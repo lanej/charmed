@@ -23,6 +23,16 @@ jobs:
         with:
           go-version: '1.26.8'
       - run: go run ./cmd/workbench generate --out docs
+      - name: Overlay independently built PR preview snapshots
+        run: |
+          if git ls-remote --exit-code origin refs/heads/pr-preview-cache >/dev/null 2>&1; then
+            git fetch -q --depth=1 origin refs/heads/pr-preview-cache
+            mkdir -p "$RUNNER_TEMP/charmed-preview-cache"
+            git archive FETCH_HEAD | tar -xf - -C "$RUNNER_TEMP/charmed-preview-cache"
+            if test -d "$RUNNER_TEMP/charmed-preview-cache/pr-preview"; then
+              cp -a "$RUNNER_TEMP/charmed-preview-cache/pr-preview" docs/dist/
+            fi
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
