@@ -1,12 +1,22 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#0d1513"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Page.Title}} · Charmed</title><link rel="stylesheet" href="style.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin></head>
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#0d1513"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Page.Title}} · Charmed</title><link rel="stylesheet" href="style.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&gt;_</span> charmed <span>terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
 <div class="shell">
-<nav aria-label="Guide">{{range .Pages}}<a href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Title}}</a>{{end}}
-{{if .Page.Groups}}<p>On this page</p>{{range .Page.Groups}}<a href="#family-{{.Name}}">{{.Name}}</a>{{end}}{{end}}
+<nav aria-label="Guide">
+<div class="nav-pages">{{range .Pages}}<a href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Title}}</a>{{end}}</div>
+{{if .Page.Groups}}
+<div class="nav-outline"><p class="nav-title">On this page</p>
+{{range .Page.Groups}}
+<div class="nav-family">
+<a class="nav-family-link" href="#family-{{.Name}}">{{.Name}}</a>
+<div class="nav-items">{{range .Entries}}<a class="nav-component" href="#{{.ID}}">{{name .Title}}</a>{{end}}</div>
+</div>
+{{end}}
+</div>
+{{end}}
 </nav>
 <main id="main">
 {{.Page.Content}}
@@ -46,17 +56,30 @@
 {{with .Page.Preview}}<section class="showcase-hero" aria-label="Service workbench"><div class="showcase-heading"><h2>One model. Every piece connected.</h2><a href="examples.html#screen/services">Explore the composition ↗</a></div><p>Filter services, follow throughput, inspect a selection. A native Go screen assembled from the same components below.</p><pre tabindex="0" class="terminal hero-terminal showcase-wide">{{terminal (index .Snapshots 0).Frame}}</pre><pre tabindex="0" class="terminal hero-terminal showcase-narrow">{{terminal (index .Snapshots 1).Frame}}</pre><p class="snapshot-note">Saved native output · run locally for keyboard interaction.</p></section>{{end}}
 {{if .Page.Showcase}}<section class="showcase-atoms"><div class="showcase-heading"><h2>Small pieces. Shared meaning.</h2><a href="components.html#feedback/status">Status atoms ↗</a></div><pre tabindex="0" class="terminal atom-strip">{{range .Page.Atoms}}<span class="status-sample">{{terminal .}}</span>{{end}}</pre><p>Semantic color and an explicit label, shared by the service list and inspector.</p></section><div class="showcase-grid">{{range .Page.Showcase}}<section><div class="showcase-heading"><h2><a href="{{.Link}}">{{.Title}} ↗</a></h2></div><p>{{.Description}}</p><pre tabindex="0" class="terminal showcase-wide">{{terminal .Frame}}</pre><pre tabindex="0" class="terminal showcase-narrow">{{terminal .NarrowFrame}}</pre></section>{{end}}</div><section class="showcase-start"><h2>Bring the pieces into your terminal.</h2><pre tabindex="0" class="code-block"><code class="language-sh">{{highlight "go run ./cmd/workbench run screen/services" "sh"}}</code></pre><p><a href="components.html">Browse every component ↗</a> · <a href="deployment.html">Compare a deployment ↗</a> · <a href="development.html">Build with Charmed ↗</a></p></section>{{end}}
 {{range .Page.Groups}}
-<section id="family-{{.Name}}"><h2>{{.Name}}</h2>
-<ul class="index">{{range .Entries}}<li><a href="#{{.ID}}">{{name .Title}}</a></li>{{end}}</ul>
-{{range .Entries}}<section class="component" id="{{.ID}}"><p class="eyebrow">{{.Level}} / {{.Family}}</p><h3>{{name .Title}}</h3><p>{{.Description}}</p>
-<pre tabindex="0" class="command"><code class="language-sh">{{highlight (printf "go run ./cmd/workbench run %s" .ID) "sh"}}</code></pre>
-{{if eq $.Page.File "components.html"}}<details><summary>Saved Go output &amp; variants</summary>{{end}}
-{{with .Snapshots}}<figure><figcaption>Saved Go snapshot · {{(index . 0).Config.Columns}} × {{(index . 0).Config.Rows}} cells · 256-color snapshot</figcaption><pre tabindex="0" class="terminal">{{terminal (index . 0).Frame}}</pre></figure>{{end}}
-<details><summary>Saved variants</summary>{{range .Snapshots}}{{if ne .Name "Default"}}<figure><figcaption>{{.Name}} · {{.Config.Columns}} × {{.Config.Rows}} cells · 256-color snapshot</figcaption><pre tabindex="0" class="terminal">{{terminal .Frame}}</pre></figure>{{end}}{{end}}</details>
-{{if eq $.Page.File "components.html"}}</details>{{end}}
-{{if .Composes}}<p>Composed from: {{range .Composes}}<a class="dependency" href="{{link .}}">{{.}}</a> {{end}}</p>{{end}}
-<details><summary>Go example</summary><p><a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">{{.Source}}</a> · <a href="{{.Upstream}}">Upstream library</a></p><pre tabindex="0" class="code-block"><code class="language-go">{{highlight .Code "go"}}</code></pre></details>
-</section>{{end}}</section>{{end}}
+<section class="component-family" id="family-{{.Name}}"><h2>{{.Name}}</h2>
+{{range .Entries}}
+{{$component := .}}
+<section class="component" id="{{.ID}}">
+<p class="eyebrow">{{.Level}} / {{.Family}}</p><h3>{{name .Title}}</h3><p>{{.Description}}</p>
+<div class="component-preview">
+<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="{{name .Title}} variants">
+{{range $i, $snapshot := .Snapshots}}<a id="tab-{{$component.ID}}-{{$i}}" href="#panel-{{$component.ID}}-{{$i}}" role="tab" aria-controls="panel-{{$component.ID}}-{{$i}}" aria-selected="{{if eq $i 0}}true{{else}}false{{end}}">{{.Name}}</a>{{end}}
+</div>
+{{range $i, $snapshot := .Snapshots}}<div id="panel-{{$component.ID}}-{{$i}}" class="variant-panel" role="tabpanel" aria-labelledby="tab-{{$component.ID}}-{{$i}}" tabindex="0">
+<figure><figcaption>{{.Name}} · {{.Config.Columns}} × {{.Config.Rows}} terminal cells</figcaption><pre tabindex="0" class="terminal">{{terminal .Frame}}</pre></figure>
+</div>{{end}}
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">{{.Source}}</a> · <a href="{{.Upstream}}">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">{{highlight .Code "go"}}</code></pre>
+<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh">{{highlight (printf "go run ./cmd/workbench run %s" .ID) "sh"}}</code></pre></div>
+</div>
+{{if .Composes}}<p class="composition-line">Composed from: {{range .Composes}}<a class="dependency" href="{{link .}}">{{.}}</a> {{end}}</p>{{end}}
+</section>{{end}}
+</section>{{end}}
 {{if .Page.Coverage}}<h2>Coverage</h2><div class="table-wrap"><table tabindex="0"><thead><tr><th>Upstream</th><th>Status</th><th>Integration</th></tr></thead><tbody>{{range .Page.Coverage}}<tr><td>{{.Upstream}}</td><td>{{.Status}}</td><td>{{.Notes}}</td></tr>{{end}}</tbody></table></div>{{end}}
 <footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
 </main></div></body></html>
