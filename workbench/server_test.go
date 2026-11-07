@@ -122,7 +122,7 @@ func TestGeneratorIsReproducible(t *testing.T) {
 	if err := workbench.Generate(b); err != nil {
 		t.Fatal(err)
 	}
-	for _, name := range []string{"manifest.json", "coverage.json", "chart_timeseries.mdx", "screen_services.mdx"} {
+	for _, name := range []string{"manifest.json", "coverage.json", "atoms/chart/timeseries.mdx", "molecules/chart/delta.mdx", "organisms/chart/comparison-panel.mdx", "screens/screen/services.mdx"} {
 		x, err := os.ReadFile(filepath.Join(a, "generated", name))
 		if err != nil {
 			t.Fatal(err)

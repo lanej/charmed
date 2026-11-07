@@ -118,6 +118,7 @@ type Definition struct {
 	Controls    []string                                 `json:"controls"`
 	States      []string                                 `json:"states"`
 	Scenarios   []string                                 `json:"scenarios"`
+	Composes    []string                                 `json:"composes"`
 	Clock       bool                                     `json:"clock"`
 	Step        bool                                     `json:"step"`
 	Defaults    Config                                   `json:"defaults"`

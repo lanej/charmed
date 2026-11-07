@@ -78,7 +78,11 @@ The deployment comparison example groups hosts by actual version identifiers, wi
 
 The screen composes the same distribution, interval, time-series, table, pill and attention components exposed in the catalog. Both the host list and member inspector use native tables. Panel titles merge the version comparison into signed delta bars on one shared scale; inspector percentage cells compose native progress bars and exact values. Version IDs label data directly, with no legends or key footers. Optional per-metric policies distinguish host z-score limits from fleet percentage-point deltas. Warning/error attention is separate from HTTP status semantics and from the displayed sigma bands. The example enables illustrative rules; use `--boundaries=false` or the **No boundaries** variant to keep deviations descriptive. Missing data remains unknown when a rule is configured.
 
-The Go registry generates each component's MDX page, argument metadata, source excerpt and four standard saved variants: default, light, narrow and monochrome. The deployment comparison also saves its alternate scenarios for static browsing. Generated files live in `docs/generated/` and are excluded from Git.
+The native story registry is split into `story/foundations.go`, `atoms.go`, `molecules.go`, `organisms.go` and `screens.go`, with core chart atoms in `story/atoms_charts.go`. Fixtures stay beside their registrations; Go component packages remain grouped by capability. Shared scene adapters and sample data live in `scene.go` and `samples.go`.
+
+The registry generates each component's MDX page, argument metadata, source excerpt and four standard saved variants: default, light, narrow and monochrome. The deployment comparison also saves its alternate scenarios for static browsing. Generated pages live at `docs/generated/<level>/<story-id>.mdx`, for example `docs/generated/molecules/chart/delta.mdx`, and are excluded from Git. Manifest paths connect these files to the existing story IDs and hash URLs.
+
+`Definition.Composes` identifies a component's building blocks. Every generated page links to these components and to the compositions that use it. The generator validates references, atomic dependency direction and cycles before publishing. Explore the deployment screen → comparison-panel organism → distribution molecule → interval-band atom in the catalog.
 
 An MDX page can compose the workbench directly:
 

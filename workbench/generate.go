@@ -24,10 +24,14 @@ type ManifestEntry struct {
 	story.Definition
 	Code      string     `json:"code"`
 	Snapshots []Snapshot `json:"snapshots"`
+	Page      string     `json:"page"`
 }
 
 // Generate writes reproducible documentation inputs from the compiled Go registry.
 func Generate(out string) error {
+	if err := story.Validate(); err != nil {
+		return err
+	}
 	root, err := moduleRoot()
 	if err != nil {
 		return err
@@ -36,13 +40,26 @@ func Generate(out string) error {
 	if err = os.MkdirAll(directory, 0755); err != nil {
 		return err
 	}
+	// Remove pages left by renamed or reclassified stories, including the old
+	// flat layout. Other generated assets are written explicitly below.
+	if err = filepath.WalkDir(directory, func(path string, entry os.DirEntry, walkErr error) error {
+		if walkErr != nil {
+			return walkErr
+		}
+		if !entry.IsDir() && filepath.Ext(path) == ".mdx" {
+			return os.Remove(path)
+		}
+		return nil
+	}); err != nil {
+		return err
+	}
 	var entries []ManifestEntry
 	for _, d := range story.Definitions() {
 		code, err := sourceSymbol(filepath.Join(root, d.Source), d.Symbol)
 		if err != nil {
 			return err
 		}
-		entry := ManifestEntry{Definition: d, Code: code}
+		entry := ManifestEntry{Definition: d, Code: code, Page: d.MDXPath()}
 		variants := []struct {
 			name   string
 			change func(*story.Config)
@@ -103,8 +120,7 @@ func Generate(out string) error {
 			entry.Snapshots = append(entry.Snapshots, Snapshot{Name: v.name, Config: c, Frame: frame})
 		}
 		entries = append(entries, entry)
-		filename := strings.ReplaceAll(d.ID, "/", "_")
-		if err = writeStories(directory, filename, entry); err != nil {
+		if err = writeStories(directory, entry); err != nil {
 			return err
 		}
 	}
@@ -123,11 +139,20 @@ func writeJSONFile(path string, value any) error {
 }
 func js(value any) string { data, _ := json.Marshal(value); return string(data) }
 
-func writeStories(directory, filename string, entry ManifestEntry) error {
+func writeStories(directory string, entry ManifestEntry) error {
 	parts := strings.Split(entry.Title, "/")
 	name := parts[len(parts)-1]
-	mdx := fmt.Sprintf("import { StoryCanvas } from '../components/StoryCanvas';\nimport { GoSource } from '../components/GoSource';\n\n# %s\n\n%s\n\n<StoryCanvas storyId=%s />\n\n## Go example\n\n<GoSource storyId=%s />\n", name, entry.Description, js(entry.ID), js(entry.ID))
-	return os.WriteFile(filepath.Join(directory, filename+".mdx"), []byte(mdx), 0644)
+	path := filepath.Join(directory, filepath.FromSlash(entry.Page))
+	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+		return err
+	}
+	components, err := filepath.Rel(filepath.Dir(path), filepath.Join(directory, "..", "components"))
+	if err != nil {
+		return err
+	}
+	components = filepath.ToSlash(components)
+	mdx := fmt.Sprintf("import { StoryCanvas } from '%s/StoryCanvas';\nimport { GoSource } from '%s/GoSource';\nimport { Composition } from '%s/Composition';\n\n# %s\n\n%s\n\n<StoryCanvas storyId=%s />\n\n<Composition storyId=%s />\n\n## Go example\n\n<GoSource storyId=%s />\n", components, components, components, name, entry.Description, js(entry.ID), js(entry.ID), js(entry.ID))
+	return os.WriteFile(path, []byte(mdx), 0644)
 }
 
 func moduleRoot() (string, error) {

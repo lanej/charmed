@@ -242,7 +242,7 @@ test("catalog navigation supports search, capability groups and mobile", async (
     name: "Components",
     exact: true,
   });
-  await expect(navigation.getByRole("link")).toHaveCount(44);
+  await expect(navigation.getByRole("link")).toHaveCount(45);
   await page.getByPlaceholder("Search components…").fill("heatmap");
   await expect(navigation.getByRole("link")).toHaveCount(1);
   await navigation.getByRole("link").click();
@@ -347,4 +347,33 @@ test("signed values, pill emphasis and status atoms have independent fixtures",a
   await page.getByRole("combobox",{name:"Emphasis",exact:true}).selectOption("dim");
   await page.getByRole("combobox",{name:"Theme",exact:true}).selectOption("mono");
   await expect(text).toContainText("Status atoms / dim");
+});
+
+test("nested static pages expose composition links in both directions", async ({ page }) => {
+  await page.goto("http://127.0.0.1:5174/#screen/deployment");
+  let composition = page.getByRole("region", { name: "Component composition", exact: true });
+  await expect(composition.getByRole("heading", { name: "Composed from", exact: true })).toBeVisible();
+  await composition.getByRole("link", { name: "Comparison panel", exact: true }).click();
+  await expect(page).toHaveURL(/#chart\/comparison-panel$/);
+  await expect(page.getByRole("heading", { name: "Comparison panel", exact: true })).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("Static snapshot: Default");
+  composition = page.getByRole("region", { name: "Component composition", exact: true });
+  await expect(composition.getByRole("link", { name: "Deployment comparison", exact: true })).toHaveAttribute("href", "#screen/deployment");
+  await composition.getByRole("link", { name: "Cohort distributions", exact: true }).click();
+  await expect(page).toHaveURL(/#chart\/distributions$/);
+  composition = page.getByRole("region", { name: "Component composition", exact: true });
+  await expect(composition.getByRole("link", { name: "Comparison panel", exact: true })).toBeVisible();
+  await composition.getByRole("link", { name: "Interval band", exact: true }).click();
+  await expect(page).toHaveURL(/#chart\/interval-band$/);
+  await expect(page.getByRole("status")).toContainText("Static snapshot: Default");
+  composition = page.getByRole("region", { name: "Component composition", exact: true });
+  await expect(composition.getByRole("heading", { name: "Composed from", exact: true })).toHaveCount(0);
+  await expect(composition.getByRole("link", { name: "Cohort distributions", exact: true })).toBeVisible();
+  await expect(composition.getByRole("link", { name: "Merged delta property", exact: true })).toBeVisible();
+  if (process.env.CHARMED_CAPTURE_DIR) {
+    mkdirSync(process.env.CHARMED_CAPTURE_DIR, { recursive: true });
+    await page.goto("http://127.0.0.1:5174/#chart/distributions");
+    await expect(page.getByRole("region", { name: "Component composition", exact: true })).toBeVisible();
+    await page.getByRole("region", { name: "Component composition", exact: true }).screenshot({ path: join(process.env.CHARMED_CAPTURE_DIR, "composition.png") });
+  }
 });

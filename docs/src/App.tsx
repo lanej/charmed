@@ -9,7 +9,7 @@ import {
 import manifest from "../generated/manifest.json";
 
 const generated = import.meta.glob<{ default: ComponentType }>(
-  "../generated/*.mdx",
+  "../generated/**/*.mdx",
 );
 const pages = import.meta.glob<{ default: ComponentType }>("../pages/*.mdx");
 const levels = [
@@ -57,9 +57,9 @@ export function App() {
     const file = fixedPages[current]?.file;
     const loader = file
       ? pages[file]
-      : generated[`../generated/${current.replaceAll("/", "_")}.mdx`];
+      : entry ? generated[`../generated/${entry.page}`] : undefined;
     return loader ? lazy(loader) : null;
-  }, [current]);
+  }, [current, entry]);
   const visible = manifest.filter((entry) =>
     `${entry.title} ${entry.family} ${entry.description}`
       .toLowerCase()
