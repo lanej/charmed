@@ -43,6 +43,34 @@ function Dimension({
   );
 }
 
+function Identifier({ label, value, other, onChange }: {
+  label: string; value: string; other: string; onChange: (value: string) => void;
+}) {
+  const [draft, setDraft] = useState(value);
+  useEffect(() => setDraft(value), [value]);
+  return (
+    <label>
+      {label}
+      <input
+        aria-label={label}
+        value={draft}
+        maxLength={128}
+        onChange={(event) => {
+          event.currentTarget.setCustomValidity("");
+          setDraft(event.target.value);
+        }}
+        onBlur={(event) => {
+          const invalid = !draft.trim() || new TextEncoder().encode(draft).length > 128 || /\p{Cc}/u.test(draft) || draft === other;
+          event.currentTarget.setCustomValidity(invalid ? "Use a distinct, printable version identifier of 1–128 bytes." : "");
+          if (invalid) event.currentTarget.reportValidity();
+          else onChange(draft);
+        }}
+        onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }}
+      />
+    </label>
+  );
+}
+
 export function StoryCanvas({
   storyId,
   variant = "Default",
@@ -56,6 +84,7 @@ export function StoryCanvas({
       entry?.snapshots.find((snapshot) => snapshot.name === variant)?.config ??
       entry!.defaults,
   );
+  const [presetRevision, setPresetRevision] = useState(0);
   useEffect(() => {
     if (entry)
       setConfig(
@@ -69,7 +98,7 @@ export function StoryCanvas({
   const states = entry.states ?? [];
   return (
     <div className="story-canvas">
-      <TerminalStory storyId={storyId} {...config} />
+      <TerminalStory key={`${storyId}:${presetRevision}`} storyId={storyId} {...config} />
       <details className="fixture-controls" open>
         <summary>
           Fixture controls<span>Changes run through the Go model</span>
@@ -84,7 +113,10 @@ export function StoryCanvas({
                 const snapshot = entry.snapshots.find(
                   (snapshot) => snapshot.name === event.target.value,
                 );
-                if (snapshot) setConfig(snapshot.config);
+                if (snapshot) {
+                  setConfig(snapshot.config);
+                  setPresetRevision((revision) => revision + 1);
+                }
               }}
             >
               <option value="" disabled>
@@ -157,6 +189,49 @@ export function StoryCanvas({
                 value={config.value}
                 onChange={(event) => set("value", event.target.value)}
               />
+            </label>
+          )}
+          {entry.controls?.includes("scenario") && (
+            <label>
+              Scenario
+              <select
+                aria-label="Scenario"
+                value={config.scenario}
+                onChange={(event) => set("scenario", event.target.value)}
+              >
+                {(entry.scenarios ?? []).map((scenario) => (
+                  <option key={scenario}>{scenario}</option>
+                ))}
+              </select>
+            </label>
+          )}
+          {entry.controls?.includes("referenceID") && (
+            <Identifier label="Reference version" value={config.referenceID} other={config.candidateID} onChange={(value) => set("referenceID", value)} />
+          )}
+          {entry.controls?.includes("candidateID") && (
+            <Identifier label="Candidate version" value={config.candidateID} other={config.referenceID} onChange={(value) => set("candidateID", value)} />
+          )}
+          {entry.controls?.includes("sigma") && (
+            <label>
+              Host spread bands
+              <select
+                aria-label="Host spread bands"
+                value={config.sigma}
+                onChange={(event) => set("sigma", Number(event.target.value))}
+              >
+                {[1, 2, 3].map((sigma) => (
+                  <option key={sigma} value={sigma}>±{sigma}σ</option>
+                ))}
+              </select>
+            </label>
+          )}
+          {entry.controls?.includes("boundaries") && (
+            <label>
+              Deviation boundaries
+              <select aria-label="Deviation boundaries" value={config.boundaries ? "example" : "off"} onChange={(event)=>set("boundaries",event.target.value==="example")}>
+                <option value="example">Example rules</option>
+                <option value="off">No boundaries</option>
+              </select>
             </label>
           )}
           {entry.controls?.includes("series") && (

@@ -8,6 +8,7 @@ import (
 	"go/token"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/lanej/charmed/story"
@@ -55,6 +56,24 @@ func Generate(out string) error {
 				c.Profile = "none"
 				c.ReducedMotion = true
 			}},
+		}
+		if slices.Contains(d.Controls, "boundaries") {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "No boundaries", change: func(c *story.Config) { c.Boundaries = false }})
+		}
+		for _, scenario := range d.Scenarios {
+			if scenario == d.Defaults.Scenario {
+				continue
+			}
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{
+				name:   strings.ToUpper(scenario[:1]) + strings.ReplaceAll(scenario[1:], "-", " "),
+				change: func(c *story.Config) { c.Scenario = scenario },
+			})
 		}
 		for _, v := range variants {
 			c := d.Defaults

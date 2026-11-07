@@ -13,6 +13,7 @@ Requires Go **1.26.8+**. The documentation app also needs Node **24+** and npm. 
 ```sh
 go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
+go run ./cmd/workbench run screen/deployment --scenario isolated-hosts --sigma 3
 go run ./cmd/workbench run chart/timeseries --theme light --series 3
 go run ./cmd/workbench capture screen/services --plain
 ```
@@ -40,11 +41,13 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 | `interaction` | Focus scopes and typed selection/submission events |
 | `input` | Bubbles text input, textarea, virtual cursor and labeled field composition |
 | `collection` | Native tables, lists, trees, file pickers, viewports and bounded structured logs |
-| `feedback` | Spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
+| `feedback` | Attention indicators, spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
+| `attention` | Optional one-sided or two-sided warn/error boundaries, explicit unknown/off states and typed transitions |
 | `form` | Themed Huh forms with native nested focus and validation |
-| `text` | Labels, badges, key hints and Glamour Markdown rendering |
-| `chart` | Sparklines, time series, line/scatter, bars, heatmaps, streamline/waveline, OHLC, canvas, portable pictures and chart compositions |
-| `pattern` | A service workbench linking a filter, table, chart and inspector |
+| `text` | Labels, badges, semantic pills, key hints and Glamour Markdown rendering |
+| `chart` | Sparklines, time series, line/scatter, bars, heatmaps, streamline/waveline, OHLC, canvas, interval bands, cohort distributions, comparison panels and portable pictures |
+| `cohort` | Validated interval counts, request-weighted rates and unweighted member sample spread |
+| `pattern` | Service workbench and cohort comparison with linked plots, member selection and inspection |
 | `runtime` | One root Bubble Tea terminal session |
 | `story` | Deterministic Go fixtures shared by terminal execution, browser previews and snapshots |
 
@@ -66,7 +69,13 @@ The core uses upstream Charm v2 modules. It has no JavaScript runtime requiremen
 
 ## MDX workbench
 
-The Go registry generates each component's MDX page, argument metadata, source excerpt and four saved variants: default, light, narrow and monochrome. Generated files live in `docs/generated/` and are excluded from Git.
+The deployment comparison example groups hosts by actual version identifiers, with reference/candidate roles and a separate blue/green deployment-method label. Semantic pills identify 2xx success, 3xx redirects, 4xx client errors and 5xx server errors. It combines nested 1/2/3σ host-spread bands, request-weighted histories and linked host inspection. Four synthetic scenarios distinguish a uniform regression, isolated bad hosts, unequal traffic and insufficient samples. Read **Compare a deployment** in the catalog for the count contract and statistical interpretation. The bands describe host variability; they are not confidence intervals or rollout decisions. Run `go run ./examples/deployment` for a standalone terminal application.
+
+[View the deployment comparison](docs/assets/deployment.png).
+
+The screen composes the same distribution, interval, time-series, table, pill and attention components exposed in the catalog. Both the host list and member inspector use native tables. Panel titles merge the version comparison into signed delta bars on one shared scale; inspector percentage cells compose native progress bars and exact values. Version IDs label data directly, with no legends or key footers. Optional per-metric policies distinguish host z-score limits from fleet percentage-point deltas. Warning/error attention is separate from HTTP status semantics and from the displayed sigma bands. The example enables illustrative rules; use `--boundaries=false` or the **No boundaries** variant to keep deviations descriptive. Missing data remains unknown when a rule is configured.
+
+The Go registry generates each component's MDX page, argument metadata, source excerpt and four standard saved variants: default, light, narrow and monochrome. The deployment comparison also saves its alternate scenarios for static browsing. Generated files live in `docs/generated/` and are excluded from Git.
 
 An MDX page can compose the workbench directly:
 
