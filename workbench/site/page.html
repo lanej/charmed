@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Page.Title}} · Charmed</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html">charmed <span>terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="shell">
+<nav aria-label="Guide">{{range .Pages}}<a href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Title}}</a>{{end}}
+{{if .Page.Groups}}<p>On this page</p>{{range .Page.Groups}}<a href="#family-{{.Name}}">{{.Name}}</a>{{end}}{{end}}
+</nav>
+<main id="main">
+{{.Page.Content}}
+{{range .Page.Groups}}
+<section id="family-{{.Name}}"><h2>{{.Name}}</h2>
+<ul class="index">{{range .Entries}}<li><a href="#{{.ID}}">{{name .Title}}</a></li>{{end}}</ul>
+{{range .Entries}}<section class="component" id="{{.ID}}"><p class="eyebrow">{{.Level}} / {{.Family}}</p><h3>{{name .Title}}</h3><p>{{.Description}}</p>
+<pre tabindex="0" class="command"><code>go run ./cmd/workbench run {{.ID}}</code></pre>
+{{if eq $.Page.File "components.html"}}<details><summary>Saved Go output &amp; variants</summary>{{end}}
+{{with .Snapshots}}<figure><figcaption>Saved Go snapshot · {{(index . 0).Config.Columns}} × {{(index . 0).Config.Rows}} cells · styling omitted</figcaption><pre tabindex="0" class="terminal">{{plain (index . 0).Frame}}</pre></figure>{{end}}
+<details><summary>Saved variants</summary>{{range .Snapshots}}{{if ne .Name "Default"}}<figure><figcaption>{{.Name}} · {{.Config.Columns}} × {{.Config.Rows}} cells · styling omitted</figcaption><pre tabindex="0" class="terminal">{{plain .Frame}}</pre></figure>{{end}}{{end}}</details>
+{{if eq $.Page.File "components.html"}}</details>{{end}}
+{{if .Composes}}<p>Composed from: {{range .Composes}}<a class="dependency" href="{{link .}}">{{.}}</a> {{end}}</p>{{end}}
+<details><summary>Go example</summary><p><a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">{{.Source}}</a> · <a href="{{.Upstream}}">Upstream library</a></p><pre tabindex="0"><code>{{.Code}}</code></pre></details>
+</section>{{end}}</section>{{end}}
+{{if .Page.Coverage}}<h2>Coverage</h2><div class="table-wrap"><table tabindex="0"><thead><tr><th>Upstream</th><th>Status</th><th>Integration</th></tr></thead><tbody>{{range .Page.Coverage}}<tr><td>{{.Upstream}}</td><td>{{.Status}}</td><td>{{.Notes}}</td></tr>{{end}}</tbody></table></div>{{end}}
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>

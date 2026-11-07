@@ -1,0 +1,6 @@
+runs/
+latest.json
+*.lock
+*.tmp
+auth*.json
+check-summary.json

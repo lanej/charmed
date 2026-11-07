@@ -1,17 +1,12 @@
-import { StoryCanvas } from "../components/StoryCanvas";
-import { GoSource } from "../components/GoSource";
-
 # Compare a deployment across a fleet
 
 Four linked panels compare **2xx, 3xx, 4xx and 5xx response percentages** between version identifiers `a13c9f2` and `f4d7e81` during a **blue/green deployment**. Reference and candidate are comparison roles; blue/green describes the deployment method. The counts are synthetic: 64 hosts serving the reference version, 32 serving the candidate, and twelve five-minute windows.
 
-<StoryCanvas storyId="screen/deployment" />
 
 ## Presentation variants
 
-**Stacked is the default.** The same component offers **Disconnected bands** in the **Comparison variant** control. Changing it keeps the current host, metric, window, sigma, focus and attention policy. **b** toggles presentation natively; `SetVariant(pattern.Stacked)` and `SetVariant(pattern.Bands)` select it explicitly. The browser control stays synchronized with native keyboard changes.
+**Stacked is the default.** Press **b** in the native terminal to switch to **Disconnected bands**. Changing it keeps the current host, metric, window, sigma, focus and attention policy. **b** toggles presentation natively; `SetVariant(pattern.Stacked)` and `SetVariant(pattern.Bands)` select it explicitly.
 
-<StoryCanvas storyId="screen/deployment" variant="Disconnected bands" />
 
 The band variant composes the same distributions and title-delta properties into a rectangle, with the active class's history below it. Each class retains a percentage axis shared by both versions. Static exports save **Disconnected bands** alongside the default stacked fixture, rather than publishing a replacement screen. Native: `go run ./cmd/workbench run screen/deployment --comparison-variant bands`.
 
@@ -29,11 +24,11 @@ Histories show each version's request-weighted rate and the selected host's rate
 
 The host list ranks configured attention first, then absolute distance from the **reference version's host distribution** for the active response class. Its `z(ref)` is `(host rate − reference host mean) / reference host standard deviation`. This is a descriptive distance, including for candidate hosts, rather than a confidence score. The candidate's widening spread does not redefine its reference. The descriptive tail count includes eligible hosts from both cohorts beyond the selected sigma distance; this is separate from boundary attention.
 
-Version identifiers are opaque strings: a commit, release tag or build ID can identify either role. **Reference version** and **Candidate version** controls accept distinct identifiers without parsing their format. Editing an ID commits on blur or Enter and starts a fresh synthetic fixture. Host identifiers are independent of version, role and deployment environment.
+Version identifiers are opaque strings: a commit, release tag or build ID can identify either role. The `--reference-version` and `--candidate-version` CLI flags accept distinct identifiers without parsing their format. Host identifiers are independent of version, role and deployment environment.
 
 ## Try distinct failure shapes
 
-Live previews expose a Scenario control. Static builds include the alternate scenarios in **Saved variant**.
+Pass `--scenario` to the native runner. Saved monochrome snapshots of these scenarios appear on the examples page.
 
 | Scenario | What changes | What to inspect |
 | --- | --- | --- |
@@ -42,11 +37,11 @@ Live previews expose a Scenario control. Static builds include the alternate sce
 | `unequal-traffic` | Host error propensities are similar, while the versions receive different volumes on the higher-error hosts | A weighted fleet delta without a comparable host-mean shift; this is workload confounding |
 | `insufficient-samples` | Most hosts serve fewer than 1,000 requests; some serve none | Excluded host counts, `n/a` spread and the absence of finite z-scores |
 
-Use **↑/↓** in the host table to choose a host, **←/→** to choose a time window, **[ / ]** to change the active response class, and **1 / 2 / 3** to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. The controls below the preview set the initial scenario and band limit; changing them starts a fresh session. **Tab** moves between the host list, metric panels and inspector. The member inspector is a dense native table with code, percentage-bar rate, reference deviation and optional attention columns. Each percentage cell composes a native progress bar on a fixed 0–100% scale with its precise numeric value; small percentages can fall below terminal bar resolution. Its arrow keys select the active metric while retaining the selected host. Arrow keys scroll the metric region; **Ctrl+N** advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.
+Use **↑/↓** in the host table to choose a host, **←/→** to choose a time window, **[ / ]** to change the active response class, and **1 / 2 / 3** to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. CLI flags set the initial scenario and band limit. **Tab** moves between the host list, metric panels and inspector. The member inspector is a dense native table with code, percentage-bar rate, reference deviation and optional attention columns. Each percentage cell composes a native progress bar on a fixed 0–100% scale with its precise numeric value; small percentages can fall below terminal bar resolution. Its arrow keys select the active metric while retaining the selected host. Arrow keys scroll the metric region; **Ctrl+N** advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.
 
 ## Optional warning and error boundaries
 
-The **Deviation boundaries** control enables illustrative policies or removes them. The library has no default alert thresholds. With no configured rule, deviation remains descriptive: there is no warning, error or implied healthy state. Static exports include a **No boundaries** variant.
+The `--boundaries` flag enables illustrative policies; `--boundaries=false` removes them. The library has no default alert thresholds. With no configured rule, deviation remains descriptive: there is no warning, error or implied healthy state. Saved snapshots include a **No boundaries** variant.
 
 | Scope | Measurement | Example warning | Example error |
 | --- | --- | --- | --- |
@@ -98,7 +93,7 @@ References: [NIST proportion control charts](https://www.itl.nist.gov/div898/han
 
 Signed values use `text.SignedNumber`. Its `SignTones` configure positive, negative and zero independently of warning/error boundaries. In this example, rising 2xx is green and falling 2xx is red; 5xx reverses those colors. Redirect and client-error changes use a direction-only tone because their benefit requires application context. Missing and non-finite observations render `n/a`; tiny nonzero values retain their sign rather than rounding to zero. Numeric color describes direction policy, while attention labels and the delta bar describe configured severity.
 
-`text.Pill` separates semantic tone from `text.Bright`, `text.Normal` and `text.Dim` emphasis. `feedback.Status` supplies reusable `OK`, `WARN`, `ERROR`, `UNKNOWN` and `OFF` states. `feedback.Attention` composes these display atoms after rule evaluation; it keeps unconfigured attention absent rather than implying an OK state. The catalog gives signed numbers, pills and statuses their own atom examples and saved emphasis variants.
+`text.Pill` separates semantic tone from `text.Bright`, `text.Normal` and `text.Dim` emphasis. `feedback.Status` supplies reusable `OK`, `WARN`, `ERROR`, `UNKNOWN` and `OFF` states. `feedback.Attention` composes these display atoms after rule evaluation; it keeps unconfigured attention absent rather than implying an OK state. The component reference groups signed numbers, pills and statuses under their capabilities, with saved emphasis variants.
 
 | Layer | Component | Responsibility |
 | --- | --- | --- |
@@ -117,7 +112,6 @@ Signed values use `text.SignedNumber`. Its `SignTones` configure positive, negat
 | Organism | `pattern.CohortComparison` | Coordinate distributions, time series, host selection, focus, windows and responsive layout |
 | Screen | `examples/deployment` | Supply version IDs, the deployment method, HTTP status tones, synthetic counts and the sample threshold |
 
-<GoSource storyId="screen/deployment" />
 
 Run the example with `go run ./examples/deployment`, or use `go run ./cmd/workbench run screen/deployment --scenario uniform-regression --sigma 2 --reference-version release-42 --candidate-version build-43`.
 

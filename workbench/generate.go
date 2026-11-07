@@ -1,7 +1,6 @@
 package workbench
 
 import (
-	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -24,7 +23,6 @@ type ManifestEntry struct {
 	story.Definition
 	Code      string     `json:"code"`
 	Snapshots []Snapshot `json:"snapshots"`
-	Page      string     `json:"page"`
 }
 
 // Generate writes reproducible documentation inputs from the compiled Go registry.
@@ -36,30 +34,13 @@ func Generate(out string) error {
 	if err != nil {
 		return err
 	}
-	directory := filepath.Join(out, "generated")
-	if err = os.MkdirAll(directory, 0755); err != nil {
-		return err
-	}
-	// Remove pages left by renamed or reclassified stories, including the old
-	// flat layout. Other generated assets are written explicitly below.
-	if err = filepath.WalkDir(directory, func(path string, entry os.DirEntry, walkErr error) error {
-		if walkErr != nil {
-			return walkErr
-		}
-		if !entry.IsDir() && filepath.Ext(path) == ".mdx" {
-			return os.Remove(path)
-		}
-		return nil
-	}); err != nil {
-		return err
-	}
 	var entries []ManifestEntry
 	for _, d := range story.Definitions() {
 		code, err := sourceSymbol(filepath.Join(root, d.Source), d.Symbol)
 		if err != nil {
 			return err
 		}
-		entry := ManifestEntry{Definition: d, Code: code, Page: d.MDXPath()}
+		entry := ManifestEntry{Definition: d, Code: code}
 		variants := []struct {
 			name   string
 			change func(*story.Config)
@@ -120,39 +101,8 @@ func Generate(out string) error {
 			entry.Snapshots = append(entry.Snapshots, Snapshot{Name: v.name, Config: c, Frame: frame})
 		}
 		entries = append(entries, entry)
-		if err = writeStories(directory, entry); err != nil {
-			return err
-		}
 	}
-	if err = writeJSONFile(filepath.Join(directory, "manifest.json"), entries); err != nil {
-		return err
-	}
-	return writeJSONFile(filepath.Join(directory, "coverage.json"), CoverageInventory())
-}
-
-func writeJSONFile(path string, value any) error {
-	data, err := json.MarshalIndent(value, "", "  ")
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(path, append(data, '\n'), 0644)
-}
-func js(value any) string { data, _ := json.Marshal(value); return string(data) }
-
-func writeStories(directory string, entry ManifestEntry) error {
-	parts := strings.Split(entry.Title, "/")
-	name := parts[len(parts)-1]
-	path := filepath.Join(directory, filepath.FromSlash(entry.Page))
-	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-		return err
-	}
-	components, err := filepath.Rel(filepath.Dir(path), filepath.Join(directory, "..", "components"))
-	if err != nil {
-		return err
-	}
-	components = filepath.ToSlash(components)
-	mdx := fmt.Sprintf("import { StoryCanvas } from '%s/StoryCanvas';\nimport { GoSource } from '%s/GoSource';\nimport { Composition } from '%s/Composition';\n\n# %s\n\n%s\n\n<StoryCanvas storyId=%s />\n\n<Composition storyId=%s />\n\n## Go example\n\n<GoSource storyId=%s />\n", components, components, components, name, entry.Description, js(entry.ID), js(entry.ID), js(entry.ID))
-	return os.WriteFile(path, []byte(mdx), 0644)
+	return writeSite(out, root, entries)
 }
 
 func moduleRoot() (string, error) {

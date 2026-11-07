@@ -17,6 +17,7 @@ require (
 	github.com/coder/websocket v1.8.15
 	github.com/creack/pty v1.1.24
 	github.com/spf13/cobra v1.10.2
+	github.com/yuin/goldmark v1.7.8
 )
 
 require (
@@ -53,7 +54,6 @@ require (
 	github.com/sahilm/fuzzy v0.1.3 // indirect
 	github.com/spf13/pflag v1.0.9 // indirect
 	github.com/xo/terminfo v1.2.0 // indirect
-	github.com/yuin/goldmark v1.7.8 // indirect
 	github.com/yuin/goldmark-emoji v1.0.5 // indirect
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
 	golang.org/x/image v0.47.0 // indirect

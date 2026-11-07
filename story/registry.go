@@ -1,4 +1,4 @@
-// Package story is the single source of truth for native and MDX component fixtures.
+// Package story is the single source of truth for native fixtures and static documentation.
 package story
 
 import (
