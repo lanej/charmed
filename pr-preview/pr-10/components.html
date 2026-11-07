@@ -3,7 +3,14 @@
 <head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Components · Charmed</title><link rel="stylesheet" href="style.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&gt;_</span> charmed <span>terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
 <div class="shell">
 <nav aria-label="Guide">
 <div class="nav-pages"><a href="index.html" >Charmed</a><a href="foundations.html" >Foundations</a><a href="components.html" aria-current="page">Components</a><a href="examples.html" >Composition &amp; examples</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
@@ -49,8 +56,9 @@
 
 </nav>
 <main id="main">
+
 <h1>Components by capability</h1>
-<p>Browse related building blocks together. Atomic levels describe composition depth; Go packages follow capabilities. Every component has a direct link in the sidebar. Each entry leads with a native terminal preview, groups alternate snapshots into tabs, and shows highlighted Go usage immediately afterward.</p>
+<p>Browse related building blocks together. Atomic levels describe composition depth; Go packages follow capabilities. Every component has a direct link in the sidebar. Each entry leads with a native terminal preview, groups alternate snapshots into tabs, and shows highlighted Go usage snippets immediately afterward. Snippets focus on the consumer API rather than a compilable program or the fixture machinery.</p>
 <p>Use the sidebar to navigate to a component or your browser's Find command to search the entire page. Saved frames preserve terminal geometry and semantic color; use the native runner to inspect colors, focus and animation.</p>
 <p>Time-series traces use native braille dots for finer terminal resolution. Shared axes and series colors retain their meaning; ASCII mode keeps its numeric fallback.</p>
 <p>Legends are opt-in. Set <code class="inline-code">DistributionComparison<span class="syn-operator">.</span>ShowLegend</code>, compose <code class="inline-code">BandOptions<span class="syn-operator">.</span>Legend</code>, or pass <code class="inline-code">chart.PanelOptions{ShowLegend: true}</code> to both <code class="inline-code">chart<span class="syn-operator">.</span>PanelPlotSize</code> and <code class="inline-code">chart<span class="syn-operator">.</span>Panel</code>. Legend symbols reuse their plotted styles; label custom boundary markers with <code class="inline-code">BandMarker<span class="syn-operator">.</span>Label</code>. Native fixtures accept <code class="inline-code"><span class="syn-operator">--</span>legend</code>, and relevant saved variants include <strong>With legend</strong>.</p>
@@ -59,13 +67,13 @@
 
 
 
-<section class="component-family" id="family-chart"><h2>chart</h2>
+<section class="component-family" id="family-chart"><h2><a class="heading-permalink" href="#family-chart" aria-label="Link to chart section"><span>chart</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="chart/sparkline">
-<p class="eyebrow">Atoms / chart</p><h3>Sparkline</h3><p>Real ntcharts Sparkline rendering with semantic styling and deterministic fixture data.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fsparkline" aria-label="Link to Sparkline component"><span>Sparkline</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Real ntcharts Sparkline rendering with semantic styling and deterministic fixture data.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/sparkline-preview"><a class="heading-permalink" href="#chart%2fsparkline-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Sparkline variants">
 <a id="tab-chart/sparkline-0" href="#panel-chart%2fsparkline-0" role="tab" aria-controls="panel-chart/sparkline-0" aria-selected="true">Default</a><a id="tab-chart/sparkline-1" href="#panel-chart%2fsparkline-1" role="tab" aria-controls="panel-chart/sparkline-1" aria-selected="false">Narrow</a><a id="tab-chart/sparkline-2" href="#panel-chart%2fsparkline-2" role="tab" aria-controls="panel-chart/sparkline-2" aria-selected="false">Monochrome</a>
@@ -104,32 +112,24 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/docs/examples/sparkline/main.go">Runnable example</a> · <a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">package</span> main
-
-<span class="syn-keyword">import</span> <span class="syn-operator">(</span>
-	<span class="syn-string">&#34;fmt&#34;</span>
-
-	<span class="syn-string">&#34;github.com/lanej/charmed/chart&#34;</span>
-	<span class="syn-string">&#34;github.com/lanej/charmed/layout&#34;</span>
-	<span class="syn-string">&#34;github.com/lanej/charmed/theme&#34;</span>
+<div class="component-subheading"><h4 id="chart/sparkline-code"><a class="heading-permalink" href="#chart%2fsparkline-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/sparkline.go.txt">Usage snippet</a> · <a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// Values and dimensions come from the application.</span>
+values <span class="syn-operator">:=</span> <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">float64</span><span class="syn-operator">{</span><span class="syn-number">32</span><span class="syn-operator">,</span> <span class="syn-number">37</span><span class="syn-operator">,</span> <span class="syn-number">34</span><span class="syn-operator">,</span> <span class="syn-number">40</span><span class="syn-operator">,</span> <span class="syn-number">44</span><span class="syn-operator">,</span> <span class="syn-number">41</span><span class="syn-operator">,</span> <span class="syn-number">47</span><span class="syn-operator">,</span> <span class="syn-number">45</span><span class="syn-operator">,</span> <span class="syn-number">52</span><span class="syn-operator">,</span> <span class="syn-number">49</span><span class="syn-operator">}</span>
+spark <span class="syn-operator">:=</span> chart<span class="syn-operator">.</span><span class="syn-function">NewSparkline</span><span class="syn-operator">(</span>
+    values<span class="syn-operator">,</span>
+    layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> <span class="syn-number">48</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">5</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+    theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">,</span>
 <span class="syn-operator">)</span>
-
-<span class="syn-keyword">func</span> <span class="syn-function">main</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
-	values <span class="syn-operator">:=</span> <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">float64</span><span class="syn-operator">{</span><span class="syn-number">32</span><span class="syn-operator">,</span> <span class="syn-number">37</span><span class="syn-operator">,</span> <span class="syn-number">34</span><span class="syn-operator">,</span> <span class="syn-number">40</span><span class="syn-operator">,</span> <span class="syn-number">44</span><span class="syn-operator">,</span> <span class="syn-number">41</span><span class="syn-operator">,</span> <span class="syn-number">47</span><span class="syn-operator">,</span> <span class="syn-number">45</span><span class="syn-operator">,</span> <span class="syn-number">52</span><span class="syn-operator">,</span> <span class="syn-number">49</span><span class="syn-operator">}</span>
-	graph <span class="syn-operator">:=</span> chart<span class="syn-operator">.</span><span class="syn-function">NewSparkline</span><span class="syn-operator">(</span>values<span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> <span class="syn-number">48</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">5</span><span class="syn-operator">}</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
-
-	fmt<span class="syn-operator">.</span><span class="syn-function">Println</span><span class="syn-operator">(</span>graph<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
-<span class="syn-operator">}</span>
+view <span class="syn-operator">:=</span> spark<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 </code></pre>
 </div>
 
 </section>
 
 <section class="component" id="chart/timeseries">
-<p class="eyebrow">Atoms / chart</p><h3>Time series</h3><p>Real ntcharts Time series rendering with semantic styling and deterministic fixture data.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2ftimeseries" aria-label="Link to Time series component"><span>Time series</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Real ntcharts Time series rendering with semantic styling and deterministic fixture data.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/timeseries-preview"><a class="heading-permalink" href="#chart%2ftimeseries-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Time series variants">
 <a id="tab-chart/timeseries-0" href="#panel-chart%2ftimeseries-0" role="tab" aria-controls="panel-chart/timeseries-0" aria-selected="true">Default</a><a id="tab-chart/timeseries-1" href="#panel-chart%2ftimeseries-1" role="tab" aria-controls="panel-chart/timeseries-1" aria-selected="false">Narrow</a><a id="tab-chart/timeseries-2" href="#panel-chart%2ftimeseries-2" role="tab" aria-controls="panel-chart/timeseries-2" aria-selected="false">Monochrome</a><a id="tab-chart/timeseries-3" href="#panel-chart%2ftimeseries-3" role="tab" aria-controls="panel-chart/timeseries-3" aria-selected="false">With legend</a>
@@ -218,7 +218,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/examples/timeseries/main.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/timeseries-code"><a class="heading-permalink" href="#chart%2ftimeseries-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/examples/timeseries/main.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">package</span> main
 
 <span class="syn-keyword">import</span> <span class="syn-operator">(</span>
@@ -252,9 +252,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/line">
-<p class="eyebrow">Atoms / chart</p><h3>Line</h3><p>Real ntcharts Line rendering with semantic styling and deterministic fixture data.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fline" aria-label="Link to Line component"><span>Line</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Real ntcharts Line rendering with semantic styling and deterministic fixture data.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/line-preview"><a class="heading-permalink" href="#chart%2fline-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Line variants">
 <a id="tab-chart/line-0" href="#panel-chart%2fline-0" role="tab" aria-controls="panel-chart/line-0" aria-selected="true">Default</a><a id="tab-chart/line-1" href="#panel-chart%2fline-1" role="tab" aria-controls="panel-chart/line-1" aria-selected="false">Narrow</a><a id="tab-chart/line-2" href="#panel-chart%2fline-2" role="tab" aria-controls="panel-chart/line-2" aria-selected="false">Monochrome</a>
@@ -313,7 +313,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/line-code"><a class="heading-permalink" href="#chart%2fline-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">chartStory</span><span class="syn-operator">(</span>kind <span class="syn-builtin">string</span><span class="syn-operator">,</span> e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 	step <span class="syn-operator">:=</span> <span class="syn-number">0</span>
@@ -475,9 +475,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/scatter">
-<p class="eyebrow">Atoms / chart</p><h3>Scatter</h3><p>Real ntcharts Scatter rendering with semantic styling and deterministic fixture data.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fscatter" aria-label="Link to Scatter component"><span>Scatter</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Real ntcharts Scatter rendering with semantic styling and deterministic fixture data.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/scatter-preview"><a class="heading-permalink" href="#chart%2fscatter-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Scatter variants">
 <a id="tab-chart/scatter-0" href="#panel-chart%2fscatter-0" role="tab" aria-controls="panel-chart/scatter-0" aria-selected="true">Default</a><a id="tab-chart/scatter-1" href="#panel-chart%2fscatter-1" role="tab" aria-controls="panel-chart/scatter-1" aria-selected="false">Narrow</a><a id="tab-chart/scatter-2" href="#panel-chart%2fscatter-2" role="tab" aria-controls="panel-chart/scatter-2" aria-selected="false">Monochrome</a>
@@ -536,7 +536,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/scatter-code"><a class="heading-permalink" href="#chart%2fscatter-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">chartStory</span><span class="syn-operator">(</span>kind <span class="syn-builtin">string</span><span class="syn-operator">,</span> e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 	step <span class="syn-operator">:=</span> <span class="syn-number">0</span>
@@ -698,9 +698,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/bars">
-<p class="eyebrow">Atoms / chart</p><h3>Bars</h3><p>Real ntcharts Bars rendering with semantic styling and deterministic fixture data.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fbars" aria-label="Link to Bars component"><span>Bars</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Real ntcharts Bars rendering with semantic styling and deterministic fixture data.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/bars-preview"><a class="heading-permalink" href="#chart%2fbars-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Bars variants">
 <a id="tab-chart/bars-0" href="#panel-chart%2fbars-0" role="tab" aria-controls="panel-chart/bars-0" aria-selected="true">Default</a><a id="tab-chart/bars-1" href="#panel-chart%2fbars-1" role="tab" aria-controls="panel-chart/bars-1" aria-selected="false">Narrow</a><a id="tab-chart/bars-2" href="#panel-chart%2fbars-2" role="tab" aria-controls="panel-chart/bars-2" aria-selected="false">Monochrome</a>
@@ -759,7 +759,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/bars-code"><a class="heading-permalink" href="#chart%2fbars-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">chartStory</span><span class="syn-operator">(</span>kind <span class="syn-builtin">string</span><span class="syn-operator">,</span> e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 	step <span class="syn-operator">:=</span> <span class="syn-number">0</span>
@@ -921,9 +921,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/heatmap">
-<p class="eyebrow">Atoms / chart</p><h3>Heatmap</h3><p>Real ntcharts Heatmap rendering with semantic styling and deterministic fixture data.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fheatmap" aria-label="Link to Heatmap component"><span>Heatmap</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Real ntcharts Heatmap rendering with semantic styling and deterministic fixture data.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/heatmap-preview"><a class="heading-permalink" href="#chart%2fheatmap-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Heatmap variants">
 <a id="tab-chart/heatmap-0" href="#panel-chart%2fheatmap-0" role="tab" aria-controls="panel-chart/heatmap-0" aria-selected="true">Default</a><a id="tab-chart/heatmap-1" href="#panel-chart%2fheatmap-1" role="tab" aria-controls="panel-chart/heatmap-1" aria-selected="false">Narrow</a><a id="tab-chart/heatmap-2" href="#panel-chart%2fheatmap-2" role="tab" aria-controls="panel-chart/heatmap-2" aria-selected="false">Monochrome</a>
@@ -982,7 +982,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/heatmap-code"><a class="heading-permalink" href="#chart%2fheatmap-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">chartStory</span><span class="syn-operator">(</span>kind <span class="syn-builtin">string</span><span class="syn-operator">,</span> e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 	step <span class="syn-operator">:=</span> <span class="syn-number">0</span>
@@ -1144,9 +1144,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/stream">
-<p class="eyebrow">Atoms / chart</p><h3>Streamline</h3><p>Real ntcharts Streamline rendering with semantic styling and deterministic fixture data.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fstream" aria-label="Link to Streamline component"><span>Streamline</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Real ntcharts Streamline rendering with semantic styling and deterministic fixture data.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/stream-preview"><a class="heading-permalink" href="#chart%2fstream-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Streamline variants">
 <a id="tab-chart/stream-0" href="#panel-chart%2fstream-0" role="tab" aria-controls="panel-chart/stream-0" aria-selected="true">Default</a><a id="tab-chart/stream-1" href="#panel-chart%2fstream-1" role="tab" aria-controls="panel-chart/stream-1" aria-selected="false">Narrow</a><a id="tab-chart/stream-2" href="#panel-chart%2fstream-2" role="tab" aria-controls="panel-chart/stream-2" aria-selected="false">Monochrome</a>
@@ -1205,7 +1205,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/stream-code"><a class="heading-permalink" href="#chart%2fstream-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">chartStory</span><span class="syn-operator">(</span>kind <span class="syn-builtin">string</span><span class="syn-operator">,</span> e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 	step <span class="syn-operator">:=</span> <span class="syn-number">0</span>
@@ -1367,9 +1367,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/wave">
-<p class="eyebrow">Atoms / chart</p><h3>Waveline</h3><p>Real ntcharts Waveline rendering with semantic styling and deterministic fixture data.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fwave" aria-label="Link to Waveline component"><span>Waveline</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Real ntcharts Waveline rendering with semantic styling and deterministic fixture data.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/wave-preview"><a class="heading-permalink" href="#chart%2fwave-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Waveline variants">
 <a id="tab-chart/wave-0" href="#panel-chart%2fwave-0" role="tab" aria-controls="panel-chart/wave-0" aria-selected="true">Default</a><a id="tab-chart/wave-1" href="#panel-chart%2fwave-1" role="tab" aria-controls="panel-chart/wave-1" aria-selected="false">Narrow</a><a id="tab-chart/wave-2" href="#panel-chart%2fwave-2" role="tab" aria-controls="panel-chart/wave-2" aria-selected="false">Monochrome</a>
@@ -1428,7 +1428,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/wave-code"><a class="heading-permalink" href="#chart%2fwave-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">chartStory</span><span class="syn-operator">(</span>kind <span class="syn-builtin">string</span><span class="syn-operator">,</span> e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 	step <span class="syn-operator">:=</span> <span class="syn-number">0</span>
@@ -1590,9 +1590,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/ohlc">
-<p class="eyebrow">Atoms / chart</p><h3>OHLC candles</h3><p>Real ntcharts OHLC candles rendering with semantic styling and deterministic fixture data.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fohlc" aria-label="Link to OHLC candles component"><span>OHLC candles</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Real ntcharts OHLC candles rendering with semantic styling and deterministic fixture data.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/ohlc-preview"><a class="heading-permalink" href="#chart%2fohlc-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="OHLC candles variants">
 <a id="tab-chart/ohlc-0" href="#panel-chart%2fohlc-0" role="tab" aria-controls="panel-chart/ohlc-0" aria-selected="true">Default</a><a id="tab-chart/ohlc-1" href="#panel-chart%2fohlc-1" role="tab" aria-controls="panel-chart/ohlc-1" aria-selected="false">Narrow</a><a id="tab-chart/ohlc-2" href="#panel-chart%2fohlc-2" role="tab" aria-controls="panel-chart/ohlc-2" aria-selected="false">Monochrome</a>
@@ -1651,7 +1651,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/ohlc-code"><a class="heading-permalink" href="#chart%2fohlc-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">chartStory</span><span class="syn-operator">(</span>kind <span class="syn-builtin">string</span><span class="syn-operator">,</span> e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 	step <span class="syn-operator">:=</span> <span class="syn-number">0</span>
@@ -1813,9 +1813,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/canvas">
-<p class="eyebrow">Atoms / chart</p><h3>Canvas</h3><p>Real ntcharts Canvas rendering with semantic styling and deterministic fixture data.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fcanvas" aria-label="Link to Canvas component"><span>Canvas</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Real ntcharts Canvas rendering with semantic styling and deterministic fixture data.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/canvas-preview"><a class="heading-permalink" href="#chart%2fcanvas-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Canvas variants">
 <a id="tab-chart/canvas-0" href="#panel-chart%2fcanvas-0" role="tab" aria-controls="panel-chart/canvas-0" aria-selected="true">Default</a><a id="tab-chart/canvas-1" href="#panel-chart%2fcanvas-1" role="tab" aria-controls="panel-chart/canvas-1" aria-selected="false">Narrow</a><a id="tab-chart/canvas-2" href="#panel-chart%2fcanvas-2" role="tab" aria-controls="panel-chart/canvas-2" aria-selected="false">Monochrome</a>
@@ -1874,7 +1874,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/canvas-code"><a class="heading-permalink" href="#chart%2fcanvas-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms_charts.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">chartStory</span><span class="syn-operator">(</span>kind <span class="syn-builtin">string</span><span class="syn-operator">,</span> e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 	step <span class="syn-operator">:=</span> <span class="syn-number">0</span>
@@ -2036,9 +2036,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/interval-band">
-<p class="eyebrow">Atoms / chart</p><h3>Interval band</h3><p>Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.</p>
+<p class="eyebrow">Atoms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2finterval-band" aria-label="Link to Interval band component"><span>Interval band</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/interval-band-preview"><a class="heading-permalink" href="#chart%2finterval-band-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Interval band variants">
 <a id="tab-chart/interval-band-0" href="#panel-chart%2finterval-band-0" role="tab" aria-controls="panel-chart/interval-band-0" aria-selected="true">Default</a><a id="tab-chart/interval-band-1" href="#panel-chart%2finterval-band-1" role="tab" aria-controls="panel-chart/interval-band-1" aria-selected="false">Narrow</a><a id="tab-chart/interval-band-2" href="#panel-chart%2finterval-band-2" role="tab" aria-controls="panel-chart/interval-band-2" aria-selected="false">Monochrome</a><a id="tab-chart/interval-band-3" href="#panel-chart%2finterval-band-3" role="tab" aria-controls="panel-chart/interval-band-3" aria-selected="false">With legend</a>
@@ -2069,7 +2069,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/chart/band.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/interval-band-code"><a class="heading-permalink" href="#chart%2finterval-band-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/chart/band.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// IntervalBand is a one-row ntcharts canvas primitive. Density encodes nested</span>
 <span class="syn-comment">// intervals independently of color; a selected observation gets a distinct mark.</span>
 <span class="syn-comment">// Invalid geometry produces an explicit fallback instead of a misleading band.</span>
@@ -2124,9 +2124,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/band-matrix">
-<p class="eyebrow">Molecules / chart</p><h3>Band matrix</h3><p>Directly labeled, disconnected distribution rows composed in a rectangular frame.</p>
+<p class="eyebrow">Molecules / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fband-matrix" aria-label="Link to Band matrix component"><span>Band matrix</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Directly labeled, disconnected distribution rows composed in a rectangular frame.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/band-matrix-preview"><a class="heading-permalink" href="#chart%2fband-matrix-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Band matrix variants">
 <a id="tab-chart/band-matrix-0" href="#panel-chart%2fband-matrix-0" role="tab" aria-controls="panel-chart/band-matrix-0" aria-selected="true">Default</a><a id="tab-chart/band-matrix-1" href="#panel-chart%2fband-matrix-1" role="tab" aria-controls="panel-chart/band-matrix-1" aria-selected="false">Narrow</a><a id="tab-chart/band-matrix-2" href="#panel-chart%2fband-matrix-2" role="tab" aria-controls="panel-chart/band-matrix-2" aria-selected="false">Monochrome</a>
@@ -2214,7 +2214,7 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/chart/comparison.go">Fixture source</a> · <a href="">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/band-matrix-code"><a class="heading-permalink" href="#chart%2fband-matrix-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/chart/comparison.go">Fixture source</a> · <a href="">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">package</span> chart
 
 <span class="syn-keyword">import</span> <span class="syn-operator">(</span>
@@ -2381,9 +2381,9 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 </section>
 
 <section class="component" id="chart/metric">
-<p class="eyebrow">Molecules / chart</p><h3>Metric trend</h3><p>A metric value, unit and sparkline share one bounded allocation.</p>
+<p class="eyebrow">Molecules / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fmetric" aria-label="Link to Metric trend component"><span>Metric trend</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A metric value, unit and sparkline share one bounded allocation.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/metric-preview"><a class="heading-permalink" href="#chart%2fmetric-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Metric trend variants">
 <a id="tab-chart/metric-0" href="#panel-chart%2fmetric-0" role="tab" aria-controls="panel-chart/metric-0" aria-selected="true">Default</a><a id="tab-chart/metric-1" href="#panel-chart%2fmetric-1" role="tab" aria-controls="panel-chart/metric-1" aria-selected="false">Narrow</a><a id="tab-chart/metric-2" href="#panel-chart%2fmetric-2" role="tab" aria-controls="panel-chart/metric-2" aria-selected="false">Monochrome</a>
@@ -2415,7 +2415,7 @@ latest 82.4</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/metric-code"><a class="heading-permalink" href="#chart%2fmetric-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">metricStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	<span class="syn-keyword">return</span> <span class="syn-function">static</span><span class="syn-operator">(</span><span class="syn-keyword">func</span><span class="syn-operator">(</span>size layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
 		<span class="syn-keyword">return</span> chart<span class="syn-operator">.</span><span class="syn-function">MetricTrend</span><span class="syn-operator">(</span><span class="syn-string">&#34;Throughput&#34;</span><span class="syn-operator">,</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;%.0f&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Amount<span class="syn-operator">*</span><span class="syn-number">20</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-string">&#34;req/min&#34;</span><span class="syn-operator">,</span> <span class="syn-function">sampleValues</span><span class="syn-operator">(</span><span class="syn-number">48</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Amount<span class="syn-operator">)</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> size<span class="syn-operator">.</span>Width<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-builtin">min</span><span class="syn-operator">(</span>size<span class="syn-operator">.</span>Height<span class="syn-operator">,</span> <span class="syn-number">8</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
@@ -2426,9 +2426,9 @@ latest 82.4</pre></figure>
 </section>
 
 <section class="component" id="chart/panel">
-<p class="eyebrow">Molecules / chart</p><h3>Chart panel</h3><p>A chart and title compose into a reusable region with an optional color-matched legend.</p>
+<p class="eyebrow">Molecules / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fpanel" aria-label="Link to Chart panel component"><span>Chart panel</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A chart and title compose into a reusable region with an optional color-matched legend.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/panel-preview"><a class="heading-permalink" href="#chart%2fpanel-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Chart panel variants">
 <a id="tab-chart/panel-0" href="#panel-chart%2fpanel-0" role="tab" aria-controls="panel-chart/panel-0" aria-selected="true">Default</a><a id="tab-chart/panel-1" href="#panel-chart%2fpanel-1" role="tab" aria-controls="panel-chart/panel-1" aria-selected="false">Narrow</a><a id="tab-chart/panel-2" href="#panel-chart%2fpanel-2" role="tab" aria-controls="panel-chart/panel-2" aria-selected="false">Monochrome</a><a id="tab-chart/panel-3" href="#panel-chart%2fpanel-3" role="tab" aria-controls="panel-chart/panel-3" aria-selected="false">With legend</a>
@@ -2547,7 +2547,7 @@ latest 82.4</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/panel-code"><a class="heading-permalink" href="#chart%2fpanel-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">panelStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	data <span class="syn-operator">:=</span> <span class="syn-function">sampleSeries</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Series<span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Amount<span class="syn-operator">)</span>
 	plot <span class="syn-operator">:=</span> chart<span class="syn-operator">.</span><span class="syn-function">NewTimeSeries</span><span class="syn-operator">(</span>data<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Size</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
@@ -2562,9 +2562,9 @@ latest 82.4</pre></figure>
 </section>
 
 <section class="component" id="chart/distributions">
-<p class="eyebrow">Molecules / chart</p><h3>Cohort distributions</h3><p>Mean/spread labels, shared-axis interval bands and optional boundary markers compose into a reusable distribution comparison.</p>
+<p class="eyebrow">Molecules / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fdistributions" aria-label="Link to Cohort distributions component"><span>Cohort distributions</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Mean/spread labels, shared-axis interval bands and optional boundary markers compose into a reusable distribution comparison.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/distributions-preview"><a class="heading-permalink" href="#chart%2fdistributions-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Cohort distributions variants">
 <a id="tab-chart/distributions-0" href="#panel-chart%2fdistributions-0" role="tab" aria-controls="panel-chart/distributions-0" aria-selected="true">Default</a><a id="tab-chart/distributions-1" href="#panel-chart%2fdistributions-1" role="tab" aria-controls="panel-chart/distributions-1" aria-selected="false">Narrow</a><a id="tab-chart/distributions-2" href="#panel-chart%2fdistributions-2" role="tab" aria-controls="panel-chart/distributions-2" aria-selected="false">Monochrome</a><a id="tab-chart/distributions-3" href="#panel-chart%2fdistributions-3" role="tab" aria-controls="panel-chart/distributions-3" aria-selected="false">With legend</a><a id="tab-chart/distributions-4" href="#panel-chart%2fdistributions-4" role="tab" aria-controls="panel-chart/distributions-4" aria-selected="false">No boundaries</a>
@@ -2614,7 +2614,7 @@ C mean 30.000% s=8.000pp n=32
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/chart/comparison.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/distributions-code"><a class="heading-permalink" href="#chart%2fdistributions-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/chart/comparison.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">package</span> chart
 
 <span class="syn-keyword">import</span> <span class="syn-operator">(</span>
@@ -2781,9 +2781,9 @@ C mean 30.000% s=8.000pp n=32
 </section>
 
 <section class="component" id="chart/delta">
-<p class="eyebrow">Molecules / chart</p><h3>Merged delta property</h3><p>A single zero-centred bar cancels the shared reference/candidate amount and emphasizes the signed percentage-point difference.</p>
+<p class="eyebrow">Molecules / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fdelta" aria-label="Link to Merged delta property component"><span>Merged delta property</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A single zero-centred bar cancels the shared reference/candidate amount and emphasizes the signed percentage-point difference.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/delta-preview"><a class="heading-permalink" href="#chart%2fdelta-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Merged delta property variants">
 <a id="tab-chart/delta-0" href="#panel-chart%2fdelta-0" role="tab" aria-controls="panel-chart/delta-0" aria-selected="true">Default</a><a id="tab-chart/delta-1" href="#panel-chart%2fdelta-1" role="tab" aria-controls="panel-chart/delta-1" aria-selected="false">Narrow</a><a id="tab-chart/delta-2" href="#panel-chart%2fdelta-2" role="tab" aria-controls="panel-chart/delta-2" aria-selected="false">Monochrome</a>
@@ -2804,7 +2804,7 @@ C mean 30.000% s=8.000pp n=32
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/chart/delta.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/delta-code"><a class="heading-permalink" href="#chart%2fdelta-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/chart/delta.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">package</span> chart
 
 <span class="syn-keyword">import</span> <span class="syn-operator">(</span>
@@ -2865,9 +2865,9 @@ C mean 30.000% s=8.000pp n=32
 </section>
 
 <section class="component" id="chart/comparison-panel">
-<p class="eyebrow">Organisms / chart</p><h3>Comparison panel</h3><p>A distribution comparison and native time-series history compose one reusable metric panel.</p>
+<p class="eyebrow">Organisms / <a href="#family-chart">chart</a></p><h3><a class="heading-permalink" href="#chart%2fcomparison-panel" aria-label="Link to Comparison panel component"><span>Comparison panel</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A distribution comparison and native time-series history compose one reusable metric panel.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/comparison-panel-preview"><a class="heading-permalink" href="#chart%2fcomparison-panel-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Comparison panel variants">
 <a id="tab-chart/comparison-panel-0" href="#panel-chart%2fcomparison-panel-0" role="tab" aria-controls="panel-chart/comparison-panel-0" aria-selected="true">Default</a><a id="tab-chart/comparison-panel-1" href="#panel-chart%2fcomparison-panel-1" role="tab" aria-controls="panel-chart/comparison-panel-1" aria-selected="false">Narrow</a><a id="tab-chart/comparison-panel-2" href="#panel-chart%2fcomparison-panel-2" role="tab" aria-controls="panel-chart/comparison-panel-2" aria-selected="false">Monochrome</a>
@@ -2955,56 +2955,36 @@ C mean 30.000% s=8.000pp n=32
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/docs/examples/comparison-panel/main.go">Runnable example</a> · <a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">package</span> main
-
-<span class="syn-keyword">import</span> <span class="syn-operator">(</span>
-	<span class="syn-string">&#34;fmt&#34;</span>
-	<span class="syn-string">&#34;time&#34;</span>
-
-	<span class="syn-string">&#34;github.com/NimbleMarkets/ntcharts/v2/linechart/timeserieslinechart&#34;</span>
-	<span class="syn-string">&#34;github.com/lanej/charmed/chart&#34;</span>
-	<span class="syn-string">&#34;github.com/lanej/charmed/layout&#34;</span>
-	<span class="syn-string">&#34;github.com/lanej/charmed/theme&#34;</span>
-<span class="syn-operator">)</span>
-
-<span class="syn-keyword">func</span> <span class="syn-function">main</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
-	palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
-	at <span class="syn-operator">:=</span> time<span class="syn-operator">.</span><span class="syn-function">Unix</span><span class="syn-operator">(</span><span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">UTC</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
-	history <span class="syn-operator">:=</span> chart<span class="syn-operator">.</span><span class="syn-function">NewTimeSeries</span><span class="syn-operator">(</span><span class="syn-operator">[</span><span class="syn-operator">]</span>chart<span class="syn-operator">.</span>TimeSeriesData<span class="syn-operator">{</span>
-		<span class="syn-operator">{</span>ID<span class="syn-operator">:</span> <span class="syn-string">&#34;baseline&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Baseline&#34;</span><span class="syn-operator">,</span> Points<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>timeserieslinechart<span class="syn-operator">.</span>TimePoint<span class="syn-operator">{</span>
-			<span class="syn-operator">{</span>Time<span class="syn-operator">:</span> at<span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-number">20</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span>Time<span class="syn-operator">:</span> at<span class="syn-operator">.</span><span class="syn-function">Add</span><span class="syn-operator">(</span>time<span class="syn-operator">.</span>Hour<span class="syn-operator">)</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-number">21</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
-		<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
-		<span class="syn-operator">{</span>ID<span class="syn-operator">:</span> <span class="syn-string">&#34;candidate&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Candidate&#34;</span><span class="syn-operator">,</span> Points<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>timeserieslinechart<span class="syn-operator">.</span>TimePoint<span class="syn-operator">{</span>
-			<span class="syn-operator">{</span>Time<span class="syn-operator">:</span> at<span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-number">28</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span>Time<span class="syn-operator">:</span> at<span class="syn-operator">.</span><span class="syn-function">Add</span><span class="syn-operator">(</span>time<span class="syn-operator">.</span>Hour<span class="syn-operator">)</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-number">31</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
-		<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
-	<span class="syn-operator">}</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> <span class="syn-number">58</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">11</span><span class="syn-operator">}</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
-
-	panel <span class="syn-operator">:=</span> chart<span class="syn-operator">.</span>ComparisonPanel<span class="syn-operator">{</span>
-		Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Response share&#34;</span><span class="syn-operator">,</span>
-		Distribution<span class="syn-operator">:</span> chart<span class="syn-operator">.</span>DistributionComparison<span class="syn-operator">{</span>Sigma<span class="syn-operator">:</span> <span class="syn-number">2</span><span class="syn-operator">,</span> Min<span class="syn-operator">:</span> <span class="syn-number">0</span><span class="syn-operator">,</span> Max<span class="syn-operator">:</span> <span class="syn-number">100</span><span class="syn-operator">,</span> Unit<span class="syn-operator">:</span> <span class="syn-string">&#34;%&#34;</span><span class="syn-operator">,</span>
-			Series<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>chart<span class="syn-operator">.</span>DistributionSeries<span class="syn-operator">{</span>
-				<span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Baseline&#34;</span><span class="syn-operator">,</span> Mean<span class="syn-operator">:</span> <span class="syn-number">20</span><span class="syn-operator">,</span> StdDev<span class="syn-operator">:</span> <span class="syn-number">3</span><span class="syn-operator">,</span> Members<span class="syn-operator">:</span> <span class="syn-number">64</span><span class="syn-operator">,</span> HasSpread<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
-				<span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Candidate&#34;</span><span class="syn-operator">,</span> Mean<span class="syn-operator">:</span> <span class="syn-number">30</span><span class="syn-operator">,</span> StdDev<span class="syn-operator">:</span> <span class="syn-number">8</span><span class="syn-operator">,</span> Members<span class="syn-operator">:</span> <span class="syn-number">32</span><span class="syn-operator">,</span> HasSpread<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
-			<span class="syn-operator">}</span><span class="syn-operator">,</span>
-		<span class="syn-operator">}</span><span class="syn-operator">,</span>
-		History<span class="syn-operator">:</span> history<span class="syn-operator">,</span>
-	<span class="syn-operator">}</span>
-	<span class="syn-comment">// Distribution and history use the same theme series colors.</span>
-	fmt<span class="syn-operator">.</span><span class="syn-function">Println</span><span class="syn-operator">(</span>panel<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> <span class="syn-number">64</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">24</span><span class="syn-operator">}</span><span class="syn-operator">,</span> palette<span class="syn-operator">,</span> <span class="syn-builtin">false</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+<div class="component-subheading"><h4 id="chart/comparison-panel-code"><a class="heading-permalink" href="#chart%2fcomparison-panel-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/comparison-panel.go.txt">Usage snippet</a> · <a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+distribution <span class="syn-operator">:=</span> chart<span class="syn-operator">.</span>DistributionComparison<span class="syn-operator">{</span>
+    Sigma<span class="syn-operator">:</span> <span class="syn-number">2</span><span class="syn-operator">,</span>
+    Min<span class="syn-operator">:</span> <span class="syn-number">0</span><span class="syn-operator">,</span> Max<span class="syn-operator">:</span> <span class="syn-number">100</span><span class="syn-operator">,</span> Unit<span class="syn-operator">:</span> <span class="syn-string">&#34;%&#34;</span><span class="syn-operator">,</span>
+    Series<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>chart<span class="syn-operator">.</span>DistributionSeries<span class="syn-operator">{</span>
+        <span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Baseline&#34;</span><span class="syn-operator">,</span> Mean<span class="syn-operator">:</span> <span class="syn-number">20</span><span class="syn-operator">,</span> StdDev<span class="syn-operator">:</span> <span class="syn-number">3</span><span class="syn-operator">,</span> Members<span class="syn-operator">:</span> <span class="syn-number">64</span><span class="syn-operator">,</span> HasSpread<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+        <span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Candidate&#34;</span><span class="syn-operator">,</span> Mean<span class="syn-operator">:</span> <span class="syn-number">30</span><span class="syn-operator">,</span> StdDev<span class="syn-operator">:</span> <span class="syn-number">8</span><span class="syn-operator">,</span> Members<span class="syn-operator">:</span> <span class="syn-number">32</span><span class="syn-operator">,</span> HasSpread<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+    <span class="syn-operator">}</span><span class="syn-operator">,</span>
 <span class="syn-operator">}</span>
+
+<span class="syn-comment">// history is an existing chart.TimeSeries built from your observations.</span>
+panel <span class="syn-operator">:=</span> chart<span class="syn-operator">.</span>ComparisonPanel<span class="syn-operator">{</span>
+    Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Response share&#34;</span><span class="syn-operator">,</span>
+    Distribution<span class="syn-operator">:</span> distribution<span class="syn-operator">,</span>
+    History<span class="syn-operator">:</span> history<span class="syn-operator">,</span>
+<span class="syn-operator">}</span>
+view <span class="syn-operator">:=</span> panel<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> <span class="syn-number">64</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">24</span><span class="syn-operator">}</span><span class="syn-operator">,</span> palette<span class="syn-operator">,</span> <span class="syn-builtin">false</span><span class="syn-operator">)</span>
 </code></pre>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#chart/distributions">chart/distributions</a> <a class="dependency" href="components.html#chart/timeseries">chart/timeseries</a> <a class="dependency" href="foundations.html#foundations/layout">foundations/layout</a> </p>
 </section>
 </section>
-<section class="component-family" id="family-collection"><h2>collection</h2>
+<section class="component-family" id="family-collection"><h2><a class="heading-permalink" href="#family-collection" aria-label="Link to collection section"><span>collection</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="collection/viewport">
-<p class="eyebrow">Atoms / collection</p><h3>Viewport</h3><p>A scrollable content region with its own dimensions.</p>
+<p class="eyebrow">Atoms / <a href="#family-collection">collection</a></p><h3><a class="heading-permalink" href="#collection%2fviewport" aria-label="Link to Viewport component"><span>Viewport</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A scrollable content region with its own dimensions.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="collection/viewport-preview"><a class="heading-permalink" href="#collection%2fviewport-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Viewport variants">
 <a id="tab-collection/viewport-0" href="#panel-collection%2fviewport-0" role="tab" aria-controls="panel-collection/viewport-0" aria-selected="true">Default</a><a id="tab-collection/viewport-1" href="#panel-collection%2fviewport-1" role="tab" aria-controls="panel-collection/viewport-1" aria-selected="false">Narrow</a><a id="tab-collection/viewport-2" href="#panel-collection%2fviewport-2" role="tab" aria-controls="panel-collection/viewport-2" aria-selected="false">Monochrome</a>
@@ -3086,7 +3066,7 @@ C mean 30.000% s=8.000pp n=32
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="collection/viewport-code"><a class="heading-permalink" href="#collection%2fviewport-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">viewportStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	<span class="syn-keyword">var</span> lines <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">string</span>
 	<span class="syn-keyword">for</span> i <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> <span class="syn-number">80</span> <span class="syn-operator">{</span>
@@ -3100,9 +3080,9 @@ C mean 30.000% s=8.000pp n=32
 </section>
 
 <section class="component" id="collection/table">
-<p class="eyebrow">Organisms / collection</p><h3>Table</h3><p>Native row navigation with themed headers, cells and selection.</p>
+<p class="eyebrow">Organisms / <a href="#family-collection">collection</a></p><h3><a class="heading-permalink" href="#collection%2ftable" aria-label="Link to Table component"><span>Table</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Native row navigation with themed headers, cells and selection.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="collection/table-preview"><a class="heading-permalink" href="#collection%2ftable-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Table variants">
 <a id="tab-collection/table-0" href="#panel-collection%2ftable-0" role="tab" aria-controls="panel-collection/table-0" aria-selected="true">Default</a><a id="tab-collection/table-1" href="#panel-collection%2ftable-1" role="tab" aria-controls="panel-collection/table-1" aria-selected="false">Narrow</a><a id="tab-collection/table-2" href="#panel-collection%2ftable-2" role="tab" aria-controls="panel-collection/table-2" aria-selected="false">Monochrome</a>
@@ -3187,7 +3167,7 @@ Up / down selects a row</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="collection/table-code"><a class="heading-permalink" href="#collection%2ftable-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">tableStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	rows <span class="syn-operator">:=</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>table<span class="syn-operator">.</span>Row<span class="syn-operator">{</span><span class="syn-operator">{</span><span class="syn-string">&#34;API gateway&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Healthy&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;1,240&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span><span class="syn-string">&#34;Event stream&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Healthy&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;860&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span><span class="syn-string">&#34;Job workers&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Degraded&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;420&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span><span class="syn-string">&#34;Storage&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Healthy&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;640&#34;</span><span class="syn-operator">}</span><span class="syn-operator">}</span>
 	<span class="syn-keyword">if</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>State <span class="syn-operator">==</span> <span class="syn-string">&#34;empty&#34;</span> <span class="syn-operator">{</span>
@@ -3213,9 +3193,9 @@ Up / down selects a row</pre></figure>
 </section>
 
 <section class="component" id="collection/list">
-<p class="eyebrow">Organisms / collection</p><h3>List</h3><p>A native list with filtering, pagination and selection.</p>
+<p class="eyebrow">Organisms / <a href="#family-collection">collection</a></p><h3><a class="heading-permalink" href="#collection%2flist" aria-label="Link to List component"><span>List</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A native list with filtering, pagination and selection.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="collection/list-preview"><a class="heading-permalink" href="#collection%2flist-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="List variants">
 <a id="tab-collection/list-0" href="#panel-collection%2flist-0" role="tab" aria-controls="panel-collection/list-0" aria-selected="true">Default</a><a id="tab-collection/list-1" href="#panel-collection%2flist-1" role="tab" aria-controls="panel-collection/list-1" aria-selected="false">Narrow</a><a id="tab-collection/list-2" href="#panel-collection%2flist-2" role="tab" aria-controls="panel-collection/list-2" aria-selected="false">Monochrome</a>
@@ -3303,7 +3283,7 @@ Disposable review environment
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="collection/list-code"><a class="heading-permalink" href="#collection%2flist-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">listStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	items <span class="syn-operator">:=</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>list<span class="syn-operator">.</span>Item<span class="syn-operator">{</span>fixtureItem<span class="syn-operator">{</span><span class="syn-string">&#34;Production&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Primary service environment&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span> fixtureItem<span class="syn-operator">{</span><span class="syn-string">&#34;Staging&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Integration environment&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span> fixtureItem<span class="syn-operator">{</span><span class="syn-string">&#34;Preview&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Disposable review environment&#34;</span><span class="syn-operator">}</span><span class="syn-operator">}</span>
 	m <span class="syn-operator">:=</span> collection<span class="syn-operator">.</span><span class="syn-function">NewList</span><span class="syn-operator">(</span>items<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Rows<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
@@ -3315,9 +3295,9 @@ Disposable review environment
 </section>
 
 <section class="component" id="collection/tree">
-<p class="eyebrow">Organisms / collection</p><h3>Tree</h3><p>Expand and collapse nested data without losing native tree capabilities.</p>
+<p class="eyebrow">Organisms / <a href="#family-collection">collection</a></p><h3><a class="heading-permalink" href="#collection%2ftree" aria-label="Link to Tree component"><span>Tree</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Expand and collapse nested data without losing native tree capabilities.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="collection/tree-preview"><a class="heading-permalink" href="#collection%2ftree-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Tree variants">
 <a id="tab-collection/tree-0" href="#panel-collection%2ftree-0" role="tab" aria-controls="panel-collection/tree-0" aria-selected="true">Default</a><a id="tab-collection/tree-1" href="#panel-collection%2ftree-1" role="tab" aria-controls="panel-collection/tree-1" aria-selected="false">Narrow</a><a id="tab-collection/tree-2" href="#panel-collection%2ftree-2" role="tab" aria-controls="panel-collection/tree-2" aria-selected="false">Monochrome</a>
@@ -3405,7 +3385,7 @@ v/j down * ^/k up * ? toggle * ? more</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="collection/tree-code"><a class="heading-permalink" href="#collection%2ftree-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">treeStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	root <span class="syn-operator">:=</span> tree<span class="syn-operator">.</span><span class="syn-function">Root</span><span class="syn-operator">(</span><span class="syn-string">&#34;charmed&#34;</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Child</span><span class="syn-operator">(</span>tree<span class="syn-operator">.</span><span class="syn-function">Root</span><span class="syn-operator">(</span><span class="syn-string">&#34;components&#34;</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Child</span><span class="syn-operator">(</span><span class="syn-string">&#34;input&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;collection&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;chart&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> tree<span class="syn-operator">.</span><span class="syn-function">Root</span><span class="syn-operator">(</span><span class="syn-string">&#34;workbench&#34;</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Child</span><span class="syn-operator">(</span><span class="syn-string">&#34;native&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;browser&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;MDX&#34;</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	m <span class="syn-operator">:=</span> collection<span class="syn-operator">.</span><span class="syn-function">NewTree</span><span class="syn-operator">(</span>root<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Rows<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
@@ -3416,9 +3396,9 @@ v/j down * ^/k up * ? toggle * ? more</pre></figure>
 </section>
 
 <section class="component" id="collection/files">
-<p class="eyebrow">Organisms / collection</p><h3>File picker</h3><p>A file picker confined to a disposable fixture directory.</p>
+<p class="eyebrow">Organisms / <a href="#family-collection">collection</a></p><h3><a class="heading-permalink" href="#collection%2ffiles" aria-label="Link to File picker component"><span>File picker</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A file picker confined to a disposable fixture directory.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="collection/files-preview"><a class="heading-permalink" href="#collection%2ffiles-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="File picker variants">
 <a id="tab-collection/files-0" href="#panel-collection%2ffiles-0" role="tab" aria-controls="panel-collection/files-0" aria-selected="true">Default</a><a id="tab-collection/files-1" href="#panel-collection%2ffiles-1" role="tab" aria-controls="panel-collection/files-1" aria-selected="false">Narrow</a><a id="tab-collection/files-2" href="#panel-collection%2ffiles-2" role="tab" aria-controls="panel-collection/files-2" aria-selected="false">Monochrome</a>
@@ -3503,7 +3483,7 @@ Arrows browse / Enter selects / fixture directory only</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="collection/files-code"><a class="heading-permalink" href="#collection%2ffiles-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">fileStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	root <span class="syn-operator">:=</span> os<span class="syn-operator">.</span><span class="syn-function">Getenv</span><span class="syn-operator">(</span><span class="syn-string">&#34;CHARMED_FIXTURE_DIR&#34;</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">var</span> err <span class="syn-builtin">error</span>
@@ -3550,9 +3530,9 @@ Arrows browse / Enter selects / fixture directory only</pre></figure>
 </section>
 
 <section class="component" id="collection/logs">
-<p class="eyebrow">Organisms / collection</p><h3>Log viewer</h3><p>Structured Charm Log entries in a bounded, scrollable viewport.</p>
+<p class="eyebrow">Organisms / <a href="#family-collection">collection</a></p><h3><a class="heading-permalink" href="#collection%2flogs" aria-label="Link to Log viewer component"><span>Log viewer</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Structured Charm Log entries in a bounded, scrollable viewport.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="collection/logs-preview"><a class="heading-permalink" href="#collection%2flogs-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Log viewer variants">
 <a id="tab-collection/logs-0" href="#panel-collection%2flogs-0" role="tab" aria-controls="panel-collection/logs-0" aria-selected="true">Default</a><a id="tab-collection/logs-1" href="#panel-collection%2flogs-1" role="tab" aria-controls="panel-collection/logs-1" aria-selected="false">Narrow</a><a id="tab-collection/logs-2" href="#panel-collection%2flogs-2" role="tab" aria-controls="panel-collection/logs-2" aria-selected="false">Monochrome</a>
@@ -3640,7 +3620,7 @@ Arrows scroll / Ctrl+N appends a deterministic log entry</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/log">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="collection/logs-code"><a class="heading-permalink" href="#collection%2flogs-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/log">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">logStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	m <span class="syn-operator">:=</span> collection<span class="syn-operator">.</span><span class="syn-function">NewLogViewer</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Rows<span class="syn-operator">-</span><span class="syn-number">4</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	step <span class="syn-operator">:=</span> <span class="syn-number">0</span>
@@ -3671,13 +3651,13 @@ Arrows scroll / Ctrl+N appends a deterministic log entry</pre></figure>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#collection/viewport">collection/viewport</a> </p>
 </section>
 </section>
-<section class="component-family" id="family-feedback"><h2>feedback</h2>
+<section class="component-family" id="family-feedback"><h2><a class="heading-permalink" href="#family-feedback" aria-label="Link to feedback section"><span>feedback</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="feedback/spinner">
-<p class="eyebrow">Atoms / feedback</p><h3>Spinner</h3><p>Native spinner; motion can run live or stay paused for evidence.</p>
+<p class="eyebrow">Atoms / <a href="#family-feedback">feedback</a></p><h3><a class="heading-permalink" href="#feedback%2fspinner" aria-label="Link to Spinner component"><span>Spinner</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Native spinner; motion can run live or stay paused for evidence.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="feedback/spinner-preview"><a class="heading-permalink" href="#feedback%2fspinner-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Spinner variants">
 <a id="tab-feedback/spinner-0" href="#panel-feedback%2fspinner-0" role="tab" aria-controls="panel-feedback/spinner-0" aria-selected="true">Default</a><a id="tab-feedback/spinner-1" href="#panel-feedback%2fspinner-1" role="tab" aria-controls="panel-feedback/spinner-1" aria-selected="false">Narrow</a><a id="tab-feedback/spinner-2" href="#panel-feedback%2fspinner-2" role="tab" aria-controls="panel-feedback/spinner-2" aria-selected="false">Monochrome</a>
@@ -3704,7 +3684,7 @@ Live runs the native clock / Ctrl+N advances a frame</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="feedback/spinner-code"><a class="heading-permalink" href="#feedback%2fspinner-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">spinnerStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	m <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewSpinner</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>init<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span><span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
@@ -3731,9 +3711,9 @@ Live runs the native clock / Ctrl+N advances a frame</pre></figure>
 </section>
 
 <section class="component" id="feedback/progress">
-<p class="eyebrow">Atoms / feedback</p><h3>Progress</h3><p>A themed progress meter with a textual percentage.</p>
+<p class="eyebrow">Atoms / <a href="#family-feedback">feedback</a></p><h3><a class="heading-permalink" href="#feedback%2fprogress" aria-label="Link to Progress component"><span>Progress</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A themed progress meter with a textual percentage.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="feedback/progress-preview"><a class="heading-permalink" href="#feedback%2fprogress-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Progress variants">
 <a id="tab-feedback/progress-0" href="#panel-feedback%2fprogress-0" role="tab" aria-controls="panel-feedback/progress-0" aria-selected="true">Default</a><a id="tab-feedback/progress-1" href="#panel-feedback%2fprogress-1" role="tab" aria-controls="panel-feedback/progress-1" aria-selected="false">Narrow</a><a id="tab-feedback/progress-2" href="#panel-feedback%2fprogress-2" role="tab" aria-controls="panel-feedback/progress-2" aria-selected="false">Monochrome</a>
@@ -3760,7 +3740,7 @@ Ctrl+N advances by five percent.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="feedback/progress-code"><a class="heading-permalink" href="#feedback%2fprogress-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">progressStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	amount <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Amount
 	m <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewProgress</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns<span class="syn-operator">-</span><span class="syn-number">10</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
@@ -3779,9 +3759,9 @@ Ctrl+N advances by five percent.</pre></figure>
 </section>
 
 <section class="component" id="feedback/time">
-<p class="eyebrow">Atoms / feedback</p><h3>Timers</h3><p>Timer and stopwatch messages continue independently of keyboard focus.</p>
+<p class="eyebrow">Atoms / <a href="#family-feedback">feedback</a></p><h3><a class="heading-permalink" href="#feedback%2ftime" aria-label="Link to Timers component"><span>Timers</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Timer and stopwatch messages continue independently of keyboard focus.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="feedback/time-preview"><a class="heading-permalink" href="#feedback%2ftime-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Timers variants">
 <a id="tab-feedback/time-0" href="#panel-feedback%2ftime-0" role="tab" aria-controls="panel-feedback/time-0" aria-selected="true">Default</a><a id="tab-feedback/time-1" href="#panel-feedback%2ftime-1" role="tab" aria-controls="panel-feedback/time-1" aria-selected="false">Narrow</a><a id="tab-feedback/time-2" href="#panel-feedback%2ftime-2" role="tab" aria-controls="panel-feedback/time-2" aria-selected="false">Monochrome</a>
@@ -3811,7 +3791,7 @@ Enable Live to run the native timers.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="feedback/time-code"><a class="heading-permalink" href="#feedback%2ftime-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">timeStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	timer <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewTimer</span><span class="syn-operator">(</span>time<span class="syn-operator">.</span>Minute<span class="syn-operator">)</span>
 	watch <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewStopwatch</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
@@ -3837,9 +3817,9 @@ Enable Live to run the native timers.</pre></figure>
 </section>
 
 <section class="component" id="feedback/status">
-<p class="eyebrow">Atoms / feedback</p><h3>Status</h3><p>Reusable OK, WARN, ERROR, UNKNOWN and OFF states compose shared tone and emphasis atoms.</p>
+<p class="eyebrow">Atoms / <a href="#family-feedback">feedback</a></p><h3><a class="heading-permalink" href="#feedback%2fstatus" aria-label="Link to Status component"><span>Status</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Reusable OK, WARN, ERROR, UNKNOWN and OFF states compose shared tone and emphasis atoms.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="feedback/status-preview"><a class="heading-permalink" href="#feedback%2fstatus-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Status variants">
 <a id="tab-feedback/status-0" href="#panel-feedback%2fstatus-0" role="tab" aria-controls="panel-feedback/status-0" aria-selected="true">Default</a><a id="tab-feedback/status-1" href="#panel-feedback%2fstatus-1" role="tab" aria-controls="panel-feedback/status-1" aria-selected="false">Narrow</a><a id="tab-feedback/status-2" href="#panel-feedback%2fstatus-2" role="tab" aria-controls="panel-feedback/status-2" aria-selected="false">Monochrome</a><a id="tab-feedback/status-3" href="#panel-feedback%2fstatus-3" role="tab" aria-controls="panel-feedback/status-3" aria-selected="false">Bright</a><a id="tab-feedback/status-4" href="#panel-feedback%2fstatus-4" role="tab" aria-controls="panel-feedback/status-4" aria-selected="false">Normal</a><a id="tab-feedback/status-5" href="#panel-feedback%2fstatus-5" role="tab" aria-controls="panel-feedback/status-5" aria-selected="false">Dim</a>
@@ -3896,7 +3876,7 @@ OFF</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/feedback/status.go">Fixture source</a> · <a href="">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="feedback/status-code"><a class="heading-permalink" href="#feedback%2fstatus-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/feedback/status.go">Fixture source</a> · <a href="">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">package</span> feedback
 
 <span class="syn-keyword">import</span> <span class="syn-operator">(</span>
@@ -3939,9 +3919,9 @@ OFF</pre></figure>
 </section>
 
 <section class="component" id="feedback/paginator">
-<p class="eyebrow">Molecules / feedback</p><h3>Pagination</h3><p>Native pagination logic with shared active and inactive styles.</p>
+<p class="eyebrow">Molecules / <a href="#family-feedback">feedback</a></p><h3><a class="heading-permalink" href="#feedback%2fpaginator" aria-label="Link to Pagination component"><span>Pagination</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Native pagination logic with shared active and inactive styles.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="feedback/paginator-preview"><a class="heading-permalink" href="#feedback%2fpaginator-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Pagination variants">
 <a id="tab-feedback/paginator-0" href="#panel-feedback%2fpaginator-0" role="tab" aria-controls="panel-feedback/paginator-0" aria-selected="true">Default</a><a id="tab-feedback/paginator-1" href="#panel-feedback%2fpaginator-1" role="tab" aria-controls="panel-feedback/paginator-1" aria-selected="false">Narrow</a><a id="tab-feedback/paginator-2" href="#panel-feedback%2fpaginator-2" role="tab" aria-controls="panel-feedback/paginator-2" aria-selected="false">Monochrome</a>
@@ -3974,7 +3954,7 @@ Left / right changes page</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="feedback/paginator-code"><a class="heading-permalink" href="#feedback%2fpaginator-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">paginatorStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	m <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewPaginator</span><span class="syn-operator">(</span><span class="syn-number">50</span><span class="syn-operator">,</span> <span class="syn-number">10</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span> <span class="syn-keyword">var</span> cmd tea<span class="syn-operator">.</span>Cmd<span class="syn-operator">;</span> m<span class="syn-operator">,</span> cmd <span class="syn-operator">=</span> m<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span><span class="syn-operator">;</span> <span class="syn-keyword">return</span> cmd <span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
@@ -3986,9 +3966,9 @@ Left / right changes page</pre></figure>
 </section>
 
 <section class="component" id="feedback/help">
-<p class="eyebrow">Molecules / feedback</p><h3>Help</h3><p>Help is generated from the same native key bindings that handle input.</p>
+<p class="eyebrow">Molecules / <a href="#family-feedback">feedback</a></p><h3><a class="heading-permalink" href="#feedback%2fhelp" aria-label="Link to Help component"><span>Help</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Help is generated from the same native key bindings that handle input.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="feedback/help-preview"><a class="heading-permalink" href="#feedback%2fhelp-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Help variants">
 <a id="tab-feedback/help-0" href="#panel-feedback%2fhelp-0" role="tab" aria-controls="panel-feedback/help-0" aria-selected="true">Default</a><a id="tab-feedback/help-1" href="#panel-feedback%2fhelp-1" role="tab" aria-controls="panel-feedback/help-1" aria-selected="false">Narrow</a><a id="tab-feedback/help-2" href="#panel-feedback%2fhelp-2" role="tab" aria-controls="panel-feedback/help-2" aria-selected="false">Monochrome</a>
@@ -4009,7 +3989,7 @@ tab next field * enter select</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="feedback/help-code"><a class="heading-permalink" href="#feedback%2fhelp-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">helpStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	m <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewHelp</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	keys <span class="syn-operator">:=</span> helpKeys<span class="syn-operator">{</span>key<span class="syn-operator">.</span><span class="syn-function">NewBinding</span><span class="syn-operator">(</span>key<span class="syn-operator">.</span><span class="syn-function">WithKeys</span><span class="syn-operator">(</span><span class="syn-string">&#34;tab&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> key<span class="syn-operator">.</span><span class="syn-function">WithHelp</span><span class="syn-operator">(</span><span class="syn-string">&#34;tab&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;next field&#34;</span><span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">,</span> key<span class="syn-operator">.</span><span class="syn-function">NewBinding</span><span class="syn-operator">(</span>key<span class="syn-operator">.</span><span class="syn-function">WithKeys</span><span class="syn-operator">(</span><span class="syn-string">&#34;enter&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> key<span class="syn-operator">.</span><span class="syn-function">WithHelp</span><span class="syn-operator">(</span><span class="syn-string">&#34;enter&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;select&#34;</span><span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">}</span>
@@ -4020,9 +4000,9 @@ tab next field * enter select</pre></figure>
 </section>
 
 <section class="component" id="feedback/attention">
-<p class="eyebrow">Molecules / feedback</p><h3>Attention</h3><p>Optional warn/error boundaries compose a labeled attention indicator from the shared semantic pill atom.</p>
+<p class="eyebrow">Molecules / <a href="#family-feedback">feedback</a></p><h3><a class="heading-permalink" href="#feedback%2fattention" aria-label="Link to Attention component"><span>Attention</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Optional warn/error boundaries compose a labeled attention indicator from the shared semantic pill atom.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="feedback/attention-preview"><a class="heading-permalink" href="#feedback%2fattention-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Attention variants">
 <a id="tab-feedback/attention-0" href="#panel-feedback%2fattention-0" role="tab" aria-controls="panel-feedback/attention-0" aria-selected="true">Default</a><a id="tab-feedback/attention-1" href="#panel-feedback%2fattention-1" role="tab" aria-controls="panel-feedback/attention-1" aria-selected="false">Narrow</a><a id="tab-feedback/attention-2" href="#panel-feedback%2fattention-2" role="tab" aria-controls="panel-feedback/attention-2" aria-selected="false">Monochrome</a><a id="tab-feedback/attention-3" href="#panel-feedback%2fattention-3" role="tab" aria-controls="panel-feedback/attention-3" aria-selected="false">No boundaries</a>
@@ -4075,7 +4055,7 @@ The indicator composes the shared semantic pill atom.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/feedback/attention.go">Fixture source</a> · <a href="https://github.com/charmbracelet/lipgloss">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="feedback/attention-code"><a class="heading-permalink" href="#feedback%2fattention-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/feedback/attention.go">Fixture source</a> · <a href="https://github.com/charmbracelet/lipgloss">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// Attention is a labeled state atom, independent of metric-category semantics.</span>
 <span class="syn-keyword">func</span> <span class="syn-function">Attention</span><span class="syn-operator">(</span>level attention<span class="syn-operator">.</span>Level<span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
 	<span class="syn-keyword">switch</span> level <span class="syn-operator">{</span>
@@ -4095,9 +4075,9 @@ The indicator composes the shared semantic pill atom.</pre></figure>
 </section>
 
 <section class="component" id="feedback/percent">
-<p class="eyebrow">Molecules / feedback</p><h3>Percentage bar</h3><p>A native progress bar and exact percentage compose a fixed-width graphical table value on a 0–100% scale.</p>
+<p class="eyebrow">Molecules / <a href="#family-feedback">feedback</a></p><h3><a class="heading-permalink" href="#feedback%2fpercent" aria-label="Link to Percentage bar component"><span>Percentage bar</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A native progress bar and exact percentage compose a fixed-width graphical table value on a 0–100% scale.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="feedback/percent-preview"><a class="heading-permalink" href="#feedback%2fpercent-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Percentage bar variants">
 <a id="tab-feedback/percent-0" href="#panel-feedback%2fpercent-0" role="tab" aria-controls="panel-feedback/percent-0" aria-selected="true">Default</a><a id="tab-feedback/percent-1" href="#panel-feedback%2fpercent-1" role="tab" aria-controls="panel-feedback/percent-1" aria-selected="false">Narrow</a><a id="tab-feedback/percent-2" href="#panel-feedback%2fpercent-2" role="tab" aria-controls="panel-feedback/percent-2" aria-selected="false">Monochrome</a>
@@ -4118,7 +4098,7 @@ The indicator composes the shared semantic pill atom.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/feedback/percent.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="feedback/percent-code"><a class="heading-permalink" href="#feedback%2fpercent-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/feedback/percent.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// PercentBar composes a native progress bar with an exact percentage. Its domain</span>
 <span class="syn-comment">// is always 0–100%; small values may fall below the bar&#39;s terminal resolution.</span>
 <span class="syn-keyword">func</span> <span class="syn-function">PercentBar</span><span class="syn-operator">(</span>value <span class="syn-builtin">float64</span><span class="syn-operator">,</span> available <span class="syn-builtin">bool</span><span class="syn-operator">,</span> width <span class="syn-builtin">int</span><span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
@@ -4140,13 +4120,13 @@ The indicator composes the shared semantic pill atom.</pre></figure>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#feedback/progress">feedback/progress</a> </p>
 </section>
 </section>
-<section class="component-family" id="family-form"><h2>form</h2>
+<section class="component-family" id="family-form"><h2><a class="heading-permalink" href="#family-form" aria-label="Link to form section"><span>form</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="form/settings">
-<p class="eyebrow">Organisms / form</p><h3>Settings</h3><p>A Huh form owns its nested focus and validation.</p>
+<p class="eyebrow">Organisms / <a href="#family-form">form</a></p><h3><a class="heading-permalink" href="#form%2fsettings" aria-label="Link to Settings component"><span>Settings</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A Huh form owns its nested focus and validation.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="form/settings-preview"><a class="heading-permalink" href="#form%2fsettings-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Settings variants">
 <a id="tab-form/settings-0" href="#panel-form%2fsettings-0" role="tab" aria-controls="panel-form/settings-0" aria-selected="true">Default</a><a id="tab-form/settings-1" href="#panel-form%2fsettings-1" role="tab" aria-controls="panel-form/settings-1" aria-selected="false">Narrow</a><a id="tab-form/settings-2" href="#panel-form%2fsettings-2" role="tab" aria-controls="panel-form/settings-2" aria-selected="false">Monochrome</a>
@@ -4161,7 +4141,7 @@ The indicator composes the shared semantic pill atom.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/huh">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="form/settings-code"><a class="heading-permalink" href="#form%2fsettings-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/huh">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">formStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	name <span class="syn-operator">:=</span> <span class="syn-string">&#34;production&#34;</span>
 	region <span class="syn-operator">:=</span> <span class="syn-string">&#34;west&#34;</span>
@@ -4196,13 +4176,13 @@ The indicator composes the shared semantic pill atom.</pre></figure>
 
 </section>
 </section>
-<section class="component-family" id="family-graphics"><h2>graphics</h2>
+<section class="component-family" id="family-graphics"><h2><a class="heading-permalink" href="#family-graphics" aria-label="Link to graphics section"><span>graphics</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="chart/picture">
-<p class="eyebrow">Atoms / graphics</p><h3>Picture</h3><p>Portable glyph rendering of an embedded image; no external image service.</p>
+<p class="eyebrow">Atoms / <a href="#family-graphics">graphics</a></p><h3><a class="heading-permalink" href="#chart%2fpicture" aria-label="Link to Picture component"><span>Picture</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Portable glyph rendering of an embedded image; no external image service.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="chart/picture-preview"><a class="heading-permalink" href="#chart%2fpicture-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Picture variants">
 <a id="tab-chart/picture-0" href="#panel-chart%2fpicture-0" role="tab" aria-controls="panel-chart/picture-0" aria-selected="true">Default</a><a id="tab-chart/picture-1" href="#panel-chart%2fpicture-1" role="tab" aria-controls="panel-chart/picture-1" aria-selected="false">Narrow</a><a id="tab-chart/picture-2" href="#panel-chart%2fpicture-2" role="tab" aria-controls="panel-chart/picture-2" aria-selected="false">Monochrome</a>
@@ -4261,7 +4241,7 @@ Embedded gradient fixture: 120 x 60 pixels</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="chart/picture-code"><a class="heading-permalink" href="#chart%2fpicture-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">pictureStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	img <span class="syn-operator">:=</span> image<span class="syn-operator">.</span><span class="syn-function">NewRGBA</span><span class="syn-operator">(</span>image<span class="syn-operator">.</span><span class="syn-function">Rect</span><span class="syn-operator">(</span><span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">120</span><span class="syn-operator">,</span> <span class="syn-number">60</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">for</span> y <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> <span class="syn-number">60</span> <span class="syn-operator">{</span>
@@ -4281,13 +4261,13 @@ Embedded gradient fixture: 120 x 60 pixels</pre></figure>
 
 </section>
 </section>
-<section class="component-family" id="family-input"><h2>input</h2>
+<section class="component-family" id="family-input"><h2><a class="heading-permalink" href="#family-input" aria-label="Link to input section"><span>input</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="input/text">
-<p class="eyebrow">Atoms / input</p><h3>Text</h3><p>A focused input with a native virtual cursor and shared theme.</p>
+<p class="eyebrow">Atoms / <a href="#family-input">input</a></p><h3><a class="heading-permalink" href="#input%2ftext" aria-label="Link to Text component"><span>Text</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A focused input with a native virtual cursor and shared theme.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="input/text-preview"><a class="heading-permalink" href="#input%2ftext-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Text variants">
 <a id="tab-input/text-0" href="#panel-input%2ftext-0" role="tab" aria-controls="panel-input/text-0" aria-selected="true">Default</a><a id="tab-input/text-1" href="#panel-input%2ftext-1" role="tab" aria-controls="panel-input/text-1" aria-selected="false">Narrow</a><a id="tab-input/text-2" href="#panel-input%2ftext-2" role="tab" aria-controls="panel-input/text-2" aria-selected="false">Monochrome</a>
@@ -4320,7 +4300,7 @@ Type to edit / Enter emits Submitted / Ctrl+C exits</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="input/text-code"><a class="heading-permalink" href="#input%2ftext-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">inputStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	m <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewText</span><span class="syn-operator">(</span>input<span class="syn-operator">.</span>TextOptions<span class="syn-operator">{</span>Placeholder<span class="syn-operator">:</span> <span class="syn-string">&#34;Type a value&#34;</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Value<span class="syn-operator">,</span> Width<span class="syn-operator">:</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns <span class="syn-operator">-</span> <span class="syn-number">4</span><span class="syn-operator">,</span> Disabled<span class="syn-operator">:</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>State <span class="syn-operator">==</span> <span class="syn-string">&#34;disabled&#34;</span><span class="syn-operator">,</span> Theme<span class="syn-operator">:</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>init<span class="syn-operator">:</span> m<span class="syn-operator">.</span>Focus<span class="syn-operator">,</span> resize<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>s layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-operator">{</span> m<span class="syn-operator">.</span><span class="syn-function">Resize</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Width <span class="syn-operator">-</span> <span class="syn-number">4</span><span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">,</span> update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
@@ -4339,9 +4319,9 @@ Type to edit / Enter emits Submitted / Ctrl+C exits</pre></figure>
 </section>
 
 <section class="component" id="input/textarea">
-<p class="eyebrow">Atoms / input</p><h3>Textarea</h3><p>Multiline input with native editing and bounded dimensions.</p>
+<p class="eyebrow">Atoms / <a href="#family-input">input</a></p><h3><a class="heading-permalink" href="#input%2ftextarea" aria-label="Link to Textarea component"><span>Textarea</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Multiline input with native editing and bounded dimensions.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="input/textarea-preview"><a class="heading-permalink" href="#input%2ftextarea-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Textarea variants">
 <a id="tab-input/textarea-0" href="#panel-input%2ftextarea-0" role="tab" aria-controls="panel-input/textarea-0" aria-selected="true">Default</a><a id="tab-input/textarea-1" href="#panel-input%2ftextarea-1" role="tab" aria-controls="panel-input/textarea-1" aria-selected="false">Narrow</a><a id="tab-input/textarea-2" href="#panel-input%2ftextarea-2" role="tab" aria-controls="panel-input/textarea-2" aria-selected="false">Monochrome</a>
@@ -4420,7 +4400,7 @@ Type to edit / Enter emits Submitted / Ctrl+C exits</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="input/textarea-code"><a class="heading-permalink" href="#input%2ftextarea-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">areaStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	m <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewArea</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Rows<span class="syn-operator">-</span><span class="syn-number">5</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	m<span class="syn-operator">.</span>Placeholder <span class="syn-operator">=</span> <span class="syn-string">&#34;Write a note&#34;</span>
@@ -4432,9 +4412,9 @@ Type to edit / Enter emits Submitted / Ctrl+C exits</pre></figure>
 </section>
 
 <section class="component" id="input/field">
-<p class="eyebrow">Molecules / input</p><h3>Labeled field</h3><p>Label, help and validation composed around the same input atom.</p>
+<p class="eyebrow">Molecules / <a href="#family-input">input</a></p><h3><a class="heading-permalink" href="#input%2ffield" aria-label="Link to Labeled field component"><span>Labeled field</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Label, help and validation composed around the same input atom.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="input/field-preview"><a class="heading-permalink" href="#input%2ffield-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Labeled field variants">
 <a id="tab-input/field-0" href="#panel-input%2ffield-0" role="tab" aria-controls="panel-input/field-0" aria-selected="true">Default</a><a id="tab-input/field-1" href="#panel-input%2ffield-1" role="tab" aria-controls="panel-input/field-1" aria-selected="false">Narrow</a><a id="tab-input/field-2" href="#panel-input%2ffield-2" role="tab" aria-controls="panel-input/field-2" aria-selected="false">Monochrome</a>
@@ -4461,7 +4441,7 @@ Use at least three characters.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="input/field-code"><a class="heading-permalink" href="#input%2ffield-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">fieldStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	f <span class="syn-operator">:=</span> input<span class="syn-operator">.</span>Field<span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Environment name&#34;</span><span class="syn-operator">,</span> Help<span class="syn-operator">:</span> <span class="syn-string">&#34;Use at least three characters.&#34;</span><span class="syn-operator">,</span> Theme<span class="syn-operator">:</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> Input<span class="syn-operator">:</span> input<span class="syn-operator">.</span><span class="syn-function">NewText</span><span class="syn-operator">(</span>input<span class="syn-operator">.</span>TextOptions<span class="syn-operator">{</span>Theme<span class="syn-operator">:</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Value<span class="syn-operator">,</span> Width<span class="syn-operator">:</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns <span class="syn-operator">-</span> <span class="syn-number">2</span><span class="syn-operator">,</span> Validate<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>s <span class="syn-builtin">string</span><span class="syn-operator">)</span> <span class="syn-builtin">error</span> <span class="syn-operator">{</span>
 		<span class="syn-keyword">if</span> <span class="syn-builtin">len</span><span class="syn-operator">(</span>s<span class="syn-operator">)</span> <span class="syn-operator">&lt;</span> <span class="syn-number">3</span> <span class="syn-operator">{</span>
@@ -4479,13 +4459,13 @@ Use at least three characters.</pre></figure>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#input/text">input/text</a> </p>
 </section>
 </section>
-<section class="component-family" id="family-text"><h2>text</h2>
+<section class="component-family" id="family-text"><h2><a class="heading-permalink" href="#family-text" aria-label="Link to text section"><span>text</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="text/primitives">
-<p class="eyebrow">Atoms / text</p><h3>Primitives</h3><p>Labels, badges and keyboard hints share semantic roles.</p>
+<p class="eyebrow">Atoms / <a href="#family-text">text</a></p><h3><a class="heading-permalink" href="#text%2fprimitives" aria-label="Link to Primitives component"><span>Primitives</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Labels, badges and keyboard hints share semantic roles.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="text/primitives-preview"><a class="heading-permalink" href="#text%2fprimitives-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Primitives variants">
 <a id="tab-text/primitives-0" href="#panel-text%2fprimitives-0" role="tab" aria-controls="panel-text/primitives-0" aria-selected="true">Default</a><a id="tab-text/primitives-1" href="#panel-text%2fprimitives-1" role="tab" aria-controls="panel-text/primitives-1" aria-selected="false">Narrow</a><a id="tab-text/primitives-2" href="#panel-text%2fprimitives-2" role="tab" aria-controls="panel-text/primitives-2" aria-selected="false">Monochrome</a>
@@ -4527,7 +4507,7 @@ production
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="text/primitives-code"><a class="heading-permalink" href="#text%2fprimitives-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">textStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	<span class="syn-keyword">return</span> <span class="syn-function">static</span><span class="syn-operator">(</span><span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
 		t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
@@ -4541,9 +4521,9 @@ production
 </section>
 
 <section class="component" id="text/signed-number">
-<p class="eyebrow">Atoms / text</p><h3>Signed number</h3><p>Exact signed values, configurable positive/negative tones, neutral zero, tiny-value preservation and explicit unavailable state.</p>
+<p class="eyebrow">Atoms / <a href="#family-text">text</a></p><h3><a class="heading-permalink" href="#text%2fsigned-number" aria-label="Link to Signed number component"><span>Signed number</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Exact signed values, configurable positive/negative tones, neutral zero, tiny-value preservation and explicit unavailable state.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="text/signed-number-preview"><a class="heading-permalink" href="#text%2fsigned-number-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Signed number variants">
 <a id="tab-text/signed-number-0" href="#panel-text%2fsigned-number-0" role="tab" aria-controls="panel-text/signed-number-0" aria-selected="true">Default</a><a id="tab-text/signed-number-1" href="#panel-text%2fsigned-number-1" role="tab" aria-controls="panel-text/signed-number-1" aria-selected="false">Narrow</a><a id="tab-text/signed-number-2" href="#panel-text%2fsigned-number-2" role="tab" aria-controls="panel-text/signed-number-2" aria-selected="false">Monochrome</a><a id="tab-text/signed-number-3" href="#panel-text%2fsigned-number-3" role="tab" aria-controls="panel-text/signed-number-3" aria-selected="false">Bright</a><a id="tab-text/signed-number-4" href="#panel-text%2fsigned-number-4" role="tab" aria-controls="panel-text/signed-number-4" aria-selected="false">Normal</a><a id="tab-text/signed-number-5" href="#panel-text%2fsigned-number-5" role="tab" aria-controls="panel-text/signed-number-5" aria-selected="false">Dim</a>
@@ -4600,7 +4580,7 @@ Unavailable                 <span class="term-fgx255">n/a</span></pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/text/signed.go">Fixture source</a> · <a href="">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="text/signed-number-code"><a class="heading-permalink" href="#text%2fsigned-number-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/text/signed.go">Fixture source</a> · <a href="">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">package</span> text
 
 <span class="syn-keyword">import</span> <span class="syn-operator">(</span>
@@ -4666,9 +4646,9 @@ Unavailable                 <span class="term-fgx255">n/a</span></pre></figure>
 </section>
 
 <section class="component" id="text/pill">
-<p class="eyebrow">Atoms / text</p><h3>Color pill</h3><p>Semantic tone and bright, normal or dim emphasis are independent. ASCII output retains the label.</p>
+<p class="eyebrow">Atoms / <a href="#family-text">text</a></p><h3><a class="heading-permalink" href="#text%2fpill" aria-label="Link to Color pill component"><span>Color pill</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Semantic tone and bright, normal or dim emphasis are independent. ASCII output retains the label.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="text/pill-preview"><a class="heading-permalink" href="#text%2fpill-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Color pill variants">
 <a id="tab-text/pill-0" href="#panel-text%2fpill-0" role="tab" aria-controls="panel-text/pill-0" aria-selected="true">Default</a><a id="tab-text/pill-1" href="#panel-text%2fpill-1" role="tab" aria-controls="panel-text/pill-1" aria-selected="false">Narrow</a><a id="tab-text/pill-2" href="#panel-text%2fpill-2" role="tab" aria-controls="panel-text/pill-2" aria-selected="false">Monochrome</a><a id="tab-text/pill-3" href="#panel-text%2fpill-3" role="tab" aria-controls="panel-text/pill-3" aria-selected="false">Bright</a><a id="tab-text/pill-4" href="#panel-text%2fpill-4" role="tab" aria-controls="panel-text/pill-4" aria-selected="false">Normal</a><a id="tab-text/pill-5" href="#panel-text%2fpill-5" role="tab" aria-controls="panel-text/pill-5" aria-selected="false">Dim</a>
@@ -4725,7 +4705,7 @@ Selected emphasis  <span class="term-bgx234"> </span><span class="term-fgx248 te
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/text/text.go">Fixture source</a> · <a href="">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="text/pill-code"><a class="heading-permalink" href="#text%2fpill-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/text/text.go">Fixture source</a> · <a href="">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// Pill keeps its text label in every profile; color supplements its meaning.</span>
 <span class="syn-comment">// Semantic fills use contrasting theme surfaces, with brackets in ASCII mode.</span>
 <span class="syn-keyword">func</span> <span class="syn-function">Pill</span><span class="syn-operator">(</span>value <span class="syn-builtin">string</span><span class="syn-operator">,</span> tone Tone<span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">,</span> emphasis <span class="syn-operator">...</span>Emphasis<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
@@ -4753,9 +4733,9 @@ Selected emphasis  <span class="term-bgx234"> </span><span class="term-fgx248 te
 </section>
 
 <section class="component" id="text/markdown">
-<p class="eyebrow">Organisms / text</p><h3>Markdown</h3><p>Glamour renders Markdown within a native scrollable viewport.</p>
+<p class="eyebrow">Organisms / <a href="#family-text">text</a></p><h3><a class="heading-permalink" href="#text%2fmarkdown" aria-label="Link to Markdown component"><span>Markdown</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Glamour renders Markdown within a native scrollable viewport.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="text/markdown-preview"><a class="heading-permalink" href="#text%2fmarkdown-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Markdown variants">
 <a id="tab-text/markdown-0" href="#panel-text%2fmarkdown-0" role="tab" aria-controls="panel-text/markdown-0" aria-selected="true">Default</a><a id="tab-text/markdown-1" href="#panel-text%2fmarkdown-1" role="tab" aria-controls="panel-text/markdown-1" aria-selected="false">Narrow</a><a id="tab-text/markdown-2" href="#panel-text%2fmarkdown-2" role="tab" aria-controls="panel-text/markdown-2" aria-selected="false">Monochrome</a>
@@ -4811,7 +4791,7 @@ Selected emphasis  <span class="term-bgx234"> </span><span class="term-fgx248 te
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/glamour">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="text/markdown-code"><a class="heading-permalink" href="#text%2fmarkdown-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/organisms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/glamour">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">markdownStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	content <span class="syn-operator">:=</span> <span class="syn-string">&#34;# Terminal documentation\n\nGlamour renders **Markdown** inside a Bubbles viewport.\n\n- Theme follows the terminal palette\n- Content wraps to its allocated width\n- Navigation belongs to this region\n\n```go\nfield := input.NewText(options)\ncmd := field.Focus()\n```\n\n## Composition\n\nKeep content, focus and layout independent.\n&#34;</span>
 	rendered<span class="syn-operator">,</span> err <span class="syn-operator">:=</span> text<span class="syn-operator">.</span><span class="syn-function">Markdown</span><span class="syn-operator">(</span>content<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>

@@ -3,7 +3,14 @@
 <head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Foundations · Charmed</title><link rel="stylesheet" href="style.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&gt;_</span> charmed <span>terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
 <div class="shell">
 <nav aria-label="Guide">
 <div class="nav-pages"><a href="index.html" >Charmed</a><a href="foundations.html" aria-current="page">Foundations</a><a href="components.html" >Components</a><a href="examples.html" >Composition &amp; examples</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
@@ -29,6 +36,7 @@
 
 </nav>
 <main id="main">
+
 <h1>Foundations</h1>
 <p>Themes, cell geometry, focus and motion are shared across every component. Choose semantic roles rather than embedding color decisions in application widgets. Layout parents allocate rectangles in terminal columns and rows; focus scopes route keys to the active child.</p>
 <p>The fixtures below show the default native frame first. Use the variant tabs for narrow and monochrome configurations on the same night surface; these static exports retain native semantic color. Run with <code class="inline-code">--theme light</code>, <code class="inline-code">--columns 40</code> or <code class="inline-code">--ascii --profile none</code> to inspect those presentations in a terminal.</p>
@@ -37,13 +45,13 @@
 
 
 
-<section class="component-family" id="family-layout"><h2>layout</h2>
+<section class="component-family" id="family-layout"><h2><a class="heading-permalink" href="#family-layout" aria-label="Link to layout section"><span>layout</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="foundations/layout">
-<p class="eyebrow">Foundations / layout</p><h3>Layout</h3><p>Cell-based panels and responsive allocation.</p>
+<p class="eyebrow">Foundations / <a href="#family-layout">layout</a></p><h3><a class="heading-permalink" href="#foundations%2flayout" aria-label="Link to Layout component"><span>Layout</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Cell-based panels and responsive allocation.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="foundations/layout-preview"><a class="heading-permalink" href="#foundations%2flayout-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Layout variants">
 <a id="tab-foundations/layout-0" href="#panel-foundations%2flayout-0" role="tab" aria-controls="panel-foundations/layout-0" aria-selected="true">Default</a><a id="tab-foundations/layout-1" href="#panel-foundations%2flayout-1" role="tab" aria-controls="panel-foundations/layout-1" aria-selected="false">Narrow</a><a id="tab-foundations/layout-2" href="#panel-foundations%2flayout-2" role="tab" aria-controls="panel-foundations/layout-2" aria-selected="false">Monochrome</a>
@@ -125,7 +133,7 @@
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="foundations/layout-code"><a class="heading-permalink" href="#foundations%2flayout-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">layoutStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	<span class="syn-keyword">return</span> <span class="syn-function">static</span><span class="syn-operator">(</span><span class="syn-keyword">func</span><span class="syn-operator">(</span>size layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
 		t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
@@ -144,13 +152,13 @@
 
 </section>
 </section>
-<section class="component-family" id="family-motion"><h2>motion</h2>
+<section class="component-family" id="family-motion"><h2><a class="heading-permalink" href="#family-motion" aria-label="Link to motion section"><span>motion</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="feedback/motion">
-<p class="eyebrow">Foundations / motion</p><h3>Motion</h3><p>A Harmonica spring stepped explicitly by the owner; reduced motion resolves immediately.</p>
+<p class="eyebrow">Foundations / <a href="#family-motion">motion</a></p><h3><a class="heading-permalink" href="#feedback%2fmotion" aria-label="Link to Motion component"><span>Motion</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>A Harmonica spring stepped explicitly by the owner; reduced motion resolves immediately.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="feedback/motion-preview"><a class="heading-permalink" href="#feedback%2fmotion-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Motion variants">
 <a id="tab-feedback/motion-0" href="#panel-feedback%2fmotion-0" role="tab" aria-controls="panel-feedback/motion-0" aria-selected="true">Default</a><a id="tab-feedback/motion-1" href="#panel-feedback%2fmotion-1" role="tab" aria-controls="panel-feedback/motion-1" aria-selected="false">Narrow</a><a id="tab-feedback/motion-2" href="#panel-feedback%2fmotion-2" role="tab" aria-controls="panel-feedback/motion-2" aria-selected="false">Monochrome</a>
@@ -183,7 +191,7 @@ Ctrl+N steps the spring. Reduced motion resolves immediately.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/harmonica">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="feedback/motion-code"><a class="heading-permalink" href="#feedback%2fmotion-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/harmonica">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">motionStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	m <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewMotion</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
@@ -200,13 +208,13 @@ Ctrl+N steps the spring. Reduced motion resolves immediately.</pre></figure>
 
 </section>
 </section>
-<section class="component-family" id="family-theme"><h2>theme</h2>
+<section class="component-family" id="family-theme"><h2><a class="heading-permalink" href="#family-theme" aria-label="Link to theme section"><span>theme</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="foundations/theme">
-<p class="eyebrow">Foundations / theme</p><h3>Theme</h3><p>Semantic roles, terminal palettes, contrast and no-color output.</p>
+<p class="eyebrow">Foundations / <a href="#family-theme">theme</a></p><h3><a class="heading-permalink" href="#foundations%2ftheme" aria-label="Link to Theme component"><span>Theme</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Semantic roles, terminal palettes, contrast and no-color output.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="foundations/theme-preview"><a class="heading-permalink" href="#foundations%2ftheme-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Theme variants">
 <a id="tab-foundations/theme-0" href="#panel-foundations%2ftheme-0" role="tab" aria-controls="panel-foundations/theme-0" aria-selected="true">Default</a><a id="tab-foundations/theme-1" href="#panel-foundations%2ftheme-1" role="tab" aria-controls="panel-foundations/theme-1" aria-selected="false">Narrow</a><a id="tab-foundations/theme-2" href="#panel-foundations%2ftheme-2" role="tab" aria-controls="panel-foundations/theme-2" aria-selected="false">Monochrome</a>
@@ -267,7 +275,7 @@ Change theme, terminal size, or ASCII in Controls.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="foundations/theme-code"><a class="heading-permalink" href="#foundations%2ftheme-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">themeStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
 	<span class="syn-keyword">return</span> <span class="syn-function">static</span><span class="syn-operator">(</span><span class="syn-keyword">func</span><span class="syn-operator">(</span>size layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
 		t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>

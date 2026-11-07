@@ -3,7 +3,14 @@
 <head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Composition &amp; examples · Charmed</title><link rel="stylesheet" href="style.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&gt;_</span> charmed <span>terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
 <div class="shell">
 <nav aria-label="Guide">
 <div class="nav-pages"><a href="index.html" >Charmed</a><a href="foundations.html" >Foundations</a><a href="components.html" >Components</a><a href="examples.html" aria-current="page">Composition &amp; examples</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
@@ -19,6 +26,7 @@
 
 </nav>
 <main id="main">
+
 <h1>Compose behavior as well as appearance</h1>
 <p>A complete screen owns one Go model and coordinates its child widgets. The service workbench links an input, table, time-series chart and details viewport. The deployment example coordinates host distributions, histories and inspection; <a href="deployment.html">read its telemetry contract and interpretation</a>.</p>
 <h2>Ownership rules</h2>
@@ -65,13 +73,13 @@
 
 
 
-<section class="component-family" id="family-pattern"><h2>pattern</h2>
+<section class="component-family" id="family-pattern"><h2><a class="heading-permalink" href="#family-pattern" aria-label="Link to pattern section"><span>pattern</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 
 
 <section class="component" id="screen/services">
-<p class="eyebrow">Screens / pattern</p><h3>Service workbench</h3><p>Filter a service list and inspect linked throughput and details. Resize preserves the selected service.</p>
+<p class="eyebrow">Screens / <a href="#family-pattern">pattern</a></p><h3><a class="heading-permalink" href="#screen%2fservices" aria-label="Link to Service workbench component"><span>Service workbench</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Filter a service list and inspect linked throughput and details. Resize preserves the selected service.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="screen/services-preview"><a class="heading-permalink" href="#screen%2fservices-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Service workbench variants">
 <a id="tab-screen/services-0" href="#panel-screen%2fservices-0" role="tab" aria-controls="panel-screen/services-0" aria-selected="true">Default</a><a id="tab-screen/services-1" href="#panel-screen%2fservices-1" role="tab" aria-controls="panel-screen/services-1" aria-selected="false">Narrow</a><a id="tab-screen/services-2" href="#panel-screen%2fservices-2" role="tab" aria-controls="panel-screen/services-2" aria-selected="false">Monochrome</a><a id="tab-screen/services-3" href="#panel-screen%2fservices-3" role="tab" aria-controls="panel-screen/services-3" aria-selected="false">With legend</a>
@@ -202,7 +210,7 @@ Tab focus   arrows navigate   Ctrl+N step   Ctrl+C quit</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/pattern/dashboard.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbletea">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="screen/services-code"><a class="heading-permalink" href="#screen%2fservices-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/pattern/dashboard.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbletea">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">NewDashboard</span><span class="syn-operator">(</span>o DashboardOptions<span class="syn-operator">)</span> <span class="syn-operator">*</span>Dashboard <span class="syn-operator">{</span>
 	m <span class="syn-operator">:=</span> <span class="syn-operator">&amp;</span>Dashboard<span class="syn-operator">{</span>theme<span class="syn-operator">:</span> o<span class="syn-operator">.</span>Theme<span class="syn-operator">,</span> services<span class="syn-operator">:</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span><span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-function">Service</span><span class="syn-operator">(</span><span class="syn-builtin">nil</span><span class="syn-operator">)</span><span class="syn-operator">,</span> o<span class="syn-operator">.</span>Services<span class="syn-operator">...</span><span class="syn-operator">)</span><span class="syn-operator">,</span> live<span class="syn-operator">:</span> o<span class="syn-operator">.</span>Live<span class="syn-operator">,</span> emit<span class="syn-operator">:</span> o<span class="syn-operator">.</span>Emit<span class="syn-operator">,</span> showLegend<span class="syn-operator">:</span> o<span class="syn-operator">.</span>ShowLegend<span class="syn-operator">,</span>
 		focus<span class="syn-operator">:</span> interaction<span class="syn-operator">.</span><span class="syn-function">NewFocus</span><span class="syn-operator">(</span><span class="syn-string">&#34;filter&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;table&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;chart&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;details&#34;</span><span class="syn-operator">)</span><span class="syn-operator">}</span>
@@ -222,9 +230,9 @@ Tab focus   arrows navigate   Ctrl+N step   Ctrl+C quit</pre></figure>
 </section>
 
 <section class="component" id="screen/deployment">
-<p class="eyebrow">Screens / pattern</p><h3>Deployment comparison</h3><p>Compare 2xx, 3xx, 4xx and 5xx by version identifier during a blue/green deployment. Reference/candidate roles, request-weighted histories, 1/2/3s host-spread bands and linked inspection use synthetic interval counts.</p>
+<p class="eyebrow">Screens / <a href="#family-pattern">pattern</a></p><h3><a class="heading-permalink" href="#screen%2fdeployment" aria-label="Link to Deployment comparison component"><span>Deployment comparison</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Compare 2xx, 3xx, 4xx and 5xx by version identifier during a blue/green deployment. Reference/candidate roles, request-weighted histories, 1/2/3s host-spread bands and linked inspection use synthetic interval counts.</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="screen/deployment-preview"><a class="heading-permalink" href="#screen%2fdeployment-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Deployment comparison variants">
 <a id="tab-screen/deployment-0" href="#panel-screen%2fdeployment-0" role="tab" aria-controls="panel-screen/deployment-0" aria-selected="true">Default</a><a id="tab-screen/deployment-1" href="#panel-screen%2fdeployment-1" role="tab" aria-controls="panel-screen/deployment-1" aria-selected="false">Narrow</a><a id="tab-screen/deployment-2" href="#panel-screen%2fdeployment-2" role="tab" aria-controls="panel-screen/deployment-2" aria-selected="false">Monochrome</a><a id="tab-screen/deployment-3" href="#panel-screen%2fdeployment-3" role="tab" aria-controls="panel-screen/deployment-3" aria-selected="false">Disconnected bands</a><a id="tab-screen/deployment-4" href="#panel-screen%2fdeployment-4" role="tab" aria-controls="panel-screen/deployment-4" aria-selected="false">No boundaries</a><a id="tab-screen/deployment-5" href="#panel-screen%2fdeployment-5" role="tab" aria-controls="panel-screen/deployment-5" aria-selected="false">Uniform regression</a><a id="tab-screen/deployment-6" href="#panel-screen%2fdeployment-6" role="tab" aria-controls="panel-screen/deployment-6" aria-selected="false">Unequal traffic</a><a id="tab-screen/deployment-7" href="#panel-screen%2fdeployment-7" role="tab" aria-controls="panel-screen/deployment-7" aria-selected="false">Insufficient samples</a>
@@ -537,7 +545,7 @@ Reference a13c9f2 / 3128736 req / 64 hosts | Candidate f4d7e81 / 1529840 req / 3
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/examples/deployment/main.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="screen/deployment-code"><a class="heading-permalink" href="#screen%2fdeployment-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span><a href="https://github.com/lanej/charmed/blob/main/examples/deployment/main.go">Fixture source</a> · <a href="https://github.com/NimbleMarkets/ntcharts">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// Run with: go run ./examples/deployment</span>
 <span class="syn-keyword">package</span> main
 
