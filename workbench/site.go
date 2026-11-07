@@ -63,6 +63,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		{File: "examples.html", Title: "Composition & examples"},
 		{File: "deployment.html", Title: "Compare a deployment"},
 		{File: "development.html", Title: "Develop & publish"},
+		{File: "brand.html", Title: "Brand sheet"},
 	}
 	markdown := goldmark.New(goldmark.WithExtensions(extension.GFM))
 	for i := range pages {
@@ -76,7 +77,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 			return err
 		}
 		// WHY: Only repository-authored Markdown passes through the HTML renderer.
-		rendered := strings.NewReplacer("<pre>", `<pre tabindex="0">`, "<table>", `<table tabindex="0">`).Replace(content.String())
+		rendered := highlightMarkdown(content.String())
 		page.Content = template.HTML(rendered)
 		if page.File == "index.html" {
 			t := theme.New(theme.Dark)
@@ -156,6 +157,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 	}
 	funcs := template.FuncMap{
 		"terminal": terminalHTML,
+		"highlight": highlightCode,
 		"name":     func(title string) string { parts := strings.Split(title, "/"); return parts[len(parts)-1] },
 		"link": func(id string) (string, error) {
 			for _, entry := range entries {
