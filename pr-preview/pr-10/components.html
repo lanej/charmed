@@ -50,7 +50,7 @@
 </nav>
 <main id="main">
 <h1>Components by capability</h1>
-<p>Browse related building blocks together. Atomic levels describe composition depth; Go packages follow capabilities. Every component has a direct link in the sidebar. Each entry leads with a native terminal preview, groups alternate snapshots into tabs, and shows the highlighted Go implementation and run command immediately afterward.</p>
+<p>Browse related building blocks together. Atomic levels describe composition depth; Go packages follow capabilities. Every component has a direct link in the sidebar. Each entry leads with a native terminal preview, groups alternate snapshots into tabs, and shows highlighted Go usage immediately afterward.</p>
 <p>Use the sidebar to navigate to a component or your browser's Find command to search the entire page. Saved frames preserve terminal geometry and semantic color; use the native runner to inspect colors, focus and animation.</p>
 <p>Time-series traces use native braille dots for finer terminal resolution. Shared axes and series colors retain their meaning; ASCII mode keeps its numeric fallback.</p>
 <p>Legends are opt-in. Set <code class="inline-code">DistributionComparison<span class="syn-operator">.</span>ShowLegend</code>, compose <code class="inline-code">BandOptions<span class="syn-operator">.</span>Legend</code>, or pass <code class="inline-code">chart.PanelOptions{ShowLegend: true}</code> to both <code class="inline-code">chart<span class="syn-operator">.</span>PanelPlotSize</code> and <code class="inline-code">chart<span class="syn-operator">.</span>Panel</code>. Legend symbols reuse their plotted styles; label custom boundary markers with <code class="inline-code">BandMarker<span class="syn-operator">.</span>Label</code>. Native fixtures accept <code class="inline-code"><span class="syn-operator">--</span>legend</code>, and relevant saved variants include <strong>With legend</strong>.</p>
@@ -122,7 +122,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	fmt<span class="syn-operator">.</span><span class="syn-function">Println</span><span class="syn-operator">(</span>graph<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 <span class="syn-operator">}</span>
 </code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/sparkline</code></pre></div>
 </div>
 
 </section>
@@ -248,7 +247,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	fmt<span class="syn-operator">.</span><span class="syn-function">Println</span><span class="syn-operator">(</span>chart<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span><span class="syn-string">&#34;Request throughput&#34;</span><span class="syn-operator">,</span> plot<span class="syn-operator">,</span> series<span class="syn-operator">,</span> size<span class="syn-operator">,</span> palette<span class="syn-operator">,</span> <span class="syn-builtin">false</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 <span class="syn-operator">}</span>
 </code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/timeseries</code></pre></div>
 </div>
 
 </section>
@@ -472,7 +470,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	<span class="syn-function">rebuild</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Size</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> s<span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/line</code></pre></div>
 </div>
 
 </section>
@@ -696,7 +693,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	<span class="syn-function">rebuild</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Size</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> s<span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/scatter</code></pre></div>
 </div>
 
 </section>
@@ -920,7 +916,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	<span class="syn-function">rebuild</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Size</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> s<span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/bars</code></pre></div>
 </div>
 
 </section>
@@ -1144,7 +1139,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	<span class="syn-function">rebuild</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Size</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> s<span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/heatmap</code></pre></div>
 </div>
 
 </section>
@@ -1368,7 +1362,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	<span class="syn-function">rebuild</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Size</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> s<span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/stream</code></pre></div>
 </div>
 
 </section>
@@ -1592,7 +1585,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	<span class="syn-function">rebuild</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Size</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> s<span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/wave</code></pre></div>
 </div>
 
 </section>
@@ -1816,7 +1808,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	<span class="syn-function">rebuild</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Size</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> s<span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/ohlc</code></pre></div>
 </div>
 
 </section>
@@ -2040,7 +2031,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	<span class="syn-function">rebuild</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Size</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> s<span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/canvas</code></pre></div>
 </div>
 
 </section>
@@ -2129,7 +2119,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	<span class="syn-operator">}</span>
 	<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Fit</span><span class="syn-operator">(</span>plot<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> width<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">1</span><span class="syn-operator">}</span><span class="syn-operator">)</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/interval-band</code></pre></div>
 </div>
 
 </section>
@@ -2387,7 +2376,6 @@ ASCII mode presents values without chart glyphs.</pre></figure>
 	<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span>b<span class="syn-operator">.</span>Title<span class="syn-operator">,</span> strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> <span class="syn-string">&#34;\n\n&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> size<span class="syn-operator">,</span> t<span class="syn-operator">,</span> focused<span class="syn-operator">)</span>
 <span class="syn-operator">}</span>
 </code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/band-matrix</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#chart/distributions">chart/distributions</a> <a class="dependency" href="foundations.html#foundations/layout">foundations/layout</a> </p>
 </section>
@@ -2433,7 +2421,6 @@ latest 82.4</pre></figure>
 		<span class="syn-keyword">return</span> chart<span class="syn-operator">.</span><span class="syn-function">MetricTrend</span><span class="syn-operator">(</span><span class="syn-string">&#34;Throughput&#34;</span><span class="syn-operator">,</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;%.0f&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Amount<span class="syn-operator">*</span><span class="syn-number">20</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-string">&#34;req/min&#34;</span><span class="syn-operator">,</span> <span class="syn-function">sampleValues</span><span class="syn-operator">(</span><span class="syn-number">48</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Amount<span class="syn-operator">)</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> size<span class="syn-operator">.</span>Width<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-builtin">min</span><span class="syn-operator">(</span>size<span class="syn-operator">.</span>Height<span class="syn-operator">,</span> <span class="syn-number">8</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/metric</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#chart/sparkline">chart/sparkline</a> </p>
 </section>
@@ -2570,7 +2557,6 @@ latest 82.4</pre></figure>
 		<span class="syn-keyword">return</span> chart<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span><span class="syn-string">&#34;Request throughput&#34;</span><span class="syn-operator">,</span> plot<span class="syn-operator">,</span> data<span class="syn-operator">,</span> size<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">true</span><span class="syn-operator">,</span> options<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/panel</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#chart/timeseries">chart/timeseries</a> <a class="dependency" href="foundations.html#foundations/layout">foundations/layout</a> </p>
 </section>
@@ -2790,7 +2776,6 @@ C mean 30.000% s=8.000pp n=32
 	<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span>b<span class="syn-operator">.</span>Title<span class="syn-operator">,</span> strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> <span class="syn-string">&#34;\n\n&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> size<span class="syn-operator">,</span> t<span class="syn-operator">,</span> focused<span class="syn-operator">)</span>
 <span class="syn-operator">}</span>
 </code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/distributions</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#chart/interval-band">chart/interval-band</a> </p>
 </section>
@@ -2875,7 +2860,6 @@ C mean 30.000% s=8.000pp n=32
 	<span class="syn-keyword">return</span> magnitude
 <span class="syn-operator">}</span>
 </code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/delta</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#chart/interval-band">chart/interval-band</a> <a class="dependency" href="components.html#text/signed-number">text/signed-number</a> </p>
 </section>
@@ -3010,7 +2994,6 @@ C mean 30.000% s=8.000pp n=32
 	fmt<span class="syn-operator">.</span><span class="syn-function">Println</span><span class="syn-operator">(</span>panel<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> <span class="syn-number">64</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">24</span><span class="syn-operator">}</span><span class="syn-operator">,</span> palette<span class="syn-operator">,</span> <span class="syn-builtin">false</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 <span class="syn-operator">}</span>
 </code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/comparison-panel</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#chart/distributions">chart/distributions</a> <a class="dependency" href="components.html#chart/timeseries">chart/timeseries</a> <a class="dependency" href="foundations.html#foundations/layout">foundations/layout</a> </p>
 </section>
@@ -3112,7 +3095,6 @@ C mean 30.000% s=8.000pp n=32
 	m <span class="syn-operator">:=</span> collection<span class="syn-operator">.</span><span class="syn-function">NewViewport</span><span class="syn-operator">(</span>strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span>lines<span class="syn-operator">,</span> <span class="syn-string">&#34;\n&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Rows<span class="syn-operator">-</span><span class="syn-number">4</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>resize<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>s layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-operator">{</span> m<span class="syn-operator">.</span><span class="syn-function">SetWidth</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Width<span class="syn-operator">)</span><span class="syn-operator">;</span> m<span class="syn-operator">.</span><span class="syn-function">SetHeight</span><span class="syn-operator">(</span><span class="syn-builtin">max</span><span class="syn-operator">(</span><span class="syn-number">1</span><span class="syn-operator">,</span> s<span class="syn-operator">.</span>Height<span class="syn-operator">-</span><span class="syn-number">4</span><span class="syn-operator">)</span><span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">,</span> update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span> <span class="syn-keyword">var</span> cmd tea<span class="syn-operator">.</span>Cmd<span class="syn-operator">;</span> m<span class="syn-operator">,</span> cmd <span class="syn-operator">=</span> m<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span><span class="syn-operator">;</span> <span class="syn-keyword">return</span> cmd <span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span> <span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Viewport&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run collection/viewport</code></pre></div>
 </div>
 
 </section>
@@ -3226,7 +3208,6 @@ Up / down selects a row</pre></figure>
 		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Table&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Up / down selects a row&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run collection/table</code></pre></div>
 </div>
 
 </section>
@@ -3329,7 +3310,6 @@ Disposable review environment
 	m<span class="syn-operator">.</span>Title <span class="syn-operator">=</span> <span class="syn-string">&#34;Environments&#34;</span>
 	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>resize<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>s layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-operator">{</span> m<span class="syn-operator">.</span><span class="syn-function">SetSize</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Width<span class="syn-operator">,</span> s<span class="syn-operator">.</span>Height<span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">,</span> update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span> <span class="syn-keyword">var</span> cmd tea<span class="syn-operator">.</span>Cmd<span class="syn-operator">;</span> m<span class="syn-operator">,</span> cmd <span class="syn-operator">=</span> m<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span><span class="syn-operator">;</span> <span class="syn-keyword">return</span> cmd <span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span> <span class="syn-keyword">return</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run collection/list</code></pre></div>
 </div>
 
 </section>
@@ -3431,7 +3411,6 @@ v/j down * ^/k up * ? toggle * ? more</pre></figure>
 	m <span class="syn-operator">:=</span> collection<span class="syn-operator">.</span><span class="syn-function">NewTree</span><span class="syn-operator">(</span>root<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Rows<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>resize<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>s layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-operator">{</span> m<span class="syn-operator">.</span><span class="syn-function">SetSize</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Width<span class="syn-operator">,</span> s<span class="syn-operator">.</span>Height<span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">,</span> update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span> <span class="syn-keyword">var</span> cmd tea<span class="syn-operator">.</span>Cmd<span class="syn-operator">;</span> m<span class="syn-operator">,</span> cmd <span class="syn-operator">=</span> m<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span><span class="syn-operator">;</span> <span class="syn-keyword">return</span> cmd <span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span> <span class="syn-keyword">return</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run collection/tree</code></pre></div>
 </div>
 
 </section>
@@ -3566,7 +3545,6 @@ Arrows browse / Enter selects / fixture directory only</pre></figure>
 		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Fixture files&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Arrows browse / Enter selects / fixture directory only&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run collection/files</code></pre></div>
 </div>
 
 </section>
@@ -3689,7 +3667,6 @@ Arrows scroll / Ctrl+N appends a deterministic log entry</pre></figure>
 		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Structured logs&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Arrows scroll / Ctrl+N appends a deterministic log entry&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run collection/logs</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#collection/viewport">collection/viewport</a> </p>
 </section>
@@ -3749,7 +3726,6 @@ Live runs the native clock / Ctrl+N advances a frame</pre></figure>
 		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Loading indicator&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  Processing fixture data&#34;</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Live runs the native clock / Ctrl+N advances a frame&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run feedback/spinner</code></pre></div>
 </div>
 
 </section>
@@ -3798,7 +3774,6 @@ Ctrl+N advances by five percent.</pre></figure>
 		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Progress&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">ViewAs</span><span class="syn-operator">(</span>amount<span class="syn-operator">/</span><span class="syn-number">100</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;  %.0f%%&#34;</span><span class="syn-operator">,</span> amount<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Ctrl+N advances by five percent.&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run feedback/progress</code></pre></div>
 </div>
 
 </section>
@@ -3857,7 +3832,6 @@ Enable Live to run the native timers.</pre></figure>
 		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Time components&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;Countdown  &#34;</span> <span class="syn-operator">+</span> timer<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;\nStopwatch  &#34;</span> <span class="syn-operator">+</span> watch<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Enable Live to run the native timers.&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run feedback/time</code></pre></div>
 </div>
 
 </section>
@@ -3960,7 +3934,6 @@ OFF</pre></figure>
 	<span class="syn-keyword">return</span> text<span class="syn-operator">.</span><span class="syn-function">ToneStyle</span><span class="syn-operator">(</span>tone<span class="syn-operator">,</span> emphasis<span class="syn-operator">,</span> t<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-builtin">string</span><span class="syn-operator">(</span>s<span class="syn-operator">)</span><span class="syn-operator">)</span>
 <span class="syn-operator">}</span>
 </code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run feedback/status</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#text/pill">text/pill</a> </p>
 </section>
@@ -4008,7 +3981,6 @@ Left / right changes page</pre></figure>
 		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Pagination&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;\n\nPage %d of %d&#34;</span><span class="syn-operator">,</span> m<span class="syn-operator">.</span>Page<span class="syn-operator">+</span><span class="syn-number">1</span><span class="syn-operator">,</span> m<span class="syn-operator">.</span>TotalPages<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Left / right changes page&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run feedback/paginator</code></pre></div>
 </div>
 
 </section>
@@ -4043,7 +4015,6 @@ tab next field * enter select</pre></figure>
 	keys <span class="syn-operator">:=</span> helpKeys<span class="syn-operator">{</span>key<span class="syn-operator">.</span><span class="syn-function">NewBinding</span><span class="syn-operator">(</span>key<span class="syn-operator">.</span><span class="syn-function">WithKeys</span><span class="syn-operator">(</span><span class="syn-string">&#34;tab&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> key<span class="syn-operator">.</span><span class="syn-function">WithHelp</span><span class="syn-operator">(</span><span class="syn-string">&#34;tab&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;next field&#34;</span><span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">,</span> key<span class="syn-operator">.</span><span class="syn-function">NewBinding</span><span class="syn-operator">(</span>key<span class="syn-operator">.</span><span class="syn-function">WithKeys</span><span class="syn-operator">(</span><span class="syn-string">&#34;enter&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> key<span class="syn-operator">.</span><span class="syn-function">WithHelp</span><span class="syn-operator">(</span><span class="syn-string">&#34;enter&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;select&#34;</span><span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">}</span>
 	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>resize<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>s layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-operator">{</span> m<span class="syn-operator">.</span><span class="syn-function">SetWidth</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Width<span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span> <span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Help from key bindings&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>keys<span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run feedback/help</code></pre></div>
 </div>
 
 </section>
@@ -4119,7 +4090,6 @@ The indicator composes the shared semantic pill atom.</pre></figure>
 	<span class="syn-operator">}</span>
 	<span class="syn-keyword">return</span> <span class="syn-string">&#34;&#34;</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run feedback/attention</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#feedback/status">feedback/status</a> </p>
 </section>
@@ -4166,7 +4136,6 @@ The indicator composes the shared semantic pill atom.</pre></figure>
 	bar<span class="syn-operator">.</span>EmptyColor <span class="syn-operator">=</span> t<span class="syn-operator">.</span>Border
 	<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Fit</span><span class="syn-operator">(</span>bar<span class="syn-operator">.</span><span class="syn-function">ViewAs</span><span class="syn-operator">(</span>value<span class="syn-operator">/</span><span class="syn-number">100</span><span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; &#34;</span><span class="syn-operator">+</span>t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;%8s&#34;</span><span class="syn-operator">,</span> label<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> width<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">1</span><span class="syn-operator">}</span><span class="syn-operator">)</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run feedback/percent</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#feedback/progress">feedback/progress</a> </p>
 </section>
@@ -4223,7 +4192,6 @@ The indicator composes the shared semantic pill atom.</pre></figure>
 		<span class="syn-keyword">return</span> f<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run form/settings</code></pre></div>
 </div>
 
 </section>
@@ -4309,7 +4277,6 @@ Embedded gradient fixture: 120 x 60 pixels</pre></figure>
 		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Picture / portable glyph rendering&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> plot<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span>Content <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;This preview uses half-block glyphs. Kitty graphics are capability-dependent.&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run chart/picture</code></pre></div>
 </div>
 
 </section>
@@ -4367,7 +4334,6 @@ Type to edit / Enter emits Submitted / Ctrl+C exits</pre></figure>
 		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Text input&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> layout<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span><span class="syn-string">&#34;Value&#34;</span><span class="syn-operator">,</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> s<span class="syn-operator">.</span>Width<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">3</span><span class="syn-operator">}</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> m<span class="syn-operator">.</span><span class="syn-function">Focused</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Type to edit / Enter emits Submitted / Ctrl+C exits&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run input/text</code></pre></div>
 </div>
 
 </section>
@@ -4461,7 +4427,6 @@ Type to edit / Enter emits Submitted / Ctrl+C exits</pre></figure>
 	m<span class="syn-operator">.</span><span class="syn-function">SetValue</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Value<span class="syn-operator">)</span>
 	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>init<span class="syn-operator">:</span> m<span class="syn-operator">.</span>Focus<span class="syn-operator">,</span> resize<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>s layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-operator">{</span> m<span class="syn-operator">.</span><span class="syn-function">SetWidth</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Width<span class="syn-operator">)</span><span class="syn-operator">;</span> m<span class="syn-operator">.</span><span class="syn-function">SetHeight</span><span class="syn-operator">(</span><span class="syn-builtin">max</span><span class="syn-operator">(</span><span class="syn-number">1</span><span class="syn-operator">,</span> s<span class="syn-operator">.</span>Height<span class="syn-operator">-</span><span class="syn-number">5</span><span class="syn-operator">)</span><span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">,</span> update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span> <span class="syn-keyword">var</span> cmd tea<span class="syn-operator">.</span>Cmd<span class="syn-operator">;</span> m<span class="syn-operator">,</span> cmd <span class="syn-operator">=</span> m<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span><span class="syn-operator">;</span> <span class="syn-keyword">return</span> cmd <span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span> <span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Multiline input&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run input/textarea</code></pre></div>
 </div>
 
 </section>
@@ -4510,7 +4475,6 @@ Use at least three characters.</pre></figure>
 	<span class="syn-operator">}</span>
 	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>init<span class="syn-operator">:</span> f<span class="syn-operator">.</span>Input<span class="syn-operator">.</span>Focus<span class="syn-operator">,</span> resize<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>s layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-operator">{</span> f<span class="syn-operator">.</span>Input<span class="syn-operator">.</span><span class="syn-function">Resize</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Width<span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">,</span> update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span> <span class="syn-keyword">var</span> cmd tea<span class="syn-operator">.</span>Cmd<span class="syn-operator">;</span> f<span class="syn-operator">.</span>Input<span class="syn-operator">,</span> cmd <span class="syn-operator">=</span> f<span class="syn-operator">.</span>Input<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span><span class="syn-operator">;</span> <span class="syn-keyword">return</span> cmd <span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span> <span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Labeled field&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> f<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run input/field</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#input/text">input/text</a> </p>
 </section>
@@ -4572,7 +4536,6 @@ production
 			text<span class="syn-operator">.</span><span class="syn-function">KeyHint</span><span class="syn-operator">(</span><span class="syn-string">&#34;Enter&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;select&#34;</span><span class="syn-operator">,</span> t<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;   &#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">KeyHint</span><span class="syn-operator">(</span><span class="syn-string">&#34;Esc&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;dismiss&#34;</span><span class="syn-operator">,</span> t<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run text/primitives</code></pre></div>
 </div>
 
 </section>
@@ -4698,7 +4661,6 @@ Unavailable                 <span class="term-fgx255">n/a</span></pre></figure>
 	<span class="syn-keyword">return</span> <span class="syn-function">ToneStyle</span><span class="syn-operator">(</span>tone<span class="syn-operator">,</span> n<span class="syn-operator">.</span>Emphasis<span class="syn-operator">,</span> t<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>n<span class="syn-operator">.</span><span class="syn-function">Label</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 <span class="syn-operator">}</span>
 </code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run text/signed-number</code></pre></div>
 </div>
 
 </section>
@@ -4786,7 +4748,6 @@ Selected emphasis  <span class="term-bgx234"> </span><span class="term-fgx248 te
 	<span class="syn-operator">}</span>
 	<span class="syn-keyword">return</span> style<span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>value<span class="syn-operator">)</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run text/pill</code></pre></div>
 </div>
 
 </section>
@@ -4866,7 +4827,6 @@ Selected emphasis  <span class="term-bgx234"> </span><span class="term-fgx248 te
 		<span class="syn-operator">}</span>
 	<span class="syn-operator">}</span><span class="syn-operator">,</span> update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span> <span class="syn-keyword">var</span> cmd tea<span class="syn-operator">.</span>Cmd<span class="syn-operator">;</span> m<span class="syn-operator">,</span> cmd <span class="syn-operator">=</span> m<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span><span class="syn-operator">;</span> <span class="syn-keyword">return</span> cmd <span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span> <span class="syn-keyword">return</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
 <span class="syn-operator">}</span></code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run text/markdown</code></pre></div>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#collection/viewport">collection/viewport</a> </p>
 </section>

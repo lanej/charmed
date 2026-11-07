@@ -118,9 +118,6 @@ nav .nav-family-link:hover { text-decoration: underline; }
 .variant-panel .terminal { margin: 0; background: var(--bg); max-width: 100%; }
 .component-source { margin-top: 28px; }
 .component-source .source-code { max-height: 520px; margin: 0; }
-.component-run { display: flex; align-items: baseline; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
-.component-run > span { flex: 0 0 auto; font-size: 13px; color: var(--muted); }
-.component-run .command { flex: 1 1 360px; margin: 0; min-width: 0; padding: 12px; }
 .composition-line { margin-top: 16px; color: var(--muted); font-size: 14px; }
 @media(max-width:760px) {
   nav { display: block; max-height: 45vh; overflow: auto; padding: 10px 12px; }
