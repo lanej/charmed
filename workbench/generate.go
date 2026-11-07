@@ -57,6 +57,24 @@ func Generate(out string) error {
 				c.ReducedMotion = true
 			}},
 		}
+		if slices.Contains(d.Controls, "comparisonVariant") {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{
+				name: "Disconnected bands", change: func(c *story.Config) { c.ComparisonVariant = "bands" },
+			})
+		}
+		if slices.Contains(d.Controls, "emphasis") {
+			for _, emphasis := range []string{"bright", "normal", "dim"} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{
+					name: strings.ToUpper(emphasis[:1]) + emphasis[1:], change: func(c *story.Config) { c.Emphasis = emphasis },
+				})
+			}
+		}
 		if slices.Contains(d.Controls, "boundaries") {
 			variants = append(variants, struct {
 				name   string

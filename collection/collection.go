@@ -18,6 +18,17 @@ func NewTable(columns []table.Column, rows []table.Row, width, height int, t the
 	return table.New(table.WithColumns(columns), table.WithRows(rows), table.WithWidth(max(1, width)), table.WithHeight(max(1, height)), table.WithStyles(s), table.WithFocused(true))
 }
 
+// NewDenseTable retains the native table API with one cell of column separation.
+func NewDenseTable(columns []table.Column, rows []table.Row, width, height int, t theme.Theme) table.Model {
+	m := NewTable(columns, rows, width, height, t)
+	s := table.DefaultStyles()
+	s.Header = t.Heading().Padding(0, 1, 0, 0)
+	s.Cell = t.Text().Padding(0, 1, 0, 0)
+	s.Selected = t.Focus()
+	m.SetStyles(s)
+	return m
+}
+
 func NewViewport(content string, width, height int) viewport.Model {
 	m := viewport.New(viewport.WithWidth(max(1, width)), viewport.WithHeight(max(1, height)))
 	m.SetContent(content)

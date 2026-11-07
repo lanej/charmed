@@ -23,22 +23,25 @@ const (
 
 // Pill keeps its text label in every profile; color supplements its meaning.
 // Semantic fills use contrasting theme surfaces, with brackets in ASCII mode.
-func Pill(value string, tone Tone, t theme.Theme) string {
+func Pill(value string, tone Tone, t theme.Theme, emphasis ...Emphasis) string {
+	level := Bright // Preserve existing filled pills for three-argument calls.
+	if len(emphasis) > 0 {
+		level = emphasis[0]
+	}
 	if t.ASCII {
-		return t.Text().Bold(true).Render("[" + value + "]")
+		return ToneStyle(tone, level, t).Render("[" + value + "]")
 	}
-	fill := t.Foreground
-	switch tone {
-	case Success:
-		fill = t.Success
-	case Info:
-		fill = t.Info
-	case Warning:
-		fill = t.Warning
-	case Danger:
-		fill = t.Danger
+	fill := toneColor(tone, t)
+	style := ToneStyle(tone, level, t).Padding(0, 1)
+	switch level {
+	case Bright:
+		style = style.Foreground(t.Background).Background(fill)
+	case Dim:
+		style = style.Background(blend(fill, t.Background, .04))
+	default:
+		style = style.Background(blend(fill, t.Background, .15))
 	}
-	return t.Text().Foreground(t.Background).Background(fill).Bold(true).Padding(0, 1).Render(value)
+	return style.Render(value)
 }
 func KeyHint(key, description string, t theme.Theme) string {
 	return t.Heading().Render(key) + " " + t.Subtle().Render(description)

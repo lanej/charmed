@@ -72,7 +72,7 @@ func TestAttentionIsComposedOptionalAndIndependentOfDisplaySigma(t *testing.T) {
 		t.Fatal("rendering, sigma, resize or caller mutation changed attention")
 	}
 	frame := ansi.Strip(m.View())
-	if !strings.Contains(frame, "ERROR") || !strings.Contains(frame, "WARN") || !strings.Contains(frame, "Warn>=+0.1 Error>=+0.3") {
+	if !strings.Contains(frame, "ERROR") || !strings.Contains(frame, "+0.203pp") || !strings.Contains(frame, "Warn>=+0.1 Error>=+0.3") {
 		t.Fatal("composed boundary state or explanation missing")
 	}
 	_ = m.SetWindow(0)
@@ -120,7 +120,7 @@ func TestComparisonLinksSelectionAndRetainsStateAcrossResize(t *testing.T) {
 			t.Fatal("resize or control change lost linked state")
 		}
 	}
-	if len(m.Inspector.Rows()) != 4 || !strings.Contains(ansi.Strip(m.View()), "Fleet "+fixture.CandidateVersionID) {
+	if len(m.Inspector.Rows()) != 4 || !strings.Contains(ansi.Strip(m.View()), fixture.CandidateVersionID+" mean") {
 		t.Fatal("inspector table or direct version labels are missing")
 	}
 	m.Update(runtime.StepMsg{})
@@ -155,8 +155,24 @@ func TestMemberInspectorTableSelectsMetricsAndHasNoLegends(t *testing.T) {
 			t.Fatalf("legend remains: %s", legend)
 		}
 	}
+	if strings.Contains(frame, "Fleet ") || strings.Contains(frame, "Delta ") {
+		t.Fatal("repeated percentage-summary labels remain")
+	}
 	if !strings.Contains(frame, "CODE") || !strings.Contains(frame, "RATE") || !strings.Contains(frame, "VERSION") {
 		t.Fatal("table data headers are missing")
+	}
+}
+
+func TestDeltaTitleScaleDoesNotFollowTheSelectedWindow(t *testing.T) {
+	m, _ := comparison(t)
+	if !strings.Contains(ansi.Strip(m.View()), "delta +/-0.5pp") {
+		t.Fatal("missing shared title-bar domain")
+	}
+	if err := m.SetWindow(0); err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(ansi.Strip(m.View()), "delta +/-0.5pp") {
+		t.Fatal("window selection rescaled the comparison")
 	}
 }
 func TestUpdatesAreAtomicAndFollowLatestOnlyWhenSelected(t *testing.T) {

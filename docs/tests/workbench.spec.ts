@@ -105,11 +105,12 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await expect(text).toContainText("Candidate f4d7e81");
   await expect(text).toContainText("Member host-096");
   await expect(text).toContainText("Version f4d7e81");
-  for (const pill of ["2xx Success", "3xx Redirects", "4xx Client error", "5xx Server error"]) {
+  for (const pill of ["2xx", "3xx", "4xx", "5xx"]) {
     await expect(text).toContainText(pill);
   }
-  await expect(text).toContainText("Fleet a13c9f2 96.093%");
-  await expect(text).toContainText("Fleet f4d7e81 0.403%");
+  await expect(text).not.toContainText("Fleet ");
+  await expect(text).toContainText("+0.203pp");
+  await expect(text).toContainText("delta +/-0.5pp");
   await expect(text).toContainText("CODE");
   await expect(text).toContainText("RATE");
   for (const legend of ["History %:", "3=member", "X = this member", "W/E =", "R=reference", "C=candidate", "1/2/3 bands"]) {
@@ -151,12 +152,12 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await page.getByRole("combobox", { name: "Host spread bands", exact: true }).selectOption("3");
   await expect(text).toContainText("5 beyond 3s");
   await expect(text).toContainText("ERROR");
-  await expect(text).toContainText("WARN");
+  await expect(text).toContainText("+0.203pp");
   await expect(text).toContainText("Warn>=+0.1 Error>=+0.3 pp");
   await page.getByRole("combobox", { name: "Deviation boundaries", exact: true }).selectOption("off");
   await expect(text).not.toContainText("ERROR");
   await expect(text).not.toContainText("ATTN");
-  await expect(text).toContainText("5xx Server error");
+  await expect(text).toContainText("5xx");
   await page.getByRole("combobox", { name: "Deviation boundaries", exact: true }).selectOption("example");
   await expect(text).toContainText("ERROR");
   await page.getByRole("button", { name: "Step", exact: true }).click();
@@ -191,7 +192,7 @@ test("static deployment variants retain the traffic and sampling scenarios", asy
   await expect(page.getByRole("status")).toContainText("Static snapshot: Default");
   await page.getByRole("combobox", { name: "Saved variant" }).selectOption("No boundaries");
   await expect(page.getByTestId("terminal-text")).not.toContainText("ERROR");
-  await expect(page.getByTestId("terminal-text")).toContainText("5xx Server error");
+  await expect(page.getByTestId("terminal-text")).toContainText("5xx");
   await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Insufficient samples");
   await expect(page.getByRole("status")).toContainText("Static snapshot: Insufficient samples");
   await expect(page.getByTestId("terminal-text")).toContainText("baseline s unavailable");
@@ -241,7 +242,7 @@ test("catalog navigation supports search, capability groups and mobile", async (
     name: "Components",
     exact: true,
   });
-  await expect(navigation.getByRole("link")).toHaveCount(40);
+  await expect(navigation.getByRole("link")).toHaveCount(44);
   await page.getByPlaceholder("Search components…").fill("heatmap");
   await expect(navigation.getByRole("link")).toHaveCount(1);
   await navigation.getByRole("link").click();
@@ -257,64 +258,93 @@ test("catalog navigation supports search, capability groups and mobile", async (
   await expect(page.getByPlaceholder("Search components…")).toBeVisible();
 });
 
-test("disconnected bands link version rows, policies, hosts and detail history", async ({ page }) => {
+test("bands are a live variant of stacked comparison and preserve shared state", async ({ page }) => {
   await page.setViewportSize({ width: 1760, height: 1400 });
-  await page.goto("/#screen/deployment-bands");
+  await page.goto("/#screen/deployment");
   const text = page.getByTestId("terminal-text");
   const events = page.getByTestId("terminal-events");
+  const variant = page.getByRole("combobox", { name: "Comparison variant", exact: true });
   await expect(page.getByRole("status")).toContainText("isolated PTY");
-  await expect(text).toContainText("Version bands / host mean +/- 3s");
-  for (const label of ["2xx Success", "3xx Redirects", "4xx Client error", "5xx Server error", "a13c9f2", "f4d7e81"]) {
-    await expect(text).toContainText(label);
-  }
-  await expect(text).not.toContainText("History %:");
-  await expect(text).not.toContainText("Version profile");
-  await expect(page.getByRole("combobox", { name: "Profile curve", exact: true })).toHaveCount(0);
+  await expect(variant).toHaveValue("stacked");
+  await expect(text).not.toContainText("Disconnected bands");
   await page.getByRole("button", { name: "Focus terminal", exact: true }).click();
   await page.keyboard.press("ArrowDown");
-  await expect(events).toContainText('"member":"host-095"');
-  await expect(events).toContainText('"overview":true');
-  await page.keyboard.press("b");
-  await expect(text).not.toContainText("Version bands");
-  await page.keyboard.press("b");
-  await expect(text).toContainText("Version bands");
-  await page.keyboard.press("]");
   await page.keyboard.press("ArrowLeft");
-  await page.keyboard.press("1");
-  await expect(events).toContainText('"metric":"2xx"');
-  await expect(events).toContainText('"window":10');
+  await page.keyboard.press("2");
+  await expect(events).toContainText('"member":"host-095"');
   await page.keyboard.press("Control+]");
+  await variant.selectOption("bands");
+  await expect(text).toContainText("Disconnected bands");
+  await expect(text).toContainText("Member host-095");
+  await expect(text).toContainText("[11/12]");
+  await expect(text).toContainText("+/- 2s host spread");
+  await expect(events).toContainText('"variant":"bands"');
+  for (const label of ["2xx","3xx","4xx","5xx"]) await expect(text).toContainText(label);
+  await expect(text).not.toContainText("Fleet ");
   const columns = page.getByRole("spinbutton", { name: "Columns", exact: true });
   await columns.fill("40"); await columns.press("Enter");
-  await expect(page.getByRole("status")).toContainText("40 × 39");
+  await expect(page.getByRole("status")).toContainText("40 × 40");
   await columns.fill("132"); await columns.press("Enter");
   await expect(text).toContainText("Member host-095");
-  await expect(text).toContainText("Version bands / host mean +/- 1s");
-  await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption("insufficient-samples");
-  await expect(text).toContainText("n/a");
-  await expect(text).not.toContainText("NaN");
+  await expect(text).toContainText("Disconnected bands");
+  await page.getByRole("button", { name: "Focus terminal", exact: true }).click();
+  await page.keyboard.press("b");
+  await expect(variant).toHaveValue("stacked");
+  await expect(text).not.toContainText("Disconnected bands");
+  await page.keyboard.press("ArrowDown");
+  await expect(text).toContainText("Member host-094");
+  await page.keyboard.press("Control+]");
+  await variant.selectOption("bands");
+  await expect(text).toContainText("Disconnected bands");
+  await expect(text).toContainText("Member host-094");
   await page.getByRole("combobox", { name: "Preset", exact: true }).selectOption("Default");
-  await expect(text).toContainText("Version bands / host mean +/- 3s");
-  const viewport = await page.locator(".terminal-scroller").evaluate((element) => ({
-    width: element.clientWidth, contentWidth: element.scrollWidth,
-    height: element.clientHeight, contentHeight: element.scrollHeight,
-  }));
-  expect(viewport.contentWidth).toBeLessThanOrEqual(viewport.width);
-  expect(viewport.contentHeight).toBeLessThanOrEqual(viewport.height);
+  await expect(variant).toHaveValue("stacked");
+  await expect(text).not.toContainText("Disconnected bands");
   if (process.env.CHARMED_CAPTURE_DIR) {
-    mkdirSync(process.env.CHARMED_CAPTURE_DIR, { recursive: true });
-    await page.locator(".story-canvas").screenshot({ path: join(process.env.CHARMED_CAPTURE_DIR, "deployment-bands.png") });
+    mkdirSync(process.env.CHARMED_CAPTURE_DIR, {recursive:true});
+    await page.locator(".story-canvas").screenshot({path:join(process.env.CHARMED_CAPTURE_DIR,"comparison-stacked.png")});
   }
+  await variant.selectOption("bands");
+  await expect(text).toContainText("Disconnected bands");
+  if (process.env.CHARMED_CAPTURE_DIR)
+    await page.locator(".story-canvas").screenshot({path:join(process.env.CHARMED_CAPTURE_DIR,"comparison-bands.png")});
 });
 
-test("static band overview preserves sampling and optional boundaries", async ({ page }) => {
-  await page.goto("http://127.0.0.1:5174/#screen/deployment-bands");
-  const text = page.getByTestId("terminal-text");
-  await expect(page.getByRole("status")).toContainText("Static snapshot: Default");
-  await expect(text).toContainText("Version bands");
-  await page.getByRole("combobox", { name: "Saved variant" }).selectOption("No boundaries");
-  await expect(text).not.toContainText("ERROR");
-  await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Insufficient samples");
+test("static comparison offers both presentation variants", async ({page}) => {
+  await page.goto("http://127.0.0.1:5174/#screen/deployment");
+  const text=page.getByTestId("terminal-text");
+  const saved=page.getByRole("combobox",{name:"Saved variant"});
+  await expect(text).not.toContainText("Disconnected bands");
+  await saved.selectOption("Disconnected bands");
+  await expect(page.getByRole("status")).toContainText("Static snapshot: Disconnected bands");
+  await expect(text).toContainText("Disconnected bands");
+  await saved.selectOption("Default");
+  await expect(text).not.toContainText("Disconnected bands");
+});
+
+test("signed values, pill emphasis and status atoms have independent fixtures",async ({page})=>{
+  const text=page.getByTestId("terminal-text");
+  await page.goto("/#text/signed-number");
+  await expect(text).toContainText("+0.180pp");
+  await expect(text).toContainText("-1e-06pp");
+  await expect(text).toContainText("+0.000pp");
   await expect(text).toContainText("n/a");
-  await expect(text).not.toContainText("NaN");
+  await page.getByRole("combobox",{name:"Emphasis",exact:true}).selectOption("bright");
+  await expect(text).toContainText("Signed number / bright");
+  await page.getByRole("combobox",{name:"State",exact:true}).selectOption("empty");
+  await expect(text).toContainText(/Positive means improvement\s+n\/a/);
+  await page.goto("/#text/pill");
+  for (const level of ["bright","normal","dim"]) await expect(text).toContainText(level);
+  await page.getByRole("combobox",{name:"Emphasis",exact:true}).selectOption("dim");
+  await page.getByRole("combobox",{name:"Theme",exact:true}).selectOption("light");
+  await expect(text).toContainText("Selected emphasis");
+  if(process.env.CHARMED_CAPTURE_DIR) {
+    mkdirSync(process.env.CHARMED_CAPTURE_DIR,{recursive:true});
+    await page.locator(".story-canvas").screenshot({path:join(process.env.CHARMED_CAPTURE_DIR,"pill-emphasis-light.png")});
+  }
+  await page.goto("/#feedback/status");
+  for(const state of ["OK","WARN","ERROR","UNKNOWN","OFF"]) await expect(text).toContainText(state);
+  await page.getByRole("combobox",{name:"Emphasis",exact:true}).selectOption("dim");
+  await page.getByRole("combobox",{name:"Theme",exact:true}).selectOption("mono");
+  await expect(text).toContainText("Status atoms / dim");
 });

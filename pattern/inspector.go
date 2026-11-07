@@ -10,6 +10,7 @@ import (
 	"github.com/lanej/charmed/cohort"
 	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
+	"github.com/lanej/charmed/text"
 )
 
 func (m *CohortComparison) inspectorContext() string {
@@ -30,9 +31,9 @@ func (m *CohortComparison) updateInspector() {
 	for _, policy := range m.boundaries {
 		showAttention = showAttention || policy.Hosts.Configured()
 	}
-	columns := []table.Column{{Title: "CODE", Width: 7}, {Title: "RATE", Width: 8}, {Title: "z(ref)", Width: 7}}
+	columns := []table.Column{{Title: "CODE", Width: 5}, {Title: "RATE", Width: 16}, {Title: "z(ref)", Width: 6}}
 	if showAttention {
-		columns = append(columns, table.Column{Title: "ATTN", Width: 8})
+		columns = append(columns, table.Column{Title: "ATTN", Width: 7})
 	}
 	m.Inspector.SetRows(nil)
 	m.Inspector.SetColumns(columns)
@@ -48,9 +49,20 @@ func (m *CohortComparison) updateInspector() {
 					}
 					z := "n/a"
 					if value, ok := cohort.Distance(p, m.summaries[i][0]); ok {
-						z = fmt.Sprintf("%+.2f", value)
+						z = m.signedNumber(i, value, 2, "", true).View(m.theme)
 					}
-					row := table.Row{m.metricLabel(i, true), rate(p.Rate, p.HasRate), z}
+					palette := m.theme
+					switch m.metricTones[m.data.Metrics[i].ID] {
+					case text.Success:
+						palette.Accent = palette.Success
+					case text.Info:
+						palette.Accent = palette.Info
+					case text.Warning:
+						palette.Accent = palette.Warning
+					case text.Danger:
+						palette.Accent = palette.Danger
+					}
+					row := table.Row{m.metricLabel(i, true), feedback.PercentBar(p.Rate*100, p.HasRate, 16, palette), z}
 					if showAttention {
 						row = append(row, feedback.Attention(m.assessments[i].Members[p.MemberKey].Level, m.theme))
 					}

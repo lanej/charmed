@@ -12,14 +12,6 @@ import (
 )
 
 func deploymentStory(e Environment) (runtime.Scene, error) {
-	return comparisonStory(e, false)
-}
-
-func deploymentBandsStory(e Environment) (runtime.Scene, error) {
-	return comparisonStory(e, true)
-}
-
-func comparisonStory(e Environment, overview bool) (runtime.Scene, error) {
 	data, err := fixture.DataWithVersions(e.Config.Scenario, fixture.Versions{Reference: e.Config.ReferenceID, Candidate: e.Config.CandidateID})
 	if err != nil {
 		return nil, err
@@ -33,28 +25,8 @@ func comparisonStory(e Environment, overview bool) (runtime.Scene, error) {
 		boundaries = fixture.Boundaries()
 	}
 	return pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Deployment comparison", Scope: "method=blue/green / SYNTHETIC / " + e.Config.Scenario,
-		Data: data, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit, MetricTones: fixture.StatusTones(), Boundaries: boundaries, BandOverview: overview})
-}
-
-func bandMatrixStory(e Environment) (runtime.Scene, error) {
-	return static(func(size layout.Size) string {
-		matrix := chart.BandMatrix{Title: fmt.Sprintf("Host mean +/- %ds", e.Config.Sigma)}
-		if e.Config.State != "empty" {
-			for _, metric := range []struct {
-				label    string
-				mean, sd float64
-			}{{"Success", 96, .4}, {"Server error", .2, .03}} {
-				selected := metric.mean + 5*metric.sd
-				d := chart.DistributionComparison{Sigma: e.Config.Sigma, Min: 0, Max: 100, Unit: "%", SpreadUnit: "pp",
-					Series: []chart.DistributionSeries{
-						{Label: "a13c9f2", Mean: metric.mean, StdDev: metric.sd, Members: 64, HasSpread: true},
-						{Label: "f4d7e81", Mean: metric.mean + metric.sd, StdDev: metric.sd * 1.5, Members: 32, HasSpread: true, Selected: &selected},
-					}}
-				matrix.Rows = append(matrix.Rows, chart.BandRow{Title: metric.label, Distribution: d})
-			}
-		}
-		return matrix.View(size, e.Config.Palette(), false)
-	}), nil
+		Data: data, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit, MetricTones: fixture.StatusTones(), Boundaries: boundaries,
+		Variant: pattern.ComparisonVariant(e.Config.ComparisonVariant), MetricSigns: fixture.StatusSigns()})
 }
 
 func bandStory(e Environment) (runtime.Scene, error) {

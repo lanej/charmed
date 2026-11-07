@@ -14,7 +14,7 @@ Requires Go **1.26.8+**. The documentation app also needs Node **24+** and npm. 
 go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
 go run ./cmd/workbench run screen/deployment --scenario isolated-hosts --sigma 3
-go run ./cmd/workbench run screen/deployment-bands --sigma 3
+go run ./cmd/workbench run screen/deployment --comparison-variant bands
 go run ./cmd/workbench run chart/timeseries --theme light --series 3
 go run ./cmd/workbench capture screen/services --plain
 ```
@@ -70,11 +70,13 @@ The core uses upstream Charm v2 modules. It has no JavaScript runtime requiremen
 
 ## MDX workbench
 
+The comparison keeps **Stacked** as its default presentation. **Disconnected bands** is a live and saved variant of the same component; switching it preserves host, metric, window, sigma, focus and policy state. Native users can press `b`. The atom catalog also includes signed numbers with configurable sign colors, bright/normal/dim pills, and reusable OK/WARN/ERROR/UNKNOWN/OFF statuses.
+
 The deployment comparison example groups hosts by actual version identifiers, with reference/candidate roles and a separate blue/green deployment-method label. Semantic pills identify 2xx success, 3xx redirects, 4xx client errors and 5xx server errors. It combines nested 1/2/3σ host-spread bands, request-weighted histories and linked host inspection. Four synthetic scenarios distinguish a uniform regression, isolated bad hosts, unequal traffic and insufficient samples. Read **Compare a deployment** in the catalog for the count contract and statistical interpretation. The bands describe host variability; they are not confidence intervals or rollout decisions. Run `go run ./examples/deployment` for a standalone terminal application.
 
 [View the deployment comparison](docs/assets/deployment.png).
 
-The screen composes the same distribution, interval, time-series, table, pill and attention components exposed in the catalog. Both the host list and member inspector use native tables. Version IDs label data directly, with no legends or key footers. Optional per-metric policies distinguish host z-score limits from fleet percentage-point deltas. Warning/error attention is separate from HTTP status semantics and from the displayed sigma bands. The example enables illustrative rules; use `--boundaries=false` or the **No boundaries** variant to keep deviations descriptive. Missing data remains unknown when a rule is configured.
+The screen composes the same distribution, interval, time-series, table, pill and attention components exposed in the catalog. Both the host list and member inspector use native tables. Panel titles merge the version comparison into signed delta bars on one shared scale; inspector percentage cells compose native progress bars and exact values. Version IDs label data directly, with no legends or key footers. Optional per-metric policies distinguish host z-score limits from fleet percentage-point deltas. Warning/error attention is separate from HTTP status semantics and from the displayed sigma bands. The example enables illustrative rules; use `--boundaries=false` or the **No boundaries** variant to keep deviations descriptive. Missing data remains unknown when a rule is configured.
 
 The Go registry generates each component's MDX page, argument metadata, source excerpt and four standard saved variants: default, light, narrow and monochrome. The deployment comparison also saves its alternate scenarios for static browsing. Generated files live in `docs/generated/` and are excluded from Git.
 
@@ -123,5 +125,3 @@ npm test
 Checks exercise cell bounds, deterministic frames, focus and selection, resize, background updates, native process cleanup, MDX source highlighting, live browser input and the static fallback.
 
 MIT licensed. Upstream components retain their respective licenses.
-
-The compact deployment overview (`screen/deployment-bands`) composes four independently scaled, directly labeled version band rows in one rectangle, plus the active status history and member table. Press `b` to switch views while preserving selection. Each row shares its percentage axis between versions; warning/error boundaries remain optional. [View the overview](docs/assets/deployment-bands.png).

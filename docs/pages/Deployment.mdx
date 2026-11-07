@@ -7,11 +7,21 @@ Four linked panels compare **2xx, 3xx, 4xx and 5xx response percentages** betwee
 
 <StoryCanvas storyId="screen/deployment" />
 
+## Presentation variants
+
+**Stacked is the default.** The same component offers **Disconnected bands** in the **Comparison variant** control. Changing it keeps the current host, metric, window, sigma, focus and attention policy. **b** toggles presentation natively; `SetVariant(pattern.Stacked)` and `SetVariant(pattern.Bands)` select it explicitly. The browser control stays synchronized with native keyboard changes.
+
+<StoryCanvas storyId="screen/deployment" variant="Disconnected bands" />
+
+The band variant composes the same distributions and title-delta properties into a rectangle, with the active class's history below it. Each class retains a percentage axis shared by both versions. Static exports save **Disconnected bands** alongside the default stacked fixture, rather than publishing a replacement screen. Native: `go run ./cmd/workbench run screen/deployment --comparison-variant bands`.
+
 ## Read the comparison
 
-The **fleet rate** is total class responses divided by total responses in the selected window. The delta is candidate minus reference in **percentage points**. A host serving 100,000 responses contributes more than one serving 100.
+The **fleet rate** is total class responses divided by total responses in the selected window. A host serving 100,000 responses contributes more than one serving 100. Each panel title merges the version comparison into one **delta bar**: shared reference/candidate response share cancels, leaving the signed candidate-minus-reference difference in **percentage points**. Negative changes extend left of zero; positive changes extend right, with an exact signed value alongside.
 
-Status classes have semantic pills: **2xx Success** in green, **3xx Redirects** in blue, **4xx Client error** in amber and **5xx Server error** in red. The same category pill appears in its panel, the active host-list heading and the inspector. Labels preserve meaning in monochrome and ASCII output. These colors describe response categories, rather than declaring every redirect or client error a release regression.
+All four title bars share one symmetric domain, rounded to a readable extent and shown once in the window metadata. The domain includes all supplied windows and configured fleet limits, so selecting a window or host does not rescale a deviation. Repeated fleet-percentage rows are removed. The title delta is request weighted; the mean values in the body describe the eligible-host distribution.
+
+Status classes use compact code pills: **2xx** success in green, **3xx** redirects in blue, **4xx** client errors in amber and **5xx** server errors in red. The same category pill appears in its panel, the active host-list heading and the inspector. Labels preserve meaning in monochrome and ASCII output. These colors describe response categories, rather than declaring every redirect or client error a release regression.
 
 The **host mean** gives each eligible host equal weight. The nested bands are the host mean ±1, ±2 and ±3 **sample standard deviations**, using the `n − 1` denominator. The brightest inner band is 1σ; the lighter surrounding bands are 2σ and 3σ. The mean is `|`; `X` marks the selected host on its version's band. Both versions share the same axis within a response class. Different classes have their own axes so a small 5xx shift stays visible. The axis includes both versions' full 3σ extent and the selected host; changing the visible band limit keeps that axis stable. Displayed bands stop at 0% and 100%.
 
@@ -32,7 +42,7 @@ Live previews expose a Scenario control. Static builds include the alternate sce
 | `unequal-traffic` | Host error propensities are similar, while the versions receive different volumes on the higher-error hosts | A weighted fleet delta without a comparable host-mean shift; this is workload confounding |
 | `insufficient-samples` | Most hosts serve fewer than 1,000 requests; some serve none | Excluded host counts, `n/a` spread and the absence of finite z-scores |
 
-Use **↑/↓** in the host table to choose a host, **←/→** to choose a time window, **[ / ]** to change the active response class, and **1 / 2 / 3** to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. The controls below the preview set the initial scenario and band limit; changing them starts a fresh session. **Tab** moves between the host list, metric panels and inspector. The member inspector is a native table with code, rate, reference deviation and optional attention columns. Its arrow keys select the active metric while retaining the selected host. Arrow keys scroll the metric region; **Ctrl+N** advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.
+Use **↑/↓** in the host table to choose a host, **←/→** to choose a time window, **[ / ]** to change the active response class, and **1 / 2 / 3** to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. The controls below the preview set the initial scenario and band limit; changing them starts a fresh session. **Tab** moves between the host list, metric panels and inspector. The member inspector is a dense native table with code, percentage-bar rate, reference deviation and optional attention columns. Each percentage cell composes a native progress bar on a fixed 0–100% scale with its precise numeric value; small percentages can fall below terminal bar resolution. Its arrow keys select the active metric while retaining the selected host. Arrow keys scroll the metric region; **Ctrl+N** advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.
 
 ## Optional warning and error boundaries
 
@@ -47,7 +57,7 @@ The **Deviation boundaries** control enables illustrative policies or removes th
 
 Each metric, scope, severity and side is optional. Host policies apply to eligible hosts in either version. Fleet policies compare the two request-weighted rates and require at least the configured minimum request count in each version. Equality triggers a boundary; error takes precedence over warning. Missing or insufficient measurements produce **UNKNOWN**, rather than a normal result. Host sigma rules remain unknown when reference spread is zero or unavailable; fleet percentage-point rules can still evaluate when their counts are available.
 
-The attention indicator composes the shared pill component. It appears on the screen and metric heading, the fleet delta, affected host rows and inspector values. A metric's indicator shows the strongest fleet or host attention; the inspector preserves the individual results. HTTP status-category pills keep their separate meanings: a red **5xx Server error** category does not itself raise an **ERROR** attention state.
+The attention indicator composes the shared pill component. It appears on the screen and metric heading, affected host rows and inspector values. The delta property uses the fleet attention tone; its metric badge shows the strongest fleet or host state. A metric's indicator shows the strongest fleet or host attention; the inspector preserves the individual results. HTTP status-category pills keep their separate meanings: a red **5xx** category does not itself raise an **ERROR** attention state.
 
 `W` and `E` mark configured host warning and error boundaries on the distributions. The shared axis includes valid boundary positions. At terminal resolution, coincident markers show the stronger error marker; `X` takes priority for the selected host. Fleet limits appear directly on metric cards with full warning/error labels. Host limits are supplied by the application policy and marked on the bands. **The 1/2/3σ controls change the displayed bands and descriptive tail counts, independently of attention policies.**
 
@@ -74,18 +84,6 @@ err := screen.SetBoundaries(rules)
 
 The optional callback emits typed `attention.Changed` events when a metric's **hosts** or **fleet** attention level changes, including recovery and removal of a policy. It seeds the initial state without emitting a burst of events. Rendering, resizing and changing the displayed sigma do not emit attention transitions.
 
-## Inspect disconnected version bands
-
-The compact overview arranges status classes as **four independent rows in one rectangle**. Each row has directly labeled version IDs and host means beside disconnected, nested 1/2/3σ bands. The status class keeps its semantic pill; optional warning/error markers and attention use the same components and policies as the detailed screen. There is no outline connecting categories and no series legend.
-
-<StoryCanvas storyId="screen/deployment-bands" />
-
-Each status class owns a clearly labeled **percentage axis shared by both versions**. A 0.2% server-error rate stays readable beside a 96% success rate. Different status rows have different numeric ranges: compare the labeled means and percentage-point deltas across rows, rather than comparing bar lengths between classes. The range includes both versions' full three-sigma spread, the selected host and valid attention boundaries. Changing the displayed 1/2/3σ limit preserves that row's range. Missing observations remain `n/a`; no reference standard deviation is needed to display raw rates.
-
-**[ / ]** selects a status row and updates its fleet summary, history and host ranking. Selecting a host marks its observation on its version's bands and updates the inspector and history. **b** switches between the compact overview and all four detailed panels without losing the host, metric, window or band limit. The matrix composes `chart.DistributionComparison` in compact form, which composes the existing `chart.IntervalBand` atom. The history below it uses the same `chart.ComparisonPanel` molecule as the detailed view. Warning/error boundaries remain optional and independent of the visible sigma limit.
-
-Run `go run ./cmd/workbench run screen/deployment-bands --sigma 3`, or inspect `chart/band-matrix` for the reusable composition. Static builds include the traffic scenarios and **No boundaries** variant.
-
 ## Sampling and interpretation
 
 At least **1,000 requests per host per window** are required for the example's host mean and spread. Low-volume hosts still contribute their actual counts to the fleet rate. A zero-request host has an unavailable rate, rather than a 0% rate. Missing metric counts are rejected; explicit zero counts are accepted. At least two eligible hosts are needed for a standard deviation. A zero or unavailable reference standard deviation yields `z(ref) = n/a`.
@@ -98,12 +96,21 @@ References: [NIST proportion control charts](https://www.itl.nist.gov/div898/han
 
 ## Compose the reusable pieces
 
+Signed values use `text.SignedNumber`. Its `SignTones` configure positive, negative and zero independently of warning/error boundaries. In this example, rising 2xx is green and falling 2xx is red; 5xx reverses those colors. Redirect and client-error changes use a direction-only tone because their benefit requires application context. Missing and non-finite observations render `n/a`; tiny nonzero values retain their sign rather than rounding to zero. Numeric color describes direction policy, while attention labels and the delta bar describe configured severity.
+
+`text.Pill` separates semantic tone from `text.Bright`, `text.Normal` and `text.Dim` emphasis. `feedback.Status` supplies reusable `OK`, `WARN`, `ERROR`, `UNKNOWN` and `OFF` states. `feedback.Attention` composes these display atoms after rule evaluation; it keeps unconfigured attention absent rather than implying an OK state. The catalog gives signed numbers, pills and statuses their own atom examples and saved emphasis variants.
+
 | Layer | Component | Responsibility |
 | --- | --- | --- |
 | Atom | `chart.IntervalBand` | Draw caller-supplied nested intervals and observation markers with ntcharts canvas |
 | Atom | `text.Pill` | Render a labeled semantic tone, with theme-aware contrast and a text fallback |
+| Atom | `text.SignedNumber` | Preserve exact sign and units with configurable sign tones, neutral missing values and emphasis |
+| Atom | `feedback.Status` | Render OK, WARN, ERROR, UNKNOWN and OFF with shared tone and emphasis |
 | Molecule | `feedback.Attention` | Compose a labeled warning/error/unknown/normal state from the shared pill |
+| Molecule | `chart.DeltaProperty` | Compose a merged, signed title-bar comparison from the interval atom |
+| Molecule | `feedback.PercentBar` | Compose native progress and an exact percentage as a dense table cell |
 | Molecule | `chart.DistributionComparison` | Compose mean/spread labels, interval bands, boundary markers and a shared axis |
+| Molecule | `chart.BandMatrix` | Compose disconnected distribution rows as a presentation variant |
 | Molecule | `chart.ComparisonPanel` | Compose the summary, distribution comparison and native time-series history |
 | Analysis | `cohort.Analyze` | Calculate weighted rates and unweighted sample spread from interval counts |
 | Policy | `attention.Rule` and `cohort.Assess` | Evaluate optional numeric boundaries separately from rendering and count aggregation |
@@ -122,4 +129,4 @@ Each `Window` has an inclusive start and exclusive end, and each `Sample` suppli
 
 Call `SetData` on the Bubble Tea update thread when new data arrives. Invalid updates return an error and preserve the existing screen. Valid updates copy the data and retain the selected host where it still exists. Appending windows follows the latest window only when it was already selected; inspecting an older window keeps that window selected. For comparisons scoped to a route or region, supply that matched population and label it in `Scope`.
 
-The optional `Emit` callback reports member selection, time window, active metric, band-limit changes and attention transitions. Applications own statistical inference, notification delivery and deployment decisions.
+The optional `Emit` callback reports member selection, time window, active metric, band-limit changes, presentation variants and attention transitions. Applications own statistical inference, notification delivery and deployment decisions. Supply `MetricSigns` independently of `MetricTones` and `Boundaries` when composing your own domain.

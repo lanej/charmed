@@ -12,16 +12,19 @@ import (
 	"github.com/lanej/charmed/theme"
 )
 
-func TestBandOverviewPreservesSelectionAndOptionalAttention(t *testing.T) {
+func TestComparisonVariantsPreserveSelectionAndOptionalAttention(t *testing.T) {
 	d, _ := fixture.Data("isolated-hosts")
-	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Dark), MinRequests: 1000, BandOverview: true, Boundaries: fixture.Boundaries()})
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Dark), MinRequests: 1000, Variant: pattern.Bands, Boundaries: fixture.Boundaries()})
 	if err != nil {
 		t.Fatal(err)
+	}
+	if m.Variant() != pattern.Bands {
+		t.Fatal("explicit band variant ignored")
 	}
 	m.Init()
 	m.Resize(layout.Size{Width: 132, Height: 39})
 	frame := ansi.Strip(m.Panels.View())
-	if !strings.Contains(frame, "Version bands") || !strings.Contains(frame, fixture.ReferenceVersionID) || !strings.Contains(frame, "ERROR") {
+	if !strings.Contains(frame, "Disconnected bands") || !strings.Contains(frame, fixture.ReferenceVersionID) || !strings.Contains(frame, "ERROR") {
 		t.Fatal("overview lost direct version identity or policy attention")
 	}
 	m.Update(tea.KeyPressMsg{Code: tea.KeyDown})
@@ -29,11 +32,14 @@ func TestBandOverviewPreservesSelectionAndOptionalAttention(t *testing.T) {
 	m.SetWindow(10)
 	m.SetSigma(1)
 	selected := m.Selected()
-	m.SetBandOverview(false)
-	m.SetBandOverview(true)
+	if err := m.SetVariant("unknown"); err == nil || m.Variant() != pattern.Bands {
+		t.Fatal("invalid variant changed presentation")
+	}
+	m.SetVariant(pattern.Stacked)
+	m.SetVariant(pattern.Bands)
 	for _, size := range []layout.Size{{Width: 40, Height: 16}, {Width: 132, Height: 39}} {
 		m.Resize(size)
-		if m.Selected() != selected || m.MetricID() != "2xx" || m.WindowIndex() != 10 || m.Sigma() != 1 || !m.BandOverview() {
+		if m.Selected() != selected || m.MetricID() != "2xx" || m.WindowIndex() != 10 || m.Sigma() != 1 || m.Variant() != pattern.Bands {
 			t.Fatal("view or resize lost shared state")
 		}
 	}
@@ -53,5 +59,16 @@ func TestBandOverviewPreservesSelectionAndOptionalAttention(t *testing.T) {
 	frame = ansi.Strip(m.Panels.View())
 	if !strings.Contains(frame, "n/a") || strings.Contains(frame, "NaN") || strings.Contains(frame, "Inf") {
 		t.Fatal("sparse bands invented observations")
+	}
+}
+
+func TestDefaultComparisonRetainsStackedPresentation(t *testing.T) {
+	d, _ := fixture.Data("isolated-hosts")
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Dark), MinRequests: 1000})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if m.Variant() != pattern.Stacked || strings.Contains(ansi.Strip(m.Panels.View()), "Disconnected bands") {
+		t.Fatal("the band variant replaced the default stacked presentation")
 	}
 }

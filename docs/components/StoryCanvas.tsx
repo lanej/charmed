@@ -84,6 +84,7 @@ export function StoryCanvas({
       entry?.snapshots.find((snapshot) => snapshot.name === variant)?.config ??
       entry!.defaults,
   );
+  const [presetRevision, setPresetRevision] = useState(0);
   useEffect(() => {
     if (entry)
       setConfig(
@@ -97,7 +98,7 @@ export function StoryCanvas({
   const states = entry.states ?? [];
   return (
     <div className="story-canvas">
-      <TerminalStory storyId={storyId} {...config} />
+      <TerminalStory key={`${storyId}:${presetRevision}`} storyId={storyId} {...config} onComparisonVariantChange={(variant) => set("comparisonVariant",variant)} />
       <details className="fixture-controls" open>
         <summary>
           Fixture controls<span>Changes run through the Go model</span>
@@ -112,7 +113,10 @@ export function StoryCanvas({
                 const snapshot = entry.snapshots.find(
                   (snapshot) => snapshot.name === event.target.value,
                 );
-                if (snapshot) setConfig(snapshot.config);
+                if (snapshot) {
+                  setConfig(snapshot.config);
+                  setPresetRevision((revision) => revision + 1);
+                }
               }}
             >
               <option value="" disabled>
@@ -206,6 +210,25 @@ export function StoryCanvas({
           )}
           {entry.controls?.includes("candidateID") && (
             <Identifier label="Candidate version" value={config.candidateID} other={config.referenceID} onChange={(value) => set("candidateID", value)} />
+          )}
+          {entry.controls?.includes("comparisonVariant") && (
+            <label>
+              Comparison variant
+              <select aria-label="Comparison variant" value={config.comparisonVariant} onChange={(event) => set("comparisonVariant",event.target.value)}>
+                <option value="stacked">Stacked</option>
+                <option value="bands">Disconnected bands</option>
+              </select>
+            </label>
+          )}
+          {entry.controls?.includes("emphasis") && (
+            <label>
+              Emphasis
+              <select aria-label="Emphasis" value={config.emphasis} onChange={(event) => set("emphasis",event.target.value)}>
+                <option value="bright">Bright</option>
+                <option value="normal">Normal</option>
+                <option value="dim">Dim</option>
+              </select>
+            </label>
           )}
           {entry.controls?.includes("sigma") && (
             <label>

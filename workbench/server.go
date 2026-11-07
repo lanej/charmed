@@ -195,11 +195,30 @@ func (s *Server) session(w http.ResponseWriter, r *http.Request) {
 			Data    string `json:"data"`
 			Columns int    `json:"columns"`
 			Rows    int    `json:"rows"`
+			Variant string `json:"variant"`
 		}
 		if json.Unmarshal(data, &message) != nil {
 			return
 		}
 		switch message.Type {
+		case "variant":
+			if id != "screen/deployment" {
+				return
+			}
+			// Explicit native presentation setters, rather than a toggle, make
+			// browser controls and keyboard changes idempotent in the same PTY.
+			key := ""
+			switch message.Variant {
+			case "stacked":
+				key = "\x1b[17~" // F6
+			case "bands":
+				key = "\x1b[18~" // F7
+			default:
+				return
+			}
+			if _, err = io.WriteString(terminal, key); err != nil {
+				return
+			}
 		case "input":
 			if _, err = io.WriteString(terminal, message.Data); err != nil {
 				return
