@@ -10,7 +10,10 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/feedback"
+	"github.com/lanej/charmed/story"
+	"github.com/lanej/charmed/text"
+	"github.com/lanej/charmed/theme"
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/extension"
 )
@@ -24,7 +27,10 @@ type guidePage struct {
 	Groups      []guideGroup
 	Coverage    []Coverage
 	Preview     *ManifestEntry
+	Showcase    []showcaseItem
+	Atoms       []string
 }
+type showcaseItem struct{ Title, Description, Link, Frame, NarrowFrame string }
 type guideGroup struct {
 	Name    string
 	Entries []ManifestEntry
@@ -73,13 +79,62 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		rendered := strings.NewReplacer("<pre>", `<pre tabindex="0">`, "<table>", `<table tabindex="0">`).Replace(content.String())
 		page.Content = template.HTML(rendered)
 		if page.File == "index.html" {
-			page.Coverage = CoverageInventory()
+			t := theme.New(theme.Dark)
+			var states []string
+			for _, state := range []feedback.Status{feedback.OK, feedback.Warn, feedback.Error, feedback.Unknown, feedback.Off} {
+				states = append(states, story.FormatFrame(state.View(text.Bright, t), story.Config{Theme: theme.Dark, Profile: "ansi256"}))
+			}
+			page.Atoms = states
+			for _, item := range []struct{ ID, Title, Description string }{
+				{"chart/timeseries", "Time series", "Measurements, baselines and shared time windows."},
+				{"chart/bars", "Bars", "Compare categories with native terminal geometry."},
+				{"chart/distributions", "Distributions", "Cohort means, spread and selected observations."},
+				{"text/signed-number", "Signed values", "Direction, precision and semantic emphasis."},
+			} {
+				d, err := story.Find(item.ID)
+				if err != nil {
+					return err
+				}
+				c := d.Defaults
+				c.Columns = 64
+				c.Rows = 16
+				c.Profile = "ansi256"
+				frame, err := story.Frame(item.ID, c)
+				if err != nil {
+					return err
+				}
+				c.Columns = 40
+				narrow, err := story.Frame(item.ID, c)
+				if err != nil {
+					return err
+				}
+				page.Showcase = append(page.Showcase, showcaseItem{item.Title, item.Description, "components.html#" + item.ID, frame, narrow})
+			}
 			for i := range entries {
 				if entries[i].ID == "screen/services" {
-					page.Preview = &entries[i]
+					preview := entries[i]
+					c := preview.Defaults
+					c.Rows = 24
+					c.Profile = "ansi256"
+					frame, err := story.Frame(preview.ID, c)
+					if err != nil {
+						return err
+					}
+					preview.Snapshots = []Snapshot{{Name: "Default", Config: c, Frame: frame}}
+					c.Columns = 40
+					c.Rows = 28
+					narrow, err := story.Frame(preview.ID, c)
+					if err != nil {
+						return err
+					}
+					preview.Snapshots = append(preview.Snapshots, Snapshot{Name: "Narrow", Config: c, Frame: narrow})
+					page.Preview = &preview
 					break
 				}
 			}
+		}
+		if page.File == "development.html" {
+			page.Coverage = CoverageInventory()
 		}
 		families := []string{}
 		for _, entry := range entries {
@@ -99,8 +154,8 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		}
 	}
 	funcs := template.FuncMap{
-		"plain": ansi.Strip,
-		"name":  func(title string) string { parts := strings.Split(title, "/"); return parts[len(parts)-1] },
+		"terminal": terminalHTML,
+		"name":     func(title string) string { parts := strings.Split(title, "/"); return parts[len(parts)-1] },
 		"link": func(id string) (string, error) {
 			for _, entry := range entries {
 				if entry.ID == id {
@@ -130,7 +185,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 	if err != nil {
 		return err
 	}
-	if err := os.WriteFile(filepath.Join(directory, "style.css"), css, 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(directory, "style.css"), append(css, []byte(terminalCSS())...), 0644); err != nil {
 		return err
 	}
 	if err := os.MkdirAll(filepath.Join(directory, "assets"), 0755); err != nil {

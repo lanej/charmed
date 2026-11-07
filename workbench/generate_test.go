@@ -104,6 +104,13 @@ func TestStaticGuide(t *testing.T) {
 			t.Errorf("fixture %s appears %d times, want once", d.ID, found)
 		}
 	}
+	if bytes.Contains(pages["index.html"], []byte("<table")) {
+		t.Error("coverage inventory must not replace the home showcase")
+	}
+	if !bytes.Contains(pages["index.html"], []byte("term-bgx")) {
+		t.Error("showcase must preserve native status pill fills")
+	}
+
 	if !bytes.Contains(pages["components.html"], []byte("&lt;")) {
 		t.Error("expected escaped source or snapshot content")
 	}

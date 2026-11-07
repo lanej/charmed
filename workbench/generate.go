@@ -93,6 +93,9 @@ func Generate(out string) error {
 		for _, v := range variants {
 			c := d.Defaults
 			v.change(&c)
+			if c.Profile != "none" {
+				c.Profile = "ansi256"
+			}
 			frame, err := story.Frame(d.ID, c)
 			if err != nil {
 				return fmt.Errorf("capture %s: %w", d.ID, err)

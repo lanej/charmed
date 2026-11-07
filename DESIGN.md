@@ -2,11 +2,11 @@
 
 ## Purpose and task
 
-Help Go developers choose terminal components, understand composition, and run native examples. Related components share capability sections so readers can compare them without opening a page for each widget.
+Show Go developers the actual components first, then help them understand composition and run native examples. The front page is a showcase, with full screens, shared status atoms and a curated chart gallery. Related components share capability sections so readers can compare them without opening a page for each widget.
 
 ## Principles and tradeoffs
 
-Use a compact guide navigation and readable prose. Keep examples beside their name, description and native command. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved text frames omit ANSI styling and inherit the guide’s night surfaces; native commands provide color and full behavior.
+Use a compact guide navigation and readable prose. Keep examples beside their name, description and native command. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved terminal frames retain ANSI colors as static HTML and inherit the guide’s night surfaces; native commands provide truecolor and full behavior.
 
 ## Visual system and ownership
 
@@ -24,7 +24,7 @@ Every registered fixture must appear once in foundations, components or examples
 
 ### GUIDE-002
 
-Navigation and content must fit desktop and mobile viewports. Terminal frames and wide tables may scroll internally to preserve cell geometry. Viewrule checks main content and screenshots support manual layout review. Text frames cannot establish native color fidelity.
+Navigation and content must fit desktop and mobile viewports. Terminal frames and wide tables may scroll internally to preserve cell geometry. Viewrule checks main content and screenshots support manual layout review. Static snapshots use the ANSI 256-color profile; native truecolor output can differ slightly.
 
 ## Evidence and unresolved decisions
 
@@ -33,3 +33,7 @@ The user requested removal of interactive documentation and consolidation of per
 ### GUIDE-003
 
 Night mode is fixed across page chrome, prose, code, disclosures and saved output, independently of the operating system appearance. Embedded screenshots must not introduce light browser chrome or a different surface palette. Viewrule checks dark color-scheme and surface colors; visual review checks the examples. Native CLI theme options remain available independently.
+
+### GUIDE-004
+
+The home page leads with a composed native service screen and representative atoms/charts. Guide navigation stays in the sidebar; the coverage inventory lives on the development page. Terminal colors, pill fills and labels survive static export. Service lists use status atoms without redundant service/state headers; selection and keyboard behavior remain native.

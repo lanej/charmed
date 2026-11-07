@@ -42,3 +42,7 @@ go run ./cmd/workbench generate --out docs
 ```
 
 The generator tests check static output, composition links, source escaping, native fixture coverage and repeatable builds. The native suite covers terminal bounds, focus, selection, resize and process cleanup.
+
+## Coverage
+
+Implemented building blocks and optional integrations are listed below.

@@ -64,7 +64,7 @@ The core uses upstream Charm v2 modules. It has no JavaScript runtime requiremen
 go run ./cmd/workbench generate --out docs
 ```
 
-The generator writes `docs/dist/` using Go alone. GitHub Actions uploads this directory to Pages; the published guide uses ordinary HTML, CSS, images and links. It needs no npm, JavaScript or preview service. Saved text frames omit ANSI styling; run a native fixture for color, keyboard interaction and animation.
+The generator writes `docs/dist/` using Go alone. GitHub Actions uploads this directory to Pages; the published guide uses ordinary HTML, CSS, images and links. It needs no npm, JavaScript or preview service. Saved terminal frames retain ANSI colors as static HTML; run a native fixture for keyboard interaction and animation.
 
 Edit the guides in `docs/*.md` and layout in `workbench/site/`. The registry supplies snapshots and source and validates declared component composition. See [development](docs/development.md) and the [deployment guide](docs/deployment.md).
 
