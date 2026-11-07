@@ -86,7 +86,7 @@ func (m *TimeSeries) Resize(size layout.Size) {
 	m.size = size
 	m.rebuild()
 	m.Bubble.SetViewXYRange(minX, maxX, minY, maxY)
-	m.Bubble.DrawAll()
+	m.Bubble.DrawBrailleAll()
 }
 func (m *TimeSeries) Focus() { m.focused = true; m.Bubble.Focus() }
 func (m *TimeSeries) Blur()  { m.focused = false; m.Bubble.Blur() }
@@ -141,12 +141,12 @@ func (m *TimeSeries) rebuild() {
 	if m.focused {
 		m.Bubble.Focus()
 	}
-	m.Bubble.DrawAll()
+	m.Bubble.DrawBrailleAll()
 }
 func (m TimeSeries) Update(msg tea.Msg) (TimeSeries, tea.Cmd) {
 	var cmd tea.Cmd
 	m.Bubble, cmd = m.Bubble.Update(msg)
-	m.Bubble.DrawAll()
+	m.Bubble.DrawBrailleAll()
 	return m, cmd
 }
 func (m TimeSeries) View() string {

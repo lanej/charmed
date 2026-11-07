@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	tea "charm.land/bubbletea/v2"
 	"github.com/NimbleMarkets/ntcharts/v2/linechart/timeserieslinechart"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/chart"
@@ -24,6 +25,19 @@ func TestResizePreservesChartViewport(t *testing.T) {
 	if plot.Bubble.ViewMinX() != beforeMin || plot.Bubble.ViewMaxX() != beforeMax {
 		t.Fatal("resize reset the selected time window")
 	}
+
+	assertDots := func(stage string) {
+		t.Helper()
+		if !strings.ContainsFunc(ansi.Strip(plot.View()), func(r rune) bool { return r >= '\u2801' && r <= '\u28ff' }) {
+			t.Fatalf("%s lost dot rendering", stage)
+		}
+	}
+	assertDots("resize")
+	plot.Focus()
+	plot, _ = plot.Update(tea.KeyPressMsg{Code: tea.KeyRight})
+	assertDots("pan")
+	plot.SetData(data)
+	assertDots("data update")
 }
 
 func TestTimeSeriesRetainsNativePrecisionOptions(t *testing.T) {

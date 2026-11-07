@@ -46,3 +46,5 @@ The generator tests check static output, composition links, source escaping, nat
 ## Coverage
 
 Implemented building blocks and optional integrations are listed below.
+
+Terminal snapshots use a bundled [JuliaMono webfont](https://github.com/cormullion/juliamono/blob/0dfc749503778730d6af79183a17fcde668ae626/webfonts/JuliaMono-Regular.woff2) so braille dots and box-drawing glyphs retain a consistent cell width. It is distributed under its [included license](assets/JuliaMono-LICENSE.txt).

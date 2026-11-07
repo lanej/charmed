@@ -86,7 +86,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 			}
 			page.Atoms = states
 			for _, item := range []struct{ ID, Title, Description string }{
-				{"chart/timeseries", "Time series", "Measurements, baselines and shared time windows."},
+				{"chart/timeseries", "Time series", "Fine-grained dot traces over shared time windows."},
 				{"chart/bars", "Bars", "Compare categories with native terminal geometry."},
 				{"chart/distributions", "Distributions", "Cohort means, spread and selected observations."},
 				{"text/signed-number", "Signed values", "Direction, precision and semantic emphasis."},
@@ -191,7 +191,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 	if err := os.MkdirAll(filepath.Join(directory, "assets"), 0755); err != nil {
 		return err
 	}
-	assets, err := filepath.Glob(filepath.Join(root, "docs", "assets", "*.png"))
+	assets, err := filepath.Glob(filepath.Join(root, "docs", "assets", "*"))
 	if err != nil {
 		return err
 	}
