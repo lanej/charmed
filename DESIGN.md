@@ -37,3 +37,5 @@ Night mode is fixed across page chrome, prose, code, disclosures and saved outpu
 ### GUIDE-004
 
 The home page leads with a composed native service screen and representative atoms/charts. Guide navigation stays in the sidebar; the coverage inventory lives on the development page. Terminal colors, pill fills and labels survive static export. Service lists use status atoms without redundant service/state headers; selection and keyboard behavior remain native.
+
+Base terminal text uses neutral off-white and gray, including after ANSI 256-color conversion. Lavender is reserved for data-series differentiation, not ordinary service names or neutral status labels.
