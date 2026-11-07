@@ -50,3 +50,7 @@ Every fixture has a sidebar entry linking to its exact section anchor. A compone
 ### GUIDE-006
 
 Charmed has a documented identity with its own green-black web palette, lowercase lockup and code typography. Brand colors never replace the native semantic terminal palette. Build-time code highlighting escapes source HTML and maintains distinguishable keyword, string, comment and numeric roles.
+
+### GUIDE-007
+
+Documentation PRs publish an isolated Pages snapshot at `/charmed/pr-preview/pr-<number>/`. The PR description links to actual preview pages, not to itself, only after the published revision marker matches the current PR head. Reviewers should be able to inspect the rendered component catalog without merging first.
