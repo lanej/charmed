@@ -191,6 +191,13 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 	if err := os.WriteFile(filepath.Join(directory, "style.css"), append(css, []byte(terminalCSS())...), 0644); err != nil {
 		return err
 	}
+	tabs, err := siteFiles.ReadFile("site/tabs.js")
+	if err != nil {
+		return err
+	}
+	if err := os.WriteFile(filepath.Join(directory, "tabs.js"), tabs, 0644); err != nil {
+		return err
+	}
 	if err := os.MkdirAll(filepath.Join(directory, "assets"), 0755); err != nil {
 		return err
 	}
