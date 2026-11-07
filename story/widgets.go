@@ -48,7 +48,9 @@ func layoutStory(e Environment) (runtime.Scene, error) {
 func textStory(e Environment) (runtime.Scene, error) {
 	return static(func(layout.Size) string {
 		t := e.Config.Palette()
-		return title("Text primitives", e) + text.Label(e.Config.Value, t) + "\n\n" + text.Badge("READY", t) + " " + text.Badge("3 SELECTED", t) + "\n\n" + text.KeyHint("Enter", "select", t) + "   " + text.KeyHint("Esc", "dismiss", t)
+		return title("Text primitives", e) + text.Label(e.Config.Value, t) + "\n\n" + text.Badge("READY", t) + " " + text.Badge("3 SELECTED", t) + "\n\n" +
+			text.Pill("Success", text.Success, t) + " " + text.Pill("Info", text.Info, t) + "\n" + text.Pill("Warning", text.Warning, t) + " " + text.Pill("Danger", text.Danger, t) + "\n\n" +
+			text.KeyHint("Enter", "select", t) + "   " + text.KeyHint("Esc", "dismiss", t)
 	}), nil
 }
 

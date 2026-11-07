@@ -100,17 +100,25 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await page.goto("/#screen/deployment");
   await expect(page.getByRole("status")).toContainText("isolated PTY");
   const text = page.getByTestId("terminal-text");
-  await expect(text).toContainText("G-032 / G");
-  await expect(text).toContainText("Fleet B 96.093%  G 95.904%");
-  await expect(text).toContainText("Fleet B 0.200%  G 0.403%");
+  await expect(text).toContainText("method=blue/green");
+  await expect(text).toContainText("R a13c9f2");
+  await expect(text).toContainText("C f4d7e81");
+  await expect(text).toContainText("host-096 / C");
+  await expect(text).toContainText("ID: f4d7e81");
+  for (const pill of ["2xx Success", "3xx Redirects", "4xx Client error", "5xx Server error"]) {
+    await expect(text).toContainText(pill);
+  }
+  await expect(text).toContainText("Fleet R 96.093%  C 95.904%");
+  await expect(text).toContainText("Fleet R 0.200%  C 0.403%");
   const viewport = await page.locator(".terminal-scroller").evaluate((element) => ({
     width: element.clientWidth, contentWidth: element.scrollWidth,
   }));
   expect(viewport.contentWidth).toBeLessThanOrEqual(viewport.width);
   await page.getByRole("button", { name: "Focus terminal", exact: true }).click();
   await page.keyboard.press("ArrowDown");
-  await expect(page.getByTestId("terminal-events")).toContainText('"member":"G-031"');
-  await expect(text).toContainText("G-031 / G");
+  await expect(page.getByTestId("terminal-events")).toContainText('"member":"host-095"');
+  await expect(page.getByTestId("terminal-events")).toContainText('"cohort":"f4d7e81"');
+  await expect(text).toContainText("host-095 / C");
   await page.keyboard.press("ArrowLeft");
   await page.keyboard.press("2");
   await expect(page.getByTestId("terminal-events")).toContainText('"window":10');
@@ -119,10 +127,10 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await page.getByRole("spinbutton", { name: "Columns", exact: true }).fill("40");
   await page.getByRole("spinbutton", { name: "Columns", exact: true }).press("Enter");
   await expect(page.getByRole("status")).toContainText("40 × 40");
-  await expect(text).toContainText("G-031 / G");
+  await expect(text).toContainText("host-095 / C");
   await page.getByRole("spinbutton", { name: "Columns", exact: true }).fill("132");
   await page.getByRole("spinbutton", { name: "Columns", exact: true }).press("Enter");
-  await expect(text).toContainText("G-031 / G");
+  await expect(text).toContainText("host-095 / C");
   await expect(text).toContainText("+/- 2s host spread");
   await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption("insufficient-samples");
   await expect(text).toContainText("baseline s unavailable");
@@ -131,6 +139,21 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption("isolated-hosts");
   await page.getByRole("combobox", { name: "Host spread bands", exact: true }).selectOption("3");
   await expect(text).toContainText("5 beyond 3s");
+  const reference = page.getByRole("textbox", { name: "Reference version", exact: true });
+  const candidate = page.getByRole("textbox", { name: "Candidate version", exact: true });
+  await reference.fill("release/2026.11.07+build.42");
+  await reference.press("Enter");
+  await expect(text).toContainText("R release/2026.11.07+build.42");
+  await candidate.fill("sha256:731a9e4");
+  await candidate.press("Enter");
+  await expect(text).toContainText("ID: sha256:731a9e4");
+  await page.getByRole("button", { name: "Focus terminal", exact: true }).click();
+  await page.keyboard.press("ArrowDown");
+  await expect(page.getByTestId("terminal-events")).toContainText('"cohort":"sha256:731a9e4"');
+  await expect(page.getByTestId("terminal-events")).toContainText('"reference":"release/2026.11.07+build.42"');
+  await page.keyboard.press("Control+]");
+  await page.getByRole("combobox", { name: "Preset", exact: true }).selectOption("Default");
+  await expect(text).toContainText("ID: f4d7e81");
   if (process.env.CHARMED_CAPTURE_DIR) {
     mkdirSync(process.env.CHARMED_CAPTURE_DIR, { recursive: true });
     await page.locator(".story-canvas").screenshot({ path: join(process.env.CHARMED_CAPTURE_DIR, "deployment.png") });

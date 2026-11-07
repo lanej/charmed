@@ -2,7 +2,6 @@ package story
 
 import (
 	"fmt"
-	"image/color"
 
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/examples/deployment/fixture"
@@ -12,7 +11,7 @@ import (
 )
 
 func deploymentStory(e Environment) (runtime.Scene, error) {
-	data, err := fixture.Data(e.Config.Scenario)
+	data, err := fixture.DataWithVersions(e.Config.Scenario, fixture.Versions{Reference: e.Config.ReferenceID, Candidate: e.Config.CandidateID})
 	if err != nil {
 		return nil, err
 	}
@@ -20,9 +19,8 @@ func deploymentStory(e Environment) (runtime.Scene, error) {
 		data.Windows = nil
 	}
 	t := e.Config.Palette()
-	t.Series = []color.Color{t.SeriesColor(3), t.Success, t.Warning}
-	return pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Deployment comparison", Scope: "SYNTHETIC / " + e.Config.Scenario,
-		Data: data, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit})
+	return pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Deployment comparison", Scope: "method=blue/green / SYNTHETIC / " + e.Config.Scenario,
+		Data: data, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit, MetricTones: fixture.StatusTones()})
 }
 
 func bandStory(e Environment) (runtime.Scene, error) {

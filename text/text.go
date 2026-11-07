@@ -10,6 +10,36 @@ import (
 
 func Label(value string, t theme.Theme) string { return t.Text().Render(value) }
 func Badge(value string, t theme.Theme) string { return t.Heading().Render("[" + value + "]") }
+
+type Tone string
+
+const (
+	Neutral Tone = "neutral"
+	Success Tone = "success"
+	Info    Tone = "info"
+	Warning Tone = "warning"
+	Danger  Tone = "danger"
+)
+
+// Pill keeps its text label in every profile; color supplements its meaning.
+// Semantic fills use contrasting theme surfaces, with brackets in ASCII mode.
+func Pill(value string, tone Tone, t theme.Theme) string {
+	if t.ASCII {
+		return t.Text().Bold(true).Render("[" + value + "]")
+	}
+	fill := t.Foreground
+	switch tone {
+	case Success:
+		fill = t.Success
+	case Info:
+		fill = t.Info
+	case Warning:
+		fill = t.Warning
+	case Danger:
+		fill = t.Danger
+	}
+	return t.Text().Foreground(t.Background).Background(fill).Bold(true).Padding(0, 1).Render(value)
+}
 func KeyHint(key, description string, t theme.Theme) string {
 	return t.Heading().Render(key) + " " + t.Subtle().Render(description)
 }

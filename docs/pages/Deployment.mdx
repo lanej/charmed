@@ -3,19 +3,23 @@ import { GoSource } from "../components/GoSource";
 
 # Compare a deployment across a fleet
 
-Four linked panels compare **2xx, 3xx, 4xx and 5xx response percentages** between Blue v1.8 and Green v1.9. Each panel separates request-weighted fleet impact from variation between hosts. The counts are synthetic: 64 blue hosts, 32 green hosts, and twelve five-minute windows.
+Four linked panels compare **2xx, 3xx, 4xx and 5xx response percentages** between version identifiers `a13c9f2` and `f4d7e81` during a **blue/green deployment**. Reference and candidate are comparison roles; blue/green describes the deployment method. The counts are synthetic: 64 hosts serving the reference version, 32 serving the candidate, and twelve five-minute windows.
 
 <StoryCanvas storyId="screen/deployment" />
 
 ## Read the comparison
 
-The **fleet rate** is total class responses divided by total responses in the selected window. The delta is green minus blue in **percentage points**. A host serving 100,000 responses contributes more than one serving 100.
+The **fleet rate** is total class responses divided by total responses in the selected window. The delta is candidate minus reference in **percentage points**. A host serving 100,000 responses contributes more than one serving 100.
+
+Status classes have semantic pills: **2xx Success** in green, **3xx Redirects** in blue, **4xx Client error** in amber and **5xx Server error** in red. The same category pill appears in its panel, the active host-list heading and the inspector. Labels preserve meaning in monochrome and ASCII output. These colors describe response categories, rather than declaring every redirect or client error a release regression.
 
 The **host mean** gives each eligible host equal weight. The nested bands are the host mean ±1, ±2 and ±3 **sample standard deviations**, using the `n − 1` denominator. The brightest inner band is 1σ; the lighter surrounding bands are 2σ and 3σ. The mean is `|`; `X` marks the selected host on its version's band. Both versions share the same axis within a response class. Different classes have their own axes so a small 5xx shift stays visible. The axis includes both versions' full 3σ extent and the selected host; changing the visible band limit keeps that axis stable. Displayed bands stop at 0% and 100%.
 
-Histories show each version's request-weighted rate and the selected host's rate over all supplied windows. Blue and green keep the same identity in every panel; the third line is the inspected host.
+Histories show each version's request-weighted rate and the selected host's rate over all supplied windows. `R` and `C` are compact aliases for reference and candidate; the header shows their actual version identifiers and the inspector shows the selected version ID. Version series keep their identity in every panel, independently of the status-pill colors. The third line is the inspected host.
 
-The host list ranks absolute distance from the **blue host distribution** for the active response class. Its `z(B)` is `(host rate − blue host mean) / blue host standard deviation`. This is a descriptive distance, including for green hosts, rather than a confidence score. Green's widening spread does not redefine its reference. The list reports the number of eligible hosts beyond the selected distance in either direction; this includes both cohorts and is not a failure count.
+The host list ranks absolute distance from the **reference version's host distribution** for the active response class. Its `z(ref)` is `(host rate − reference host mean) / reference host standard deviation`. This is a descriptive distance, including for candidate hosts, rather than a confidence score. The candidate's widening spread does not redefine its reference. The list reports the number of eligible hosts beyond the selected distance in either direction; this includes both cohorts and is not a failure count.
+
+Version identifiers are opaque strings: a commit, release tag or build ID can identify either role. **Reference version** and **Candidate version** controls accept distinct identifiers without parsing their format. Editing an ID commits on blur or Enter and starts a fresh synthetic fixture. Host identifiers are independent of version, role and deployment environment.
 
 ## Try distinct failure shapes
 
@@ -23,16 +27,16 @@ Live previews expose a Scenario control. Static builds include the alternate sce
 
 | Scenario | What changes | What to inspect |
 | --- | --- | --- |
-| `isolated-hosts` | Five green hosts develop elevated 5xx rates after the fourth window | Green's wider spread, the ranked hosts and their histories |
-| `uniform-regression` | Every green host develops a higher 5xx rate | The shifted green mean with relatively narrow spread |
-| `unequal-traffic` | Host error propensities are similar, while blue and green route different volumes to the higher-error hosts | A weighted fleet delta without a comparable host-mean shift; this is workload confounding |
+| `isolated-hosts` | Five candidate hosts develop elevated 5xx rates after the fourth window | The candidate's wider spread, the ranked hosts and their histories |
+| `uniform-regression` | Every candidate host develops a higher 5xx rate | The shifted candidate mean with relatively narrow spread |
+| `unequal-traffic` | Host error propensities are similar, while the versions receive different volumes on the higher-error hosts | A weighted fleet delta without a comparable host-mean shift; this is workload confounding |
 | `insufficient-samples` | Most hosts serve fewer than 1,000 requests; some serve none | Excluded host counts, `n/a` spread and the absence of finite z-scores |
 
 Use **↑/↓** to choose a host, **←/→** to choose a time window, **[ / ]** to change the active response class, and **1 / 2 / 3** to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. The controls below the preview set the initial scenario and band limit; changing them starts a fresh session. **Tab** moves between the host list, metric panels and inspector. Arrow keys scroll the focused region; **Ctrl+N** advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.
 
 ## Sampling and interpretation
 
-At least **1,000 requests per host per window** are required for the example's host mean and spread. Low-volume hosts still contribute their actual counts to the fleet rate. A zero-request host has an unavailable rate, rather than a 0% rate. Missing metric counts are rejected; explicit zero counts are accepted. At least two eligible hosts are needed for a standard deviation. A zero or unavailable blue standard deviation yields `z(B) = n/a`.
+At least **1,000 requests per host per window** are required for the example's host mean and spread. Low-volume hosts still contribute their actual counts to the fleet rate. A zero-request host has an unavailable rate, rather than a 0% rate. Missing metric counts are rejected; explicit zero counts are accepted. At least two eligible hosts are needed for a standard deviation. A zero or unavailable reference standard deviation yields `z(ref) = n/a`.
 
 These bands describe host variation. They are **not confidence intervals**, do not imply 68/95/99.7% coverage for skewed host distributions, and do not determine whether a release is safe. Rare 5xx counts and unequal traffic need count-aware inference and a model of host and traffic heterogeneity. Repeated comparisons across hosts, classes and windows also need a decision policy that accounts for false positives. No automatic promote or rollback action is attached to these plots.
 
@@ -45,17 +49,20 @@ References: [NIST proportion control charts](https://www.itl.nist.gov/div898/han
 | Layer | Component | Responsibility |
 | --- | --- | --- |
 | Atom | `chart.IntervalBand` | Draw caller-supplied nested intervals and observation markers with ntcharts canvas |
+| Atom | `text.Pill` | Render a labeled semantic tone, with theme-aware contrast and a text fallback |
 | Analysis | `cohort.Analyze` | Calculate weighted rates and unweighted sample spread from interval counts |
 | Organism | `pattern.CohortComparison` | Coordinate distributions, time series, host selection, focus, windows and responsive layout |
-| Screen | `examples/deployment` | Name the versions, supply HTTP metrics and synthetic scenarios, choose the sample threshold and palette |
+| Screen | `examples/deployment` | Supply version IDs, the deployment method, HTTP status tones, synthetic counts and the sample threshold |
 
 <GoSource storyId="screen/deployment" />
 
-Run the example with `go run ./examples/deployment`, or use `go run ./cmd/workbench run screen/deployment --scenario uniform-regression --sigma 2`.
+Run the example with `go run ./examples/deployment`, or use `go run ./cmd/workbench run screen/deployment --scenario uniform-regression --sigma 2 --reference-version release-42 --candidate-version build-43`.
 
 ## Supply real telemetry
 
-Replace `fixture.Data` with `cohort.Data` from your application's telemetry adapter. Each `Window` has an inclusive start and exclusive end, and each `Sample` supplies a cohort ID, member ID, request count, and an explicit count for every configured metric. Supply **interval counts**, handling cumulative-counter resets and rate-to-count conversion in that adapter. Windows must be ordered, nonoverlapping and equal in duration; gaps and absent hosts are allowed. The UI never queries a telemetry service.
+Replace `fixture.Data` with `cohort.Data` from your application's telemetry adapter. For this screen, each `Cohort.ID` is the actual **version identifier**, and each `Sample.CohortID` points to that version. The first cohort is the reference; the second is the candidate. Group by version and host, independently of the deployment method or pool names. A version served in both environments remains one version cohort; aggregate its host counts accordingly. Deployment method and environment assignments are application metadata, rather than version identifiers.
+
+Each `Window` has an inclusive start and exclusive end, and each `Sample` supplies a version/cohort ID, member ID, request count, and an explicit count for every configured metric. Supply **interval counts**, handling cumulative-counter resets and rate-to-count conversion in that adapter. Windows must be ordered, nonoverlapping and equal in duration; gaps and absent hosts are allowed. The UI never queries a telemetry service. The application supplies a `MetricTones` map; the generic comparison component has no built-in HTTP status policy.
 
 Call `SetData` on the Bubble Tea update thread when new data arrives. Invalid updates return an error and preserve the existing screen. Valid updates copy the data and retain the selected host where it still exists. Appending windows follows the latest window only when it was already selected; inspecting an older window keeps that window selected. For comparisons scoped to a route or region, supply that matched population and label it in `Scope`.
 

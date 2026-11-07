@@ -6,19 +6,48 @@ import (
 	"fmt"
 	"math"
 	"slices"
+	"strings"
 	"time"
+	"unicode"
+	"unicode/utf8"
 
 	"github.com/lanej/charmed/cohort"
 )
 
 var Scenarios = []string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}
 
+const ReferenceVersionID = "a13c9f2"
+const CandidateVersionID = "f4d7e81"
+
+// Versions are opaque identifiers, independent of the deployment method,
+// environment names, comparison roles and visual series aliases.
+type Versions struct{ Reference, Candidate string }
+
+func (v Versions) Validate() error {
+	for _, id := range []string{v.Reference, v.Candidate} {
+		if strings.TrimSpace(id) == "" || len(id) > 128 || !utf8.ValidString(id) || strings.ContainsFunc(id, unicode.IsControl) {
+			return fmt.Errorf("version identifiers must be nonempty printable text of at most 128 bytes")
+		}
+	}
+	if v.Reference == v.Candidate {
+		return fmt.Errorf("reference and candidate need different version identifiers")
+	}
+	return nil
+}
+
 func Data(scenario string) (cohort.Data, error) {
+	return DataWithVersions(scenario, Versions{Reference: ReferenceVersionID, Candidate: CandidateVersionID})
+}
+
+func DataWithVersions(scenario string, versions Versions) (cohort.Data, error) {
+	if err := versions.Validate(); err != nil {
+		return cohort.Data{}, err
+	}
 	if !slices.Contains(Scenarios, scenario) {
 		return cohort.Data{}, fmt.Errorf("unknown deployment scenario %q", scenario)
 	}
-	d := cohort.Data{Cohorts: []cohort.Cohort{{ID: "blue", Label: "Blue v1.8", Short: "B"}, {ID: "green", Label: "Green v1.9", Short: "G"}},
-		Metrics: []cohort.Metric{{ID: "2xx", Label: "2xx"}, {ID: "3xx", Label: "3xx"}, {ID: "4xx", Label: "4xx"}, {ID: "5xx", Label: "5xx"}}}
+	d := cohort.Data{Cohorts: []cohort.Cohort{{ID: versions.Reference, Label: versions.Reference, Short: "R"}, {ID: versions.Candidate, Label: versions.Candidate, Short: "C"}},
+		Metrics: []cohort.Metric{{ID: "2xx", Label: "2xx Success"}, {ID: "3xx", Label: "3xx Redirects"}, {ID: "4xx", Label: "4xx Client error"}, {ID: "5xx", Label: "5xx Server error"}}}
 	start := time.Date(2026, 1, 1, 12, 0, 0, 0, time.UTC)
 	for bucket := range 12 {
 		w := cohort.Window{Start: start.Add(time.Duration(bucket) * 5 * time.Minute), End: start.Add(time.Duration(bucket+1) * 5 * time.Minute)}
@@ -30,7 +59,7 @@ func Data(scenario string) (cohort.Data, error) {
 			for host := range hosts {
 				requests := uint64(20000 + (host*7919+bucket*233)%60000)
 				if scenario == "unequal-traffic" {
-					// Host rates match, but green routes most traffic to the
+					// Host rates match, but the candidate routes most traffic to the
 					// naturally higher-error third of the population.
 					requests = 80000
 					if host%3 == 0 {
@@ -73,7 +102,7 @@ func Data(scenario string) (cohort.Data, error) {
 				}
 				counts := map[string]uint64{"3xx": uint64(math.Round(redirect * float64(requests))), "4xx": uint64(math.Round(client * float64(requests))), "5xx": uint64(math.Round(server * float64(requests)))}
 				counts["2xx"] = requests - counts["3xx"] - counts["4xx"] - counts["5xx"]
-				w.Samples = append(w.Samples, cohort.Sample{MemberKey: cohort.MemberKey{CohortID: group.ID, MemberID: fmt.Sprintf("%s-%03d", group.Short, host+1)}, Requests: requests, Counts: counts})
+				w.Samples = append(w.Samples, cohort.Sample{MemberKey: cohort.MemberKey{CohortID: group.ID, MemberID: fmt.Sprintf("host-%03d", c*64+host+1)}, Requests: requests, Counts: counts})
 			}
 		}
 		d.Windows = append(d.Windows, w)

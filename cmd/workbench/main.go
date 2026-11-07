@@ -54,6 +54,8 @@ func command() *cobra.Command {
 		cmd.Flags().IntVar(&c.Series, "series", c.Series, "Chart series count")
 		cmd.Flags().IntVar(&c.Sigma, "sigma", c.Sigma, "Maximum nested host-spread band: 1, 2 or 3")
 		cmd.Flags().StringVar(&c.Scenario, "scenario", c.Scenario, "Deployment fixture scenario (see MDX deployment guide)")
+		cmd.Flags().StringVar(&c.ReferenceID, "reference-version", c.ReferenceID, "Reference version identifier")
+		cmd.Flags().StringVar(&c.CandidateID, "candidate-version", c.CandidateID, "Candidate version identifier")
 		cmd.Flags().Float64Var(&c.Amount, "amount", c.Amount, "Progress or chart baseline, 0–100")
 		cmd.Flags().BoolVar(&c.Horizontal, "horizontal", false, "Use horizontal bars")
 		cmd.Flags().StringVar(&encoded, "config", "", "Internal encoded configuration")

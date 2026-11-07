@@ -30,12 +30,12 @@ func comparison(t *testing.T) (*pattern.CohortComparison, cohort.Data) {
 }
 func TestComparisonLinksSelectionAndRetainsStateAcrossResize(t *testing.T) {
 	m, _ := comparison(t)
-	if m.Selected().MemberID != "G-032" || m.WindowIndex() != 11 || m.MetricID() != "5xx" {
+	if m.Selected().MemberID != "host-096" || m.Selected().CohortID != fixture.CandidateVersionID || m.WindowIndex() != 11 || m.MetricID() != "5xx" {
 		t.Fatal("initial view did not select largest baseline deviation in the latest window")
 	}
 	before := m.Panels.View()
 	m.Update(tea.KeyPressMsg{Code: tea.KeyDown})
-	if m.Selected().MemberID != "G-031" || !strings.Contains(ansi.Strip(m.Inspector.View()), "G-031") || before == m.Panels.View() {
+	if m.Selected().MemberID != "host-095" || !strings.Contains(ansi.Strip(m.Inspector.View()), "ID: "+fixture.CandidateVersionID) || before == m.Panels.View() {
 		t.Fatal("selection did not coordinate plots and inspector")
 	}
 	m.Update(tea.KeyPressMsg{Code: tea.KeyLeft})
@@ -43,7 +43,7 @@ func TestComparisonLinksSelectionAndRetainsStateAcrossResize(t *testing.T) {
 	m.Update(press(']', "]"))
 	for _, size := range []layout.Size{{Width: 40, Height: 16}, {Width: 150, Height: 46}} {
 		m.Resize(size)
-		if m.Selected().MemberID != "G-031" || m.WindowIndex() != 10 || m.Sigma() != 1 || m.MetricID() != "2xx" {
+		if m.Selected().MemberID != "host-095" || m.WindowIndex() != 10 || m.Sigma() != 1 || m.MetricID() != "2xx" {
 			t.Fatal("resize or control change lost linked state")
 		}
 	}
@@ -51,7 +51,7 @@ func TestComparisonLinksSelectionAndRetainsStateAcrossResize(t *testing.T) {
 		t.Fatal("not all four panels include the selected member history")
 	}
 	m.Update(runtime.StepMsg{})
-	if m.WindowIndex() != 11 || m.Selected().MemberID != "G-031" {
+	if m.WindowIndex() != 11 || m.Selected().MemberID != "host-095" {
 		t.Fatal("window advance lost selection")
 	}
 }

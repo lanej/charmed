@@ -9,6 +9,7 @@ import (
 	"math"
 	"slices"
 
+	"github.com/lanej/charmed/examples/deployment/fixture"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/runtime"
 	"github.com/lanej/charmed/theme"
@@ -29,10 +30,12 @@ type Config struct {
 	Horizontal    bool       `json:"horizontal"`
 	Sigma         int        `json:"sigma"`
 	Scenario      string     `json:"scenario"`
+	ReferenceID   string     `json:"referenceID"`
+	CandidateID   string     `json:"candidateID"`
 }
 
 func DefaultConfig() Config {
-	return Config{Columns: 100, Rows: 30, Theme: theme.Dark, Profile: "truecolor", State: "ready", Value: "production", Series: 2, Amount: 68, Sigma: 3, Scenario: "isolated-hosts"}
+	return Config{Columns: 100, Rows: 30, Theme: theme.Dark, Profile: "truecolor", State: "ready", Value: "production", Series: 2, Amount: 68, Sigma: 3, Scenario: "isolated-hosts", ReferenceID: fixture.ReferenceVersionID, CandidateID: fixture.CandidateVersionID}
 }
 func (c Config) Validate() error {
 	if c.Columns < 20 || c.Columns > 240 || c.Rows < 8 || c.Rows > 80 {
@@ -55,6 +58,9 @@ func (c Config) Validate() error {
 	}
 	if c.Sigma < 1 || c.Sigma > 3 {
 		return errors.New("sigma must be 1, 2 or 3")
+	}
+	if err := (fixture.Versions{Reference: c.ReferenceID, Candidate: c.CandidateID}).Validate(); err != nil {
+		return err
 	}
 	if !slices.Contains([]string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, c.Scenario) {
 		return fmt.Errorf("unknown scenario %q", c.Scenario)

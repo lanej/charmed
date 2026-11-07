@@ -43,7 +43,7 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 | `collection` | Native tables, lists, trees, file pickers, viewports and bounded structured logs |
 | `feedback` | Spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
 | `form` | Themed Huh forms with native nested focus and validation |
-| `text` | Labels, badges, key hints and Glamour Markdown rendering |
+| `text` | Labels, badges, semantic pills, key hints and Glamour Markdown rendering |
 | `chart` | Sparklines, time series, line/scatter, bars, heatmaps, streamline/waveline, OHLC, canvas, interval bands, portable pictures and chart compositions |
 | `cohort` | Validated interval counts, request-weighted rates and unweighted member sample spread |
 | `pattern` | Service workbench and cohort comparison with linked plots, member selection and inspection |
@@ -68,7 +68,7 @@ The core uses upstream Charm v2 modules. It has no JavaScript runtime requiremen
 
 ## MDX workbench
 
-The deployment comparison example shows all four HTTP response classes across blue and green fleets, nested 1/2/3σ host-spread bands, request-weighted histories and linked host inspection. Four synthetic scenarios distinguish a uniform regression, isolated bad hosts, unequal traffic and insufficient samples. Read **Compare a deployment** in the catalog for the count contract and statistical interpretation. The bands describe host variability; they are not confidence intervals or rollout decisions. Run `go run ./examples/deployment` for a standalone terminal application.
+The deployment comparison example groups hosts by actual version identifiers, with reference/candidate roles and a separate blue/green deployment-method label. Semantic pills identify 2xx success, 3xx redirects, 4xx client errors and 5xx server errors. It combines nested 1/2/3σ host-spread bands, request-weighted histories and linked host inspection. Four synthetic scenarios distinguish a uniform regression, isolated bad hosts, unequal traffic and insufficient samples. Read **Compare a deployment** in the catalog for the count contract and statistical interpretation. The bands describe host variability; they are not confidence intervals or rollout decisions. Run `go run ./examples/deployment` for a standalone terminal application.
 
 [View the deployment comparison](docs/assets/deployment.png).
 

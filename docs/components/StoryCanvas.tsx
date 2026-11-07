@@ -43,6 +43,34 @@ function Dimension({
   );
 }
 
+function Identifier({ label, value, other, onChange }: {
+  label: string; value: string; other: string; onChange: (value: string) => void;
+}) {
+  const [draft, setDraft] = useState(value);
+  useEffect(() => setDraft(value), [value]);
+  return (
+    <label>
+      {label}
+      <input
+        aria-label={label}
+        value={draft}
+        maxLength={128}
+        onChange={(event) => {
+          event.currentTarget.setCustomValidity("");
+          setDraft(event.target.value);
+        }}
+        onBlur={(event) => {
+          const invalid = !draft.trim() || new TextEncoder().encode(draft).length > 128 || /\p{Cc}/u.test(draft) || draft === other;
+          event.currentTarget.setCustomValidity(invalid ? "Use a distinct, printable version identifier of 1–128 bytes." : "");
+          if (invalid) event.currentTarget.reportValidity();
+          else onChange(draft);
+        }}
+        onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }}
+      />
+    </label>
+  );
+}
+
 export function StoryCanvas({
   storyId,
   variant = "Default",
@@ -172,6 +200,12 @@ export function StoryCanvas({
                 ))}
               </select>
             </label>
+          )}
+          {entry.controls?.includes("referenceID") && (
+            <Identifier label="Reference version" value={config.referenceID} other={config.candidateID} onChange={(value) => set("referenceID", value)} />
+          )}
+          {entry.controls?.includes("candidateID") && (
+            <Identifier label="Candidate version" value={config.candidateID} other={config.referenceID} onChange={(value) => set("candidateID", value)} />
           )}
           {entry.controls?.includes("sigma") && (
             <label>

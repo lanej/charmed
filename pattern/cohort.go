@@ -2,6 +2,7 @@ package pattern
 
 import (
 	"fmt"
+	"maps"
 	"math"
 	"sort"
 	"strings"
@@ -11,22 +12,27 @@ import (
 	"charm.land/bubbles/v2/viewport"
 	tea "charm.land/bubbletea/v2"
 	"github.com/NimbleMarkets/ntcharts/v2/linechart/timeserieslinechart"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/cohort"
 	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/interaction"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/runtime"
+	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 )
 
 type CohortComparisonOptions struct {
 	Title, Scope string
-	Data         cohort.Data
-	Theme        theme.Theme
-	MinRequests  uint64
-	Sigma        int
-	Emit         func(any)
+	// Data orders the reference cohort first and candidate second. IDs retain
+	// their application identity; display aliases and roles do not replace them.
+	Data        cohort.Data
+	Theme       theme.Theme
+	MinRequests uint64
+	Sigma       int
+	Emit        func(any)
+	MetricTones map[string]text.Tone
 }
 
 // CohortComparison links per-metric distributions, request-weighted histories,
@@ -51,6 +57,7 @@ type CohortComparison struct {
 	tableHeight, inspectorHeight int
 	sidebar                      bool
 	emit                         func(any)
+	metricTones                  map[string]text.Tone
 }
 
 func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
@@ -61,8 +68,8 @@ func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
 		return nil, fmt.Errorf("sigma must be 1, 2 or 3")
 	}
 	m := &CohortComparison{title: o.Title, scope: o.Scope, theme: o.Theme, minRequests: max(1, o.MinRequests), sigma: o.Sigma, emit: o.Emit,
-		focus: interaction.NewFocus("hosts", "metrics", "inspector"), window: -1}
-	m.Table = collection.NewTable([]table.Column{{Title: "MEMBER", Width: 23}, {Title: "VER", Width: 3}, {Title: "z(B)", Width: 6}}, nil, 38, 14, o.Theme)
+		focus: interaction.NewFocus("hosts", "metrics", "inspector"), window: -1, metricTones: maps.Clone(o.MetricTones)}
+	m.Table = collection.NewTable([]table.Column{{Title: "MEMBER", Width: 22}, {Title: "ROLE", Width: 4}, {Title: "z(ref)", Width: 6}}, nil, 38, 14, o.Theme)
 	m.Panels = collection.NewViewport("", 100, 36)
 	m.Inspector = collection.NewViewport("", 38, 16)
 	m.size = layout.Size{Width: 132, Height: 40}
@@ -204,6 +211,7 @@ func (m *CohortComparison) Update(msg tea.Msg) tea.Cmd {
 func (m *CohortComparison) event(kind string) {
 	if m.emit != nil {
 		m.emit(map[string]any{"type": kind, "cohort": m.selected.CohortID, "member": m.selected.MemberID,
+			"reference": m.data.Cohorts[0].ID, "candidate": m.data.Cohorts[1].ID,
 			"window": m.window, "metric": m.MetricID(), "sigma": m.sigma})
 	}
 }
@@ -223,7 +231,7 @@ func (m *CohortComparison) Resize(size layout.Size) {
 	m.inspectorHeight = max(3, m.sideSize.Height-m.tableHeight)
 	m.Table.SetWidth(max(1, m.sideSize.Width-2))
 	m.Table.SetHeight(max(1, m.tableHeight-3))
-	m.Table.SetColumns([]table.Column{{Title: "MEMBER", Width: max(1, m.sideSize.Width-17)}, {Title: "VER", Width: 3}, {Title: "z(B)", Width: 6}})
+	m.Table.SetColumns([]table.Column{{Title: "MEMBER", Width: max(1, m.sideSize.Width-18)}, {Title: "ROLE", Width: 4}, {Title: "z(ref)", Width: 6}})
 	m.Panels.SetWidth(max(1, m.gridSize.Width))
 	m.Panels.SetHeight(max(1, m.gridSize.Height))
 	m.Inspector.SetWidth(max(1, m.sideSize.Width-2))
@@ -296,7 +304,8 @@ func (m *CohortComparison) updateDetails() {
 		lines = []string{"No member observations.", "Missing data is not zero."}
 	} else {
 		lines = []string{m.selected.MemberID + " / " + m.short(m.selected.CohortID)}
-		for i, metric := range m.data.Metrics {
+		lines = append(lines, ansi.Hardwrap("ID: "+m.selected.CohortID, max(1, m.sideSize.Width-2), true))
+		for i := range m.data.Metrics {
 			for _, summary := range m.summaries[i] {
 				for _, p := range summary.Points {
 					if p.MemberKey != m.selected {
@@ -309,14 +318,14 @@ func (m *CohortComparison) updateDetails() {
 					if !p.Eligible {
 						distance = "low volume"
 					}
-					lines = append(lines, fmt.Sprintf("%s %s  %s", metric.Label, rate(p.Rate, p.HasRate), distance))
+					lines = append(lines, fmt.Sprintf("%s %s  %s", m.metricLabel(i, true), rate(p.Rate, p.HasRate), distance))
 					if i == 0 {
 						lines = append(lines, fmt.Sprintf("%d requests in window", p.Requests))
 					}
 				}
 			}
 		}
-		lines = append(lines, "", "X = this member on its cohort band", "3 = member history in every plot", "z(B) = distance from baseline hosts", "Descriptive; not a confidence test.")
+		lines = append(lines, "", "X = this member on its cohort band", "3 = member history in every plot", "z(ref) = distance from reference hosts", "Descriptive; not a confidence test.")
 	}
 	m.Inspector.SetContent(strings.Join(lines, "\n"))
 	m.rebuildPlots()
@@ -374,8 +383,21 @@ func rate(value float64, ok bool) string {
 	}
 	return fmt.Sprintf("%.3f%%", value*100)
 }
+
+func (m *CohortComparison) metricLabel(index int, compact bool) string {
+	metric := m.data.Metrics[index]
+	value := metric.Label
+	if compact {
+		value = metric.ID
+	}
+	if tone, ok := m.metricTones[metric.ID]; ok {
+		return text.Pill(value, tone, m.theme)
+	}
+	return value
+}
+
 func (m *CohortComparison) panel(index, width int) string {
-	metric, summaries := m.data.Metrics[index], m.summaries[index]
+	summaries := m.summaries[index]
 	delta := "n/a"
 	if summaries[0].HasRate && summaries[1].HasRate {
 		delta = fmt.Sprintf("%+.3fpp", (summaries[1].Rate-summaries[0].Rate)*100)
@@ -432,7 +454,7 @@ func (m *CohortComparison) panel(index, width int) string {
 		lines = append(lines, axis+strings.Repeat(" ", max(1, width-2-len(axis)-len(end)))+end)
 	}
 	lines = append(lines, "History %: 1="+m.data.Cohorts[0].Short+" 2="+m.data.Cohorts[1].Short+" 3=member", m.plots[index].View())
-	return layout.Panel(metric.Label, strings.Join(lines, "\n"), layout.Size{Width: width, Height: 17}, m.theme, m.metric == index)
+	return layout.Panel(m.metricLabel(index, false), strings.Join(lines, "\n"), layout.Size{Width: width, Height: 17}, m.theme, m.metric == index)
 }
 func (m *CohortComparison) grid() string {
 	if len(m.plots) == 0 {
@@ -465,7 +487,7 @@ func (m *CohortComparison) View() string {
 		w := m.data.Windows[m.window]
 		window = fmt.Sprintf("%s-%s UTC [%d/%d]", w.Start.UTC().Format("15:04"), w.End.UTC().Format("15:04"), m.window+1, len(m.data.Windows))
 	}
-	info := fmt.Sprintf("%s | +/- %ds host spread | min %d req/host", window, m.sigma, m.minRequests)
+	info := fmt.Sprintf("%s | +/- %ds host spread | min %d req/host | %s=reference %s=candidate", window, m.sigma, m.minRequests, m.data.Cohorts[0].Short, m.data.Cohorts[1].Short)
 	baseline, outliers, eligible, excluded := m.summaries[m.metric][0], 0, 0, 0
 	for _, s := range m.summaries[m.metric] {
 		eligible += s.Eligible
@@ -480,7 +502,7 @@ func (m *CohortComparison) View() string {
 	if !baseline.HasSpread || baseline.StdDev == 0 {
 		count = "baseline s unavailable"
 	}
-	tableTitle := fmt.Sprintf("%s / %s", m.MetricID(), count)
+	tableTitle := fmt.Sprintf("%s / %s", m.metricLabel(m.metric, true), count)
 	tablePanel := layout.Panel(tableTitle, m.Table.View(), layout.Size{Width: m.sideSize.Width, Height: m.tableHeight}, m.theme, m.focus.Current() == "hosts")
 	inspector := layout.Panel("Member inspector", m.Inspector.View(), layout.Size{Width: m.sideSize.Width, Height: m.inspectorHeight}, m.theme, m.focus.Current() == "inspector")
 	side := layout.Column(tablePanel, inspector)
@@ -489,6 +511,6 @@ func (m *CohortComparison) View() string {
 		content = layout.Row(m.Panels.View(), " ", side)
 	}
 	footer := fmt.Sprintf("1/2/3 bands | Left/Right window | [/] metric | Tab: %s | %d eligible / %d excluded", m.focus.Current(), eligible, excluded)
-	note := "s = sample host SD; bands clipped 0-100%; z(B) is descriptive. Tab + arrows scroll."
+	note := "s = sample host SD; bands clipped 0-100%; z(ref) is descriptive. Tab + arrows scroll."
 	return layout.Fit(strings.Join([]string{header, strings.Join(groups, " | "), info, content, footer, m.theme.Subtle().Render(note)}, "\n"), m.size)
 }

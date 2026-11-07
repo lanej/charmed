@@ -3,7 +3,6 @@ package main
 
 import (
 	"fmt"
-	"image/color"
 	"os"
 
 	tea "charm.land/bubbletea/v2"
@@ -21,11 +20,9 @@ func main() {
 		os.Exit(1)
 	}
 	palette := theme.New(theme.Dark)
-	// Preserve version identity in the distributions and all linked histories.
-	palette.Series = []color.Color{palette.SeriesColor(3), palette.Success, palette.Warning}
 	screen, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{
-		Title: "Deployment comparison", Scope: "Synthetic HTTP responses / all routes",
-		Data: data, Theme: palette, MinRequests: 1000, Sigma: 3,
+		Title: "Deployment comparison", Scope: "method=blue/green / Synthetic HTTP responses / all routes",
+		Data: data, Theme: palette, MinRequests: 1000, Sigma: 3, MetricTones: fixture.StatusTones(),
 	})
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
