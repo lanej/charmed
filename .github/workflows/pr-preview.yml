@@ -92,6 +92,8 @@ jobs:
           name: charmed-pr-preview
           path: preview-artifact/
       - name: Publish snapshot, trigger Pages, verify live revision, and update PR
+        # During initial bootstrap, the new trusted publisher is not on main.
+        if: hashFiles('scripts/publish-pr-preview.sh') != ''
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event_name == 'workflow_dispatch' && inputs.pr || github.event.pull_request.number }}
