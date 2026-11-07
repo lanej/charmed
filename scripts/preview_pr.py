@@ -32,7 +32,7 @@ def description(body: str, number: int, revision: str, remove: bool = False) -> 
             f"- [Brand sheet]({base}brand.html)",
             f"- [Full catalog]({base})",
             "",
-            f"Built from \`{revision[:12]}\` · updated on every PR push.",
+            f"Built from `{revision[:12]}` · updated on every PR push.",
             END,
         ]
     )
