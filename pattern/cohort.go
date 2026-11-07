@@ -33,6 +33,8 @@ type CohortComparisonOptions struct {
 	Sigma       int
 	Emit        func(any)
 	MetricTones map[string]text.Tone
+	// Radar starts in the radial overview. The detail view shares its state.
+	Radar bool
 }
 
 // CohortComparison links per-metric distributions, request-weighted histories,
@@ -58,6 +60,7 @@ type CohortComparison struct {
 	sidebar                      bool
 	emit                         func(any)
 	metricTones                  map[string]text.Tone
+	radar, smooth                bool
 }
 
 func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
@@ -68,7 +71,7 @@ func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
 		return nil, fmt.Errorf("sigma must be 1, 2 or 3")
 	}
 	m := &CohortComparison{title: o.Title, scope: o.Scope, theme: o.Theme, minRequests: max(1, o.MinRequests), sigma: o.Sigma, emit: o.Emit,
-		focus: interaction.NewFocus("hosts", "metrics", "inspector"), window: -1, metricTones: maps.Clone(o.MetricTones)}
+		focus: interaction.NewFocus("hosts", "metrics", "inspector"), window: -1, metricTones: maps.Clone(o.MetricTones), radar: o.Radar, smooth: true}
 	m.Table = collection.NewTable([]table.Column{{Title: "MEMBER", Width: 22}, {Title: "ROLE", Width: 4}, {Title: "z(ref)", Width: 6}}, nil, 38, 14, o.Theme)
 	m.Panels = collection.NewViewport("", 100, 36)
 	m.Inspector = collection.NewViewport("", 38, 16)
@@ -84,6 +87,21 @@ func (m *CohortComparison) Selected() cohort.MemberKey { return m.selected }
 func (m *CohortComparison) WindowIndex() int           { return m.window }
 func (m *CohortComparison) Sigma() int                 { return m.sigma }
 func (m *CohortComparison) MetricID() string           { return m.data.Metrics[m.metric].ID }
+func (m *CohortComparison) RadarEnabled() bool         { return m.radar }
+func (m *CohortComparison) Smooth() bool               { return m.smooth }
+
+func (m *CohortComparison) SetRadar(enabled bool) {
+	m.radar = enabled
+	m.Panels.GotoTop()
+	m.updateDetails()
+	m.event("view")
+}
+
+func (m *CohortComparison) SetSmooth(smooth bool) {
+	m.smooth = smooth
+	m.updateDetails()
+	m.event("curve")
+}
 
 // SetData is atomic on validation failure. Appends follow the latest window only
 // if it was already selected. An inspected historical window stays selected.
@@ -167,6 +185,14 @@ func (m *CohortComparison) Update(msg tea.Msg) tea.Cmd {
 	}
 	if key, ok := msg.(tea.KeyPressMsg); ok {
 		switch key.String() {
+		case "r":
+			m.SetRadar(!m.radar)
+			return nil
+		case "s":
+			if m.radar {
+				m.SetSmooth(!m.smooth)
+				return nil
+			}
 		case "1", "2", "3":
 			_ = m.SetSigma(int(key.String()[0] - '0'))
 			return nil
@@ -212,7 +238,7 @@ func (m *CohortComparison) event(kind string) {
 	if m.emit != nil {
 		m.emit(map[string]any{"type": kind, "cohort": m.selected.CohortID, "member": m.selected.MemberID,
 			"reference": m.data.Cohorts[0].ID, "candidate": m.data.Cohorts[1].ID,
-			"window": m.window, "metric": m.MetricID(), "sigma": m.sigma})
+			"window": m.window, "metric": m.MetricID(), "sigma": m.sigma, "radar": m.radar, "smooth": m.smooth})
 	}
 }
 func (m *CohortComparison) Resize(size layout.Size) {
@@ -325,7 +351,11 @@ func (m *CohortComparison) updateDetails() {
 				}
 			}
 		}
-		lines = append(lines, "", "X = this member on its cohort band", "3 = member history in every plot", "z(ref) = distance from reference hosts", "Descriptive; not a confidence test.")
+		marker := "X = this member on its cohort band"
+		if m.radar {
+			marker = "X = this member on the profile"
+		}
+		lines = append(lines, "", marker, "3 = member history in every plot", "z(ref) = distance from reference hosts", "Descriptive; not a confidence test.")
 	}
 	m.Inspector.SetContent(strings.Join(lines, "\n"))
 	m.rebuildPlots()
@@ -333,7 +363,7 @@ func (m *CohortComparison) updateDetails() {
 }
 func (m *CohortComparison) rebuildPlots() {
 	columns := 1
-	if m.gridSize.Width >= 82 {
+	if !m.radar && m.gridSize.Width >= 82 {
 		columns = 2
 	}
 	width := max(20, (m.gridSize.Width-(columns-1))/columns-2)
@@ -457,6 +487,9 @@ func (m *CohortComparison) panel(index, width int) string {
 	return layout.Panel(m.metricLabel(index, false), strings.Join(lines, "\n"), layout.Size{Width: width, Height: 17}, m.theme, m.metric == index)
 }
 func (m *CohortComparison) grid() string {
+	if m.radar {
+		return m.radarView()
+	}
 	if len(m.plots) == 0 {
 		return ""
 	}
@@ -510,7 +543,10 @@ func (m *CohortComparison) View() string {
 	if m.sidebar {
 		content = layout.Row(m.Panels.View(), " ", side)
 	}
-	footer := fmt.Sprintf("1/2/3 bands | Left/Right window | [/] metric | Tab: %s | %d eligible / %d excluded", m.focus.Current(), eligible, excluded)
+	footer := fmt.Sprintf("r view | 1/2/3 bands | Left/Right window | [/] metric | Tab: %s | %d eligible / %d excluded", m.focus.Current(), eligible, excluded)
 	note := "s = sample host SD; bands clipped 0-100%; z(ref) is descriptive. Tab + arrows scroll."
+	if m.radar {
+		note = "s smooth/straight | outward = higher share | radial s is descriptive host spread, not confidence."
+	}
 	return layout.Fit(strings.Join([]string{header, strings.Join(groups, " | "), info, content, footer, m.theme.Subtle().Render(note)}, "\n"), m.size)
 }

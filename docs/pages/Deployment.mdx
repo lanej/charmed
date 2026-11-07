@@ -34,6 +34,22 @@ Live previews expose a Scenario control. Static builds include the alternate sce
 
 Use **↑/↓** to choose a host, **←/→** to choose a time window, **[ / ]** to change the active response class, and **1 / 2 / 3** to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. The controls below the preview set the initial scenario and band limit; changing them starts a fresh session. **Tab** moves between the host list, metric panels and inspector. Arrow keys scroll the focused region; **Ctrl+N** advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.
 
+## Inspect a version profile
+
+The radar overview puts all four status classes on one **reference-centered, signed scale**. Each axis subtracts that class's reference host mean and divides by its reference host sample standard deviation. `R` stays on the zero ring, `C` shows the candidate's unweighted host mean, and `X` shows the selected eligible host. Both version outlines retain their version identity; status pills retain their HTTP semantics. The raw, request-weighted fleet rates remain in the active class's detail panel.
+
+<StoryCanvas storyId="screen/deployment-radar" />
+
+The default **smooth** connection eases the radius between adjacent spokes. It passes through the actual values, closes smoothly, and stays within the adjacent endpoint radii. Category connections are a visual guide: they do not introduce samples, establish a trend between classes, or make the outline's area a performance score. **Profile curve** or **s** switches to straight segments for comparison. Static builds save a **Straight** variant.
+
+Nested radial whiskers show each version's own host mean ±1/2/3 standard deviations, expressed in the **same reference units**. Whiskers are clipped to physical 0–100% rates before normalization. The full three-sigma extents and every eligible host determine a symmetric range for each window. Changing the visible sigma limit, selected host, curve or active class keeps that window's radial scale fixed. The range caption reports the actual limits; it can expand beyond ±3 reference SDs for extreme hosts. Grid rings adapt to the range, while the whiskers retain the selected 1/2/3σ spread.
+
+Outward means a **higher share** of responses in that class. Its operational meaning depends on the status: 2xx and 5xx do not share a universal good-outward direction, and 3xx/4xx need application context. The four status shares are related. No joint significance, confidence coverage, or release decision follows from the radial outline.
+
+Use **[ / ]** to select a spoke and update the class detail panel and host ranking. Host selection overlays its profile and history. **r** switches between the radar overview and all four detailed panels without losing host, metric, window, focus, band limit or curve choice. The same view toggle is available in the original comparison screen. Zero or unavailable reference spread produces a missing spoke and a visible `n/a` message; adjacent curves leave gaps. When every spoke is unavailable, the overview explains the missing reference instead of drawing a zero profile. Low-volume hosts keep their raw observations in the inspector but have no normalized profile.
+
+Run `go run ./cmd/workbench run screen/deployment-radar --curve smooth --sigma 3`, or inspect the reusable `chart/radar` fixture. Small terminals scroll the linked regions; ASCII output lists the same signed values and outer whisker endpoints as text.
+
 ## Sampling and interpretation
 
 At least **1,000 requests per host per window** are required for the example's host mean and spread. Low-volume hosts still contribute their actual counts to the fleet rate. A zero-request host has an unavailable rate, rather than a 0% rate. Missing metric counts are rejected; explicit zero counts are accepted. At least two eligible hosts are needed for a standard deviation. A zero or unavailable reference standard deviation yields `z(ref) = n/a`.
@@ -49,6 +65,7 @@ References: [NIST proportion control charts](https://www.itl.nist.gov/div898/han
 | Layer | Component | Responsibility |
 | --- | --- | --- |
 | Atom | `chart.IntervalBand` | Draw caller-supplied nested intervals and observation markers with ntcharts canvas |
+| Atom | `chart.Radar` | Draw smooth or straight profiles, exact axis markers, missing-value gaps and nested radial whiskers |
 | Atom | `text.Pill` | Render a labeled semantic tone, with theme-aware contrast and a text fallback |
 | Analysis | `cohort.Analyze` | Calculate weighted rates and unweighted sample spread from interval counts |
 | Organism | `pattern.CohortComparison` | Coordinate distributions, time series, host selection, focus, windows and responsive layout |

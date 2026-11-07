@@ -78,6 +78,8 @@ func definitions() []Definition {
 		return pattern.NewDashboard(pattern.DashboardOptions{Theme: e.Config.Palette(), Services: services, Live: e.Config.Live, Emit: e.Emit}), nil
 	}})
 	d = append(d,
+		Definition{ID: "chart/radar", Title: "Atoms/Charts/Radar profile", Level: "Atoms", Family: "chart", Description: "Smooth reference-centered profiles, exact axis markers and nested radial whiskers on an ntcharts Braille canvas. Missing values leave gaps.", Source: "chart/radar.go", Symbol: "Radar", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma", "curve"}, Defaults: DefaultConfig(), Factory: radarStory},
+		Definition{ID: "screen/deployment-radar", Title: "Screens/Deployment radar", Level: "Screens", Family: "pattern", Description: "A smooth version profile linked to host selection, status details and time histories. All axes use reference host SD units; version IDs and semantic status pills retain separate identities.", Source: "pattern/cohort_radar.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "scenario", "sigma", "curve", "referenceID", "candidateID"}, Scenarios: []string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, Defaults: func() Config { c := DefaultConfig(); c.Columns = 132; c.Rows = 39; return c }(), Factory: deploymentRadarStory},
 		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma"}, Defaults: DefaultConfig(), Factory: bandStory},
 		Definition{ID: "screen/deployment", Title: "Screens/Deployment comparison", Level: "Screens", Family: "pattern", Description: "Compare 2xx, 3xx, 4xx and 5xx by version identifier during a blue/green deployment. Reference/candidate roles, request-weighted histories, 1/2/3s host-spread bands and linked inspection use synthetic interval counts.", Source: "examples/deployment/main.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "scenario", "sigma", "referenceID", "candidateID"}, Scenarios: []string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, Defaults: func() Config { c := DefaultConfig(); c.Columns = 132; c.Rows = 40; return c }(), Factory: deploymentStory},
 	)
@@ -95,7 +97,7 @@ func definitions() []Definition {
 			d[i].States = []string{"ready", "error"}
 		case "screen/services":
 			d[i].States = []string{"ready", "empty"}
-		case "screen/deployment", "chart/interval-band":
+		case "screen/deployment", "screen/deployment-radar", "chart/radar", "chart/interval-band":
 			d[i].States = []string{"ready", "empty"}
 		case "chart/metric":
 			d[i].Controls = []string{"amount"}
@@ -108,9 +110,9 @@ func definitions() []Definition {
 		case "collection/logs":
 			d[i].Family = "collection"
 		}
-		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band"
+		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band" && id != "chart/radar"
 		d[i].Clock = coreChart || id == "feedback/spinner" || id == "feedback/time" || id == "screen/services"
-		d[i].Step = coreChart || id == "feedback/spinner" || id == "feedback/progress" || id == "feedback/motion" || id == "collection/logs" || id == "screen/services" || id == "screen/deployment"
+		d[i].Step = coreChart || id == "feedback/spinner" || id == "feedback/progress" || id == "feedback/motion" || id == "collection/logs" || id == "screen/services" || id == "screen/deployment" || id == "screen/deployment-radar"
 		if id == "chart/timeseries" {
 			d[i].Source = "examples/timeseries/main.go"
 			d[i].Symbol = ""

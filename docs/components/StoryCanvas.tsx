@@ -207,6 +207,15 @@ export function StoryCanvas({
           {entry.controls?.includes("candidateID") && (
             <Identifier label="Candidate version" value={config.candidateID} other={config.referenceID} onChange={(value) => set("candidateID", value)} />
           )}
+          {entry.controls?.includes("curve") && (
+            <label>
+              Profile curve
+              <select aria-label="Profile curve" value={config.curve} onChange={(event) => set("curve", event.target.value)}>
+                <option value="smooth">Smooth</option>
+                <option value="straight">Straight</option>
+              </select>
+            </label>
+          )}
           {entry.controls?.includes("sigma") && (
             <label>
               Host spread bands

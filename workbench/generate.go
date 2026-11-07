@@ -56,6 +56,12 @@ func Generate(out string) error {
 				c.ReducedMotion = true
 			}},
 		}
+		if d.ID == "chart/radar" || d.ID == "screen/deployment-radar" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Straight", change: func(c *story.Config) { c.Curve = "straight" }})
+		}
 		for _, scenario := range d.Scenarios {
 			if scenario == d.Defaults.Scenario {
 				continue

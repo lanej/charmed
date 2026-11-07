@@ -14,6 +14,7 @@ Requires Go **1.26.8+**. The documentation app also needs Node **24+** and npm. 
 go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
 go run ./cmd/workbench run screen/deployment --scenario isolated-hosts --sigma 3
+go run ./cmd/workbench run screen/deployment-radar --curve smooth --sigma 3
 go run ./cmd/workbench run chart/timeseries --theme light --series 3
 go run ./cmd/workbench capture screen/services --plain
 ```
@@ -71,6 +72,10 @@ The core uses upstream Charm v2 modules. It has no JavaScript runtime requiremen
 The deployment comparison example groups hosts by actual version identifiers, with reference/candidate roles and a separate blue/green deployment-method label. Semantic pills identify 2xx success, 3xx redirects, 4xx client errors and 5xx server errors. It combines nested 1/2/3σ host-spread bands, request-weighted histories and linked host inspection. Four synthetic scenarios distinguish a uniform regression, isolated bad hosts, unequal traffic and insufficient samples. Read **Compare a deployment** in the catalog for the count contract and statistical interpretation. The bands describe host variability; they are not confidence intervals or rollout decisions. Run `go run ./examples/deployment` for a standalone terminal application.
 
 [View the deployment comparison](docs/assets/deployment.png).
+
+[View the radar overview](docs/assets/deployment-radar.png).
+
+The radar overview (`screen/deployment-radar`) uses smooth, bounded profiles in reference host standard-deviation units, with exact axis markers, 1/2/3σ radial whiskers and a selected-host overlay. Press `r` to switch between the overview and all four detail panels, `s` to compare smooth and straight connections, and `[` / `]` to choose a status axis. Host, window, metric and band selection are shared between views. Zero or unavailable reference spread leaves an explicit gap; the radial outline is descriptive, not a confidence region or performance score.
 
 The Go registry generates each component's MDX page, argument metadata, source excerpt and four standard saved variants: default, light, narrow and monochrome. The deployment comparison also saves its alternate scenarios for static browsing. Generated files live in `docs/generated/` and are excluded from Git.
 

@@ -200,7 +200,7 @@ test("catalog navigation supports search, capability groups and mobile", async (
     name: "Components",
     exact: true,
   });
-  await expect(navigation.getByRole("link")).toHaveCount(36);
+  await expect(navigation.getByRole("link")).toHaveCount(38);
   await page.getByPlaceholder("Search components…").fill("heatmap");
   await expect(navigation.getByRole("link")).toHaveCount(1);
   await navigation.getByRole("link").click();
@@ -214,4 +214,69 @@ test("catalog navigation supports search, capability groups and mobile", async (
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole("button", { name: "Components", exact: true }).click();
   await expect(page.getByPlaceholder("Search components…")).toBeVisible();
+});
+
+test("radar links smooth profiles, host selection and the detail view", async ({ page }) => {
+  await page.setViewportSize({ width: 1760, height: 1400 });
+  await page.goto("/#screen/deployment-radar");
+  const text = page.getByTestId("terminal-text");
+  const events = page.getByTestId("terminal-events");
+  await expect(page.getByRole("status")).toContainText("isolated PTY");
+  await expect(text).toContainText("Version profile / smooth");
+  await expect(text).toContainText("0 = reference mean");
+  await expect(text).toContainText("Fleet R 0.200%  C 0.403%");
+  await expect(page.getByRole("combobox", { name: "Profile curve", exact: true })).toHaveValue("smooth");
+  await page.getByRole("button", { name: "Focus terminal", exact: true }).click();
+  await page.keyboard.press("ArrowDown");
+  await expect(events).toContainText('"member":"host-095"');
+  await expect(events).toContainText('"radar":true');
+  await page.keyboard.press("s");
+  await expect(text).toContainText("Version profile / straight");
+  await expect(events).toContainText('"smooth":false');
+  await page.keyboard.press("r");
+  await expect(text).not.toContainText("Version profile");
+  await expect(text).toContainText("host-095 / C");
+  await page.keyboard.press("r");
+  await expect(text).toContainText("Version profile / straight");
+  await page.keyboard.press("]");
+  await expect(events).toContainText('"metric":"2xx"');
+  await page.keyboard.press("ArrowLeft");
+  await page.keyboard.press("1");
+  await expect(events).toContainText('"window":10');
+  await page.keyboard.press("Control+]");
+  const columns = page.getByRole("spinbutton", { name: "Columns", exact: true });
+  await columns.fill("40");
+  await columns.press("Enter");
+  await expect(page.getByRole("status")).toContainText("40 × 39");
+  await columns.fill("132");
+  await columns.press("Enter");
+  await expect(text).toContainText("Version profile / straight");
+  await expect(text).toContainText("host-095 / C");
+  await expect(text).toContainText("+/- 1s host spread");
+  await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption("insufficient-samples");
+  await expect(text).toContainText("Reference spread unavailable");
+  await expect(text).not.toContainText("NaN");
+  await page.getByRole("combobox", { name: "Preset", exact: true }).selectOption("Default");
+  await expect(text).toContainText("Version profile / smooth");
+  const viewport = await page.locator(".terminal-scroller").evaluate((element) => ({
+    width: element.clientWidth, contentWidth: element.scrollWidth,
+    height: element.clientHeight, contentHeight: element.scrollHeight,
+  }));
+  expect(viewport.contentWidth).toBeLessThanOrEqual(viewport.width);
+  expect(viewport.contentHeight).toBeLessThanOrEqual(viewport.height);
+  if (process.env.CHARMED_CAPTURE_DIR) {
+    mkdirSync(process.env.CHARMED_CAPTURE_DIR, { recursive: true });
+    await page.locator(".story-canvas").screenshot({ path: join(process.env.CHARMED_CAPTURE_DIR, "deployment-radar.png") });
+  }
+});
+
+test("static radar includes straight and sparse variants", async ({ page }) => {
+  await page.goto("http://127.0.0.1:5174/#screen/deployment-radar");
+  const text = page.getByTestId("terminal-text");
+  await expect(page.getByRole("status")).toContainText("Static snapshot: Default");
+  await expect(text).toContainText("Version profile / smooth");
+  await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Straight");
+  await expect(text).toContainText("Version profile / straight");
+  await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Insufficient samples");
+  await expect(text).toContainText("Reference spread unavailable");
 });

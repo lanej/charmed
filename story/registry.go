@@ -32,10 +32,11 @@ type Config struct {
 	Scenario      string     `json:"scenario"`
 	ReferenceID   string     `json:"referenceID"`
 	CandidateID   string     `json:"candidateID"`
+	Curve         string     `json:"curve"`
 }
 
 func DefaultConfig() Config {
-	return Config{Columns: 100, Rows: 30, Theme: theme.Dark, Profile: "truecolor", State: "ready", Value: "production", Series: 2, Amount: 68, Sigma: 3, Scenario: "isolated-hosts", ReferenceID: fixture.ReferenceVersionID, CandidateID: fixture.CandidateVersionID}
+	return Config{Columns: 100, Rows: 30, Theme: theme.Dark, Profile: "truecolor", State: "ready", Value: "production", Series: 2, Amount: 68, Sigma: 3, Scenario: "isolated-hosts", ReferenceID: fixture.ReferenceVersionID, CandidateID: fixture.CandidateVersionID, Curve: "smooth"}
 }
 func (c Config) Validate() error {
 	if c.Columns < 20 || c.Columns > 240 || c.Rows < 8 || c.Rows > 80 {
@@ -58,6 +59,9 @@ func (c Config) Validate() error {
 	}
 	if c.Sigma < 1 || c.Sigma > 3 {
 		return errors.New("sigma must be 1, 2 or 3")
+	}
+	if c.Curve != "" && c.Curve != "smooth" && c.Curve != "straight" {
+		return errors.New("curve must be smooth or straight")
 	}
 	if err := (fixture.Versions{Reference: c.ReferenceID, Candidate: c.CandidateID}).Validate(); err != nil {
 		return err
