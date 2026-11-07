@@ -1,8 +1,8 @@
 # Components by capability
 
-Browse related building blocks together. Atomic levels describe composition depth; Go packages follow capabilities. Each entry includes its native command, composition links, and expandable saved output and source.
+Browse related building blocks together. Atomic levels describe composition depth; Go packages follow capabilities. Every component has a direct link in the sidebar. Each entry leads with a native terminal preview, groups alternate snapshots into tabs, and shows the highlighted Go implementation and run command immediately afterward.
 
-Use your browser's Find command to locate a component. Saved frames preserve terminal geometry and semantic color; use the native runner to inspect colors, focus and animation.
+Use the sidebar to navigate to a component or your browser's Find command to search the entire page. Saved frames preserve terminal geometry and semantic color; use the native runner to inspect colors, focus and animation.
 
 Time-series traces use native braille dots for finer terminal resolution. Shared axes and series colors retain their meaning; ASCII mode keeps its numeric fallback.
 
