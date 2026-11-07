@@ -1,0 +1,99 @@
+// Package layout composes ANSI text using terminal cells rather than bytes or pixels.
+package layout
+
+import (
+	"strings"
+
+	"charm.land/lipgloss/v2"
+	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/theme"
+)
+
+// Size includes a component's border and padding.
+type Size struct{ Width, Height int }
+
+// Fit clips and pads to exactly the requested cell rectangle. It never wraps.
+func Fit(content string, size Size) string {
+	if size.Width <= 0 || size.Height <= 0 {
+		return ""
+	}
+	lines := strings.Split(strings.ReplaceAll(content, "\r\n", "\n"), "\n")
+	out := make([]string, size.Height)
+	for y := range out {
+		line := ""
+		if y < len(lines) {
+			line = ansi.Truncate(lines[y], size.Width, "")
+		}
+		out[y] = line + strings.Repeat(" ", max(0, size.Width-lipgloss.Width(line)))
+	}
+	return strings.Join(out, "\n")
+}
+
+// ASCII replaces terminal decoration when Unicode is unavailable. Application
+// state is untouched; unsupported text glyphs get an explicit '?' fallback.
+func ASCII(content string) string {
+	return strings.Map(func(r rune) rune {
+		if r < 128 {
+			return r
+		}
+		switch r {
+		case '─', '━', '═', '–', '—':
+			return '-'
+		case '│', '┃', '║':
+			return '|'
+		case '┌', '┐', '└', '┘', '├', '┤', '┬', '┴', '┼', '╭', '╮', '╰', '╯':
+			return '+'
+		case '●', '○', '•', '·', '▪':
+			return '*'
+		case '↑', '▲':
+			return '^'
+		case '↓', '▼':
+			return 'v'
+		case '→', '▶', '›':
+			return '>'
+		case '←', '◀', '‹':
+			return '<'
+		case '…':
+			return '~'
+		case '✓', '✔':
+			return '+'
+		case '×', '✗':
+			return 'x'
+		}
+		return '?'
+	}, content)
+}
+
+func Panel(title, content string, size Size, t theme.Theme, focused bool) string {
+	if size.Width < 4 || size.Height < 3 {
+		return Fit(content, size)
+	}
+	tl, tr, bl, br, horizontal, vertical := "┌", "┐", "└", "┘", "─", "│"
+	if t.ASCII {
+		tl, tr, bl, br, horizontal, vertical = "+", "+", "+", "+", "-", "|"
+	}
+	border := lipgloss.NewStyle().Foreground(t.Border)
+	if focused {
+		border = border.Foreground(t.Accent).Bold(true)
+	}
+	label := ansi.Truncate(" "+title+" ", size.Width-2, "")
+	top := border.Render(tl + label + strings.Repeat(horizontal, max(0, size.Width-2-lipgloss.Width(label))) + tr)
+	inside := strings.Split(Fit(content, Size{size.Width - 2, size.Height - 2}), "\n")
+	for i := range inside {
+		inside[i] = border.Render(vertical) + inside[i] + border.Render(vertical)
+	}
+	bottom := border.Render(bl + strings.Repeat(horizontal, size.Width-2) + br)
+	return strings.Join(append(append([]string{top}, inside...), bottom), "\n")
+}
+
+func Row(parts ...string) string    { return lipgloss.JoinHorizontal(lipgloss.Top, parts...) }
+func Column(parts ...string) string { return lipgloss.JoinVertical(lipgloss.Left, parts...) }
+
+// Split allocates a horizontal pair only when both minimums fit.
+func Split(width, gap, leftMin, rightMin int, ratio float64) (left, right int, sideBySide bool) {
+	if width < leftMin+rightMin+gap {
+		return width, width, false
+	}
+	left = max(leftMin, min(int(float64(width-gap)*ratio), width-gap-rightMin))
+	return left, width - gap - left, true
+}

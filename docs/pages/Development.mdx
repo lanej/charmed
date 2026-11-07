@@ -1,0 +1,41 @@
+# Develop and publish
+
+## Run the workbench
+
+```sh
+cd docs
+npm ci
+npm run dev
+```
+
+The development command builds the Go story runner, exports the registry, starts the loopback preview service, and launches the standalone MDX catalog. Each live preview runs its own native Go process in a pseudo-terminal.
+
+## Use Go directly
+
+```sh
+go run ./cmd/workbench list
+go run ./cmd/workbench run screen/services
+go run ./cmd/workbench run chart/timeseries --theme light --series 3
+go run ./cmd/workbench capture screen/services --plain
+```
+
+Use Ctrl+C to exit a native story. The browser's Focus terminal button directs keystrokes into a preview; Ctrl+] releases focus. Reset creates a fresh Go model. Resizing an active preview preserves its state.
+
+## Publish a static catalog
+
+```sh
+cd docs
+npm run build
+```
+
+The output is `docs/dist/`. Static pages show labeled Go snapshots with saved light, narrow, and monochrome variants. They do not simulate live execution. Live previews require the local Go service.
+
+## Add a component story
+
+Add a concrete wrapper where shared defaults or composition help. Add a fixture factory and metadata to the Go registry. Run `workbench generate` to export its MDX page, controls, highlighted Go source, and deterministic snapshots.
+
+Keep fixtures deterministic. Use typed events, a controlled step, and bounded sample data. Real application services remain outside the component model.
+
+## Browser execution
+
+The core uses upstream Charm modules. The optional Booba/WASM adapter is recorded as planned in the coverage inventory because its current browser route requires a patched Bubble Tea replacement.
