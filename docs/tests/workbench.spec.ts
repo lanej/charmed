@@ -105,11 +105,12 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await expect(text).toContainText("Candidate f4d7e81");
   await expect(text).toContainText("Member host-096");
   await expect(text).toContainText("Version f4d7e81");
-  for (const pill of ["2xx Success", "3xx Redirects", "4xx Client error", "5xx Server error"]) {
+  for (const pill of ["2xx", "3xx", "4xx", "5xx"]) {
     await expect(text).toContainText(pill);
   }
-  await expect(text).toContainText("Fleet a13c9f2 96.093%");
-  await expect(text).toContainText("Fleet f4d7e81 0.403%");
+  await expect(text).not.toContainText("Fleet ");
+  await expect(text).toContainText("+0.203pp");
+  await expect(text).toContainText("delta +/-0.5pp");
   await expect(text).toContainText("CODE");
   await expect(text).toContainText("RATE");
   for (const legend of ["History %:", "3=member", "X = this member", "W/E =", "R=reference", "C=candidate", "1/2/3 bands"]) {
@@ -151,12 +152,12 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await page.getByRole("combobox", { name: "Host spread bands", exact: true }).selectOption("3");
   await expect(text).toContainText("5 beyond 3s");
   await expect(text).toContainText("ERROR");
-  await expect(text).toContainText("WARN");
+  await expect(text).toContainText("+0.203pp");
   await expect(text).toContainText("Warn>=+0.1 Error>=+0.3 pp");
   await page.getByRole("combobox", { name: "Deviation boundaries", exact: true }).selectOption("off");
   await expect(text).not.toContainText("ERROR");
   await expect(text).not.toContainText("ATTN");
-  await expect(text).toContainText("5xx Server error");
+  await expect(text).toContainText("5xx");
   await page.getByRole("combobox", { name: "Deviation boundaries", exact: true }).selectOption("example");
   await expect(text).toContainText("ERROR");
   await page.getByRole("button", { name: "Step", exact: true }).click();
@@ -191,7 +192,7 @@ test("static deployment variants retain the traffic and sampling scenarios", asy
   await expect(page.getByRole("status")).toContainText("Static snapshot: Default");
   await page.getByRole("combobox", { name: "Saved variant" }).selectOption("No boundaries");
   await expect(page.getByTestId("terminal-text")).not.toContainText("ERROR");
-  await expect(page.getByTestId("terminal-text")).toContainText("5xx Server error");
+  await expect(page.getByTestId("terminal-text")).toContainText("5xx");
   await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Insufficient samples");
   await expect(page.getByRole("status")).toContainText("Static snapshot: Insufficient samples");
   await expect(page.getByTestId("terminal-text")).toContainText("baseline s unavailable");
@@ -241,7 +242,7 @@ test("catalog navigation supports search, capability groups and mobile", async (
     name: "Components",
     exact: true,
   });
-  await expect(navigation.getByRole("link")).toHaveCount(38);
+  await expect(navigation.getByRole("link")).toHaveCount(40);
   await page.getByPlaceholder("Search components…").fill("heatmap");
   await expect(navigation.getByRole("link")).toHaveCount(1);
   await navigation.getByRole("link").click();

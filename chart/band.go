@@ -25,6 +25,7 @@ type BandOptions struct {
 	Selected  *float64
 	Series    int
 	Markers   []BandMarker
+	Style     *lipgloss.Style
 }
 
 // IntervalBand is a one-row ntcharts canvas primitive. Density encodes nested
@@ -43,6 +44,9 @@ func IntervalBand(o BandOptions, width int, t theme.Theme) string {
 	}
 	plot := NewCanvas(layout.Size{Width: width, Height: 1}, t)
 	style := lipgloss.NewStyle().Foreground(t.SeriesColor(o.Series))
+	if o.Style != nil {
+		style = *o.Style
+	}
 	for x := range width {
 		plot.SetRuneWithStyle(canvas.Point{X: x}, '·', t.Subtle())
 		if t.ASCII {

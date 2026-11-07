@@ -11,6 +11,7 @@ import (
 	"charm.land/bubbles/v2/table"
 	"charm.land/bubbles/v2/viewport"
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 	"github.com/NimbleMarkets/ntcharts/v2/linechart/timeserieslinechart"
 	"github.com/lanej/charmed/attention"
 	"github.com/lanej/charmed/chart"
@@ -64,6 +65,7 @@ type CohortComparison struct {
 	assessments                  []cohort.ComparisonAttention
 	attentionLevels              map[string]attention.Level
 	initialized                  bool
+	deltaExtent                  float64
 }
 
 func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
@@ -77,7 +79,7 @@ func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
 		focus: interaction.NewFocus("hosts", "metrics", "inspector"), window: -1, metricTones: maps.Clone(o.MetricTones)}
 	m.Table = collection.NewTable([]table.Column{{Title: "MEMBER", Width: 22}, {Title: "ROLE", Width: 4}, {Title: "z(ref)", Width: 6}}, nil, 38, 14, o.Theme)
 	m.Panels = collection.NewViewport("", 100, 36)
-	m.Inspector = collection.NewTable(nil, nil, 38, 4, o.Theme)
+	m.Inspector = collection.NewDenseTable(nil, nil, 38, 4, o.Theme)
 	m.size = layout.Size{Width: 132, Height: 40}
 	if err := m.SetData(o.Data); err != nil {
 		return nil, err
@@ -271,6 +273,7 @@ func (m *CohortComparison) refresh() {
 		}
 	}
 	changes := m.assessAttention()
+	m.updateDeltaExtent()
 	baseline := m.summaries[m.metric][0]
 	sort.SliceStable(m.visible, func(i, j int) bool {
 		a, b := m.visible[i], m.visible[j]
@@ -366,7 +369,7 @@ func (m *CohortComparison) rebuildPlots() {
 			low, high = 0, 1
 		}
 		padding := max((high-low)*0.15, 0.001)
-		m.plots[i] = chart.NewTimeSeries(series, layout.Size{Width: width, Height: 6}, m.theme,
+		m.plots[i] = chart.NewTimeSeries(series, layout.Size{Width: width, Height: 9}, m.theme,
 			timeserieslinechart.WithYRange(max(0, low-padding), min(100, high+padding)),
 			timeserieslinechart.WithYLabelFormatter(func(_ int, value float64) string { return fmt.Sprintf("%.2f%%", value) }),
 			timeserieslinechart.WithXLabelFormatter(func(_ int, value float64) string {
@@ -374,13 +377,6 @@ func (m *CohortComparison) rebuildPlots() {
 			}))
 	}
 }
-func rate(value float64, ok bool) string {
-	if !ok {
-		return "n/a"
-	}
-	return fmt.Sprintf("%.3f%%", value*100)
-}
-
 func (m *CohortComparison) metricLabel(index int, compact bool) string {
 	metric := m.data.Metrics[index]
 	value := metric.Label
@@ -407,20 +403,17 @@ func (m *CohortComparison) panel(index, width int) string {
 		}
 		distribution.Series = append(distribution.Series, series)
 	}
-	delta := "n/a"
-	if summaries[0].HasRate && summaries[1].HasRate {
-		delta = fmt.Sprintf("%+.3fpp", (summaries[1].Rate-summaries[0].Rate)*100)
-	}
-	rows := []string{
-		m.theme.Text().Foreground(m.theme.SeriesColor(0)).Render(fmt.Sprintf("Fleet %s %s", m.data.Cohorts[0].ID, rate(summaries[0].Rate, summaries[0].HasRate))),
-		m.theme.Text().Foreground(m.theme.SeriesColor(1)).Render(fmt.Sprintf("Fleet %s %s", m.data.Cohorts[1].ID, rate(summaries[1].Rate, summaries[1].HasRate))),
-		"Delta " + delta + " " + feedback.Attention(state.Fleet.Level, m.theme) + " weighted",
-		"",
-	}
+	delta, available := m.delta(index)
+	style := feedback.AttentionStyle(state.Fleet.Level, m.theme)
+	titleLabel := m.metricLabel(index, true)
+	propertyWidth := max(0, width-4-lipgloss.Width(titleLabel)-9)
+	property := chart.DeltaProperty{Value: delta, Extent: m.deltaExtent, Available: available, Style: style}
+	title := titleLabel + " " + property.View(propertyWidth, m.theme) + " " + layout.Fit(feedback.Attention(state.Level, m.theme), layout.Size{Width: 7, Height: 1})
+	rows := []string{""}
 	if policy := m.boundaries[m.data.Metrics[index].ID]; policy.Fleet.Configured() {
-		rows[3] = policy.Fleet.Summary("pp")
+		rows[0] = policy.Fleet.Summary("pp")
 	}
-	card := chart.ComparisonPanel{Title: m.metricLabel(index, false) + " " + feedback.Attention(state.Level, m.theme), Summary: rows, Distribution: distribution, History: m.plots[index]}
+	card := chart.ComparisonPanel{Title: title, Summary: rows, Distribution: distribution, History: m.plots[index]}
 	return card.View(layout.Size{Width: width, Height: 17}, m.theme, m.metric == index)
 }
 func (m *CohortComparison) grid() string {
@@ -473,7 +466,7 @@ func (m *CohortComparison) View() string {
 		}
 	}
 	count := fmt.Sprintf("%d beyond %ds", outliers, m.sigma)
-	info := fmt.Sprintf("%s | +/- %ds host spread | min %d req/host | %d eligible / %d excluded", window, m.sigma, m.minRequests, eligible, excluded)
+	info := fmt.Sprintf("%s | +/- %ds host spread | min %d req/host | %d eligible / %d excluded | delta +/-%.3gpp", window, m.sigma, m.minRequests, eligible, excluded, m.deltaExtent)
 	if !baseline.HasSpread || baseline.StdDev == 0 {
 		count = "baseline s unavailable"
 	}

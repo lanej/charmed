@@ -85,6 +85,10 @@ func definitions() []Definition {
 		Definition{ID: "feedback/attention", Title: "Molecules/Feedback/Attention", Level: "Molecules", Family: "feedback", Description: "Optional warn/error boundaries compose a labeled attention indicator from the shared semantic pill atom.", Source: "feedback/attention.go", Symbol: "Attention", Upstream: "https://github.com/charmbracelet/lipgloss", Controls: []string{"state", "amount", "boundaries"}, Defaults: DefaultConfig(), Factory: attentionStory},
 		Definition{ID: "chart/distributions", Title: "Molecules/Charts/Cohort distributions", Level: "Molecules", Family: "chart", Description: "Mean/spread labels, shared-axis interval bands and optional boundary markers compose into a reusable distribution comparison.", Source: "chart/comparison.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"sigma", "boundaries"}, Defaults: DefaultConfig(), Factory: distributionStory},
 	)
+	d = append(d,
+		Definition{ID: "chart/delta", Title: "Molecules/Charts/Merged delta property", Level: "Molecules", Family: "chart", Description: "A single zero-centred bar cancels the shared reference/candidate amount and emphasizes the signed percentage-point difference.", Source: "chart/delta.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"amount", "state"}, Defaults: DefaultConfig(), Factory: deltaStory},
+		Definition{ID: "feedback/percent", Title: "Molecules/Feedback/Percentage bar", Level: "Molecules", Family: "feedback", Description: "A native progress bar and exact percentage compose a fixed-width graphical table value on a 0–100% scale.", Source: "feedback/percent.go", Symbol: "PercentBar", Upstream: "https://github.com/charmbracelet/bubbles", Controls: []string{"amount", "state"}, Defaults: DefaultConfig(), Factory: percentStory},
+	)
 	for i := range d {
 		id := d[i].ID
 		for _, control := range d[i].Controls {
@@ -110,6 +114,8 @@ func definitions() []Definition {
 			d[i].Defaults.Boundaries = true
 		case "chart/interval-band":
 			d[i].States = []string{"ready", "empty"}
+		case "chart/delta", "feedback/percent":
+			d[i].States = []string{"ready", "empty"}
 		case "chart/metric":
 			d[i].Controls = []string{"amount"}
 			d[i].Family = "chart"
@@ -121,7 +127,7 @@ func definitions() []Definition {
 		case "collection/logs":
 			d[i].Family = "collection"
 		}
-		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band" && id != "chart/distributions"
+		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band" && id != "chart/distributions" && id != "chart/delta"
 		d[i].Clock = coreChart || id == "feedback/spinner" || id == "feedback/time" || id == "screen/services"
 		d[i].Step = coreChart || id == "feedback/spinner" || id == "feedback/progress" || id == "feedback/motion" || id == "collection/logs" || id == "screen/services" || id == "screen/deployment"
 		if id == "chart/timeseries" {

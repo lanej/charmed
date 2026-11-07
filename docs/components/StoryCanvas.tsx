@@ -84,6 +84,7 @@ export function StoryCanvas({
       entry?.snapshots.find((snapshot) => snapshot.name === variant)?.config ??
       entry!.defaults,
   );
+  const [presetRevision, setPresetRevision] = useState(0);
   useEffect(() => {
     if (entry)
       setConfig(
@@ -97,7 +98,7 @@ export function StoryCanvas({
   const states = entry.states ?? [];
   return (
     <div className="story-canvas">
-      <TerminalStory storyId={storyId} {...config} />
+      <TerminalStory key={`${storyId}:${presetRevision}`} storyId={storyId} {...config} />
       <details className="fixture-controls" open>
         <summary>
           Fixture controls<span>Changes run through the Go model</span>
@@ -112,7 +113,10 @@ export function StoryCanvas({
                 const snapshot = entry.snapshots.find(
                   (snapshot) => snapshot.name === event.target.value,
                 );
-                if (snapshot) setConfig(snapshot.config);
+                if (snapshot) {
+                  setConfig(snapshot.config);
+                  setPresetRevision((revision) => revision + 1);
+                }
               }}
             >
               <option value="" disabled>
