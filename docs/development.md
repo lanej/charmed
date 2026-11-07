@@ -22,9 +22,9 @@ From the repository root:
 go run ./cmd/workbench generate --out docs
 ```
 
-Publish `docs/dist/` to GitHub Pages or any static host. The Pages workflow builds with Go and uploads that directory. No Node, npm, browser JavaScript or running preview service is required. All navigation and assets use relative URLs for repository subpaths. To preview, serve `docs/dist/` with any static HTTP server.
+Publish `docs/dist/` to GitHub Pages or any static host. The Pages workflow builds with Go and uploads that directory. No Node, npm or running preview service is required. A small, local JavaScript file enhances accessible variant tabs; without JavaScript, all snapshots remain visible as ordinary static sections. All navigation and assets use relative URLs for repository subpaths. To preview, serve `docs/dist/` with any static HTTP server.
 
-Edit the Markdown guides in `docs/` and the shared HTML/CSS in `workbench/site/`. The generator reads the compiled story registry, validates composition and captures deterministic frames. Foundations share one page, component capabilities share another, and full screens sit together under examples. Stable story IDs are section anchors.
+Edit the Markdown guides in `docs/` and the shared HTML/CSS in `workbench/site/`. The generator reads the compiled story registry, validates composition and captures deterministic frames. Foundations share one page, component capabilities share another, and full screens sit together under examples. The sidebar links directly to every fixture, with visual previews preceding syntax-highlighted source. Stable story IDs are section anchors.
 
 ## Add a fixture
 
@@ -42,7 +42,9 @@ go test -race ./...
 go run ./cmd/workbench generate --out docs
 ```
 
-The generator tests check static output, composition links, source escaping, native fixture coverage and repeatable builds. The native suite covers terminal bounds, focus, selection, resize and process cleanup.
+The generator tests check static output, component sidebar links, variant tab semantics, syntax highlighting, composition links, source escaping, native fixture coverage and repeatable builds. The native suite covers terminal bounds, focus, selection, resize and process cleanup.
+
+See the [brand sheet](brand.html) for the website palette, typography, lockup, and native status color separation.
 
 ## Coverage
 
