@@ -1,0 +1,276 @@
+// Package pattern contains composed, application-independent terminal patterns.
+package pattern
+
+import (
+	"fmt"
+	"math"
+	"strings"
+	"time"
+
+	"charm.land/bubbles/v2/table"
+	"charm.land/bubbles/v2/viewport"
+	tea "charm.land/bubbletea/v2"
+	"github.com/NimbleMarkets/ntcharts/v2/linechart/timeserieslinechart"
+	"github.com/lanej/charmed/chart"
+	"github.com/lanej/charmed/collection"
+	"github.com/lanej/charmed/input"
+	"github.com/lanej/charmed/interaction"
+	"github.com/lanej/charmed/layout"
+	"github.com/lanej/charmed/runtime"
+	"github.com/lanej/charmed/text"
+	"github.com/lanej/charmed/theme"
+)
+
+type Service struct {
+	ID, Name, Status string
+	Rate, Latency    float64
+}
+type DashboardOptions struct {
+	Theme    theme.Theme
+	Services []Service
+	Live     bool
+	Emit     func(any)
+}
+
+// Dashboard owns coordinated UI state; applications provide its data and events.
+type Dashboard struct {
+	Filter                                                        input.Text
+	Table                                                         table.Model
+	Details                                                       viewport.Model
+	Plot                                                          chart.TimeSeries
+	SelectedID                                                    string
+	Step                                                          int
+	services, visible                                             []Service
+	focus                                                         interaction.Focus
+	size                                                          layout.Size
+	theme                                                         theme.Theme
+	live                                                          bool
+	emit                                                          func(any)
+	leftWidth, rightWidth, tableHeight, chartHeight, detailHeight int
+	split                                                         bool
+}
+
+func NewDashboard(o DashboardOptions) *Dashboard {
+	m := &Dashboard{theme: o.Theme, services: append([]Service(nil), o.Services...), live: o.Live, emit: o.Emit,
+		focus: interaction.NewFocus("filter", "table", "chart", "details")}
+	m.Filter = input.NewText(input.TextOptions{Placeholder: "Filter services…", Width: 80, Theme: o.Theme})
+	if o.Theme.ASCII {
+		m.Filter.Placeholder = "Filter services..."
+	}
+	m.Table = collection.NewTable(nil, nil, 35, 12, o.Theme)
+	m.Details = collection.NewViewport("", 30, 8)
+	m.Plot = chart.NewTimeSeries(nil, layout.Size{Width: 40, Height: 10}, o.Theme)
+	m.Resize(layout.Size{Width: 120, Height: 34})
+	m.applyFilter()
+	return m
+}
+
+func (m *Dashboard) Init() tea.Cmd {
+	var pulse tea.Cmd
+	if m.live && !m.theme.ReducedMotion {
+		pulse = m.nextTick()
+	}
+	return tea.Batch(m.syncFocus(), pulse)
+}
+
+type dashboardTick struct{}
+
+func (m *Dashboard) nextTick() tea.Cmd {
+	return tea.Tick(time.Second, func(time.Time) tea.Msg { return dashboardTick{} })
+}
+func (m *Dashboard) Resize(size layout.Size) {
+	m.size = size
+	m.Filter.Resize(max(1, size.Width-2))
+	mainHeight := max(1, size.Height-7)
+	m.leftWidth, m.rightWidth, m.split = layout.Split(size.Width, 1, 30, 48, 0.36)
+	m.split = m.split && size.Height >= 24
+	if m.split {
+		m.tableHeight = mainHeight
+		m.chartHeight = max(9, mainHeight*2/3)
+		m.detailHeight = mainHeight - m.chartHeight
+	} else {
+		m.leftWidth, m.rightWidth = size.Width, size.Width
+		m.tableHeight = min(7, max(3, mainHeight/3))
+		m.chartHeight = max(1, mainHeight-m.tableHeight)
+		m.detailHeight = 0
+	}
+	current := m.focus.Current()
+	ids := []string{"filter", "table"}
+	if m.chartHeight >= 8 {
+		ids = append(ids, "chart")
+	}
+	if m.detailHeight >= 3 {
+		ids = append(ids, "details")
+	}
+	m.focus = interaction.NewFocus(ids...)
+	m.focus.Set(current)
+	w := max(4, m.leftWidth-2)
+	m.Table.SetColumns([]table.Column{{Title: "SERVICE", Width: max(1, w-16)}, {Title: "STATE", Width: 10}})
+	m.Table.SetWidth(w)
+	m.Table.SetHeight(max(1, m.tableHeight-3))
+	m.Details.SetWidth(max(1, m.rightWidth-2))
+	m.Details.SetHeight(max(1, m.detailHeight-2))
+	m.Plot.Resize(layout.Size{Width: max(0, m.rightWidth-2), Height: max(0, m.chartHeight-3)})
+}
+func (m *Dashboard) syncFocus() tea.Cmd {
+	m.Filter.Blur()
+	m.Table.Blur()
+	m.Plot.Blur()
+	switch m.focus.Current() {
+	case "filter":
+		return m.Filter.Focus()
+	case "table":
+		m.Table.Focus()
+	case "chart":
+		m.Plot.Focus()
+	}
+	return nil
+}
+func (m *Dashboard) Update(msg tea.Msg) tea.Cmd {
+	if m.focus.Handle(msg) {
+		return m.syncFocus()
+	}
+	switch msg.(type) {
+	case dashboardTick:
+		m.advance()
+		if m.live && !m.theme.ReducedMotion {
+			return m.nextTick()
+		}
+		return nil
+	case runtime.StepMsg:
+		m.advance()
+		return nil
+	}
+	if _, key := msg.(tea.KeyPressMsg); key {
+		switch m.focus.Current() {
+		case "filter":
+			before := m.Filter.Value()
+			var cmd tea.Cmd
+			m.Filter, cmd = m.Filter.Update(msg)
+			if before != m.Filter.Value() {
+				m.applyFilter()
+			}
+			return cmd
+		case "table":
+			var cmd tea.Cmd
+			m.Table, cmd = m.Table.Update(msg)
+			m.selectRow()
+			return cmd
+		case "chart":
+			var cmd tea.Cmd
+			m.Plot, cmd = m.Plot.Update(msg)
+			return cmd
+		case "details":
+			var cmd tea.Cmd
+			m.Details, cmd = m.Details.Update(msg)
+			return cmd
+		}
+		return nil
+	}
+	// Cursor and asynchronous child messages still reach their owner when unfocused.
+	var cmd tea.Cmd
+	m.Filter, cmd = m.Filter.Update(msg)
+	return cmd
+}
+func (m *Dashboard) advance() {
+	m.Step++
+	m.updateSelection()
+	if m.emit != nil {
+		m.emit(map[string]any{"type": "tick", "step": m.Step, "selected": m.SelectedID})
+	}
+}
+func (m *Dashboard) applyFilter() {
+	needle := strings.ToLower(m.Filter.Value())
+	m.visible = nil
+	var rows []table.Row
+	selected := 0
+	for _, s := range m.services {
+		if strings.Contains(strings.ToLower(s.Name+" "+s.Status), needle) {
+			if s.ID == m.SelectedID {
+				selected = len(rows)
+			}
+			m.visible = append(m.visible, s)
+			rows = append(rows, table.Row{s.Name, s.Status})
+		}
+	}
+	m.Table.SetRows(rows)
+	if len(rows) > 0 {
+		m.Table.SetCursor(selected)
+	}
+	m.selectRow()
+}
+func (m *Dashboard) selectRow() {
+	old := m.SelectedID
+	m.SelectedID = ""
+	if i := m.Table.Cursor(); i >= 0 && i < len(m.visible) {
+		m.SelectedID = m.visible[i].ID
+	}
+	m.updateSelection()
+	if old != m.SelectedID && m.emit != nil {
+		m.emit(interaction.Selected{Component: "services", ID: m.SelectedID})
+	}
+}
+func (m *Dashboard) selected() (Service, bool) {
+	for _, s := range m.visible {
+		if s.ID == m.SelectedID {
+			return s, true
+		}
+	}
+	return Service{}, false
+}
+func (m *Dashboard) updateSelection() {
+	s, ok := m.selected()
+	if !ok {
+		m.Plot.SetData(nil)
+		m.Details.SetContent("No services match your filter.")
+		return
+	}
+	m.Plot.SetData(m.series(s))
+	m.Details.SetContent(fmt.Sprintf("%s\nStatus       %s\nThroughput   %.0f req/min\nLatency p95  %.0f ms\n\nStable selection: %s\nBackground samples: %d\n\nThis fixture has no external services.\nFiltering, selection and resize operate on the same state.", s.Name, s.Status, s.Rate, s.Latency, s.ID, m.Step))
+}
+func (m *Dashboard) series(s Service) []chart.TimeSeriesData {
+	base := time.Date(2026, 1, 1, 12, 0, 0, 0, time.UTC)
+	data := []chart.TimeSeriesData{{ID: "observed", Label: "Observed", Unit: "req/min"}, {ID: "baseline", Label: "Baseline", Unit: "req/min"}}
+	for i := range 32 {
+		t := base.Add(time.Duration(i) * time.Minute)
+		phase := float64(i+m.Step)*0.27 + float64(len(s.ID))
+		data[0].Points = append(data[0].Points, timeserieslinechart.TimePoint{Time: t, Value: s.Rate * (0.9 + 0.15*math.Sin(phase))})
+		data[1].Points = append(data[1].Points, timeserieslinechart.TimePoint{Time: t, Value: s.Rate * 0.94})
+	}
+	return data
+}
+func (m *Dashboard) View() string {
+	header := m.theme.Heading().Render("CHARMED") + "  " + m.theme.Subtle().Render("Service workbench")
+	header += "\n" + text.Badge("FIXTURE", m.theme) + "  " + m.theme.Subtle().Render(fmt.Sprintf("%d services · %d samples", len(m.visible), m.Step))
+	filter := layout.Panel("Search", m.Filter.View(), layout.Size{Width: m.size.Width, Height: 3}, m.theme, m.focus.Current() == "filter")
+	left := layout.Panel("Services", m.Table.View(), layout.Size{Width: m.leftWidth, Height: m.tableHeight}, m.theme, m.focus.Current() == "table")
+	title := "Throughput / req per minute"
+	data := []chart.TimeSeriesData{}
+	if s, ok := m.selected(); ok {
+		title = s.Name + " / throughput"
+		data = m.series(s)
+	}
+	plot := chart.Panel(title, m.Plot, data, layout.Size{Width: m.rightWidth, Height: m.chartHeight}, m.theme, m.focus.Current() == "chart")
+	main := ""
+	if m.split {
+		details := layout.Panel("Inspector", m.Details.View(), layout.Size{Width: m.rightWidth, Height: m.detailHeight}, m.theme, m.focus.Current() == "details")
+		main = layout.Row(left, strings.Repeat(" \n", max(0, m.tableHeight-1))+" ", layout.Column(plot, details))
+	} else {
+		main = layout.Column(left, plot)
+	}
+	footer := m.theme.Subtle().Render("Tab focus   arrows navigate   Ctrl+N step   Ctrl+C quit")
+	if m.theme.ASCII {
+		header = strings.ReplaceAll(header, "·", "/")
+	}
+	return layout.Fit(layout.Column(header, filter, main, footer), m.size)
+}
+
+func SampleServices() []Service {
+	return []Service{
+		{ID: "api", Name: "API gateway", Status: "Healthy", Rate: 1240, Latency: 78},
+		{ID: "events", Name: "Event stream", Status: "Healthy", Rate: 860, Latency: 42},
+		{ID: "workers", Name: "Job workers", Status: "Degraded", Rate: 420, Latency: 198},
+		{ID: "storage", Name: "Storage", Status: "Healthy", Rate: 640, Latency: 24},
+		{ID: "scheduler", Name: "Scheduler", Status: "Healthy", Rate: 180, Latency: 16},
+	}
+}

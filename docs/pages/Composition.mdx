@@ -1,0 +1,31 @@
+import { StoryCanvas } from "../components/StoryCanvas";
+import { GoSource } from "../components/GoSource";
+
+# Compose behavior as well as appearance
+
+The service workbench combines an input, table, time-series chart, and details viewport. Its state belongs to one Go model. The browser forwards terminal input to that model.
+
+<StoryCanvas storyId="screen/services" />
+
+## Ownership rules
+
+| Owner         | Responsibility                                             |
+| ------------- | ---------------------------------------------------------- |
+| Theme         | Semantic colors, contrast, ASCII and motion policy         |
+| Layout parent | Allocate rectangles in columns and rows, including borders |
+| Focus scope   | Route keyboard input to the active child                   |
+| Component     | Own its native widget state and return commands            |
+| Root runtime  | Own the terminal session and forward commands              |
+| Application   | Supply data and handle typed UI events                     |
+
+Tab moves focus. Typing in the filter leaves navigation keys available to the input. Arrow keys change rows when the table is focused. Selection updates the chart and inspector together. Ctrl+N advances background samples even while another region is focused.
+
+The split layout becomes stacked on small terminals. The selected service persists across resize; hidden regions leave the focus order.
+
+## Go entry point
+
+<GoSource storyId="screen/services" />
+
+## Dependencies follow capabilities
+
+Import `input`, `chart`, `layout`, or `form`. Atomic levels organize the catalog; they do not force package names or artificial composition layers. The Go library has no JavaScript runtime dependency.
