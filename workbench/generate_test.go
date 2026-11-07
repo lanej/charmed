@@ -29,6 +29,7 @@ func TestStaticGuide(t *testing.T) {
 	pages := map[string][]byte{}
 	ids := map[string]map[string]bool{}
 	links := map[string][]string{}
+	navComponents := map[string]map[string]bool{}
 	for _, path := range files {
 		data, err := os.ReadFile(path)
 		if err != nil {
@@ -37,6 +38,7 @@ func TestStaticGuide(t *testing.T) {
 		name := filepath.Base(path)
 		pages[name] = data
 		ids[name] = map[string]bool{}
+		navComponents[name] = map[string]bool{}
 		if bytes.Contains(data, []byte("\x1b")) {
 			t.Errorf("%s contains terminal escape sequences", name)
 		}
@@ -70,6 +72,30 @@ func TestStaticGuide(t *testing.T) {
 					}
 					if a.Key == "src" || a.Key == "href" {
 						links[name] = append(links[name], a.Val)
+					}
+				}
+			}
+			if n.Type == html.ElementNode && n.Data == "a" {
+				componentLink := false
+				href := ""
+				for _, a := range n.Attr {
+					if a.Key == "class" && strings.Contains(a.Val, "nav-component") {
+						componentLink = true
+					}
+					if a.Key == "href" {
+						href = a.Val
+					}
+				}
+				insideNav := false
+				for p := n.Parent; p != nil; p = p.Parent {
+					if p.Type == html.ElementNode && p.Data == "nav" {
+						insideNav = true
+						break
+					}
+				}
+				if componentLink && insideNav {
+					if u, err := url.Parse(href); err == nil {
+						navComponents[name][u.Fragment] = true
 					}
 				}
 			}
@@ -149,7 +175,7 @@ func TestStaticGuide(t *testing.T) {
 		case "Screens", "Templates":
 			target = "examples.html"
 		}
-		if !bytes.Contains(pages[target], []byte(`class="nav-component" href="#`+d.ID+`"`)) {
+		if !navComponents[target][d.ID] {
 			t.Errorf("missing sidebar link for %s", d.ID)
 		}
 	}
