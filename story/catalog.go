@@ -77,6 +77,10 @@ func definitions() []Definition {
 		}
 		return pattern.NewDashboard(pattern.DashboardOptions{Theme: e.Config.Palette(), Services: services, Live: e.Config.Live, Emit: e.Emit}), nil
 	}})
+	d = append(d,
+		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma"}, Defaults: DefaultConfig(), Factory: bandStory},
+		Definition{ID: "screen/deployment", Title: "Screens/Deployment comparison", Level: "Screens", Family: "pattern", Description: "Compare 2xx, 3xx, 4xx and 5xx across blue and green fleets. Request-weighted histories, 1/2/3s host-spread bands and linked member inspection use synthetic interval counts.", Source: "examples/deployment/main.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "scenario", "sigma"}, Scenarios: []string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, Defaults: func() Config { c := DefaultConfig(); c.Columns = 132; c.Rows = 40; return c }(), Factory: deploymentStory},
+	)
 	for i := range d {
 		id := d[i].ID
 		for _, control := range d[i].Controls {
@@ -91,6 +95,8 @@ func definitions() []Definition {
 			d[i].States = []string{"ready", "error"}
 		case "screen/services":
 			d[i].States = []string{"ready", "empty"}
+		case "screen/deployment", "chart/interval-band":
+			d[i].States = []string{"ready", "empty"}
 		case "chart/metric":
 			d[i].Controls = []string{"amount"}
 			d[i].Family = "chart"
@@ -102,9 +108,9 @@ func definitions() []Definition {
 		case "collection/logs":
 			d[i].Family = "collection"
 		}
-		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture"
+		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band"
 		d[i].Clock = coreChart || id == "feedback/spinner" || id == "feedback/time" || id == "screen/services"
-		d[i].Step = coreChart || id == "feedback/spinner" || id == "feedback/progress" || id == "feedback/motion" || id == "collection/logs" || id == "screen/services"
+		d[i].Step = coreChart || id == "feedback/spinner" || id == "feedback/progress" || id == "feedback/motion" || id == "collection/logs" || id == "screen/services" || id == "screen/deployment"
 		if id == "chart/timeseries" {
 			d[i].Source = "examples/timeseries/main.go"
 			d[i].Symbol = ""

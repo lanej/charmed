@@ -13,6 +13,7 @@ Requires Go **1.26.8+**. The documentation app also needs Node **24+** and npm. 
 ```sh
 go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
+go run ./cmd/workbench run screen/deployment --scenario isolated-hosts --sigma 3
 go run ./cmd/workbench run chart/timeseries --theme light --series 3
 go run ./cmd/workbench capture screen/services --plain
 ```
@@ -43,8 +44,9 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 | `feedback` | Spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
 | `form` | Themed Huh forms with native nested focus and validation |
 | `text` | Labels, badges, key hints and Glamour Markdown rendering |
-| `chart` | Sparklines, time series, line/scatter, bars, heatmaps, streamline/waveline, OHLC, canvas, portable pictures and chart compositions |
-| `pattern` | A service workbench linking a filter, table, chart and inspector |
+| `chart` | Sparklines, time series, line/scatter, bars, heatmaps, streamline/waveline, OHLC, canvas, interval bands, portable pictures and chart compositions |
+| `cohort` | Validated interval counts, request-weighted rates and unweighted member sample spread |
+| `pattern` | Service workbench and cohort comparison with linked plots, member selection and inspection |
 | `runtime` | One root Bubble Tea terminal session |
 | `story` | Deterministic Go fixtures shared by terminal execution, browser previews and snapshots |
 
@@ -66,7 +68,11 @@ The core uses upstream Charm v2 modules. It has no JavaScript runtime requiremen
 
 ## MDX workbench
 
-The Go registry generates each component's MDX page, argument metadata, source excerpt and four saved variants: default, light, narrow and monochrome. Generated files live in `docs/generated/` and are excluded from Git.
+The deployment comparison example shows all four HTTP response classes across blue and green fleets, nested 1/2/3σ host-spread bands, request-weighted histories and linked host inspection. Four synthetic scenarios distinguish a uniform regression, isolated bad hosts, unequal traffic and insufficient samples. Read **Compare a deployment** in the catalog for the count contract and statistical interpretation. The bands describe host variability; they are not confidence intervals or rollout decisions. Run `go run ./examples/deployment` for a standalone terminal application.
+
+[View the deployment comparison](docs/assets/deployment.png).
+
+The Go registry generates each component's MDX page, argument metadata, source excerpt and four standard saved variants: default, light, narrow and monochrome. The deployment comparison also saves its alternate scenarios for static browsing. Generated files live in `docs/generated/` and are excluded from Git.
 
 An MDX page can compose the workbench directly:
 

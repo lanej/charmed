@@ -56,6 +56,18 @@ func Generate(out string) error {
 				c.ReducedMotion = true
 			}},
 		}
+		for _, scenario := range d.Scenarios {
+			if scenario == d.Defaults.Scenario {
+				continue
+			}
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{
+				name:   strings.ToUpper(scenario[:1]) + strings.ReplaceAll(scenario[1:], "-", " "),
+				change: func(c *story.Config) { c.Scenario = scenario },
+			})
+		}
 		for _, v := range variants {
 			c := d.Defaults
 			v.change(&c)

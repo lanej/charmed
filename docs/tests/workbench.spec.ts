@@ -95,6 +95,58 @@ test("MDX pages include highlighted Go and file context", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("deployment comparison links host selection, windows, bands and sparse fixtures", async ({ page }) => {
+  await page.setViewportSize({ width: 1760, height: 1250 });
+  await page.goto("/#screen/deployment");
+  await expect(page.getByRole("status")).toContainText("isolated PTY");
+  const text = page.getByTestId("terminal-text");
+  await expect(text).toContainText("G-032 / G");
+  await expect(text).toContainText("Fleet B 96.093%  G 95.904%");
+  await expect(text).toContainText("Fleet B 0.200%  G 0.403%");
+  const viewport = await page.locator(".terminal-scroller").evaluate((element) => ({
+    width: element.clientWidth, contentWidth: element.scrollWidth,
+  }));
+  expect(viewport.contentWidth).toBeLessThanOrEqual(viewport.width);
+  await page.getByRole("button", { name: "Focus terminal", exact: true }).click();
+  await page.keyboard.press("ArrowDown");
+  await expect(page.getByTestId("terminal-events")).toContainText('"member":"G-031"');
+  await expect(text).toContainText("G-031 / G");
+  await page.keyboard.press("ArrowLeft");
+  await page.keyboard.press("2");
+  await expect(page.getByTestId("terminal-events")).toContainText('"window":10');
+  await expect(text).toContainText("+/- 2s host spread");
+  await page.keyboard.press("Control+]");
+  await page.getByRole("spinbutton", { name: "Columns", exact: true }).fill("40");
+  await page.getByRole("spinbutton", { name: "Columns", exact: true }).press("Enter");
+  await expect(page.getByRole("status")).toContainText("40 × 40");
+  await expect(text).toContainText("G-031 / G");
+  await page.getByRole("spinbutton", { name: "Columns", exact: true }).fill("132");
+  await page.getByRole("spinbutton", { name: "Columns", exact: true }).press("Enter");
+  await expect(text).toContainText("G-031 / G");
+  await expect(text).toContainText("+/- 2s host spread");
+  await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption("insufficient-samples");
+  await expect(text).toContainText("baseline s unavailable");
+  await expect(text).toContainText("95 excluded");
+  await expect(text).not.toContainText("NaN");
+  await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption("isolated-hosts");
+  await page.getByRole("combobox", { name: "Host spread bands", exact: true }).selectOption("3");
+  await expect(text).toContainText("5 beyond 3s");
+  if (process.env.CHARMED_CAPTURE_DIR) {
+    mkdirSync(process.env.CHARMED_CAPTURE_DIR, { recursive: true });
+    await page.locator(".story-canvas").screenshot({ path: join(process.env.CHARMED_CAPTURE_DIR, "deployment.png") });
+  }
+});
+
+test("static deployment variants retain the traffic and sampling scenarios", async ({ page }) => {
+  await page.goto("http://127.0.0.1:5174/#screen/deployment");
+  await expect(page.getByRole("status")).toContainText("Static snapshot: Default");
+  await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Insufficient samples");
+  await expect(page.getByRole("status")).toContainText("Static snapshot: Insufficient samples");
+  await expect(page.getByTestId("terminal-text")).toContainText("baseline s unavailable");
+  await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Unequal traffic");
+  await expect(page.getByTestId("terminal-text")).toContainText("unequal-traffic");
+});
+
 test("static export labels snapshots and offers saved variants", async ({
   page,
 }) => {
@@ -125,7 +177,7 @@ test("catalog navigation supports search, capability groups and mobile", async (
     name: "Components",
     exact: true,
   });
-  await expect(navigation.getByRole("link")).toHaveCount(34);
+  await expect(navigation.getByRole("link")).toHaveCount(36);
   await page.getByPlaceholder("Search components…").fill("heatmap");
   await expect(navigation.getByRole("link")).toHaveCount(1);
   await navigation.getByRole("link").click();

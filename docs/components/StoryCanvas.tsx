@@ -159,6 +159,34 @@ export function StoryCanvas({
               />
             </label>
           )}
+          {entry.controls?.includes("scenario") && (
+            <label>
+              Scenario
+              <select
+                aria-label="Scenario"
+                value={config.scenario}
+                onChange={(event) => set("scenario", event.target.value)}
+              >
+                {(entry.scenarios ?? []).map((scenario) => (
+                  <option key={scenario}>{scenario}</option>
+                ))}
+              </select>
+            </label>
+          )}
+          {entry.controls?.includes("sigma") && (
+            <label>
+              Host spread bands
+              <select
+                aria-label="Host spread bands"
+                value={config.sigma}
+                onChange={(event) => set("sigma", Number(event.target.value))}
+              >
+                {[1, 2, 3].map((sigma) => (
+                  <option key={sigma} value={sigma}>±{sigma}σ</option>
+                ))}
+              </select>
+            </label>
+          )}
           {entry.controls?.includes("series") && (
             <Dimension
               label="Series"

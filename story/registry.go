@@ -27,10 +27,12 @@ type Config struct {
 	Series        int        `json:"series"`
 	Amount        float64    `json:"amount"`
 	Horizontal    bool       `json:"horizontal"`
+	Sigma         int        `json:"sigma"`
+	Scenario      string     `json:"scenario"`
 }
 
 func DefaultConfig() Config {
-	return Config{Columns: 100, Rows: 30, Theme: theme.Dark, Profile: "truecolor", State: "ready", Value: "production", Series: 2, Amount: 68}
+	return Config{Columns: 100, Rows: 30, Theme: theme.Dark, Profile: "truecolor", State: "ready", Value: "production", Series: 2, Amount: 68, Sigma: 3, Scenario: "isolated-hosts"}
 }
 func (c Config) Validate() error {
 	if c.Columns < 20 || c.Columns > 240 || c.Rows < 8 || c.Rows > 80 {
@@ -50,6 +52,12 @@ func (c Config) Validate() error {
 	}
 	if c.Series < 1 || c.Series > 4 {
 		return errors.New("series must be between 1 and 4")
+	}
+	if c.Sigma < 1 || c.Sigma > 3 {
+		return errors.New("sigma must be 1, 2 or 3")
+	}
+	if !slices.Contains([]string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, c.Scenario) {
+		return fmt.Errorf("unknown scenario %q", c.Scenario)
 	}
 	if math.IsNaN(c.Amount) || math.IsInf(c.Amount, 0) || c.Amount < 0 || c.Amount > 100 {
 		return errors.New("amount must be between 0 and 100")
@@ -94,6 +102,7 @@ type Definition struct {
 	Upstream    string                                   `json:"upstream"`
 	Controls    []string                                 `json:"controls"`
 	States      []string                                 `json:"states"`
+	Scenarios   []string                                 `json:"scenarios"`
 	Clock       bool                                     `json:"clock"`
 	Step        bool                                     `json:"step"`
 	Defaults    Config                                   `json:"defaults"`

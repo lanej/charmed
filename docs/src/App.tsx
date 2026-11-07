@@ -23,6 +23,7 @@ const levels = [
 const fixedPages: Record<string, { title: string; file: string }> = {
   overview: { title: "Charmed", file: "../pages/Welcome.mdx" },
   composition: { title: "Composition", file: "../pages/Composition.mdx" },
+  deployment: { title: "Compare a deployment", file: "../pages/Deployment.mdx" },
   development: {
     title: "Develop and publish",
     file: "../pages/Development.mdx",

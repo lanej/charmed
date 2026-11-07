@@ -62,10 +62,11 @@ type TimeSeries struct {
 	size    layout.Size
 	theme   theme.Theme
 	focused bool
+	options []timeserieslinechart.Option
 }
 
-func NewTimeSeries(series []TimeSeriesData, size layout.Size, t theme.Theme) TimeSeries {
-	m := TimeSeries{size: size, theme: t}
+func NewTimeSeries(series []TimeSeriesData, size layout.Size, t theme.Theme, options ...timeserieslinechart.Option) TimeSeries {
+	m := TimeSeries{size: size, theme: t, options: append([]timeserieslinechart.Option(nil), options...)}
 	m.SetData(series)
 	return m
 }
@@ -123,10 +124,12 @@ func (m *TimeSeries) rebuild() {
 		low -= margin
 		high += margin
 	}
-	m.Bubble = timeserieslinechart.New(max(20, m.size.Width), max(6, m.size.Height),
+	defaults := []timeserieslinechart.Option{
 		timeserieslinechart.WithTimeRange(first, last), timeserieslinechart.WithYRange(low, high),
 		timeserieslinechart.WithXLabelFormatter(timeserieslinechart.HourTimeLabelFormatter()),
-		timeserieslinechart.WithXYSteps(3, 2), timeserieslinechart.WithAxesStyles(m.theme.Subtle(), m.theme.Subtle()))
+		timeserieslinechart.WithXYSteps(3, 2), timeserieslinechart.WithAxesStyles(m.theme.Subtle(), m.theme.Subtle()),
+	}
+	m.Bubble = timeserieslinechart.New(max(20, m.size.Width), max(6, m.size.Height), append(defaults, m.options...)...)
 	for i, s := range m.series {
 		m.Bubble.SetDataSetStyle(s.ID, lipgloss.NewStyle().Foreground(m.theme.SeriesColor(i)))
 		for _, p := range s.Points {
