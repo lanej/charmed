@@ -8,7 +8,6 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -109,30 +108,6 @@ func TestNativeSessionInputResizeAndCleanup(t *testing.T) {
 		case <-deadline.C:
 			t.Fatal("preview process was not reaped after socket close")
 		case <-tick.C:
-		}
-	}
-}
-
-func TestGeneratorIsReproducible(t *testing.T) {
-	// Generate runs from the module root or one of its subdirectories.
-	a, b := t.TempDir(), t.TempDir()
-	if err := workbench.Generate(a); err != nil {
-		t.Fatal(err)
-	}
-	if err := workbench.Generate(b); err != nil {
-		t.Fatal(err)
-	}
-	for _, name := range []string{"manifest.json", "coverage.json", "atoms/chart/timeseries.mdx", "molecules/chart/delta.mdx", "organisms/chart/comparison-panel.mdx", "screens/screen/services.mdx"} {
-		x, err := os.ReadFile(filepath.Join(a, "generated", name))
-		if err != nil {
-			t.Fatal(err)
-		}
-		y, err := os.ReadFile(filepath.Join(b, "generated", name))
-		if err != nil {
-			t.Fatal(err)
-		}
-		if !bytes.Equal(x, y) {
-			t.Fatalf("generated %s differs between runs", name)
 		}
 	}
 }

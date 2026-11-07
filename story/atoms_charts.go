@@ -37,7 +37,13 @@ func chartStory(kind string, e Environment) (runtime.Scene, error) {
 			data := sampleSeries(e.Config.Series, step, e.Config.Amount)
 			plot := chart.NewTimeSeries(data, plotSize, t)
 			plot.Focus()
-			render = func() string { return plot.View() + "\n" + chart.Legend(data, t) }
+			render = func() string {
+				view := plot.View()
+				if e.Config.Legend {
+					view += "\n" + chart.Legend(data, t)
+				}
+				return view
+			}
 			update = func(msg tea.Msg) tea.Cmd { var cmd tea.Cmd; plot, cmd = plot.Update(msg); return cmd }
 		case "line", "scatter":
 			plot := chart.NewLine(plotSize, 0, 31, 0, 120, t)

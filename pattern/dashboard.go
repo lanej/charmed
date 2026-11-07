@@ -13,6 +13,7 @@ import (
 	"github.com/NimbleMarkets/ntcharts/v2/linechart/timeserieslinechart"
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/collection"
+	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/input"
 	"github.com/lanej/charmed/interaction"
 	"github.com/lanej/charmed/layout"
@@ -26,10 +27,11 @@ type Service struct {
 	Rate, Latency    float64
 }
 type DashboardOptions struct {
-	Theme    theme.Theme
-	Services []Service
-	Live     bool
-	Emit     func(any)
+	Theme      theme.Theme
+	Services   []Service
+	Live       bool
+	ShowLegend bool
+	Emit       func(any)
 }
 
 // Dashboard owns coordinated UI state; applications provide its data and events.
@@ -45,13 +47,14 @@ type Dashboard struct {
 	size                                                          layout.Size
 	theme                                                         theme.Theme
 	live                                                          bool
+	showLegend                                                    bool
 	emit                                                          func(any)
 	leftWidth, rightWidth, tableHeight, chartHeight, detailHeight int
 	split                                                         bool
 }
 
 func NewDashboard(o DashboardOptions) *Dashboard {
-	m := &Dashboard{theme: o.Theme, services: append([]Service(nil), o.Services...), live: o.Live, emit: o.Emit,
+	m := &Dashboard{theme: o.Theme, services: append([]Service(nil), o.Services...), live: o.Live, emit: o.Emit, showLegend: o.ShowLegend,
 		focus: interaction.NewFocus("filter", "table", "chart", "details")}
 	m.Filter = input.NewText(input.TextOptions{Placeholder: "Filter services…", Width: 80, Theme: o.Theme})
 	if o.Theme.ASCII {
@@ -81,13 +84,13 @@ func (m *Dashboard) nextTick() tea.Cmd {
 func (m *Dashboard) Resize(size layout.Size) {
 	m.size = size
 	m.Filter.Resize(max(1, size.Width-2))
-	mainHeight := max(1, size.Height-7)
+	mainHeight := max(1, size.Height-5)
 	m.leftWidth, m.rightWidth, m.split = layout.Split(size.Width, 1, 30, 48, 0.36)
 	m.split = m.split && size.Height >= 24
 	if m.split {
-		m.tableHeight = mainHeight
-		m.chartHeight = max(9, mainHeight*2/3)
-		m.detailHeight = mainHeight - m.chartHeight
+		m.tableHeight = min(mainHeight, max(3, len(m.services)+2))
+		m.chartHeight = mainHeight
+		m.detailHeight = mainHeight - m.tableHeight
 	} else {
 		m.leftWidth, m.rightWidth = size.Width, size.Width
 		m.tableHeight = min(7, max(3, mainHeight/3))
@@ -107,10 +110,10 @@ func (m *Dashboard) Resize(size layout.Size) {
 	w := max(4, m.leftWidth-2)
 	m.Table.SetColumns([]table.Column{{Title: "SERVICE", Width: max(1, w-16)}, {Title: "STATE", Width: 10}})
 	m.Table.SetWidth(w)
-	m.Table.SetHeight(max(1, m.tableHeight-3))
-	m.Details.SetWidth(max(1, m.rightWidth-2))
+	m.Table.SetHeight(max(1, m.tableHeight-1))
+	m.Details.SetWidth(max(1, m.leftWidth-2))
 	m.Details.SetHeight(max(1, m.detailHeight-2))
-	m.Plot.Resize(layout.Size{Width: max(0, m.rightWidth-2), Height: max(0, m.chartHeight-3)})
+	m.Plot.Resize(chart.PanelPlotSize(layout.Size{Width: m.rightWidth, Height: m.chartHeight}, chart.PanelOptions{ShowLegend: m.showLegend}))
 }
 func (m *Dashboard) syncFocus() tea.Cmd {
 	m.Filter.Blur()
@@ -190,7 +193,7 @@ func (m *Dashboard) applyFilter() {
 				selected = len(rows)
 			}
 			m.visible = append(m.visible, s)
-			rows = append(rows, table.Row{s.Name, s.Status})
+			rows = append(rows, table.Row{s.Name, serviceStatus(s.Status).View(text.Bright, m.theme)})
 		}
 	}
 	m.Table.SetRows(rows)
@@ -226,7 +229,7 @@ func (m *Dashboard) updateSelection() {
 		return
 	}
 	m.Plot.SetData(m.series(s))
-	m.Details.SetContent(fmt.Sprintf("%s\nStatus       %s\nThroughput   %.0f req/min\nLatency p95  %.0f ms\n\nStable selection: %s\nBackground samples: %d\n\nThis fixture has no external services.\nFiltering, selection and resize operate on the same state.", s.Name, s.Status, s.Rate, s.Latency, s.ID, m.Step))
+	m.Details.SetContent(fmt.Sprintf("%s  %s\n\nThroughput   %.0f req/min\nLatency p95  %.0f ms", s.Name, serviceStatus(s.Status).View(text.Bright, m.theme), s.Rate, s.Latency))
 }
 func (m *Dashboard) series(s Service) []chart.TimeSeriesData {
 	base := time.Date(2026, 1, 1, 12, 0, 0, 0, time.UTC)
@@ -240,21 +243,22 @@ func (m *Dashboard) series(s Service) []chart.TimeSeriesData {
 	return data
 }
 func (m *Dashboard) View() string {
-	header := m.theme.Heading().Render("CHARMED") + "  " + m.theme.Subtle().Render("Service workbench")
-	header += "\n" + text.Badge("FIXTURE", m.theme) + "  " + m.theme.Subtle().Render(fmt.Sprintf("%d services · %d samples", len(m.visible), m.Step))
-	filter := layout.Panel("Search", m.Filter.View(), layout.Size{Width: m.size.Width, Height: 3}, m.theme, m.focus.Current() == "filter")
-	left := layout.Panel("Services", m.Table.View(), layout.Size{Width: m.leftWidth, Height: m.tableHeight}, m.theme, m.focus.Current() == "table")
+	header := m.theme.Heading().Render("Service workbench") + "  " + m.theme.Subtle().Render(fmt.Sprintf("%d services · %d samples", len(m.visible), m.Step))
+	filter := layout.Panel("", m.Filter.View(), layout.Size{Width: m.size.Width, Height: 3}, m.theme, m.focus.Current() == "filter")
+	// WHY: Names and status pills are self-describing; retain native table navigation without its column-heading row.
+	_, rows, _ := strings.Cut(m.Table.View(), "\n")
+	left := layout.Panel("", rows, layout.Size{Width: m.leftWidth, Height: m.tableHeight}, m.theme, m.focus.Current() == "table")
 	title := "Throughput / req per minute"
 	data := []chart.TimeSeriesData{}
 	if s, ok := m.selected(); ok {
 		title = s.Name + " / throughput"
 		data = m.series(s)
 	}
-	plot := chart.Panel(title, m.Plot, data, layout.Size{Width: m.rightWidth, Height: m.chartHeight}, m.theme, m.focus.Current() == "chart")
+	plot := chart.Panel(title, m.Plot, data, layout.Size{Width: m.rightWidth, Height: m.chartHeight}, m.theme, m.focus.Current() == "chart", chart.PanelOptions{ShowLegend: m.showLegend})
 	main := ""
 	if m.split {
-		details := layout.Panel("Inspector", m.Details.View(), layout.Size{Width: m.rightWidth, Height: m.detailHeight}, m.theme, m.focus.Current() == "details")
-		main = layout.Row(left, strings.Repeat(" \n", max(0, m.tableHeight-1))+" ", layout.Column(plot, details))
+		details := layout.Panel("", m.Details.View(), layout.Size{Width: m.leftWidth, Height: m.detailHeight}, m.theme, m.focus.Current() == "details")
+		main = layout.Row(layout.Column(left, details), strings.Repeat(" \n", max(0, m.chartHeight-1))+" ", plot)
 	} else {
 		main = layout.Column(left, plot)
 	}
@@ -272,5 +276,21 @@ func SampleServices() []Service {
 		{ID: "workers", Name: "Job workers", Status: "Degraded", Rate: 420, Latency: 198},
 		{ID: "storage", Name: "Storage", Status: "Healthy", Rate: 640, Latency: 24},
 		{ID: "scheduler", Name: "Scheduler", Status: "Healthy", Rate: 180, Latency: 16},
+	}
+}
+
+// serviceStatus maps the example's service health vocabulary to shared display atoms.
+func serviceStatus(value string) feedback.Status {
+	switch strings.ToLower(value) {
+	case "healthy", "ok":
+		return feedback.OK
+	case "degraded", "warn":
+		return feedback.Warn
+	case "failed", "error":
+		return feedback.Error
+	case "off", "disabled":
+		return feedback.Off
+	default:
+		return feedback.Unknown
 	}
 }

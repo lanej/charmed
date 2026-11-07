@@ -1,7 +1,3 @@
 .cache/
-docs/node_modules/
 docs/dist/
-docs/generated/
-docs/test-results/
-docs/playwright-report/
 *.test

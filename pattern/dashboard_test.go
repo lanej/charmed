@@ -40,7 +40,7 @@ func TestDashboardCoordinatesSelectionResizeAndBackgroundData(t *testing.T) {
 		t.Fatal("linked plot no longer reflects selection")
 	}
 	m.Resize(layout.Size{Width: 120, Height: 34})
-	if !strings.Contains(ansi.Strip(m.Details.View()), "Stable selection: events") {
+	if !strings.Contains(ansi.Strip(m.Details.View()), "Event stream") {
 		t.Fatal("inspector disagrees with selection")
 	}
 }
@@ -60,5 +60,28 @@ func TestInputQIsTextAndEmptyFiltersRemainNavigable(t *testing.T) {
 	m.Update(tea.KeyPressMsg{Code: 'u', Mod: tea.ModCtrl})
 	if m.Filter.Value() != "" || m.SelectedID != "api" {
 		t.Fatal("clearing an empty filter did not restore a valid selection")
+	}
+}
+
+func TestDashboardUsesStatusAtomsWithoutRedundantHeadings(t *testing.T) {
+	m := pattern.NewDashboard(pattern.DashboardOptions{Theme: theme.New(theme.Dark), Services: pattern.SampleServices()})
+	frame := ansi.Strip(m.View())
+	for _, heading := range []string{"SERVICE", "STATE", "Services", "Inspector"} {
+		if strings.Contains(frame, heading) {
+			t.Errorf("redundant heading %q remains", heading)
+		}
+	}
+	for _, label := range []string{"API gateway", "Event stream", "Job workers", "Storage", "Scheduler", "OK", "WARN"} {
+		if !strings.Contains(frame, label) {
+			t.Errorf("missing service or shared status label %q", label)
+		}
+	}
+	rows := m.Table.Rows()
+	if !strings.Contains(rows[2][1], "\x1b[") {
+		t.Error("warning status has no native styling")
+	}
+	m = pattern.NewDashboard(pattern.DashboardOptions{Theme: theme.New(theme.Mono), Services: []pattern.Service{{ID: "unknown", Name: "Unclassified", Status: "unrecognized"}}})
+	if !strings.Contains(ansi.Strip(m.View()), "[UNKNOWN]") {
+		t.Error("unrecognized health must use the explicit unknown status atom")
 	}
 }

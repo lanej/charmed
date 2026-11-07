@@ -11,11 +11,6 @@ func Levels() []string {
 	return []string{"Foundations", "Atoms", "Molecules", "Organisms", "Templates", "Screens"}
 }
 
-// MDXPath locates a generated page without changing its public story ID.
-func (d Definition) MDXPath() string {
-	return strings.ToLower(d.Level) + "/" + d.ID + ".mdx"
-}
-
 // Validate checks the catalog's declared composition graph before publication.
 // Peers can compose peers, but a lower level cannot depend on a higher one.
 func Validate() error { return validateDefinitions(Definitions()) }

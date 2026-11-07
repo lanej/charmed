@@ -1,14 +1,14 @@
 # Charmed
 
-A Go design system for Charm and ntcharts, with a standalone MDX component workbench.
+A Go design system for Charm and ntcharts, with a static reference guide and native terminal fixtures.
 
-Components share semantic themes, terminal-cell geometry, focus conventions and state handling. The workbench provides the component-explorer concept: searchable examples, variants, controls, real terminal previews, emitted events and highlighted Go source. It uses Vite and MDX directly.
+Components share semantic themes, terminal-cell geometry, focus conventions and state handling. The guide groups related components, saved Go output, source and composition examples by capability.
 
-![A live Charmed service workbench with a linked table, chart and inspector](docs/assets/workbench.png)
+![Charmed static guide in night mode](.github/pr-assets/static-guide.png)
 
 ## Run it
 
-Requires Go **1.26.8+**. The documentation app also needs Node **24+** and npm. Native live previews support Linux and macOS.
+Requires Go **1.26.8+**. Native terminal sessions support Linux and macOS.
 
 ```sh
 go run ./cmd/workbench list
@@ -18,18 +18,6 @@ go run ./cmd/workbench run screen/deployment --comparison-variant bands
 go run ./cmd/workbench run chart/timeseries --theme light --series 3
 go run ./cmd/workbench capture screen/services --plain
 ```
-
-Open the component workbench:
-
-```sh
-cd docs
-npm ci
-npm run dev
-```
-
-The catalog runs at **http://127.0.0.1:5173**. Its native preview service runs on loopback port 7331. Each live preview starts a fixed, registered Go story in its own pseudo-terminal. Closing or resetting a preview cancels and reaps its process.
-
-Use **Focus terminal** to direct keys into a preview and **Ctrl+]** to release focus. **Tab** moves between regions in the service screen; arrow keys select rows; **Ctrl+N** advances fixture data. Resizing preserves the selected service.
 
 ## Components
 
@@ -68,44 +56,17 @@ cmd := field.Focus()
 
 The core uses upstream Charm v2 modules. It has no JavaScript runtime requirement and no Bubble Tea fork.
 
-## MDX workbench
+## Static guide
 
-The comparison keeps **Stacked** as its default presentation. **Disconnected bands** is a live and saved variant of the same component; switching it preserves host, metric, window, sigma, focus and policy state. Native users can press `b`. The atom catalog also includes signed numbers with configurable sign colors, bright/normal/dim pills, and reusable OK/WARN/ERROR/UNKNOWN/OFF statuses.
-
-The deployment comparison example groups hosts by actual version identifiers, with reference/candidate roles and a separate blue/green deployment-method label. Semantic pills identify 2xx success, 3xx redirects, 4xx client errors and 5xx server errors. It combines nested 1/2/3σ host-spread bands, request-weighted histories and linked host inspection. Four synthetic scenarios distinguish a uniform regression, isolated bad hosts, unequal traffic and insufficient samples. Read **Compare a deployment** in the catalog for the count contract and statistical interpretation. The bands describe host variability; they are not confidence intervals or rollout decisions. Run `go run ./examples/deployment` for a standalone terminal application.
-
-[View the deployment comparison](docs/assets/deployment.png).
-
-The screen composes the same distribution, interval, time-series, table, pill and attention components exposed in the catalog. Both the host list and member inspector use native tables. Panel titles merge the version comparison into signed delta bars on one shared scale; inspector percentage cells compose native progress bars and exact values. Version IDs label data directly, with no legends or key footers. Optional per-metric policies distinguish host z-score limits from fleet percentage-point deltas. Warning/error attention is separate from HTTP status semantics and from the displayed sigma bands. The example enables illustrative rules; use `--boundaries=false` or the **No boundaries** variant to keep deviations descriptive. Missing data remains unknown when a rule is configured.
-
-The native story registry is split into `story/foundations.go`, `atoms.go`, `molecules.go`, `organisms.go` and `screens.go`, with core chart atoms in `story/atoms_charts.go`. Fixtures stay beside their registrations; Go component packages remain grouped by capability. Shared scene adapters and sample data live in `scene.go` and `samples.go`.
-
-The registry generates each component's MDX page, argument metadata, source excerpt and four standard saved variants: default, light, narrow and monochrome. The deployment comparison also saves its alternate scenarios for static browsing. Generated pages live at `docs/generated/<level>/<story-id>.mdx`, for example `docs/generated/molecules/chart/delta.mdx`, and are excluded from Git. Manifest paths connect these files to the existing story IDs and hash URLs.
-
-`Definition.Composes` identifies a component's building blocks. Every generated page links to these components and to the compositions that use it. The generator validates references, atomic dependency direction and cycles before publishing. Explore the deployment screen → comparison-panel organism → distribution molecule → interval-band atom in the catalog.
-
-An MDX page can compose the workbench directly:
-
-```mdx
-import { StoryCanvas } from '../components/StoryCanvas';
-import { GoSource } from '../components/GoSource';
-
-# Time series
-
-Compare measurements over a shared time window.
-
-<StoryCanvas storyId="chart/timeseries" />
-<GoSource storyId="chart/timeseries" />
-```
-
-To build a static site:
+[Browse the guide](https://lanej.github.io/charmed/) for foundations, components grouped by capability, composition examples and the deployment telemetry contract. Components share sections rather than individual pages. Each fixture includes saved output, source and a native command.
 
 ```sh
-cd docs
-npm run build
+go run ./cmd/workbench generate --out docs
 ```
 
-Publish `docs/dist/` to any static host, including GitHub Pages. Hash routes work under a repository subpath. Static pages explicitly show **saved Go snapshots**. Live keyboard interaction and arbitrary fixture changes require the native service. Saved variants remain available offline.
+The generator writes `docs/dist/` using Go alone. GitHub Actions uploads this directory to Pages; the published guide uses ordinary HTML, CSS, images and links. It needs no npm, JavaScript or preview service. Saved terminal frames retain ANSI colors as static HTML; run a native fixture for keyboard interaction and animation.
+
+Edit the guides in `docs/*.md` and layout in `workbench/site/`. The registry supplies snapshots and source and validates declared component composition. See [development](docs/development.md) and the [deployment guide](docs/deployment.md).
 
 ## Coverage
 
@@ -118,14 +79,9 @@ WASM remains optional because the current Booba route requires a patched Bubble 
 ```sh
 go vet ./...
 go test -race ./...
-cd docs
-npm ci
-npm run check
-npm run build
-npx playwright install chromium
-npm test
+go run ./cmd/workbench generate --out docs
 ```
 
-Checks exercise cell bounds, deterministic frames, focus and selection, resize, background updates, native process cleanup, MDX source highlighting, live browser input and the static fallback.
+Checks exercise cell bounds, deterministic frames, focus and selection, resize, background updates, native process cleanup, static guide generation and component links.
 
 MIT licensed. Upstream components retain their respective licenses.

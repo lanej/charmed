@@ -77,7 +77,11 @@ func Panel(title, content string, size Size, t theme.Theme, focused bool) string
 		border = border.Foreground(t.Accent).Bold(true)
 	}
 	label := ansi.Truncate(" "+title+" ", size.Width-2, "")
-	top := border.Render(tl + label + strings.Repeat(horizontal, max(0, size.Width-2-lipgloss.Width(label))) + tr)
+	labelStyle := t.Subtle()
+	if focused {
+		labelStyle = t.Heading()
+	}
+	top := border.Render(tl) + labelStyle.Render(label) + border.Render(strings.Repeat(horizontal, max(0, size.Width-2-lipgloss.Width(label)))+tr)
 	inside := strings.Split(Fit(content, Size{size.Width - 2, size.Height - 2}), "\n")
 	for i := range inside {
 		inside[i] = border.Render(vertical) + inside[i] + border.Render(vertical)

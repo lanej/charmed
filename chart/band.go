@@ -14,6 +14,7 @@ type Interval struct{ Low, High float64 }
 type BandMarker struct {
 	Value float64
 	Glyph rune
+	Label string
 	Style lipgloss.Style
 }
 type BandOptions struct {
@@ -35,18 +36,12 @@ func IntervalBand(o BandOptions, width int, t theme.Theme) string {
 	if width <= 0 {
 		return ""
 	}
-	valid := finite(o.Min) && finite(o.Max) && o.Max > o.Min && finite(o.Center)
-	for _, i := range o.Intervals {
-		valid = valid && finite(i.Low) && finite(i.High) && i.Low <= i.High
-	}
-	if !valid {
+	if !validBand(o) {
 		return layout.Fit("Invalid interval", layout.Size{Width: width, Height: 1})
 	}
+
 	plot := NewCanvas(layout.Size{Width: width, Height: 1}, t)
-	style := lipgloss.NewStyle().Foreground(t.SeriesColor(o.Series))
-	if o.Style != nil {
-		style = *o.Style
-	}
+	style := bandStyle(o, t)
 	for x := range width {
 		plot.SetRuneWithStyle(canvas.Point{X: x}, '·', t.Subtle())
 		if t.ASCII {
@@ -79,7 +74,15 @@ func IntervalBand(o BandOptions, width int, t theme.Theme) string {
 		}
 	}
 	if o.Selected != nil && finite(*o.Selected) && *o.Selected >= o.Min && *o.Selected <= o.Max {
-		plot.SetRuneWithStyle(canvas.Point{X: project(*o.Selected)}, 'X', t.Text().Bold(true))
+		plot.SetRuneWithStyle(canvas.Point{X: project(*o.Selected)}, 'X', selectedStyle(t))
 	}
 	return layout.Fit(plot.View(), layout.Size{Width: width, Height: 1})
+}
+
+func validBand(o BandOptions) bool {
+	valid := finite(o.Min) && finite(o.Max) && o.Max > o.Min && finite(o.Center)
+	for _, i := range o.Intervals {
+		valid = valid && finite(i.Low) && finite(i.High) && i.Low <= i.High
+	}
+	return valid
 }

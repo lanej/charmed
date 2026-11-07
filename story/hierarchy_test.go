@@ -9,11 +9,6 @@ func TestCatalogCompositionGraph(t *testing.T) {
 	if err := Validate(); err != nil {
 		t.Fatal(err)
 	}
-	for _, d := range Definitions() {
-		if !strings.HasPrefix(d.MDXPath(), strings.ToLower(d.Level)+"/") {
-			t.Fatalf("%s lost its atomic directory", d.ID)
-		}
-	}
 }
 
 func TestCompositionRejectsBrokenLinksAndLayerInversions(t *testing.T) {

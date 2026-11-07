@@ -1,4 +1,4 @@
-// Package story is the single source of truth for native and MDX component fixtures.
+// Package story is the single source of truth for native fixtures and static documentation.
 package story
 
 import (
@@ -27,6 +27,7 @@ type Config struct {
 	Value             string     `json:"value"`
 	Series            int        `json:"series"`
 	Amount            float64    `json:"amount"`
+	Legend            bool       `json:"legend"`
 	Horizontal        bool       `json:"horizontal"`
 	Sigma             int        `json:"sigma"`
 	Scenario          string     `json:"scenario"`

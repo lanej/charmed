@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "enforceOnStop": false,
+  "sourcePaths": [
+    "docs/*.md",
+    "workbench/site/*",
+    "workbench/site.go"
+  ],
+  "sourceChecks": [],
+  "accessibility": true,
+  "projectDocuments": [
+    "DESIGN.md"
+  ],
+  "pages": [
+    {
+      "name": "index",
+      "path": "/index.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "foundations",
+      "path": "/foundations.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "components",
+      "path": "/components.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "examples",
+      "path": "/examples.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "deployment",
+      "path": "/deployment.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "development",
+      "path": "/development.html",
+      "ready": "main h1"
+    }
+  ],
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    }
+  ]
+}

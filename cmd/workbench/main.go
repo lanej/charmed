@@ -55,11 +55,12 @@ func command() *cobra.Command {
 		cmd.Flags().IntVar(&c.Sigma, "sigma", c.Sigma, "Maximum nested host-spread band: 1, 2 or 3")
 		cmd.Flags().StringVar(&c.ComparisonVariant, "comparison-variant", c.ComparisonVariant, "Comparison presentation: stacked or bands")
 		cmd.Flags().StringVar(&c.Emphasis, "emphasis", c.Emphasis, "Atom emphasis: bright, normal or dim")
-		cmd.Flags().StringVar(&c.Scenario, "scenario", c.Scenario, "Deployment fixture scenario (see MDX deployment guide)")
+		cmd.Flags().StringVar(&c.Scenario, "scenario", c.Scenario, "Deployment fixture scenario (see deployment guide)")
 		cmd.Flags().StringVar(&c.ReferenceID, "reference-version", c.ReferenceID, "Reference version identifier")
 		cmd.Flags().StringVar(&c.CandidateID, "candidate-version", c.CandidateID, "Candidate version identifier")
 		cmd.Flags().BoolVar(&c.Boundaries, "boundaries", false, "Enable illustrative warn/error deviation boundaries")
 		cmd.Flags().Float64Var(&c.Amount, "amount", c.Amount, "Progress or chart baseline, 0–100")
+		cmd.Flags().BoolVar(&c.Legend, "legend", false, "Show a legend using the plot marker and series styles")
 		cmd.Flags().BoolVar(&c.Horizontal, "horizontal", false, "Use horizontal bars")
 		cmd.Flags().StringVar(&encoded, "config", "", "Internal encoded configuration")
 		cmd.Flags().MarkHidden("config")
@@ -117,8 +118,8 @@ func command() *cobra.Command {
 	serve.Flags().StringVar(&addr, "listen", addr, "Loopback address")
 	root.AddCommand(serve)
 	out := "docs"
-	generate := &cobra.Command{Use: "generate", Short: "Export Go stories, MDX, source and static frames", RunE: func(cmd *cobra.Command, args []string) error { return workbench.Generate(out) }}
-	generate.Flags().StringVar(&out, "out", out, "Documentation project directory")
+	generate := &cobra.Command{Use: "generate", Short: "Build the static guide from Go stories", RunE: func(cmd *cobra.Command, args []string) error { return workbench.Generate(out) }}
+	generate.Flags().StringVar(&out, "out", out, "Documentation output parent directory")
 	root.AddCommand(generate)
 	return root
 }
