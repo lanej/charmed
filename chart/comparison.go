@@ -90,12 +90,11 @@ type ComparisonPanel struct {
 	Summary      []string
 	Distribution DistributionComparison
 	History      TimeSeries
-	HistoryLabel string
 }
 
 func (p ComparisonPanel) View(size layout.Size, t theme.Theme, focused bool) string {
 	lines := append([]string(nil), p.Summary...)
 	lines = append(lines, p.Distribution.View(max(1, size.Width-2), t))
-	lines = append(lines, p.HistoryLabel, p.History.View())
+	lines = append(lines, p.History.View())
 	return layout.Panel(p.Title, strings.Join(lines, "\n"), size, t, focused)
 }

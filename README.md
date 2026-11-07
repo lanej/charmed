@@ -73,7 +73,7 @@ The deployment comparison example groups hosts by actual version identifiers, wi
 
 [View the deployment comparison](docs/assets/deployment.png).
 
-The screen composes the same distribution, interval, time-series, pill and attention components exposed in the catalog. Optional per-metric policies distinguish host z-score limits from fleet percentage-point deltas. Warning/error attention is separate from HTTP status semantics and from the displayed sigma bands. The example enables illustrative rules; use `--boundaries=false` or the **No boundaries** variant to keep deviations descriptive. Missing data remains unknown when a rule is configured.
+The screen composes the same distribution, interval, time-series, table, pill and attention components exposed in the catalog. Both the host list and member inspector use native tables. Version IDs label data directly, with no legends or key footers. Optional per-metric policies distinguish host z-score limits from fleet percentage-point deltas. Warning/error attention is separate from HTTP status semantics and from the displayed sigma bands. The example enables illustrative rules; use `--boundaries=false` or the **No boundaries** variant to keep deviations descriptive. Missing data remains unknown when a rule is configured.
 
 The Go registry generates each component's MDX page, argument metadata, source excerpt and four standard saved variants: default, light, narrow and monochrome. The deployment comparison also saves its alternate scenarios for static browsing. Generated files live in `docs/generated/` and are excluded from Git.
 

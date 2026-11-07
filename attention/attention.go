@@ -152,9 +152,9 @@ func (r Rule) Summary(unit string) string {
 	}
 	var parts []string
 	for _, t := range r.Thresholds() {
-		label, sign := "W", ">="
+		label, sign := "Warn", ">="
 		if t.Level == Error {
-			label = "E"
+			label = "Error"
 		}
 		if t.Side == "lower" {
 			sign = "<="

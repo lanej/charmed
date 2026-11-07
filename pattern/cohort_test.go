@@ -72,7 +72,7 @@ func TestAttentionIsComposedOptionalAndIndependentOfDisplaySigma(t *testing.T) {
 		t.Fatal("rendering, sigma, resize or caller mutation changed attention")
 	}
 	frame := ansi.Strip(m.View())
-	if !strings.Contains(frame, "ERROR") || !strings.Contains(frame, "WARN") || !strings.Contains(frame, "W>=+2 E>=+3") {
+	if !strings.Contains(frame, "ERROR") || !strings.Contains(frame, "WARN") || !strings.Contains(frame, "Warn>=+0.1 Error>=+0.3") {
 		t.Fatal("composed boundary state or explanation missing")
 	}
 	_ = m.SetWindow(0)
@@ -108,7 +108,7 @@ func TestComparisonLinksSelectionAndRetainsStateAcrossResize(t *testing.T) {
 	}
 	before := m.Panels.View()
 	m.Update(tea.KeyPressMsg{Code: tea.KeyDown})
-	if m.Selected().MemberID != "host-095" || !strings.Contains(ansi.Strip(m.Inspector.View()), "ID: "+fixture.CandidateVersionID) || before == m.Panels.View() {
+	if m.Selected().MemberID != "host-095" || !strings.Contains(ansi.Strip(m.View()), "Version "+fixture.CandidateVersionID) || before == m.Panels.View() {
 		t.Fatal("selection did not coordinate plots and inspector")
 	}
 	m.Update(tea.KeyPressMsg{Code: tea.KeyLeft})
@@ -120,12 +120,43 @@ func TestComparisonLinksSelectionAndRetainsStateAcrossResize(t *testing.T) {
 			t.Fatal("resize or control change lost linked state")
 		}
 	}
-	if strings.Count(ansi.Strip(m.View()), "3=member") != 4 {
-		t.Fatal("not all four panels include the selected member history")
+	if len(m.Inspector.Rows()) != 4 || !strings.Contains(ansi.Strip(m.View()), "Fleet "+fixture.CandidateVersionID) {
+		t.Fatal("inspector table or direct version labels are missing")
 	}
 	m.Update(runtime.StepMsg{})
 	if m.WindowIndex() != 11 || m.Selected().MemberID != "host-095" {
 		t.Fatal("window advance lost selection")
+	}
+}
+
+func TestMemberInspectorTableSelectsMetricsAndHasNoLegends(t *testing.T) {
+	m, _ := comparison(t)
+	if len(m.Inspector.Rows()) != 4 || m.Inspector.Cursor() != 3 {
+		t.Fatal("inspector did not present the four metric rows")
+	}
+	selected := m.Selected()
+	m.Update(tea.KeyPressMsg{Code: tea.KeyTab})
+	m.Update(tea.KeyPressMsg{Code: tea.KeyTab})
+	if !m.Inspector.Focused() || m.Table.Focused() {
+		t.Fatal("inspector table did not receive focus")
+	}
+	m.Update(tea.KeyPressMsg{Code: tea.KeyUp})
+	if m.MetricID() != "4xx" || m.Inspector.Cursor() != 2 || m.Selected() != selected {
+		t.Fatal("inspector selection did not coordinate the active metric")
+	}
+	m.Resize(layout.Size{Width: 40, Height: 40})
+	m.Resize(layout.Size{Width: 132, Height: 40})
+	if m.MetricID() != "4xx" || m.Inspector.Cursor() != 2 || m.Selected() != selected {
+		t.Fatal("resize lost table selection")
+	}
+	frame := ansi.Strip(m.View())
+	for _, legend := range []string{"History %:", "3=member", "X = this member", "W/E =", "R=reference", "C=candidate", "1/2/3 bands", "distance from reference hosts"} {
+		if strings.Contains(frame, legend) {
+			t.Fatalf("legend remains: %s", legend)
+		}
+	}
+	if !strings.Contains(frame, "CODE") || !strings.Contains(frame, "RATE") || !strings.Contains(frame, "VERSION") {
+		t.Fatal("table data headers are missing")
 	}
 }
 func TestUpdatesAreAtomicAndFollowLatestOnlyWhenSelected(t *testing.T) {

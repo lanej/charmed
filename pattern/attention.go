@@ -80,11 +80,11 @@ func (m *CohortComparison) tableColumns() {
 	if width == 0 {
 		width = 40
 	}
-	memberWidth := max(1, width-18)
+	memberWidth := max(1, width-21)
 	if m.boundaries[m.MetricID()].Hosts.Configured() {
-		memberWidth = max(1, width-27)
+		memberWidth = max(1, width-30)
 	}
-	columns := []table.Column{{Title: "MEMBER", Width: memberWidth}, {Title: "ROLE", Width: 4}, {Title: "z(ref)", Width: 6}}
+	columns := []table.Column{{Title: "MEMBER", Width: memberWidth}, {Title: "VERSION", Width: 7}, {Title: "z(ref)", Width: 6}}
 	if m.boundaries[m.MetricID()].Hosts.Configured() {
 		columns = append(columns, table.Column{Title: "ATTN", Width: 7})
 	}
