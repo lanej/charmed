@@ -17,7 +17,7 @@ The **host mean** gives each eligible host equal weight. The nested bands are th
 
 Histories show each version's request-weighted rate and the selected host's rate over all supplied windows. `R` and `C` are compact aliases for reference and candidate; the header shows their actual version identifiers and the inspector shows the selected version ID. Version series keep their identity in every panel, independently of the status-pill colors. The third line is the inspected host.
 
-The host list ranks absolute distance from the **reference version's host distribution** for the active response class. Its `z(ref)` is `(host rate − reference host mean) / reference host standard deviation`. This is a descriptive distance, including for candidate hosts, rather than a confidence score. The candidate's widening spread does not redefine its reference. The list reports the number of eligible hosts beyond the selected distance in either direction; this includes both cohorts and is not a failure count.
+The host list ranks configured attention first, then absolute distance from the **reference version's host distribution** for the active response class. Its `z(ref)` is `(host rate − reference host mean) / reference host standard deviation`. This is a descriptive distance, including for candidate hosts, rather than a confidence score. The candidate's widening spread does not redefine its reference. The descriptive tail count includes eligible hosts from both cohorts beyond the selected sigma distance; this is separate from boundary attention.
 
 Version identifiers are opaque strings: a commit, release tag or build ID can identify either role. **Reference version** and **Candidate version** controls accept distinct identifiers without parsing their format. Editing an ID commits on blur or Enter and starts a fresh synthetic fixture. Host identifiers are independent of version, role and deployment environment.
 
@@ -33,6 +33,46 @@ Live previews expose a Scenario control. Static builds include the alternate sce
 | `insufficient-samples` | Most hosts serve fewer than 1,000 requests; some serve none | Excluded host counts, `n/a` spread and the absence of finite z-scores |
 
 Use **↑/↓** to choose a host, **←/→** to choose a time window, **[ / ]** to change the active response class, and **1 / 2 / 3** to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. The controls below the preview set the initial scenario and band limit; changing them starts a fresh session. **Tab** moves between the host list, metric panels and inspector. Arrow keys scroll the focused region; **Ctrl+N** advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.
+
+## Optional warning and error boundaries
+
+The **Deviation boundaries** control enables illustrative policies or removes them. The library has no default alert thresholds. With no configured rule, deviation remains descriptive: there is no warning, error or implied healthy state. Static exports include a **No boundaries** variant.
+
+| Scope | Measurement | Example warning | Example error |
+| --- | --- | --- | --- |
+| 2xx host | Host `z(ref)` | ≤ −2σ | ≤ −3σ |
+| 5xx host | Host `z(ref)` | ≥ +2σ | ≥ +3σ |
+| 2xx fleet | Candidate minus reference weighted rate | ≤ −0.1 percentage points | ≤ −0.3 percentage points |
+| 5xx fleet | Candidate minus reference weighted rate | ≥ +0.1 percentage points | ≥ +0.3 percentage points |
+
+Each metric, scope, severity and side is optional. Host policies apply to eligible hosts in either version. Fleet policies compare the two request-weighted rates and require at least the configured minimum request count in each version. Equality triggers a boundary; error takes precedence over warning. Missing or insufficient measurements produce **UNKNOWN**, rather than a normal result. Host sigma rules remain unknown when reference spread is zero or unavailable; fleet percentage-point rules can still evaluate when their counts are available.
+
+The attention indicator composes the shared pill component. It appears on the screen and metric heading, the fleet delta, affected host rows and inspector values. A metric's indicator shows the strongest fleet or host attention; the inspector preserves the individual results. HTTP status-category pills keep their separate meanings: a red **5xx Server error** category does not itself raise an **ERROR** attention state.
+
+`W` and `E` mark configured host warning and error boundaries on the distributions. The shared axis includes valid boundary positions. At terminal resolution, coincident markers show the stronger error marker; `X` takes priority for the selected host. The inspector lists the exact active host and fleet limits. **The 1/2/3σ controls change the displayed bands and descriptive tail counts, independently of attention policies.**
+
+Applications supply policies explicitly:
+
+```go
+// Host limits are in z(ref) units; fleet limits are in percentage points.
+rules := map[string]cohort.ComparisonPolicy{
+    "5xx": {
+        Hosts: attention.Rule{
+            Warn:  &attention.Bounds{Upper: attention.Limit(2)},
+            Error: &attention.Bounds{Upper: attention.Limit(3)},
+        },
+        Fleet: attention.Rule{
+            Warn:  &attention.Bounds{Upper: attention.Limit(0.1)},
+            Error: &attention.Bounds{Upper: attention.Limit(0.3)},
+        },
+    },
+}
+err := screen.SetBoundaries(rules)
+```
+
+`SetBoundaries` validates and copies rules before changing the screen. Set a lower limit to watch decreases, set both sides for two-sided attention, or omit a severity or scope. Pass `nil` to remove all policies. Invalid or inverted limits leave the existing screen intact. These policies express application attention, rather than statistical confidence or an automatic deployment action.
+
+The optional callback emits typed `attention.Changed` events when a metric's **hosts** or **fleet** attention level changes, including recovery and removal of a policy. It seeds the initial state without emitting a burst of events. Rendering, resizing and changing the displayed sigma do not emit attention transitions.
 
 ## Sampling and interpretation
 
@@ -50,7 +90,11 @@ References: [NIST proportion control charts](https://www.itl.nist.gov/div898/han
 | --- | --- | --- |
 | Atom | `chart.IntervalBand` | Draw caller-supplied nested intervals and observation markers with ntcharts canvas |
 | Atom | `text.Pill` | Render a labeled semantic tone, with theme-aware contrast and a text fallback |
+| Molecule | `feedback.Attention` | Compose a labeled warning/error/unknown/normal state from the shared pill |
+| Molecule | `chart.DistributionComparison` | Compose mean/spread labels, interval bands, boundary markers and a shared axis |
+| Molecule | `chart.ComparisonPanel` | Compose the summary, distribution comparison and native time-series history |
 | Analysis | `cohort.Analyze` | Calculate weighted rates and unweighted sample spread from interval counts |
+| Policy | `attention.Rule` and `cohort.Assess` | Evaluate optional numeric boundaries separately from rendering and count aggregation |
 | Organism | `pattern.CohortComparison` | Coordinate distributions, time series, host selection, focus, windows and responsive layout |
 | Screen | `examples/deployment` | Supply version IDs, the deployment method, HTTP status tones, synthetic counts and the sample threshold |
 
@@ -66,4 +110,4 @@ Each `Window` has an inclusive start and exclusive end, and each `Sample` suppli
 
 Call `SetData` on the Bubble Tea update thread when new data arrives. Invalid updates return an error and preserve the existing screen. Valid updates copy the data and retain the selected host where it still exists. Appending windows follows the latest window only when it was already selected; inspecting an older window keeps that window selected. For comparisons scoped to a route or region, supply that matched population and label it in `Scope`.
 
-The optional `Emit` callback reports member selection, time window, active metric and band-limit changes. Applications own any statistical inference, alerting or deployment decisions.
+The optional `Emit` callback reports member selection, time window, active metric, band-limit changes and attention transitions. Applications own statistical inference, notification delivery and deployment decisions.

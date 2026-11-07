@@ -81,6 +81,10 @@ func definitions() []Definition {
 		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma"}, Defaults: DefaultConfig(), Factory: bandStory},
 		Definition{ID: "screen/deployment", Title: "Screens/Deployment comparison", Level: "Screens", Family: "pattern", Description: "Compare 2xx, 3xx, 4xx and 5xx by version identifier during a blue/green deployment. Reference/candidate roles, request-weighted histories, 1/2/3s host-spread bands and linked inspection use synthetic interval counts.", Source: "examples/deployment/main.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "scenario", "sigma", "referenceID", "candidateID"}, Scenarios: []string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, Defaults: func() Config { c := DefaultConfig(); c.Columns = 132; c.Rows = 40; return c }(), Factory: deploymentStory},
 	)
+	d = append(d,
+		Definition{ID: "feedback/attention", Title: "Molecules/Feedback/Attention", Level: "Molecules", Family: "feedback", Description: "Optional warn/error boundaries compose a labeled attention indicator from the shared semantic pill atom.", Source: "feedback/attention.go", Symbol: "Attention", Upstream: "https://github.com/charmbracelet/lipgloss", Controls: []string{"state", "amount", "boundaries"}, Defaults: DefaultConfig(), Factory: attentionStory},
+		Definition{ID: "chart/distributions", Title: "Molecules/Charts/Cohort distributions", Level: "Molecules", Family: "chart", Description: "Mean/spread labels, shared-axis interval bands and optional boundary markers compose into a reusable distribution comparison.", Source: "chart/comparison.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"sigma", "boundaries"}, Defaults: DefaultConfig(), Factory: distributionStory},
+	)
 	for i := range d {
 		id := d[i].ID
 		for _, control := range d[i].Controls {
@@ -95,7 +99,16 @@ func definitions() []Definition {
 			d[i].States = []string{"ready", "error"}
 		case "screen/services":
 			d[i].States = []string{"ready", "empty"}
-		case "screen/deployment", "chart/interval-band":
+		case "screen/deployment":
+			d[i].States = []string{"ready", "empty"}
+			d[i].Controls = append(d[i].Controls, "boundaries")
+			d[i].Defaults.Boundaries = true
+		case "feedback/attention":
+			d[i].States = []string{"ready", "empty"}
+			d[i].Defaults.Boundaries = true
+		case "chart/distributions":
+			d[i].Defaults.Boundaries = true
+		case "chart/interval-band":
 			d[i].States = []string{"ready", "empty"}
 		case "chart/metric":
 			d[i].Controls = []string{"amount"}
@@ -108,7 +121,7 @@ func definitions() []Definition {
 		case "collection/logs":
 			d[i].Family = "collection"
 		}
-		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band"
+		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band" && id != "chart/distributions"
 		d[i].Clock = coreChart || id == "feedback/spinner" || id == "feedback/time" || id == "screen/services"
 		d[i].Step = coreChart || id == "feedback/spinner" || id == "feedback/progress" || id == "feedback/motion" || id == "collection/logs" || id == "screen/services" || id == "screen/deployment"
 		if id == "chart/timeseries" {

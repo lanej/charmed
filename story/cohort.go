@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/lanej/charmed/chart"
+	"github.com/lanej/charmed/cohort"
 	"github.com/lanej/charmed/examples/deployment/fixture"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/pattern"
@@ -19,8 +20,12 @@ func deploymentStory(e Environment) (runtime.Scene, error) {
 		data.Windows = nil
 	}
 	t := e.Config.Palette()
+	var boundaries map[string]cohort.ComparisonPolicy
+	if e.Config.Boundaries {
+		boundaries = fixture.Boundaries()
+	}
 	return pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Deployment comparison", Scope: "method=blue/green / SYNTHETIC / " + e.Config.Scenario,
-		Data: data, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit, MetricTones: fixture.StatusTones()})
+		Data: data, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit, MetricTones: fixture.StatusTones(), Boundaries: boundaries})
 }
 
 func bandStory(e Environment) (runtime.Scene, error) {

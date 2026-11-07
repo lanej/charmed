@@ -221,6 +221,15 @@ export function StoryCanvas({
               </select>
             </label>
           )}
+          {entry.controls?.includes("boundaries") && (
+            <label>
+              Deviation boundaries
+              <select aria-label="Deviation boundaries" value={config.boundaries ? "example" : "off"} onChange={(event)=>set("boundaries",event.target.value==="example")}>
+                <option value="example">Example rules</option>
+                <option value="off">No boundaries</option>
+              </select>
+            </label>
+          )}
           {entry.controls?.includes("series") && (
             <Dimension
               label="Series"

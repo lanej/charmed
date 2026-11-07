@@ -29,3 +29,12 @@ func TestIntervalGeometryAndObservationMarker(t *testing.T) {
 		t.Fatal("invalid scale rendered as data")
 	}
 }
+
+func TestBandBoundaryMarkersComposeWithSelection(t *testing.T) {
+	selected := 90.0
+	options := chart.BandOptions{Min: 0, Max: 100, Center: 50, Selected: &selected, Markers: []chart.BandMarker{{Value: 20, Glyph: 'W'}, {Value: 30, Glyph: 'E'}, {Value: 200, Glyph: 'E'}}}
+	band := ansi.Strip(chart.IntervalBand(options, 101, theme.New(theme.Mono)))
+	if band[20] != 'W' || band[30] != 'E' || band[50] != '|' || band[90] != 'X' || strings.Count(band, "E") != 1 {
+		t.Fatal("boundary geometry or selected marker was lost")
+	}
+}

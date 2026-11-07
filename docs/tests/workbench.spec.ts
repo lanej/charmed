@@ -139,6 +139,21 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption("isolated-hosts");
   await page.getByRole("combobox", { name: "Host spread bands", exact: true }).selectOption("3");
   await expect(text).toContainText("5 beyond 3s");
+  await expect(text).toContainText("ERROR");
+  await expect(text).toContainText("WARN");
+  await expect(text).toContainText("Host W>=+2 E>=+3 s");
+  await page.getByRole("combobox", { name: "Deviation boundaries", exact: true }).selectOption("off");
+  await expect(text).not.toContainText("ERROR");
+  await expect(text).not.toContainText("ATTN");
+  await expect(text).toContainText("5xx Server error");
+  await page.getByRole("combobox", { name: "Deviation boundaries", exact: true }).selectOption("example");
+  await expect(text).toContainText("ERROR");
+  await page.getByRole("button", { name: "Step", exact: true }).click();
+  await expect(page.getByTestId("terminal-events")).toContainText('"type":"attention"');
+  await expect(page.getByTestId("terminal-events")).toContainText('"previous":"error"');
+  await expect(page.getByTestId("terminal-events")).toContainText('"level":"normal"');
+  await page.getByRole("combobox", { name: "Preset", exact: true }).selectOption("Default");
+  await expect(text).toContainText("ERROR");
   const reference = page.getByRole("textbox", { name: "Reference version", exact: true });
   const candidate = page.getByRole("textbox", { name: "Candidate version", exact: true });
   await reference.fill("release/2026.11.07+build.42");
@@ -163,6 +178,9 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
 test("static deployment variants retain the traffic and sampling scenarios", async ({ page }) => {
   await page.goto("http://127.0.0.1:5174/#screen/deployment");
   await expect(page.getByRole("status")).toContainText("Static snapshot: Default");
+  await page.getByRole("combobox", { name: "Saved variant" }).selectOption("No boundaries");
+  await expect(page.getByTestId("terminal-text")).not.toContainText("ERROR");
+  await expect(page.getByTestId("terminal-text")).toContainText("5xx Server error");
   await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Insufficient samples");
   await expect(page.getByRole("status")).toContainText("Static snapshot: Insufficient samples");
   await expect(page.getByTestId("terminal-text")).toContainText("baseline s unavailable");
@@ -189,6 +207,18 @@ test("static export labels snapshots and offers saved variants", async ({
   await expect(page.getByTestId("terminal-text")).toContainText("CHARMED");
 });
 
+test("the reusable attention fixture distinguishes unknown and disabled rules", async ({ page }) => {
+  await page.goto("/#feedback/attention");
+  const text = page.getByTestId("terminal-text");
+  await expect(text).toContainText(/^\s*WARN\s*$/m);
+  await page.getByRole("slider", { name: "Amount", exact: true }).fill("85");
+  await expect(text).toContainText(/^\s*ERROR\s*$/m);
+  await page.getByRole("combobox", { name: "State", exact: true }).selectOption("empty");
+  await expect(text).toContainText(/^\s*UNKNOWN\s*$/m);
+  await page.getByRole("combobox", { name: "Deviation boundaries", exact: true }).selectOption("off");
+  await expect(text).toContainText("OFF / no boundaries");
+});
+
 test("catalog navigation supports search, capability groups and mobile", async ({
   page,
 }) => {
@@ -200,7 +230,7 @@ test("catalog navigation supports search, capability groups and mobile", async (
     name: "Components",
     exact: true,
   });
-  await expect(navigation.getByRole("link")).toHaveCount(36);
+  await expect(navigation.getByRole("link")).toHaveCount(38);
   await page.getByPlaceholder("Search components…").fill("heatmap");
   await expect(navigation.getByRole("link")).toHaveCount(1);
   await navigation.getByRole("link").click();

@@ -56,6 +56,7 @@ func command() *cobra.Command {
 		cmd.Flags().StringVar(&c.Scenario, "scenario", c.Scenario, "Deployment fixture scenario (see MDX deployment guide)")
 		cmd.Flags().StringVar(&c.ReferenceID, "reference-version", c.ReferenceID, "Reference version identifier")
 		cmd.Flags().StringVar(&c.CandidateID, "candidate-version", c.CandidateID, "Candidate version identifier")
+		cmd.Flags().BoolVar(&c.Boundaries, "boundaries", false, "Enable illustrative warn/error deviation boundaries")
 		cmd.Flags().Float64Var(&c.Amount, "amount", c.Amount, "Progress or chart baseline, 0–100")
 		cmd.Flags().BoolVar(&c.Horizontal, "horizontal", false, "Use horizontal bars")
 		cmd.Flags().StringVar(&encoded, "config", "", "Internal encoded configuration")
@@ -80,6 +81,9 @@ func command() *cobra.Command {
 				}
 				if !cmd.Flags().Changed("rows") {
 					c.Rows = d.Defaults.Rows
+				}
+				if !cmd.Flags().Changed("boundaries") {
+					c.Boundaries = d.Defaults.Boundaries
 				}
 				if os.Getenv("NO_COLOR") != "" {
 					c.Profile = "none"

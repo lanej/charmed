@@ -22,7 +22,7 @@ func main() {
 	palette := theme.New(theme.Dark)
 	screen, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{
 		Title: "Deployment comparison", Scope: "method=blue/green / Synthetic HTTP responses / all routes",
-		Data: data, Theme: palette, MinRequests: 1000, Sigma: 3, MetricTones: fixture.StatusTones(),
+		Data: data, Theme: palette, MinRequests: 1000, Sigma: 3, MetricTones: fixture.StatusTones(), Boundaries: fixture.Boundaries(),
 	})
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)

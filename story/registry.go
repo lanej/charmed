@@ -32,6 +32,7 @@ type Config struct {
 	Scenario      string     `json:"scenario"`
 	ReferenceID   string     `json:"referenceID"`
 	CandidateID   string     `json:"candidateID"`
+	Boundaries    bool       `json:"boundaries"`
 }
 
 func DefaultConfig() Config {
