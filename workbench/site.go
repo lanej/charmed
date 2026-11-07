@@ -168,7 +168,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 			return "", fmt.Errorf("unknown component link %q", id)
 		},
 	}
-	layout, err := template.New("page.html").Funcs(funcs).ParseFS(siteFiles, "site/page.html")
+	layout, err := template.New("page.html").Funcs(funcs).ParseFS(siteFiles, "site/page.html", "site/mark.svg")
 	if err != nil {
 		return err
 	}
@@ -199,6 +199,14 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		return err
 	}
 	if err := os.MkdirAll(filepath.Join(directory, "assets"), 0755); err != nil {
+		return err
+	}
+	// The downloadable asset and inline lockups share one vector source.
+	mark, err := siteFiles.ReadFile("site/mark.svg")
+	if err != nil {
+		return err
+	}
+	if err := os.WriteFile(filepath.Join(directory, "assets", "charmed-mark.svg"), mark, 0644); err != nil {
 		return err
 	}
 	assets, err := filepath.Glob(filepath.Join(root, "docs", "assets", "*"))

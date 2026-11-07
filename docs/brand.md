@@ -1,10 +1,20 @@
-# Brand sheet
+## The terminal talisman
 
-Charmed is a terminal-first design system. Its identity should feel like the interfaces it creates: precise, compact, and legible. Brand color stays restrained; semantic colors in terminal fixtures carry the meaning.
+The Charmed mark combines a terminal with a lucky charm. The terminal window becomes the body of a small talisman: an attachment loop above, a faceted outline below, and a shell prompt inside.
+
+| Form | Meaning |
+| --- | --- |
+| Attachment loop | A charm that can be carried or attached |
+| Faceted frame | The shape of a talisman, enclosing one compact object |
+| Window rail and `>_` prompt | A native terminal interface |
+
+The complete silhouette carries the idea in one color. The mark uses the website's accent through `currentColor`; the reversed specimen uses its existing canvas and text tokens. Terminal data keeps its own semantic colors.
 
 ## Use the identity
 
-The primary lockup pairs a compact prompt mark (`>_`) with the lowercase **charmed** wordmark. Keep the mark and name together for the website, documentation, and repository art. The small prompt mark can stand alone when the surrounding product name is visible.
+The primary lockup pairs the terminal talisman with the lowercase **charmed** wordmark. Use it for documentation, the website, and repository art. The mark can stand alone when the product name is already visible.
+
+Use the supplied SVG so the header, lockups, and small-size specimens share the same geometry. Keep the attachment loop and faceted outline intact. Leave at least one cursor-width of clear space around the mark and keep it at least 24 pixels high. Use the plain product name where vector graphics are unavailable.
 
 Do not use the mark as a generic status badge or replace a status label with brand green. Preserve legibility on both light and dark backgrounds; the default documentation identity is dark.
 

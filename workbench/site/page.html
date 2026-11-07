@@ -3,7 +3,7 @@
 <head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#0d1513"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Page.Title}} · Charmed</title><link rel="stylesheet" href="style.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&gt;_</span> charmed <span>terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">{{template "mark.svg"}}</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
 <div class="shell">
 <nav aria-label="Guide">
 <div class="nav-pages">{{range .Pages}}<a href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Title}}</a>{{end}}</div>
@@ -19,14 +19,28 @@
 {{end}}
 </nav>
 <main id="main">
+{{if eq .Page.File "brand.html"}}
+<h1>Brand sheet</h1>
+<section class="brand-specimens" aria-label="Charmed brand specimens">
+<div class="brand-lockups">
+<div class="brand-lockup primary-lockup"><span class="specimen-label">Primary lockup</span><div class="brand-lockup-name"><span class="brand-mark" aria-hidden="true">{{template "mark.svg"}}</span><span>charmed</span></div><p>terminal design system</p><small>The terminal is the talisman.</small></div>
+<div class="brand-lockup compact-lockup"><span class="specimen-label">Standalone mark</span><div class="brand-symbol">{{template "mark.svg"}}</div><small>Attachment loop · terminal window · prompt</small></div>
+</div>
+<div class="brand-monochrome">
+<div class="brand-mono brand-mono-dark"><span class="specimen-label">One color · dark surface</span><div class="brand-lockup-name"><span class="brand-mark" aria-hidden="true">{{template "mark.svg"}}</span><span>charmed</span></div></div>
+<div class="brand-mono brand-mono-light"><span class="specimen-label">One color · light surface</span><div class="brand-lockup-name"><span class="brand-mark" aria-hidden="true">{{template "mark.svg"}}</span><span>charmed</span></div></div>
+</div>
+<div class="brand-sizes" aria-label="Mark sizes">
+<figure><span class="brand-size brand-size-24" aria-hidden="true">{{template "mark.svg"}}</span><figcaption>24px</figcaption></figure>
+<figure><span class="brand-size brand-size-32" aria-hidden="true">{{template "mark.svg"}}</span><figcaption>32px</figcaption></figure>
+<figure><span class="brand-size brand-size-48" aria-hidden="true">{{template "mark.svg"}}</span><figcaption>48px</figcaption></figure>
+</div>
+<p class="brand-download"><a href="assets/charmed-mark.svg" download="charmed-mark.svg">Download vector mark ↗</a><span>SVG · currentColor · 64 × 72 grid</span></p>
+</section>
+{{end}}
 {{.Page.Content}}
 {{if eq .Page.File "brand.html"}}
-<section class="brand-specimens" aria-label="Charmed brand specimens">
-<h2>Identity</h2>
-<div class="brand-lockups">
-<div class="brand-lockup primary-lockup"><div class="brand-lockup-name"><span class="brand-mark" aria-hidden="true">&gt;_</span> charmed</div><p>terminal design system</p><small>Primary identity · dark surfaces</small></div>
-<div class="brand-lockup compact-lockup"><div class="brand-lockup-name"><span class="brand-mark" aria-hidden="true">&gt;_</span> charmed</div><small>Compact identity · applications and navigation</small></div>
-</div>
+<section class="brand-specimens" aria-label="Brand tokens and typography">
 <h2>Web palette</h2>
 <div class="brand-swatches">
 <div class="swatch"><div class="swatch-fill swatch-bg"></div><strong>Canvas</strong><code>#0d1513</code></div>
