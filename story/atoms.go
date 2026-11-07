@@ -37,6 +37,9 @@ func atomsDefinitions() []Definition {
 		switch kind.id {
 		case "timeseries", "line", "scatter":
 			controls = append(controls, "series", "amount")
+			if kind.id == "timeseries" {
+				controls = append(controls, "legend")
+			}
 		case "sparkline", "stream", "wave", "ohlc":
 			controls = append(controls, "amount")
 		case "bars":
@@ -49,7 +52,7 @@ func atomsDefinitions() []Definition {
 		Definition{ID: "text/pill", Title: "Atoms/Text/Color pill", Level: "Atoms", Family: "text", Description: "Semantic tone and bright, normal or dim emphasis are independent. ASCII output retains the label.", Source: "text/text.go", Symbol: "Pill", Controls: []string{"value", "emphasis"}, Defaults: atomConfig(), Factory: pillsStory},
 		Definition{ID: "feedback/status", Title: "Atoms/Feedback/Status", Level: "Atoms", Family: "feedback", Description: "Reusable OK, WARN, ERROR, UNKNOWN and OFF states compose shared tone and emphasis atoms.", Source: "feedback/status.go", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: atomConfig(), Factory: statusStory},
 		Definition{ID: "chart/picture", Title: "Atoms/Graphics/Picture", Level: "Atoms", Family: "graphics", Description: "Portable glyph rendering of an embedded image; no external image service.", Source: "story/atoms.go", Symbol: "pictureStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Defaults: DefaultConfig(), Factory: pictureStory},
-		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma"}, States: []string{"ready", "empty"}, Defaults: DefaultConfig(), Factory: bandStory},
+		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma", "legend"}, States: []string{"ready", "empty"}, Defaults: DefaultConfig(), Factory: bandStory},
 	)
 	for i := range d {
 		switch d[i].ID {
@@ -192,8 +195,13 @@ func bandStory(e Environment) (runtime.Scene, error) {
 			intervals = append(intervals, chart.Interval{Low: 50 - float64(k)*8, High: 50 + float64(k)*8})
 		}
 		selected := 78.0
-		return fmt.Sprintf("Nested intervals / +/- %ds\n\n", e.Config.Sigma) + chart.IntervalBand(chart.BandOptions{Min: 0, Max: 100, Center: 50, Intervals: intervals, Selected: &selected}, size.Width, e.Config.Palette()) +
-			"\n0                                              100\n\n| center / X selected observation\nOuter to inner: 3s / 2s / 1s\nIntervals are supplied by the caller; this atom makes no statistical claim."
+		options := chart.BandOptions{Min: 0, Max: 100, Center: 50, Intervals: intervals, Selected: &selected}
+		view := fmt.Sprintf("Nested intervals / +/- %ds\n\n", e.Config.Sigma) + chart.IntervalBand(options, size.Width, e.Config.Palette()) + "\n0                                              100"
+		if e.Config.Legend {
+			view += "\n\n" + options.Legend(size.Width, e.Config.Palette())
+		}
+		return view
+
 	}), nil
 }
 

@@ -8,6 +8,7 @@ Requires Go 1.26.8 or later.
 go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
 go run ./cmd/workbench run chart/timeseries --theme light --series 3
+go run ./cmd/workbench run chart/distributions --legend
 go run ./cmd/workbench capture screen/services --plain
 ```
 

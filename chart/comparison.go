@@ -28,7 +28,8 @@ type DistributionComparison struct {
 	Unit, SpreadUnit string
 	Markers          []BandMarker
 	// Compact puts a direct series label and mean beside each band.
-	Compact bool
+	Compact    bool
+	ShowLegend bool
 }
 
 func (d DistributionComparison) View(width int, t theme.Theme) string {
@@ -59,6 +60,7 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 		high = min(d.Max, high+pad)
 	}
 	var lines []string
+	var legend []legendEntry
 	prefixWidth := 0
 	if d.Compact {
 		prefixWidth = min(29, max(8, width/3))
@@ -95,12 +97,20 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 				layout.Size{Width: prefixWidth, Height: 1}))
 		}
 		lines = append(lines, prefix+IntervalBand(opts, max(1, width-prefixWidth), t))
+		if d.ShowLegend {
+			legend = append(legend, opts.legendEntries(s.Label+" ", t)...)
+		}
 	}
 	if math.IsInf(low, 0) {
 		lines = append(lines, "No eligible host spread")
 	} else {
 		left, right := fmt.Sprintf("%.3f%s", low, d.Unit), fmt.Sprintf("%.3f%s", high, d.Unit)
 		lines = append(lines, strings.Repeat(" ", prefixWidth)+left+strings.Repeat(" ", max(1, width-prefixWidth-len(left)-len(right)))+right)
+	}
+	if d.ShowLegend {
+		if key := renderLegend(legend, width, t); key != "" {
+			lines = append(lines, key)
+		}
 	}
 	return strings.Join(lines, "\n")
 }

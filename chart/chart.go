@@ -180,13 +180,24 @@ func Legend(series []TimeSeriesData, t theme.Theme) string {
 	return strings.Join(labels, "  ")
 }
 
-// Panel composes a chart already allocated to PanelPlotSize(size). Rendering is
+// PanelOptions controls optional annotations. The zero value omits the legend.
+type PanelOptions struct{ ShowLegend bool }
+
+// Panel composes a chart already allocated to PanelPlotSize(size, options...). Rendering is
 // pure, so panning and selection in the child are preserved between views.
-func Panel(title string, plot TimeSeries, series []TimeSeriesData, size layout.Size, t theme.Theme, focused bool) string {
-	return layout.Panel(title, plot.View()+"\n"+Legend(series, t), size, t, focused)
+func Panel(title string, plot TimeSeries, series []TimeSeriesData, size layout.Size, t theme.Theme, focused bool, options ...PanelOptions) string {
+	content := plot.View()
+	if len(options) > 0 && options[0].ShowLegend {
+		content += "\n" + Legend(series, t)
+	}
+	return layout.Panel(title, content, size, t, focused)
 }
-func PanelPlotSize(size layout.Size) layout.Size {
-	return layout.Size{Width: max(0, size.Width-2), Height: max(0, size.Height-3)}
+func PanelPlotSize(size layout.Size, options ...PanelOptions) layout.Size {
+	legendRows := 0
+	if len(options) > 0 && options[0].ShowLegend {
+		legendRows = 1
+	}
+	return layout.Size{Width: max(0, size.Width-2), Height: max(0, size.Height-2-legendRows)}
 }
 
 func finite(v float64) bool { return !math.IsNaN(v) && !math.IsInf(v, 0) }

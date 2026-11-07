@@ -60,6 +60,7 @@ func command() *cobra.Command {
 		cmd.Flags().StringVar(&c.CandidateID, "candidate-version", c.CandidateID, "Candidate version identifier")
 		cmd.Flags().BoolVar(&c.Boundaries, "boundaries", false, "Enable illustrative warn/error deviation boundaries")
 		cmd.Flags().Float64Var(&c.Amount, "amount", c.Amount, "Progress or chart baseline, 0–100")
+		cmd.Flags().BoolVar(&c.Legend, "legend", false, "Show a legend using the plot marker and series styles")
 		cmd.Flags().BoolVar(&c.Horizontal, "horizontal", false, "Use horizontal bars")
 		cmd.Flags().StringVar(&encoded, "config", "", "Internal encoded configuration")
 		cmd.Flags().MarkHidden("config")

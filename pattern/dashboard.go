@@ -27,10 +27,11 @@ type Service struct {
 	Rate, Latency    float64
 }
 type DashboardOptions struct {
-	Theme    theme.Theme
-	Services []Service
-	Live     bool
-	Emit     func(any)
+	Theme      theme.Theme
+	Services   []Service
+	Live       bool
+	ShowLegend bool
+	Emit       func(any)
 }
 
 // Dashboard owns coordinated UI state; applications provide its data and events.
@@ -46,13 +47,14 @@ type Dashboard struct {
 	size                                                          layout.Size
 	theme                                                         theme.Theme
 	live                                                          bool
+	showLegend                                                    bool
 	emit                                                          func(any)
 	leftWidth, rightWidth, tableHeight, chartHeight, detailHeight int
 	split                                                         bool
 }
 
 func NewDashboard(o DashboardOptions) *Dashboard {
-	m := &Dashboard{theme: o.Theme, services: append([]Service(nil), o.Services...), live: o.Live, emit: o.Emit,
+	m := &Dashboard{theme: o.Theme, services: append([]Service(nil), o.Services...), live: o.Live, emit: o.Emit, showLegend: o.ShowLegend,
 		focus: interaction.NewFocus("filter", "table", "chart", "details")}
 	m.Filter = input.NewText(input.TextOptions{Placeholder: "Filter services…", Width: 80, Theme: o.Theme})
 	if o.Theme.ASCII {
@@ -111,7 +113,7 @@ func (m *Dashboard) Resize(size layout.Size) {
 	m.Table.SetHeight(max(1, m.tableHeight-1))
 	m.Details.SetWidth(max(1, m.leftWidth-2))
 	m.Details.SetHeight(max(1, m.detailHeight-2))
-	m.Plot.Resize(layout.Size{Width: max(0, m.rightWidth-2), Height: max(0, m.chartHeight-3)})
+	m.Plot.Resize(chart.PanelPlotSize(layout.Size{Width: m.rightWidth, Height: m.chartHeight}, chart.PanelOptions{ShowLegend: m.showLegend}))
 }
 func (m *Dashboard) syncFocus() tea.Cmd {
 	m.Filter.Blur()
@@ -252,7 +254,7 @@ func (m *Dashboard) View() string {
 		title = s.Name + " / throughput"
 		data = m.series(s)
 	}
-	plot := chart.Panel(title, m.Plot, data, layout.Size{Width: m.rightWidth, Height: m.chartHeight}, m.theme, m.focus.Current() == "chart")
+	plot := chart.Panel(title, m.Plot, data, layout.Size{Width: m.rightWidth, Height: m.chartHeight}, m.theme, m.focus.Current() == "chart", chart.PanelOptions{ShowLegend: m.showLegend})
 	main := ""
 	if m.split {
 		details := layout.Panel("", m.Details.View(), layout.Size{Width: m.leftWidth, Height: m.detailHeight}, m.theme, m.focus.Current() == "details")

@@ -54,6 +54,12 @@ func Generate(out string) error {
 				c.ReducedMotion = true
 			}},
 		}
+		if slices.Contains(d.Controls, "legend") {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{"With legend", func(c *story.Config) { c.Legend = true }})
+		}
 		if slices.Contains(d.Controls, "comparisonVariant") {
 			variants = append(variants, struct {
 				name   string

@@ -24,9 +24,9 @@ func moleculesDefinitions() []Definition {
 	d = append(d,
 		Definition{ID: "chart/band-matrix", Title: "Molecules/Charts/Band matrix", Level: "Molecules", Family: "chart", Description: "Directly labeled, disconnected distribution rows composed in a rectangular frame.", Source: "chart/comparison.go", Controls: []string{"sigma"}, Composes: []string{"chart/distributions", "foundations/layout"}, Defaults: DefaultConfig(), Factory: bandMatrixStory},
 		Definition{ID: "chart/metric", Title: "Molecules/Charts/Metric trend", Level: "Molecules", Family: "chart", Description: "A metric value, unit and sparkline share one bounded allocation.", Source: "story/molecules.go", Symbol: "metricStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"amount"}, Composes: []string{"chart/sparkline"}, Defaults: DefaultConfig(), Factory: metricStory},
-		Definition{ID: "chart/panel", Title: "Molecules/Charts/Chart panel", Level: "Molecules", Family: "chart", Description: "A chart, title and series labels compose into a reusable region.", Source: "story/molecules.go", Symbol: "panelStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"series", "amount"}, Composes: []string{"chart/timeseries", "foundations/layout"}, Defaults: DefaultConfig(), Factory: panelStory},
+		Definition{ID: "chart/panel", Title: "Molecules/Charts/Chart panel", Level: "Molecules", Family: "chart", Description: "A chart and title compose into a reusable region with an optional color-matched legend.", Source: "story/molecules.go", Symbol: "panelStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"series", "amount", "legend"}, Composes: []string{"chart/timeseries", "foundations/layout"}, Defaults: DefaultConfig(), Factory: panelStory},
 		Definition{ID: "feedback/attention", Title: "Molecules/Feedback/Attention", Level: "Molecules", Family: "feedback", Description: "Optional warn/error boundaries compose a labeled attention indicator from the shared semantic pill atom.", Source: "feedback/attention.go", Symbol: "Attention", Upstream: "https://github.com/charmbracelet/lipgloss", Controls: []string{"state", "amount", "boundaries"}, States: []string{"ready", "empty"}, Composes: []string{"feedback/status"}, Defaults: DefaultConfig(), Factory: attentionStory},
-		Definition{ID: "chart/distributions", Title: "Molecules/Charts/Cohort distributions", Level: "Molecules", Family: "chart", Description: "Mean/spread labels, shared-axis interval bands and optional boundary markers compose into a reusable distribution comparison.", Source: "chart/comparison.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"sigma", "boundaries"}, Composes: []string{"chart/interval-band"}, Defaults: DefaultConfig(), Factory: distributionStory},
+		Definition{ID: "chart/distributions", Title: "Molecules/Charts/Cohort distributions", Level: "Molecules", Family: "chart", Description: "Mean/spread labels, shared-axis interval bands and optional boundary markers compose into a reusable distribution comparison.", Source: "chart/comparison.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"sigma", "boundaries", "legend"}, Composes: []string{"chart/interval-band"}, Defaults: DefaultConfig(), Factory: distributionStory},
 		Definition{ID: "chart/delta", Title: "Molecules/Charts/Merged delta property", Level: "Molecules", Family: "chart", Description: "A single zero-centred bar cancels the shared reference/candidate amount and emphasizes the signed percentage-point difference.", Source: "chart/delta.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Composes: []string{"chart/interval-band", "text/signed-number"}, Defaults: DefaultConfig(), Factory: deltaStory},
 		Definition{ID: "feedback/percent", Title: "Molecules/Feedback/Percentage bar", Level: "Molecules", Family: "feedback", Description: "A native progress bar and exact percentage compose a fixed-width graphical table value on a 0–100% scale.", Source: "feedback/percent.go", Symbol: "PercentBar", Upstream: "https://github.com/charmbracelet/bubbles", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Composes: []string{"feedback/progress"}, Defaults: DefaultConfig(), Factory: percentStory},
 	)
@@ -85,8 +85,9 @@ func panelStory(e Environment) (runtime.Scene, error) {
 	data := sampleSeries(e.Config.Series, 0, e.Config.Amount)
 	plot := chart.NewTimeSeries(data, e.Config.Size(), e.Config.Palette())
 	plot.Focus()
-	return &scene{resize: func(size layout.Size) { plot.Resize(chart.PanelPlotSize(size)) }, update: func(msg tea.Msg) tea.Cmd { var cmd tea.Cmd; plot, cmd = plot.Update(msg); return cmd }, view: func(size layout.Size) string {
-		return chart.Panel("Request throughput", plot, data, size, e.Config.Palette(), true)
+	options := chart.PanelOptions{ShowLegend: e.Config.Legend}
+	return &scene{resize: func(size layout.Size) { plot.Resize(chart.PanelPlotSize(size, options)) }, update: func(msg tea.Msg) tea.Cmd { var cmd tea.Cmd; plot, cmd = plot.Update(msg); return cmd }, view: func(size layout.Size) string {
+		return chart.Panel("Request throughput", plot, data, size, e.Config.Palette(), true, options)
 	}}, nil
 }
 
@@ -108,11 +109,11 @@ func attentionStory(e Environment) (runtime.Scene, error) {
 func distributionStory(e Environment) (runtime.Scene, error) {
 	return static(func(size layout.Size) string {
 		selected := 40.0
-		d := chart.DistributionComparison{Series: []chart.DistributionSeries{{Label: "R", Mean: 20, StdDev: 3, Members: 64, HasSpread: true}, {Label: "C", Mean: 30, StdDev: 8, Members: 32, HasSpread: true, Selected: &selected}}, Sigma: e.Config.Sigma, Min: 0, Max: 60, Unit: "%", SpreadUnit: "pp"}
+		d := chart.DistributionComparison{Series: []chart.DistributionSeries{{Label: "R", Mean: 20, StdDev: 3, Members: 64, HasSpread: true}, {Label: "C", Mean: 30, StdDev: 8, Members: 32, HasSpread: true, Selected: &selected}}, ShowLegend: e.Config.Legend, Sigma: e.Config.Sigma, Min: 0, Max: 60, Unit: "%", SpreadUnit: "pp"}
 		if e.Config.Boundaries {
-			d.Markers = []chart.BandMarker{{Value: 26, Glyph: 'W', Style: feedback.AttentionStyle(attention.Warn, e.Config.Palette())}, {Value: 29, Glyph: 'E', Style: feedback.AttentionStyle(attention.Error, e.Config.Palette())}}
+			d.Markers = []chart.BandMarker{{Value: 26, Glyph: 'W', Label: "warning boundary", Style: feedback.AttentionStyle(attention.Warn, e.Config.Palette())}, {Value: 29, Glyph: 'E', Label: "error boundary", Style: feedback.AttentionStyle(attention.Error, e.Config.Palette())}}
 		}
-		return title("Composed cohort distributions", e) + d.View(size.Width, e.Config.Palette()) + "\n\nW/E = optional caller-supplied warn/error boundaries\nX = selected observation; | = mean\nThis molecule composes interval bands, labels and a shared axis."
+		return title("Composed cohort distributions", e) + d.View(size.Width, e.Config.Palette())
 	}), nil
 }
 

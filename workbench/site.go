@@ -96,6 +96,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 					return err
 				}
 				c := d.Defaults
+				c.Legend = item.ID == "chart/distributions" || item.ID == "chart/timeseries"
 				c.Columns = 64
 				c.Rows = 16
 				c.Profile = "ansi256"
