@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Foundations · Charmed</title><link rel="stylesheet" href="style.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">&gt;_</span> charmed <span>terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="shell">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Charmed</a><a href="foundations.html" aria-current="page">Foundations</a><a href="components.html" >Components</a><a href="examples.html" >Composition &amp; examples</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-family">
+<a class="nav-family-link" href="#family-layout">layout</a>
+<div class="nav-items"><a class="nav-component" href="#foundations%2flayout">Layout</a></div>
+</div>
+
+<div class="nav-family">
+<a class="nav-family-link" href="#family-motion">motion</a>
+<div class="nav-items"><a class="nav-component" href="#feedback%2fmotion">Motion</a></div>
+</div>
+
+<div class="nav-family">
+<a class="nav-family-link" href="#family-theme">theme</a>
+<div class="nav-items"><a class="nav-component" href="#foundations%2ftheme">Theme</a></div>
+</div>
+
+</div>
+
+</nav>
+<main id="main">
+<h1>Foundations</h1>
+<p>Themes, cell geometry, focus and motion are shared across every component. Choose semantic roles rather than embedding color decisions in application widgets. Layout parents allocate rectangles in terminal columns and rows; focus scopes route keys to the active child.</p>
+<p>The fixtures below show the default native frame first. Use the variant tabs for narrow and monochrome configurations on the same night surface; these static exports retain native semantic color. Run with <code class="inline-code">--theme light</code>, <code class="inline-code">--columns 40</code> or <code class="inline-code">--ascii --profile none</code> to inspect those presentations in a terminal.</p>
+
+
+
+
+
+<section class="component-family" id="family-layout"><h2>layout</h2>
+
+
+<section class="component" id="foundations/layout">
+<p class="eyebrow">Foundations / layout</p><h3>Layout</h3><p>Cell-based panels and responsive allocation.</p>
+<div class="component-preview">
+<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Layout variants">
+<a id="tab-foundations/layout-0" href="#panel-foundations%2flayout-0" role="tab" aria-controls="panel-foundations/layout-0" aria-selected="true">Default</a><a id="tab-foundations/layout-1" href="#panel-foundations%2flayout-1" role="tab" aria-controls="panel-foundations/layout-1" aria-selected="false">Narrow</a><a id="tab-foundations/layout-2" href="#panel-foundations%2flayout-2" role="tab" aria-controls="panel-foundations/layout-2" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-foundations/layout-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/layout-0" tabindex="0">
+<figure><figcaption>Default · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal"><span class="term-fgx79 term-fg1">Responsive layout</span>
+ 
+<span class="term-fgx79 term-fg1">┌ Navigation ─────────────────────────┐</span> <span class="term-fgx240">┌</span><span class="term-fgx248"> Content </span><span class="term-fgx240">─────────────────────────────────────────────────┐</span>
+<span class="term-fgx79 term-fg1">│</span>Cell-based dimensions                <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>The right pane adapts to available space.                 <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>Borders included in size             <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>Narrow terminals stack the same panels.                   <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                     <span class="term-fgx79 term-fg1">│</span> <span class="term-fgx240">│</span>                                                          <span class="term-fgx240">│</span>
+<span class="term-fgx79 term-fg1">└─────────────────────────────────────┘</span> <span class="term-fgx240">└──────────────────────────────────────────────────────────┘</span></pre></figure>
+</div><div id="panel-foundations/layout-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/layout-1" tabindex="0">
+<figure><figcaption>Narrow · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal"><span class="term-fgx79 term-fg1">Stacked layout</span>
+ 
+<span class="term-fgx79 term-fg1">┌ Navigation ──────────────────────────┐</span>
+<span class="term-fgx79 term-fg1">│</span>Same content                          <span class="term-fgx79 term-fg1">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                      <span class="term-fgx79 term-fg1">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                      <span class="term-fgx79 term-fg1">│</span>
+<span class="term-fgx79 term-fg1">│</span>                                      <span class="term-fgx79 term-fg1">│</span>
+<span class="term-fgx79 term-fg1">└──────────────────────────────────────┘</span>
+<span class="term-fgx240">┌</span><span class="term-fgx248"> Content </span><span class="term-fgx240">─────────────────────────────┐</span>
+<span class="term-fgx240">│</span>Same state                            <span class="term-fgx240">│</span>
+<span class="term-fgx240">│</span>                                      <span class="term-fgx240">│</span>
+<span class="term-fgx240">│</span>                                      <span class="term-fgx240">│</span>
+<span class="term-fgx240">│</span>                                      <span class="term-fgx240">│</span>
+<span class="term-fgx240">└──────────────────────────────────────┘</span></pre></figure>
+</div><div id="panel-foundations/layout-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/layout-2" tabindex="0">
+<figure><figcaption>Monochrome · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal"><span class="term-fg1">Responsive layout</span>
+ 
+<span class="term-fg1">+ Navigation -------------------------+</span> + Content -------------------------------------------------+
+<span class="term-fg1">|</span>Cell-based dimensions                <span class="term-fg1">|</span> |The right pane adapts to available space.                 |
+<span class="term-fg1">|</span>Borders included in size             <span class="term-fg1">|</span> |Narrow terminals stack the same panels.                   |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">|</span>                                     <span class="term-fg1">|</span> |                                                          |
+<span class="term-fg1">+-------------------------------------+</span> +----------------------------------------------------------+</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">layoutStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
+	<span class="syn-keyword">return</span> <span class="syn-function">static</span><span class="syn-operator">(</span><span class="syn-keyword">func</span><span class="syn-operator">(</span>size layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
+		t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+		left<span class="syn-operator">,</span> right<span class="syn-operator">,</span> split <span class="syn-operator">:=</span> layout<span class="syn-operator">.</span><span class="syn-function">Split</span><span class="syn-operator">(</span>size<span class="syn-operator">.</span>Width<span class="syn-operator">,</span> <span class="syn-number">1</span><span class="syn-operator">,</span> <span class="syn-number">20</span><span class="syn-operator">,</span> <span class="syn-number">30</span><span class="syn-operator">,</span> <span class="syn-number">.4</span><span class="syn-operator">)</span>
+		height <span class="syn-operator">:=</span> <span class="syn-builtin">max</span><span class="syn-operator">(</span><span class="syn-number">3</span><span class="syn-operator">,</span> size<span class="syn-operator">.</span>Height<span class="syn-operator">-</span><span class="syn-number">4</span><span class="syn-operator">)</span>
+		a <span class="syn-operator">:=</span> layout<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span><span class="syn-string">&#34;Navigation&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Cell-based dimensions\nBorders included in size&#34;</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> left<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> height<span class="syn-operator">}</span><span class="syn-operator">,</span> t<span class="syn-operator">,</span> <span class="syn-builtin">true</span><span class="syn-operator">)</span>
+		b <span class="syn-operator">:=</span> layout<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span><span class="syn-string">&#34;Content&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;The right pane adapts to available space.\nNarrow terminals stack the same panels.&#34;</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> right<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> height<span class="syn-operator">}</span><span class="syn-operator">,</span> t<span class="syn-operator">,</span> <span class="syn-builtin">false</span><span class="syn-operator">)</span>
+		<span class="syn-keyword">if</span> split <span class="syn-operator">{</span>
+			<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Responsive layout&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> layout<span class="syn-operator">.</span><span class="syn-function">Row</span><span class="syn-operator">(</span>a<span class="syn-operator">,</span> <span class="syn-string">&#34; &#34;</span><span class="syn-operator">,</span> b<span class="syn-operator">)</span>
+		<span class="syn-operator">}</span>
+		height <span class="syn-operator">=</span> <span class="syn-builtin">max</span><span class="syn-operator">(</span><span class="syn-number">3</span><span class="syn-operator">,</span> height<span class="syn-operator">/</span><span class="syn-number">2</span><span class="syn-operator">)</span>
+		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Stacked layout&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span><span class="syn-string">&#34;Navigation&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Same content&#34;</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> left<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> height<span class="syn-operator">}</span><span class="syn-operator">,</span> t<span class="syn-operator">,</span> <span class="syn-builtin">true</span><span class="syn-operator">)</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span><span class="syn-string">&#34;Content&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Same state&#34;</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> right<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> height<span class="syn-operator">}</span><span class="syn-operator">,</span> t<span class="syn-operator">,</span> <span class="syn-builtin">false</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+	<span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+<span class="syn-operator">}</span></code></pre>
+<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run foundations/layout</code></pre></div>
+</div>
+
+</section>
+</section>
+<section class="component-family" id="family-motion"><h2>motion</h2>
+
+
+<section class="component" id="feedback/motion">
+<p class="eyebrow">Foundations / motion</p><h3>Motion</h3><p>A Harmonica spring stepped explicitly by the owner; reduced motion resolves immediately.</p>
+<div class="component-preview">
+<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Motion variants">
+<a id="tab-feedback/motion-0" href="#panel-feedback%2fmotion-0" role="tab" aria-controls="panel-feedback/motion-0" aria-selected="true">Default</a><a id="tab-feedback/motion-1" href="#panel-feedback%2fmotion-1" role="tab" aria-controls="panel-feedback/motion-1" aria-selected="false">Narrow</a><a id="tab-feedback/motion-2" href="#panel-feedback%2fmotion-2" role="tab" aria-controls="panel-feedback/motion-2" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/motion-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/motion-0" tabindex="0">
+<figure><figcaption>Default · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal"><span class="term-fgx79 term-fg1">Spring motion</span>
+ 
+Position 0.00  /  Target 68
+ 
+Velocity 0.00
+ 
+<span class="term-fgx248">Ctrl+N steps the spring. Reduced motion resolves immediately.</span></pre></figure>
+</div><div id="panel-feedback/motion-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/motion-1" tabindex="0">
+<figure><figcaption>Narrow · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal"><span class="term-fgx79 term-fg1">Spring motion</span>
+ 
+Position 0.00  /  Target 68
+ 
+Velocity 0.00
+ 
+<span class="term-fgx248">Ctrl+N steps the spring. Reduced motion </span></pre></figure>
+</div><div id="panel-feedback/motion-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/motion-2" tabindex="0">
+<figure><figcaption>Monochrome · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal"><span class="term-fg1">Spring motion</span>
+ 
+Position 0.00  /  Target 68
+ 
+Velocity 0.00
+ 
+Ctrl+N steps the spring. Reduced motion resolves immediately.</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/harmonica">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">motionStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
+	m <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewMotion</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
+		<span class="syn-keyword">if</span> _<span class="syn-operator">,</span> ok <span class="syn-operator">:=</span> msg<span class="syn-operator">.</span><span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>StepMsg<span class="syn-operator">)</span><span class="syn-operator">;</span> ok <span class="syn-operator">{</span>
+			m<span class="syn-operator">.</span><span class="syn-function">Step</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Amount<span class="syn-operator">)</span>
+			<span class="syn-function">emit</span><span class="syn-operator">(</span>e<span class="syn-operator">,</span> <span class="syn-keyword">map</span><span class="syn-operator">[</span><span class="syn-builtin">string</span><span class="syn-operator">]</span><span class="syn-builtin">any</span><span class="syn-operator">{</span><span class="syn-string">&#34;type&#34;</span><span class="syn-operator">:</span> <span class="syn-string">&#34;motion&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;position&#34;</span><span class="syn-operator">:</span> m<span class="syn-operator">.</span>Position<span class="syn-operator">}</span><span class="syn-operator">)</span>
+		<span class="syn-operator">}</span>
+		<span class="syn-keyword">return</span> <span class="syn-builtin">nil</span>
+	<span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
+		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Spring motion&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;Position %.2f  /  Target %.0f\n\nVelocity %.2f&#34;</span><span class="syn-operator">,</span> m<span class="syn-operator">.</span>Position<span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Amount<span class="syn-operator">,</span> m<span class="syn-operator">.</span>Velocity<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Ctrl+N steps the spring. Reduced motion resolves immediately.&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
+	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+<span class="syn-operator">}</span></code></pre>
+<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run feedback/motion</code></pre></div>
+</div>
+
+</section>
+</section>
+<section class="component-family" id="family-theme"><h2>theme</h2>
+
+
+<section class="component" id="foundations/theme">
+<p class="eyebrow">Foundations / theme</p><h3>Theme</h3><p>Semantic roles, terminal palettes, contrast and no-color output.</p>
+<div class="component-preview">
+<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Theme variants">
+<a id="tab-foundations/theme-0" href="#panel-foundations%2ftheme-0" role="tab" aria-controls="panel-foundations/theme-0" aria-selected="true">Default</a><a id="tab-foundations/theme-1" href="#panel-foundations%2ftheme-1" role="tab" aria-controls="panel-foundations/theme-1" aria-selected="false">Narrow</a><a id="tab-foundations/theme-2" href="#panel-foundations%2ftheme-2" role="tab" aria-controls="panel-foundations/theme-2" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-foundations/theme-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/theme-0" tabindex="0">
+<figure><figcaption>Default · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal"><span class="term-fgx79 term-fg1">Semantic tokens</span>
+ 
+<span class="term-fgx255">Foreground / primary content</span>
+ 
+<span class="term-fgx248">Muted / supporting information</span>
+ 
+<span class="term-fgx79 term-fg1">Accent / interactive emphasis</span>
+ 
+<span class="term-fgx79 term-fg1">Focus / inverse + emphasis</span>
+ 
+<span class="term-fgx114">[OK] Success</span>
+ 
+<span class="term-fgx222">[!] Warning</span>
+ 
+<span class="term-fgx210">[x] Danger</span>
+ 
+<span class="term-fgx248">Change theme, terminal size, or ASCII in Controls.</span></pre></figure>
+</div><div id="panel-foundations/theme-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/theme-1" tabindex="0">
+<figure><figcaption>Narrow · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal"><span class="term-fgx79 term-fg1">Semantic tokens</span>
+ 
+<span class="term-fgx255">Foreground / primary content</span>
+ 
+<span class="term-fgx248">Muted / supporting information</span>
+ 
+<span class="term-fgx79 term-fg1">Accent / interactive emphasis</span>
+ 
+<span class="term-fgx79 term-fg1">Focus / inverse + emphasis</span>
+ 
+<span class="term-fgx114">[OK] Success</span>
+ 
+<span class="term-fgx222">[!] Warning</span>
+ 
+<span class="term-fgx210">[x] Danger</span></pre></figure>
+</div><div id="panel-foundations/theme-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/theme-2" tabindex="0">
+<figure><figcaption>Monochrome · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal"><span class="term-fg1">Semantic tokens</span>
+ 
+Foreground / primary content
+ 
+Muted / supporting information
+ 
+<span class="term-fg1">Accent / interactive emphasis</span>
+ 
+<span class="term-fg1">Focus / inverse + emphasis</span>
+ 
+[OK] Success
+ 
+[!] Warning
+ 
+[x] Danger
+ 
+Change theme, terminal size, or ASCII in Controls.</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">themeStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
+	<span class="syn-keyword">return</span> <span class="syn-function">static</span><span class="syn-operator">(</span><span class="syn-keyword">func</span><span class="syn-operator">(</span>size layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
+		t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Semantic tokens&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span><span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">string</span><span class="syn-operator">{</span>t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Foreground / primary content&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Subtle</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Muted / supporting information&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Heading</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Accent / interactive emphasis&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Focus</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Focus / inverse + emphasis&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Foreground</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span>Success<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;[OK] Success&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Foreground</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span>Warning<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;[!] Warning&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Foreground</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span>Danger<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;[x] Danger&#34;</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-string">&#34;\n\n&#34;</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Change theme, terminal size, or ASCII in Controls.&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
+	<span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+<span class="syn-operator">}</span></code></pre>
+<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench run foundations/theme</code></pre></div>
+</div>
+
+</section>
+</section>
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
