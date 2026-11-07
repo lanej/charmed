@@ -83,7 +83,7 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 	return strings.Join(lines, "\n")
 }
 
-// ComparisonPanel is a pure molecule: labels + distribution + native history.
+// ComparisonPanel composes labels, distribution and native history as one region.
 // It accepts already-computed values and never evaluates an attention policy.
 type ComparisonPanel struct {
 	Title        string

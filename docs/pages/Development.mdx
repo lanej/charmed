@@ -32,7 +32,11 @@ The output is `docs/dist/`. Static pages show labeled Go snapshots with saved li
 
 ## Add a component story
 
-Add a concrete wrapper where shared defaults or composition help. Add a fixture factory and metadata to the Go registry. Run `workbench generate` to export its MDX page, controls, highlighted Go source, and deterministic snapshots.
+Add a concrete wrapper where shared defaults or composition help. Add its fixture factory and metadata to the matching `story/foundations.go`, `atoms.go`, `molecules.go`, `organisms.go` or `screens.go` file. Core chart atoms live in `story/atoms_charts.go`.
+
+Declare the registered components it uses in `Definition.Composes`. The catalog derives both **Composed from** and **Used by** links from this list. Use actual building blocks; references to higher levels and cyclic composition are rejected.
+
+Run `workbench generate` to export its MDX page, controls, highlighted Go source, and deterministic snapshots. Pages live at `docs/generated/<level>/<story-id>.mdx`; `manifest.json` records their paths. A story's ID remains its native command and hash URL, so moving its page does not break bookmarks. Regeneration removes obsolete generated MDX pages.
 
 Keep fixtures deterministic. Use typed events, a controlled step, and bounded sample data. Real application services remain outside the component model.
 

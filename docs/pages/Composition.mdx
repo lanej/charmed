@@ -1,11 +1,14 @@
 import { StoryCanvas } from "../components/StoryCanvas";
 import { GoSource } from "../components/GoSource";
+import { Composition } from "../components/Composition";
 
 # Compose behavior as well as appearance
 
 The service workbench combines an input, table, time-series chart, and details viewport. Its state belongs to one Go model. The browser forwards terminal input to that model.
 
 <StoryCanvas storyId="screen/services" />
+
+<Composition storyId="screen/services" />
 
 ## Ownership rules
 
@@ -33,3 +36,21 @@ The deployment comparison follows the same ownership rules. The parent coordinat
 Explore [cohort distributions](#chart/distributions), [attention](#feedback/attention), and the [deployment example](#deployment) as separate catalog entries. The same components render the full screen.
 
 Import `input`, `chart`, `layout`, or `form`. Atomic levels organize the catalog; they do not force package names or artificial composition layers. The Go library has no JavaScript runtime dependency.
+
+## Find a story by composition level
+
+Native fixture factories and their registrations live together in level-specific files. The registry joins them into one catalog; the generator places each MDX page under its level and capability. Story IDs remain stable as files move.
+
+| Level | Native fixtures and registrations | Example generated MDX |
+| --- | --- | --- |
+| Foundations | `story/foundations.go` | `docs/generated/foundations/foundations/theme.mdx` |
+| Atoms | `story/atoms.go`, `story/atoms_charts.go` | `docs/generated/atoms/chart/interval-band.mdx` |
+| Molecules | `story/molecules.go` | `docs/generated/molecules/chart/delta.mdx` |
+| Organisms | `story/organisms.go` | `docs/generated/organisms/chart/comparison-panel.mdx` |
+| Screens | `story/screens.go` | `docs/generated/screens/screen/deployment.mdx` |
+
+The same `Composes` declarations generate **Composed from** links and reverse **Used by** links. Follow the [deployment screen](#screen/deployment) to its [comparison panel](#chart/comparison-panel), then its [distribution comparison](#chart/distributions) and [interval-band atom](#chart/interval-band).
+
+The generator rejects broken links, duplicate entries, cycles and dependencies on a higher atomic level. Same-level composition is allowed. These checks validate the declared catalog relationships; Go package boundaries remain responsible for code dependencies. Shared scene adapters and deterministic sample data stay in `story/scene.go` and `story/samples.go`. Data analysis and optional attention policies stay in `cohort` and `attention`.
+
+Add a template level when a reusable screen arrangement needs its own example. Empty levels do not require placeholder fixtures.
