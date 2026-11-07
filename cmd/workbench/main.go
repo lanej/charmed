@@ -53,6 +53,8 @@ func command() *cobra.Command {
 		cmd.Flags().StringVar(&c.Value, "value", c.Value, "Input fixture value")
 		cmd.Flags().IntVar(&c.Series, "series", c.Series, "Chart series count")
 		cmd.Flags().IntVar(&c.Sigma, "sigma", c.Sigma, "Maximum nested host-spread band: 1, 2 or 3")
+		cmd.Flags().StringVar(&c.ComparisonVariant, "comparison-variant", c.ComparisonVariant, "Comparison presentation: stacked or bands")
+		cmd.Flags().StringVar(&c.Emphasis, "emphasis", c.Emphasis, "Atom emphasis: bright, normal or dim")
 		cmd.Flags().StringVar(&c.Scenario, "scenario", c.Scenario, "Deployment fixture scenario (see MDX deployment guide)")
 		cmd.Flags().StringVar(&c.ReferenceID, "reference-version", c.ReferenceID, "Reference version identifier")
 		cmd.Flags().StringVar(&c.CandidateID, "candidate-version", c.CandidateID, "Candidate version identifier")

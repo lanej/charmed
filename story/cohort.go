@@ -25,7 +25,8 @@ func deploymentStory(e Environment) (runtime.Scene, error) {
 		boundaries = fixture.Boundaries()
 	}
 	return pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Deployment comparison", Scope: "method=blue/green / SYNTHETIC / " + e.Config.Scenario,
-		Data: data, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit, MetricTones: fixture.StatusTones(), Boundaries: boundaries})
+		Data: data, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit, MetricTones: fixture.StatusTones(), Boundaries: boundaries,
+		Variant: pattern.ComparisonVariant(e.Config.ComparisonVariant), MetricSigns: fixture.StatusSigns()})
 }
 
 func bandStory(e Environment) (runtime.Scene, error) {

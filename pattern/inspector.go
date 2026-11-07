@@ -49,7 +49,7 @@ func (m *CohortComparison) updateInspector() {
 					}
 					z := "n/a"
 					if value, ok := cohort.Distance(p, m.summaries[i][0]); ok {
-						z = fmt.Sprintf("%+.2f", value)
+						z = m.signedNumber(i, value, 2, "", true).View(m.theme)
 					}
 					palette := m.theme
 					switch m.metricTones[m.data.Metrics[i].ID] {

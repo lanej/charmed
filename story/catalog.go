@@ -78,6 +78,10 @@ func definitions() []Definition {
 		return pattern.NewDashboard(pattern.DashboardOptions{Theme: e.Config.Palette(), Services: services, Live: e.Config.Live, Emit: e.Emit}), nil
 	}})
 	d = append(d,
+		Definition{ID: "text/signed-number", Title: "Atoms/Text/Signed number", Level: "Atoms", Family: "text", Description: "Exact signed values, configurable positive/negative tones, neutral zero, tiny-value preservation and explicit unavailable state.", Source: "text/signed.go", Controls: []string{"amount", "state", "emphasis"}, Defaults: atomConfig(), Factory: signedNumberStory},
+		Definition{ID: "text/pill", Title: "Atoms/Text/Color pill", Level: "Atoms", Family: "text", Description: "Semantic tone and bright, normal or dim emphasis are independent. ASCII output retains the label.", Source: "text/text.go", Symbol: "Pill", Controls: []string{"value", "emphasis"}, Defaults: atomConfig(), Factory: pillsStory},
+		Definition{ID: "feedback/status", Title: "Atoms/Feedback/Status", Level: "Atoms", Family: "feedback", Description: "Reusable OK, WARN, ERROR, UNKNOWN and OFF states compose shared tone and emphasis atoms.", Source: "feedback/status.go", Controls: []string{"emphasis"}, Defaults: atomConfig(), Factory: statusStory},
+		Definition{ID: "chart/band-matrix", Title: "Molecules/Charts/Band matrix", Level: "Molecules", Family: "chart", Description: "Directly labeled, disconnected distribution rows composed in a rectangular frame.", Source: "chart/comparison.go", Controls: []string{"sigma"}, Defaults: DefaultConfig(), Factory: bandMatrixStory},
 		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma"}, Defaults: DefaultConfig(), Factory: bandStory},
 		Definition{ID: "screen/deployment", Title: "Screens/Deployment comparison", Level: "Screens", Family: "pattern", Description: "Compare 2xx, 3xx, 4xx and 5xx by version identifier during a blue/green deployment. Reference/candidate roles, request-weighted histories, 1/2/3s host-spread bands and linked inspection use synthetic interval counts.", Source: "examples/deployment/main.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "scenario", "sigma", "referenceID", "candidateID"}, Scenarios: []string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, Defaults: func() Config { c := DefaultConfig(); c.Columns = 132; c.Rows = 40; return c }(), Factory: deploymentStory},
 	)
@@ -107,6 +111,9 @@ func definitions() []Definition {
 			d[i].States = []string{"ready", "empty"}
 			d[i].Controls = append(d[i].Controls, "boundaries")
 			d[i].Defaults.Boundaries = true
+			d[i].Controls = append(d[i].Controls, "comparisonVariant")
+		case "text/signed-number":
+			d[i].States = []string{"ready", "empty"}
 		case "feedback/attention":
 			d[i].States = []string{"ready", "empty"}
 			d[i].Defaults.Boundaries = true
@@ -127,7 +134,7 @@ func definitions() []Definition {
 		case "collection/logs":
 			d[i].Family = "collection"
 		}
-		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band" && id != "chart/distributions" && id != "chart/delta"
+		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band" && id != "chart/distributions" && id != "chart/delta" && id != "chart/band-matrix"
 		d[i].Clock = coreChart || id == "feedback/spinner" || id == "feedback/time" || id == "screen/services"
 		d[i].Step = coreChart || id == "feedback/spinner" || id == "feedback/progress" || id == "feedback/motion" || id == "collection/logs" || id == "screen/services" || id == "screen/deployment"
 		if id == "chart/timeseries" {

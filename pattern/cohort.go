@@ -25,6 +25,13 @@ import (
 	"github.com/lanej/charmed/theme"
 )
 
+type ComparisonVariant string
+
+const (
+	Stacked ComparisonVariant = "stacked"
+	Bands   ComparisonVariant = "bands"
+)
+
 type CohortComparisonOptions struct {
 	Title, Scope string
 	// Data orders the reference cohort first and candidate second. IDs retain
@@ -36,6 +43,8 @@ type CohortComparisonOptions struct {
 	Emit        func(any)
 	MetricTones map[string]text.Tone
 	Boundaries  map[string]cohort.ComparisonPolicy
+	Variant     ComparisonVariant
+	MetricSigns map[string]text.SignTones
 }
 
 // CohortComparison links per-metric distributions, request-weighted histories,
@@ -66,9 +75,17 @@ type CohortComparison struct {
 	attentionLevels              map[string]attention.Level
 	initialized                  bool
 	deltaExtent                  float64
+	variant                      ComparisonVariant
+	metricSigns                  map[string]text.SignTones
 }
 
 func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
+	if o.Variant == "" {
+		o.Variant = Stacked
+	}
+	if o.Variant != Stacked && o.Variant != Bands {
+		return nil, fmt.Errorf("unknown comparison variant %q", o.Variant)
+	}
 	if o.Sigma == 0 {
 		o.Sigma = 3
 	}
@@ -76,7 +93,7 @@ func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
 		return nil, fmt.Errorf("sigma must be 1, 2 or 3")
 	}
 	m := &CohortComparison{title: o.Title, scope: o.Scope, theme: o.Theme, minRequests: max(1, o.MinRequests), sigma: o.Sigma, emit: o.Emit,
-		focus: interaction.NewFocus("hosts", "metrics", "inspector"), window: -1, metricTones: maps.Clone(o.MetricTones)}
+		focus: interaction.NewFocus("hosts", "metrics", "inspector"), window: -1, metricTones: maps.Clone(o.MetricTones), variant: o.Variant, metricSigns: maps.Clone(o.MetricSigns)}
 	m.Table = collection.NewTable([]table.Column{{Title: "MEMBER", Width: 22}, {Title: "ROLE", Width: 4}, {Title: "z(ref)", Width: 6}}, nil, 38, 14, o.Theme)
 	m.Panels = collection.NewViewport("", 100, 36)
 	m.Inspector = collection.NewDenseTable(nil, nil, 38, 4, o.Theme)
@@ -95,6 +112,23 @@ func (m *CohortComparison) Selected() cohort.MemberKey { return m.selected }
 func (m *CohortComparison) WindowIndex() int           { return m.window }
 func (m *CohortComparison) Sigma() int                 { return m.sigma }
 func (m *CohortComparison) MetricID() string           { return m.data.Metrics[m.metric].ID }
+func (m *CohortComparison) Variant() ComparisonVariant { return m.variant }
+
+// SetVariant changes presentation on the existing model. No fixture, focus,
+// selected host, metric, time window or attention policy is replaced.
+func (m *CohortComparison) SetVariant(variant ComparisonVariant) error {
+	if variant != Stacked && variant != Bands {
+		return fmt.Errorf("unknown comparison variant %q", variant)
+	}
+	if variant == m.variant {
+		return nil
+	}
+	m.variant = variant
+	m.Panels.GotoTop()
+	m.updateDetails()
+	m.event("variant")
+	return nil
+}
 
 // SetData is atomic on validation failure. Appends follow the latest window only
 // if it was already selected. An inspected historical window stays selected.
@@ -185,6 +219,19 @@ func (m *CohortComparison) Update(msg tea.Msg) tea.Cmd {
 	}
 	if key, ok := msg.(tea.KeyPressMsg); ok {
 		switch key.String() {
+		case "b":
+			variant := Bands
+			if m.variant == Bands {
+				variant = Stacked
+			}
+			_ = m.SetVariant(variant)
+			return nil
+		case "f6":
+			_ = m.SetVariant(Stacked)
+			return nil
+		case "f7":
+			_ = m.SetVariant(Bands)
+			return nil
 		case "1", "2", "3":
 			_ = m.SetSigma(int(key.String()[0] - '0'))
 			return nil
@@ -235,7 +282,7 @@ func (m *CohortComparison) event(kind string) {
 	if m.emit != nil {
 		m.emit(map[string]any{"type": kind, "cohort": m.selected.CohortID, "member": m.selected.MemberID,
 			"reference": m.data.Cohorts[0].ID, "candidate": m.data.Cohorts[1].ID,
-			"window": m.window, "metric": m.MetricID(), "sigma": m.sigma})
+			"window": m.window, "metric": m.MetricID(), "sigma": m.sigma, "variant": m.variant})
 	}
 }
 func (m *CohortComparison) Resize(size layout.Size) {
@@ -300,7 +347,7 @@ func (m *CohortComparison) refresh() {
 		}
 		z := "n/a"
 		if distance, ok := cohort.Distance(p, baseline); ok {
-			z = fmt.Sprintf("%+.1f", distance)
+			z = m.signedNumber(m.metric, distance, 1, "", true).View(m.theme)
 		}
 		row := table.Row{p.MemberID, p.CohortID, z}
 		if m.boundaries[m.MetricID()].Hosts.Configured() {
@@ -333,7 +380,7 @@ func (m *CohortComparison) updateDetails() {
 }
 func (m *CohortComparison) rebuildPlots() {
 	columns := 1
-	if m.gridSize.Width >= 82 {
+	if m.variant == Stacked && m.gridSize.Width >= 82 {
 		columns = 2
 	}
 	width := max(20, (m.gridSize.Width-(columns-1))/columns-2)
@@ -369,7 +416,11 @@ func (m *CohortComparison) rebuildPlots() {
 			low, high = 0, 1
 		}
 		padding := max((high-low)*0.15, 0.001)
-		m.plots[i] = chart.NewTimeSeries(series, layout.Size{Width: width, Height: 9}, m.theme,
+		height := 9
+		if m.variant == Bands {
+			height = max(6, m.gridSize.Height-23)
+		}
+		m.plots[i] = chart.NewTimeSeries(series, layout.Size{Width: width, Height: height}, m.theme,
 			timeserieslinechart.WithYRange(max(0, low-padding), min(100, high+padding)),
 			timeserieslinechart.WithYLabelFormatter(func(_ int, value float64) string { return fmt.Sprintf("%.2f%%", value) }),
 			timeserieslinechart.WithXLabelFormatter(func(_ int, value float64) string {
@@ -389,9 +440,8 @@ func (m *CohortComparison) metricLabel(index int, compact bool) string {
 	return value
 }
 
-func (m *CohortComparison) panel(index, width int) string {
+func (m *CohortComparison) distribution(index int) chart.DistributionComparison {
 	summaries := m.summaries[index]
-	state := m.assessments[index]
 	distribution := chart.DistributionComparison{Sigma: m.sigma, Min: 0, Max: 100, Unit: "%", SpreadUnit: "pp", Markers: m.boundaryMarkers(index)}
 	for c, s := range summaries {
 		series := chart.DistributionSeries{Label: m.data.Cohorts[c].ID, Mean: s.Mean * 100, StdDev: s.StdDev * 100, Members: s.Eligible, HasSpread: s.HasSpread}
@@ -403,22 +453,34 @@ func (m *CohortComparison) panel(index, width int) string {
 		}
 		distribution.Series = append(distribution.Series, series)
 	}
+	return distribution
+}
+
+func (m *CohortComparison) comparisonTitle(index, width int) string {
+	state := m.assessments[index]
 	delta, available := m.delta(index)
 	style := feedback.AttentionStyle(state.Fleet.Level, m.theme)
 	titleLabel := m.metricLabel(index, true)
 	propertyWidth := max(0, width-4-lipgloss.Width(titleLabel)-9)
-	property := chart.DeltaProperty{Value: delta, Extent: m.deltaExtent, Available: available, Style: style}
+	property := chart.DeltaProperty{Value: delta, Extent: m.deltaExtent, Available: available, Style: style, Tones: m.metricSigns[m.data.Metrics[index].ID]}
 	title := titleLabel + " " + property.View(propertyWidth, m.theme) + " " + layout.Fit(feedback.Attention(state.Level, m.theme), layout.Size{Width: 7, Height: 1})
+	return title
+}
+
+func (m *CohortComparison) panel(index, width int) string {
 	rows := []string{""}
 	if policy := m.boundaries[m.data.Metrics[index].ID]; policy.Fleet.Configured() {
 		rows[0] = policy.Fleet.Summary("pp")
 	}
-	card := chart.ComparisonPanel{Title: title, Summary: rows, Distribution: distribution, History: m.plots[index]}
+	card := chart.ComparisonPanel{Title: m.comparisonTitle(index, width), Summary: rows, Distribution: m.distribution(index), History: m.plots[index]}
 	return card.View(layout.Size{Width: width, Height: 17}, m.theme, m.metric == index)
 }
 func (m *CohortComparison) grid() string {
 	if len(m.plots) == 0 {
 		return ""
+	}
+	if m.variant == Bands {
+		return m.bandVariantView()
 	}
 	columns := 1
 	if m.gridSize.Width >= 82 {

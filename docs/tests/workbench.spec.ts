@@ -242,7 +242,7 @@ test("catalog navigation supports search, capability groups and mobile", async (
     name: "Components",
     exact: true,
   });
-  await expect(navigation.getByRole("link")).toHaveCount(40);
+  await expect(navigation.getByRole("link")).toHaveCount(44);
   await page.getByPlaceholder("Search components…").fill("heatmap");
   await expect(navigation.getByRole("link")).toHaveCount(1);
   await navigation.getByRole("link").click();
@@ -256,4 +256,95 @@ test("catalog navigation supports search, capability groups and mobile", async (
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole("button", { name: "Components", exact: true }).click();
   await expect(page.getByPlaceholder("Search components…")).toBeVisible();
+});
+
+test("bands are a live variant of stacked comparison and preserve shared state", async ({ page }) => {
+  await page.setViewportSize({ width: 1760, height: 1400 });
+  await page.goto("/#screen/deployment");
+  const text = page.getByTestId("terminal-text");
+  const events = page.getByTestId("terminal-events");
+  const variant = page.getByRole("combobox", { name: "Comparison variant", exact: true });
+  await expect(page.getByRole("status")).toContainText("isolated PTY");
+  await expect(variant).toHaveValue("stacked");
+  await expect(text).not.toContainText("Disconnected bands");
+  await page.getByRole("button", { name: "Focus terminal", exact: true }).click();
+  await page.keyboard.press("ArrowDown");
+  await page.keyboard.press("ArrowLeft");
+  await page.keyboard.press("2");
+  await expect(events).toContainText('"member":"host-095"');
+  await page.keyboard.press("Control+]");
+  await variant.selectOption("bands");
+  await expect(text).toContainText("Disconnected bands");
+  await expect(text).toContainText("Member host-095");
+  await expect(text).toContainText("[11/12]");
+  await expect(text).toContainText("+/- 2s host spread");
+  await expect(events).toContainText('"variant":"bands"');
+  for (const label of ["2xx","3xx","4xx","5xx"]) await expect(text).toContainText(label);
+  await expect(text).not.toContainText("Fleet ");
+  const columns = page.getByRole("spinbutton", { name: "Columns", exact: true });
+  await columns.fill("40"); await columns.press("Enter");
+  await expect(page.getByRole("status")).toContainText("40 × 40");
+  await columns.fill("132"); await columns.press("Enter");
+  await expect(text).toContainText("Member host-095");
+  await expect(text).toContainText("Disconnected bands");
+  await page.getByRole("button", { name: "Focus terminal", exact: true }).click();
+  await page.keyboard.press("b");
+  await expect(variant).toHaveValue("stacked");
+  await expect(text).not.toContainText("Disconnected bands");
+  await page.keyboard.press("ArrowDown");
+  await expect(text).toContainText("Member host-094");
+  await page.keyboard.press("Control+]");
+  await variant.selectOption("bands");
+  await expect(text).toContainText("Disconnected bands");
+  await expect(text).toContainText("Member host-094");
+  await page.getByRole("combobox", { name: "Preset", exact: true }).selectOption("Default");
+  await expect(variant).toHaveValue("stacked");
+  await expect(text).not.toContainText("Disconnected bands");
+  if (process.env.CHARMED_CAPTURE_DIR) {
+    mkdirSync(process.env.CHARMED_CAPTURE_DIR, {recursive:true});
+    await page.locator(".story-canvas").screenshot({path:join(process.env.CHARMED_CAPTURE_DIR,"comparison-stacked.png")});
+  }
+  await variant.selectOption("bands");
+  await expect(text).toContainText("Disconnected bands");
+  if (process.env.CHARMED_CAPTURE_DIR)
+    await page.locator(".story-canvas").screenshot({path:join(process.env.CHARMED_CAPTURE_DIR,"comparison-bands.png")});
+});
+
+test("static comparison offers both presentation variants", async ({page}) => {
+  await page.goto("http://127.0.0.1:5174/#screen/deployment");
+  const text=page.getByTestId("terminal-text");
+  const saved=page.getByRole("combobox",{name:"Saved variant"});
+  await expect(text).not.toContainText("Disconnected bands");
+  await saved.selectOption("Disconnected bands");
+  await expect(page.getByRole("status")).toContainText("Static snapshot: Disconnected bands");
+  await expect(text).toContainText("Disconnected bands");
+  await saved.selectOption("Default");
+  await expect(text).not.toContainText("Disconnected bands");
+});
+
+test("signed values, pill emphasis and status atoms have independent fixtures",async ({page})=>{
+  const text=page.getByTestId("terminal-text");
+  await page.goto("/#text/signed-number");
+  await expect(text).toContainText("+0.180pp");
+  await expect(text).toContainText("-1e-06pp");
+  await expect(text).toContainText("+0.000pp");
+  await expect(text).toContainText("n/a");
+  await page.getByRole("combobox",{name:"Emphasis",exact:true}).selectOption("bright");
+  await expect(text).toContainText("Signed number / bright");
+  await page.getByRole("combobox",{name:"State",exact:true}).selectOption("empty");
+  await expect(text).toContainText(/Positive means improvement\s+n\/a/);
+  await page.goto("/#text/pill");
+  for (const level of ["bright","normal","dim"]) await expect(text).toContainText(level);
+  await page.getByRole("combobox",{name:"Emphasis",exact:true}).selectOption("dim");
+  await page.getByRole("combobox",{name:"Theme",exact:true}).selectOption("light");
+  await expect(text).toContainText("Selected emphasis");
+  if(process.env.CHARMED_CAPTURE_DIR) {
+    mkdirSync(process.env.CHARMED_CAPTURE_DIR,{recursive:true});
+    await page.locator(".story-canvas").screenshot({path:join(process.env.CHARMED_CAPTURE_DIR,"pill-emphasis-light.png")});
+  }
+  await page.goto("/#feedback/status");
+  for(const state of ["OK","WARN","ERROR","UNKNOWN","OFF"]) await expect(text).toContainText(state);
+  await page.getByRole("combobox",{name:"Emphasis",exact:true}).selectOption("dim");
+  await page.getByRole("combobox",{name:"Theme",exact:true}).selectOption("mono");
+  await expect(text).toContainText("Status atoms / dim");
 });

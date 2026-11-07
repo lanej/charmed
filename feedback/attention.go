@@ -11,13 +11,13 @@ import (
 func Attention(level attention.Level, t theme.Theme) string {
 	switch level {
 	case attention.Error:
-		return text.Pill("ERROR", text.Danger, t)
+		return Error.View(text.Bright, t)
 	case attention.Warn:
-		return text.Pill("WARN", text.Warning, t)
+		return Warn.View(text.Bright, t)
 	case attention.Unknown:
-		return t.Subtle().Render("UNKNOWN")
+		return Unknown.View(text.Dim, t)
 	case attention.Normal:
-		return t.Subtle().Render("OK")
+		return OK.View(text.Dim, t)
 	}
 	return ""
 }
