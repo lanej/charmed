@@ -1,0 +1,102 @@
+name: Publish PR documentation preview
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: PR number to build and publish
+        required: true
+        type: number
+
+permissions:
+  contents: read
+
+concurrency:
+  group: charmed-preview-pr-${{ github.event.pull_request.number || inputs.pr }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name == 'workflow_dispatch' || (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      sha: ${{ steps.revision.outputs.sha }}
+    steps:
+      - name: Validate manual dispatch targets a same-repository open PR
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ inputs.pr }}
+        run: |
+          test "$PR_NUMBER" -gt 0
+          test "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.head.repo.full_name')" = "$GITHUB_REPOSITORY"
+          test "$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.state')" = "open"
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && format('refs/pull/{0}/head', inputs.pr) || github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.8'
+      - name: Compile isolated preview without any write token
+        run: go run ./cmd/workbench generate --out docs
+      - name: Stamp source revision and discourage indexing
+        id: revision
+        run: |
+          sha="$(git rev-parse HEAD)"
+          echo "$sha" > docs/dist/revision.txt
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          python3 - <<'PY'
+          from pathlib import Path
+          for page in Path("docs/dist").glob("*.html"):
+              content = page.read_text(encoding="utf-8")
+              if "</head>" not in content:
+                  raise SystemExit(f"Missing head: {page}")
+              content = content.replace("</head>", '<meta name="robots" content="noindex,nofollow"></head>', 1)
+              page.write_text(content, encoding="utf-8")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: charmed-pr-preview
+          path: docs/dist/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 2
+
+  publish:
+    needs: build
+    if: always() && (needs.build.result == 'success' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository))
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      actions: write
+      pull-requests: write
+    concurrency:
+      group: charmed-pr-preview-cache
+      cancel-in-progress: false
+    steps:
+      - name: Checkout trusted publisher from main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Download unprivileged preview output
+        if: needs.build.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: charmed-pr-preview
+          path: preview-artifact/
+      - name: Publish snapshot, trigger Pages, verify live revision, and update PR
+        # During initial bootstrap, the new trusted publisher is not on main.
+        if: hashFiles('scripts/publish-pr-preview.sh') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event_name == 'workflow_dispatch' && inputs.pr || github.event.pull_request.number }}
+          PREVIEW_ACTION: ${{ github.event.action == 'closed' && 'closed' || 'publish' }}
+          PREVIEW_SHA: ${{ needs.build.outputs.sha }}
+        run: bash scripts/publish-pr-preview.sh "$PR_NUMBER" "$PREVIEW_ACTION" "$PREVIEW_SHA"

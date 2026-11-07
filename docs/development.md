@@ -34,6 +34,37 @@ Declare actual building blocks in `Definition.Composes`. The generator rejects m
 
 Keep application services outside the model. Use typed events, controlled steps and bounded sample data. Browser WASM remains an optional integration because the current Booba route requires a patched Bubble Tea replacement.
 
+## Pull request previews
+
+Each same-repository PR receives a public, revision-verified snapshot of the
+complete static guide at:
+
+- Components: `https://lanej.io/charmed/pr-preview/pr-<number>/components.html`
+- Brand sheet: `https://lanej.io/charmed/pr-preview/pr-<number>/brand.html`
+- Catalog: `https://lanej.io/charmed/pr-preview/pr-<number>/`
+
+The unprivileged `pr-preview.yml` workflow generates and stamps the PR's
+actual head SHA. A separate trusted publishing job stores the generated static
+files in `pr-preview-cache`, then dispatches the existing main-branch
+Pages workflow. That workflow overlays the snapshots onto the production catalog
+without replacing its root pages. The preview is updated on each push and
+removed when the PR closes.
+
+The PR description receives direct browser links **only after** the published
+`revision.txt` matches the PR's current head. The preview section is
+maintained between `<!-- charmed-preview:start -->` and
+`<!-- charmed-preview:end -->` comments; edits elsewhere are retained.
+Do not add a link to the PR's own GitHub URL inside its description.
+Previews are marked `noindex,nofollow` and use relative static assets.
+
+Fork PRs intentionally do not receive privileged preview publishing. They
+still receive regular CI checks. If the publisher workflow has just been
+installed, run `pr-preview.yml` manually with the PR number once it is on
+`main` to seed previews for already-open PRs.
+
+`go run ./cmd/workbench generate --out docs` remains the same local
+build command.
+
 ## Verify
 
 ```sh
