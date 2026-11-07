@@ -8,6 +8,7 @@ import (
 	"go/token"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/lanej/charmed/story"
@@ -56,11 +57,11 @@ func Generate(out string) error {
 				c.ReducedMotion = true
 			}},
 		}
-		if d.ID == "chart/radar" || d.ID == "screen/deployment-radar" {
+		if slices.Contains(d.Controls, "boundaries") {
 			variants = append(variants, struct {
 				name   string
 				change func(*story.Config)
-			}{name: "Straight", change: func(c *story.Config) { c.Curve = "straight" }})
+			}{name: "No boundaries", change: func(c *story.Config) { c.Boundaries = false }})
 		}
 		for _, scenario := range d.Scenarios {
 			if scenario == d.Defaults.Scenario {

@@ -78,10 +78,14 @@ func definitions() []Definition {
 		return pattern.NewDashboard(pattern.DashboardOptions{Theme: e.Config.Palette(), Services: services, Live: e.Config.Live, Emit: e.Emit}), nil
 	}})
 	d = append(d,
-		Definition{ID: "chart/radar", Title: "Atoms/Charts/Radar profile", Level: "Atoms", Family: "chart", Description: "Smooth reference-centered profiles, exact axis markers and nested radial whiskers on an ntcharts Braille canvas. Missing values leave gaps.", Source: "chart/radar.go", Symbol: "Radar", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma", "curve"}, Defaults: DefaultConfig(), Factory: radarStory},
-		Definition{ID: "screen/deployment-radar", Title: "Screens/Deployment radar", Level: "Screens", Family: "pattern", Description: "A smooth version profile linked to host selection, status details and time histories. All axes use reference host SD units; version IDs and semantic status pills retain separate identities.", Source: "pattern/cohort_radar.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "scenario", "sigma", "curve", "referenceID", "candidateID"}, Scenarios: []string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, Defaults: func() Config { c := DefaultConfig(); c.Columns = 132; c.Rows = 39; return c }(), Factory: deploymentRadarStory},
+		Definition{ID: "chart/band-matrix", Title: "Molecules/Charts/Band matrix", Level: "Molecules", Family: "chart", Description: "Disconnected version bands in one rectangular frame. Every metric has its own labeled percentage axis and directly labeled version means.", Source: "story/cohort.go", Symbol: "bandMatrixStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma"}, Defaults: DefaultConfig(), Factory: bandMatrixStory},
+		Definition{ID: "screen/deployment-bands", Title: "Screens/Deployment bands", Level: "Screens", Family: "pattern", Description: "Four aligned HTTP status rows compose version distributions, optional attention boundaries and a linked class history. No curves or series legends.", Source: "pattern/cohort_bands.go", Controls: []string{"state", "scenario", "sigma", "referenceID", "candidateID"}, Scenarios: []string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, Defaults: func() Config { c := DefaultConfig(); c.Columns = 132; c.Rows = 39; return c }(), Factory: deploymentBandsStory},
 		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma"}, Defaults: DefaultConfig(), Factory: bandStory},
 		Definition{ID: "screen/deployment", Title: "Screens/Deployment comparison", Level: "Screens", Family: "pattern", Description: "Compare 2xx, 3xx, 4xx and 5xx by version identifier during a blue/green deployment. Reference/candidate roles, request-weighted histories, 1/2/3s host-spread bands and linked inspection use synthetic interval counts.", Source: "examples/deployment/main.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "scenario", "sigma", "referenceID", "candidateID"}, Scenarios: []string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, Defaults: func() Config { c := DefaultConfig(); c.Columns = 132; c.Rows = 40; return c }(), Factory: deploymentStory},
+	)
+	d = append(d,
+		Definition{ID: "feedback/attention", Title: "Molecules/Feedback/Attention", Level: "Molecules", Family: "feedback", Description: "Optional warn/error boundaries compose a labeled attention indicator from the shared semantic pill atom.", Source: "feedback/attention.go", Symbol: "Attention", Upstream: "https://github.com/charmbracelet/lipgloss", Controls: []string{"state", "amount", "boundaries"}, Defaults: DefaultConfig(), Factory: attentionStory},
+		Definition{ID: "chart/distributions", Title: "Molecules/Charts/Cohort distributions", Level: "Molecules", Family: "chart", Description: "Mean/spread labels, shared-axis interval bands and optional boundary markers compose into a reusable distribution comparison.", Source: "chart/comparison.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"sigma", "boundaries"}, Defaults: DefaultConfig(), Factory: distributionStory},
 	)
 	for i := range d {
 		id := d[i].ID
@@ -97,7 +101,16 @@ func definitions() []Definition {
 			d[i].States = []string{"ready", "error"}
 		case "screen/services":
 			d[i].States = []string{"ready", "empty"}
-		case "screen/deployment", "screen/deployment-radar", "chart/radar", "chart/interval-band":
+		case "screen/deployment", "screen/deployment-bands":
+			d[i].States = []string{"ready", "empty"}
+			d[i].Controls = append(d[i].Controls, "boundaries")
+			d[i].Defaults.Boundaries = true
+		case "feedback/attention":
+			d[i].States = []string{"ready", "empty"}
+			d[i].Defaults.Boundaries = true
+		case "chart/distributions":
+			d[i].Defaults.Boundaries = true
+		case "chart/interval-band", "chart/band-matrix":
 			d[i].States = []string{"ready", "empty"}
 		case "chart/metric":
 			d[i].Controls = []string{"amount"}
@@ -110,9 +123,9 @@ func definitions() []Definition {
 		case "collection/logs":
 			d[i].Family = "collection"
 		}
-		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band" && id != "chart/radar"
+		coreChart := strings.HasPrefix(id, "chart/") && id != "chart/panel" && id != "chart/metric" && id != "chart/picture" && id != "chart/interval-band" && id != "chart/distributions" && id != "chart/band-matrix"
 		d[i].Clock = coreChart || id == "feedback/spinner" || id == "feedback/time" || id == "screen/services"
-		d[i].Step = coreChart || id == "feedback/spinner" || id == "feedback/progress" || id == "feedback/motion" || id == "collection/logs" || id == "screen/services" || id == "screen/deployment" || id == "screen/deployment-radar"
+		d[i].Step = coreChart || id == "feedback/spinner" || id == "feedback/progress" || id == "feedback/motion" || id == "collection/logs" || id == "screen/services" || id == "screen/deployment" || id == "screen/deployment-bands"
 		if id == "chart/timeseries" {
 			d[i].Source = "examples/timeseries/main.go"
 			d[i].Symbol = ""

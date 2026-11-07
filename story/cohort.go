@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/lanej/charmed/chart"
+	"github.com/lanej/charmed/cohort"
 	"github.com/lanej/charmed/examples/deployment/fixture"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/pattern"
@@ -14,11 +15,11 @@ func deploymentStory(e Environment) (runtime.Scene, error) {
 	return comparisonStory(e, false)
 }
 
-func deploymentRadarStory(e Environment) (runtime.Scene, error) {
+func deploymentBandsStory(e Environment) (runtime.Scene, error) {
 	return comparisonStory(e, true)
 }
 
-func comparisonStory(e Environment, radar bool) (runtime.Scene, error) {
+func comparisonStory(e Environment, overview bool) (runtime.Scene, error) {
 	data, err := fixture.DataWithVersions(e.Config.Scenario, fixture.Versions{Reference: e.Config.ReferenceID, Candidate: e.Config.CandidateID})
 	if err != nil {
 		return nil, err
@@ -27,43 +28,32 @@ func comparisonStory(e Environment, radar bool) (runtime.Scene, error) {
 		data.Windows = nil
 	}
 	t := e.Config.Palette()
-	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Deployment comparison", Scope: "method=blue/green / SYNTHETIC / " + e.Config.Scenario,
-		Data: data, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit, MetricTones: fixture.StatusTones(), Radar: radar})
-	if err != nil {
-		return nil, err
+	var boundaries map[string]cohort.ComparisonPolicy
+	if e.Config.Boundaries {
+		boundaries = fixture.Boundaries()
 	}
-	if e.Config.Curve == "straight" {
-		m.SetSmooth(false)
-	}
-	return m, nil
+	return pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Deployment comparison", Scope: "method=blue/green / SYNTHETIC / " + e.Config.Scenario,
+		Data: data, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit, MetricTones: fixture.StatusTones(), Boundaries: boundaries, BandOverview: overview})
 }
 
-func radarStory(e Environment) (runtime.Scene, error) {
+func bandMatrixStory(e Environment) (runtime.Scene, error) {
 	return static(func(size layout.Size) string {
-		if e.Config.State == "empty" {
-			return layout.Fit("No profile observations", size)
-		}
-		o := chart.RadarOptions{Axes: []string{"2xx", "3xx", "4xx", "5xx"}, Min: -4, Max: 4, Reference: 0,
-			Rings: []float64{-3, -2, -1, 1, 2, 3}, Smooth: e.Config.Curve != "straight", SelectedAxis: -1}
-		for c, values := range [][]float64{{0, 0, 0, 0}, {-.8, .1, .4, 1.2}, {-1.1, .2, .4, 1.8}} {
-			s := chart.RadarSeries{Label: []string{"reference", "candidate", "host"}[c], Marker: []rune{'R', 'C', 'X'}[c]}
-			for _, value := range values {
-				p := chart.RadarValue{Value: value, Valid: true}
-				if c < 2 {
-					sd := 1.0
-					if c == 1 {
-						sd = .4
-					}
-					for k := e.Config.Sigma; k >= 1; k-- {
-						p.Intervals = append(p.Intervals, chart.Interval{Low: value - float64(k)*sd, High: value + float64(k)*sd})
-					}
-				}
-				s.Values = append(s.Values, p)
+		matrix := chart.BandMatrix{Title: fmt.Sprintf("Host mean +/- %ds", e.Config.Sigma)}
+		if e.Config.State != "empty" {
+			for _, metric := range []struct {
+				label    string
+				mean, sd float64
+			}{{"Success", 96, .4}, {"Server error", .2, .03}} {
+				selected := metric.mean + 5*metric.sd
+				d := chart.DistributionComparison{Sigma: e.Config.Sigma, Min: 0, Max: 100, Unit: "%", SpreadUnit: "pp",
+					Series: []chart.DistributionSeries{
+						{Label: "a13c9f2", Mean: metric.mean, StdDev: metric.sd, Members: 64, HasSpread: true},
+						{Label: "f4d7e81", Mean: metric.mean + metric.sd, StdDev: metric.sd * 1.5, Members: 32, HasSpread: true, Selected: &selected},
+					}}
+				matrix.Rows = append(matrix.Rows, chart.BandRow{Title: metric.label, Distribution: d})
 			}
-			o.Series = append(o.Series, s)
 		}
-		return layout.Fit("R reference / C candidate / X host; normalized units\n"+chart.Radar(o, layout.Size{Width: size.Width, Height: size.Height - 2}, e.Config.Palette())+
-			fmt.Sprintf("\n0=reference mean; outward=higher; +/- %ds whiskers", e.Config.Sigma), size)
+		return matrix.View(size, e.Config.Palette(), false)
 	}), nil
 }
 

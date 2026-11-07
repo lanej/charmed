@@ -101,15 +101,20 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await expect(page.getByRole("status")).toContainText("isolated PTY");
   const text = page.getByTestId("terminal-text");
   await expect(text).toContainText("method=blue/green");
-  await expect(text).toContainText("R a13c9f2");
-  await expect(text).toContainText("C f4d7e81");
-  await expect(text).toContainText("host-096 / C");
-  await expect(text).toContainText("ID: f4d7e81");
+  await expect(text).toContainText("Reference a13c9f2");
+  await expect(text).toContainText("Candidate f4d7e81");
+  await expect(text).toContainText("Member host-096");
+  await expect(text).toContainText("Version f4d7e81");
   for (const pill of ["2xx Success", "3xx Redirects", "4xx Client error", "5xx Server error"]) {
     await expect(text).toContainText(pill);
   }
-  await expect(text).toContainText("Fleet R 96.093%  C 95.904%");
-  await expect(text).toContainText("Fleet R 0.200%  C 0.403%");
+  await expect(text).toContainText("Fleet a13c9f2 96.093%");
+  await expect(text).toContainText("Fleet f4d7e81 0.403%");
+  await expect(text).toContainText("CODE");
+  await expect(text).toContainText("RATE");
+  for (const legend of ["History %:", "3=member", "X = this member", "W/E =", "R=reference", "C=candidate", "1/2/3 bands"]) {
+    await expect(text).not.toContainText(legend);
+  }
   const viewport = await page.locator(".terminal-scroller").evaluate((element) => ({
     width: element.clientWidth, contentWidth: element.scrollWidth,
   }));
@@ -118,19 +123,25 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await page.keyboard.press("ArrowDown");
   await expect(page.getByTestId("terminal-events")).toContainText('"member":"host-095"');
   await expect(page.getByTestId("terminal-events")).toContainText('"cohort":"f4d7e81"');
-  await expect(text).toContainText("host-095 / C");
+  await expect(text).toContainText("Member host-095");
   await page.keyboard.press("ArrowLeft");
   await page.keyboard.press("2");
   await expect(page.getByTestId("terminal-events")).toContainText('"window":10');
   await expect(text).toContainText("+/- 2s host spread");
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("ArrowUp");
+  await expect(page.getByTestId("terminal-events")).toContainText('"metric":"4xx"');
+  await expect(text).toContainText("Member host-095");
+  await page.keyboard.press("ArrowDown");
   await page.keyboard.press("Control+]");
   await page.getByRole("spinbutton", { name: "Columns", exact: true }).fill("40");
   await page.getByRole("spinbutton", { name: "Columns", exact: true }).press("Enter");
   await expect(page.getByRole("status")).toContainText("40 × 40");
-  await expect(text).toContainText("host-095 / C");
+  await expect(text).toContainText("Member host-095");
   await page.getByRole("spinbutton", { name: "Columns", exact: true }).fill("132");
   await page.getByRole("spinbutton", { name: "Columns", exact: true }).press("Enter");
-  await expect(text).toContainText("host-095 / C");
+  await expect(text).toContainText("Member host-095");
   await expect(text).toContainText("+/- 2s host spread");
   await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption("insufficient-samples");
   await expect(text).toContainText("baseline s unavailable");
@@ -139,21 +150,36 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
   await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption("isolated-hosts");
   await page.getByRole("combobox", { name: "Host spread bands", exact: true }).selectOption("3");
   await expect(text).toContainText("5 beyond 3s");
+  await expect(text).toContainText("ERROR");
+  await expect(text).toContainText("WARN");
+  await expect(text).toContainText("Warn>=+0.1 Error>=+0.3 pp");
+  await page.getByRole("combobox", { name: "Deviation boundaries", exact: true }).selectOption("off");
+  await expect(text).not.toContainText("ERROR");
+  await expect(text).not.toContainText("ATTN");
+  await expect(text).toContainText("5xx Server error");
+  await page.getByRole("combobox", { name: "Deviation boundaries", exact: true }).selectOption("example");
+  await expect(text).toContainText("ERROR");
+  await page.getByRole("button", { name: "Step", exact: true }).click();
+  await expect(page.getByTestId("terminal-events")).toContainText('"type":"attention"');
+  await expect(page.getByTestId("terminal-events")).toContainText('"previous":"error"');
+  await expect(page.getByTestId("terminal-events")).toContainText('"level":"normal"');
+  await page.getByRole("combobox", { name: "Preset", exact: true }).selectOption("Default");
+  await expect(text).toContainText("ERROR");
   const reference = page.getByRole("textbox", { name: "Reference version", exact: true });
   const candidate = page.getByRole("textbox", { name: "Candidate version", exact: true });
   await reference.fill("release/2026.11.07+build.42");
   await reference.press("Enter");
-  await expect(text).toContainText("R release/2026.11.07+build.42");
+  await expect(text).toContainText("Reference release/2026.11.07+build.42");
   await candidate.fill("sha256:731a9e4");
   await candidate.press("Enter");
-  await expect(text).toContainText("ID: sha256:731a9e4");
+  await expect(text).toContainText("Version sha256:731a9e4");
   await page.getByRole("button", { name: "Focus terminal", exact: true }).click();
   await page.keyboard.press("ArrowDown");
   await expect(page.getByTestId("terminal-events")).toContainText('"cohort":"sha256:731a9e4"');
   await expect(page.getByTestId("terminal-events")).toContainText('"reference":"release/2026.11.07+build.42"');
   await page.keyboard.press("Control+]");
   await page.getByRole("combobox", { name: "Preset", exact: true }).selectOption("Default");
-  await expect(text).toContainText("ID: f4d7e81");
+  await expect(text).toContainText("Version f4d7e81");
   if (process.env.CHARMED_CAPTURE_DIR) {
     mkdirSync(process.env.CHARMED_CAPTURE_DIR, { recursive: true });
     await page.locator(".story-canvas").screenshot({ path: join(process.env.CHARMED_CAPTURE_DIR, "deployment.png") });
@@ -163,6 +189,9 @@ test("deployment comparison links host selection, windows, bands and sparse fixt
 test("static deployment variants retain the traffic and sampling scenarios", async ({ page }) => {
   await page.goto("http://127.0.0.1:5174/#screen/deployment");
   await expect(page.getByRole("status")).toContainText("Static snapshot: Default");
+  await page.getByRole("combobox", { name: "Saved variant" }).selectOption("No boundaries");
+  await expect(page.getByTestId("terminal-text")).not.toContainText("ERROR");
+  await expect(page.getByTestId("terminal-text")).toContainText("5xx Server error");
   await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Insufficient samples");
   await expect(page.getByRole("status")).toContainText("Static snapshot: Insufficient samples");
   await expect(page.getByTestId("terminal-text")).toContainText("baseline s unavailable");
@@ -189,6 +218,18 @@ test("static export labels snapshots and offers saved variants", async ({
   await expect(page.getByTestId("terminal-text")).toContainText("CHARMED");
 });
 
+test("the reusable attention fixture distinguishes unknown and disabled rules", async ({ page }) => {
+  await page.goto("/#feedback/attention");
+  const text = page.getByTestId("terminal-text");
+  await expect(text).toContainText(/^\s*WARN\s*$/m);
+  await page.getByRole("slider", { name: "Amount", exact: true }).fill("85");
+  await expect(text).toContainText(/^\s*ERROR\s*$/m);
+  await page.getByRole("combobox", { name: "State", exact: true }).selectOption("empty");
+  await expect(text).toContainText(/^\s*UNKNOWN\s*$/m);
+  await page.getByRole("combobox", { name: "Deviation boundaries", exact: true }).selectOption("off");
+  await expect(text).toContainText("OFF / no boundaries");
+});
+
 test("catalog navigation supports search, capability groups and mobile", async ({
   page,
 }) => {
@@ -200,7 +241,7 @@ test("catalog navigation supports search, capability groups and mobile", async (
     name: "Components",
     exact: true,
   });
-  await expect(navigation.getByRole("link")).toHaveCount(38);
+  await expect(navigation.getByRole("link")).toHaveCount(40);
   await page.getByPlaceholder("Search components…").fill("heatmap");
   await expect(navigation.getByRole("link")).toHaveCount(1);
   await navigation.getByRole("link").click();
@@ -216,48 +257,44 @@ test("catalog navigation supports search, capability groups and mobile", async (
   await expect(page.getByPlaceholder("Search components…")).toBeVisible();
 });
 
-test("radar links smooth profiles, host selection and the detail view", async ({ page }) => {
+test("disconnected bands link version rows, policies, hosts and detail history", async ({ page }) => {
   await page.setViewportSize({ width: 1760, height: 1400 });
-  await page.goto("/#screen/deployment-radar");
+  await page.goto("/#screen/deployment-bands");
   const text = page.getByTestId("terminal-text");
   const events = page.getByTestId("terminal-events");
   await expect(page.getByRole("status")).toContainText("isolated PTY");
-  await expect(text).toContainText("Version profile / smooth");
-  await expect(text).toContainText("0 = reference mean");
-  await expect(text).toContainText("Fleet R 0.200%  C 0.403%");
-  await expect(page.getByRole("combobox", { name: "Profile curve", exact: true })).toHaveValue("smooth");
+  await expect(text).toContainText("Version bands / host mean +/- 3s");
+  for (const label of ["2xx Success", "3xx Redirects", "4xx Client error", "5xx Server error", "a13c9f2", "f4d7e81"]) {
+    await expect(text).toContainText(label);
+  }
+  await expect(text).not.toContainText("History %:");
+  await expect(text).not.toContainText("Version profile");
+  await expect(page.getByRole("combobox", { name: "Profile curve", exact: true })).toHaveCount(0);
   await page.getByRole("button", { name: "Focus terminal", exact: true }).click();
   await page.keyboard.press("ArrowDown");
   await expect(events).toContainText('"member":"host-095"');
-  await expect(events).toContainText('"radar":true');
-  await page.keyboard.press("s");
-  await expect(text).toContainText("Version profile / straight");
-  await expect(events).toContainText('"smooth":false');
-  await page.keyboard.press("r");
-  await expect(text).not.toContainText("Version profile");
-  await expect(text).toContainText("host-095 / C");
-  await page.keyboard.press("r");
-  await expect(text).toContainText("Version profile / straight");
+  await expect(events).toContainText('"overview":true');
+  await page.keyboard.press("b");
+  await expect(text).not.toContainText("Version bands");
+  await page.keyboard.press("b");
+  await expect(text).toContainText("Version bands");
   await page.keyboard.press("]");
-  await expect(events).toContainText('"metric":"2xx"');
   await page.keyboard.press("ArrowLeft");
   await page.keyboard.press("1");
+  await expect(events).toContainText('"metric":"2xx"');
   await expect(events).toContainText('"window":10');
   await page.keyboard.press("Control+]");
   const columns = page.getByRole("spinbutton", { name: "Columns", exact: true });
-  await columns.fill("40");
-  await columns.press("Enter");
+  await columns.fill("40"); await columns.press("Enter");
   await expect(page.getByRole("status")).toContainText("40 × 39");
-  await columns.fill("132");
-  await columns.press("Enter");
-  await expect(text).toContainText("Version profile / straight");
-  await expect(text).toContainText("host-095 / C");
-  await expect(text).toContainText("+/- 1s host spread");
+  await columns.fill("132"); await columns.press("Enter");
+  await expect(text).toContainText("Member host-095");
+  await expect(text).toContainText("Version bands / host mean +/- 1s");
   await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption("insufficient-samples");
-  await expect(text).toContainText("Reference spread unavailable");
+  await expect(text).toContainText("n/a");
   await expect(text).not.toContainText("NaN");
   await page.getByRole("combobox", { name: "Preset", exact: true }).selectOption("Default");
-  await expect(text).toContainText("Version profile / smooth");
+  await expect(text).toContainText("Version bands / host mean +/- 3s");
   const viewport = await page.locator(".terminal-scroller").evaluate((element) => ({
     width: element.clientWidth, contentWidth: element.scrollWidth,
     height: element.clientHeight, contentHeight: element.scrollHeight,
@@ -266,17 +303,18 @@ test("radar links smooth profiles, host selection and the detail view", async ({
   expect(viewport.contentHeight).toBeLessThanOrEqual(viewport.height);
   if (process.env.CHARMED_CAPTURE_DIR) {
     mkdirSync(process.env.CHARMED_CAPTURE_DIR, { recursive: true });
-    await page.locator(".story-canvas").screenshot({ path: join(process.env.CHARMED_CAPTURE_DIR, "deployment-radar.png") });
+    await page.locator(".story-canvas").screenshot({ path: join(process.env.CHARMED_CAPTURE_DIR, "deployment-bands.png") });
   }
 });
 
-test("static radar includes straight and sparse variants", async ({ page }) => {
-  await page.goto("http://127.0.0.1:5174/#screen/deployment-radar");
+test("static band overview preserves sampling and optional boundaries", async ({ page }) => {
+  await page.goto("http://127.0.0.1:5174/#screen/deployment-bands");
   const text = page.getByTestId("terminal-text");
   await expect(page.getByRole("status")).toContainText("Static snapshot: Default");
-  await expect(text).toContainText("Version profile / smooth");
-  await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Straight");
-  await expect(text).toContainText("Version profile / straight");
+  await expect(text).toContainText("Version bands");
+  await page.getByRole("combobox", { name: "Saved variant" }).selectOption("No boundaries");
+  await expect(text).not.toContainText("ERROR");
   await page.getByRole("combobox", { name: "Saved variant" }).selectOption("Insufficient samples");
-  await expect(text).toContainText("Reference spread unavailable");
+  await expect(text).toContainText("n/a");
+  await expect(text).not.toContainText("NaN");
 });

@@ -14,7 +14,7 @@ Requires Go **1.26.8+**. The documentation app also needs Node **24+** and npm. 
 go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
 go run ./cmd/workbench run screen/deployment --scenario isolated-hosts --sigma 3
-go run ./cmd/workbench run screen/deployment-radar --curve smooth --sigma 3
+go run ./cmd/workbench run screen/deployment-bands --sigma 3
 go run ./cmd/workbench run chart/timeseries --theme light --series 3
 go run ./cmd/workbench capture screen/services --plain
 ```
@@ -42,10 +42,11 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 | `interaction` | Focus scopes and typed selection/submission events |
 | `input` | Bubbles text input, textarea, virtual cursor and labeled field composition |
 | `collection` | Native tables, lists, trees, file pickers, viewports and bounded structured logs |
-| `feedback` | Spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
+| `feedback` | Attention indicators, spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
+| `attention` | Optional one-sided or two-sided warn/error boundaries, explicit unknown/off states and typed transitions |
 | `form` | Themed Huh forms with native nested focus and validation |
 | `text` | Labels, badges, semantic pills, key hints and Glamour Markdown rendering |
-| `chart` | Sparklines, time series, line/scatter, bars, heatmaps, streamline/waveline, OHLC, canvas, interval bands, portable pictures and chart compositions |
+| `chart` | Sparklines, time series, line/scatter, bars, heatmaps, streamline/waveline, OHLC, canvas, interval bands, cohort distributions, comparison panels and portable pictures |
 | `cohort` | Validated interval counts, request-weighted rates and unweighted member sample spread |
 | `pattern` | Service workbench and cohort comparison with linked plots, member selection and inspection |
 | `runtime` | One root Bubble Tea terminal session |
@@ -73,9 +74,7 @@ The deployment comparison example groups hosts by actual version identifiers, wi
 
 [View the deployment comparison](docs/assets/deployment.png).
 
-[View the radar overview](docs/assets/deployment-radar.png).
-
-The radar overview (`screen/deployment-radar`) uses smooth, bounded profiles in reference host standard-deviation units, with exact axis markers, 1/2/3σ radial whiskers and a selected-host overlay. Press `r` to switch between the overview and all four detail panels, `s` to compare smooth and straight connections, and `[` / `]` to choose a status axis. Host, window, metric and band selection are shared between views. Zero or unavailable reference spread leaves an explicit gap; the radial outline is descriptive, not a confidence region or performance score.
+The screen composes the same distribution, interval, time-series, table, pill and attention components exposed in the catalog. Both the host list and member inspector use native tables. Version IDs label data directly, with no legends or key footers. Optional per-metric policies distinguish host z-score limits from fleet percentage-point deltas. Warning/error attention is separate from HTTP status semantics and from the displayed sigma bands. The example enables illustrative rules; use `--boundaries=false` or the **No boundaries** variant to keep deviations descriptive. Missing data remains unknown when a rule is configured.
 
 The Go registry generates each component's MDX page, argument metadata, source excerpt and four standard saved variants: default, light, narrow and monochrome. The deployment comparison also saves its alternate scenarios for static browsing. Generated files live in `docs/generated/` and are excluded from Git.
 
@@ -124,3 +123,5 @@ npm test
 Checks exercise cell bounds, deterministic frames, focus and selection, resize, background updates, native process cleanup, MDX source highlighting, live browser input and the static fallback.
 
 MIT licensed. Upstream components retain their respective licenses.
+
+The compact deployment overview (`screen/deployment-bands`) composes four independently scaled, directly labeled version band rows in one rectangle, plus the active status history and member table. Press `b` to switch views while preserving selection. Each row shares its percentage axis between versions; warning/error boundaries remain optional. [View the overview](docs/assets/deployment-bands.png).

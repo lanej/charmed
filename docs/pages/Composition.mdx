@@ -28,4 +28,8 @@ The split layout becomes stacked on small terminals. The selected service persis
 
 ## Dependencies follow capabilities
 
+The deployment comparison follows the same ownership rules. The parent coordinates selection and data; each metric uses `chart.ComparisonPanel`, which composes `chart.DistributionComparison`, `chart.IntervalBand`, and `chart.TimeSeries`. `feedback.Attention` composes `text.Pill`. Optional rules are evaluated by `attention` and `cohort.Assess`, independently of those renderers.
+
+Explore [cohort distributions](#chart/distributions), [attention](#feedback/attention), and the [deployment example](#deployment) as separate catalog entries. The same components render the full screen.
+
 Import `input`, `chart`, `layout`, or `form`. Atomic levels organize the catalog; they do not force package names or artificial composition layers. The Go library has no JavaScript runtime dependency.

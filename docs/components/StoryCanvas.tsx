@@ -207,15 +207,6 @@ export function StoryCanvas({
           {entry.controls?.includes("candidateID") && (
             <Identifier label="Candidate version" value={config.candidateID} other={config.referenceID} onChange={(value) => set("candidateID", value)} />
           )}
-          {entry.controls?.includes("curve") && (
-            <label>
-              Profile curve
-              <select aria-label="Profile curve" value={config.curve} onChange={(event) => set("curve", event.target.value)}>
-                <option value="smooth">Smooth</option>
-                <option value="straight">Straight</option>
-              </select>
-            </label>
-          )}
           {entry.controls?.includes("sigma") && (
             <label>
               Host spread bands
@@ -227,6 +218,15 @@ export function StoryCanvas({
                 {[1, 2, 3].map((sigma) => (
                   <option key={sigma} value={sigma}>±{sigma}σ</option>
                 ))}
+              </select>
+            </label>
+          )}
+          {entry.controls?.includes("boundaries") && (
+            <label>
+              Deviation boundaries
+              <select aria-label="Deviation boundaries" value={config.boundaries ? "example" : "off"} onChange={(event)=>set("boundaries",event.target.value==="example")}>
+                <option value="example">Example rules</option>
+                <option value="off">No boundaries</option>
               </select>
             </label>
           )}

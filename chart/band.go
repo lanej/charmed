@@ -11,6 +11,11 @@ import (
 )
 
 type Interval struct{ Low, High float64 }
+type BandMarker struct {
+	Value float64
+	Glyph rune
+	Style lipgloss.Style
+}
 type BandOptions struct {
 	Min, Max float64
 	// Intervals are nested from outermost to innermost. They are clipped to
@@ -19,6 +24,7 @@ type BandOptions struct {
 	Center    float64
 	Selected  *float64
 	Series    int
+	Markers   []BandMarker
 }
 
 // IntervalBand is a one-row ntcharts canvas primitive. Density encodes nested
@@ -62,6 +68,11 @@ func IntervalBand(o BandOptions, width int, t theme.Theme) string {
 	}
 	if o.Center >= o.Min && o.Center <= o.Max {
 		plot.SetRuneWithStyle(canvas.Point{X: project(o.Center)}, '|', style.Bold(true))
+	}
+	for _, marker := range o.Markers {
+		if finite(marker.Value) && marker.Value >= o.Min && marker.Value <= o.Max {
+			plot.SetRuneWithStyle(canvas.Point{X: project(marker.Value)}, marker.Glyph, marker.Style)
+		}
 	}
 	if o.Selected != nil && finite(*o.Selected) && *o.Selected >= o.Min && *o.Selected <= o.Max {
 		plot.SetRuneWithStyle(canvas.Point{X: project(*o.Selected)}, 'X', t.Text().Bold(true))

@@ -15,9 +15,9 @@ Status classes have semantic pills: **2xx Success** in green, **3xx Redirects** 
 
 The **host mean** gives each eligible host equal weight. The nested bands are the host mean ±1, ±2 and ±3 **sample standard deviations**, using the `n − 1` denominator. The brightest inner band is 1σ; the lighter surrounding bands are 2σ and 3σ. The mean is `|`; `X` marks the selected host on its version's band. Both versions share the same axis within a response class. Different classes have their own axes so a small 5xx shift stays visible. The axis includes both versions' full 3σ extent and the selected host; changing the visible band limit keeps that axis stable. Displayed bands stop at 0% and 100%.
 
-Histories show each version's request-weighted rate and the selected host's rate over all supplied windows. `R` and `C` are compact aliases for reference and candidate; the header shows their actual version identifiers and the inspector shows the selected version ID. Version series keep their identity in every panel, independently of the status-pill colors. The third line is the inspected host.
+Histories show each version's request-weighted rate and the selected host's rate over all supplied windows. Version IDs appear directly in fleet values, distribution labels and the host table. The screen has no legends or explanatory key footers. Status-category pills keep their separate meanings.
 
-The host list ranks absolute distance from the **reference version's host distribution** for the active response class. Its `z(ref)` is `(host rate − reference host mean) / reference host standard deviation`. This is a descriptive distance, including for candidate hosts, rather than a confidence score. The candidate's widening spread does not redefine its reference. The list reports the number of eligible hosts beyond the selected distance in either direction; this includes both cohorts and is not a failure count.
+The host list ranks configured attention first, then absolute distance from the **reference version's host distribution** for the active response class. Its `z(ref)` is `(host rate − reference host mean) / reference host standard deviation`. This is a descriptive distance, including for candidate hosts, rather than a confidence score. The candidate's widening spread does not redefine its reference. The descriptive tail count includes eligible hosts from both cohorts beyond the selected sigma distance; this is separate from boundary attention.
 
 Version identifiers are opaque strings: a commit, release tag or build ID can identify either role. **Reference version** and **Candidate version** controls accept distinct identifiers without parsing their format. Editing an ID commits on blur or Enter and starts a fresh synthetic fixture. Host identifiers are independent of version, role and deployment environment.
 
@@ -32,23 +32,59 @@ Live previews expose a Scenario control. Static builds include the alternate sce
 | `unequal-traffic` | Host error propensities are similar, while the versions receive different volumes on the higher-error hosts | A weighted fleet delta without a comparable host-mean shift; this is workload confounding |
 | `insufficient-samples` | Most hosts serve fewer than 1,000 requests; some serve none | Excluded host counts, `n/a` spread and the absence of finite z-scores |
 
-Use **↑/↓** to choose a host, **←/→** to choose a time window, **[ / ]** to change the active response class, and **1 / 2 / 3** to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. The controls below the preview set the initial scenario and band limit; changing them starts a fresh session. **Tab** moves between the host list, metric panels and inspector. Arrow keys scroll the focused region; **Ctrl+N** advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.
+Use **↑/↓** in the host table to choose a host, **←/→** to choose a time window, **[ / ]** to change the active response class, and **1 / 2 / 3** to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. The controls below the preview set the initial scenario and band limit; changing them starts a fresh session. **Tab** moves between the host list, metric panels and inspector. The member inspector is a native table with code, rate, reference deviation and optional attention columns. Its arrow keys select the active metric while retaining the selected host. Arrow keys scroll the metric region; **Ctrl+N** advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.
 
-## Inspect a version profile
+## Optional warning and error boundaries
 
-The radar overview puts all four status classes on one **reference-centered, signed scale**. Each axis subtracts that class's reference host mean and divides by its reference host sample standard deviation. `R` stays on the zero ring, `C` shows the candidate's unweighted host mean, and `X` shows the selected eligible host. Both version outlines retain their version identity; status pills retain their HTTP semantics. The raw, request-weighted fleet rates remain in the active class's detail panel.
+The **Deviation boundaries** control enables illustrative policies or removes them. The library has no default alert thresholds. With no configured rule, deviation remains descriptive: there is no warning, error or implied healthy state. Static exports include a **No boundaries** variant.
 
-<StoryCanvas storyId="screen/deployment-radar" />
+| Scope | Measurement | Example warning | Example error |
+| --- | --- | --- | --- |
+| 2xx host | Host `z(ref)` | ≤ −2σ | ≤ −3σ |
+| 5xx host | Host `z(ref)` | ≥ +2σ | ≥ +3σ |
+| 2xx fleet | Candidate minus reference weighted rate | ≤ −0.1 percentage points | ≤ −0.3 percentage points |
+| 5xx fleet | Candidate minus reference weighted rate | ≥ +0.1 percentage points | ≥ +0.3 percentage points |
 
-The default **smooth** connection eases the radius between adjacent spokes. It passes through the actual values, closes smoothly, and stays within the adjacent endpoint radii. Category connections are a visual guide: they do not introduce samples, establish a trend between classes, or make the outline's area a performance score. **Profile curve** or **s** switches to straight segments for comparison. Static builds save a **Straight** variant.
+Each metric, scope, severity and side is optional. Host policies apply to eligible hosts in either version. Fleet policies compare the two request-weighted rates and require at least the configured minimum request count in each version. Equality triggers a boundary; error takes precedence over warning. Missing or insufficient measurements produce **UNKNOWN**, rather than a normal result. Host sigma rules remain unknown when reference spread is zero or unavailable; fleet percentage-point rules can still evaluate when their counts are available.
 
-Nested radial whiskers show each version's own host mean ±1/2/3 standard deviations, expressed in the **same reference units**. Whiskers are clipped to physical 0–100% rates before normalization. The full three-sigma extents and every eligible host determine a symmetric range for each window. Changing the visible sigma limit, selected host, curve or active class keeps that window's radial scale fixed. The range caption reports the actual limits; it can expand beyond ±3 reference SDs for extreme hosts. Grid rings adapt to the range, while the whiskers retain the selected 1/2/3σ spread.
+The attention indicator composes the shared pill component. It appears on the screen and metric heading, the fleet delta, affected host rows and inspector values. A metric's indicator shows the strongest fleet or host attention; the inspector preserves the individual results. HTTP status-category pills keep their separate meanings: a red **5xx Server error** category does not itself raise an **ERROR** attention state.
 
-Outward means a **higher share** of responses in that class. Its operational meaning depends on the status: 2xx and 5xx do not share a universal good-outward direction, and 3xx/4xx need application context. The four status shares are related. No joint significance, confidence coverage, or release decision follows from the radial outline.
+`W` and `E` mark configured host warning and error boundaries on the distributions. The shared axis includes valid boundary positions. At terminal resolution, coincident markers show the stronger error marker; `X` takes priority for the selected host. Fleet limits appear directly on metric cards with full warning/error labels. Host limits are supplied by the application policy and marked on the bands. **The 1/2/3σ controls change the displayed bands and descriptive tail counts, independently of attention policies.**
 
-Use **[ / ]** to select a spoke and update the class detail panel and host ranking. Host selection overlays its profile and history. **r** switches between the radar overview and all four detailed panels without losing host, metric, window, focus, band limit or curve choice. The same view toggle is available in the original comparison screen. Zero or unavailable reference spread produces a missing spoke and a visible `n/a` message; adjacent curves leave gaps. When every spoke is unavailable, the overview explains the missing reference instead of drawing a zero profile. Low-volume hosts keep their raw observations in the inspector but have no normalized profile.
+Applications supply policies explicitly:
 
-Run `go run ./cmd/workbench run screen/deployment-radar --curve smooth --sigma 3`, or inspect the reusable `chart/radar` fixture. Small terminals scroll the linked regions; ASCII output lists the same signed values and outer whisker endpoints as text.
+```go
+// Host limits are in z(ref) units; fleet limits are in percentage points.
+rules := map[string]cohort.ComparisonPolicy{
+    "5xx": {
+        Hosts: attention.Rule{
+            Warn:  &attention.Bounds{Upper: attention.Limit(2)},
+            Error: &attention.Bounds{Upper: attention.Limit(3)},
+        },
+        Fleet: attention.Rule{
+            Warn:  &attention.Bounds{Upper: attention.Limit(0.1)},
+            Error: &attention.Bounds{Upper: attention.Limit(0.3)},
+        },
+    },
+}
+err := screen.SetBoundaries(rules)
+```
+
+`SetBoundaries` validates and copies rules before changing the screen. Set a lower limit to watch decreases, set both sides for two-sided attention, or omit a severity or scope. Pass `nil` to remove all policies. Invalid or inverted limits leave the existing screen intact. These policies express application attention, rather than statistical confidence or an automatic deployment action.
+
+The optional callback emits typed `attention.Changed` events when a metric's **hosts** or **fleet** attention level changes, including recovery and removal of a policy. It seeds the initial state without emitting a burst of events. Rendering, resizing and changing the displayed sigma do not emit attention transitions.
+
+## Inspect disconnected version bands
+
+The compact overview arranges status classes as **four independent rows in one rectangle**. Each row has directly labeled version IDs and host means beside disconnected, nested 1/2/3σ bands. The status class keeps its semantic pill; optional warning/error markers and attention use the same components and policies as the detailed screen. There is no outline connecting categories and no series legend.
+
+<StoryCanvas storyId="screen/deployment-bands" />
+
+Each status class owns a clearly labeled **percentage axis shared by both versions**. A 0.2% server-error rate stays readable beside a 96% success rate. Different status rows have different numeric ranges: compare the labeled means and percentage-point deltas across rows, rather than comparing bar lengths between classes. The range includes both versions' full three-sigma spread, the selected host and valid attention boundaries. Changing the displayed 1/2/3σ limit preserves that row's range. Missing observations remain `n/a`; no reference standard deviation is needed to display raw rates.
+
+**[ / ]** selects a status row and updates its fleet summary, history and host ranking. Selecting a host marks its observation on its version's bands and updates the inspector and history. **b** switches between the compact overview and all four detailed panels without losing the host, metric, window or band limit. The matrix composes `chart.DistributionComparison` in compact form, which composes the existing `chart.IntervalBand` atom. The history below it uses the same `chart.ComparisonPanel` molecule as the detailed view. Warning/error boundaries remain optional and independent of the visible sigma limit.
+
+Run `go run ./cmd/workbench run screen/deployment-bands --sigma 3`, or inspect `chart/band-matrix` for the reusable composition. Static builds include the traffic scenarios and **No boundaries** variant.
 
 ## Sampling and interpretation
 
@@ -65,9 +101,12 @@ References: [NIST proportion control charts](https://www.itl.nist.gov/div898/han
 | Layer | Component | Responsibility |
 | --- | --- | --- |
 | Atom | `chart.IntervalBand` | Draw caller-supplied nested intervals and observation markers with ntcharts canvas |
-| Atom | `chart.Radar` | Draw smooth or straight profiles, exact axis markers, missing-value gaps and nested radial whiskers |
 | Atom | `text.Pill` | Render a labeled semantic tone, with theme-aware contrast and a text fallback |
+| Molecule | `feedback.Attention` | Compose a labeled warning/error/unknown/normal state from the shared pill |
+| Molecule | `chart.DistributionComparison` | Compose mean/spread labels, interval bands, boundary markers and a shared axis |
+| Molecule | `chart.ComparisonPanel` | Compose the summary, distribution comparison and native time-series history |
 | Analysis | `cohort.Analyze` | Calculate weighted rates and unweighted sample spread from interval counts |
+| Policy | `attention.Rule` and `cohort.Assess` | Evaluate optional numeric boundaries separately from rendering and count aggregation |
 | Organism | `pattern.CohortComparison` | Coordinate distributions, time series, host selection, focus, windows and responsive layout |
 | Screen | `examples/deployment` | Supply version IDs, the deployment method, HTTP status tones, synthetic counts and the sample threshold |
 
@@ -83,4 +122,4 @@ Each `Window` has an inclusive start and exclusive end, and each `Sample` suppli
 
 Call `SetData` on the Bubble Tea update thread when new data arrives. Invalid updates return an error and preserve the existing screen. Valid updates copy the data and retain the selected host where it still exists. Appending windows follows the latest window only when it was already selected; inspecting an older window keeps that window selected. For comparisons scoped to a route or region, supply that matched population and label it in `Scope`.
 
-The optional `Emit` callback reports member selection, time window, active metric and band-limit changes. Applications own any statistical inference, alerting or deployment decisions.
+The optional `Emit` callback reports member selection, time window, active metric, band-limit changes and attention transitions. Applications own statistical inference, notification delivery and deployment decisions.
