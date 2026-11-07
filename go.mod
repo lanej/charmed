@@ -20,7 +20,7 @@ require (
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/spf13/cobra v1.10.2
 	github.com/yuin/goldmark v1.7.17
-	golang.org/x/net v0.39.0
+	golang.org/x/net v0.55.0
 )
 
 require (
