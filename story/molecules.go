@@ -22,11 +22,12 @@ func moleculesDefinitions() []Definition {
 		widget("feedback/help", "Molecules/Feedback/Help", "Molecules", "feedback", "Help is generated from the same native key bindings that handle input.", "helpStory", nil, helpStory),
 	}
 	d = append(d,
+		Definition{ID: "chart/band-matrix", Title: "Molecules/Charts/Band matrix", Level: "Molecules", Family: "chart", Description: "Directly labeled, disconnected distribution rows composed in a rectangular frame.", Source: "chart/comparison.go", Controls: []string{"sigma"}, Composes: []string{"chart/distributions", "foundations/layout"}, Defaults: DefaultConfig(), Factory: bandMatrixStory},
 		Definition{ID: "chart/metric", Title: "Molecules/Charts/Metric trend", Level: "Molecules", Family: "chart", Description: "A metric value, unit and sparkline share one bounded allocation.", Source: "story/molecules.go", Symbol: "metricStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"amount"}, Composes: []string{"chart/sparkline"}, Defaults: DefaultConfig(), Factory: metricStory},
 		Definition{ID: "chart/panel", Title: "Molecules/Charts/Chart panel", Level: "Molecules", Family: "chart", Description: "A chart, title and series labels compose into a reusable region.", Source: "story/molecules.go", Symbol: "panelStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"series", "amount"}, Composes: []string{"chart/timeseries", "foundations/layout"}, Defaults: DefaultConfig(), Factory: panelStory},
-		Definition{ID: "feedback/attention", Title: "Molecules/Feedback/Attention", Level: "Molecules", Family: "feedback", Description: "Optional warn/error boundaries compose a labeled attention indicator from the shared semantic pill atom.", Source: "feedback/attention.go", Symbol: "Attention", Upstream: "https://github.com/charmbracelet/lipgloss", Controls: []string{"state", "amount", "boundaries"}, States: []string{"ready", "empty"}, Composes: []string{"text/primitives"}, Defaults: DefaultConfig(), Factory: attentionStory},
+		Definition{ID: "feedback/attention", Title: "Molecules/Feedback/Attention", Level: "Molecules", Family: "feedback", Description: "Optional warn/error boundaries compose a labeled attention indicator from the shared semantic pill atom.", Source: "feedback/attention.go", Symbol: "Attention", Upstream: "https://github.com/charmbracelet/lipgloss", Controls: []string{"state", "amount", "boundaries"}, States: []string{"ready", "empty"}, Composes: []string{"feedback/status"}, Defaults: DefaultConfig(), Factory: attentionStory},
 		Definition{ID: "chart/distributions", Title: "Molecules/Charts/Cohort distributions", Level: "Molecules", Family: "chart", Description: "Mean/spread labels, shared-axis interval bands and optional boundary markers compose into a reusable distribution comparison.", Source: "chart/comparison.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"sigma", "boundaries"}, Composes: []string{"chart/interval-band"}, Defaults: DefaultConfig(), Factory: distributionStory},
-		Definition{ID: "chart/delta", Title: "Molecules/Charts/Merged delta property", Level: "Molecules", Family: "chart", Description: "A single zero-centred bar cancels the shared reference/candidate amount and emphasizes the signed percentage-point difference.", Source: "chart/delta.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Composes: []string{"chart/interval-band"}, Defaults: DefaultConfig(), Factory: deltaStory},
+		Definition{ID: "chart/delta", Title: "Molecules/Charts/Merged delta property", Level: "Molecules", Family: "chart", Description: "A single zero-centred bar cancels the shared reference/candidate amount and emphasizes the signed percentage-point difference.", Source: "chart/delta.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Composes: []string{"chart/interval-band", "text/signed-number"}, Defaults: DefaultConfig(), Factory: deltaStory},
 		Definition{ID: "feedback/percent", Title: "Molecules/Feedback/Percentage bar", Level: "Molecules", Family: "feedback", Description: "A native progress bar and exact percentage compose a fixed-width graphical table value on a 0–100% scale.", Source: "feedback/percent.go", Symbol: "PercentBar", Upstream: "https://github.com/charmbracelet/bubbles", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Composes: []string{"feedback/progress"}, Defaults: DefaultConfig(), Factory: percentStory},
 	)
 	for i := range d {
@@ -125,5 +126,23 @@ func deltaStory(e Environment) (runtime.Scene, error) {
 func percentStory(e Environment) (runtime.Scene, error) {
 	return static(func(size layout.Size) string {
 		return title("Compact percentage bar", e) + feedback.PercentBar(e.Config.Amount, e.Config.State != "empty", min(size.Width, 30), e.Config.Palette())
+	}), nil
+}
+
+func bandMatrixStory(e Environment) (runtime.Scene, error) {
+	return static(func(size layout.Size) string {
+		matrix := chart.BandMatrix{Title: fmt.Sprintf("Host mean +/- %ds", e.Config.Sigma)}
+		for _, metric := range []struct {
+			label    string
+			mean, sd float64
+		}{{"Success", 96, .4}, {"Server error", .2, .03}} {
+			selected := metric.mean + 5*metric.sd
+			d := chart.DistributionComparison{Sigma: e.Config.Sigma, Min: 0, Max: 100, Unit: "%", SpreadUnit: "pp", Series: []chart.DistributionSeries{
+				{Label: "a13c9f2", Mean: metric.mean, StdDev: metric.sd, Members: 64, HasSpread: true},
+				{Label: "f4d7e81", Mean: metric.mean + metric.sd, StdDev: metric.sd * 1.5, Members: 32, HasSpread: true, Selected: &selected},
+			}}
+			matrix.Rows = append(matrix.Rows, chart.BandRow{Title: metric.label, Distribution: d})
+		}
+		return matrix.View(size, e.Config.Palette(), false)
 	}), nil
 }

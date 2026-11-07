@@ -14,6 +14,7 @@ Requires Go **1.26.8+**. The documentation app also needs Node **24+** and npm. 
 go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
 go run ./cmd/workbench run screen/deployment --scenario isolated-hosts --sigma 3
+go run ./cmd/workbench run screen/deployment --comparison-variant bands
 go run ./cmd/workbench run chart/timeseries --theme light --series 3
 go run ./cmd/workbench capture screen/services --plain
 ```
@@ -68,6 +69,8 @@ cmd := field.Focus()
 The core uses upstream Charm v2 modules. It has no JavaScript runtime requirement and no Bubble Tea fork.
 
 ## MDX workbench
+
+The comparison keeps **Stacked** as its default presentation. **Disconnected bands** is a live and saved variant of the same component; switching it preserves host, metric, window, sigma, focus and policy state. Native users can press `b`. The atom catalog also includes signed numbers with configurable sign colors, bright/normal/dim pills, and reusable OK/WARN/ERROR/UNKNOWN/OFF statuses.
 
 The deployment comparison example groups hosts by actual version identifiers, with reference/candidate roles and a separate blue/green deployment-method label. Semantic pills identify 2xx success, 3xx redirects, 4xx client errors and 5xx server errors. It combines nested 1/2/3σ host-spread bands, request-weighted histories and linked host inspection. Four synthetic scenarios distinguish a uniform regression, isolated bad hosts, unequal traffic and insufficient samples. Read **Compare a deployment** in the catalog for the count contract and statistical interpretation. The bands describe host variability; they are not confidence intervals or rollout decisions. Run `go run ./examples/deployment` for a standalone terminal application.
 

@@ -5,6 +5,7 @@ import manifest from "../generated/manifest.json";
 
 export type StoryArgs = (typeof manifest)[number]["defaults"] & {
   storyId: string;
+  onComparisonVariantChange?: (variant:string) => void;
 };
 type PreviewMode = "connecting" | "live" | "static" | "stopped";
 
@@ -47,11 +48,14 @@ export function TerminalStory(props: StoryArgs) {
   const [savedVariant, setSavedVariant] = useState<string | null>(null);
   const [readable, setReadable] = useState("");
   const [events, setEvents] = useState<unknown[]>([]);
-  const { storyId, columns, rows, ...rest } = props;
+  const { storyId, columns, rows, comparisonVariant, onComparisonVariantChange, ...rest } = props;
+  const variantChange = useRef(onComparisonVariantChange);
+  variantChange.current = onComparisonVariantChange;
   const configurationKey = JSON.stringify(rest);
   const automaticSnapshot = entry?.snapshots.find(
     (snapshot) =>
       snapshot.config.theme === props.theme &&
+      snapshot.config.comparisonVariant === comparisonVariant &&
       snapshot.config.columns === columns &&
       snapshot.config.rows === rows,
   );
@@ -69,7 +73,7 @@ export function TerminalStory(props: StoryArgs) {
 
   useEffect(
     () => setSavedVariant(null),
-    [storyId, configurationKey, columns, rows],
+    [storyId, configurationKey, columns, rows, comparisonVariant],
   );
 
   useEffect(() => {
@@ -154,7 +158,7 @@ export function TerminalStory(props: StoryArgs) {
         return;
       }
 
-      const config = { ...rest, columns, rows };
+      const config = { ...rest, columns, rows, comparisonVariant };
       term.resize(columns, rows);
       term.options.theme = colors(props.theme);
       term.clear();
@@ -179,6 +183,8 @@ export function TerminalStory(props: StoryArgs) {
             const value = JSON.parse(message.data);
             if (value.type === "event")
               setEvents((events) => [...events.slice(-11), value.event]);
+            if (value.type === "event" && value.event?.type === "variant" && ["stacked","bands"].includes(value.event.variant))
+              variantChange.current?.(value.event.variant);
           } catch {
             /* Terminal bytes use binary frames; control messages are JSON. */
           }
@@ -205,7 +211,7 @@ export function TerminalStory(props: StoryArgs) {
       if (terminal.current === term) terminal.current = null;
       if (socket.current === ws) socket.current = null;
     };
-    // Size changes use the existing live session, preserving selection and focus.
+    // Size and comparison-variant changes preserve the existing live session.
     // Other fixture changes and Reset create a fresh Go model.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storyId, configurationKey, reset, savedVariant, validSize]);
@@ -213,6 +219,11 @@ export function TerminalStory(props: StoryArgs) {
   useEffect(() => {
     if (mode === "static" && snapshot) paintSnapshot.current?.(snapshot);
   }, [mode, snapshot]);
+
+  useEffect(() => {
+    if (mode === "live" && entry?.controls?.includes("comparisonVariant") && socket.current?.readyState === WebSocket.OPEN)
+      socket.current.send(JSON.stringify({type:"variant",variant:comparisonVariant}));
+  }, [comparisonVariant,mode,entry]);
 
   useEffect(() => {
     if (mode !== "live" || !validSize) return;

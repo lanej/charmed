@@ -98,7 +98,7 @@ export function StoryCanvas({
   const states = entry.states ?? [];
   return (
     <div className="story-canvas">
-      <TerminalStory key={`${storyId}:${presetRevision}`} storyId={storyId} {...config} />
+      <TerminalStory key={`${storyId}:${presetRevision}`} storyId={storyId} {...config} onComparisonVariantChange={(variant) => set("comparisonVariant",variant)} />
       <details className="fixture-controls" open>
         <summary>
           Fixture controls<span>Changes run through the Go model</span>
@@ -210,6 +210,25 @@ export function StoryCanvas({
           )}
           {entry.controls?.includes("candidateID") && (
             <Identifier label="Candidate version" value={config.candidateID} other={config.referenceID} onChange={(value) => set("candidateID", value)} />
+          )}
+          {entry.controls?.includes("comparisonVariant") && (
+            <label>
+              Comparison variant
+              <select aria-label="Comparison variant" value={config.comparisonVariant} onChange={(event) => set("comparisonVariant",event.target.value)}>
+                <option value="stacked">Stacked</option>
+                <option value="bands">Disconnected bands</option>
+              </select>
+            </label>
+          )}
+          {entry.controls?.includes("emphasis") && (
+            <label>
+              Emphasis
+              <select aria-label="Emphasis" value={config.emphasis} onChange={(event) => set("emphasis",event.target.value)}>
+                <option value="bright">Bright</option>
+                <option value="normal">Normal</option>
+                <option value="dim">Dim</option>
+              </select>
+            </label>
           )}
           {entry.controls?.includes("sigma") && (
             <label>

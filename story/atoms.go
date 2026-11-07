@@ -45,6 +45,9 @@ func atomsDefinitions() []Definition {
 		d = append(d, Definition{ID: "chart/" + kind.id, Title: "Atoms/Charts/" + kind.name, Level: "Atoms", Family: "chart", Description: "Real ntcharts " + kind.name + " rendering with semantic styling and deterministic fixture data.", Source: "story/atoms_charts.go", Symbol: "chartStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: controls, Clock: true, Step: true, Defaults: DefaultConfig(), Factory: func(e Environment) (runtime.Scene, error) { return chartStory(kind.id, e) }})
 	}
 	d = append(d,
+		Definition{ID: "text/signed-number", Title: "Atoms/Text/Signed number", Level: "Atoms", Family: "text", Description: "Exact signed values, configurable positive/negative tones, neutral zero, tiny-value preservation and explicit unavailable state.", Source: "text/signed.go", Controls: []string{"amount", "state", "emphasis"}, States: []string{"ready", "empty"}, Defaults: atomConfig(), Factory: signedNumberStory},
+		Definition{ID: "text/pill", Title: "Atoms/Text/Color pill", Level: "Atoms", Family: "text", Description: "Semantic tone and bright, normal or dim emphasis are independent. ASCII output retains the label.", Source: "text/text.go", Symbol: "Pill", Controls: []string{"value", "emphasis"}, Defaults: atomConfig(), Factory: pillsStory},
+		Definition{ID: "feedback/status", Title: "Atoms/Feedback/Status", Level: "Atoms", Family: "feedback", Description: "Reusable OK, WARN, ERROR, UNKNOWN and OFF states compose shared tone and emphasis atoms.", Source: "feedback/status.go", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: atomConfig(), Factory: statusStory},
 		Definition{ID: "chart/picture", Title: "Atoms/Graphics/Picture", Level: "Atoms", Family: "graphics", Description: "Portable glyph rendering of an embedded image; no external image service.", Source: "story/atoms.go", Symbol: "pictureStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Defaults: DefaultConfig(), Factory: pictureStory},
 		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma"}, States: []string{"ready", "empty"}, Defaults: DefaultConfig(), Factory: bandStory},
 	)
@@ -193,3 +196,47 @@ func bandStory(e Environment) (runtime.Scene, error) {
 			"\n0                                              100\n\n| center / X selected observation\nOuter to inner: 3s / 2s / 1s\nIntervals are supplied by the caller; this atom makes no statistical claim."
 	}), nil
 }
+
+func signedNumberStory(e Environment) (runtime.Scene, error) {
+	return static(func(layout.Size) string {
+		t := e.Config.Palette()
+		emphasis := text.Emphasis(e.Config.Emphasis)
+		value := (e.Config.Amount - 50) / 100
+		standard := text.SignedNumber{Value: value, Available: e.Config.State != "empty", Precision: 3, Unit: "pp", Emphasis: emphasis}
+		serverErrors := standard
+		serverErrors.Tones = text.SignTones{Positive: text.Danger, Negative: text.Success}
+		zero := text.SignedNumber{Available: true, Precision: 3, Unit: "pp", Emphasis: emphasis}
+		tiny := text.SignedNumber{Value: -.000001, Available: true, Precision: 3, Unit: "pp", Emphasis: emphasis}
+		missing := text.SignedNumber{Available: false}
+		return strings.Join([]string{"Signed number / " + e.Config.Emphasis, "", "Positive means improvement   " + standard.View(t), "Higher server-error rate     " + serverErrors.View(t), "Zero                        " + zero.View(t), "Small nonzero               " + tiny.View(t), "Unavailable                 " + missing.View(t)}, "\n")
+	}), nil
+}
+
+func pillsStory(e Environment) (runtime.Scene, error) {
+	return static(func(layout.Size) string {
+		t := e.Config.Palette()
+		rows := []string{"Pills / tone and emphasis", ""}
+		for _, emphasis := range []text.Emphasis{text.Bright, text.Normal, text.Dim} {
+			line := []string{string(emphasis)}
+			for _, tone := range []text.Tone{text.Neutral, text.Success, text.Info, text.Warning, text.Danger} {
+				line = append(line, text.Pill(string(tone), tone, t, emphasis))
+			}
+			rows = append(rows, strings.Join(line, "  "))
+		}
+		rows = append(rows, "", "Selected emphasis  "+text.Pill(e.Config.Value, text.Info, t, text.Emphasis(e.Config.Emphasis)))
+		return strings.Join(rows, "\n")
+	}), nil
+}
+
+func statusStory(e Environment) (runtime.Scene, error) {
+	return static(func(layout.Size) string {
+		t := e.Config.Palette()
+		rows := []string{"Status atoms / " + e.Config.Emphasis, ""}
+		for _, status := range []feedback.Status{feedback.OK, feedback.Warn, feedback.Error, feedback.Unknown, feedback.Off} {
+			rows = append(rows, status.View(text.Emphasis(e.Config.Emphasis), t))
+		}
+		return strings.Join(rows, "\n")
+	}), nil
+}
+
+func atomConfig() Config { c := DefaultConfig(); c.Columns = 80; c.Rows = 12; return c }

@@ -16,29 +16,37 @@ import (
 )
 
 type Config struct {
-	Columns       int        `json:"columns"`
-	Rows          int        `json:"rows"`
-	Theme         theme.Mode `json:"theme"`
-	Profile       string     `json:"profile"`
-	ASCII         bool       `json:"ascii"`
-	ReducedMotion bool       `json:"reducedMotion"`
-	Live          bool       `json:"live"`
-	State         string     `json:"state"`
-	Value         string     `json:"value"`
-	Series        int        `json:"series"`
-	Amount        float64    `json:"amount"`
-	Horizontal    bool       `json:"horizontal"`
-	Sigma         int        `json:"sigma"`
-	Scenario      string     `json:"scenario"`
-	ReferenceID   string     `json:"referenceID"`
-	CandidateID   string     `json:"candidateID"`
-	Boundaries    bool       `json:"boundaries"`
+	Columns           int        `json:"columns"`
+	Rows              int        `json:"rows"`
+	Theme             theme.Mode `json:"theme"`
+	Profile           string     `json:"profile"`
+	ASCII             bool       `json:"ascii"`
+	ReducedMotion     bool       `json:"reducedMotion"`
+	Live              bool       `json:"live"`
+	State             string     `json:"state"`
+	Value             string     `json:"value"`
+	Series            int        `json:"series"`
+	Amount            float64    `json:"amount"`
+	Horizontal        bool       `json:"horizontal"`
+	Sigma             int        `json:"sigma"`
+	Scenario          string     `json:"scenario"`
+	ReferenceID       string     `json:"referenceID"`
+	CandidateID       string     `json:"candidateID"`
+	Boundaries        bool       `json:"boundaries"`
+	ComparisonVariant string     `json:"comparisonVariant"`
+	Emphasis          string     `json:"emphasis"`
 }
 
 func DefaultConfig() Config {
-	return Config{Columns: 100, Rows: 30, Theme: theme.Dark, Profile: "truecolor", State: "ready", Value: "production", Series: 2, Amount: 68, Sigma: 3, Scenario: "isolated-hosts", ReferenceID: fixture.ReferenceVersionID, CandidateID: fixture.CandidateVersionID}
+	return Config{Columns: 100, Rows: 30, Theme: theme.Dark, Profile: "truecolor", State: "ready", Value: "production", Series: 2, Amount: 68, Sigma: 3, Scenario: "isolated-hosts", ReferenceID: fixture.ReferenceVersionID, CandidateID: fixture.CandidateVersionID, ComparisonVariant: "stacked", Emphasis: "normal"}
 }
 func (c Config) Validate() error {
+	if !slices.Contains([]string{"", "stacked", "bands"}, c.ComparisonVariant) {
+		return errors.New("comparison variant must be stacked or bands")
+	}
+	if !slices.Contains([]string{"", "bright", "normal", "dim"}, c.Emphasis) {
+		return errors.New("emphasis must be bright, normal or dim")
+	}
 	if c.Columns < 20 || c.Columns > 240 || c.Rows < 8 || c.Rows > 80 {
 		return errors.New("terminal size must be 20–240 columns and 8–80 rows")
 	}
