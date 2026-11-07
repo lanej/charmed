@@ -156,9 +156,9 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		}
 	}
 	funcs := template.FuncMap{
-		"terminal": terminalHTML,
+		"terminal":  terminalHTML,
 		"highlight": highlightCode,
-		"name":     func(title string) string { parts := strings.Split(title, "/"); return parts[len(parts)-1] },
+		"name":      func(title string) string { parts := strings.Split(title, "/"); return parts[len(parts)-1] },
 		"link": func(id string) (string, error) {
 			for _, entry := range entries {
 				if entry.ID == id {
