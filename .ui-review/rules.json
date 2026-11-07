@@ -30,5 +30,39 @@
     "min": 14,
     "severity": "error",
     "reason": "Guide prose and reference tables remain readable; cell snapshots use smaller fixed geometry."
+  },
+  {
+    "id": "guide-dark-color-scheme",
+    "type": "style",
+    "selector": "html",
+    "property": "color-scheme",
+    "allowed": [
+      "dark"
+    ],
+    "severity": "error",
+    "reason": "The guide stays in night mode regardless of system appearance."
+  },
+  {
+    "id": "guide-night-background",
+    "type": "style",
+    "selector": "html, body",
+    "property": "background-color",
+    "allowed": [
+      "rgb(13, 21, 19)"
+    ],
+    "severity": "error",
+    "reason": "Page surfaces share the night background."
+  },
+  {
+    "id": "guide-night-example-surfaces",
+    "type": "style",
+    "selector": "main pre, main details",
+    "property": "background-color",
+    "allowed": [
+      "rgb(20, 32, 28)"
+    ],
+    "optional": true,
+    "severity": "error",
+    "reason": "Code, saved output and disclosure panels share the night surface."
   }
 ]

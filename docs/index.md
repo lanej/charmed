@@ -2,8 +2,6 @@
 
 Charmed brings shared themes, cell layouts and interaction conventions to Go applications built with Charm and ntcharts. Start with a complete screen, then find its building blocks by capability.
 
-![Service workbench with a linked table, chart and inspector](assets/workbench.png)
-
 ## Read the guide
 
 - [Foundations](foundations.html): themes, terminal geometry, focus and motion.
@@ -12,7 +10,7 @@ Charmed brings shared themes, cell layouts and interaction conventions to Go app
 - [Compare a deployment](deployment.html): reading cohort comparisons and supplying telemetry.
 - [Develop & publish](development.html): run fixtures and generate this static site.
 
-The images and terminal frames are saved Go output. Run a fixture locally for keyboard interaction; this guide needs no JavaScript or preview service.
+The terminal frames are saved Go output. Run a fixture locally for keyboard interaction; this guide needs no JavaScript or preview service.
 
 ## Run a screen
 

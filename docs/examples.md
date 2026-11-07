@@ -2,8 +2,6 @@
 
 A complete screen owns one Go model and coordinates its child widgets. The service workbench links an input, table, time-series chart and details viewport. The deployment example coordinates host distributions, histories and inspection; [read its telemetry contract and interpretation](deployment.html).
 
-![Deployment comparison](assets/deployment.png)
-
 ## Ownership rules
 
 | Owner | Responsibility |
@@ -19,6 +17,6 @@ In the native service screen, Tab changes focus, arrows select rows and Ctrl+N a
 
 In the native deployment screen, arrows choose hosts and windows, brackets choose a response class, 1/2/3 change displayed spread, and b switches between stacked and disconnected bands. These are terminal controls; the saved frames below do not execute them.
 
-![Disconnected band presentation](assets/deployment-bands.png)
+The deployment fixture’s saved variants include the disconnected band presentation, rendered on the same night surface as the default snapshot.
 
 ## Screen fixtures

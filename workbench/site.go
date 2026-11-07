@@ -23,6 +23,7 @@ type guidePage struct {
 	Content     template.HTML
 	Groups      []guideGroup
 	Coverage    []Coverage
+	Preview     *ManifestEntry
 }
 type guideGroup struct {
 	Name    string
@@ -73,6 +74,12 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		page.Content = template.HTML(rendered)
 		if page.File == "index.html" {
 			page.Coverage = CoverageInventory()
+			for i := range entries {
+				if entries[i].ID == "screen/services" {
+					page.Preview = &entries[i]
+					break
+				}
+			}
 		}
 		families := []string{}
 		for _, entry := range entries {

@@ -6,7 +6,7 @@ Help Go developers choose terminal components, understand composition, and run n
 
 ## Principles and tradeoffs
 
-Use a compact guide navigation and readable prose. Keep examples beside their name, description and native command. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved text frames omit ANSI styling, so screenshots illustrate color and native commands provide the full behavior.
+Use a compact guide navigation and readable prose. Keep examples beside their name, description and native command. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved text frames omit ANSI styling and inherit the guide’s night surfaces; native commands provide color and full behavior.
 
 ## Visual system and ownership
 
@@ -28,4 +28,8 @@ Navigation and content must fit desktop and mobile viewports. Terminal frames an
 
 ## Evidence and unresolved decisions
 
-The user requested removal of interactive documentation and consolidation of per-component pages. Six guide pages and capability grouping implement that direction; they are proposed organization, without recorded user visual approval. Existing screenshots in `docs/assets/` illustrate native screens. Live deployment verification requires publishing the resulting artifact.
+The user requested removal of interactive documentation and consolidation of per-component pages. Six guide pages and capability grouping implement that direction; they are proposed organization, without recorded user visual approval. The user requested consistent night mode across the guide. Embedded examples use saved native text on the shared night palette; historical browser screenshots are not embedded. Live deployment verification requires publishing the resulting artifact.
+
+### GUIDE-003
+
+Night mode is fixed across page chrome, prose, code, disclosures and saved output, independently of the operating system appearance. Embedded screenshots must not introduce light browser chrome or a different surface palette. Viewrule checks dark color-scheme and surface colors; visual review checks the examples. Native CLI theme options remain available independently.

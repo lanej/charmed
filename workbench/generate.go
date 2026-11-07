@@ -46,7 +46,6 @@ func Generate(out string) error {
 			change func(*story.Config)
 		}{
 			{"Default", func(*story.Config) {}},
-			{"Light", func(c *story.Config) { c.Theme = theme.Light }},
 			{"Narrow", func(c *story.Config) { c.Columns = 40; c.Rows = 16 }},
 			{"Monochrome", func(c *story.Config) {
 				c.Theme = theme.Mono

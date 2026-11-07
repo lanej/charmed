@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Page.Title}} · Charmed</title><link rel="stylesheet" href="style.css"></head>
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#0d1513"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Page.Title}} · Charmed</title><link rel="stylesheet" href="style.css"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html">charmed <span>terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
@@ -10,6 +10,7 @@
 </nav>
 <main id="main">
 {{.Page.Content}}
+{{with .Page.Preview}}<section aria-label="Native service screen"><h2>Native service screen</h2><p>Saved Go output on the guide’s night surface. <a href="examples.html#screen/services">Read the composition example</a>.</p><figure><figcaption>{{(index .Snapshots 0).Config.Columns}} × {{(index .Snapshots 0).Config.Rows}} cells · styling omitted</figcaption><pre tabindex="0" class="terminal">{{plain (index .Snapshots 0).Frame}}</pre></figure></section>{{end}}
 {{range .Page.Groups}}
 <section id="family-{{.Name}}"><h2>{{.Name}}</h2>
 <ul class="index">{{range .Entries}}<li><a href="#{{.ID}}">{{name .Title}}</a></li>{{end}}</ul>

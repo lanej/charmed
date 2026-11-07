@@ -4,7 +4,7 @@ A Go design system for Charm and ntcharts, with a static reference guide and nat
 
 Components share semantic themes, terminal-cell geometry, focus conventions and state handling. The guide groups related components, saved Go output, source and composition examples by capability.
 
-![A live Charmed service workbench with a linked table, chart and inspector](docs/assets/workbench.png)
+![Charmed static guide in night mode](.github/pr-assets/static-guide.png)
 
 ## Run it
 
