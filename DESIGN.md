@@ -6,7 +6,7 @@ Show Go developers the actual components first, then help them understand compos
 
 ## Principles and tradeoffs
 
-Use a compact guide navigation and readable prose. Keep examples beside their name, description and native command. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved terminal frames retain ANSI colors as static HTML and inherit the guide’s night surfaces; native commands provide truecolor and full behavior.
+Use a compact guide navigation and readable prose. Each fixture has a sidebar link. Lead with the saved native visual, put variants in keyboard-accessible tabs, and immediately follow with highlighted Go source and the native command. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved terminal frames retain ANSI colors as static HTML and inherit the guide’s night surfaces; native commands provide truecolor and full behavior.
 
 ## Visual system and ownership
 
@@ -14,13 +14,13 @@ Use a compact guide navigation and readable prose. Keep examples beside their na
 
 ## Behavior and resilience
 
-The generated guide uses HTML, CSS and local images with relative links. Navigation and content work without JavaScript or a preview service. Native details elements expand saved variants and source with keyboard access. A skip link reaches the main content; focused links and summaries have visible outlines. Missing inputs fail generation with an error. No loading or live connection states are needed for these static pages.
+The generated guide uses HTML, CSS and local images with relative links. Navigation and source remain readable without JavaScript or a preview service. A small local script enhances semantic variant tabs with roving keyboard focus; without it, all variant snapshots stay visible. Source is never hidden behind a disclosure. A skip link reaches the main content; focused links and summaries have visible outlines. Missing inputs fail generation with an error. No loading or live connection states are needed for these static pages.
 
 ## Requirements and verification
 
 ### GUIDE-001
 
-Every registered fixture must appear once in foundations, components or examples, with a native command and saved frame. Go generator tests check fixture presence, local links, anchors and repeatability. No client scripts or form controls belong in published output.
+Every registered fixture must appear once in foundations, components or examples, with a native command and saved frame. Go generator tests check fixture presence, local links, anchors and repeatability. The only client script is the static variant-tab enhancer; all documentation, navigation, code highlighting and snapshot rendering happen at build time.
 
 ### GUIDE-002
 
@@ -28,7 +28,7 @@ Navigation and content must fit desktop and mobile viewports. Terminal frames an
 
 ## Evidence and unresolved decisions
 
-The user requested removal of interactive documentation and consolidation of per-component pages. Six guide pages and capability grouping implement that direction; they are proposed organization, without recorded user visual approval. The user requested consistent night mode across the guide. Embedded examples use saved native text on the shared night palette; historical browser screenshots are not embedded. Live deployment verification requires publishing the resulting artifact.
+The user requested removal of interactive documentation and consolidation of per-component pages. Seven guide pages, a brandsheet and capability grouping implement that direction; they are proposed organization, without recorded user visual approval. The user requested consistent night mode across the guide. Embedded examples use saved native text on the shared night palette; historical browser screenshots are not embedded. Live deployment verification requires publishing the resulting artifact.
 
 ### GUIDE-003
 
@@ -41,3 +41,16 @@ The home page leads with a composed native service screen and representative ato
 Base terminal text uses neutral off-white and gray, including after ANSI 256-color conversion. Lavender is reserved for data-series differentiation, not ordinary service names or neutral status labels.
 
 Legends are optional and absent by default. When enabled, each marker or series key reuses the style of its plotted counterpart; neutral prose does not replace the visual key. Warning and error boundaries have separate colored keys. Mean keys retain each series color, and selection retains its neutral marker.
+
+
+### GUIDE-005
+
+Every fixture has a sidebar entry linking to its exact section anchor. A component's first visible content is its saved terminal preview, with all snapshots available as semantic tabs. Its highlighted Go source follows the preview directly, not inside a disclosure. Tabs support arrow keys, Home and End; the original static frames remain visible if JavaScript is unavailable.
+
+### GUIDE-006
+
+Charmed has a documented identity with its own green-black web palette, lowercase lockup and code typography. Brand colors never replace the native semantic terminal palette. Build-time code highlighting escapes source HTML and maintains distinguishable keyword, string, comment and numeric roles.
+
+### GUIDE-007
+
+Documentation PRs publish an isolated Pages snapshot at `/charmed/pr-preview/pr-<number>/`. The PR description links to actual preview pages, not to itself, only after the published revision marker matches the current PR head. Reviewers should be able to inspect the rendered component catalog without merging first.

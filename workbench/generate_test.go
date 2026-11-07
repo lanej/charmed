@@ -23,12 +23,13 @@ func TestStaticGuide(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(files) != 6 {
-		t.Fatalf("got %d pages, want six grouped guides", len(files))
+	if len(files) != 7 {
+		t.Fatalf("got %d pages, want seven grouped guides", len(files))
 	}
 	pages := map[string][]byte{}
 	ids := map[string]map[string]bool{}
 	links := map[string][]string{}
+	navComponents := map[string]map[string]bool{}
 	for _, path := range files {
 		data, err := os.ReadFile(path)
 		if err != nil {
@@ -37,6 +38,7 @@ func TestStaticGuide(t *testing.T) {
 		name := filepath.Base(path)
 		pages[name] = data
 		ids[name] = map[string]bool{}
+		navComponents[name] = map[string]bool{}
 		if bytes.Contains(data, []byte("\x1b")) {
 			t.Errorf("%s contains terminal escape sequences", name)
 		}
@@ -48,8 +50,18 @@ func TestStaticGuide(t *testing.T) {
 		walk = func(n *html.Node) {
 			if n.Type == html.ElementNode {
 				switch n.Data {
-				case "script", "input", "button", "select", "iframe":
-					t.Errorf("%s contains interactive element %s", name, n.Data)
+				case "script":
+					allowed := false
+					for _, a := range n.Attr {
+						if a.Key == "src" && a.Val == "tabs.js" {
+							allowed = true
+						}
+					}
+					if !allowed {
+						t.Errorf("%s contains unexpected script", name)
+					}
+				case "input", "button", "select", "iframe":
+					t.Errorf("%s contains unsupported interactive element %s", name, n.Data)
 				}
 				for _, a := range n.Attr {
 					if a.Key == "id" {
@@ -60,6 +72,30 @@ func TestStaticGuide(t *testing.T) {
 					}
 					if a.Key == "src" || a.Key == "href" {
 						links[name] = append(links[name], a.Val)
+					}
+				}
+			}
+			if n.Type == html.ElementNode && n.Data == "a" {
+				componentLink := false
+				href := ""
+				for _, a := range n.Attr {
+					if a.Key == "class" && strings.Contains(a.Val, "nav-component") {
+						componentLink = true
+					}
+					if a.Key == "href" {
+						href = a.Val
+					}
+				}
+				insideNav := false
+				for p := n.Parent; p != nil; p = p.Parent {
+					if p.Type == html.ElementNode && p.Data == "nav" {
+						insideNav = true
+						break
+					}
+				}
+				if componentLink && insideNav {
+					if u, err := url.Parse(href); err == nil {
+						navComponents[name][u.Fragment] = true
 					}
 				}
 			}
@@ -113,6 +149,35 @@ func TestStaticGuide(t *testing.T) {
 
 	if !bytes.Contains(pages["components.html"], []byte("&lt;")) {
 		t.Error("expected escaped source or snapshot content")
+	}
+	if !bytes.Contains(pages["components.html"], []byte(`class="variant-tablist" role="tablist"`)) {
+		t.Error("component previews must provide variant tabs")
+	}
+	if !bytes.Contains(pages["components.html"], []byte(`class="language-go"`)) ||
+		!bytes.Contains(pages["components.html"], []byte("syn-keyword")) {
+		t.Error("source listings must be highlighted")
+	}
+	if bytes.Contains(pages["components.html"], []byte("Saved Go output &amp; variants")) ||
+		bytes.Contains(pages["components.html"], []byte("<summary>Go example</summary>")) {
+		t.Error("visual previews and source must be immediately visible")
+	}
+	if !bytes.Contains(pages["brand.html"], []byte("brand-swatches")) {
+		t.Error("brand sheet must expose the visual token palette")
+	}
+	if _, err := os.Stat(filepath.Join(directory, "tabs.js")); err != nil {
+		t.Fatalf("missing variant-tabs enhancement: %v", err)
+	}
+	for _, d := range story.Definitions() {
+		target := "components.html"
+		switch d.Level {
+		case "Foundations":
+			target = "foundations.html"
+		case "Screens", "Templates":
+			target = "examples.html"
+		}
+		if !navComponents[target][d.ID] {
+			t.Errorf("missing sidebar link for %s", d.ID)
+		}
 	}
 	stale := filepath.Join(directory, "obsolete.js")
 	if err := os.WriteFile(stale, []byte("old browser bundle"), 0644); err != nil {

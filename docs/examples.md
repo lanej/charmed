@@ -17,6 +17,6 @@ In the native service screen, Tab changes focus, arrows select rows and Ctrl+N a
 
 In the native deployment screen, arrows choose hosts and windows, brackets choose a response class, 1/2/3 change displayed spread, and b switches between stacked and disconnected bands. These are terminal controls; the saved frames below do not execute them.
 
-The deployment fixture’s saved variants include the disconnected band presentation, rendered on the same night surface as the default snapshot.
+Switch between the deployment fixture's stacked and disconnected-band snapshots using the variant tabs, then inspect the corresponding Go implementation below the preview.
 
 ## Screen fixtures

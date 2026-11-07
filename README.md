@@ -58,13 +58,13 @@ The core uses upstream Charm v2 modules. It has no JavaScript runtime requiremen
 
 ## Static guide
 
-[Browse the guide](https://lanej.github.io/charmed/) for foundations, components grouped by capability, composition examples and the deployment telemetry contract. Components share sections rather than individual pages. Each fixture includes saved output, source and a native command.
+[Browse the guide](https://lanej.github.io/charmed/) for foundations, components grouped by capability, composition examples and the deployment telemetry contract. Components share sections rather than individual pages, but every fixture has a sidebar link. Each fixture leads with a saved native preview and variant tabs, followed by highlighted source and a native command. See the [brand sheet](https://lanej.github.io/charmed/brand.html) for visual tokens and identity.
 
 ```sh
 go run ./cmd/workbench generate --out docs
 ```
 
-The generator writes `docs/dist/` using Go alone. GitHub Actions uploads this directory to Pages; the published guide uses ordinary HTML, CSS, images and links. It needs no npm, JavaScript or preview service. Saved terminal frames retain ANSI colors as static HTML; run a native fixture for keyboard interaction and animation.
+The generator writes `docs/dist/` using Go alone. GitHub Actions uploads this directory to Pages; the published guide uses ordinary HTML, CSS, images and links. It needs no npm or preview service. A tiny local script enhances keyboard-accessible variant tabs; without JavaScript all snapshots remain visible. Saved terminal frames retain ANSI colors as static HTML; run a native fixture for keyboard interaction and animation.
 
 Edit the guides in `docs/*.md` and layout in `workbench/site/`. The registry supplies snapshots and source and validates declared component composition. See [development](docs/development.md) and the [deployment guide](docs/deployment.md).
 
