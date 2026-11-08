@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "rollout": "ratchet",
+  "config": ".golangci.yml",
+  "legacy": null
+}

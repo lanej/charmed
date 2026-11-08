@@ -2,7 +2,7 @@
 
 ## Run native fixtures
 
-Requires Go 1.26.8 or later.
+Requires Go 1.26.10 or later.
 
 ```sh
 go run ./cmd/workbench list
@@ -68,10 +68,11 @@ build command.
 ## Verify
 
 ```sh
-go vet ./...
-go test -race ./...
+bash scripts/check-go.sh
 go run ./cmd/workbench generate --out docs
 ```
+
+The Go quality runner selects the module's Go version by default and enforces formatting, vet, module tidiness, strict lint, uncached race tests and reachable-vulnerability checks. CI runs the same command on Linux and macOS. Existing lint and style findings use a shrinking baseline; new findings fail. Run `bash scripts/check-go.sh lint` while editing and `bash scripts/check-go.sh ratchet` after resolving existing findings. Never enlarge the baseline to accept new findings.
 
 The generator tests check static output, component sidebar links, variant tab semantics, syntax highlighting, composition links, source escaping, native fixture coverage and repeatable builds. The native suite covers terminal bounds, focus, selection, resize and process cleanup.
 
