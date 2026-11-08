@@ -40,11 +40,11 @@ Keep services and decisions outside UI models. The registry rejects duplicate ID
 ## Verify changes
 
 ```sh
-bash scripts/check-go.sh
-go run ./cmd/workbench generate --out docs
+just check
+just docs
 ```
 
-The Go quality command checks formatting, vet, module tidiness, strict lint, uncached race tests, and reachable vulnerabilities on Linux and macOS. For a quicker iteration, run `bash scripts/check-go.sh lint`. Existing debt is in a shrinking baseline: new findings must be fixed, and resolved findings removed with `bash scripts/check-go.sh ratchet`.
+Install [just](https://github.com/casey/just#installation) and run `just` to list targets. The targets select the module's Go version unless explicitly overridden. `just check` checks formatting, vet, module tidiness, strict lint, uncached race tests, and reachable vulnerabilities on Linux and macOS. For a quicker iteration, run `just lint`; use `just test` or `just vuln` for individual gates and `just fmt path/to/file.go` or `just fix ./path/to/package` for scoped fixes. Existing debt is in a shrinking baseline: new findings must be fixed, and resolved findings removed with `just ratchet`. Never enlarge the baseline to accept new findings.
 
 The generator writes the static guide to `docs/dist/`, validates source and composition, and preserves terminal output colors. The responsive browser check covers mobile and desktop layouts, navigation, and fragment links.
 

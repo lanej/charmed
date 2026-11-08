@@ -35,4 +35,7 @@ jobs:
         with:
           path: ~/.cache/go-quality
           key: go-quality-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('scripts/check-go.sh', 'go.mod') }}
-      - run: bash scripts/check-go.sh
+      - uses: extractions/setup-just@f8a3cce218d9f83db3a2ecd90e41ac3de6cdfd9b # v3
+        with:
+          just-version: '1.59.0'
+      - run: just check
