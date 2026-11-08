@@ -1,0 +1,5 @@
+view := chart.MetricTrend(
+    "Throughput", "1,240", "req/min", history,
+    layout.Size{Width: 32, Height: 6}, palette,
+)
+// An empty value is unavailable; empty history does not discard a known value.

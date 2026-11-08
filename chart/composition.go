@@ -3,18 +3,72 @@ package chart
 import (
 	"fmt"
 	"image"
+	"strings"
 	"time"
 
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 	"github.com/NimbleMarkets/ntcharts/v2/linechart/timeserieslinechart"
 	"github.com/NimbleMarkets/ntcharts/v2/picture"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/theme"
 )
 
+// MetricTrend prioritizes the current value in short allocations. An empty
+// value is unavailable; missing history does not invalidate a supplied value.
 func MetricTrend(label, value, unit string, values []float64, size layout.Size, t theme.Theme) string {
-	trend := NewSparkline(values, layout.Size{Width: size.Width, Height: max(1, size.Height-3)}, t)
-	return layout.Fit(t.Subtle().Render(label)+"\n"+t.Heading().Render(value)+" "+t.Subtle().Render(unit)+"\n\n"+trend.View(), size)
+	if size.Width <= 0 || size.Height <= 0 {
+		return ""
+	}
+
+	reading := t.Text().Bold(true).Render(value)
+	if strings.TrimSpace(value) == "" {
+		reading = t.Subtle().Render(t.Glyph(theme.GlyphUnavailable))
+	}
+
+	if unit != "" {
+		reading += " " + t.Subtle().Render(unit)
+	}
+
+	if size.Height == 1 {
+		return layout.Fit(reading, size)
+	}
+
+	var lines []string
+	if label != "" {
+		lines = append(lines, t.Subtle().Render(ansi.Truncate(label, size.Width, "~")))
+	}
+
+	lines = append(lines, reading)
+	header := strings.Join(lines, "\n")
+	remaining := size.Height - lipgloss.Height(header)
+
+	if remaining <= 0 {
+		return layout.Fit(header, size)
+	}
+
+	if remaining > 1 {
+		lines = append(lines, "")
+		remaining--
+	}
+
+	var history []float64
+
+	for _, sample := range values {
+		if finite(sample) {
+			history = append(history, sample)
+		}
+	}
+
+	if len(history) == 0 {
+		lines = append(lines, t.Subtle().Render("No history"))
+	} else {
+		trend := NewSparkline(history, layout.Size{Width: size.Width, Height: remaining}, t)
+		lines = append(lines, trend.View())
+	}
+
+	return layout.Fit(strings.Join(lines, "\n"), size)
 }
 
 type Candle struct {
@@ -41,6 +95,7 @@ func NewCandles(data []Candle, size layout.Size, t theme.Theme) (Candles, error)
 	m.draw()
 	return m, nil
 }
+
 func (m *Candles) draw() {
 	m.Plot.Bubble.Clear()
 	m.Plot.Bubble.DrawCandle("open", "high", "low", "close", m.theme.Text().Foreground(m.theme.Success), m.theme.Text().Foreground(m.theme.Danger))

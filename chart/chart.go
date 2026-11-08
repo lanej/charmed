@@ -27,6 +27,7 @@ func NewSparkline(values []float64, size layout.Size, t theme.Theme) Sparkline {
 	m.rebuild()
 	return m
 }
+
 func (m *Sparkline) rebuild() {
 	m.Bubble = sparkline.New(max(1, m.size.Width), max(1, m.size.Height), sparkline.WithStyle(m.theme.Heading()))
 	for _, v := range m.values {
@@ -41,6 +42,7 @@ func (m *Sparkline) SetData(values []float64) {
 	m.values = append([]float64(nil), values...)
 	m.rebuild()
 }
+
 func (m Sparkline) View() string {
 	if len(m.values) == 0 {
 		return layout.Fit("No data", m.size)
@@ -70,6 +72,7 @@ func NewTimeSeries(series []TimeSeriesData, size layout.Size, t theme.Theme, opt
 	m.SetData(series)
 	return m
 }
+
 func (m *TimeSeries) SetData(series []TimeSeriesData) {
 	m.series = make([]TimeSeriesData, len(series))
 	for i, s := range series {
@@ -78,6 +81,7 @@ func (m *TimeSeries) SetData(series []TimeSeriesData) {
 	}
 	m.rebuild()
 }
+
 func (m *TimeSeries) Resize(size layout.Size) {
 	if m.size == size {
 		return
@@ -143,12 +147,14 @@ func (m *TimeSeries) rebuild() {
 	}
 	m.Bubble.DrawBrailleAll()
 }
+
 func (m TimeSeries) Update(msg tea.Msg) (TimeSeries, tea.Cmd) {
 	var cmd tea.Cmd
 	m.Bubble, cmd = m.Bubble.Update(msg)
 	m.Bubble.DrawBrailleAll()
 	return m, cmd
 }
+
 func (m TimeSeries) View() string {
 	count := 0
 	for _, s := range m.series {
@@ -172,27 +178,84 @@ func (m TimeSeries) View() string {
 	return layout.Fit(m.Bubble.View(), m.size)
 }
 
+// Legend renders a single-row key using each series color.
 func Legend(series []TimeSeriesData, t theme.Theme) string {
-	labels := make([]string, len(series))
-	for i, s := range series {
-		labels[i] = lipgloss.NewStyle().Foreground(t.SeriesColor(i)).Render(fmt.Sprintf("%d %s", i+1, s.Label))
+	entries := seriesLegendEntries(series, t)
+	width := 0
+
+	for _, entry := range entries {
+		width += lipgloss.Width(entry.glyph+" "+entry.label) + 2
 	}
-	return strings.Join(labels, "  ")
+
+	return renderLegend(entries, width, t)
+}
+
+// SeriesLegend wraps series keys to the supplied width without dropping labels.
+func SeriesLegend(series []TimeSeriesData, width int, t theme.Theme) string {
+	return renderLegend(seriesLegendEntries(series, t), width, t)
+}
+
+func seriesLegendEntries(series []TimeSeriesData, t theme.Theme) []legendEntry {
+	entries := make([]legendEntry, len(series))
+	for i, s := range series {
+		label := s.Label
+		if label == "" {
+			label = s.ID
+		}
+
+		entries[i] = legendEntry{glyph: fmt.Sprint(i + 1), label: label, style: lipgloss.NewStyle().Foreground(t.SeriesColor(i))}
+	}
+
+	return entries
 }
 
 // PanelOptions controls optional annotations. The zero value omits the legend.
 type PanelOptions struct{ ShowLegend bool }
 
-// Panel composes a chart already allocated to PanelPlotSize(size, options...). Rendering is
-// pure, so panning and selection in the child are preserved between views.
-func Panel(title string, plot TimeSeries, series []TimeSeriesData, size layout.Size, t theme.Theme, focused bool, options ...PanelOptions) string {
-	content := plot.View()
-	if len(options) > 0 && options[0].ShowLegend {
-		content += "\n" + Legend(series, t)
+// PlotSize reserves the actual wrapped legend height for the supplied series.
+// Use this allocation when constructing or resizing the native child chart.
+func (o PanelOptions) PlotSize(size layout.Size, series []TimeSeriesData, t theme.Theme) layout.Size {
+	content := layout.PanelContentSize(size)
+	if o.ShowLegend {
+		if legend := SeriesLegend(series, content.Width, t); legend != "" {
+			content.Height = max(0, content.Height-lipgloss.Height(legend))
+		}
 	}
+
+	return content
+}
+
+// Panel composes a chart allocated to options.PlotSize(size, series, theme).
+// Rendering does not rebuild or mutate the native model or its custom styles.
+func Panel(title string, plot TimeSeries, series []TimeSeriesData, size layout.Size, t theme.Theme, focused bool, options ...PanelOptions) string {
+	var o PanelOptions
+	if len(options) > 0 {
+		o = options[0]
+	}
+
+	legend := ""
+	if o.ShowLegend {
+		legend = SeriesLegend(series, layout.PanelContentSize(size).Width, t)
+	}
+
+	if legend != "" && lipgloss.Height(legend) > layout.PanelContentSize(size).Height {
+		return layout.Panel(title, t.Subtle().Render(fmt.Sprintf("Legend needs %d rows", lipgloss.Height(legend))), size, t, focused)
+	}
+
+	content := layout.Fit(plot.View(), o.PlotSize(size, series, t))
+	if legend != "" {
+		if content != "" {
+			content += "\n"
+		}
+
+		content += legend
+	}
+
 	return layout.Panel(title, content, size, t, focused)
 }
 
+// PanelPlotSize retains the single-row legend allocation for existing callers.
+// Use PanelOptions.PlotSize to measure legends that can occupy multiple rows.
 func PanelPlotSize(size layout.Size, options ...PanelOptions) layout.Size {
 	legendRows := 0
 	if len(options) > 0 && options[0].ShowLegend {

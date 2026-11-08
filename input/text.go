@@ -2,9 +2,13 @@
 package input
 
 import (
+	"strings"
+
 	"charm.land/bubbles/v2/textarea"
 	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -27,11 +31,12 @@ func NewText(o TextOptions) Text {
 	m.Prompt = "> "
 	m.Placeholder, m.Validate = o.Placeholder, o.Validate
 	m.SetValue(o.Value)
-	m.SetWidth(max(1, o.Width-2))
+	m.Resize(o.Width)
 	m.SetVirtualCursor(true)
 	m.SetTheme(o.Theme)
 	return m
 }
+
 func (m *Text) SetTheme(t theme.Theme) {
 	s := textinput.DefaultStyles(t.IsDark())
 	s.Focused.Text, s.Blurred.Text = t.Text(), t.Text()
@@ -41,14 +46,24 @@ func (m *Text) SetTheme(t theme.Theme) {
 	s.Cursor.Color, s.Cursor.Blink = t.Accent, !t.ReducedMotion
 	m.SetStyles(s)
 }
+
 func (m *Text) Focus() tea.Cmd {
 	if m.Disabled {
 		return nil
 	}
 	return m.Model.Focus()
 }
-func (m *Text) Resize(columns int) { m.SetWidth(max(1, columns-2)) }
-func (m Text) Init() tea.Cmd       { return nil }
+
+// Resize includes the native prompt and the extra cell reserved for its cursor.
+func (m *Text) Resize(columns int) {
+	m.SetWidth(max(1, columns-ansi.StringWidth(m.Prompt)-1))
+	position := m.Position()
+	// WHY: Native overflow handling does not shrink a viewport containing the cursor.
+	m.CursorEnd()
+	m.SetCursor(position)
+}
+
+func (m Text) Init() tea.Cmd { return nil }
 func (m Text) Update(msg tea.Msg) (Text, tea.Cmd) {
 	if m.Disabled {
 		return m, nil
@@ -73,6 +88,7 @@ func NewArea(width, height int, t theme.Theme) Area {
 	m.SetStyles(s)
 	return m
 }
+
 func (m Area) Update(msg tea.Msg) (Area, tea.Cmd) {
 	var cmd tea.Cmd
 	m.Model, cmd = m.Model.Update(msg)
@@ -87,12 +103,23 @@ type Field struct {
 }
 
 func (f Field) View() string {
-	s := f.Theme.Heading().Render(f.Label) + "\n" + f.Input.View()
+	control := f.Input.View()
+	width := max(1, lipgloss.Width(control))
+
+	var lines []string
+
+	if f.Label != "" {
+		lines = append(lines, f.Theme.Heading().Render(ansi.Wrap(f.Label, width, "")))
+	}
+
+	lines = append(lines, control)
+
 	if f.Input.Err != nil {
-		return s + "\n" + f.Theme.Text().Foreground(f.Theme.Danger).Render("! "+f.Input.Err.Error())
+		message := f.Theme.Glyph(theme.GlyphError) + " " + f.Input.Err.Error()
+		lines = append(lines, f.Theme.Text().Foreground(f.Theme.Danger).Render(ansi.Wrap(message, width, "")))
+	} else if f.Help != "" {
+		lines = append(lines, f.Theme.Subtle().Render(ansi.Wrap(f.Help, width, "")))
 	}
-	if f.Help != "" {
-		s += "\n" + f.Theme.Subtle().Render(f.Help)
-	}
-	return s
+
+	return strings.Join(lines, "\n")
 }

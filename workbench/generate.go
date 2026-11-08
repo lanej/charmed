@@ -63,6 +63,16 @@ func Generate(out string) error {
 				change func(*story.Config)
 			}{"With legend", func(c *story.Config) { c.Legend = true }})
 		}
+
+		if d.ID == "chart/panel" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{"Narrow with legend", func(c *story.Config) {
+				c.Columns, c.Rows = 40, 16
+				c.Series, c.Legend = 4, true
+			}})
+		}
 		if slices.Contains(d.Controls, "comparisonVariant") {
 			variants = append(variants, struct {
 				name   string
@@ -133,6 +143,7 @@ func moduleRoot() (string, error) {
 		dir = parent
 	}
 }
+
 func sourceSymbol(path, symbol string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
