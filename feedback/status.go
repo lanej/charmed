@@ -18,19 +18,24 @@ const (
 
 func (s Status) View(emphasis text.Emphasis, t theme.Theme) string {
 	tone := text.Neutral
+	glyph := theme.GlyphUnknown
+
 	switch s {
 	case OK:
 		tone = text.Success
+		glyph = theme.GlyphOK
 	case Warn:
 		tone = text.Warning
+		glyph = theme.GlyphWarning
 	case Error:
 		tone = text.Danger
-	case Unknown, Off:
+		glyph = theme.GlyphError
+	case Unknown:
+	case Off:
+		glyph = theme.GlyphOff
 	default:
 		s = Unknown
 	}
-	if emphasis == text.Bright {
-		return text.Pill(string(s), tone, t, emphasis)
-	}
-	return text.ToneStyle(tone, emphasis, t).Render(string(s))
+
+	return text.Pill(t.Glyph(glyph)+" "+string(s), tone, t, emphasis)
 }

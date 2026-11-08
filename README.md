@@ -25,7 +25,7 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 
 | Package | Includes |
 | --- | --- |
-| `theme` | Dark, light, high-contrast and monochrome themes; semantic color roles; ASCII and motion policies |
+| `theme` | Dark, light, high-contrast and monochrome themes; semantic and dim colors; independent series colors; named glyphs, spacing, ASCII and motion policies |
 | `layout` | ANSI-aware fitting, cell rectangles, responsive splits, stacks and panels |
 | `interaction` | Focus scopes and typed selection/submission events |
 | `input` | Bubbles text input, textarea, virtual cursor and labeled field composition |
@@ -66,7 +66,7 @@ The core uses upstream Charm v2 modules. It has no JavaScript runtime requiremen
 go run ./cmd/workbench generate --out docs
 ```
 
-The generator writes `docs/dist/` using Go alone. GitHub Actions uploads this directory to Pages; the published guide uses ordinary HTML, CSS, images and links. It needs no npm or preview service. A tiny local script enhances keyboard-accessible variant tabs; without JavaScript all snapshots remain visible. Saved terminal frames retain ANSI colors as static HTML; run a native fixture for keyboard interaction and animation.
+The generator writes `docs/dist/` using Go alone. GitHub Actions uploads this directory to Pages; the published guide uses ordinary HTML, CSS, images and links. It needs no npm or preview service. A tiny local script enhances keyboard-accessible variant tabs; without JavaScript all snapshots remain visible. Saved terminal frames preserve truecolor as static HTML, with separate 256-color, 16-color and monochrome fallback tabs; run a native fixture for keyboard interaction and animation. See [foundations](docs/foundations.md) for glyph, spacing and panel allocation contracts.
 
 Edit the guides in `docs/*.md` and layout in `workbench/site/`. The registry supplies snapshots and source and validates declared component composition. See [development](docs/development.md) and the [deployment guide](docs/deployment.md).
 

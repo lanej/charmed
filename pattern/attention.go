@@ -8,6 +8,7 @@ import (
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/cohort"
 	"github.com/lanej/charmed/feedback"
+	"github.com/lanej/charmed/layout"
 )
 
 func copyPolicies(policies map[string]cohort.ComparisonPolicy, metrics []cohort.Metric) (map[string]cohort.ComparisonPolicy, error) {
@@ -75,21 +76,28 @@ func (m *CohortComparison) assessAttention() []attention.Changed {
 	m.attentionLevels = next
 	return changes
 }
+
 func (m *CohortComparison) tableColumns() {
 	width := m.sideSize.Width
 	if width == 0 {
 		width = 40
 	}
-	memberWidth := max(1, width-21)
+
+	width = layout.PanelContentSize(layout.Size{Width: width}).Width
+
+	memberWidth := max(1, width-19)
 	if m.boundaries[m.MetricID()].Hosts.Configured() {
-		memberWidth = max(1, width-30)
+		memberWidth = max(1, width-32)
 	}
+
 	columns := []table.Column{{Title: "MEMBER", Width: memberWidth}, {Title: "VERSION", Width: 7}, {Title: "z(ref)", Width: 6}}
 	if m.boundaries[m.MetricID()].Hosts.Configured() {
-		columns = append(columns, table.Column{Title: "ATTN", Width: 7})
+		columns = append(columns, table.Column{Title: "ATTN", Width: 11})
 	}
+
 	m.Table.SetColumns(columns)
 }
+
 func (m *CohortComparison) boundaryMarkers(index int) []chart.BandMarker {
 	reference := m.summaries[index][0]
 	if !reference.HasSpread || reference.StdDev <= 0 {

@@ -288,6 +288,7 @@ func (m *CohortComparison) event(kind string) {
 func (m *CohortComparison) Resize(size layout.Size) {
 	m.size = size
 	height := max(1, size.Height-3)
+
 	m.sidebar = size.Width >= 124 && size.Height >= 28
 	if m.sidebar {
 		m.sideSize = layout.Size{Width: 40, Height: height}
@@ -297,9 +298,10 @@ func (m *CohortComparison) Resize(size layout.Size) {
 		m.sideSize = layout.Size{Width: size.Width, Height: sideHeight}
 		m.gridSize = layout.Size{Width: size.Width, Height: max(1, height-sideHeight)}
 	}
+
 	m.inspectorHeight = min(10, max(3, m.sideSize.Height-3))
 	m.tableHeight = max(3, m.sideSize.Height-m.inspectorHeight)
-	m.Table.SetWidth(max(1, m.sideSize.Width-2))
+	m.Table.SetWidth(max(1, layout.PanelContentSize(m.sideSize).Width))
 	m.Table.SetHeight(max(1, m.tableHeight-3))
 	m.tableColumns()
 	m.Panels.SetWidth(max(1, m.gridSize.Width))
@@ -383,10 +385,14 @@ func (m *CohortComparison) rebuildPlots() {
 	if m.variant == Stacked && m.gridSize.Width >= 82 {
 		columns = 2
 	}
-	width := max(20, (m.gridSize.Width-(columns-1))/columns-2)
+
+	panelWidth := (m.gridSize.Width - (columns - 1)) / columns
+	width := max(1, layout.PanelContentSize(layout.Size{Width: panelWidth}).Width)
+
 	m.plots = make([]chart.TimeSeries, len(m.data.Metrics))
 	for i, metric := range m.data.Metrics {
 		series := []chart.TimeSeriesData{{ID: "cohort:0"}, {ID: "cohort:1"}, {ID: "selected"}}
+
 		for _, w := range m.data.Windows {
 			for c, group := range m.data.Cohorts {
 				s := cohort.Analyze(w.Samples, group.ID, metric.ID, m.minRequests)
@@ -461,9 +467,11 @@ func (m *CohortComparison) comparisonTitle(index, width int) string {
 	delta, available := m.delta(index)
 	style := feedback.AttentionStyle(state.Fleet.Level, m.theme)
 	titleLabel := m.metricLabel(index, true)
-	propertyWidth := max(0, width-4-lipgloss.Width(titleLabel)-9)
+	status := feedback.Attention(state.Level, m.theme)
+	propertyWidth := max(0, width-2-lipgloss.Width(titleLabel)-lipgloss.Width(status))
 	property := chart.DeltaProperty{Value: delta, Extent: m.deltaExtent, Available: available, Style: style, Tones: m.metricSigns[m.data.Metrics[index].ID]}
-	title := titleLabel + " " + property.View(propertyWidth, m.theme) + " " + layout.Fit(feedback.Attention(state.Level, m.theme), layout.Size{Width: 7, Height: 1})
+	title := titleLabel + " " + property.View(propertyWidth, m.theme) + " " + status
+
 	return title
 }
 
@@ -472,9 +480,12 @@ func (m *CohortComparison) panel(index, width int) string {
 	if policy := m.boundaries[m.data.Metrics[index].ID]; policy.Fleet.Configured() {
 		rows[0] = policy.Fleet.Summary("pp")
 	}
-	card := chart.ComparisonPanel{Title: m.comparisonTitle(index, width), Summary: rows, Distribution: m.distribution(index), History: m.plots[index]}
+
+	card := chart.ComparisonPanel{Title: m.comparisonTitle(index, width-4), Summary: rows, Distribution: m.distribution(index), History: m.plots[index]}
+
 	return card.View(layout.Size{Width: width, Height: 17}, m.theme, m.metric == index)
 }
+
 func (m *CohortComparison) grid() string {
 	if len(m.plots) == 0 {
 		return ""

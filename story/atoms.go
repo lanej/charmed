@@ -83,13 +83,16 @@ func textStory(e Environment) (runtime.Scene, error) {
 }
 
 func inputStory(e Environment) (runtime.Scene, error) {
-	m := input.NewText(input.TextOptions{Placeholder: "Type a value", Value: e.Config.Value, Width: e.Config.Columns - 4, Disabled: e.Config.State == "disabled", Theme: e.Config.Palette()})
-	return &scene{init: m.Focus, resize: func(s layout.Size) { m.Resize(s.Width - 4) }, update: func(msg tea.Msg) tea.Cmd {
+	m := input.NewText(input.TextOptions{Placeholder: "Type a value", Value: e.Config.Value, Width: layout.PanelContentSize(e.Config.Size()).Width, Disabled: e.Config.State == "disabled", Theme: e.Config.Palette()})
+
+	return &scene{init: m.Focus, resize: func(s layout.Size) { m.Resize(layout.PanelContentSize(s).Width) }, update: func(msg tea.Msg) tea.Cmd {
 		var cmd tea.Cmd
+
 		m, cmd = m.Update(msg)
 		if k, ok := msg.(tea.KeyPressMsg); ok && k.String() == "enter" {
 			emit(e, interaction.Submitted{Component: "input", Value: m.Value()})
 		}
+
 		return cmd
 	}, view: func(s layout.Size) string {
 		return title("Text input", e) + layout.Panel("Value", m.View(), layout.Size{Width: s.Width, Height: 3}, e.Config.Palette(), m.Focused()) + footer("Type to edit / Enter emits Submitted / Ctrl+C exits", e)
@@ -216,22 +219,37 @@ func signedNumberStory(e Environment) (runtime.Scene, error) {
 		zero := text.SignedNumber{Available: true, Precision: 3, Unit: "pp", Emphasis: emphasis}
 		tiny := text.SignedNumber{Value: -.000001, Available: true, Precision: 3, Unit: "pp", Emphasis: emphasis}
 		missing := text.SignedNumber{Available: false}
+
 		return strings.Join([]string{"Signed number / " + e.Config.Emphasis, "", "Positive means improvement   " + standard.View(t), "Higher server-error rate     " + serverErrors.View(t), "Zero                        " + zero.View(t), "Small nonzero               " + tiny.View(t), "Unavailable                 " + missing.View(t)}, "\n")
 	}), nil
 }
 
 func pillsStory(e Environment) (runtime.Scene, error) {
-	return static(func(layout.Size) string {
+	return static(func(size layout.Size) string {
 		t := e.Config.Palette()
 		rows := []string{"Pills / tone and emphasis", ""}
+
 		for _, emphasis := range []text.Emphasis{text.Bright, text.Normal, text.Dim} {
-			line := []string{string(emphasis)}
+			line := []string{fmt.Sprintf("%-6s", emphasis)}
+			if size.Width < 70 {
+				rows = append(rows, string(emphasis))
+				line = nil
+			}
+
 			for _, tone := range []text.Tone{text.Neutral, text.Success, text.Info, text.Warning, text.Danger} {
+				if size.Width < 70 && len(line) == 3 {
+					rows = append(rows, strings.Join(line, "  "))
+					line = nil
+				}
+
 				line = append(line, text.Pill(string(tone), tone, t, emphasis))
 			}
+
 			rows = append(rows, strings.Join(line, "  "))
 		}
+
 		rows = append(rows, "", "Selected emphasis  "+text.Pill(e.Config.Value, text.Info, t, text.Emphasis(e.Config.Emphasis)))
+
 		return strings.Join(rows, "\n")
 	}), nil
 }

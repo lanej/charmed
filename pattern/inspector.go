@@ -24,22 +24,35 @@ func (m *CohortComparison) inspectorContext() string {
 			break
 		}
 	}
-	return ansi.Hardwrap("Version "+m.selected.CohortID, max(1, m.sideSize.Width-2), true) + fmt.Sprintf("\n%d requests", requests)
+
+	return ansi.Hardwrap("Version "+m.selected.CohortID, max(1, layout.PanelContentSize(m.sideSize).Width), true) + fmt.Sprintf("\n%d requests", requests)
 }
+
 func (m *CohortComparison) updateInspector() {
 	showAttention := false
 	for _, policy := range m.boundaries {
 		showAttention = showAttention || policy.Hosts.Configured()
 	}
-	columns := []table.Column{{Title: "CODE", Width: 5}, {Title: "RATE", Width: 16}, {Title: "z(ref)", Width: 6}}
+
+	width := max(1, layout.PanelContentSize(m.sideSize).Width)
+
+	rateWidth := 16
 	if showAttention {
-		columns = append(columns, table.Column{Title: "ATTN", Width: 7})
+		rateWidth = max(5, width-26)
 	}
+
+	columns := []table.Column{{Title: "CODE", Width: 5}, {Title: "RATE", Width: rateWidth}, {Title: "z(ref)", Width: 6}}
+	if showAttention {
+		columns = append(columns, table.Column{Title: "ATTN", Width: 11})
+	}
+
 	m.Inspector.SetRows(nil)
 	m.Inspector.SetColumns(columns)
-	m.Inspector.SetWidth(max(1, m.sideSize.Width-2))
+	m.Inspector.SetWidth(width)
 	m.Inspector.SetHeight(max(1, m.inspectorHeight-3-lipgloss.Height(m.inspectorContext())))
+
 	var rows []table.Row
+
 	if m.selected.MemberID != "" {
 		for i := range m.data.Metrics {
 			for _, summary := range m.summaries[i] {
@@ -62,10 +75,12 @@ func (m *CohortComparison) updateInspector() {
 					case text.Danger:
 						palette.Accent = palette.Danger
 					}
-					row := table.Row{m.metricLabel(i, true), feedback.PercentBar(p.Rate*100, p.HasRate, 16, palette), z}
+
+					row := table.Row{m.metricLabel(i, true), feedback.PercentBar(p.Rate*100, p.HasRate, rateWidth, palette), z}
 					if showAttention {
 						row = append(row, feedback.Attention(m.assessments[i].Members[p.MemberKey].Level, m.theme))
 					}
+
 					rows = append(rows, row)
 				}
 			}

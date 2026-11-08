@@ -16,11 +16,15 @@ import (
 
 func NewSpinner(t theme.Theme) spinner.Model {
 	m := spinner.New(spinner.WithSpinner(spinner.Dot), spinner.WithStyle(t.Heading()))
-	if t.ASCII || t.ReducedMotion {
+	if t.ASCII {
 		m.Spinner = spinner.Line
+	} else if t.ReducedMotion {
+		m.Spinner = spinner.Spinner{Frames: []string{t.Glyph(theme.GlyphLoading)}, FPS: time.Second}
 	}
+
 	return m
 }
+
 func NewProgress(width int, t theme.Theme) progress.Model {
 	opts := []progress.Option{progress.WithWidth(max(1, width)), progress.WithoutPercentage()}
 	if t.Accent != nil {
@@ -33,23 +37,25 @@ func NewProgress(width int, t theme.Theme) progress.Model {
 	}
 	return m
 }
+
 func NewPaginator(total, perPage int, t theme.Theme) paginator.Model {
 	m := paginator.New()
 	m.Type = paginator.Dots
 	m.PerPage = max(1, perPage)
 	m.SetTotalPages(max(0, total))
-	m.ActiveDot = t.Heading().Render("●")
-	m.InactiveDot = t.Subtle().Render("○")
-	if t.ASCII {
-		m.ActiveDot = "[x]"
-		m.InactiveDot = "[ ]"
-	}
+	m.ActiveDot = t.Heading().Render(t.Glyph(theme.GlyphSelected))
+	m.InactiveDot = t.Subtle().Render(t.Glyph(theme.GlyphUnselected))
+
 	return m
 }
+
 func NewHelp(width int, t theme.Theme) help.Model {
 	m := help.New()
 	m.SetWidth(width)
 	m.Styles = help.DefaultStyles(t.IsDark())
+	m.Styles.ShortKey, m.Styles.FullKey = t.Heading(), t.Heading()
+	m.Styles.ShortDesc, m.Styles.FullDesc = t.Subtle(), t.Subtle()
+	m.Styles.ShortSeparator, m.Styles.FullSeparator, m.Styles.Ellipsis = t.Subtle(), t.Subtle(), t.Subtle()
 	return m
 }
 func NewTimer(duration time.Duration) timer.Model {

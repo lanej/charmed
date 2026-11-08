@@ -47,6 +47,8 @@ func Generate(out string) error {
 		}{
 			{"Default", func(*story.Config) {}},
 			{"Narrow", func(c *story.Config) { c.Columns = 40; c.Rows = 16 }},
+			{"256 colors", func(c *story.Config) { c.Profile = "ansi256" }},
+			{"16 colors", func(c *story.Config) { c.Profile = "ansi16" }},
 			{"Monochrome", func(c *story.Config) {
 				c.Theme = theme.Mono
 				c.ASCII = true
@@ -96,16 +98,16 @@ func Generate(out string) error {
 				change: func(c *story.Config) { c.Scenario = scenario },
 			})
 		}
+
 		for _, v := range variants {
 			c := d.Defaults
 			v.change(&c)
-			if c.Profile != "none" {
-				c.Profile = "ansi256"
-			}
+
 			frame, err := story.Frame(d.ID, c)
 			if err != nil {
 				return fmt.Errorf("capture %s: %w", d.ID, err)
 			}
+
 			entry.Snapshots = append(entry.Snapshots, Snapshot{Name: v.name, Config: c, Frame: frame})
 		}
 		entries = append(entries, entry)

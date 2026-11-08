@@ -87,7 +87,25 @@ func TestRejectsInvalidStoryConfiguration(t *testing.T) {
 	if _, err := story.New("input/text", c, nil); err == nil {
 		t.Fatal("unbounded dimensions accepted")
 	}
+
 	if _, err := story.New("not/a/story", story.DefaultConfig(), nil); err == nil {
 		t.Fatal("unregistered story accepted")
+	}
+}
+
+func TestNarrowPillSpecimenKeepsEveryToneAtEachEmphasis(t *testing.T) {
+	c := story.DefaultConfig()
+	c.Columns, c.Rows = 40, 16
+
+	frame, err := story.Frame("text/pill", c)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	plain := ansi.Strip(frame)
+	for _, tone := range []string{"neutral", "success", "info", "warning", "danger"} {
+		if strings.Count(plain, tone) != 3 {
+			t.Fatalf("narrow specimen clipped %s: %s", tone, plain)
+		}
 	}
 }

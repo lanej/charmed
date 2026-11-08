@@ -83,9 +83,10 @@ func (m *Dashboard) nextTick() tea.Cmd {
 }
 func (m *Dashboard) Resize(size layout.Size) {
 	m.size = size
-	m.Filter.Resize(max(1, size.Width-2))
+	m.Filter.Resize(max(1, layout.PanelContentSize(size).Width))
 	mainHeight := max(1, size.Height-5)
 	m.leftWidth, m.rightWidth, m.split = layout.Split(size.Width, 1, 30, 48, 0.36)
+
 	m.split = m.split && size.Height >= 24
 	if m.split {
 		m.tableHeight = min(mainHeight, max(3, len(m.services)+2))
@@ -102,19 +103,22 @@ func (m *Dashboard) Resize(size layout.Size) {
 	if m.chartHeight >= 8 {
 		ids = append(ids, "chart")
 	}
+
 	if m.detailHeight >= 3 {
 		ids = append(ids, "details")
 	}
+
 	m.focus = interaction.NewFocus(ids...)
 	m.focus.Set(current)
-	w := max(4, m.leftWidth-2)
-	m.Table.SetColumns([]table.Column{{Title: "SERVICE", Width: max(1, w-16)}, {Title: "STATE", Width: 10}})
+	w := max(4, layout.PanelContentSize(layout.Size{Width: m.leftWidth}).Width)
+	m.Table.SetColumns([]table.Column{{Title: "SERVICE", Width: max(1, w-15)}, {Title: "STATE", Width: 11}})
 	m.Table.SetWidth(w)
 	m.Table.SetHeight(max(1, m.tableHeight-1))
-	m.Details.SetWidth(max(1, m.leftWidth-2))
+	m.Details.SetWidth(w)
 	m.Details.SetHeight(max(1, m.detailHeight-2))
 	m.Plot.Resize(chart.PanelPlotSize(layout.Size{Width: m.rightWidth, Height: m.chartHeight}, chart.PanelOptions{ShowLegend: m.showLegend}))
 }
+
 func (m *Dashboard) syncFocus() tea.Cmd {
 	m.Filter.Blur()
 	m.Table.Blur()

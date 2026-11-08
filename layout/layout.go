@@ -43,25 +43,34 @@ func ASCII(content string) string {
 			return '|'
 		case '┌', '┐', '└', '┘', '├', '┤', '┬', '┴', '┼', '╭', '╮', '╰', '╯':
 			return '+'
-		case '●', '○', '•', '·', '▪':
+		case '●', '•', '·', '▪':
 			return '*'
+		case '○':
+			return 'o'
 		case '↑', '▲':
 			return '^'
-		case '↓', '▼':
+		case '↓', '▼', '▾':
 			return 'v'
-		case '→', '▶', '›':
+		case '→', '▶', '›', '▸':
 			return '>'
 		case '←', '◀', '‹':
 			return '<'
 		case '…':
-			return '~'
+			return '.'
 		case '✓', '✔':
 			return '+'
 		case '×', '✗':
 			return 'x'
 		}
+
 		return '?'
 	}, content)
+}
+
+// PanelContentSize excludes the border and horizontal content gutters.
+func PanelContentSize(size Size) Size {
+	padding := min(theme.InlinePadding, max(0, (size.Width-3)/2))
+	return Size{Width: max(0, size.Width-2-2*padding), Height: max(0, size.Height-2)}
 }
 
 func Panel(title, content string, size Size, t theme.Theme, focused bool) string {
@@ -77,16 +86,22 @@ func Panel(title, content string, size Size, t theme.Theme, focused bool) string
 		border = border.Foreground(t.Accent).Bold(true)
 	}
 	label := ansi.Truncate(" "+title+" ", size.Width-2, "")
+
 	labelStyle := t.Subtle()
 	if focused {
 		labelStyle = t.Heading()
 	}
+
 	top := border.Render(tl) + labelStyle.Render(label) + border.Render(strings.Repeat(horizontal, max(0, size.Width-2-lipgloss.Width(label)))+tr)
-	inside := strings.Split(Fit(content, Size{size.Width - 2, size.Height - 2}), "\n")
+	padding := strings.Repeat(" ", min(theme.InlinePadding, max(0, (size.Width-3)/2)))
+
+	inside := strings.Split(Fit(content, PanelContentSize(size)), "\n")
 	for i := range inside {
-		inside[i] = border.Render(vertical) + inside[i] + border.Render(vertical)
+		inside[i] = border.Render(vertical) + padding + inside[i] + padding + border.Render(vertical)
 	}
+
 	bottom := border.Render(bl + strings.Repeat(horizontal, size.Width-2) + br)
+
 	return strings.Join(append(append([]string{top}, inside...), bottom), "\n")
 }
 

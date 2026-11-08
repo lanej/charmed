@@ -53,9 +53,11 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 	if err := os.RemoveAll(directory); err != nil {
 		return err
 	}
+
 	if err := os.MkdirAll(directory, 0755); err != nil {
 		return err
 	}
+
 	pages := []guidePage{
 		{File: "index.html", Title: "Charmed"},
 		{File: "foundations.html", Title: "Foundations"},
@@ -78,14 +80,18 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		}
 		// WHY: Only repository-authored Markdown passes through the HTML renderer.
 		rendered := highlightMarkdown(content.String())
+
 		page.Content = template.HTML(rendered)
 		if page.File == "index.html" {
 			t := theme.New(theme.Dark)
+
 			var states []string
 			for _, state := range []feedback.Status{feedback.OK, feedback.Warn, feedback.Error, feedback.Unknown, feedback.Off} {
-				states = append(states, story.FormatFrame(state.View(text.Bright, t), story.Config{Theme: theme.Dark, Profile: "ansi256"}))
+				states = append(states, story.FormatFrame(state.View(text.Bright, t), story.Config{Theme: theme.Dark, Profile: "truecolor"}))
 			}
+
 			page.Atoms = states
+
 			for _, item := range []struct{ ID, Title, Description string }{
 				{"chart/timeseries", "Time series", "Fine-grained dot traces over shared time windows."},
 				{"chart/bars", "Bars", "Compare categories with native terminal geometry."},
@@ -96,32 +102,39 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 				if err != nil {
 					return err
 				}
+
 				c := d.Defaults
 				c.Legend = item.ID == "chart/distributions" || item.ID == "chart/timeseries"
 				c.Columns = 64
 				c.Rows = 16
-				c.Profile = "ansi256"
+				c.Profile = "truecolor"
+
 				frame, err := story.Frame(item.ID, c)
 				if err != nil {
 					return err
 				}
+
 				c.Columns = 40
+
 				narrow, err := story.Frame(item.ID, c)
 				if err != nil {
 					return err
 				}
 				page.Showcase = append(page.Showcase, showcaseItem{item.Title, item.Description, "components.html#" + item.ID, frame, narrow})
 			}
+
 			for i := range entries {
 				if entries[i].ID == "screen/services" {
 					preview := entries[i]
 					c := preview.Defaults
 					c.Rows = 24
-					c.Profile = "ansi256"
+					c.Profile = "truecolor"
+
 					frame, err := story.Frame(preview.ID, c)
 					if err != nil {
 						return err
 					}
+
 					preview.Snapshots = []Snapshot{{Name: "Default", Config: c, Frame: frame}}
 					c.Columns = 40
 					c.Rows = 28
@@ -180,24 +193,30 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		}{page, pages}); err != nil {
 			return err
 		}
+
 		if err := os.WriteFile(filepath.Join(directory, page.File), output.Bytes(), 0644); err != nil {
 			return err
 		}
 	}
+
 	css, err := siteFiles.ReadFile("site/style.css")
 	if err != nil {
 		return err
 	}
-	if err := os.WriteFile(filepath.Join(directory, "style.css"), append(css, []byte(terminalCSS())...), 0644); err != nil {
+
+	if err = os.WriteFile(filepath.Join(directory, "style.css"), css, 0o600); err != nil {
 		return err
 	}
+
 	tabs, err := siteFiles.ReadFile("site/tabs.js")
 	if err != nil {
 		return err
 	}
+
 	if err := os.WriteFile(filepath.Join(directory, "tabs.js"), tabs, 0644); err != nil {
 		return err
 	}
+
 	if err := os.MkdirAll(filepath.Join(directory, "assets"), 0755); err != nil {
 		return err
 	}
@@ -206,21 +225,26 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 	if err != nil {
 		return err
 	}
+
 	if err := os.WriteFile(filepath.Join(directory, "assets", "charmed-mark.svg"), mark, 0644); err != nil {
 		return err
 	}
+
 	assets, err := filepath.Glob(filepath.Join(root, "docs", "assets", "*"))
 	if err != nil {
 		return err
 	}
+
 	for _, path := range assets {
 		data, err := os.ReadFile(path)
 		if err != nil {
 			return err
 		}
+
 		if err := os.WriteFile(filepath.Join(directory, "assets", filepath.Base(path)), data, 0644); err != nil {
 			return err
 		}
 	}
+
 	return os.WriteFile(filepath.Join(directory, ".nojekyll"), nil, 0644)
 }

@@ -76,12 +76,14 @@ func TestDashboardUsesStatusAtomsWithoutRedundantHeadings(t *testing.T) {
 			t.Errorf("missing service or shared status label %q", label)
 		}
 	}
+
 	rows := m.Table.Rows()
 	if !strings.Contains(rows[2][1], "\x1b[") {
 		t.Error("warning status has no native styling")
 	}
+
 	m = pattern.NewDashboard(pattern.DashboardOptions{Theme: theme.New(theme.Mono), Services: []pattern.Service{{ID: "unknown", Name: "Unclassified", Status: "unrecognized"}}})
-	if !strings.Contains(ansi.Strip(m.View()), "[UNKNOWN]") {
+	if !strings.Contains(ansi.Strip(m.View()), "[? UNKNOWN]") {
 		t.Error("unrecognized health must use the explicit unknown status atom")
 	}
 }

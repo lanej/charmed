@@ -192,12 +192,17 @@ func Panel(title string, plot TimeSeries, series []TimeSeriesData, size layout.S
 	}
 	return layout.Panel(title, content, size, t, focused)
 }
+
 func PanelPlotSize(size layout.Size, options ...PanelOptions) layout.Size {
 	legendRows := 0
 	if len(options) > 0 && options[0].ShowLegend {
 		legendRows = 1
 	}
-	return layout.Size{Width: max(0, size.Width-2), Height: max(0, size.Height-2-legendRows)}
+
+	content := layout.PanelContentSize(size)
+	content.Height = max(0, content.Height-legendRows)
+
+	return content
 }
 
 func finite(v float64) bool { return !math.IsNaN(v) && !math.IsInf(v, 0) }

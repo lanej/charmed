@@ -63,7 +63,7 @@
 <div><span class="semantic-chip semantic-info">INFO</span> Information <code>#78b8ed</code></div>
 <div><span class="semantic-chip semantic-warn">WARN</span> Warning <code>#f2c879</code></div>
 <div><span class="semantic-chip semantic-error">ERROR</span> Danger <code>#f28b82</code></div>
-<div><span class="semantic-chip semantic-series">SERIES</span> Comparison <code>#c4a7e7</code></div>
+<div><span class="semantic-chip semantic-series">SERIES</span> Comparison <code>#b9a7f5</code></div>
 </div>
 </section>
 {{end}}
@@ -76,13 +76,13 @@
 <section class="component" id="{{.ID}}">
 <p class="eyebrow">{{.Level}} / {{.Family}}</p><h3>{{name .Title}}</h3><p>{{.Description}}</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="{{name .Title}} variants">
 {{range $i, $snapshot := .Snapshots}}<a id="tab-{{$component.ID}}-{{$i}}" href="#panel-{{$component.ID}}-{{$i}}" role="tab" aria-controls="panel-{{$component.ID}}-{{$i}}" aria-selected="{{if eq $i 0}}true{{else}}false{{end}}">{{.Name}}</a>{{end}}
 </div>
 {{range $i, $snapshot := .Snapshots}}<div id="panel-{{$component.ID}}-{{$i}}" class="variant-panel" role="tabpanel" aria-labelledby="tab-{{$component.ID}}-{{$i}}" tabindex="0">
-<figure><figcaption>{{.Name}} · {{.Config.Columns}} × {{.Config.Rows}} terminal cells</figcaption><pre tabindex="0" class="terminal">{{terminal .Frame}}</pre></figure>
+<figure><figcaption>{{.Name}} · {{.Config.Profile}} · {{.Config.Columns}} × {{.Config.Rows}} terminal cells</figcaption><pre tabindex="0" class="terminal">{{terminal .Frame}}</pre></figure>
 </div>{{end}}
 </div>
 </div>

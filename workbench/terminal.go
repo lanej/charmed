@@ -2,51 +2,126 @@ package workbench
 
 import (
 	"fmt"
+	"html"
 	"html/template"
-	"regexp"
+	"image/color"
 	"strings"
 
-	terminal "github.com/buildkite/terminal-to-html/v3"
-	"github.com/microcosm-cc/bluemonday"
+	uv "github.com/charmbracelet/ultraviolet"
+	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/theme"
 )
 
-var terminalPolicy = func() *bluemonday.Policy {
-	p := bluemonday.StrictPolicy()
-	p.AllowElements("span")
-	p.AllowAttrs("class").Matching(regexp.MustCompile(`^term-[a-z0-9]+( term-[a-z0-9]+)*$`)).OnElements("span")
-	return p
-}()
-
-// terminalHTML preserves ANSI color while excluding links, images and executable markup.
+// terminalHTML renders saved cells, preserving RGB and escaping all terminal text.
+// NOTE: Links and terminal control effects are never emitted as HTML capabilities.
 func terminalHTML(frame string) template.HTML {
-	rendered := terminal.Render([]byte(strings.TrimRight(frame, " \n")))
-	return template.HTML(terminalPolicy.Sanitize(rendered))
+	lines := uv.NewStyledString(strings.TrimRight(frame, " \n")).Lines(ansi.GraphemeWidth)
+
+	var result []string
+
+	for i, line := range lines {
+		if i > 0 {
+			result = append(result, "\n")
+		}
+
+		var (
+			run      []string
+			previous uv.Style
+		)
+
+		flush := func() {
+			if len(run) == 0 {
+				return
+			}
+
+			content := html.EscapeString(strings.Join(run, ""))
+			if style := terminalStyle(previous); style != "" {
+				result = append(result, `<span style="`+style+`">`+content+`</span>`)
+			} else {
+				result = append(result, content)
+			}
+
+			run = nil
+		}
+
+		for _, cell := range line {
+			if cell.Width == 0 {
+				continue
+			}
+
+			if !previous.Equal(&cell.Style) {
+				flush()
+
+				previous = cell.Style
+			}
+
+			run = append(run, cell.Content)
+		}
+
+		flush()
+	}
+
+	return template.HTML(strings.Join(result, "")) // #nosec G203 -- Text is HTML-escaped; styles contain only numeric colors and fixed literals.
 }
 
-func terminalCSS() string {
-	var css strings.Builder
-	base := []string{"#14201c", "#f28b82", "#86cf9a", "#f2c879", "#78b8ed", "#c4a7e7", "#67d4c0", "#eef1ee", "#607b6c", "#f28b82", "#86cf9a", "#f2c879", "#78b8ed", "#c4a7e7", "#67d4c0", "#ffffff"}
-	for i := range 256 {
-		color := ""
-		switch {
-		case i < 16:
-			color = base[i]
-		case i < 232:
-			v := i - 16
-			levels := []int{0, 95, 135, 175, 215, 255}
-			color = fmt.Sprintf("#%02x%02x%02x", levels[v/36], levels[v/6%6], levels[v%6])
-		default:
-			level := 8 + (i-232)*10
-			color = fmt.Sprintf("#%02x%02x%02x", level, level, level)
+func terminalStyle(style uv.Style) string {
+	var css []string
+
+	fg, bg := style.Fg, style.Bg
+	if style.Attrs&uv.AttrReverse != 0 {
+		defaults := theme.New(theme.Dark)
+		if fg == nil {
+			fg = defaults.Foreground
 		}
-		fmt.Fprintf(&css, ".terminal .term-fgx%d{color:%s}.terminal .term-bgx%d{background-color:%s}\n", i, color, i, color)
-		if i < 8 {
-			fmt.Fprintf(&css, ".terminal .term-fg%d{color:%s}.terminal .term-bg%d{background-color:%s}\n", i+30, color, i+40, color)
+
+		if bg == nil {
+			bg = defaults.Background
 		}
-		if i >= 8 && i < 16 {
-			fmt.Fprintf(&css, ".terminal .term-fgi%d{color:%s}.terminal .term-bgi%d{background-color:%s}\n", i+82, color, i+92, color)
-		}
+
+		fg, bg = bg, fg
 	}
-	css.WriteString(".terminal .term-fg1{font-weight:bold}.terminal .term-fg2{opacity:.7}.terminal .term-fg3{font-style:italic}.terminal .term-fg4{text-decoration:underline}.terminal .term-fg9{text-decoration:line-through}\n")
-	return css.String()
+
+	if fg != nil {
+		css = append(css, "color:"+terminalColor(fg)+";")
+	}
+
+	if bg != nil {
+		css = append(css, "background-color:"+terminalColor(bg)+";")
+	}
+
+	if style.Attrs&uv.AttrBold != 0 {
+		css = append(css, "font-weight:bold;")
+	}
+
+	if style.Attrs&uv.AttrFaint != 0 {
+		css = append(css, "opacity:.7;")
+	}
+
+	if style.Attrs&uv.AttrItalic != 0 {
+		css = append(css, "font-style:italic;")
+	}
+
+	var decorations []string
+	if style.Underline != uv.UnderlineNone {
+		decorations = append(decorations, "underline")
+	}
+
+	if style.Attrs&uv.AttrStrikethrough != 0 {
+		decorations = append(decorations, "line-through")
+	}
+
+	if len(decorations) > 0 {
+		css = append(css, "text-decoration:"+strings.Join(decorations, " ")+";")
+	}
+
+	if style.Attrs&uv.AttrConceal != 0 {
+		css = append(css, "visibility:hidden;")
+	}
+
+	return strings.Join(css, "")
+}
+
+func terminalColor(c color.Color) string {
+	r, g, b, _ := c.RGBA()
+	return fmt.Sprintf("#%02x%02x%02x", r>>8, g>>8, b>>8)
 }
