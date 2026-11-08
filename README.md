@@ -42,6 +42,8 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 
 Stateful wrappers expose their concrete upstream models or return them directly. Applications retain access to native APIs. Components return Bubble Tea commands; their parent forwards them. Application services and business decisions remain outside the UI library.
 
+Exposing upstream APIs is a deliberate compatibility commitment. See the [architecture decision](ARCHITECTURE.md) for ownership boundaries and wrapper lifecycle responsibilities.
+
 ```go
 // A field remains an ordinary concrete Go model.
 field := input.NewText(input.TextOptions{
