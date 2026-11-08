@@ -43,7 +43,7 @@
 </div>
 </section>
 
-<h2 id="use-charmeduse-charmed"><a href="#use-charmed">Use Charmed</a></h2>
+<h2 id="use-charmed"><a class="heading-permalink" href="#use-charmed"><span>Use Charmed</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Charmed wraps native <a href="https://charm.sh/">Charm</a> and ntcharts components with shared themes, terminal-cell sizing, and composition conventions. Application code owns its state and business decisions; widgets remain ordinary Go models.</p>
 <p>Start with a component and pass the same theme to related elements:</p>
 <pre tabindex="0" class="code-block"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
@@ -55,13 +55,13 @@ field <span class="syn-operator">:=</span> input<span class="syn-operator">.</sp
 cmd <span class="syn-operator">:=</span> field<span class="syn-operator">.</span><span class="syn-function">Focus</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 </code></pre>
 <p>Explore the <a href="components.html#input/text">input components</a>, <a href="components.html#chart/sparkline">charts</a>, and <a href="examples.html#screen/services">complete screens</a>. The catalog shows the visual first, then a focused usage snippet. Full fixture implementations are linked separately.</p>
-<h2 id="inspect-a-native-fixtureinspect-a-native-fixture"><a href="#inspect-a-native-fixture">Inspect a native fixture</a></h2>
+<h2 id="inspect-a-native-fixture"><a class="heading-permalink" href="#inspect-a-native-fixture"><span>Inspect a native fixture</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>The documentation snapshots are deterministic captures of real Go components, not browser recreations. Use the terminal runner when you need to inspect keyboard behavior, animation, focus, or resizing.</p>
 <pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench list
 <span class="syn-command">go</span> run ./cmd/workbench run screen/services
 </code></pre>
 <p>Run from the repository root with <strong>Go 1.26.10+</strong>. Use Ctrl+C to exit. You can pass fixture-specific options such as <code class="inline-code">--theme light</code>, <code class="inline-code"><span class="syn-operator">--</span>legend</code>, or <code class="inline-code">--columns 40</code>; see the <a href="https://github.com/lanej/charmed/blob/main/story/catalog.go">component registry</a> for available fixtures.</p>
-<h2 id="add-a-componentadd-a-component"><a href="#add-a-component">Add a component</a></h2>
+<h2 id="add-a-component"><a class="heading-permalink" href="#add-a-component"><span>Add a component</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Organize Go packages by capability rather than atomic level. Use atoms, molecules, and organisms to describe <strong>composition depth in the catalog</strong>, not to create extra package layers.</p>
 <ol>
 <li>Implement a wrapper only where it establishes useful defaults, semantics, or reusable composition.</li>
@@ -69,17 +69,17 @@ cmd <span class="syn-operator">:=</span> field<span class="syn-operator">.</span
 <li>Supply a short consumer-oriented example in <code class="inline-code">docs/snippets/</code> when the full fixture would obscure the public API.</li>
 </ol>
 <p>Keep services and decisions outside UI models. The registry rejects duplicate IDs, composition cycles, and references to higher atomic levels. See <a href="https://github.com/lanej/charmed/blob/main/DESIGN.md">DESIGN.md</a> for the design constraints.</p>
-<h2 id="verify-changesverify-changes"><a href="#verify-changes">Verify changes</a></h2>
+<h2 id="verify-changes"><a class="heading-permalink" href="#verify-changes"><span>Verify changes</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">bash</span> scripts/check-go.sh
 <span class="syn-command">go</span> run ./cmd/workbench generate <span class="syn-flag">--out</span> docs
 </code></pre>
 <p>The Go quality command checks formatting, vet, module tidiness, strict lint, uncached race tests, and reachable vulnerabilities on Linux and macOS. For a quicker iteration, run <code class="inline-code">bash scripts/check-go.sh lint</code>. Existing debt is in a shrinking baseline: new findings must be fixed, and resolved findings removed with <code class="inline-code">bash scripts/check-go.sh ratchet</code>.</p>
 <p>The generator writes the static guide to <code class="inline-code">docs/dist/</code>, validates source and composition, and preserves terminal output colors. The responsive browser check covers mobile and desktop layouts, navigation, and fragment links.</p>
-<h2 id="publish-documentationpublish-documentation"><a href="#publish-documentation">Publish documentation</a></h2>
+<h2 id="publish-documentation"><a class="heading-permalink" href="#publish-documentation"><span>Publish documentation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Edit <code class="inline-code">docs/*.md</code>, catalog stories in <code class="inline-code">story/</code>, and the shared site template/styles in <code class="inline-code">workbench/site/</code>. Generate locally before opening a pull request.</p>
 <p>Every same-repository documentation PR gets an isolated preview at <code class="inline-code">lanej.io/charmed/pr-preview/pr-&lt;number&gt;/</code>. The PR description is updated with <strong>direct links to rendered pages</strong> after the publisher verifies that the live revision matches the PR head. Previews refresh on push, are excluded from search indexing, and are removed when the PR closes. Forks receive CI checks but no privileged preview publication.</p>
 <p>Merging to <code class="inline-code">main</code> publishes the tested static bundle through GitHub Pages. No separate documentation server or JavaScript build tool is required; the small client script only enhances variant tabs and the mobile navigation.</p>
-<h2 id="coveragecoverage"><a href="#coverage">Coverage</a></h2>
+<h2 id="coverage"><a class="heading-permalink" href="#coverage"><span>Coverage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>The inventory below is generated from the registry and distinguishes implemented components from optional integrations. The bundled JuliaMono font preserves braille and box-drawing glyph geometry; see its <a href="assets/JuliaMono-LICENSE.txt">license</a>.</p>
 
 

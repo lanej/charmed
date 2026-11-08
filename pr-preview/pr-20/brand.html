@@ -99,7 +99,7 @@
 </section>
 
 
-<h2 id="the-terminal-talisman">The terminal talisman</h2>
+<h2 id="the-terminal-talisman"><a class="heading-permalink" href="#the-terminal-talisman"><span>The terminal talisman</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>The Charmed mark combines a terminal with a lucky charm. The terminal window becomes the body of a small talisman: an attachment loop above, a faceted outline below, and a shell prompt inside.</p>
 <table tabindex="0">
 <thead>
@@ -124,16 +124,16 @@
 </tbody>
 </table>
 <p>The complete silhouette carries the idea in one color. The mark uses the website's accent through <code class="inline-code">currentColor</code>; the reversed specimen uses its existing canvas and text tokens. Terminal data keeps its own semantic colors.</p>
-<h2 id="use-the-identity">Use the identity</h2>
+<h2 id="use-the-identity"><a class="heading-permalink" href="#use-the-identity"><span>Use the identity</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>The primary lockup pairs the terminal talisman with the lowercase <strong>charmed</strong> wordmark. Use it for documentation, the website, and repository art. The mark can stand alone when the product name is already visible.</p>
 <p>Use the supplied SVG so the header, lockups, and small-size specimens share the same geometry. Keep the attachment loop and faceted outline intact. Leave at least one cursor-width of clear space around the mark and keep it at least 24 pixels high. Use the plain product name where vector graphics are unavailable.</p>
 <p>Do not use the mark as a generic status badge or replace a status label with brand green. Preserve legibility on both light and dark backgrounds; the default documentation identity is dark.</p>
-<h2 id="tokens-and-roles">Tokens and roles</h2>
+<h2 id="tokens-and-roles"><a class="heading-permalink" href="#tokens-and-roles"><span>Tokens and roles</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>The swatches below are <strong>derived directly from Charmed's native dark theme</strong>. Generated CSS and this page draw from the same semantic roles used in terminal fixtures, including surfaces, borders, text, statuses, and data-series colors. Syntax highlighting maps to these roles instead of defining another hex palette.</p>
 <p>For native widgets, source semantic colors from <a href="https://github.com/lanej/charmed/blob/main/theme/theme.go"><code class="inline-code">theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span></code></a>. Documentation consumes those values during static generation rather than maintaining a second palette. Success, information, warning, danger, and data-series colors remain distinct.</p>
-<h2 id="typography-and-code">Typography and code</h2>
+<h2 id="typography-and-code"><a class="heading-permalink" href="#typography-and-code"><span>Typography and code</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Use system sans-serif for documentation and labels. Use bundled JuliaMono for terminal snapshots, source listings, and short inline references. Source examples should use lexical highlighting, while terminal snapshots should retain the ANSI colors emitted by the native fixtures.</p>
-<h2 id="composition">Composition</h2>
+<h2 id="composition"><a class="heading-permalink" href="#composition"><span>Composition</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Lead with the terminal output. Show alternate states in adjacent variant tabs and a short consumer-API snippet immediately afterward. Snippets need not declare a Go package, imports, or an outer function; link to complete fixture implementations separately. Keep runner commands in the development guide instead of repeating them under each component.</p>
 
 
