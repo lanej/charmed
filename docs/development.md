@@ -1,85 +1,61 @@
-# Develop & publish
+## Use Charmed
 
-## Run native fixtures
+Charmed wraps native [Charm](https://charm.sh/) and ntcharts components with shared themes, terminal-cell sizing, and composition conventions. Application code owns its state and business decisions; widgets remain ordinary Go models.
 
-Requires Go 1.26.10 or later.
+Start with a component and pass the same theme to related elements:
+
+```go
+palette := theme.New(theme.Dark)
+field := input.NewText(input.TextOptions{
+    Placeholder: "Environment name",
+    Width:       40,
+    Theme:       palette,
+})
+cmd := field.Focus()
+```
+
+Explore the [input components](components.html#input/text), [charts](components.html#chart/sparkline), and [complete screens](examples.html#screen/services). The catalog shows the visual first, then a focused usage snippet. Full fixture implementations are linked separately.
+
+## Inspect a native fixture
+
+The documentation snapshots are deterministic captures of real Go components, not browser recreations. Use the terminal runner when you need to inspect keyboard behavior, animation, focus, or resizing.
 
 ```sh
 go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
-go run ./cmd/workbench run chart/timeseries --theme light --series 3
-go run ./cmd/workbench run chart/distributions --legend
-go run ./cmd/workbench capture screen/services --plain
 ```
 
-Use Ctrl+C to exit a native story. The library and native runner retain their terminal interactions independently of this static guide.
+Run from the repository root with **Go 1.26.10+**. Use Ctrl+C to exit. You can pass fixture-specific options such as `--theme light`, `--legend`, or `--columns 40`; see the [component registry](https://github.com/lanej/charmed/blob/main/story/catalog.go) for available fixtures.
 
-## Build the guide
+## Add a component
 
-From the repository root:
+Organize Go packages by capability rather than atomic level. Use atoms, molecules, and organisms to describe **composition depth in the catalog**, not to create extra package layers.
 
-```sh
-go run ./cmd/workbench generate --out docs
-```
+1. Implement a wrapper only where it establishes useful defaults, semantics, or reusable composition.
+2. Register a deterministic story in the matching `story/` file. Set its actual building blocks in `Definition.Composes` so the catalog can link them.
+3. Supply a short consumer-oriented example in `docs/snippets/` when the full fixture would obscure the public API.
 
-Publish `docs/dist/` to GitHub Pages or any static host. The Pages workflow builds with Go and uploads that directory. No Node, npm or running preview service is required. A small, local JavaScript file enhances accessible variant tabs; without JavaScript, all snapshots remain visible as ordinary static sections. All navigation and assets use relative URLs for repository subpaths. To preview, serve `docs/dist/` with any static HTTP server.
+Keep services and decisions outside UI models. The registry rejects duplicate IDs, composition cycles, and references to higher atomic levels. See [DESIGN.md](https://github.com/lanej/charmed/blob/main/DESIGN.md) for the design constraints.
 
-Edit the Markdown guides in `docs/` and the shared HTML/CSS in `workbench/site/`. The generator reads the compiled story registry, validates composition and captures deterministic frames. Foundations share one page, component capabilities share another, and full screens sit together under examples. The sidebar links directly to every fixture, with visual previews preceding syntax-highlighted source. Stable story IDs are section anchors.
-
-## Add a fixture
-
-Add a wrapper where shared defaults or composition help. Put its deterministic fixture and registration in the matching `story/foundations.go`, `atoms.go`, `atoms_charts.go`, `molecules.go`, `organisms.go` or `screens.go` file. Go packages remain organized by capability.
-
-Declare actual building blocks in `Definition.Composes`. The generator rejects missing references, duplicates, cycles and references to higher atomic levels. It renders links to the corresponding sections automatically. Empty levels need no placeholders.
-
-Keep application services outside the model. Use typed events, controlled steps and bounded sample data. Browser WASM remains an optional integration because the current Booba route requires a patched Bubble Tea replacement.
-
-## Pull request previews
-
-Each same-repository PR receives a public, revision-verified snapshot of the
-complete static guide at:
-
-- Components: `https://lanej.io/charmed/pr-preview/pr-<number>/components.html`
-- Brand sheet: `https://lanej.io/charmed/pr-preview/pr-<number>/brand.html`
-- Catalog: `https://lanej.io/charmed/pr-preview/pr-<number>/`
-
-The unprivileged `pr-preview.yml` workflow generates and stamps the PR's
-actual head SHA. A separate trusted publishing job stores the generated static
-files in `pr-preview-cache`, then dispatches the existing main-branch
-Pages workflow. That workflow overlays the snapshots onto the production catalog
-without replacing its root pages. The preview is updated on each push and
-removed when the PR closes.
-
-The PR description receives direct browser links **only after** the published
-`revision.txt` matches the PR's current head. The preview section is
-maintained between `<!-- charmed-preview:start -->` and
-`<!-- charmed-preview:end -->` comments; edits elsewhere are retained.
-Do not add a link to the PR's own GitHub URL inside its description.
-Previews are marked `noindex,nofollow` and use relative static assets.
-
-Fork PRs intentionally do not receive privileged preview publishing. They
-still receive regular CI checks. If the publisher workflow has just been
-installed, run `pr-preview.yml` manually with the PR number once it is on
-`main` to seed previews for already-open PRs.
-
-`go run ./cmd/workbench generate --out docs` remains the same local
-build command.
-
-## Verify
+## Verify changes
 
 ```sh
 bash scripts/check-go.sh
 go run ./cmd/workbench generate --out docs
 ```
 
-The Go quality runner selects the module's Go version by default and enforces formatting, vet, module tidiness, strict lint, uncached race tests and reachable-vulnerability checks. CI runs the same command on Linux and macOS. Existing lint and style findings use a shrinking baseline; new findings fail. Run `bash scripts/check-go.sh lint` while editing and `bash scripts/check-go.sh ratchet` after resolving existing findings. Never enlarge the baseline to accept new findings.
+The Go quality command checks formatting, vet, module tidiness, strict lint, uncached race tests, and reachable vulnerabilities on Linux and macOS. For a quicker iteration, run `bash scripts/check-go.sh lint`. Existing debt is in a shrinking baseline: new findings must be fixed, and resolved findings removed with `bash scripts/check-go.sh ratchet`.
 
-The generator tests check static output, component sidebar links, variant tab semantics, syntax highlighting, composition links, source escaping, native fixture coverage and repeatable builds. The native suite covers terminal bounds, focus, selection, resize and process cleanup.
+The generator writes the static guide to `docs/dist/`, validates source and composition, and preserves terminal output colors. The responsive browser check covers mobile and desktop layouts, navigation, and fragment links.
 
-See the [brand sheet](brand.html) for the website palette, typography, lockup, and native status color separation.
+## Publish documentation
+
+Edit `docs/*.md`, catalog stories in `story/`, and the shared site template/styles in `workbench/site/`. Generate locally before opening a pull request.
+
+Every same-repository documentation PR gets an isolated preview at `lanej.io/charmed/pr-preview/pr-<number>/`. The PR description is updated with **direct links to rendered pages** after the publisher verifies that the live revision matches the PR head. Previews refresh on push, are excluded from search indexing, and are removed when the PR closes. Forks receive CI checks but no privileged preview publication.
+
+Merging to `main` publishes the tested static bundle through GitHub Pages. No separate documentation server or JavaScript build tool is required; the small client script only enhances variant tabs and the mobile navigation.
 
 ## Coverage
 
-Implemented building blocks and optional integrations are listed below.
-
-Terminal snapshots use a bundled [JuliaMono webfont](https://github.com/cormullion/juliamono/blob/0dfc749503778730d6af79183a17fcde668ae626/webfonts/JuliaMono-Regular.woff2) so braille dots and box-drawing glyphs retain a consistent cell width. It is distributed under its [included license](assets/JuliaMono-LICENSE.txt).
+The inventory below is generated from the registry and distinguishes implemented components from optional integrations. The bundled JuliaMono font preserves braille and box-drawing glyph geometry; see its [license](assets/JuliaMono-LICENSE.txt).

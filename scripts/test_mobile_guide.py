@@ -98,8 +98,14 @@ def main():
                 if width <= 760:
                     assert values["headingTop"] < 180, (filename, values)
                     assert not values["menuOpen"], (filename, values)
-                if filename == "examples.html" and width in (390, 1440):
-                    page.screenshot(path=str(args.output / f"examples-{width}.png"))
+                if filename in ("examples.html", "development.html") and width in (390, 1440):
+                    page.screenshot(path=str(args.output / f"{filename.removesuffix('.html')}-{width}.png"))
+                if filename == "development.html":
+                    tasks = page.locator(".dev-paths a")
+                    assert tasks.count() == 3, "developer guide needs three task paths"
+                    for task in tasks.all():
+                        target = task.get_attribute("href")
+                        assert target.startswith("#") and page.locator(f'[id="{target[1:]}"]').count() == 1, target
                 if filename == "examples.html" and width == 390:
                     check_menu(page, args.output)
                 results.append({"page": filename, **values})

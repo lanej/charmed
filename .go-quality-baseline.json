@@ -1054,7 +1054,6 @@
     {"path": "workbench/highlight.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return \"<code class=\\\"inline-code\\\">\" + string(highlightGo(value)) + \"</code>\"", "count": 1},
     {"path": "workbench/highlight.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return \"<pre tabindex=\\\"0\\\" class=\\\"code-block\\\"><code class=\\\"language-\" +", "count": 1},
     {"path": "workbench/highlight.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return false", "count": 1},
-    {"path": "workbench/highlight.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return strings.ReplaceAll(rendered, \"<table>\", \"<table tabindex=\\\"0\\\">\")", "count": 1},
     {"path": "workbench/highlight.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return template.HTML(out.String())", "count": 2},
     {"path": "workbench/highlight.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return tok.String()", "count": 1},
     {"path": "workbench/highlight.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many statements above for)", "source": "end := i + 1", "count": 1},
