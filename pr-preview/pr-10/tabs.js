@@ -48,3 +48,49 @@
     });
   });
 })();
+
+// The mobile menu is a native disclosure: it works even without this enhancer.
+// Close it on navigation without leaving keyboard focus in hidden content.
+(function () {
+  "use strict";
+  var menu = document.querySelector("[data-mobile-nav]");
+  if (!menu) return;
+  var summary = menu.querySelector("summary");
+
+  function closeMenu(restoreFocus) {
+    menu.open = false;
+    if (restoreFocus) summary.focus({ preventScroll: true });
+  }
+
+  menu.addEventListener("click", function (event) {
+    var link = event.target.closest("a[href]");
+    if (!link || !menu.contains(link) || event.button !== 0 ||
+        event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var href = link.getAttribute("href");
+    if (!href.startsWith("#")) return; // Let page navigation work normally.
+    var target;
+    try { target = document.getElementById(decodeURIComponent(href.slice(1))); }
+    catch (_) { return; }
+    if (!target) return;
+    closeMenu(false);
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+    // Native fragment navigation updates the URL/history after the menu closes.
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && menu.open) {
+      event.preventDefault();
+      closeMenu(true);
+    }
+  });
+  document.addEventListener("click", function (event) {
+    if (menu.open && !menu.contains(event.target)) {
+      closeMenu(menu.contains(document.activeElement));
+    }
+  });
+  window.matchMedia("(max-width: 760px)").addEventListener("change", function () {
+    closeMenu(false);
+  });
+  window.addEventListener("pageshow", function () { closeMenu(false); });
+})();

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Develop &amp; publish · Charmed</title><link rel="stylesheet" href="style.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Develop &amp; publish · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
@@ -11,11 +11,24 @@
   <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
 </svg>
 </span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
-<div class="shell">
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Develop &amp; publish</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
 <nav aria-label="Guide">
 <div class="nav-pages"><a href="index.html" >Charmed</a><a href="foundations.html" >Foundations</a><a href="components.html" >Components</a><a href="examples.html" >Composition &amp; examples</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" aria-current="page">Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 </nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Charmed</a><a href="foundations.html" >Foundations</a><a href="components.html" >Components</a><a href="examples.html" >Composition &amp; examples</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" aria-current="page">Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+</aside>
 <main id="main">
 
 <h1>Develop &amp; publish</h1>
@@ -82,3 +95,4 @@ build command.</p>
 <h2>Coverage</h2><div class="table-wrap"><table tabindex="0"><thead><tr><th>Upstream</th><th>Status</th><th>Integration</th></tr></thead><tbody><tr><td>Bubble Tea</td><td>implemented</td><td>One root runtime and isolated native PTY previews.</td></tr><tr><td>Lip Gloss</td><td>implemented</td><td>Semantic styles, text, cell sizing and responsive panels.</td></tr><tr><td>Bubbles inputs</td><td>implemented</td><td>Text input, textarea and native cursor behavior; concrete models remain accessible.</td></tr><tr><td>Bubbles collections</td><td>implemented</td><td>Table, list, tree, file picker and viewport.</td></tr><tr><td>Bubbles feedback</td><td>implemented</td><td>Spinner, progress, paginator, timer, stopwatch, help and native key bindings.</td></tr><tr><td>Huh</td><td>implemented</td><td>Themed forms, input, select, multiselect, confirm, text and note fixtures; Huh owns nested focus.</td></tr><tr><td>Glamour</td><td>implemented</td><td>Markdown rendered into a bounded viewport.</td></tr><tr><td>Harmonica</td><td>implemented</td><td>Explicit spring state with reduced-motion behavior.</td></tr><tr><td>ntcharts core</td><td>implemented</td><td>Canvas, bars, heatmap, line, scatter, streamline, waveline, time series, OHLC and sparklines; native models remain accessible.</td></tr><tr><td>Fang / Cobra</td><td>implemented</td><td>Command help, completions and error presentation.</td></tr><tr><td>Ultraviolet / ANSI / colorprofile</td><td>implemented</td><td>Reuse Charm&#39;s renderer; cell-aware clipping and explicit truecolor/256/16/no-color output.</td></tr><tr><td>ntcharts pictures</td><td>partial</td><td>Portable glyph picture rendering is implemented. URL fetching, heat pictures and high-resolution graphics integrations remain optional.</td></tr><tr><td>ntcharts companion viewers</td><td>planned</td><td>PDF, SVG, maps and 3D are separate integrations, outside the core dependency graph.</td></tr><tr><td>Wish</td><td>planned</td><td>Optional SSH host adapter.</td></tr><tr><td>Log</td><td>implemented</td><td>Structured log entries rendered with Charm Log into a bounded viewport; producers remain outside the UI thread.</td></tr><tr><td>Gum / VHS / Freeze / CharmTone</td><td>reference</td><td>Shell workflows, recording/export and palette integrations; not dependencies of the Go components.</td></tr><tr><td>Booba / WASM</td><td>planned</td><td>Native live previews and static snapshots currently avoid requiring a Bubble Tea fork.</td></tr></tbody></table></div>
 <footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
 </main></div></body></html>
+
