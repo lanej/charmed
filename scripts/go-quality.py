@@ -211,6 +211,8 @@ def check(args):
         write_baseline(counts)
         print(f"Removed {sum(resolved.values())} resolved findings from the baseline.")
     elif resolved:
+        for (path, linter, _message, source), count in sorted(resolved.items()):
+            print(f"Resolved ({count}): {path} [{linter}] {source}", file=sys.stderr)
         raise ValueError(f"{sum(resolved.values())} baseline findings were fixed; run bash scripts/check-go.sh ratchet and commit the smaller baseline")
     else:
         print(f"Go quality: no new findings ({sum(allowed.values())} existing findings baselined).")

@@ -30,6 +30,7 @@ func TestStaticGuide(t *testing.T) {
 	ids := map[string]map[string]bool{}
 	links := map[string][]string{}
 	navComponents := map[string]map[string]bool{}
+	headingLinks := map[string]map[string]bool{}
 	for _, path := range files {
 		data, err := os.ReadFile(path)
 		if err != nil {
@@ -39,6 +40,8 @@ func TestStaticGuide(t *testing.T) {
 		pages[name] = data
 		ids[name] = map[string]bool{}
 		navComponents[name] = map[string]bool{}
+
+		headingLinks[name] = map[string]bool{}
 		if bytes.Contains(data, []byte("\x1b")) {
 			t.Errorf("%s contains terminal escape sequences", name)
 		}
@@ -77,10 +80,15 @@ func TestStaticGuide(t *testing.T) {
 			}
 			if n.Type == html.ElementNode && n.Data == "a" {
 				componentLink := false
+				permalink := false
 				href := ""
 				for _, a := range n.Attr {
 					if a.Key == "class" && strings.Contains(a.Val, "nav-component") {
 						componentLink = true
+					}
+
+					if a.Key == "class" && strings.Contains(a.Val, "heading-permalink") {
+						permalink = true
 					}
 					if a.Key == "href" {
 						href = a.Val
@@ -96,6 +104,12 @@ func TestStaticGuide(t *testing.T) {
 				if componentLink && insideNav {
 					if u, err := url.Parse(href); err == nil {
 						navComponents[name][u.Fragment] = true
+					}
+				}
+
+				if permalink && n.Parent != nil && (n.Parent.Data == "h2" || n.Parent.Data == "h3" || n.Parent.Data == "h4") {
+					if u, err := url.Parse(href); err == nil {
+						headingLinks[name][u.Fragment] = true
 					}
 				}
 			}
@@ -163,6 +177,14 @@ func TestStaticGuide(t *testing.T) {
 		bytes.Contains(pages["components.html"], []byte("<summary>Go example</summary>")) {
 		t.Error("visual previews and source must be immediately visible")
 	}
+
+	for _, page := range []string{"components.html", "foundations.html", "examples.html"} {
+		if bytes.Contains(pages[page], []byte("Run natively")) ||
+			bytes.Contains(pages[page], []byte("component-run")) ||
+			bytes.Contains(pages[page], []byte("go run ./cmd/workbench run ")) {
+			t.Errorf("%s should not render per-component runner commands", page)
+		}
+	}
 	if !bytes.Contains(pages["brand.html"], []byte("brand-swatches")) {
 		t.Error("brand sheet must expose the visual token palette")
 	}
@@ -180,6 +202,12 @@ func TestStaticGuide(t *testing.T) {
 
 		if !navComponents[target][d.ID] {
 			t.Errorf("missing sidebar link for %s", d.ID)
+		}
+
+		for _, id := range []string{d.ID, d.ID + "-preview", d.ID + "-code", "family-" + d.Family} {
+			if !headingLinks[target][id] {
+				t.Errorf("%s: missing self-link on heading %q", target, id)
+			}
 		}
 	}
 
@@ -202,6 +230,38 @@ func TestStaticGuide(t *testing.T) {
 		}
 		if !bytes.Equal(before, after) {
 			t.Errorf("%s changed on regeneration", name)
+		}
+	}
+}
+
+func TestCuratedSnippetsFocusOnConsumerAPIs(t *testing.T) {
+	expected := map[string]string{
+		"chart/sparkline":        "docs/snippets/sparkline.go.txt",
+		"chart/comparison-panel": "docs/snippets/comparison-panel.go.txt",
+	}
+
+	for _, definition := range story.Definitions() {
+		if definition.ExampleSource == "" {
+			continue
+		}
+
+		if want, ok := expected[definition.ID]; ok && definition.ExampleSource != want {
+			t.Errorf("%s: example source = %q, want %q", definition.ID, definition.ExampleSource, want)
+		}
+
+		source, err := os.ReadFile(filepath.Join("..", definition.ExampleSource))
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, scaffolding := range []string{"package main", "func main()", "import ("} {
+			if bytes.Contains(source, []byte(scaffolding)) {
+				t.Errorf("%s: unnecessary program scaffolding %q", definition.ID, scaffolding)
+			}
+		}
+
+		if lines := strings.Count(string(source), "\n"); lines > 30 {
+			t.Errorf("%s: usage example is %d lines; keep it focused", definition.ID, lines)
 		}
 	}
 }

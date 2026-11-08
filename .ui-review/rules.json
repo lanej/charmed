@@ -48,7 +48,7 @@
     "selector": "html, body",
     "property": "background-color",
     "allowed": [
-      "rgb(13, 21, 19)"
+      "rgb(16, 23, 34)"
     ],
     "severity": "error",
     "reason": "Page surfaces share the night background."
@@ -56,13 +56,24 @@
   {
     "id": "guide-night-example-surfaces",
     "type": "style",
-    "selector": "main pre, main details",
+    "selector": "main pre:not(.terminal), main details",
     "property": "background-color",
     "allowed": [
-      "rgb(20, 32, 28)"
+      "rgb(27, 39, 52)"
     ],
     "optional": true,
     "severity": "error",
     "reason": "Code, saved output and disclosure panels share the night surface."
+  },
+  {
+    "id": "guide-native-terminal-background",
+    "type": "style",
+    "selector": "main pre.terminal",
+    "property": "background-color",
+    "allowed": [
+      "rgb(16, 23, 34)"
+    ],
+    "severity": "error",
+    "reason": "Native truecolor frames use the canonical theme background so dim tokens retain their contrast."
   }
 ]

@@ -21,7 +21,7 @@ type Theme struct {
 	Mode                                                      Mode
 	ASCII                                                     bool
 	ReducedMotion                                             bool
-	Background, Foreground, Muted, Border, Accent             color.Color
+	Background, Surface, Foreground, Muted, Border, Accent    color.Color
 	SelectionBackground                                       color.Color
 	Success, Info, Warning, Danger                            color.Color
 	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger color.Color
@@ -33,6 +33,7 @@ func New(mode Mode) Theme {
 	switch mode {
 	case Light:
 		t.Background, t.Foreground = hex("#f8fafc"), hex("#172033")
+		t.Surface = hex("#edf2f7")
 		t.Muted, t.Border, t.Accent = hex("#526176"), hex("#94a3b8"), hex("#075985")
 		t.Success, t.Warning, t.Danger = hex("#166534"), hex("#92400e"), hex("#b91c1c")
 		t.Info = hex("#1d4ed8")
@@ -41,6 +42,7 @@ func New(mode Mode) Theme {
 		t.Series = colors("#6654ad", "#3568b0", "#a3497f", "#8c663d", "#575ba6")
 	case Contrast:
 		t.Background, t.Foreground = hex("#000000"), hex("#ffffff")
+		t.Surface = hex("#151515")
 		t.Muted, t.Border, t.Accent = hex("#d0d0d0"), hex("#ffffff"), hex("#67e8f9")
 		t.Success, t.Warning, t.Danger = hex("#86efac"), hex("#fde047"), hex("#fca5a5")
 		t.Info = hex("#93c5fd")
@@ -49,9 +51,12 @@ func New(mode Mode) Theme {
 		t.Series = colors("#c8b4ff", "#9ac2ff", "#f4b0d8", "#e8c49a", "#abb6ff")
 	case Mono:
 		t.ASCII, t.ReducedMotion = true, true
+		t.Background, t.Surface = hex("#000000"), hex("#151515")
+		t.Foreground, t.Muted, t.Border, t.Accent = hex("#ffffff"), hex("#bdbdbd"), hex("#777777"), hex("#ffffff")
 	default:
 		t.Mode = Dark
 		t.Background, t.Foreground = hex("#101722"), hex("#eeeeee")
+		t.Surface = hex("#1b2734")
 		t.Muted, t.Border, t.Accent = hex("#a8a8a8"), hex("#475569"), hex("#67d4c0")
 		t.Success, t.Warning, t.Danger = hex("#86cf9a"), hex("#f2c879"), hex("#f28b82")
 		t.Info = hex("#78b8ed")

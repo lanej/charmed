@@ -65,6 +65,8 @@ func atomsDefinitions() []Definition {
 			d[i].Clock = true
 		case "feedback/progress":
 			d[i].Step = true
+		case "chart/sparkline":
+			d[i].ExampleSource = "docs/snippets/sparkline.go.txt"
 		case "chart/timeseries":
 			d[i].Source = "examples/timeseries/main.go"
 			d[i].Symbol = ""

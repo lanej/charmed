@@ -36,10 +36,11 @@ func Generate(out string) error {
 	}
 	var entries []ManifestEntry
 	for _, d := range story.Definitions() {
-		code, err := sourceSymbol(filepath.Join(root, d.Source), d.Symbol)
+		code, err := exampleCode(root, d)
 		if err != nil {
 			return err
 		}
+
 		entry := ManifestEntry{Definition: d, Code: code}
 		variants := []struct {
 			name   string
