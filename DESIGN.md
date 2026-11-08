@@ -6,11 +6,11 @@ Show Go developers the actual components first, then help them understand compos
 
 ## Principles and tradeoffs
 
-Use a compact guide navigation and readable prose. Each fixture has a sidebar link. Lead with the saved native visual, put variants in keyboard-accessible tabs, and immediately follow with highlighted Go source. Keep runner commands in the development guide rather than repeating them under each component. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved terminal frames retain ANSI colors as static HTML and inherit the guide’s night surfaces; native commands provide truecolor and full behavior.
+Use a compact guide navigation and readable prose. Each fixture has a sidebar link. Lead with the saved native visual, put variants in keyboard-accessible tabs, and immediately follow with highlighted Go source. Keep runner commands in the development guide rather than repeating them under each component. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved terminal frames preserve exact RGB as static HTML on the guide’s night surfaces; native commands provide keyboard interaction and animation.
 
 ## Visual system and ownership
 
-`workbench/site/style.css` owns the guide's palette and typography. Preserve the existing green-black background, pale text and muted green links. Prose uses system sans-serif; source and terminal cells use monospace. Theme semantics inside native applications remain owned by the Go theme package.
+The Go `theme` package owns the canonical palette for native applications and the guide. The site generator derives CSS variables and brand swatches from `theme.New(theme.Dark)`; `workbench/site/style.css` owns layout and typography without duplicating hex values. Prose uses system sans-serif; source and terminal cells use JuliaMono. Truecolor previews preserve the native foreground and fill values.
 
 ## Behavior and resilience
 
@@ -24,7 +24,7 @@ Every registered fixture must appear once in foundations, components or examples
 
 ### GUIDE-002
 
-Navigation and content must fit desktop and mobile viewports. Terminal frames and wide tables may scroll internally to preserve cell geometry. Viewrule checks main content and screenshots support manual layout review. Static snapshots use the ANSI 256-color profile; native truecolor output can differ slightly.
+Navigation and content must fit desktop and mobile viewports. Terminal frames and wide tables may scroll internally to preserve cell geometry. Viewrule checks main content and screenshots support manual layout review. Static snapshots use truecolor as the reference. Separate 256-color, 16-color and monochrome variants expose fallback behavior.
 
 ## Evidence and unresolved decisions
 
@@ -49,7 +49,7 @@ Every fixture has a sidebar entry linking to its exact section anchor. A compone
 
 ### GUIDE-006
 
-Charmed has a documented identity with its own green-black web palette, lowercase lockup and code typography. Brand colors never replace the native semantic terminal palette. Build-time code highlighting escapes source HTML and maintains distinguishable keyword, string, comment and numeric roles.
+Charmed has a documented identity with a lowercase lockup and code typography. Brand swatches and page CSS variables derive from the canonical native theme; component previews preserve those native colors. Build-time code highlighting escapes source HTML and maintains distinguishable keyword, string, comment and numeric roles.
 
 ### GUIDE-007
 
@@ -58,3 +58,7 @@ Documentation PRs publish an isolated Pages snapshot at `/charmed/pr-preview/pr-
 ### GUIDE-008
 
 Catalog Go examples demonstrate the consumer API and need not be standalone programs. Prefer statements or expressions without `package main`, import blocks, or a surrounding `func main()`. Keep curated snippets in documentation-only files (e.g. `docs/snippets/*.go.txt`) so they do not become accidentally compiled packages. Full fixture code remains available through the source link, not the introductory example.
+
+### FOUNDATION-001
+
+Glyphs have names and explicit one-cell ASCII equivalents. Semantic states retain labels alongside icons. Controls, pills and panel content reserve one horizontal cell on both sides; focus and emphasis preserve the same allocation. Panel children use the shared content-size calculation. Dim semantic tokens preserve hue and readable contrast in the truecolor reference; fallback limitations are reviewed separately. Categorical series colors do not alias interaction or status colors. These requirements incorporate the user feedback on missing icons and padding, unpadded inverse focus, shared accent/series color and gray dimming.

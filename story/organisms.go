@@ -210,11 +210,14 @@ func comparisonPanelStory(e Environment) (runtime.Scene, error) {
 	return static(func(size layout.Size) string {
 		selected := 40.0
 		distribution := chart.DistributionComparison{Series: []chart.DistributionSeries{{Label: "a13c9f2", Mean: 20, StdDev: 3, Members: 64, HasSpread: true}, {Label: "f4d7e81", Mean: 30, StdDev: 8, Members: 32, HasSpread: true, Selected: &selected}}, Sigma: e.Config.Sigma, Min: 0, Max: 100, Unit: "%", SpreadUnit: "pp"}
+
 		data := sampleSeries(2, 0, 20)
 		for i, id := range []string{"a13c9f2", "f4d7e81"} {
 			data[i].ID, data[i].Label, data[i].Unit = id, id, "%"
 		}
-		plot := chart.NewTimeSeries(data, layout.Size{Width: max(1, size.Width-2), Height: max(3, size.Height-8)}, e.Config.Palette())
+
+		plot := chart.NewTimeSeries(data, layout.Size{Width: max(1, layout.PanelContentSize(size).Width), Height: max(3, size.Height-8)}, e.Config.Palette())
+
 		return (chart.ComparisonPanel{Title: "Response share", Distribution: distribution, History: plot}).View(size, e.Config.Palette(), false)
 	}), nil
 }

@@ -43,50 +43,71 @@ func ASCII(content string) string {
 			return '|'
 		case '┌', '┐', '└', '┘', '├', '┤', '┬', '┴', '┼', '╭', '╮', '╰', '╯':
 			return '+'
-		case '●', '○', '•', '·', '▪':
+		case '●', '•', '·', '▪':
 			return '*'
+		case '○':
+			return 'o'
 		case '↑', '▲':
 			return '^'
-		case '↓', '▼':
+		case '↓', '▼', '▾':
 			return 'v'
-		case '→', '▶', '›':
+		case '→', '▶', '›', '▸':
 			return '>'
 		case '←', '◀', '‹':
 			return '<'
 		case '…':
-			return '~'
+			return '.'
 		case '✓', '✔':
 			return '+'
 		case '×', '✗':
 			return 'x'
 		}
+
 		return '?'
 	}, content)
 }
 
+// PanelContentSize excludes the border and horizontal content gutters.
+func PanelContentSize(size Size) Size {
+	borderSpan := 2 * theme.BorderCells
+	return Size{Width: max(0, size.Width-borderSpan-2*panelGutter(size.Width)), Height: max(0, size.Height-borderSpan)}
+}
+
+func panelGutter(width int) int {
+	innerWidth := max(0, width-2*theme.BorderCells)
+	// WHY: Tiny panels reduce gutters so at least one content cell can remain.
+	return min(theme.InlinePadding, max(0, (innerWidth-1)/2))
+}
+
 func Panel(title, content string, size Size, t theme.Theme, focused bool) string {
-	if size.Width < 4 || size.Height < 3 {
+	const minPanelWidth = 2*theme.BorderCells + 2
+
+	const minPanelHeight = 2*theme.BorderCells + 1
+
+	if size.Width < minPanelWidth || size.Height < minPanelHeight {
 		return Fit(content, size)
 	}
-	tl, tr, bl, br, horizontal, vertical := "┌", "┐", "└", "┘", "─", "│"
-	if t.ASCII {
-		tl, tr, bl, br, horizontal, vertical = "+", "+", "+", "+", "-", "|"
-	}
-	border := lipgloss.NewStyle().Foreground(t.Border)
-	if focused {
-		border = border.Foreground(t.Accent).Bold(true)
-	}
-	label := ansi.Truncate(" "+title+" ", size.Width-2, "")
+
+	innerWidth := size.Width - 2*theme.BorderCells
+	frame := t.FrameBorder()
+	border := t.BorderStyle(focused)
+	label := ansi.Truncate(" "+title+" ", innerWidth, "")
+
 	labelStyle := t.Subtle()
 	if focused {
 		labelStyle = t.Heading()
 	}
-	top := border.Render(tl) + labelStyle.Render(label) + border.Render(strings.Repeat(horizontal, max(0, size.Width-2-lipgloss.Width(label)))+tr)
-	inside := strings.Split(Fit(content, Size{size.Width - 2, size.Height - 2}), "\n")
+
+	top := border.Render(frame.TopLeft) + labelStyle.Render(label) + border.Render(strings.Repeat(frame.Top, max(0, innerWidth-lipgloss.Width(label)))+frame.TopRight)
+	padding := strings.Repeat(" ", panelGutter(size.Width))
+
+	inside := strings.Split(Fit(content, PanelContentSize(size)), "\n")
 	for i := range inside {
-		inside[i] = border.Render(vertical) + inside[i] + border.Render(vertical)
+		inside[i] = border.Render(frame.Left) + padding + inside[i] + padding + border.Render(frame.Right)
 	}
-	bottom := border.Render(bl + strings.Repeat(horizontal, size.Width-2) + br)
+
+	bottom := border.Render(frame.BottomLeft + strings.Repeat(frame.Bottom, innerWidth) + frame.BottomRight)
+
 	return strings.Join(append(append([]string{top}, inside...), bottom), "\n")
 }
 

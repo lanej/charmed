@@ -50,7 +50,7 @@ func atomsDefinitions() []Definition {
 	d = append(d,
 		Definition{ID: "text/signed-number", Title: "Atoms/Text/Signed number", Level: "Atoms", Family: "text", Description: "Exact signed values, configurable positive/negative tones, neutral zero, tiny-value preservation and explicit unavailable state.", Source: "text/signed.go", Controls: []string{"amount", "state", "emphasis"}, States: []string{"ready", "empty"}, Defaults: atomConfig(), Factory: signedNumberStory},
 		Definition{ID: "text/pill", Title: "Atoms/Text/Color pill", Level: "Atoms", Family: "text", Description: "Semantic tone and bright, normal or dim emphasis are independent. ASCII output retains the label.", Source: "text/text.go", Symbol: "Pill", Controls: []string{"value", "emphasis"}, Defaults: atomConfig(), Factory: pillsStory},
-		Definition{ID: "feedback/status", Title: "Atoms/Feedback/Status", Level: "Atoms", Family: "feedback", Description: "Reusable OK, WARN, ERROR, UNKNOWN and OFF states compose shared tone and emphasis atoms.", Source: "feedback/status.go", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: atomConfig(), Factory: statusStory},
+		Definition{ID: "feedback/status", Title: "Atoms/Feedback/Status", Level: "Atoms", Family: "feedback", Description: "Health and lifecycle states share semantic colors, named glyphs and emphasis-independent spacing.", Source: "feedback/status.go", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: atomConfig(), Factory: statusStory},
 		Definition{ID: "chart/picture", Title: "Atoms/Graphics/Picture", Level: "Atoms", Family: "graphics", Description: "Portable glyph rendering of an embedded image; no external image service.", Source: "story/atoms.go", Symbol: "pictureStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Defaults: DefaultConfig(), Factory: pictureStory},
 		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma", "legend"}, States: []string{"ready", "empty"}, Defaults: DefaultConfig(), Factory: bandStory},
 	)
@@ -85,13 +85,16 @@ func textStory(e Environment) (runtime.Scene, error) {
 }
 
 func inputStory(e Environment) (runtime.Scene, error) {
-	m := input.NewText(input.TextOptions{Placeholder: "Type a value", Value: e.Config.Value, Width: e.Config.Columns - 4, Disabled: e.Config.State == "disabled", Theme: e.Config.Palette()})
-	return &scene{init: m.Focus, resize: func(s layout.Size) { m.Resize(s.Width - 4) }, update: func(msg tea.Msg) tea.Cmd {
+	m := input.NewText(input.TextOptions{Placeholder: "Type a value", Value: e.Config.Value, Width: layout.PanelContentSize(e.Config.Size()).Width, Disabled: e.Config.State == "disabled", Theme: e.Config.Palette()})
+
+	return &scene{init: m.Focus, resize: func(s layout.Size) { m.Resize(layout.PanelContentSize(s).Width) }, update: func(msg tea.Msg) tea.Cmd {
 		var cmd tea.Cmd
+
 		m, cmd = m.Update(msg)
 		if k, ok := msg.(tea.KeyPressMsg); ok && k.String() == "enter" {
 			emit(e, interaction.Submitted{Component: "input", Value: m.Value()})
 		}
+
 		return cmd
 	}, view: func(s layout.Size) string {
 		return title("Text input", e) + layout.Panel("Value", m.View(), layout.Size{Width: s.Width, Height: 3}, e.Config.Palette(), m.Focused()) + footer("Type to edit / Enter emits Submitted / Ctrl+C exits", e)
@@ -218,22 +221,37 @@ func signedNumberStory(e Environment) (runtime.Scene, error) {
 		zero := text.SignedNumber{Available: true, Precision: 3, Unit: "pp", Emphasis: emphasis}
 		tiny := text.SignedNumber{Value: -.000001, Available: true, Precision: 3, Unit: "pp", Emphasis: emphasis}
 		missing := text.SignedNumber{Available: false}
+
 		return strings.Join([]string{"Signed number / " + e.Config.Emphasis, "", "Positive means improvement   " + standard.View(t), "Higher server-error rate     " + serverErrors.View(t), "Zero                        " + zero.View(t), "Small nonzero               " + tiny.View(t), "Unavailable                 " + missing.View(t)}, "\n")
 	}), nil
 }
 
 func pillsStory(e Environment) (runtime.Scene, error) {
-	return static(func(layout.Size) string {
+	return static(func(size layout.Size) string {
 		t := e.Config.Palette()
 		rows := []string{"Pills / tone and emphasis", ""}
+
 		for _, emphasis := range []text.Emphasis{text.Bright, text.Normal, text.Dim} {
-			line := []string{string(emphasis)}
+			line := []string{fmt.Sprintf("%-6s", emphasis)}
+			if size.Width < 70 {
+				rows = append(rows, string(emphasis))
+				line = nil
+			}
+
 			for _, tone := range []text.Tone{text.Neutral, text.Success, text.Info, text.Warning, text.Danger} {
+				if size.Width < 70 && len(line) == 3 {
+					rows = append(rows, strings.Join(line, "  "))
+					line = nil
+				}
+
 				line = append(line, text.Pill(string(tone), tone, t, emphasis))
 			}
+
 			rows = append(rows, strings.Join(line, "  "))
 		}
+
 		rows = append(rows, "", "Selected emphasis  "+text.Pill(e.Config.Value, text.Info, t, text.Emphasis(e.Config.Emphasis)))
+
 		return strings.Join(rows, "\n")
 	}), nil
 }
@@ -242,7 +260,7 @@ func statusStory(e Environment) (runtime.Scene, error) {
 	return static(func(layout.Size) string {
 		t := e.Config.Palette()
 		rows := []string{"Status atoms / " + e.Config.Emphasis, ""}
-		for _, status := range []feedback.Status{feedback.OK, feedback.Warn, feedback.Error, feedback.Unknown, feedback.Off} {
+		for _, status := range feedback.Statuses() {
 			rows = append(rows, status.View(text.Emphasis(e.Config.Emphasis), t))
 		}
 		return strings.Join(rows, "\n")

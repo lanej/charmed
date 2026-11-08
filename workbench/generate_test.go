@@ -154,10 +154,12 @@ func TestStaticGuide(t *testing.T) {
 			t.Errorf("fixture %s appears %d times, want once", d.ID, found)
 		}
 	}
+
 	if bytes.Contains(pages["index.html"], []byte("<table")) {
 		t.Error("coverage inventory must not replace the home showcase")
 	}
-	if !bytes.Contains(pages["index.html"], []byte("term-bgx")) {
+
+	if !bytes.Contains(pages["index.html"], []byte("background-color:#86cf9a")) {
 		t.Error("showcase must preserve native status pill fills")
 	}
 
@@ -197,6 +199,7 @@ func TestStaticGuide(t *testing.T) {
 		case "Screens", "Templates":
 			target = "examples.html"
 		}
+
 		if !navComponents[target][d.ID] {
 			t.Errorf("missing sidebar link for %s", d.ID)
 		}
@@ -207,13 +210,16 @@ func TestStaticGuide(t *testing.T) {
 			}
 		}
 	}
+
 	stale := filepath.Join(directory, "obsolete.js")
 	if err := os.WriteFile(stale, []byte("old browser bundle"), 0644); err != nil {
 		t.Fatal(err)
 	}
+
 	if err := workbench.Generate(out); err != nil {
 		t.Fatal(err)
 	}
+
 	if _, err := os.Stat(stale); !os.IsNotExist(err) {
 		t.Fatalf("stale output survived regeneration: %v", err)
 	}

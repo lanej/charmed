@@ -54,17 +54,23 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 			high = max(high, m.Value)
 		}
 	}
+
 	if !math.IsInf(low, 0) {
 		pad := max((high-low)*0.07, (d.Max-d.Min)*0.00001)
 		low = max(d.Min, low-pad)
 		high = min(d.Max, high+pad)
 	}
-	var lines []string
-	var legend []legendEntry
+
+	var (
+		lines  []string
+		legend []legendEntry
+	)
+
 	prefixWidth := 0
 	if d.Compact {
 		prefixWidth = min(29, max(8, width/3))
 	}
+
 	for i, s := range d.Series {
 		style := t.Text().Foreground(t.SeriesColor(i))
 		if s.Members == 0 {
@@ -127,9 +133,11 @@ type ComparisonPanel struct {
 func (p ComparisonPanel) View(size layout.Size, t theme.Theme, focused bool) string {
 	lines := append([]string(nil), p.Summary...)
 	if len(p.Distribution.Series) > 0 {
-		lines = append(lines, p.Distribution.View(max(1, size.Width-2), t))
+		lines = append(lines, p.Distribution.View(max(1, layout.PanelContentSize(size).Width), t))
 	}
+
 	lines = append(lines, p.History.View())
+
 	return layout.Panel(p.Title, strings.Join(lines, "\n"), size, t, focused)
 }
 
@@ -148,13 +156,16 @@ type BandMatrix struct {
 
 func (b BandMatrix) View(size layout.Size, t theme.Theme, focused bool) string {
 	var rows []string
+
 	for _, row := range b.Rows {
 		d := row.Distribution
 		d.Compact = true
-		rows = append(rows, row.Title+"\n"+d.View(max(1, size.Width-2), t))
+		rows = append(rows, row.Title+"\n"+d.View(max(1, layout.PanelContentSize(size).Width), t))
 	}
+
 	if len(rows) == 0 {
 		rows = []string{"No observations"}
 	}
+
 	return layout.Panel(b.Title, strings.Join(rows, "\n\n"), size, t, focused)
 }

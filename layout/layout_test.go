@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"charm.land/lipgloss/v2"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/theme"
 )
@@ -24,6 +25,25 @@ func TestFitUsesDisplayCells(t *testing.T) {
 		}
 	}
 }
+
+func TestPanelReservesGuttersInsideItsAllocation(t *testing.T) {
+	for _, width := range []int{4, 5, 13, 40} {
+		for _, focused := range []bool{false, true} {
+			size := layout.Size{Width: width, Height: 4}
+
+			view := layout.Panel("", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", size, theme.New(theme.Dark), focused)
+			if lipgloss.Width(view) != width || lipgloss.Height(view) != size.Height {
+				t.Fatalf("panel escaped allocation at width %d", width)
+			}
+
+			row := strings.Split(ansi.Strip(view), "\n")[1]
+			if width >= 5 && (!strings.HasPrefix(row, "│ A") || !strings.HasSuffix(row, " │")) {
+				t.Fatalf("missing content gutter: %q", row)
+			}
+		}
+	}
+}
+
 func TestPanelIncludesItsBorderInAllocation(t *testing.T) {
 	out := layout.Panel("A very long title", "wide 界 content", layout.Size{Width: 13, Height: 5}, theme.New(theme.Dark), true)
 	if lipgloss.Width(out) != 13 || lipgloss.Height(out) != 5 {

@@ -1,6 +1,9 @@
 package feedback
 
 import (
+	"image/color"
+
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 )
@@ -9,28 +12,80 @@ import (
 type Status string
 
 const (
-	OK      Status = "OK"
-	Warn    Status = "WARN"
-	Error   Status = "ERROR"
-	Unknown Status = "UNKNOWN"
-	Off     Status = "OFF"
+	OK       Status = "OK"
+	Warn     Status = "WARN"
+	Error    Status = "ERROR"
+	Unknown  Status = "UNKNOWN"
+	Off      Status = "OFF"
+	Pending  Status = "PENDING"
+	Running  Status = "RUNNING"
+	Paused   Status = "PAUSED"
+	Disabled Status = "DISABLED"
 )
+
+// Statuses returns the display catalog in its learning order.
+func Statuses() []Status {
+	return []Status{OK, Warn, Error, Unknown, Off, Pending, Running, Paused, Disabled}
+}
+
+// MaxStatusWidth includes the glyph, separating space and horizontal insets.
+// All emphasis levels retain this geometry.
+func MaxStatusWidth(t theme.Theme) int {
+	width := 0
+	for _, status := range Statuses() {
+		width = max(width, ansi.StringWidth(status.View(text.Normal, t)))
+	}
+
+	return width
+}
 
 func (s Status) View(emphasis text.Emphasis, t theme.Theme) string {
 	tone := text.Neutral
+	glyph := theme.GlyphUnknown
+
 	switch s {
 	case OK:
 		tone = text.Success
+		glyph = theme.GlyphOK
 	case Warn:
 		tone = text.Warning
+		glyph = theme.GlyphWarning
 	case Error:
 		tone = text.Danger
-	case Unknown, Off:
+		glyph = theme.GlyphError
+	case Unknown:
+		t = statusTheme(t, t.Unknown, t.DimUnknown)
+	case Off:
+		glyph = theme.GlyphOff
+		t = statusTheme(t, t.Inactive, t.DimInactive)
+	case Pending:
+		glyph = theme.GlyphPending
+		t = statusTheme(t, t.Pending, t.DimPending)
+	case Running:
+		glyph = theme.GlyphRunning
+		t = statusTheme(t, t.Running, t.DimRunning)
+	case Paused:
+		glyph = theme.GlyphPaused
+		t = statusTheme(t, t.Paused, t.DimPaused)
+	case Disabled:
+		glyph = theme.GlyphDisabled
+		t = statusTheme(t, t.Inactive, t.DimInactive)
 	default:
 		s = Unknown
+		t = statusTheme(t, t.Unknown, t.DimUnknown)
 	}
-	if emphasis == text.Bright {
-		return text.Pill(string(s), tone, t, emphasis)
+
+	return text.Pill(t.Glyph(glyph)+" "+string(s), tone, t, emphasis)
+}
+
+func statusTheme(t theme.Theme, normal, dim color.Color) theme.Theme {
+	if normal != nil {
+		t.Foreground = normal
 	}
-	return text.ToneStyle(tone, emphasis, t).Render(string(s))
+
+	if dim != nil {
+		t.DimForeground = dim
+	}
+
+	return t
 }

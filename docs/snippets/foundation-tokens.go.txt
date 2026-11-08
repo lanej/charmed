@@ -1,0 +1,11 @@
+t := theme.New(theme.Dark)
+
+// Keep shape and color separate; native Lip Gloss styles stay available.
+frame := lipgloss.NewStyle().
+    Border(t.FrameBorder()).
+    BorderForeground(t.BorderStyle(true).GetForeground()).
+    Padding(theme.SpaceNone, theme.InlinePadding)
+
+selected := t.Selection().Render("Selected item")
+control := t.Control().Render(t.Glyph(theme.GlyphSearch) + " Search")
+view := frame.Render(control + "\n" + selected)

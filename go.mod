@@ -11,13 +11,12 @@ require (
 	charm.land/lipgloss/v2 v2.0.6
 	charm.land/log/v2 v2.0.1
 	github.com/NimbleMarkets/ntcharts/v2 v2.9.0
-	github.com/buildkite/terminal-to-html/v3 v3.16.3
 	github.com/charmbracelet/colorprofile v0.4.3
 	github.com/charmbracelet/harmonica v0.2.0
+	github.com/charmbracelet/ultraviolet v0.0.0-20261023060817-a45b7c86333f
 	github.com/charmbracelet/x/ansi v0.11.9
 	github.com/coder/websocket v1.8.15
 	github.com/creack/pty v1.1.24
-	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/spf13/cobra v1.10.2
 	github.com/yuin/goldmark v1.7.17
 	golang.org/x/net v0.60.0
@@ -28,7 +27,6 @@ require (
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/catppuccin/go v0.2.0 // indirect
-	github.com/charmbracelet/ultraviolet v0.0.0-20261023060817-a45b7c86333f // indirect
 	github.com/charmbracelet/x/exp/charmtone v0.0.0-20250603201427-c31516f43444 // indirect
 	github.com/charmbracelet/x/exp/ordered v0.1.0 // indirect
 	github.com/charmbracelet/x/exp/slice v0.0.0-20250327172914-2fdc97757edf // indirect
@@ -46,6 +44,7 @@ require (
 	github.com/lrstanley/bubblezone/v2 v2.0.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.4.1 // indirect
 	github.com/mattn/go-runewidth v0.0.31 // indirect
+	github.com/microcosm-cc/bluemonday v1.0.27 // indirect
 	github.com/mitchellh/hashstructure/v2 v2.0.2 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
 	github.com/muesli/mango v0.1.0 // indirect
