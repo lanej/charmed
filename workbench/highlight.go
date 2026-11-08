@@ -39,6 +39,7 @@ func highlightMarkdown(markdownHTML string) string {
 		}
 		return "<code class=\"inline-code\">" + string(highlightGo(value)) + "</code>"
 	})
+
 	return headingPermalinks(strings.ReplaceAll(rendered, "<table>", "<table tabindex=\"0\">"))
 }
 
