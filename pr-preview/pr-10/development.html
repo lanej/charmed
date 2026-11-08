@@ -33,7 +33,7 @@
 
 <h1>Develop &amp; publish</h1>
 <h2>Run native fixtures</h2>
-<p>Requires Go 1.26.8 or later.</p>
+<p>Requires Go 1.26.10 or later.</p>
 <pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench list
 <span class="syn-command">go</span> run ./cmd/workbench run screen/services
 <span class="syn-command">go</span> run ./cmd/workbench run chart/timeseries <span class="syn-flag">--theme</span> light <span class="syn-flag">--series</span> 3
@@ -78,10 +78,10 @@ installed, run <code class="inline-code">pr<span class="syn-operator">-</span>pr
 <p><code class="inline-code">go run ./cmd/workbench generate --out docs</code> remains the same local
 build command.</p>
 <h2>Verify</h2>
-<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> vet ./...
-<span class="syn-command">go</span> test <span class="syn-flag">-race</span> ./...
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">bash</span> scripts/check-go.sh
 <span class="syn-command">go</span> run ./cmd/workbench generate <span class="syn-flag">--out</span> docs
 </code></pre>
+<p>The Go quality runner selects the module's Go version by default and enforces formatting, vet, module tidiness, strict lint, uncached race tests and reachable-vulnerability checks. CI runs the same command on Linux and macOS. Existing lint and style findings use a shrinking baseline; new findings fail. Run <code class="inline-code">bash scripts/check-go.sh lint</code> while editing and <code class="inline-code">bash scripts/check-go.sh ratchet</code> after resolving existing findings. Never enlarge the baseline to accept new findings.</p>
 <p>The generator tests check static output, component sidebar links, variant tab semantics, syntax highlighting, composition links, source escaping, native fixture coverage and repeatable builds. The native suite covers terminal bounds, focus, selection, resize and process cleanup.</p>
 <p>See the <a href="brand.html">brand sheet</a> for the website palette, typography, lockup, and native status color separation.</p>
 <h2>Coverage</h2>
