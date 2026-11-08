@@ -17,6 +17,7 @@ import (
 	"github.com/lanej/charmed/theme"
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
 )
 
 //go:embed site/*
@@ -68,7 +69,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		{File: "brand.html", Title: "Brand sheet"},
 	}
 	brand := newBrandPalette(theme.New(theme.Dark))
-	markdown := goldmark.New(goldmark.WithExtensions(extension.GFM))
+	markdown := goldmark.New(goldmark.WithExtensions(extension.GFM), goldmark.WithParserOptions(parser.WithAutoHeadingID()))
 	for i := range pages {
 		page := &pages[i]
 		page.Brand = brand
