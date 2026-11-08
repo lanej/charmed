@@ -24,6 +24,7 @@ type Theme struct {
 	Background, Surface, Foreground, Muted, Border, Accent    color.Color
 	SelectionBackground                                       color.Color
 	Success, Info, Warning, Danger                            color.Color
+	Unknown, Inactive, DimUnknown, DimInactive                color.Color
 	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger color.Color
 	Series                                                    []color.Color
 }
@@ -38,6 +39,8 @@ func New(mode Mode) Theme {
 		t.Success, t.Warning, t.Danger = hex("#166534"), hex("#92400e"), hex("#b91c1c")
 		t.Info = hex("#1d4ed8")
 		t.SelectionBackground = hex("#d1e8e3")
+		t.Unknown, t.Inactive = hex("#475e86"), hex("#626262")
+		t.DimUnknown, t.DimInactive = hex("#5c6e8a"), hex("#666666")
 		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#526176"), hex("#477451"), hex("#526fa8"), hex("#8a6841"), hex("#a05b5b")
 		t.Series = colors("#6654ad", "#3568b0", "#a3497f", "#8c663d", "#575ba6")
 	case Contrast:
@@ -47,6 +50,8 @@ func New(mode Mode) Theme {
 		t.Success, t.Warning, t.Danger = hex("#86efac"), hex("#fde047"), hex("#fca5a5")
 		t.Info = hex("#93c5fd")
 		t.SelectionBackground = hex("#1c4245")
+		t.Unknown, t.Inactive = hex("#b7c9ed"), hex("#b0b0b0")
+		t.DimUnknown, t.DimInactive = hex("#8da4cb"), hex("#929292")
 		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#c0c0c0"), hex("#6cbe80"), hex("#739ac7"), hex("#c5b75a"), hex("#d48282")
 		t.Series = colors("#c8b4ff", "#9ac2ff", "#f4b0d8", "#e8c49a", "#abb6ff")
 	case Mono:
@@ -61,6 +66,8 @@ func New(mode Mode) Theme {
 		t.Success, t.Warning, t.Danger = hex("#86cf9a"), hex("#f2c879"), hex("#f28b82")
 		t.Info = hex("#78b8ed")
 		t.SelectionBackground = hex("#24433f")
+		t.Unknown, t.Inactive = hex("#a7bce0"), hex("#9a9a9a")
+		t.DimUnknown, t.DimInactive = hex("#829bc3"), hex("#898989")
 		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#a8a8a8"), hex("#629c73"), hex("#5a8fb9"), hex("#b5945c"), hex("#c17670")
 		t.Series = colors("#b9a7f5", "#87b5f9", "#e49ac2", "#d7b58b", "#8f9de8")
 	}

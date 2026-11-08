@@ -34,10 +34,14 @@ func themeStory(e Environment) (runtime.Scene, error) {
 	return static(func(size layout.Size) string {
 		t := e.Config.Palette()
 
-		rows := []string{title("Semantic tokens / normal and dim", e), t.Text().Render("Primary content"), t.Subtle().Render("Supporting information"), t.Heading().Render("Accent / interaction"), ""}
+		rows := []string{"Semantic tokens / normal and dim", "", t.Text().Render("Primary content"), t.Subtle().Render("Supporting information"), t.Heading().Render("Accent / interaction"), ""}
 		for _, tone := range []text.Tone{text.Neutral, text.Success, text.Info, text.Warning, text.Danger} {
 			rows = append(rows, text.ToneStyle(tone, text.Normal, t).Render(fmt.Sprintf("%-9s", tone))+"  "+text.ToneStyle(tone, text.Dim, t).Render("dim "+string(tone)))
 		}
+
+		rows = append(rows,
+			t.Text().Foreground(t.Unknown).Render("unknown  ")+"  "+t.Text().Foreground(t.DimUnknown).Render("dim unknown"),
+			t.Text().Foreground(t.Inactive).Render("off      ")+"  "+t.Text().Foreground(t.DimInactive).Render("dim off"))
 
 		rows = append(rows, "", "Categorical data / independent palette")
 

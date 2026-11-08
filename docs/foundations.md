@@ -6,7 +6,7 @@ The default saved frame is the truecolor reference. Separate tabs show narrow, 2
 
 ## Colors and emphasis
 
-Foreground and muted text are neutral. Accent identifies interaction; success, information, warning and danger identify semantic meaning. Categorical series use a separate palette and never alias those interface or status tokens. Series order remains stable across views; labels and matching legend keys retain identity when fallback colors converge.
+Foreground and muted text are neutral. Accent identifies interaction; success, information, warning and danger identify semantic meaning. UNKNOWN uses a cool slate-blue tone for uncertainty; OFF uses achromatic gray for inactivity. Their normal and dim tokens remain separate, while labels and glyphs retain meaning without color. Categorical series use a separate palette and never alias those interface or status tokens. Series order remains stable across views; labels and matching legend keys retain identity when fallback colors converge.
 
 Bright, normal and dim emphasis preserve the label, glyph and cell allocation. Dim uses explicit shades of each semantic hue instead of blending every tone toward gray or relying on the terminal's faint attribute. The built-in dim text tokens meet a 4.5:1 contrast floor against their theme background; native fonts, color profiles and terminal settings still affect appearance. Monochrome keeps labels, glyphs and bright weight; normal and dim may coincide without color.
 

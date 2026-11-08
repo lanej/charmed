@@ -1,9 +1,11 @@
 package feedback_test
 
 import (
+	"image/color"
 	"strings"
 	"testing"
 
+	uv "github.com/charmbracelet/ultraviolet"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/attention"
 	"github.com/lanej/charmed/feedback"
@@ -29,6 +31,39 @@ func TestStatusAtomsKeepUnavailableAndDisabledDistinct(t *testing.T) {
 		palette := theme.New(mode)
 		if feedback.Attention(attention.Off, palette) != "" || !strings.Contains(ansi.Strip(feedback.Attention(attention.Unknown, palette)), "UNKNOWN") {
 			t.Fatal("off and unknown attention states were conflated")
+		}
+	}
+}
+
+func TestUnknownIsCoolAndOffIsAchromaticAtEveryEmphasis(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast} {
+		palette := theme.New(mode)
+
+		for _, emphasis := range []text.Emphasis{text.Bright, text.Normal, text.Dim} {
+			colors := make([]color.Color, 0, 2)
+
+			for _, status := range []feedback.Status{feedback.Unknown, feedback.Off} {
+				cells := uv.NewStyledString(status.View(emphasis, palette)).Lines(ansi.GraphemeWidth)[0]
+				if emphasis == text.Bright {
+					colors = append(colors, cells[1].Style.Bg)
+				} else {
+					colors = append(colors, cells[1].Style.Fg)
+				}
+			}
+
+			if colors[0] == nil || colors[1] == nil {
+				t.Fatalf("%s %s status color disappeared", mode, emphasis)
+			}
+
+			r, _, b, _ := colors[0].RGBA()
+			if b <= r {
+				t.Fatalf("%s %s UNKNOWN lost its cool hue", mode, emphasis)
+			}
+
+			r, g, b, _ := colors[1].RGBA()
+			if r != g || g != b {
+				t.Fatalf("%s %s OFF must remain achromatic", mode, emphasis)
+			}
 		}
 	}
 }

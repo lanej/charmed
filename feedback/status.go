@@ -1,6 +1,8 @@
 package feedback
 
 import (
+	"image/color"
+
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 )
@@ -31,11 +33,26 @@ func (s Status) View(emphasis text.Emphasis, t theme.Theme) string {
 		tone = text.Danger
 		glyph = theme.GlyphError
 	case Unknown:
+		t = statusTheme(t, t.Unknown, t.DimUnknown)
 	case Off:
 		glyph = theme.GlyphOff
+		t = statusTheme(t, t.Inactive, t.DimInactive)
 	default:
 		s = Unknown
+		t = statusTheme(t, t.Unknown, t.DimUnknown)
 	}
 
 	return text.Pill(t.Glyph(glyph)+" "+string(s), tone, t, emphasis)
+}
+
+func statusTheme(t theme.Theme, normal, dim color.Color) theme.Theme {
+	if normal != nil {
+		t.Foreground = normal
+	}
+
+	if dim != nil {
+		t.DimForeground = dim
+	}
+
+	return t
 }
