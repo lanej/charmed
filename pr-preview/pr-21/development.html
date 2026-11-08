@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Develop &amp; publish · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Develop &amp; publish</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Charmed</a><a href="foundations.html" >Foundations</a><a href="components.html" >Components</a><a href="examples.html" >Composition &amp; examples</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" aria-current="page">Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Charmed</a><a href="foundations.html" >Foundations</a><a href="components.html" >Components</a><a href="examples.html" >Composition &amp; examples</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" aria-current="page">Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+</aside>
+<main id="main">
+
+<h1>Develop &amp; publish</h1>
+<h2>Run native fixtures</h2>
+<p>Requires Go 1.26.10 or later.</p>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench list
+<span class="syn-command">go</span> run ./cmd/workbench run screen/services
+<span class="syn-command">go</span> run ./cmd/workbench run chart/timeseries <span class="syn-flag">--theme</span> light <span class="syn-flag">--series</span> 3
+<span class="syn-command">go</span> run ./cmd/workbench run chart/distributions <span class="syn-flag">--legend</span>
+<span class="syn-command">go</span> run ./cmd/workbench capture screen/services <span class="syn-flag">--plain</span>
+</code></pre>
+<p>Use Ctrl+C to exit a native story. The library and native runner retain their terminal interactions independently of this static guide.</p>
+<h2>Build the guide</h2>
+<p>From the repository root:</p>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">just</span> docs
+</code></pre>
+<p>Publish <code class="inline-code">docs/dist/</code> to GitHub Pages or any static host. The Pages workflow builds with Go and uploads that directory. No Node, npm or running preview service is required. A small, local JavaScript file enhances accessible variant tabs; without JavaScript, all snapshots remain visible as ordinary static sections. All navigation and assets use relative URLs for repository subpaths. To preview, serve <code class="inline-code">docs/dist/</code> with any static HTTP server.</p>
+<p>Edit the Markdown guides in <code class="inline-code">docs/</code> and the shared HTML/CSS in <code class="inline-code">workbench/site/</code>. The generator reads the compiled story registry, validates composition and captures deterministic frames. Foundations share one page, component capabilities share another, and full screens sit together under examples. The sidebar links directly to every fixture, with visual previews preceding syntax-highlighted source. Stable story IDs are section anchors.</p>
+<h2>Add a fixture</h2>
+<p>Add a wrapper where shared defaults or composition help. Put its deterministic fixture and registration in the matching <code class="inline-code">story/foundations.go</code>, <code class="inline-code">atoms<span class="syn-operator">.</span><span class="syn-keyword">go</span></code>, <code class="inline-code">atoms_charts<span class="syn-operator">.</span><span class="syn-keyword">go</span></code>, <code class="inline-code">molecules<span class="syn-operator">.</span><span class="syn-keyword">go</span></code>, <code class="inline-code">organisms<span class="syn-operator">.</span><span class="syn-keyword">go</span></code> or <code class="inline-code">screens<span class="syn-operator">.</span><span class="syn-keyword">go</span></code> file. Go packages remain organized by capability.</p>
+<p>Declare actual building blocks in <code class="inline-code">Definition<span class="syn-operator">.</span>Composes</code>. The generator rejects missing references, duplicates, cycles and references to higher atomic levels. It renders links to the corresponding sections automatically. Empty levels need no placeholders.</p>
+<p>Keep application services outside the model. Use typed events, controlled steps and bounded sample data. Browser WASM remains an optional integration because the current Booba route requires a patched Bubble Tea replacement.</p>
+<h2>Pull request previews</h2>
+<p>Each same-repository PR receives a public, revision-verified snapshot of the
+complete static guide at:</p>
+<ul>
+<li>Components: <code class="inline-code">https://lanej.io/charmed/pr-preview/pr-&lt;number&gt;/components.html</code></li>
+<li>Brand sheet: <code class="inline-code">https://lanej.io/charmed/pr-preview/pr-&lt;number&gt;/brand.html</code></li>
+<li>Catalog: <code class="inline-code">https://lanej.io/charmed/pr-preview/pr-&lt;number&gt;/</code></li>
+</ul>
+<p>The unprivileged <code class="inline-code">pr<span class="syn-operator">-</span>preview<span class="syn-operator">.</span>yml</code> workflow generates and stamps the PR's
+actual head SHA. A separate trusted publishing job stores the generated static
+files in <code class="inline-code">pr<span class="syn-operator">-</span>preview<span class="syn-operator">-</span>cache</code>, then dispatches the existing main-branch
+Pages workflow. That workflow overlays the snapshots onto the production catalog
+without replacing its root pages. The preview is updated on each push and
+removed when the PR closes.</p>
+<p>The PR description receives direct browser links <strong>only after</strong> the published
+<code class="inline-code">revision<span class="syn-operator">.</span>txt</code> matches the PR's current head. The preview section is
+maintained between <code class="inline-code">&lt;!-- charmed-preview:start --&gt;</code> and
+<code class="inline-code">&lt;!-- charmed-preview:end --&gt;</code> comments; edits elsewhere are retained.
+Do not add a link to the PR's own GitHub URL inside its description.
+Previews are marked <code class="inline-code">noindex<span class="syn-operator">,</span>nofollow</code> and use relative static assets.</p>
+<p>Fork PRs intentionally do not receive privileged preview publishing. They
+still receive regular CI checks. If the publisher workflow has just been
+installed, run <code class="inline-code">pr<span class="syn-operator">-</span>preview<span class="syn-operator">.</span>yml</code> manually with the PR number once it is on
+<code class="inline-code">main</code> to seed previews for already-open PRs.</p>
+<p><code class="inline-code">just docs</code> runs the same local build command used by CI and publishing workflows.</p>
+<h2>Verify</h2>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">just</span> check
+<span class="syn-command">just</span> docs
+</code></pre>
+<p>Install <a href="https://github.com/casey/just#installation">just</a> and run <code class="inline-code">just</code> to list targets. The targets select the module's Go version by default. <code class="inline-code">just check</code> enforces formatting, vet, module tidiness, strict lint, uncached race tests and reachable-vulnerability checks; CI runs it on Linux and macOS. Run <code class="inline-code">just lint</code> while editing, <code class="inline-code">just test</code> or <code class="inline-code">just vuln</code> for individual gates, and <code class="inline-code">just fmt path/to/file.go</code> or <code class="inline-code">just fix ./path/to/package</code> for scoped fixes. Existing lint and style findings use a shrinking baseline; run <code class="inline-code">just ratchet</code> after resolving them. Never enlarge the baseline to accept new findings.</p>
+<p>The generator tests check static output, component sidebar links, variant tab semantics, syntax highlighting, composition links, source escaping, native fixture coverage and repeatable builds. The native suite covers terminal bounds, focus, selection, resize and process cleanup.</p>
+<p>See the <a href="brand.html">brand sheet</a> for the website palette, typography, lockup, and native status color separation.</p>
+<h2>Coverage</h2>
+<p>Implemented building blocks and optional integrations are listed below.</p>
+<p>Terminal snapshots use a bundled <a href="https://github.com/cormullion/juliamono/blob/0dfc749503778730d6af79183a17fcde668ae626/webfonts/JuliaMono-Regular.woff2">JuliaMono webfont</a> so braille dots and box-drawing glyphs retain a consistent cell width. It is distributed under its <a href="assets/JuliaMono-LICENSE.txt">included license</a>.</p>
+
+
+
+
+
+<h2>Coverage</h2><div class="table-wrap"><table tabindex="0"><thead><tr><th>Upstream</th><th>Status</th><th>Integration</th></tr></thead><tbody><tr><td>Bubble Tea</td><td>implemented</td><td>One root runtime and isolated native PTY previews.</td></tr><tr><td>Lip Gloss</td><td>implemented</td><td>Semantic styles, text, cell sizing and responsive panels.</td></tr><tr><td>Bubbles inputs</td><td>implemented</td><td>Text input, textarea and native cursor behavior; concrete models remain accessible.</td></tr><tr><td>Bubbles collections</td><td>implemented</td><td>Table, list, tree, file picker and viewport.</td></tr><tr><td>Bubbles feedback</td><td>implemented</td><td>Spinner, progress, paginator, timer, stopwatch, help and native key bindings.</td></tr><tr><td>Huh</td><td>implemented</td><td>Themed forms, input, select, multiselect, confirm, text and note fixtures; Huh owns nested focus.</td></tr><tr><td>Glamour</td><td>implemented</td><td>Markdown rendered into a bounded viewport.</td></tr><tr><td>Harmonica</td><td>implemented</td><td>Explicit spring state with reduced-motion behavior.</td></tr><tr><td>ntcharts core</td><td>implemented</td><td>Canvas, bars, heatmap, line, scatter, streamline, waveline, time series, OHLC and sparklines; native models remain accessible.</td></tr><tr><td>Fang / Cobra</td><td>implemented</td><td>Command help, completions and error presentation.</td></tr><tr><td>Ultraviolet / ANSI / colorprofile</td><td>implemented</td><td>Reuse Charm&#39;s renderer; cell-aware clipping and explicit truecolor/256/16/no-color output.</td></tr><tr><td>ntcharts pictures</td><td>partial</td><td>Portable glyph picture rendering is implemented. URL fetching, heat pictures and high-resolution graphics integrations remain optional.</td></tr><tr><td>ntcharts companion viewers</td><td>planned</td><td>PDF, SVG, maps and 3D are separate integrations, outside the core dependency graph.</td></tr><tr><td>Wish</td><td>planned</td><td>Optional SSH host adapter.</td></tr><tr><td>Log</td><td>implemented</td><td>Structured log entries rendered with Charm Log into a bounded viewport; producers remain outside the UI thread.</td></tr><tr><td>Gum / VHS / Freeze / CharmTone</td><td>reference</td><td>Shell workflows, recording/export and palette integrations; not dependencies of the Go components.</td></tr><tr><td>Booba / WASM</td><td>planned</td><td>Native live previews and static snapshots currently avoid requiring a Bubble Tea fork.</td></tr></tbody></table></div>
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
