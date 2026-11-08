@@ -14,9 +14,9 @@ import (
 )
 
 func TestStatusAtomsKeepUnavailableAndDisabledDistinct(t *testing.T) {
-	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Mono} {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast, theme.Mono} {
 		for _, emphasis := range []text.Emphasis{text.Bright, text.Normal, text.Dim} {
-			for _, status := range []feedback.Status{feedback.OK, feedback.Warn, feedback.Error, feedback.Unknown, feedback.Off} {
+			for _, status := range feedback.Statuses() {
 				label := ansi.Strip(status.View(emphasis, theme.New(mode)))
 				if !strings.Contains(label, string(status)) {
 					t.Fatalf("%s status lost its label", status)
@@ -64,6 +64,42 @@ func TestUnknownIsCoolAndOffIsAchromaticAtEveryEmphasis(t *testing.T) {
 			if r != g || g != b {
 				t.Fatalf("%s %s OFF must remain achromatic", mode, emphasis)
 			}
+		}
+	}
+}
+
+func TestLifecycleStatusesKeepLabelsGlyphsAndReservedWidth(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast, theme.Mono} {
+		palette := theme.New(mode)
+
+		for _, state := range []struct {
+			status         feedback.Status
+			unicode, ascii string
+		}{
+			{feedback.Pending, "◷", "p"},
+			{feedback.Running, "▶", ">"},
+			{feedback.Paused, "‖", "="},
+			{feedback.Disabled, "⊘", "/"},
+		} {
+			glyph := state.unicode
+			if palette.ASCII {
+				glyph = state.ascii
+			}
+
+			for _, emphasis := range []text.Emphasis{text.Bright, text.Normal, text.Dim} {
+				want := " " + glyph + " " + string(state.status) + " "
+				if palette.ASCII {
+					want = "[" + glyph + " " + string(state.status) + "]"
+				}
+
+				if got := ansi.Strip(state.status.View(emphasis, palette)); got != want {
+					t.Fatalf("%s %s lifecycle status: got %q want %q", mode, emphasis, got, want)
+				}
+			}
+		}
+
+		if feedback.MaxStatusWidth(palette) != 12 {
+			t.Fatal("status allocation must fit the twelve-cell DISABLED pill")
 		}
 	}
 }

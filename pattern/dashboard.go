@@ -111,7 +111,8 @@ func (m *Dashboard) Resize(size layout.Size) {
 	m.focus = interaction.NewFocus(ids...)
 	m.focus.Set(current)
 	w := max(4, layout.PanelContentSize(layout.Size{Width: m.leftWidth}).Width)
-	m.Table.SetColumns([]table.Column{{Title: "SERVICE", Width: max(1, w-15)}, {Title: "STATE", Width: 11}})
+	statusWidth := feedback.MaxStatusWidth(m.theme)
+	m.Table.SetColumns([]table.Column{{Title: "SERVICE", Width: max(1, w-statusWidth-4)}, {Title: "STATE", Width: statusWidth}})
 	m.Table.SetWidth(w)
 	m.Table.SetHeight(max(1, m.tableHeight-1))
 	m.Details.SetWidth(w)
@@ -292,8 +293,16 @@ func serviceStatus(value string) feedback.Status {
 		return feedback.Warn
 	case "failed", "error":
 		return feedback.Error
-	case "off", "disabled":
+	case "off":
 		return feedback.Off
+	case "disabled":
+		return feedback.Disabled
+	case "pending":
+		return feedback.Pending
+	case "running":
+		return feedback.Running
+	case "paused":
+		return feedback.Paused
 	default:
 		return feedback.Unknown
 	}

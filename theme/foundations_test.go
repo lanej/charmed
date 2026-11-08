@@ -35,7 +35,7 @@ func TestDimTokensRemainReadableAndSeriesDoNotAliasSemanticRoles(t *testing.T) {
 			t.Fatalf("%s selection surface makes nested plain text unreadable", mode)
 		}
 
-		for _, dim := range []color.Color{palette.DimForeground, palette.DimSuccess, palette.DimInfo, palette.DimWarning, palette.DimDanger, palette.DimUnknown, palette.DimInactive} {
+		for _, dim := range []color.Color{palette.DimForeground, palette.DimSuccess, palette.DimInfo, palette.DimWarning, palette.DimDanger, palette.DimUnknown, palette.DimInactive, palette.DimPending, palette.DimRunning, palette.DimPaused} {
 			value := luminance(dim)
 
 			ratio := (max(value, background) + .05) / (min(value, background) + .05)
@@ -45,7 +45,7 @@ func TestDimTokensRemainReadableAndSeriesDoNotAliasSemanticRoles(t *testing.T) {
 		}
 
 		for i, series := range palette.Series {
-			for _, semantic := range []color.Color{palette.Accent, palette.Success, palette.Info, palette.Warning, palette.Danger, palette.Unknown, palette.Inactive} {
+			for _, semantic := range []color.Color{palette.Accent, palette.Success, palette.Info, palette.Warning, palette.Danger, palette.Unknown, palette.Inactive, palette.Pending, palette.Running, palette.Paused} {
 				if color.NRGBAModel.Convert(series) == color.NRGBAModel.Convert(semantic) {
 					t.Fatalf("%s series %d aliases a semantic token", mode, i)
 				}

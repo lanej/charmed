@@ -10,6 +10,24 @@ Foreground and muted text are neutral. Accent identifies interaction; success, i
 
 Bright, normal and dim emphasis preserve the label, glyph and cell allocation. Dim uses explicit shades of each semantic hue instead of blending every tone toward gray or relying on the terminal's faint attribute. The built-in dim text tokens meet a 4.5:1 contrast floor against their theme background; native fonts, color profiles and terminal settings still affect appearance. Monochrome keeps labels, glyphs and bright weight; normal and dim may coincide without color.
 
+## Display states
+
+Health and lifecycle states share one catalog through `feedback.Statuses()`. The application decides when each state applies; rendering a state never starts, pauses or disables work. Allocate fixed status columns with `feedback.MaxStatusWidth` so longer labels retain their glyphs and padding.
+
+| State | Meaning | Color family |
+| --- | --- | --- |
+| OK | Healthy or successful | Green |
+| WARN | Attention needed | Amber |
+| ERROR | Failed or unhealthy | Red |
+| UNKNOWN | State cannot be established | Slate blue |
+| OFF | Switched off or inactive | Gray |
+| PENDING | Waiting to start | Blue |
+| RUNNING | Actively executing | Cyan |
+| PAUSED | Temporarily suspended and resumable | Sand |
+| DISABLED | Unavailable to start or select | Gray, with a slashed-circle glyph |
+
+Pending, running and paused have independent normal/dim tokens. Disabled shares the inactivity palette with off; its label and slashed-circle glyph distinguish unavailability from being switched off. These states do not imply warning/error severity and are independent of attention-rule evaluation.
+
 ## Glyphs and spacing
 
 `theme.Glyph` names status, selection, expansion, navigation, loading and unavailable marks. `Theme.Glyph` selects a one-cell Unicode or ASCII representation. A glyph supplements a semantic text label; `UNKNOWN` and `OFF` remain different states. Animated spinners retain native frame sequences, with a named static loading mark for reduced motion. Application-specific chart markers remain caller-owned.

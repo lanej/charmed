@@ -90,7 +90,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 			t := theme.New(theme.Dark)
 
 			var states []string
-			for _, state := range []feedback.Status{feedback.OK, feedback.Warn, feedback.Error, feedback.Unknown, feedback.Off} {
+			for _, state := range feedback.Statuses() {
 				states = append(states, story.FormatFrame(state.View(text.Bright, t), story.Config{Theme: theme.Dark, Profile: "truecolor"}))
 			}
 

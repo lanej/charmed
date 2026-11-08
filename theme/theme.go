@@ -18,15 +18,16 @@ const (
 
 // Theme is a value: a preview can change its theme without mutating other sessions.
 type Theme struct {
-	Mode                                                      Mode
-	ASCII                                                     bool
-	ReducedMotion                                             bool
-	Background, Surface, Foreground, Muted, Border, Accent    color.Color
-	SelectionBackground                                       color.Color
-	Success, Info, Warning, Danger                            color.Color
-	Unknown, Inactive, DimUnknown, DimInactive                color.Color
-	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger color.Color
-	Series                                                    []color.Color
+	Mode                                                        Mode
+	ASCII                                                       bool
+	ReducedMotion                                               bool
+	Background, Surface, Foreground, Muted, Border, Accent      color.Color
+	SelectionBackground                                         color.Color
+	Success, Info, Warning, Danger                              color.Color
+	Unknown, Inactive, DimUnknown, DimInactive                  color.Color
+	Pending, Running, Paused, DimPending, DimRunning, DimPaused color.Color
+	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger   color.Color
+	Series                                                      []color.Color
 }
 
 func New(mode Mode) Theme {
@@ -41,6 +42,8 @@ func New(mode Mode) Theme {
 		t.SelectionBackground = hex("#d1e8e3")
 		t.Unknown, t.Inactive = hex("#475e86"), hex("#626262")
 		t.DimUnknown, t.DimInactive = hex("#5c6e8a"), hex("#666666")
+		t.Pending, t.Running, t.Paused = hex("#345a9c"), hex("#146375"), hex("#756044")
+		t.DimPending, t.DimRunning, t.DimPaused = hex("#526fa0"), hex("#426f7c"), hex("#7f6b51")
 		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#526176"), hex("#477451"), hex("#526fa8"), hex("#8a6841"), hex("#a05b5b")
 		t.Series = colors("#6654ad", "#3568b0", "#a3497f", "#8c663d", "#575ba6")
 	case Contrast:
@@ -52,6 +55,8 @@ func New(mode Mode) Theme {
 		t.SelectionBackground = hex("#1c4245")
 		t.Unknown, t.Inactive = hex("#b7c9ed"), hex("#b0b0b0")
 		t.DimUnknown, t.DimInactive = hex("#8da4cb"), hex("#929292")
+		t.Pending, t.Running, t.Paused = hex("#abc1ff"), hex("#88ddeb"), hex("#e1ccb1")
+		t.DimPending, t.DimRunning, t.DimPaused = hex("#8ba2da"), hex("#65aab7"), hex("#b5a28a")
 		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#c0c0c0"), hex("#6cbe80"), hex("#739ac7"), hex("#c5b75a"), hex("#d48282")
 		t.Series = colors("#c8b4ff", "#9ac2ff", "#f4b0d8", "#e8c49a", "#abb6ff")
 	case Mono:
@@ -68,6 +73,8 @@ func New(mode Mode) Theme {
 		t.SelectionBackground = hex("#24433f")
 		t.Unknown, t.Inactive = hex("#a7bce0"), hex("#9a9a9a")
 		t.DimUnknown, t.DimInactive = hex("#829bc3"), hex("#898989")
+		t.Pending, t.Running, t.Paused = hex("#8ca8e8"), hex("#70c6d8"), hex("#c5b49b")
+		t.DimPending, t.DimRunning, t.DimPaused = hex("#758fc4"), hex("#519bab"), hex("#a59682")
 		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#a8a8a8"), hex("#629c73"), hex("#5a8fb9"), hex("#b5945c"), hex("#c17670")
 		t.Series = colors("#b9a7f5", "#87b5f9", "#e49ac2", "#d7b58b", "#8f9de8")
 	}

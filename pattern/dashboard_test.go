@@ -87,3 +87,18 @@ func TestDashboardUsesStatusAtomsWithoutRedundantHeadings(t *testing.T) {
 		t.Error("unrecognized health must use the explicit unknown status atom")
 	}
 }
+
+func TestDashboardKeepsLifecycleStatesDistinctAndUnclipped(t *testing.T) {
+	for _, status := range []string{"pending", "running", "paused", "disabled", "off"} {
+		for _, mode := range []theme.Mode{theme.Dark, theme.Mono} {
+			m := pattern.NewDashboard(pattern.DashboardOptions{Theme: theme.New(mode), Services: []pattern.Service{{ID: "one", Name: "Service", Status: status}}})
+			for _, width := range []int{40, 120} {
+				m.Resize(layout.Size{Width: width, Height: 34})
+
+				if !strings.Contains(ansi.Strip(m.Table.View()), strings.ToUpper(status)) {
+					t.Fatalf("%s at %d cells lost its lifecycle label", status, width)
+				}
+			}
+		}
+	}
+}

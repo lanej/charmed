@@ -93,14 +93,14 @@ References: [NIST proportion control charts](https://www.itl.nist.gov/div898/han
 
 Signed values use `text.SignedNumber`. Its `SignTones` configure positive, negative and zero independently of warning/error boundaries. In this example, rising 2xx is green and falling 2xx is red; 5xx reverses those colors. Redirect and client-error changes use a direction-only tone because their benefit requires application context. Missing and non-finite observations render `n/a`; tiny nonzero values retain their sign rather than rounding to zero. Numeric color describes direction policy, while attention labels and the delta bar describe configured severity.
 
-`text.Pill` separates semantic tone from `text.Bright`, `text.Normal` and `text.Dim` emphasis. `feedback.Status` supplies reusable `OK`, `WARN`, `ERROR`, `UNKNOWN` and `OFF` states. `feedback.Attention` composes these display atoms after rule evaluation; it keeps unconfigured attention absent rather than implying an OK state. The component reference groups signed numbers, pills and statuses under their capabilities, with saved emphasis variants.
+`text.Pill` separates semantic tone from `text.Bright`, `text.Normal` and `text.Dim` emphasis. `feedback.Status` supplies reusable `OK`, `WARN`, `ERROR`, `UNKNOWN`, `OFF`, `PENDING`, `RUNNING`, `PAUSED` and `DISABLED` states. `feedback.Attention` composes these display atoms after rule evaluation; it keeps unconfigured attention absent rather than implying an OK state. The component reference groups signed numbers, pills and statuses under their capabilities, with saved emphasis variants.
 
 | Layer | Component | Responsibility |
 | --- | --- | --- |
 | Atom | `chart.IntervalBand` | Draw caller-supplied nested intervals and observation markers with ntcharts canvas |
 | Atom | `text.Pill` | Render a labeled semantic tone, with theme-aware contrast and a text fallback |
 | Atom | `text.SignedNumber` | Preserve exact sign and units with configurable sign tones, neutral missing values and emphasis |
-| Atom | `feedback.Status` | Render OK, WARN, ERROR, UNKNOWN and OFF with shared tone and emphasis |
+| Atom | `feedback.Status` | Render labeled health and lifecycle states with shared tone and emphasis |
 | Molecule | `feedback.Attention` | Compose a labeled warning/error/unknown/normal state from the shared pill |
 | Molecule | `chart.DeltaProperty` | Compose a merged, signed title-bar comparison from the interval atom |
 | Molecule | `feedback.PercentBar` | Compose native progress and an exact percentage as a dense table cell |

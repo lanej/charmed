@@ -64,7 +64,7 @@ func glyphStory(e Environment) (runtime.Scene, error) {
 		rows := []string{"Meaning     U A     Meaning     U A", ""}
 
 		var cells []string
-		for _, glyph := range []theme.Glyph{theme.GlyphOK, theme.GlyphWarning, theme.GlyphError, theme.GlyphUnknown, theme.GlyphOff, theme.GlyphInfo, theme.GlyphSelected, theme.GlyphUnselected, theme.GlyphExpanded, theme.GlyphCollapsed, theme.GlyphUp, theme.GlyphDown, theme.GlyphLeft, theme.GlyphRight, theme.GlyphLoading, theme.GlyphUnavailable} {
+		for _, glyph := range []theme.Glyph{theme.GlyphOK, theme.GlyphWarning, theme.GlyphError, theme.GlyphUnknown, theme.GlyphOff, theme.GlyphPending, theme.GlyphRunning, theme.GlyphPaused, theme.GlyphDisabled, theme.GlyphInfo, theme.GlyphSelected, theme.GlyphUnselected, theme.GlyphExpanded, theme.GlyphCollapsed, theme.GlyphUp, theme.GlyphDown, theme.GlyphLeft, theme.GlyphRight, theme.GlyphLoading, theme.GlyphUnavailable} {
 			cells = append(cells, layout.Fit(fmt.Sprintf("%-11s %s %s", glyph, t.Glyph(glyph), fallback.Glyph(glyph)), layout.Size{Width: 18, Height: 1}))
 		}
 

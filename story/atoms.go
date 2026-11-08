@@ -50,7 +50,7 @@ func atomsDefinitions() []Definition {
 	d = append(d,
 		Definition{ID: "text/signed-number", Title: "Atoms/Text/Signed number", Level: "Atoms", Family: "text", Description: "Exact signed values, configurable positive/negative tones, neutral zero, tiny-value preservation and explicit unavailable state.", Source: "text/signed.go", Controls: []string{"amount", "state", "emphasis"}, States: []string{"ready", "empty"}, Defaults: atomConfig(), Factory: signedNumberStory},
 		Definition{ID: "text/pill", Title: "Atoms/Text/Color pill", Level: "Atoms", Family: "text", Description: "Semantic tone and bright, normal or dim emphasis are independent. ASCII output retains the label.", Source: "text/text.go", Symbol: "Pill", Controls: []string{"value", "emphasis"}, Defaults: atomConfig(), Factory: pillsStory},
-		Definition{ID: "feedback/status", Title: "Atoms/Feedback/Status", Level: "Atoms", Family: "feedback", Description: "Reusable OK, WARN, ERROR, UNKNOWN and OFF states compose shared tone and emphasis atoms.", Source: "feedback/status.go", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: atomConfig(), Factory: statusStory},
+		Definition{ID: "feedback/status", Title: "Atoms/Feedback/Status", Level: "Atoms", Family: "feedback", Description: "Health and lifecycle states share semantic colors, named glyphs and emphasis-independent spacing.", Source: "feedback/status.go", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: atomConfig(), Factory: statusStory},
 		Definition{ID: "chart/picture", Title: "Atoms/Graphics/Picture", Level: "Atoms", Family: "graphics", Description: "Portable glyph rendering of an embedded image; no external image service.", Source: "story/atoms.go", Symbol: "pictureStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Defaults: DefaultConfig(), Factory: pictureStory},
 		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma", "legend"}, States: []string{"ready", "empty"}, Defaults: DefaultConfig(), Factory: bandStory},
 	)
@@ -260,7 +260,7 @@ func statusStory(e Environment) (runtime.Scene, error) {
 	return static(func(layout.Size) string {
 		t := e.Config.Palette()
 		rows := []string{"Status atoms / " + e.Config.Emphasis, ""}
-		for _, status := range []feedback.Status{feedback.OK, feedback.Warn, feedback.Error, feedback.Unknown, feedback.Off} {
+		for _, status := range feedback.Statuses() {
 			rows = append(rows, status.View(text.Emphasis(e.Config.Emphasis), t))
 		}
 		return strings.Join(rows, "\n")

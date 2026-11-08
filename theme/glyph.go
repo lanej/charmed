@@ -9,6 +9,10 @@ const (
 	GlyphError       Glyph = "error"
 	GlyphUnknown     Glyph = "unknown"
 	GlyphOff         Glyph = "off"
+	GlyphPending     Glyph = "pending"
+	GlyphRunning     Glyph = "running"
+	GlyphPaused      Glyph = "paused"
+	GlyphDisabled    Glyph = "disabled"
 	GlyphInfo        Glyph = "info"
 	GlyphSelected    Glyph = "selected"
 	GlyphUnselected  Glyph = "unselected"
@@ -37,6 +41,14 @@ func (t Theme) Glyph(glyph Glyph) string {
 		unicode, ascii = "?", "?"
 	case GlyphOff:
 		unicode, ascii = "○", "-"
+	case GlyphPending:
+		unicode, ascii = "◷", "p"
+	case GlyphRunning:
+		unicode, ascii = "▶", ">"
+	case GlyphPaused:
+		unicode, ascii = "‖", "="
+	case GlyphDisabled:
+		unicode, ascii = "⊘", "/"
 	case GlyphInfo:
 		unicode, ascii = "i", "i"
 	case GlyphSelected:
