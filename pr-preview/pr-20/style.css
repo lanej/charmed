@@ -188,9 +188,6 @@ nav .nav-family-link:hover { text-decoration: underline; }
 .dev-paths a span { color: var(--muted); font-size: 13px; line-height: 1.45; }
 .dev-paths a:hover,.dev-paths a:focus-visible { border-color: var(--accent); }
 main h2 > a[href^="#"] { color: inherit; text-decoration: none; }
-main h2 > a[href^="#"]::after { content: " #"; color: var(--muted); opacity: .42; font-size: .72em; }
-main h2 > a[href^="#"]:hover::after,
-main h2 > a[href^="#"]:focus-visible::after { color: var(--accent); opacity: 1; }
 main h2[id] { scroll-margin-top: 88px; }
 @media(max-width:900px) { .dev-paths { grid-template-columns: 1fr; } .dev-paths a { min-height: 88px; } }
 @media(max-width:760px) {
