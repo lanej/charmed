@@ -30,15 +30,17 @@ func moleculesDefinitions() []Definition {
 		Definition{ID: "chart/delta", Title: "Molecules/Charts/Merged delta property", Level: "Molecules", Family: "chart", Description: "A single zero-centred bar cancels the shared reference/candidate amount and emphasizes the signed percentage-point difference.", Source: "chart/delta.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Composes: []string{"chart/interval-band", "text/signed-number"}, Defaults: DefaultConfig(), Factory: deltaStory},
 		Definition{ID: "feedback/percent", Title: "Molecules/Feedback/Percentage bar", Level: "Molecules", Family: "feedback", Description: "A native progress bar and exact percentage compose a fixed-width graphical table value on a 0–100% scale.", Source: "feedback/percent.go", Symbol: "PercentBar", Upstream: "https://github.com/charmbracelet/bubbles", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Composes: []string{"feedback/progress"}, Defaults: DefaultConfig(), Factory: percentStory},
 	)
+
+	snippets := map[string]string{
+		"input/field": "field", "feedback/paginator": "paginator",
+		"feedback/help": "help", "chart/band-matrix": "band-matrix",
+		"chart/metric": "metric-trend", "chart/panel": "chart-panel",
+		"feedback/attention": "attention", "chart/distributions": "distributions",
+		"chart/delta": "delta", "feedback/percent": "percent",
+	}
+
 	for i := range d {
-		switch d[i].ID {
-		case "input/field":
-			d[i].ExampleSource = "docs/snippets/field.go.txt"
-		case "chart/metric":
-			d[i].ExampleSource = "docs/snippets/metric-trend.go.txt"
-		case "chart/panel":
-			d[i].ExampleSource = "docs/snippets/chart-panel.go.txt"
-		}
+		d[i].ExampleSource = "docs/snippets/" + snippets[d[i].ID] + ".go.txt"
 
 		if d[i].ID == "input/field" {
 			d[i].States = []string{"ready", "empty", "error"}

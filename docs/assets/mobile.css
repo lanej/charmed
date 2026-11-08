@@ -60,3 +60,9 @@
   .showcase-hero { margin-top: 28px; }
   footer { margin-top: 32px; font-size: 12px; }
 }
+
+@media (max-width: 760px) {
+  .component > h4 { font-size: 20px; }
+  .component-subheading h5 .heading-permalink > span { font-size: inherit; color: inherit; }
+  main :is(h5)[id] { scroll-margin-top: 4.5rem; }
+}
