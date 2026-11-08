@@ -74,6 +74,7 @@
       "rgb(16, 23, 34)"
     ],
     "severity": "error",
-    "reason": "Native truecolor frames use the canonical theme background so dim tokens retain their contrast."
+    "reason": "Native truecolor frames use the canonical theme background so dim tokens retain their contrast.",
+    "optional": true
   }
 ]

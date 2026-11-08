@@ -40,7 +40,7 @@
   main p { margin-block: 0 18px; }
   main :is(h2, h3, h4)[id], .component, .component-family { scroll-margin-top: 4.5rem; }
   .component { padding: 24px 0 32px; }
-  .component > .eyebrow { font-size: 11px; margin-bottom: 4px; }
+  .component > .eyebrow { font-size: 14px; margin-bottom: 4px; }
   .heading-permalink { min-height: 44px; align-items: center; }
   .component-preview { margin-top: 16px; }
   .component-subheading { gap: 4px 12px; margin-bottom: 8px; }
