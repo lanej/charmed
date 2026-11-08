@@ -47,8 +47,11 @@ def check_menu(page, output):
     page.keyboard.press("Escape")
     assert not menu.evaluate("el => el.open")
     assert summary.evaluate("el => el === document.activeElement"), "Escape must restore focus"
-    page.keyboard.press("Space")
-    assert menu.evaluate("el => el.open"), "keyboard must open the menu"
+    summary.press("Space")
+    page.wait_for_function(
+        "() => document.querySelector('[data-mobile-nav]').open",
+        timeout=2000,
+    )
     page.mouse.click(10, 800)
     assert not menu.evaluate("el => el.open"), "outside click must close the menu"
     summary.tap()
