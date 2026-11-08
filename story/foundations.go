@@ -17,11 +17,16 @@ func foundationsDefinitions() []Definition {
 		widget("foundations/theme", "Foundations/Theme", "Foundations", "theme", "Semantic roles, terminal palettes, contrast and no-color output.", "themeStory", nil, themeStory),
 		widget("foundations/layout", "Foundations/Layout", "Foundations", "layout", "Cell-based panels and responsive allocation.", "layoutStory", nil, layoutStory),
 		widget("foundations/glyphs", "Foundations/Glyphs", "Foundations", "theme", "Named semantic glyphs, explicit ASCII equivalents and adjacent labels.", "glyphStory", nil, glyphStory),
+		widget("foundations/tokens", "Foundations/Spacing, borders and selection", "Foundations", "theme", "Cell spacing scale, normal and focused border roles, and readable collection selection.", "tokensStory", nil, tokensStory),
 		widget("foundations/focus", "Foundations/Focus and spacing", "Foundations", "theme", "One cell on both sides of controls and panel content. Focus and emphasis retain the same allocation.", "focusStory", nil, focusStory),
 		widget("feedback/motion", "Foundations/Motion", "Foundations", "motion", "A Harmonica spring stepped explicitly by the owner; reduced motion resolves immediately.", "motionStory", []string{"amount"}, motionStory),
 	}
 
 	for i := range d {
+		if d[i].ID == "foundations/tokens" {
+			d[i].ExampleSource = "docs/snippets/foundation-tokens.go.txt"
+		}
+
 		if d[i].ID == "feedback/motion" {
 			d[i].Upstream = "https://github.com/charmbracelet/harmonica"
 			d[i].Step = true
@@ -64,7 +69,7 @@ func glyphStory(e Environment) (runtime.Scene, error) {
 		rows := []string{"Meaning     U A     Meaning     U A", ""}
 
 		var cells []string
-		for _, glyph := range []theme.Glyph{theme.GlyphOK, theme.GlyphWarning, theme.GlyphError, theme.GlyphUnknown, theme.GlyphOff, theme.GlyphPending, theme.GlyphRunning, theme.GlyphPaused, theme.GlyphDisabled, theme.GlyphInfo, theme.GlyphSelected, theme.GlyphUnselected, theme.GlyphExpanded, theme.GlyphCollapsed, theme.GlyphUp, theme.GlyphDown, theme.GlyphLeft, theme.GlyphRight, theme.GlyphLoading, theme.GlyphUnavailable} {
+		for _, glyph := range theme.Glyphs() {
 			cells = append(cells, layout.Fit(fmt.Sprintf("%-11s %s %s", glyph, t.Glyph(glyph), fallback.Glyph(glyph)), layout.Size{Width: 18, Height: 1}))
 		}
 
@@ -117,4 +122,30 @@ func motionStory(e Environment) (runtime.Scene, error) {
 	}, view: func(layout.Size) string {
 		return title("Spring motion", e) + fmt.Sprintf("Position %.2f  /  Target %.0f\n\nVelocity %.2f", m.Position, e.Config.Amount, m.Velocity) + footer("Ctrl+N steps the spring. Reduced motion resolves immediately.", e)
 	}}, nil
+}
+
+func tokensStory(e Environment) (runtime.Scene, error) {
+	return static(func(size layout.Size) string {
+		t := e.Config.Palette()
+		rows := []string{"Cell spacing / horizontal examples", ""}
+
+		for _, space := range []struct {
+			name  string
+			cells int
+		}{{"none", theme.SpaceNone}, {"small", theme.SpaceSmall}, {"medium", theme.SpaceMedium}, {"large", theme.SpaceLarge}} {
+			rows = append(rows, fmt.Sprintf("%-6s %d  |%s|", space.name, space.cells, strings.Repeat(" ", space.cells)))
+		}
+
+		width := min(18, (size.Width-theme.SpaceMedium)/2)
+		rows = append(rows, "", layout.Row(
+			layout.Panel("Normal", "Border", layout.Size{Width: width, Height: 3}, t, false),
+			strings.Repeat(" ", theme.SpaceMedium),
+			layout.Panel("Focused", "FocusBorder", layout.Size{Width: width, Height: 3}, t, true)),
+			"", "Selection / stable insets",
+			"rest     |"+t.Control().Render("Value")+"|",
+			"focused  |"+t.Focus().Render("Value")+"|",
+			"selected |"+t.Selection().Render("Value")+"|")
+
+		return strings.Join(rows, "\n")
+	}), nil
 }

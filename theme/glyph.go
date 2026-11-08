@@ -13,6 +13,12 @@ const (
 	GlyphRunning     Glyph = "running"
 	GlyphPaused      Glyph = "paused"
 	GlyphDisabled    Glyph = "disabled"
+	GlyphSearch      Glyph = "search"
+	GlyphFilter      Glyph = "filter"
+	GlyphSort        Glyph = "sort"
+	GlyphRefresh     Glyph = "refresh"
+	GlyphLink        Glyph = "link"
+	GlyphExpand      Glyph = "expand"
 	GlyphInfo        Glyph = "info"
 	GlyphSelected    Glyph = "selected"
 	GlyphUnselected  Glyph = "unselected"
@@ -25,6 +31,11 @@ const (
 	GlyphLoading     Glyph = "loading"
 	GlyphUnavailable Glyph = "unavailable"
 )
+
+// Glyphs returns the semantic catalog in display order.
+func Glyphs() []Glyph {
+	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable}
+}
 
 // Glyph returns a compact mark. Callers keep a text label for semantic states.
 func (t Theme) Glyph(glyph Glyph) string {
@@ -49,6 +60,18 @@ func (t Theme) Glyph(glyph Glyph) string {
 		unicode, ascii = "‖", "="
 	case GlyphDisabled:
 		unicode, ascii = "⊘", "/"
+	case GlyphSearch:
+		unicode, ascii = "⌕", "/"
+	case GlyphFilter:
+		unicode, ascii = "▽", "f"
+	case GlyphSort:
+		unicode, ascii = "↕", "s"
+	case GlyphRefresh:
+		unicode, ascii = "↻", "r"
+	case GlyphLink:
+		unicode, ascii = "↗", "@"
+	case GlyphExpand:
+		unicode, ascii = "⤢", "+"
 	case GlyphInfo:
 		unicode, ascii = "i", "i"
 	case GlyphSelected:

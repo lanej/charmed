@@ -22,7 +22,7 @@ type Theme struct {
 	ASCII                                                       bool
 	ReducedMotion                                               bool
 	Background, Surface, Foreground, Muted, Border, Accent      color.Color
-	SelectionBackground                                         color.Color
+	FocusBorder, SelectionForeground, SelectionBackground       color.Color
 	Success, Info, Warning, Danger                              color.Color
 	Unknown, Inactive, DimUnknown, DimInactive                  color.Color
 	Pending, Running, Paused, DimPending, DimRunning, DimPaused color.Color
@@ -79,6 +79,8 @@ func New(mode Mode) Theme {
 		t.Series = colors("#b9a7f5", "#87b5f9", "#e49ac2", "#d7b58b", "#8f9de8")
 	}
 
+	t.FocusBorder, t.SelectionForeground = t.Accent, t.Foreground
+
 	return t
 }
 
@@ -94,7 +96,7 @@ func colors(values ...string) []color.Color {
 }
 
 // InlinePadding is the horizontal inset shared by controls and panel content, in cells.
-const InlinePadding = 1
+const InlinePadding = SpaceSmall
 
 func (t Theme) Text() lipgloss.Style    { return lipgloss.NewStyle().Foreground(t.Foreground) }
 func (t Theme) Subtle() lipgloss.Style  { return lipgloss.NewStyle().Foreground(t.Muted) }
@@ -111,7 +113,8 @@ func (t Theme) Focus() lipgloss.Style {
 	return t.Control().Foreground(t.Background).Background(t.Accent).Bold(true)
 }
 
-// Selection keeps nested semantic cells readable on a highlighted collection row.
+// Selection styles a padded selection surface. Nested foreground styles retain
+// their colors, including native table cells and semantic pills.
 func (t Theme) Selection() lipgloss.Style {
 	if t.Mode == Mono {
 		return t.Focus()
@@ -122,7 +125,12 @@ func (t Theme) Selection() lipgloss.Style {
 		return t.Control().Bold(true).Underline(true)
 	}
 
-	return t.Control().Background(t.SelectionBackground).Bold(true)
+	style := t.Control().Background(t.SelectionBackground).Bold(true)
+	if t.SelectionForeground != nil {
+		style = style.Foreground(t.SelectionForeground)
+	}
+
+	return style
 }
 func (t Theme) IsDark() bool { return t.Mode != Light }
 

@@ -58,6 +58,7 @@ func TestCatalogFramesAreDeterministicAndBounded(t *testing.T) {
 		})
 	}
 }
+
 func TestStoriesDoNotShareState(t *testing.T) {
 	c := story.DefaultConfig()
 	c.Value = ""
@@ -81,6 +82,7 @@ func TestStoriesDoNotShareState(t *testing.T) {
 		t.Fatal("input state leaked between scenes")
 	}
 }
+
 func TestRejectsInvalidStoryConfiguration(t *testing.T) {
 	c := story.DefaultConfig()
 	c.Columns = 100000
@@ -106,6 +108,37 @@ func TestNarrowPillSpecimenKeepsEveryToneAtEachEmphasis(t *testing.T) {
 	for _, tone := range []string{"neutral", "success", "info", "warning", "danger"} {
 		if strings.Count(plain, tone) != 3 {
 			t.Fatalf("narrow specimen clipped %s: %s", tone, plain)
+		}
+	}
+}
+
+func TestNarrowFoundationCatalogKeepsAllGlyphsAndSelection(t *testing.T) {
+	c := story.DefaultConfig()
+	c.Columns, c.Rows = 40, 16
+
+	for _, mode := range []theme.Mode{theme.Dark, theme.Mono} {
+		c.Theme = mode
+
+		glyphs, err := story.Frame("foundations/glyphs", c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, glyph := range theme.Glyphs() {
+			if !strings.Contains(ansi.Strip(glyphs), string(glyph)) {
+				t.Fatalf("narrow %s catalog clipped %s", mode, glyph)
+			}
+		}
+
+		tokens, err := story.Frame("foundations/tokens", c)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, label := range []string{"none", "small", "medium", "large", "Normal", "Focused", "selected | Value |"} {
+			if !strings.Contains(ansi.Strip(tokens), label) {
+				t.Fatalf("narrow %s token specimen clipped %s", mode, label)
+			}
 		}
 	}
 }

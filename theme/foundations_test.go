@@ -92,6 +92,16 @@ func TestNamedGlyphFallbacksKeepStateAndWidth(t *testing.T) {
 		{theme.GlyphError, "×", "x"},
 		{theme.GlyphUnknown, "?", "?"},
 		{theme.GlyphOff, "○", "-"},
+		{theme.GlyphPending, "◷", "p"},
+		{theme.GlyphRunning, "▶", ">"},
+		{theme.GlyphPaused, "‖", "="},
+		{theme.GlyphDisabled, "⊘", "/"},
+		{theme.GlyphSearch, "⌕", "/"},
+		{theme.GlyphFilter, "▽", "f"},
+		{theme.GlyphSort, "↕", "s"},
+		{theme.GlyphRefresh, "↻", "r"},
+		{theme.GlyphLink, "↗", "@"},
+		{theme.GlyphExpand, "⤢", "+"},
 		{theme.GlyphInfo, "i", "i"},
 		{theme.GlyphSelected, "●", "*"},
 		{theme.GlyphUnselected, "○", "o"},
@@ -111,5 +121,26 @@ func TestNamedGlyphFallbacksKeepStateAndWidth(t *testing.T) {
 		if lipgloss.Width(pair.unicode) != 1 || lipgloss.Width(pair.ascii) != 1 {
 			t.Fatalf("%s does not fit the one-cell icon slot", pair.glyph)
 		}
+	}
+}
+
+func TestCustomBorderAndSelectionTokensRemainIndependent(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	palette.FocusBorder = lipgloss.Color("#abcdef")
+	palette.SelectionForeground = lipgloss.Color("#fedcba")
+
+	if palette.BorderStyle(true).GetForeground() != palette.FocusBorder || palette.BorderStyle(false).GetForeground() != palette.Border {
+		t.Fatal("frame colors lost their normal/focused roles")
+	}
+
+	if palette.Selection().GetForeground() != palette.SelectionForeground || palette.Focus().GetBackground() != palette.Accent {
+		t.Fatal("collection selection and inverse focus tokens were conflated")
+	}
+
+	palette.FocusBorder = nil
+	palette.SelectionForeground = nil
+
+	if palette.BorderStyle(true).GetForeground() != palette.Accent || palette.Selection().GetForeground() != palette.Foreground {
+		t.Fatal("partial custom theme lost accent/text fallbacks")
 	}
 }

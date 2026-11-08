@@ -70,21 +70,16 @@ func ASCII(content string) string {
 // PanelContentSize excludes the border and horizontal content gutters.
 func PanelContentSize(size Size) Size {
 	padding := min(theme.InlinePadding, max(0, (size.Width-3)/2))
-	return Size{Width: max(0, size.Width-2-2*padding), Height: max(0, size.Height-2)}
+	return Size{Width: max(0, size.Width-2*theme.BorderCells-2*padding), Height: max(0, size.Height-2*theme.BorderCells)}
 }
 
 func Panel(title, content string, size Size, t theme.Theme, focused bool) string {
 	if size.Width < 4 || size.Height < 3 {
 		return Fit(content, size)
 	}
-	tl, tr, bl, br, horizontal, vertical := "┌", "┐", "└", "┘", "─", "│"
-	if t.ASCII {
-		tl, tr, bl, br, horizontal, vertical = "+", "+", "+", "+", "-", "|"
-	}
-	border := lipgloss.NewStyle().Foreground(t.Border)
-	if focused {
-		border = border.Foreground(t.Accent).Bold(true)
-	}
+
+	frame := t.FrameBorder()
+	border := t.BorderStyle(focused)
 	label := ansi.Truncate(" "+title+" ", size.Width-2, "")
 
 	labelStyle := t.Subtle()
@@ -92,15 +87,15 @@ func Panel(title, content string, size Size, t theme.Theme, focused bool) string
 		labelStyle = t.Heading()
 	}
 
-	top := border.Render(tl) + labelStyle.Render(label) + border.Render(strings.Repeat(horizontal, max(0, size.Width-2-lipgloss.Width(label)))+tr)
+	top := border.Render(frame.TopLeft) + labelStyle.Render(label) + border.Render(strings.Repeat(frame.Top, max(0, size.Width-2-lipgloss.Width(label)))+frame.TopRight)
 	padding := strings.Repeat(" ", min(theme.InlinePadding, max(0, (size.Width-3)/2)))
 
 	inside := strings.Split(Fit(content, PanelContentSize(size)), "\n")
 	for i := range inside {
-		inside[i] = border.Render(vertical) + padding + inside[i] + padding + border.Render(vertical)
+		inside[i] = border.Render(frame.Left) + padding + inside[i] + padding + border.Render(frame.Right)
 	}
 
-	bottom := border.Render(bl + strings.Repeat(horizontal, size.Width-2) + br)
+	bottom := border.Render(frame.BottomLeft + strings.Repeat(frame.Bottom, size.Width-2) + frame.BottomRight)
 
 	return strings.Join(append(append([]string{top}, inside...), bottom), "\n")
 }
