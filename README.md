@@ -83,7 +83,7 @@ just check
 just docs
 ```
 
-Install [just](https://github.com/casey/just#installation), then run `just` to list targets. `just check` uses the module's Go version by default and runs module tidiness, strict lint and formatting, uncached race tests, and reachable-vulnerability analysis. The same target runs on Linux and macOS in CI. Existing lint and style findings are recorded in a shrinking baseline; new findings fail, and resolved allowances must be removed with `just ratchet`. Use `just lint`, `just test` or `just vuln` for individual gates, and `just fmt path/to/file.go` or `just fix ./path/to/package` for scoped fixes. `just run` starts the service fixture; pass a story ID and flags for another fixture.
+Install [just](https://github.com/casey/just#installation) and [ShellCheck](https://github.com/koalaman/shellcheck#installing), then run `just` to list targets. `just check` uses the module's Go version by default and runs ShellCheck, module tidiness, strict lint and formatting, uncached race tests, and reachable-vulnerability analysis. The same target runs on Linux and macOS in CI, with ShellCheck pinned to 0.11.0. Existing Go lint and style findings are recorded in a shrinking baseline; new findings fail, and resolved allowances must be removed with `just ratchet`. Use `just shellcheck`, `just lint`, `just test` or `just vuln` for individual gates; `just lint` includes ShellCheck. Use `just fmt path/to/file.go` or `just fix ./path/to/package` for scoped fixes. `just run` starts the service fixture; pass a story ID and flags for another fixture.
 
 Checks also exercise cell bounds, deterministic frames, focus and selection, resize, background updates, native process cleanup, static guide generation and component links.
 

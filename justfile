@@ -7,13 +7,17 @@ export GOTOOLCHAIN := env_var_or_default("GOTOOLCHAIN", "go" + `awk '$1 == "go" 
 default:
     @just --list
 
-# Run the full Go quality gate used in CI.
-check:
+# Run ShellCheck and the full Go quality gate used in CI.
+check: shellcheck
     bash scripts/check-go.sh
 
-# Check formatting, vet, module tidiness and the strict lint ratchet.
-lint:
+# Check shell scripts, formatting, vet, module tidiness and strict lint.
+lint: shellcheck
     bash scripts/check-go.sh lint
+
+# Check repository shell scripts, including portable profile assets.
+shellcheck:
+    bash scripts/check-shell.sh
 
 # Run uncached race tests.
 test:
