@@ -20,9 +20,9 @@ Do not use the mark as a generic status badge or replace a status label with bra
 
 ## Tokens and roles
 
-The swatches below are **website identity tokens**, not the terminal theme. Documentation uses the canvas, surface, border, text, muted, and accent values to maintain its fixed night mode. Code highlighting uses separate syntax tokens, so keywords, strings, comments, and literals remain independently distinguishable.
+The swatches below are **derived directly from Charmed's native dark theme**. Generated CSS and this page draw from the same semantic roles used in terminal fixtures, including surfaces, borders, text, statuses, and data-series colors. Syntax highlighting maps to these roles instead of defining another hex palette.
 
-For native widgets, source the semantic colors from [`theme.New(theme.Dark)`](https://github.com/lanej/charmed/blob/main/theme/theme.go), not from CSS. Success, information, warning, danger, and comparison series should remain separable without conflating their roles.
+For native widgets, source semantic colors from [`theme.New(theme.Dark)`](https://github.com/lanej/charmed/blob/main/theme/theme.go). Documentation consumes those values during static generation rather than maintaining a second palette. Success, information, warning, danger, and data-series colors remain distinct.
 
 ## Typography and code
 
@@ -30,4 +30,4 @@ Use system sans-serif for documentation and labels. Use bundled JuliaMono for te
 
 ## Composition
 
-Lead with the terminal output. Show alternate states in adjacent variant tabs and source immediately afterward. Include the command that reproduces the example and a link to its implementation. The brand should support the component content rather than compete with it.
+Lead with the terminal output. Show alternate states in adjacent variant tabs and a short consumer-API snippet immediately afterward. Snippets need not declare a Go package, imports, or an outer function; link to complete fixture implementations separately. Keep runner commands in the development guide instead of repeating them under each component.

@@ -124,6 +124,9 @@ type Definition struct {
 	Step        bool                                     `json:"step"`
 	Defaults    Config                                   `json:"defaults"`
 	Factory     func(Environment) (runtime.Scene, error) `json:"-"`
+
+	// ExampleSource is a small runnable consumer example; Source remains the fixture implementation.
+	ExampleSource string `json:"exampleSource,omitempty"`
 }
 
 // Definitions returns fresh metadata; factories always construct fresh model state.

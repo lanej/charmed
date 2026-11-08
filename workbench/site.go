@@ -5,6 +5,7 @@ import (
 	"embed"
 	"fmt"
 	"html/template"
+	"image/color"
 	"os"
 	"path/filepath"
 	"slices"
@@ -29,6 +30,7 @@ type guidePage struct {
 	Preview     *ManifestEntry
 	Showcase    []showcaseItem
 	Atoms       []string
+	Brand       brandPalette
 }
 type showcaseItem struct{ Title, Description, Link, Frame, NarrowFrame string }
 type guideGroup struct {
@@ -65,9 +67,11 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		{File: "development.html", Title: "Develop & publish"},
 		{File: "brand.html", Title: "Brand sheet"},
 	}
+	brand := newBrandPalette(theme.New(theme.Dark))
 	markdown := goldmark.New(goldmark.WithExtensions(extension.GFM))
 	for i := range pages {
 		page := &pages[i]
+		page.Brand = brand
 		source, err := os.ReadFile(filepath.Join(root, "docs", strings.TrimSuffix(page.File, ".html")+".md"))
 		if err != nil {
 			return err
@@ -188,8 +192,9 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 	if err != nil {
 		return err
 	}
-	if err := os.WriteFile(filepath.Join(directory, "style.css"), append(css, []byte(terminalCSS())...), 0644); err != nil {
-		return err
+
+	if writeErr := os.WriteFile(filepath.Join(directory, "style.css"), []byte(string(css)+terminalCSS()+brand.style()), 0600); writeErr != nil {
+		return writeErr
 	}
 	tabs, err := siteFiles.ReadFile("site/tabs.js")
 	if err != nil {
@@ -223,4 +228,56 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		}
 	}
 	return os.WriteFile(filepath.Join(directory, ".nojekyll"), nil, 0644)
+}
+
+// brandPalette exposes the native dark-mode color roles to the static site.
+// The browser has no independent brand or data-series hex palette.
+type brandPalette struct {
+	Background, Surface, Text, Muted, Border, Accent string
+	Success, Info, Warning, Danger                   string
+	Series                                           []string
+}
+
+func colorHex(c color.Color) string {
+	if c == nil {
+		return "transparent"
+	}
+
+	r, g, b, _ := c.RGBA()
+
+	return fmt.Sprintf("#%02x%02x%02x", r>>8, g>>8, b>>8)
+}
+
+func newBrandPalette(t theme.Theme) brandPalette {
+	b := brandPalette{
+		Background: colorHex(t.Background), Surface: colorHex(t.Surface),
+		Text: colorHex(t.Foreground), Muted: colorHex(t.Muted),
+		Border: colorHex(t.Border), Accent: colorHex(t.Accent),
+		Success: colorHex(t.Success), Info: colorHex(t.Info),
+		Warning: colorHex(t.Warning), Danger: colorHex(t.Danger),
+	}
+	for _, c := range t.Series {
+		b.Series = append(b.Series, colorHex(c))
+	}
+
+	return b
+}
+
+func (b brandPalette) style() string {
+	styles := "\n:root{--bg:" + b.Background +
+		";--surface:" + b.Surface +
+		";--text:" + b.Text +
+		";--muted:" + b.Muted +
+		";--line:" + b.Border +
+		";--accent:" + b.Accent +
+		";--success:" + b.Success +
+		";--info:" + b.Info +
+		";--warning:" + b.Warning +
+		";--danger:" + b.Danger + ";"
+
+	for i, c := range b.Series {
+		styles += fmt.Sprintf("--series-%d:%s;", i, c)
+	}
+
+	return styles + "}\n"
 }

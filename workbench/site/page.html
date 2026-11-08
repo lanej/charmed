@@ -1,23 +1,17 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#0d1513"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Page.Title}} · Charmed</title><link rel="stylesheet" href="style.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script></head>
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="{{.Page.Brand.Background}}"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Page.Title}} · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">{{template "mark.svg"}}</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">{{.Page.Title}}</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+{{template "guide-nav" .}}
+</details>
+</div>
 <div class="shell">
-<nav aria-label="Guide">
-<div class="nav-pages">{{range .Pages}}<a href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Title}}</a>{{end}}</div>
-{{if .Page.Groups}}
-<div class="nav-outline"><p class="nav-title">On this page</p>
-{{range .Page.Groups}}
-<div class="nav-family">
-<a class="nav-family-link" href="#family-{{.Name}}">{{.Name}}</a>
-<div class="nav-items">{{range .Entries}}<a class="nav-component" href="#{{.ID}}">{{name .Title}}</a>{{end}}</div>
-</div>
-{{end}}
-</div>
-{{end}}
-</nav>
+<aside class="desktop-nav">{{template "guide-nav" .}}</aside>
 <main id="main">
 {{if eq .Page.File "brand.html"}}
 <h1>Brand sheet</h1>
@@ -43,12 +37,12 @@
 <section class="brand-specimens" aria-label="Brand tokens and typography">
 <h2>Web palette</h2>
 <div class="brand-swatches">
-<div class="swatch"><div class="swatch-fill swatch-bg"></div><strong>Canvas</strong><code>#0d1513</code></div>
-<div class="swatch"><div class="swatch-fill swatch-surface"></div><strong>Surface</strong><code>#14201c</code></div>
-<div class="swatch"><div class="swatch-fill swatch-line"></div><strong>Border</strong><code>#2b3a34</code></div>
-<div class="swatch"><div class="swatch-fill swatch-text"></div><strong>Text</strong><code>#eef1ee</code></div>
-<div class="swatch"><div class="swatch-fill swatch-muted"></div><strong>Muted</strong><code>#afbbb4</code></div>
-<div class="swatch"><div class="swatch-fill swatch-accent"></div><strong>Accent</strong><code>#acc8b7</code></div>
+<div class="swatch"><div class="swatch-fill swatch-bg"></div><strong>Canvas</strong><code>{{.Page.Brand.Background}}</code></div>
+<div class="swatch"><div class="swatch-fill swatch-surface"></div><strong>Surface</strong><code>{{.Page.Brand.Surface}}</code></div>
+<div class="swatch"><div class="swatch-fill swatch-line"></div><strong>Border</strong><code>{{.Page.Brand.Border}}</code></div>
+<div class="swatch"><div class="swatch-fill swatch-text"></div><strong>Text</strong><code>{{.Page.Brand.Text}}</code></div>
+<div class="swatch"><div class="swatch-fill swatch-muted"></div><strong>Muted</strong><code>{{.Page.Brand.Muted}}</code></div>
+<div class="swatch"><div class="swatch-fill swatch-accent"></div><strong>Accent</strong><code>{{.Page.Brand.Accent}}</code></div>
 </div>
 <h2>Typography</h2>
 <div class="type-specimens">
@@ -59,24 +53,24 @@
 <h2>Native semantic colors</h2>
 <p>The browser identity is intentionally quieter than terminal data. Native colors belong to the Go <code class="inline-code">theme</code> package and must not be substituted with web brand accents.</p>
 <div class="brand-semantics">
-<div><span class="semantic-chip semantic-ok">OK</span> Success <code>#86cf9a</code></div>
-<div><span class="semantic-chip semantic-info">INFO</span> Information <code>#78b8ed</code></div>
-<div><span class="semantic-chip semantic-warn">WARN</span> Warning <code>#f2c879</code></div>
-<div><span class="semantic-chip semantic-error">ERROR</span> Danger <code>#f28b82</code></div>
-<div><span class="semantic-chip semantic-series">SERIES</span> Comparison <code>#c4a7e7</code></div>
+<div><span class="semantic-chip semantic-ok">OK</span> Success <code>{{.Page.Brand.Success}}</code></div>
+<div><span class="semantic-chip semantic-info">INFO</span> Information <code>{{.Page.Brand.Info}}</code></div>
+<div><span class="semantic-chip semantic-warn">WARN</span> Warning <code>{{.Page.Brand.Warning}}</code></div>
+<div><span class="semantic-chip semantic-error">ERROR</span> Danger <code>{{.Page.Brand.Danger}}</code></div>
+<div><span class="semantic-chip semantic-series">SERIES</span> Comparison <code>{{index .Page.Brand.Series 1}}</code></div>
 </div>
 </section>
 {{end}}
 {{with .Page.Preview}}<section class="showcase-hero" aria-label="Service workbench"><div class="showcase-heading"><h2>One model. Every piece connected.</h2><a href="examples.html#screen/services">Explore the composition ↗</a></div><p>Filter services, follow throughput, inspect a selection. A native Go screen assembled from the same components below.</p><pre tabindex="0" class="terminal hero-terminal showcase-wide">{{terminal (index .Snapshots 0).Frame}}</pre><pre tabindex="0" class="terminal hero-terminal showcase-narrow">{{terminal (index .Snapshots 1).Frame}}</pre><p class="snapshot-note">Saved native output · run locally for keyboard interaction.</p></section>{{end}}
 {{if .Page.Showcase}}<section class="showcase-atoms"><div class="showcase-heading"><h2>Small pieces. Shared meaning.</h2><a href="components.html#feedback/status">Status atoms ↗</a></div><pre tabindex="0" class="terminal atom-strip">{{range .Page.Atoms}}<span class="status-sample">{{terminal .}}</span>{{end}}</pre><p>Semantic color and an explicit label, shared by the service list and inspector.</p></section><div class="showcase-grid">{{range .Page.Showcase}}<section><div class="showcase-heading"><h2><a href="{{.Link}}">{{.Title}} ↗</a></h2></div><p>{{.Description}}</p><pre tabindex="0" class="terminal showcase-wide">{{terminal .Frame}}</pre><pre tabindex="0" class="terminal showcase-narrow">{{terminal .NarrowFrame}}</pre></section>{{end}}</div><section class="showcase-start"><h2>Bring the pieces into your terminal.</h2><pre tabindex="0" class="code-block"><code class="language-sh">{{highlight "go run ./cmd/workbench run screen/services" "sh"}}</code></pre><p><a href="components.html">Browse every component ↗</a> · <a href="deployment.html">Compare a deployment ↗</a> · <a href="development.html">Build with Charmed ↗</a></p></section>{{end}}
 {{range .Page.Groups}}
-<section class="component-family" id="family-{{.Name}}"><h2>{{.Name}}</h2>
+<section class="component-family" id="family-{{.Name}}"><h2><a class="heading-permalink" href="#family-{{.Name}}" aria-label="Link to {{.Name}} section"><span>{{.Name}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 {{range .Entries}}
 {{$component := .}}
 <section class="component" id="{{.ID}}">
-<p class="eyebrow">{{.Level}} / {{.Family}}</p><h3>{{name .Title}}</h3><p>{{.Description}}</p>
+<p class="eyebrow">{{.Level}} / <a href="#family-{{.Family}}">{{.Family}}</a></p><h3><a class="heading-permalink" href="#{{.ID}}" aria-label="Link to {{name .Title}} component"><span>{{name .Title}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>{{.Description}}</p>
 <div class="component-preview">
-<div class="component-subheading"><h4>Native preview</h4><span>Saved terminal output · 256 colors</span></div>
+<div class="component-subheading"><h4 id="{{.ID}}-preview"><a class="heading-permalink" href="#{{.ID}}-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · 256 colors</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="{{name .Title}} variants">
 {{range $i, $snapshot := .Snapshots}}<a id="tab-{{$component.ID}}-{{$i}}" href="#panel-{{$component.ID}}-{{$i}}" role="tab" aria-controls="panel-{{$component.ID}}-{{$i}}" aria-selected="{{if eq $i 0}}true{{else}}false{{end}}">{{.Name}}</a>{{end}}
@@ -87,9 +81,8 @@
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4>Go example</h4><span><a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">{{.Source}}</a> · <a href="{{.Upstream}}">Upstream</a></span></div>
+<div class="component-subheading"><h4 id="{{.ID}}-code"><a class="heading-permalink" href="#{{.ID}}-code"><span>{{if .ExampleSource}}Go usage{{else}}Fixture implementation{{end}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>{{if .ExampleSource}}<a href="https://github.com/lanej/charmed/blob/main/{{.ExampleSource}}">Usage snippet</a> · {{end}}<a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">Fixture source</a> · <a href="{{.Upstream}}">Upstream</a></span></div>
 <pre tabindex="0" class="code-block source-code"><code class="language-go">{{highlight .Code "go"}}</code></pre>
-<div class="component-run"><span>Run natively</span><pre tabindex="0" class="command code-block"><code class="language-sh">{{highlight (printf "go run ./cmd/workbench run %s" .ID) "sh"}}</code></pre></div>
 </div>
 {{if .Composes}}<p class="composition-line">Composed from: {{range .Composes}}<a class="dependency" href="{{link .}}">{{.}}</a> {{end}}</p>{{end}}
 </section>{{end}}
@@ -97,3 +90,18 @@
 {{if .Page.Coverage}}<h2>Coverage</h2><div class="table-wrap"><table tabindex="0"><thead><tr><th>Upstream</th><th>Status</th><th>Integration</th></tr></thead><tbody>{{range .Page.Coverage}}<tr><td>{{.Upstream}}</td><td>{{.Status}}</td><td>{{.Notes}}</td></tr>{{end}}</tbody></table></div>{{end}}
 <footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
 </main></div></body></html>
+{{define "guide-nav"}}
+<nav aria-label="Guide">
+<div class="nav-pages">{{range .Pages}}<a href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Title}}</a>{{end}}</div>
+{{if .Page.Groups}}
+<div class="nav-outline"><p class="nav-title">On this page</p>
+{{range .Page.Groups}}
+<div class="nav-family">
+<a class="nav-family-link" href="#family-{{.Name}}">{{.Name}}</a>
+<div class="nav-items">{{range .Entries}}<a class="nav-component" href="#{{.ID}}">{{name .Title}}</a>{{end}}</div>
+</div>
+{{end}}
+</div>
+{{end}}
+</nav>
+{{end}}
