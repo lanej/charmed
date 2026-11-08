@@ -1,4 +1,4 @@
-## [Use Charmed](#use-charmed)
+## Use Charmed
 
 Charmed wraps native [Charm](https://charm.sh/) and ntcharts components with shared themes, terminal-cell sizing, and composition conventions. Application code owns its state and business decisions; widgets remain ordinary Go models.
 
@@ -16,7 +16,7 @@ cmd := field.Focus()
 
 Explore the [input components](components.html#input/text), [charts](components.html#chart/sparkline), and [complete screens](examples.html#screen/services). The catalog shows the visual first, then a focused usage snippet. Full fixture implementations are linked separately.
 
-## [Inspect a native fixture](#inspect-a-native-fixture)
+## Inspect a native fixture
 
 The documentation snapshots are deterministic captures of real Go components, not browser recreations. Use the terminal runner when you need to inspect keyboard behavior, animation, focus, or resizing.
 
@@ -27,7 +27,7 @@ go run ./cmd/workbench run screen/services
 
 Run from the repository root with **Go 1.26.10+**. Use Ctrl+C to exit. You can pass fixture-specific options such as `--theme light`, `--legend`, or `--columns 40`; see the [component registry](https://github.com/lanej/charmed/blob/main/story/catalog.go) for available fixtures.
 
-## [Add a component](#add-a-component)
+## Add a component
 
 Organize Go packages by capability rather than atomic level. Use atoms, molecules, and organisms to describe **composition depth in the catalog**, not to create extra package layers.
 
@@ -37,7 +37,7 @@ Organize Go packages by capability rather than atomic level. Use atoms, molecule
 
 Keep services and decisions outside UI models. The registry rejects duplicate IDs, composition cycles, and references to higher atomic levels. See [DESIGN.md](https://github.com/lanej/charmed/blob/main/DESIGN.md) for the design constraints.
 
-## [Verify changes](#verify-changes)
+## Verify changes
 
 ```sh
 bash scripts/check-go.sh
@@ -48,7 +48,7 @@ The Go quality command checks formatting, vet, module tidiness, strict lint, unc
 
 The generator writes the static guide to `docs/dist/`, validates source and composition, and preserves terminal output colors. The responsive browser check covers mobile and desktop layouts, navigation, and fragment links.
 
-## [Publish documentation](#publish-documentation)
+## Publish documentation
 
 Edit `docs/*.md`, catalog stories in `story/`, and the shared site template/styles in `workbench/site/`. Generate locally before opening a pull request.
 
@@ -56,6 +56,6 @@ Every same-repository documentation PR gets an isolated preview at `lanej.io/cha
 
 Merging to `main` publishes the tested static bundle through GitHub Pages. No separate documentation server or JavaScript build tool is required; the small client script only enhances variant tabs and the mobile navigation.
 
-## [Coverage](#coverage)
+## Coverage
 
 The inventory below is generated from the registry and distinguishes implemented components from optional integrations. The bundled JuliaMono font preserves braille and box-drawing glyph geometry; see its [license](assets/JuliaMono-LICENSE.txt).
