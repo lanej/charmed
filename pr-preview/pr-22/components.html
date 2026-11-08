@@ -5077,7 +5077,7 @@ Enable Live to run the native timers.</pre></figure>
 </section>
 
 <section class="component" id="feedback/status">
-<p class="eyebrow">Atoms / <a href="#family-feedback">feedback</a></p><h3><a class="heading-permalink" href="#feedback%2fstatus" aria-label="Link to Status component"><span>Status</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Reusable OK, WARN, ERROR, UNKNOWN and OFF states compose shared tone and emphasis atoms.</p>
+<p class="eyebrow">Atoms / <a href="#family-feedback">feedback</a></p><h3><a class="heading-permalink" href="#feedback%2fstatus" aria-label="Link to Status component"><span>Status</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Health and lifecycle states share semantic colors, named glyphs and emphasis-independent spacing.</p>
 <div class="component-preview">
 <div class="component-subheading"><h4 id="feedback/status-preview"><a class="heading-permalink" href="#feedback%2fstatus-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
@@ -5091,7 +5091,11 @@ Enable Live to run the native timers.</pre></figure>
 <span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">! WARN</span><span style="background-color:#32322f;"> </span>                                                                        
 <span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× ERROR</span><span style="background-color:#322830;"> </span>                                                                       
 <span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span>                                                                     
-<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ OFF</span><span style="background-color:#252b34;"> </span></pre></figure>
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ OFF</span><span style="background-color:#252b34;"> </span>                                                                         
+<span style="background-color:#232d40;"> </span><span style="color:#8ca8e8;background-color:#232d40;">◷ PENDING</span><span style="background-color:#232d40;"> </span>                                                                     
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ RUNNING</span><span style="background-color:#1e313d;"> </span>                                                                     
+<span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span>                                                                      
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">⊘ DISABLED</span><span style="background-color:#252b34;"> </span></pre></figure>
 </div><div id="panel-feedback/status-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-1" tabindex="0">
 <figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal">Status atoms / normal                   
                                         
@@ -5099,7 +5103,11 @@ Enable Live to run the native timers.</pre></figure>
 <span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">! WARN</span><span style="background-color:#32322f;"> </span>                                
 <span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× ERROR</span><span style="background-color:#322830;"> </span>                               
 <span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span>                             
-<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ OFF</span><span style="background-color:#252b34;"> </span></pre></figure>
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ OFF</span><span style="background-color:#252b34;"> </span>                                 
+<span style="background-color:#232d40;"> </span><span style="color:#8ca8e8;background-color:#232d40;">◷ PENDING</span><span style="background-color:#232d40;"> </span>                             
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ RUNNING</span><span style="background-color:#1e313d;"> </span>                             
+<span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span>                              
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">⊘ DISABLED</span><span style="background-color:#252b34;"> </span></pre></figure>
 </div><div id="panel-feedback/status-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-2" tabindex="0">
 <figure><figcaption>256 colors · ansi256 · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal">Status atoms / normal                                                           
                                                                                 
@@ -5107,7 +5115,11 @@ Enable Live to run the native timers.</pre></figure>
 <span style="background-color:#303030;"> </span><span style="color:#ffd787;background-color:#303030;">! WARN</span><span style="background-color:#303030;"> </span>                                                                        
 <span style="background-color:#5f005f;"> </span><span style="color:#ff8787;background-color:#5f005f;">× ERROR</span><span style="background-color:#5f005f;"> </span>                                                                       
 <span style="background-color:#005f5f;"> </span><span style="color:#afafd7;background-color:#005f5f;">? UNKNOWN</span><span style="background-color:#005f5f;"> </span>                                                                     
-<span style="background-color:#00005f;"> </span><span style="color:#9e9e9e;background-color:#00005f;">○ OFF</span><span style="background-color:#00005f;"> </span></pre></figure>
+<span style="background-color:#00005f;"> </span><span style="color:#9e9e9e;background-color:#00005f;">○ OFF</span><span style="background-color:#00005f;"> </span>                                                                         
+<span style="background-color:#00005f;"> </span><span style="color:#87afd7;background-color:#00005f;">◷ PENDING</span><span style="background-color:#00005f;"> </span>                                                                     
+<span style="background-color:#005f5f;"> </span><span style="color:#5fd7d7;background-color:#005f5f;">▶ RUNNING</span><span style="background-color:#005f5f;"> </span>                                                                     
+<span style="background-color:#00005f;"> </span><span style="color:#d7afaf;background-color:#00005f;">‖ PAUSED</span><span style="background-color:#00005f;"> </span>                                                                      
+<span style="background-color:#00005f;"> </span><span style="color:#9e9e9e;background-color:#00005f;">⊘ DISABLED</span><span style="background-color:#00005f;"> </span></pre></figure>
 </div><div id="panel-feedback/status-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-3" tabindex="0">
 <figure><figcaption>16 colors · ansi16 · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal">Status atoms / normal                                                           
                                                                                 
@@ -5115,7 +5127,11 @@ Enable Live to run the native timers.</pre></figure>
 <span style="background-color:#000000;"> </span><span style="color:#ff0000;background-color:#000000;">! WARN</span><span style="background-color:#000000;"> </span>                                                                        
 <span style="background-color:#800080;"> </span><span style="color:#ff0000;background-color:#800080;">× ERROR</span><span style="background-color:#800080;"> </span>                                                                       
 <span style="background-color:#008080;"> </span><span style="color:#0000ff;background-color:#008080;">? UNKNOWN</span><span style="background-color:#008080;"> </span>                                                                     
-<span style="background-color:#000080;"> </span><span style="color:#c0c0c0;background-color:#000080;">○ OFF</span><span style="background-color:#000080;"> </span></pre></figure>
+<span style="background-color:#000080;"> </span><span style="color:#c0c0c0;background-color:#000080;">○ OFF</span><span style="background-color:#000080;"> </span>                                                                         
+<span style="background-color:#000080;"> </span><span style="color:#0000ff;background-color:#000080;">◷ PENDING</span><span style="background-color:#000080;"> </span>                                                                     
+<span style="background-color:#008080;"> </span><span style="color:#00ffff;background-color:#008080;">▶ RUNNING</span><span style="background-color:#008080;"> </span>                                                                     
+<span style="background-color:#000080;"> </span><span style="color:#ff0000;background-color:#000080;">‖ PAUSED</span><span style="background-color:#000080;"> </span>                                                                      
+<span style="background-color:#000080;"> </span><span style="color:#c0c0c0;background-color:#000080;">⊘ DISABLED</span><span style="background-color:#000080;"> </span></pre></figure>
 </div><div id="panel-feedback/status-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-4" tabindex="0">
 <figure><figcaption>Monochrome · none · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal">Status atoms / normal                                                           
                                                                                 
@@ -5123,7 +5139,11 @@ Enable Live to run the native timers.</pre></figure>
 [! WARN]                                                                        
 [x ERROR]                                                                       
 [? UNKNOWN]                                                                     
-[- OFF]</pre></figure>
+[- OFF]                                                                         
+[p PENDING]                                                                     
+[&gt; RUNNING]                                                                     
+[= PAUSED]                                                                      
+[/ DISABLED]</pre></figure>
 </div><div id="panel-feedback/status-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-5" tabindex="0">
 <figure><figcaption>Bright · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal">Status atoms / bright                                                           
                                                                                 
@@ -5131,7 +5151,11 @@ Enable Live to run the native timers.</pre></figure>
 <span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">! WARN</span><span style="background-color:#f2c879;"> </span>                                                                        
 <span style="background-color:#f28b82;"> </span><span style="color:#101722;background-color:#f28b82;font-weight:bold;">× ERROR</span><span style="background-color:#f28b82;"> </span>                                                                       
 <span style="background-color:#a7bce0;"> </span><span style="color:#101722;background-color:#a7bce0;font-weight:bold;">? UNKNOWN</span><span style="background-color:#a7bce0;"> </span>                                                                     
-<span style="background-color:#9a9a9a;"> </span><span style="color:#101722;background-color:#9a9a9a;font-weight:bold;">○ OFF</span><span style="background-color:#9a9a9a;"> </span></pre></figure>
+<span style="background-color:#9a9a9a;"> </span><span style="color:#101722;background-color:#9a9a9a;font-weight:bold;">○ OFF</span><span style="background-color:#9a9a9a;"> </span>                                                                         
+<span style="background-color:#8ca8e8;"> </span><span style="color:#101722;background-color:#8ca8e8;font-weight:bold;">◷ PENDING</span><span style="background-color:#8ca8e8;"> </span>                                                                     
+<span style="background-color:#70c6d8;"> </span><span style="color:#101722;background-color:#70c6d8;font-weight:bold;">▶ RUNNING</span><span style="background-color:#70c6d8;"> </span>                                                                     
+<span style="background-color:#c5b49b;"> </span><span style="color:#101722;background-color:#c5b49b;font-weight:bold;">‖ PAUSED</span><span style="background-color:#c5b49b;"> </span>                                                                      
+<span style="background-color:#9a9a9a;"> </span><span style="color:#101722;background-color:#9a9a9a;font-weight:bold;">⊘ DISABLED</span><span style="background-color:#9a9a9a;"> </span></pre></figure>
 </div><div id="panel-feedback/status-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-6" tabindex="0">
 <figure><figcaption>Normal · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal">Status atoms / normal                                                           
                                                                                 
@@ -5139,7 +5163,11 @@ Enable Live to run the native timers.</pre></figure>
 <span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">! WARN</span><span style="background-color:#32322f;"> </span>                                                                        
 <span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× ERROR</span><span style="background-color:#322830;"> </span>                                                                       
 <span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span>                                                                     
-<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ OFF</span><span style="background-color:#252b34;"> </span></pre></figure>
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ OFF</span><span style="background-color:#252b34;"> </span>                                                                         
+<span style="background-color:#232d40;"> </span><span style="color:#8ca8e8;background-color:#232d40;">◷ PENDING</span><span style="background-color:#232d40;"> </span>                                                                     
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ RUNNING</span><span style="background-color:#1e313d;"> </span>                                                                     
+<span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span>                                                                      
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">⊘ DISABLED</span><span style="background-color:#252b34;"> </span></pre></figure>
 </div><div id="panel-feedback/status-7" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-7" tabindex="0">
 <figure><figcaption>Dim · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal">Status atoms / dim                                                              
                                                                                 
@@ -5147,7 +5175,11 @@ Enable Live to run the native timers.</pre></figure>
 <span style="background-color:#191e25;"> </span><span style="color:#b5945c;background-color:#191e25;">! WARN</span><span style="background-color:#191e25;"> </span>                                                                        
 <span style="background-color:#191c26;"> </span><span style="color:#c17670;background-color:#191c26;">× ERROR</span><span style="background-color:#191c26;"> </span>                                                                       
 <span style="background-color:#161e2a;"> </span><span style="color:#829bc3;background-color:#161e2a;">? UNKNOWN</span><span style="background-color:#161e2a;"> </span>                                                                     
-<span style="background-color:#161c27;"> </span><span style="color:#898989;background-color:#161c27;">○ OFF</span><span style="background-color:#161c27;"> </span></pre></figure>
+<span style="background-color:#161c27;"> </span><span style="color:#898989;background-color:#161c27;">○ OFF</span><span style="background-color:#161c27;"> </span>                                                                         
+<span style="background-color:#151d2a;"> </span><span style="color:#758fc4;background-color:#151d2a;">◷ PENDING</span><span style="background-color:#151d2a;"> </span>                                                                     
+<span style="background-color:#141e29;"> </span><span style="color:#519bab;background-color:#141e29;">▶ RUNNING</span><span style="background-color:#141e29;"> </span>                                                                     
+<span style="background-color:#171d27;"> </span><span style="color:#a59682;background-color:#171d27;">‖ PAUSED</span><span style="background-color:#171d27;"> </span>                                                                      
+<span style="background-color:#161c27;"> </span><span style="color:#898989;background-color:#161c27;">⊘ DISABLED</span><span style="background-color:#161c27;"> </span></pre></figure>
 </div>
 </div>
 </div>
@@ -5158,6 +5190,7 @@ Enable Live to run the native timers.</pre></figure>
 <span class="syn-keyword">import</span> <span class="syn-operator">(</span>
 	<span class="syn-string">&#34;image/color&#34;</span>
 
+	<span class="syn-string">&#34;github.com/charmbracelet/x/ansi&#34;</span>
 	<span class="syn-string">&#34;github.com/lanej/charmed/text&#34;</span>
 	<span class="syn-string">&#34;github.com/lanej/charmed/theme&#34;</span>
 <span class="syn-operator">)</span>
@@ -5166,12 +5199,32 @@ Enable Live to run the native timers.</pre></figure>
 <span class="syn-keyword">type</span> Status <span class="syn-builtin">string</span>
 
 <span class="syn-keyword">const</span> <span class="syn-operator">(</span>
-	OK      Status <span class="syn-operator">=</span> <span class="syn-string">&#34;OK&#34;</span>
-	Warn    Status <span class="syn-operator">=</span> <span class="syn-string">&#34;WARN&#34;</span>
-	Error   Status <span class="syn-operator">=</span> <span class="syn-string">&#34;ERROR&#34;</span>
-	Unknown Status <span class="syn-operator">=</span> <span class="syn-string">&#34;UNKNOWN&#34;</span>
-	Off     Status <span class="syn-operator">=</span> <span class="syn-string">&#34;OFF&#34;</span>
+	OK       Status <span class="syn-operator">=</span> <span class="syn-string">&#34;OK&#34;</span>
+	Warn     Status <span class="syn-operator">=</span> <span class="syn-string">&#34;WARN&#34;</span>
+	Error    Status <span class="syn-operator">=</span> <span class="syn-string">&#34;ERROR&#34;</span>
+	Unknown  Status <span class="syn-operator">=</span> <span class="syn-string">&#34;UNKNOWN&#34;</span>
+	Off      Status <span class="syn-operator">=</span> <span class="syn-string">&#34;OFF&#34;</span>
+	Pending  Status <span class="syn-operator">=</span> <span class="syn-string">&#34;PENDING&#34;</span>
+	Running  Status <span class="syn-operator">=</span> <span class="syn-string">&#34;RUNNING&#34;</span>
+	Paused   Status <span class="syn-operator">=</span> <span class="syn-string">&#34;PAUSED&#34;</span>
+	Disabled Status <span class="syn-operator">=</span> <span class="syn-string">&#34;DISABLED&#34;</span>
 <span class="syn-operator">)</span>
+
+<span class="syn-comment">// Statuses returns the display catalog in its learning order.</span>
+<span class="syn-keyword">func</span> <span class="syn-function">Statuses</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>Status <span class="syn-operator">{</span>
+	<span class="syn-keyword">return</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>Status<span class="syn-operator">{</span>OK<span class="syn-operator">,</span> Warn<span class="syn-operator">,</span> Error<span class="syn-operator">,</span> Unknown<span class="syn-operator">,</span> Off<span class="syn-operator">,</span> Pending<span class="syn-operator">,</span> Running<span class="syn-operator">,</span> Paused<span class="syn-operator">,</span> Disabled<span class="syn-operator">}</span>
+<span class="syn-operator">}</span>
+
+<span class="syn-comment">// MaxStatusWidth includes the glyph, separating space and horizontal insets.</span>
+<span class="syn-comment">// All emphasis levels retain this geometry.</span>
+<span class="syn-keyword">func</span> <span class="syn-function">MaxStatusWidth</span><span class="syn-operator">(</span>t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">int</span> <span class="syn-operator">{</span>
+	width <span class="syn-operator">:=</span> <span class="syn-number">0</span>
+	<span class="syn-keyword">for</span> _<span class="syn-operator">,</span> status <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> <span class="syn-function">Statuses</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
+		width <span class="syn-operator">=</span> <span class="syn-builtin">max</span><span class="syn-operator">(</span>width<span class="syn-operator">,</span> ansi<span class="syn-operator">.</span><span class="syn-function">StringWidth</span><span class="syn-operator">(</span>status<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> t<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+	<span class="syn-operator">}</span>
+
+	<span class="syn-keyword">return</span> width
+<span class="syn-operator">}</span>
 
 <span class="syn-keyword">func</span> <span class="syn-operator">(</span>s Status<span class="syn-operator">)</span> <span class="syn-function">View</span><span class="syn-operator">(</span>emphasis text<span class="syn-operator">.</span>Emphasis<span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
 	tone <span class="syn-operator">:=</span> text<span class="syn-operator">.</span>Neutral
@@ -5191,6 +5244,18 @@ Enable Live to run the native timers.</pre></figure>
 		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Unknown<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimUnknown<span class="syn-operator">)</span>
 	<span class="syn-keyword">case</span> Off<span class="syn-operator">:</span>
 		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphOff
+		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Inactive<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimInactive<span class="syn-operator">)</span>
+	<span class="syn-keyword">case</span> Pending<span class="syn-operator">:</span>
+		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphPending
+		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Pending<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimPending<span class="syn-operator">)</span>
+	<span class="syn-keyword">case</span> Running<span class="syn-operator">:</span>
+		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphRunning
+		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Running<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimRunning<span class="syn-operator">)</span>
+	<span class="syn-keyword">case</span> Paused<span class="syn-operator">:</span>
+		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphPaused
+		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Paused<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimPaused<span class="syn-operator">)</span>
+	<span class="syn-keyword">case</span> Disabled<span class="syn-operator">:</span>
+		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphDisabled
 		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Inactive<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimInactive<span class="syn-operator">)</span>
 	<span class="syn-keyword">default</span><span class="syn-operator">:</span>
 		s <span class="syn-operator">=</span> Unknown

@@ -75,6 +75,65 @@
 <h2>Colors and emphasis</h2>
 <p>Foreground and muted text are neutral. Accent identifies interaction; success, information, warning and danger identify semantic meaning. UNKNOWN uses a cool slate-blue tone for uncertainty; OFF uses achromatic gray for inactivity. Their normal and dim tokens remain separate, while labels and glyphs retain meaning without color. Categorical series use a separate palette and never alias those interface or status tokens. Series order remains stable across views; labels and matching legend keys retain identity when fallback colors converge.</p>
 <p>Bright, normal and dim emphasis preserve the label, glyph and cell allocation. Dim uses explicit shades of each semantic hue instead of blending every tone toward gray or relying on the terminal's faint attribute. The built-in dim text tokens meet a 4.5:1 contrast floor against their theme background; native fonts, color profiles and terminal settings still affect appearance. Monochrome keeps labels, glyphs and bright weight; normal and dim may coincide without color.</p>
+<h2>Display states</h2>
+<p>Health and lifecycle states share one catalog through <code class="inline-code">feedback<span class="syn-operator">.</span><span class="syn-function">Statuses</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code>. The application decides when each state applies; rendering a state never starts, pauses or disables work. Allocate fixed status columns with <code class="inline-code">feedback<span class="syn-operator">.</span>MaxStatusWidth</code> so longer labels retain their glyphs and padding.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>State</th>
+<th>Meaning</th>
+<th>Color family</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OK</td>
+<td>Healthy or successful</td>
+<td>Green</td>
+</tr>
+<tr>
+<td>WARN</td>
+<td>Attention needed</td>
+<td>Amber</td>
+</tr>
+<tr>
+<td>ERROR</td>
+<td>Failed or unhealthy</td>
+<td>Red</td>
+</tr>
+<tr>
+<td>UNKNOWN</td>
+<td>State cannot be established</td>
+<td>Slate blue</td>
+</tr>
+<tr>
+<td>OFF</td>
+<td>Switched off or inactive</td>
+<td>Gray</td>
+</tr>
+<tr>
+<td>PENDING</td>
+<td>Waiting to start</td>
+<td>Blue</td>
+</tr>
+<tr>
+<td>RUNNING</td>
+<td>Actively executing</td>
+<td>Cyan</td>
+</tr>
+<tr>
+<td>PAUSED</td>
+<td>Temporarily suspended and resumable</td>
+<td>Sand</td>
+</tr>
+<tr>
+<td>DISABLED</td>
+<td>Unavailable to start or select</td>
+<td>Gray, with a slashed-circle glyph</td>
+</tr>
+</tbody>
+</table>
+<p>Pending, running and paused have independent normal/dim tokens. Disabled shares the inactivity palette with off; its label and slashed-circle glyph distinguish unavailability from being switched off. These states do not imply warning/error severity and are independent of attention-rule evaluation.</p>
 <h2>Glyphs and spacing</h2>
 <p><code class="inline-code">theme<span class="syn-operator">.</span>Glyph</code> names status, selection, expansion, navigation, loading and unavailable marks. <code class="inline-code">Theme<span class="syn-operator">.</span>Glyph</code> selects a one-cell Unicode or ASCII representation. A glyph supplements a semantic text label; <code class="inline-code">UNKNOWN</code> and <code class="inline-code">OFF</code> remain different states. Animated spinners retain native frame sequences, with a named static loading mark for reduced motion. Application-specific chart markers remain caller-owned.</p>
 <p><code class="inline-code">theme<span class="syn-operator">.</span>InlinePadding</code> reserves one horizontal cell on each side of controls, pills and panel content. <code class="inline-code">Theme<span class="syn-operator">.</span>Control</code> and <code class="inline-code">Theme<span class="syn-operator">.</span>Focus</code> allocate the same space. Status always composes its glyph, one separating cell and its label inside the same padded pill; emphasis changes color and weight without changing geometry. Monochrome focus retains inverse highlighting. <code class="inline-code">Theme<span class="syn-operator">.</span>Selection</code> uses a quieter selection surface so nested table text and semantic pills remain readable; tables reuse their existing cell insets instead of adding a second focus inset.</p>
@@ -463,7 +522,9 @@ Categorical data / independent palette</pre></figure>
                                                                                                     
 ok          ✓ +     warning     ! !                                                                 
 error       × x     unknown     ? ?                                                                 
-off         ○ -     info        i i                                                                 
+off         ○ -     pending     ◷ p                                                                 
+running     ▶ &gt;     paused      ‖ =                                                                 
+disabled    ⊘ /     info        i i                                                                 
 selected    ● *     unselected  ○ o                                                                 
 expanded    ▾ v     collapsed   ▸ &gt;                                                                 
 up          ↑ ^     down        ↓ v                                                                 
@@ -474,7 +535,9 @@ loading     … .     unavailable — -</pre></figure>
                                         
 ok          ✓ +     warning     ! !     
 error       × x     unknown     ? ?     
-off         ○ -     info        i i     
+off         ○ -     pending     ◷ p     
+running     ▶ &gt;     paused      ‖ =     
+disabled    ⊘ /     info        i i     
 selected    ● *     unselected  ○ o     
 expanded    ▾ v     collapsed   ▸ &gt;     
 up          ↑ ^     down        ↓ v     
@@ -485,7 +548,9 @@ loading     … .     unavailable — -</pre></figure>
                                                                                                     
 ok          ✓ +     warning     ! !                                                                 
 error       × x     unknown     ? ?                                                                 
-off         ○ -     info        i i                                                                 
+off         ○ -     pending     ◷ p                                                                 
+running     ▶ &gt;     paused      ‖ =                                                                 
+disabled    ⊘ /     info        i i                                                                 
 selected    ● *     unselected  ○ o                                                                 
 expanded    ▾ v     collapsed   ▸ &gt;                                                                 
 up          ↑ ^     down        ↓ v                                                                 
@@ -496,7 +561,9 @@ loading     … .     unavailable — -</pre></figure>
                                                                                                     
 ok          ✓ +     warning     ! !                                                                 
 error       × x     unknown     ? ?                                                                 
-off         ○ -     info        i i                                                                 
+off         ○ -     pending     ◷ p                                                                 
+running     ▶ &gt;     paused      ‖ =                                                                 
+disabled    ⊘ /     info        i i                                                                 
 selected    ● *     unselected  ○ o                                                                 
 expanded    ▾ v     collapsed   ▸ &gt;                                                                 
 up          ↑ ^     down        ↓ v                                                                 
@@ -507,7 +574,9 @@ loading     … .     unavailable — -</pre></figure>
                                                                                                     
 ok          + +     warning     ! !                                                                 
 error       x x     unknown     ? ?                                                                 
-off         - -     info        i i                                                                 
+off         - -     pending     p p                                                                 
+running     &gt; &gt;     paused      = =                                                                 
+disabled    / /     info        i i                                                                 
 selected    * *     unselected  o o                                                                 
 expanded    v v     collapsed   &gt; &gt;                                                                 
 up          ^ ^     down        v v                                                                 
@@ -526,7 +595,7 @@ loading     . .     unavailable - -</pre></figure>
 		rows <span class="syn-operator">:=</span> <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">string</span><span class="syn-operator">{</span><span class="syn-string">&#34;Meaning     U A     Meaning     U A&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">}</span>
 
 		<span class="syn-keyword">var</span> cells <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">string</span>
-		<span class="syn-keyword">for</span> _<span class="syn-operator">,</span> glyph <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>theme<span class="syn-operator">.</span>Glyph<span class="syn-operator">{</span>theme<span class="syn-operator">.</span>GlyphOK<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphWarning<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphError<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphUnknown<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphOff<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphInfo<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphSelected<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphUnselected<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphExpanded<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphCollapsed<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphUp<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphDown<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphLeft<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphRight<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphLoading<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphUnavailable<span class="syn-operator">}</span> <span class="syn-operator">{</span>
+		<span class="syn-keyword">for</span> _<span class="syn-operator">,</span> glyph <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>theme<span class="syn-operator">.</span>Glyph<span class="syn-operator">{</span>theme<span class="syn-operator">.</span>GlyphOK<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphWarning<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphError<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphUnknown<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphOff<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphPending<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphRunning<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphPaused<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphDisabled<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphInfo<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphSelected<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphUnselected<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphExpanded<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphCollapsed<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphUp<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphDown<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphLeft<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphRight<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphLoading<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>GlyphUnavailable<span class="syn-operator">}</span> <span class="syn-operator">{</span>
 			cells <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>cells<span class="syn-operator">,</span> layout<span class="syn-operator">.</span><span class="syn-function">Fit</span><span class="syn-operator">(</span>fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;%-11s %s %s&#34;</span><span class="syn-operator">,</span> glyph<span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Glyph</span><span class="syn-operator">(</span>glyph<span class="syn-operator">)</span><span class="syn-operator">,</span> fallback<span class="syn-operator">.</span><span class="syn-function">Glyph</span><span class="syn-operator">(</span>glyph<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> <span class="syn-number">18</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">1</span><span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
 		<span class="syn-operator">}</span>
 
