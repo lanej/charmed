@@ -7,6 +7,7 @@ import (
 	"github.com/lanej/charmed/attention"
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/cohort"
+	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
 )
@@ -55,6 +56,7 @@ func (m *CohortComparison) Attention(id string) (cohort.ComparisonAttention, boo
 	}
 	return cohort.ComparisonAttention{}, false
 }
+
 func (m *CohortComparison) assessAttention() []attention.Changed {
 	m.assessments = make([]cohort.ComparisonAttention, len(m.data.Metrics))
 	var changes []attention.Changed
@@ -85,15 +87,19 @@ func (m *CohortComparison) tableColumns() {
 
 	width = layout.PanelContentSize(layout.Size{Width: width}).Width
 
-	memberWidth := max(1, width-19)
+	const versionWidth, distanceWidth = 7, 6
+
+	columns := []table.Column{{Title: "MEMBER", Width: 1}, {Title: "VERSION", Width: versionWidth}, {Title: "z(ref)", Width: distanceWidth}}
 	if m.boundaries[m.MetricID()].Hosts.Configured() {
-		memberWidth = max(1, width-32)
+		columns = append(columns, table.Column{Title: "ATTN", Width: feedback.MaxAttentionWidth(m.theme)})
 	}
 
-	columns := []table.Column{{Title: "MEMBER", Width: memberWidth}, {Title: "VERSION", Width: 7}, {Title: "z(ref)", Width: 6}}
-	if m.boundaries[m.MetricID()].Hosts.Configured() {
-		columns = append(columns, table.Column{Title: "ATTN", Width: 11})
+	occupied := collection.TablePaddingWidth(len(columns))
+	for _, column := range columns[1:] {
+		occupied += column.Width
 	}
+
+	columns[0].Width = max(1, width-occupied)
 
 	m.Table.SetColumns(columns)
 }

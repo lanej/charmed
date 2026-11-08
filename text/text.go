@@ -24,6 +24,12 @@ const (
 	Danger  Tone = "danger"
 )
 
+// Pill tint strengths are the semantic color fraction mixed into the background.
+const (
+	normalPillTint = 0.15
+	dimPillTint    = 0.04
+)
+
 // Pill keeps its text label in every profile; color supplements its meaning.
 // Semantic fills use contrasting theme surfaces, with brackets in ASCII mode.
 func Pill(value string, tone Tone, t theme.Theme, emphasis ...Emphasis) string {
@@ -43,12 +49,13 @@ func Pill(value string, tone Tone, t theme.Theme, emphasis ...Emphasis) string {
 	case Bright:
 		style = style.Foreground(t.Background).Background(fill)
 	case Dim:
-		style = style.Background(blend(fill, t.Background, .04))
+		style = style.Background(blend(fill, t.Background, dimPillTint))
 	default:
-		style = style.Background(blend(fill, t.Background, .15))
+		style = style.Background(blend(fill, t.Background, normalPillTint))
 	}
 	return style.Render(value)
 }
+
 func KeyHint(key, description string, t theme.Theme) string {
 	return t.Heading().Render(key) + " " + t.Subtle().Render(description)
 }

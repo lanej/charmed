@@ -2,6 +2,7 @@ package feedback
 
 import (
 	"charm.land/lipgloss/v2"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/attention"
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
@@ -21,6 +22,7 @@ func Attention(level attention.Level, t theme.Theme) string {
 	}
 	return ""
 }
+
 func AttentionStyle(level attention.Level, t theme.Theme) lipgloss.Style {
 	switch level {
 	case attention.Error:
@@ -29,4 +31,15 @@ func AttentionStyle(level attention.Level, t theme.Theme) lipgloss.Style {
 		return t.Text().Foreground(t.Warning).Bold(true)
 	}
 	return t.Subtle()
+}
+
+// MaxAttentionWidth reserves the widest rendered attention label, including
+// its glyph and padding. Off renders no label.
+func MaxAttentionWidth(t theme.Theme) int {
+	width := 0
+	for _, level := range []attention.Level{attention.Off, attention.Normal, attention.Warn, attention.Error, attention.Unknown} {
+		width = max(width, ansi.StringWidth(Attention(level, t)))
+	}
+
+	return width
 }

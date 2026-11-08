@@ -12,7 +12,7 @@ Bright, normal and dim emphasis preserve the label, glyph and cell allocation. D
 
 ## Display states
 
-Health and lifecycle states share one catalog through `feedback.Statuses()`. The application decides when each state applies; rendering a state never starts, pauses or disables work. Allocate fixed status columns with `feedback.MaxStatusWidth` so longer labels retain their glyphs and padding.
+Health and lifecycle states share one catalog through `feedback.Statuses()`. The application decides when each state applies; rendering a state never starts, pauses or disables work. Allocate fixed status columns with `feedback.MaxStatusWidth` so longer labels retain their glyphs and padding. Attention-only tables use `feedback.MaxAttentionWidth`, which measures the attention catalog separately from lifecycle states.
 
 | State | Meaning | Color family |
 | --- | --- | --- |
@@ -50,3 +50,5 @@ Spacing is measured in terminal cells. Apply horizontal and vertical gaps explic
 `theme.InlinePadding` aliases `SpaceSmall`. Each frame side occupies `theme.BorderCells` (one cell). `Theme.FrameBorder()` exposes a native Lip Gloss border with an explicit ASCII fallback, and `Theme.BorderStyle(focused)` uses `Border` or `FocusBorder` without changing the frame geometry. `layout.Panel` consumes those defaults. Set `FocusBorder` independently when interaction chrome needs a different color from the accent; custom themes without it retain their accent fallback.
 
 `SelectionForeground` and `SelectionBackground` style the outer surface returned by `Theme.Selection()`. They are independent of inverse keyboard focus: `Theme.Focus()` identifies the active control, while `Theme.Selection()` keeps the selected item's text readable on a quieter surface. Both retain the control's horizontal insets. Built-in selection colors meet a 4.5:1 text contrast floor; monochrome keeps inverse selection, and custom themes without a selection background keep the bold/underline fallback. Omitting only the selection foreground retains the theme's ordinary text color. Nested foreground styles take precedence: native table cells retain their ordinary text or semantic pill colors instead of inheriting `SelectionForeground`. Customize native table cell styles directly when changing those colors, and check them against the selection background. Native styles remain directly customizable.
+
+Table column widths describe content, excluding native cell insets. Budget those insets with `collection.TablePaddingWidth` or `collection.DenseTablePaddingWidth`, then subtract the other columns from the available panel content width. These helpers describe the constructor defaults; recalculate the budget if you customize native cell padding.

@@ -13,8 +13,8 @@ import (
 
 func NewTable(columns []table.Column, rows []table.Row, width, height int, t theme.Theme) table.Model {
 	s := table.DefaultStyles()
-	s.Header = t.Heading().Padding(0, 1)
-	s.Cell = t.Text().Padding(0, 1)
+	s.Header = t.Heading().Padding(0, theme.InlinePadding)
+	s.Cell = t.Text().Padding(0, theme.InlinePadding)
 	// WHY: Table cells already reserve the inset; row focus must not add another.
 	s.Selected = t.Selection().Padding(0)
 
@@ -25,8 +25,8 @@ func NewTable(columns []table.Column, rows []table.Row, width, height int, t the
 func NewDenseTable(columns []table.Column, rows []table.Row, width, height int, t theme.Theme) table.Model {
 	m := NewTable(columns, rows, width, height, t)
 	s := table.DefaultStyles()
-	s.Header = t.Heading().Padding(0, 1, 0, 0)
-	s.Cell = t.Text().Padding(0, 1, 0, 0)
+	s.Header = t.Heading().Padding(0, theme.SpaceSmall, 0, 0)
+	s.Cell = t.Text().Padding(0, theme.SpaceSmall, 0, 0)
 	s.Selected = t.Selection().Padding(0)
 	m.SetStyles(s)
 

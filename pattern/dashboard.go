@@ -54,8 +54,10 @@ type Dashboard struct {
 }
 
 func NewDashboard(o DashboardOptions) *Dashboard {
-	m := &Dashboard{theme: o.Theme, services: append([]Service(nil), o.Services...), live: o.Live, emit: o.Emit, showLegend: o.ShowLegend,
-		focus: interaction.NewFocus("filter", "table", "chart", "details")}
+	m := &Dashboard{
+		theme: o.Theme, services: append([]Service(nil), o.Services...), live: o.Live, emit: o.Emit, showLegend: o.ShowLegend,
+		focus: interaction.NewFocus("filter", "table", "chart", "details"),
+	}
 	m.Filter = input.NewText(input.TextOptions{Placeholder: "Filter services…", Width: 80, Theme: o.Theme})
 	if o.Theme.ASCII {
 		m.Filter.Placeholder = "Filter services..."
@@ -81,6 +83,7 @@ type dashboardTick struct{}
 func (m *Dashboard) nextTick() tea.Cmd {
 	return tea.Tick(time.Second, func(time.Time) tea.Msg { return dashboardTick{} })
 }
+
 func (m *Dashboard) Resize(size layout.Size) {
 	m.size = size
 	m.Filter.Resize(max(1, layout.PanelContentSize(size).Width))
@@ -110,13 +113,17 @@ func (m *Dashboard) Resize(size layout.Size) {
 
 	m.focus = interaction.NewFocus(ids...)
 	m.focus.Set(current)
-	w := max(4, layout.PanelContentSize(layout.Size{Width: m.leftWidth}).Width)
+
+	const columnCount = 2
+
+	paddingWidth := collection.TablePaddingWidth(columnCount)
+	w := max(paddingWidth, layout.PanelContentSize(layout.Size{Width: m.leftWidth}).Width)
 	statusWidth := feedback.MaxStatusWidth(m.theme)
-	m.Table.SetColumns([]table.Column{{Title: "SERVICE", Width: max(1, w-statusWidth-4)}, {Title: "STATE", Width: statusWidth}})
+	m.Table.SetColumns([]table.Column{{Title: "SERVICE", Width: max(1, w-statusWidth-paddingWidth)}, {Title: "STATE", Width: statusWidth}})
 	m.Table.SetWidth(w)
 	m.Table.SetHeight(max(1, m.tableHeight-1))
 	m.Details.SetWidth(w)
-	m.Details.SetHeight(max(1, m.detailHeight-2))
+	m.Details.SetHeight(max(1, layout.PanelContentSize(layout.Size{Height: m.detailHeight}).Height))
 	m.Plot.Resize(chart.PanelPlotSize(layout.Size{Width: m.rightWidth, Height: m.chartHeight}, chart.PanelOptions{ShowLegend: m.showLegend}))
 }
 
@@ -134,6 +141,7 @@ func (m *Dashboard) syncFocus() tea.Cmd {
 	}
 	return nil
 }
+
 func (m *Dashboard) Update(msg tea.Msg) tea.Cmd {
 	if m.focus.Handle(msg) {
 		return m.syncFocus()
@@ -180,6 +188,7 @@ func (m *Dashboard) Update(msg tea.Msg) tea.Cmd {
 	m.Filter, cmd = m.Filter.Update(msg)
 	return cmd
 }
+
 func (m *Dashboard) advance() {
 	m.Step++
 	m.updateSelection()
@@ -187,6 +196,7 @@ func (m *Dashboard) advance() {
 		m.emit(map[string]any{"type": "tick", "step": m.Step, "selected": m.SelectedID})
 	}
 }
+
 func (m *Dashboard) applyFilter() {
 	needle := strings.ToLower(m.Filter.Value())
 	m.visible = nil
@@ -207,6 +217,7 @@ func (m *Dashboard) applyFilter() {
 	}
 	m.selectRow()
 }
+
 func (m *Dashboard) selectRow() {
 	old := m.SelectedID
 	m.SelectedID = ""
@@ -218,6 +229,7 @@ func (m *Dashboard) selectRow() {
 		m.emit(interaction.Selected{Component: "services", ID: m.SelectedID})
 	}
 }
+
 func (m *Dashboard) selected() (Service, bool) {
 	for _, s := range m.visible {
 		if s.ID == m.SelectedID {
@@ -226,6 +238,7 @@ func (m *Dashboard) selected() (Service, bool) {
 	}
 	return Service{}, false
 }
+
 func (m *Dashboard) updateSelection() {
 	s, ok := m.selected()
 	if !ok {
@@ -236,6 +249,7 @@ func (m *Dashboard) updateSelection() {
 	m.Plot.SetData(m.series(s))
 	m.Details.SetContent(fmt.Sprintf("%s  %s\n\nThroughput   %.0f req/min\nLatency p95  %.0f ms", s.Name, serviceStatus(s.Status).View(text.Bright, m.theme), s.Rate, s.Latency))
 }
+
 func (m *Dashboard) series(s Service) []chart.TimeSeriesData {
 	base := time.Date(2026, 1, 1, 12, 0, 0, 0, time.UTC)
 	data := []chart.TimeSeriesData{{ID: "observed", Label: "Observed", Unit: "req/min"}, {ID: "baseline", Label: "Baseline", Unit: "req/min"}}
@@ -247,6 +261,7 @@ func (m *Dashboard) series(s Service) []chart.TimeSeriesData {
 	}
 	return data
 }
+
 func (m *Dashboard) View() string {
 	header := m.theme.Heading().Render("Service workbench") + "  " + m.theme.Subtle().Render(fmt.Sprintf("%d services · %d samples", len(m.visible), m.Step))
 	filter := layout.Panel("", m.Filter.View(), layout.Size{Width: m.size.Width, Height: 3}, m.theme, m.focus.Current() == "filter")

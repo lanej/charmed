@@ -103,3 +103,12 @@ func TestLifecycleStatusesKeepLabelsGlyphsAndReservedWidth(t *testing.T) {
 		}
 	}
 }
+
+func TestAttentionWidthIncludesUnknownButExcludesLifecycleLabels(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast, theme.Mono} {
+		palette := theme.New(mode)
+		if feedback.MaxAttentionWidth(palette) != 11 {
+			t.Fatal("attention must fit UNKNOWN without reserving lifecycle labels")
+		}
+	}
+}

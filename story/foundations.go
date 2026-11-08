@@ -12,6 +12,12 @@ import (
 	"github.com/lanej/charmed/theme"
 )
 
+const (
+	foundationColumns     = 2
+	foundationColumnWidth = 18
+	foundationPanelHeight = 2*theme.BorderCells + 1
+)
+
 func foundationsDefinitions() []Definition {
 	d := []Definition{
 		widget("foundations/theme", "Foundations/Theme", "Foundations", "theme", "Semantic roles, terminal palettes, contrast and no-color output.", "themeStory", nil, themeStory),
@@ -69,12 +75,18 @@ func glyphStory(e Environment) (runtime.Scene, error) {
 		rows := []string{"Meaning     U A     Meaning     U A", ""}
 
 		var cells []string
+
+		nameWidth := 0
 		for _, glyph := range theme.Glyphs() {
-			cells = append(cells, layout.Fit(fmt.Sprintf("%-11s %s %s", glyph, t.Glyph(glyph), fallback.Glyph(glyph)), layout.Size{Width: 18, Height: 1}))
+			nameWidth = max(nameWidth, len(glyph))
 		}
 
-		for i := 0; i < len(cells); i += 2 {
-			rows = append(rows, cells[i]+"  "+cells[i+1])
+		for _, glyph := range theme.Glyphs() {
+			cells = append(cells, layout.Fit(fmt.Sprintf("%-*s %s %s", nameWidth, glyph, t.Glyph(glyph), fallback.Glyph(glyph)), layout.Size{Width: foundationColumnWidth, Height: 1}))
+		}
+
+		for i := 0; i < len(cells); i += foundationColumns {
+			rows = append(rows, strings.Join(cells[i:min(i+foundationColumns, len(cells))], strings.Repeat(" ", theme.SpaceMedium)))
 		}
 
 		return strings.Join(rows, "\n")
@@ -85,12 +97,12 @@ func focusStory(e Environment) (runtime.Scene, error) {
 	return static(func(size layout.Size) string {
 		t := e.Config.Palette()
 
-		rows := []string{"Stable control insets / 1 cell per side", "", "Normal  |" + t.Control().Render("Value") + "|", "Focused |" + t.Focus().Render("Value") + "|", "Row     |" + t.Selection().Render("Value") + "|", ""}
+		rows := []string{fmt.Sprintf("Stable control insets / %d cell per side", theme.InlinePadding), "", "Normal  |" + t.Control().Render("Value") + "|", "Focused |" + t.Focus().Render("Value") + "|", "Row     |" + t.Selection().Render("Value") + "|", ""}
 		for _, emphasis := range []text.Emphasis{text.Bright, text.Normal, text.Dim} {
 			rows = append(rows, fmt.Sprintf("%-7s |", emphasis)+text.Pill("Value", text.Info, t, emphasis)+"|")
 		}
 
-		rows = append(rows, "", layout.Panel("Content gutter", "Text starts one cell from the border.", layout.Size{Width: size.Width, Height: 3}, t, true))
+		rows = append(rows, "", layout.Panel("Content gutter", "Text starts one cell from the border.", layout.Size{Width: size.Width, Height: foundationPanelHeight}, t, true))
 
 		return strings.Join(rows, "\n")
 	}), nil
@@ -136,11 +148,11 @@ func tokensStory(e Environment) (runtime.Scene, error) {
 			rows = append(rows, fmt.Sprintf("%-6s %d  |%s|", space.name, space.cells, strings.Repeat(" ", space.cells)))
 		}
 
-		width := min(18, (size.Width-theme.SpaceMedium)/2)
+		width := min(foundationColumnWidth, (size.Width-theme.SpaceMedium)/foundationColumns)
 		rows = append(rows, "", layout.Row(
-			layout.Panel("Normal", "Border", layout.Size{Width: width, Height: 3}, t, false),
+			layout.Panel("Normal", "Border", layout.Size{Width: width, Height: foundationPanelHeight}, t, false),
 			strings.Repeat(" ", theme.SpaceMedium),
-			layout.Panel("Focused", "FocusBorder", layout.Size{Width: width, Height: 3}, t, true)),
+			layout.Panel("Focused", "FocusBorder", layout.Size{Width: width, Height: foundationPanelHeight}, t, true)),
 			"", "Selection / stable insets",
 			"rest     |"+t.Control().Render("Value")+"|",
 			"focused  |"+t.Focus().Render("Value")+"|",

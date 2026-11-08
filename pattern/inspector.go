@@ -8,6 +8,7 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/cohort"
+	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/text"
@@ -36,14 +37,22 @@ func (m *CohortComparison) updateInspector() {
 
 	width := max(1, layout.PanelContentSize(m.sideSize).Width)
 
-	rateWidth := 16
-	if showAttention {
-		rateWidth = max(5, width-26)
-	}
+	const codeWidth, minRateWidth, defaultRateWidth, distanceWidth = 5, 5, 16, 6
 
-	columns := []table.Column{{Title: "CODE", Width: 5}, {Title: "RATE", Width: rateWidth}, {Title: "z(ref)", Width: 6}}
+	const rateColumn = 1
+
+	columns := []table.Column{{Title: "CODE", Width: codeWidth}, {Title: "RATE", Width: defaultRateWidth}, {Title: "z(ref)", Width: distanceWidth}}
 	if showAttention {
-		columns = append(columns, table.Column{Title: "ATTN", Width: 11})
+		columns = append(columns, table.Column{Title: "ATTN", Width: feedback.MaxAttentionWidth(m.theme)})
+		occupied := collection.DenseTablePaddingWidth(len(columns))
+
+		for i, column := range columns {
+			if i != rateColumn {
+				occupied += column.Width
+			}
+		}
+
+		columns[rateColumn].Width = max(minRateWidth, width-occupied)
 	}
 
 	m.Inspector.SetRows(nil)
@@ -76,7 +85,7 @@ func (m *CohortComparison) updateInspector() {
 						palette.Accent = palette.Danger
 					}
 
-					row := table.Row{m.metricLabel(i, true), feedback.PercentBar(p.Rate*100, p.HasRate, rateWidth, palette), z}
+					row := table.Row{m.metricLabel(i, true), feedback.PercentBar(p.Rate*100, p.HasRate, columns[rateColumn].Width, palette), z}
 					if showAttention {
 						row = append(row, feedback.Attention(m.assessments[i].Members[p.MemberKey].Level, m.theme))
 					}
@@ -91,6 +100,7 @@ func (m *CohortComparison) updateInspector() {
 		m.Inspector.SetCursor(m.metric)
 	}
 }
+
 func (m *CohortComparison) inspectorView() string {
 	title := "Member inspector"
 	if m.selected.MemberID != "" {
