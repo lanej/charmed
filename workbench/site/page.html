@@ -32,6 +32,18 @@
 <p class="brand-download"><a href="assets/charmed-mark.svg" download="charmed-mark.svg">Download vector mark ↗</a><span>SVG · currentColor · 64 × 72 grid</span></p>
 </section>
 {{end}}
+{{if eq .Page.File "development.html"}}
+<section class="dev-hero" aria-labelledby="dev-title">
+<p class="eyebrow">Developer workflow</p>
+<h1 id="dev-title">Build native terminal interfaces.</h1>
+<p class="dev-lede">Use Charmed's components, explore their real terminal behavior, and publish a verified guide without a separate browser application.</p>
+<div class="dev-paths" aria-label="Choose a development task">
+<a href="#use-charmed"><strong>Use components</strong><span>Theme and compose native Go widgets</span></a>
+<a href="#add-a-component"><strong>Extend the library</strong><span>Implement and document new capabilities</span></a>
+<a href="#publish-documentation"><strong>Publish the guide</strong><span>Review a PR preview before merge</span></a>
+</div>
+</section>
+{{end}}
 {{.Page.Content}}
 {{if eq .Page.File "brand.html"}}
 <section class="brand-specimens" aria-label="Brand tokens and typography">
@@ -87,7 +99,7 @@
 {{if .Composes}}<p class="composition-line">Composed from: {{range .Composes}}<a class="dependency" href="{{link .}}">{{.}}</a> {{end}}</p>{{end}}
 </section>{{end}}
 </section>{{end}}
-{{if .Page.Coverage}}<h2>Coverage</h2><div class="table-wrap"><table tabindex="0"><thead><tr><th>Upstream</th><th>Status</th><th>Integration</th></tr></thead><tbody>{{range .Page.Coverage}}<tr><td>{{.Upstream}}</td><td>{{.Status}}</td><td>{{.Notes}}</td></tr>{{end}}</tbody></table></div>{{end}}
+{{if .Page.Coverage}}<div class="table-wrap" aria-label="Component coverage inventory"><table tabindex="0"><thead><tr><th>Upstream</th><th>Status</th><th>Integration</th></tr></thead><tbody>{{range .Page.Coverage}}<tr><td>{{.Upstream}}</td><td>{{.Status}}</td><td>{{.Notes}}</td></tr>{{end}}</tbody></table></div>{{end}}
 <footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
 </main></div></body></html>
 {{define "guide-nav"}}
