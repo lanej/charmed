@@ -8,7 +8,7 @@ Components share semantic themes, terminal-cell geometry, focus conventions and 
 
 ## Run it
 
-Requires Go **1.26.8+**. Native terminal sessions support Linux and macOS.
+Requires Go **1.26.10+**. Native terminal sessions support Linux and macOS.
 
 ```sh
 go run ./cmd/workbench list
@@ -77,11 +77,12 @@ WASM remains optional because the current Booba route requires a patched Bubble 
 ## Verify
 
 ```sh
-go vet ./...
-go test -race ./...
+bash scripts/check-go.sh
 go run ./cmd/workbench generate --out docs
 ```
 
-Checks exercise cell bounds, deterministic frames, focus and selection, resize, background updates, native process cleanup, static guide generation and component links.
+The Go quality command uses the module's Go version by default and runs module tidiness, strict lint and formatting, uncached race tests, and reachable-vulnerability analysis. The same command runs on Linux and macOS in CI. Existing lint and style findings are recorded in a shrinking baseline; new findings fail, and resolved allowances must be removed with `bash scripts/check-go.sh ratchet`. Run `bash scripts/check-go.sh lint` for the lint gate alone.
+
+Checks also exercise cell bounds, deterministic frames, focus and selection, resize, background updates, native process cleanup, static guide generation and component links.
 
 MIT licensed. Upstream components retain their respective licenses.
