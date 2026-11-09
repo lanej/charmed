@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+	"time"
 
 	tea "charm.land/bubbletea/v2"
 	"github.com/lanej/charmed/collection"
@@ -31,6 +32,9 @@ const (
 )
 
 type LogInspectorOptions struct {
+	Layout                       InspectorLayout
+	TimelineGroups               []collection.HTTPGroup
+	TimelineNow                  time.Time
 	Symbols                      text.Presentation
 	URLFormat                    text.URLFormat
 	VerboseDetails, ColumnLabels bool
@@ -45,18 +49,19 @@ type LogInspectorOptions struct {
 // LogInspector owns coordinated UI state. Producers send observations through
 // the application's Bubble Tea update loop; this model performs no capture I/O.
 type LogInspector struct {
-	Symbols                              text.Presentation
-	HTTP                                 *collection.HTTPLog
-	Logs                                 *collection.LogTree
-	focus                                interaction.Focus
-	palette                              theme.Theme
-	size                                 layout.Size
-	left, right, detailHeight, logHeight int
-	wide                                 bool
-	scope                                CorrelationScope
-	logs                                 []collection.LogRecord
-	limit                                int
-	correlationMessage                   string
+	Symbols            text.Presentation
+	HTTP               *collection.HTTPLog
+	Logs               *collection.LogTree
+	focus              interaction.Focus
+	palette            theme.Theme
+	size               layout.Size
+	regions            inspectorRegions
+	preferred, active  InspectorLayout
+	wide               bool
+	scope              CorrelationScope
+	logs               []collection.LogRecord
+	limit              int
+	correlationMessage string
 }
 
 func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
@@ -73,6 +78,8 @@ func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
 	m.HTTP.VerboseDetails = o.VerboseDetails
 	m.HTTP.ShowColumnLabels = o.ColumnLabels
 	m.HTTP.Limit = limit
+	m.HTTP.TimelineNow = o.TimelineNow
+	m.HTTP.SetTimelineGrouping(o.TimelineGroups...)
 	m.Logs = collection.NewLogTree(40, 12, o.Theme)
 
 	m.Logs.Symbols = o.Symbols
@@ -83,6 +90,10 @@ func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
 
 	if err := m.SetEntries(o.Requests, o.Logs); err != nil {
 		return nil, err
+	}
+
+	if !m.SetLayout(o.Layout) {
+		return nil, fmt.Errorf("unknown inspector layout %q", o.Layout)
 	}
 
 	m.Resize(layout.Size{Width: 120, Height: 36})
@@ -227,27 +238,16 @@ func (m *LogInspector) correlate() {
 
 func (m *LogInspector) Resize(size layout.Size) {
 	m.size = size
-	m.left, m.right, m.wide = layout.Split(size.Width, theme.SpaceSmall, inspectorMinRequests, inspectorMinDetails, .34)
-	m.wide = m.wide && size.Height >= inspectorMinHeight
-
-	contentHeight := max(1, size.Height-2)
-	if m.wide {
-		m.detailHeight = max(7, contentHeight*3/5)
-		m.logHeight = max(3, contentHeight-m.detailHeight)
-		requests := layout.PanelContentSize(layout.Size{Width: m.left, Height: contentHeight})
-		details := layout.PanelContentSize(layout.Size{Width: m.right, Height: m.detailHeight})
-		logs := layout.PanelContentSize(layout.Size{Width: m.right, Height: m.logHeight})
-		m.HTTP.Resize(requests.Width, requests.Height)
-		m.HTTP.ResizeList(requests.Width, requests.Height)
-		m.HTTP.ResizeDetails(details.Width, details.Height)
-		m.Logs.Resize(logs.Width, max(1, logs.Height-1))
-	} else {
-		content := layout.PanelContentSize(layout.Size{Width: size.Width, Height: contentHeight})
-		m.HTTP.Resize(content.Width, content.Height)
-		m.HTTP.ResizeList(content.Width, content.Height)
-		m.HTTP.ResizeDetails(content.Width, content.Height)
-		m.Logs.Resize(content.Width, max(1, content.Height-1))
-	}
+	m.active, m.regions = planInspector(size, m.preferred)
+	m.wide = m.active != InspectorFocused
+	m.HTTP.Timeline = m.active == InspectorTimeline || (!m.wide && m.preferred == InspectorTimeline)
+	requests := layout.PanelContentSize(m.regions.requests)
+	details := layout.PanelContentSize(m.regions.details)
+	logs := layout.PanelContentSize(m.regions.logs)
+	m.HTTP.Resize(requests.Width, requests.Height)
+	m.HTTP.ResizeList(requests.Width, requests.Height)
+	m.HTTP.ResizeDetails(details.Width, details.Height)
+	m.Logs.Resize(logs.Width, max(1, logs.Height-1))
 }
 
 func (m *LogInspector) Update(msg tea.Msg) tea.Cmd {
@@ -257,6 +257,9 @@ func (m *LogInspector) Update(msg tea.Msg) tea.Cmd {
 		}
 
 		switch key.String() {
+		case "L":
+			m.cycleLayout()
+			return nil
 		case "alt+1":
 			m.focus.Set(requestPane)
 			return nil
@@ -310,7 +313,12 @@ func (m *LogInspector) View() string {
 	focused := m.focus.Current()
 
 	requests := func(size layout.Size) string {
-		return layout.Panel("HTTP requests · "+feedback.Follow(m.HTTP.Follow, text.Normal, m.palette, m.Symbols), m.HTTP.ListView(), size, m.palette, focused == requestPane)
+		title := "HTTP requests"
+		if m.HTTP.Timeline {
+			title = "Request timeline"
+		}
+
+		return layout.Panel(title+" · "+feedback.Follow(m.HTTP.Follow, text.Normal, m.palette, m.Symbols), m.HTTP.ListView(), size, m.palette, focused == requestPane)
 	}
 	details := func(size layout.Size) string {
 		return layout.Panel("HTTP details", m.HTTP.DetailView(), size, m.palette, focused == httpPane)
@@ -318,25 +326,30 @@ func (m *LogInspector) View() string {
 	logs := func(size layout.Size) string {
 		return layout.Panel("Related logs · "+feedback.Follow(m.Logs.Follow, text.Normal, m.palette, m.Symbols), m.palette.Subtle().Render(m.correlationMessage)+"\n"+m.Logs.View(), size, m.palette, focused == logPane)
 	}
-	height := max(1, m.size.Height-2)
 
 	var content string
-	if m.wide {
-		content = layout.Row(requests(layout.Size{Width: m.left, Height: height}), " ", layout.Column(details(layout.Size{Width: m.right, Height: m.detailHeight}), logs(layout.Size{Width: m.right, Height: m.logHeight})))
-	} else {
-		size := layout.Size{Width: m.size.Width, Height: height}
 
+	switch m.active {
+	case InspectorAuto, InspectorSidebar:
+		content = layout.Row(requests(m.regions.requests), " ", layout.Column(details(m.regions.details), logs(m.regions.logs)))
+	case InspectorTimeline:
+		content = layout.Column(requests(m.regions.requests), layout.Row(details(m.regions.details), " ", logs(m.regions.logs)))
+	case InspectorColumns:
+		content = layout.Row(requests(m.regions.requests), " ", details(m.regions.details), " ", logs(m.regions.logs))
+	case InspectorFocused:
 		switch focused {
 		case requestPane:
-			content = requests(size)
+			content = requests(m.regions.requests)
 		case httpPane:
-			content = details(size)
+			content = details(m.regions.details)
 		case logPane:
-			content = logs(size)
+			content = logs(m.regions.logs)
 		}
+	default:
+		content = ""
 	}
 
-	help := text.KeyHint("Tab", "panes", m.palette) + " · " + text.KeyHint("Alt+1/2/3", "views", m.palette) + "\n"
+	help := text.KeyHint("Tab", "panes", m.palette) + " · " + text.KeyHint("L", "layout", m.palette) + " · " + text.KeyHint("Alt+1/2/3", "views", m.palette) + "\n"
 
 	switch focused {
 	case requestPane:

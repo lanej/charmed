@@ -146,6 +146,32 @@ func Generate(out string) error {
 		}
 
 		if d.ID == "pattern/log-inspector" {
+			for _, preset := range []string{"sidebar", "timeline", "columns", "focused"} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: "Layout " + preset, change: func(c *story.Config) {
+					c.InspectorLayout = preset
+					c.DetachedLogDetails = true
+					c.Columns = 120
+
+					c.Rows = 44
+					if preset == "columns" {
+						c.Columns = 160
+					}
+
+					if preset == "timeline" {
+						c.TimelineGroups = []string{"service", "endpoint"}
+					}
+
+					if preset == "focused" {
+						c.LogPane = "logs"
+						c.Columns = 60
+						c.Rows = 30
+					}
+				}})
+			}
+
 			variants = append(variants, struct {
 				name   string
 				change func(*story.Config)

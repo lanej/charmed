@@ -36,7 +36,7 @@ func logDefinitions() []Definition {
 		{ID: "text/syntax", Title: "Atoms/Text/Syntax", Level: "Atoms", Family: "text", Description: "Content-type aware lexical highlighting; terminal controls stay visible as escaped data.", Source: "text/syntax.go", Symbol: "Syntax", Defaults: DefaultConfig(), Factory: syntaxStory},
 		{ID: "collection/log-tree", ExampleSource: "docs/snippets/log-tree.go.txt", Title: "Molecules/Logs/Structured log tree", Level: "Molecules", Family: "logs", Description: "Trace and span hierarchy with expandable ordered fields, stable identities and retained follow state.", Source: "story/logs.go", Symbol: "logTreeStory", Composes: []string{"collection/tree", "text/observation", "text/time", "text/disclosure", "feedback/scrollbar"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: logTreeStory},
 		{ID: "collection/http-log", ExampleSource: "docs/snippets/http-log.go.txt", Title: "Molecules/Logs/HTTP log", Level: "Molecules", Family: "logs", Description: "Request summaries and captured headers/bodies with syntax highlighting, pretty/raw views and explicit capture states.", Source: "story/logs.go", Symbol: "httpLogStory", Composes: []string{"collection/table", "text/http-method", "text/url", "text/http-status", "text/pending", "text/time", "text/disclosure", "feedback/scrollbar", "text/syntax", "collection/viewport"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: httpLogStory},
-		{ID: "pattern/log-inspector", Title: "Organisms/Logs/Correlated inspector", Level: "Organisms", Family: "logs", Description: "Select HTTP requests to inspect exact request logs, widen to trace scope, or browse switchable narrow views.", Source: "story/logs.go", Symbol: "logInspectorStory", Composes: []string{"collection/http-log", "collection/log-tree", "feedback/follow", "text/presentation", "text/key-hint", "foundations/layout"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: logInspectorStory},
+		{ID: "pattern/log-inspector", ExampleSource: "docs/snippets/log-inspector.go.txt", Title: "Organisms/Logs/Correlated inspector", Level: "Organisms", Family: "logs", Description: "Select HTTP requests to inspect exact request logs, widen to trace scope, or browse switchable narrow views.", Source: "story/logs.go", Symbol: "logInspectorStory", Composes: []string{"collection/http-log", "collection/log-tree", "feedback/follow", "text/presentation", "text/key-hint", "foundations/layout"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: logInspectorStory},
 	}
 }
 
@@ -173,22 +173,7 @@ func httpLogStory(e Environment) (runtime.Scene, error) {
 	m := collection.NewHTTPLog(e.Config.Columns, e.Config.Rows-2, e.Config.Palette())
 	m.Timeline = e.Config.Timeline
 
-	var groups []collection.HTTPGroup
-
-	for _, group := range e.Config.TimelineGroups {
-		switch group {
-		case "service":
-			groups = append(groups, collection.GroupByService)
-		case "host":
-			groups = append(groups, collection.GroupByHost)
-		case "port":
-			groups = append(groups, collection.GroupByPort)
-		case "endpoint":
-			groups = append(groups, collection.GroupByEndpoint)
-		}
-	}
-
-	m.SetTimelineGrouping(groups...)
+	m.SetTimelineGrouping(timelineGroups(e.Config.TimelineGroups)...)
 	m.TimelineLegend = e.Config.Legend
 	m.TimelineNow = time.Date(2026, 11, 8, 12, 4, 4, 0, time.UTC)
 	m.Symbols = text.Presentation(e.Config.SymbolStyle)
@@ -245,12 +230,16 @@ func httpLogStory(e Environment) (runtime.Scene, error) {
 
 func logInspectorStory(e Environment) (runtime.Scene, error) {
 	requests, logs := LogFixture()
+	if e.Config.InspectorLayout == "timeline" {
+		requests = TimelineFixture()
+	}
+
 	if e.Config.State == "empty" {
 		requests = nil
 		logs = nil
 	}
 
-	m, err := pattern.NewLogInspector(pattern.LogInspectorOptions{Theme: e.Config.Palette(), Requests: requests, Logs: logs, Symbols: text.Presentation(e.Config.SymbolStyle), URLFormat: text.URLFormat(e.Config.URLStyle), VerboseDetails: e.Config.VerboseDetails, ColumnLabels: e.Config.ColumnLabels, DetachedLogDetails: e.Config.DetachedLogDetails})
+	m, err := pattern.NewLogInspector(pattern.LogInspectorOptions{Theme: e.Config.Palette(), Requests: requests, Logs: logs, Symbols: text.Presentation(e.Config.SymbolStyle), URLFormat: text.URLFormat(e.Config.URLStyle), VerboseDetails: e.Config.VerboseDetails, ColumnLabels: e.Config.ColumnLabels, DetachedLogDetails: e.Config.DetachedLogDetails, Layout: pattern.InspectorLayout(e.Config.InspectorLayout), TimelineGroups: timelineGroups(e.Config.TimelineGroups), TimelineNow: time.Date(2026, 11, 8, 12, 4, 4, 0, time.UTC)})
 	if err != nil {
 		return nil, err
 	}
@@ -436,4 +425,23 @@ func TimelineFixture() []collection.HTTPExchange {
 	records[3].Time = at.Add(1600 * time.Millisecond)
 
 	return append(records, collection.HTTPExchange{ID: "http-5", Service: "carrier", Time: at.Add(2500 * time.Millisecond), Method: "QUERY", URL: "https://carrier.example:8443/v1/rates", Completed: true, StatusCode: 200, DurationKnown: true, Duration: 900 * time.Millisecond}, collection.HTTPExchange{ID: "http-6", Service: "events", Time: at.Add(1800 * time.Millisecond), Method: "POST", URL: "http://events.internal:9090/events", Completed: true, StatusCode: 202, DurationKnown: true, Duration: 600 * time.Millisecond})
+}
+
+func timelineGroups(names []string) []collection.HTTPGroup {
+	var groups []collection.HTTPGroup
+
+	for _, group := range names {
+		switch group {
+		case "service":
+			groups = append(groups, collection.GroupByService)
+		case "host":
+			groups = append(groups, collection.GroupByHost)
+		case "port":
+			groups = append(groups, collection.GroupByPort)
+		case "endpoint":
+			groups = append(groups, collection.GroupByEndpoint)
+		}
+	}
+
+	return groups
 }
