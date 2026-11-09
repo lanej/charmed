@@ -118,10 +118,14 @@
 <div class="component-subheading"><h3 id="feedback/spinner-preview"><a class="heading-permalink" href="#feedback%2fspinner-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Spinner variants">
-<a id="tab-feedback/spinner-0" href="#panel-feedback%2fspinner-0" role="tab" aria-controls="panel-feedback/spinner-0" aria-selected="true">Default</a><a id="tab-feedback/spinner-1" href="#panel-feedback%2fspinner-1" role="tab" aria-controls="panel-feedback/spinner-1" aria-selected="false">Narrow</a><a id="tab-feedback/spinner-2" href="#panel-feedback%2fspinner-2" role="tab" aria-controls="panel-feedback/spinner-2" aria-selected="false">256 colors</a><a id="tab-feedback/spinner-3" href="#panel-feedback%2fspinner-3" role="tab" aria-controls="panel-feedback/spinner-3" aria-selected="false">16 colors</a><a id="tab-feedback/spinner-4" href="#panel-feedback%2fspinner-4" role="tab" aria-controls="panel-feedback/spinner-4" aria-selected="false">Monochrome</a>
+<a id="tab-feedback/spinner-example" href="#panel-feedback%2fspinner-example" role="tab" aria-controls="panel-feedback/spinner-example" aria-selected="true">Example</a>
+<a id="tab-feedback/spinner-0" href="#panel-feedback%2fspinner-0" role="tab" aria-controls="panel-feedback/spinner-0" aria-selected="false">Demo</a><a id="tab-feedback/spinner-1" href="#panel-feedback%2fspinner-1" role="tab" aria-controls="panel-feedback/spinner-1" aria-selected="false">Narrow</a><a id="tab-feedback/spinner-2" href="#panel-feedback%2fspinner-2" role="tab" aria-controls="panel-feedback/spinner-2" aria-selected="false">256 colors</a><a id="tab-feedback/spinner-3" href="#panel-feedback%2fspinner-3" role="tab" aria-controls="panel-feedback/spinner-3" aria-selected="false">16 colors</a><a id="tab-feedback/spinner-4" href="#panel-feedback%2fspinner-4" role="tab" aria-controls="panel-feedback/spinner-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/spinner-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/spinner-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#67d4c0;font-weight:bold;">⣾ </span>  Processing requests</pre></figure>
 </div>
 <div id="panel-feedback/spinner-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/spinner-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Loading indicator</span>                                                                                   
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Loading indicator</span>                                                                                   
                                                                                                     
 <span style="color:#67d4c0;font-weight:bold;">⣾ </span>  Processing fixture data                                                                         
                                                                                                     
@@ -154,34 +158,12 @@ Live runs the native clock / Ctrl+N advances a frame</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="feedback/spinner-code"><a class="heading-permalink" href="#feedback%2fspinner-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">spinnerStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
-	m <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewSpinner</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
-
-	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>init<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span><span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
-		<span class="syn-keyword">if</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Live <span class="syn-operator">&amp;&amp;</span> <span class="syn-operator">!</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span>ReducedMotion <span class="syn-operator">{</span>
-			<span class="syn-keyword">return</span> m<span class="syn-operator">.</span>Tick
-		<span class="syn-operator">}</span>
-
-		<span class="syn-keyword">return</span> <span class="syn-builtin">nil</span>
-	<span class="syn-operator">}</span><span class="syn-operator">,</span> update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
-		<span class="syn-keyword">if</span> _<span class="syn-operator">,</span> ok <span class="syn-operator">:=</span> msg<span class="syn-operator">.</span><span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>StepMsg<span class="syn-operator">)</span><span class="syn-operator">;</span> ok <span class="syn-operator">{</span>
-			msg <span class="syn-operator">=</span> spinner<span class="syn-operator">.</span>TickMsg<span class="syn-operator">{</span>ID<span class="syn-operator">:</span> m<span class="syn-operator">.</span><span class="syn-function">ID</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">}</span>
-		<span class="syn-operator">}</span>
-
-		<span class="syn-keyword">var</span> cmd tea<span class="syn-operator">.</span>Cmd
-
-		m<span class="syn-operator">,</span> cmd <span class="syn-operator">=</span> m<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span>
-
-		<span class="syn-keyword">if</span> <span class="syn-operator">!</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Live <span class="syn-operator">{</span>
-			<span class="syn-keyword">return</span> <span class="syn-builtin">nil</span>
-		<span class="syn-operator">}</span>
-
-		<span class="syn-keyword">return</span> cmd
-	<span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Loading indicator&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  Processing fixture data&#34;</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Live runs the native clock / Ctrl+N advances a frame&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
-<span class="syn-operator">}</span></code></pre>
+<div class="component-subheading"><h3 id="feedback/spinner-code"><a class="heading-permalink" href="#feedback%2fspinner-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/feedback_spinner.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">spinner <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewSpinner</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+<span class="syn-comment">// Return spinner.Tick from Init; retain the model and command from spinner.Update(msg).</span>
+<span class="syn-keyword">return</span> spinner<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  Processing requests&#34;</span>
+</code></pre>
 </div>
 
 </section>
@@ -192,10 +174,14 @@ Live runs the native clock / Ctrl+N advances a frame</pre></figure>
 <div class="component-subheading"><h3 id="feedback/progress-preview"><a class="heading-permalink" href="#feedback%2fprogress-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Progress variants">
-<a id="tab-feedback/progress-0" href="#panel-feedback%2fprogress-0" role="tab" aria-controls="panel-feedback/progress-0" aria-selected="true">Default</a><a id="tab-feedback/progress-1" href="#panel-feedback%2fprogress-1" role="tab" aria-controls="panel-feedback/progress-1" aria-selected="false">Narrow</a><a id="tab-feedback/progress-2" href="#panel-feedback%2fprogress-2" role="tab" aria-controls="panel-feedback/progress-2" aria-selected="false">256 colors</a><a id="tab-feedback/progress-3" href="#panel-feedback%2fprogress-3" role="tab" aria-controls="panel-feedback/progress-3" aria-selected="false">16 colors</a><a id="tab-feedback/progress-4" href="#panel-feedback%2fprogress-4" role="tab" aria-controls="panel-feedback/progress-4" aria-selected="false">Monochrome</a>
+<a id="tab-feedback/progress-example" href="#panel-feedback%2fprogress-example" role="tab" aria-controls="panel-feedback/progress-example" aria-selected="true">Example</a>
+<a id="tab-feedback/progress-0" href="#panel-feedback%2fprogress-0" role="tab" aria-controls="panel-feedback/progress-0" aria-selected="false">Demo</a><a id="tab-feedback/progress-1" href="#panel-feedback%2fprogress-1" role="tab" aria-controls="panel-feedback/progress-1" aria-selected="false">Narrow</a><a id="tab-feedback/progress-2" href="#panel-feedback%2fprogress-2" role="tab" aria-controls="panel-feedback/progress-2" aria-selected="false">256 colors</a><a id="tab-feedback/progress-3" href="#panel-feedback%2fprogress-3" role="tab" aria-controls="panel-feedback/progress-3" aria-selected="false">16 colors</a><a id="tab-feedback/progress-4" href="#panel-feedback%2fprogress-4" role="tab" aria-controls="panel-feedback/progress-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/progress-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/progress-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#606060;">░░░░░░░░░░░░░</span>  68%</pre></figure>
 </div>
 <div id="panel-feedback/progress-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/progress-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Progress</span>                                                                                            
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Progress</span>                                                                                            
                                                                                                     
 <span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#606060;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>  68%     
                                                                                                     
@@ -228,22 +214,13 @@ Ctrl+N advances by five percent.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="feedback/progress-code"><a class="heading-permalink" href="#feedback%2fprogress-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">progressStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
-	amount <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Amount
-	m <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewProgress</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Columns<span class="syn-operator">-</span><span class="syn-number">10</span><span class="syn-operator">,</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+<div class="component-subheading"><h3 id="feedback/progress-code"><a class="heading-permalink" href="#feedback%2fprogress-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/feedback_progress.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">progress <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewProgress</span><span class="syn-operator">(</span><span class="syn-number">40</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+completed<span class="syn-operator">,</span> total <span class="syn-operator">:=</span> <span class="syn-number">68.0</span><span class="syn-operator">,</span> <span class="syn-number">100.0</span>
 
-	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>resize<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>s layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-operator">{</span> m<span class="syn-operator">.</span><span class="syn-function">SetWidth</span><span class="syn-operator">(</span><span class="syn-builtin">max</span><span class="syn-operator">(</span><span class="syn-number">1</span><span class="syn-operator">,</span> s<span class="syn-operator">.</span>Width<span class="syn-operator">-</span><span class="syn-number">10</span><span class="syn-operator">)</span><span class="syn-operator">)</span> <span class="syn-operator">}</span><span class="syn-operator">,</span> update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
-		<span class="syn-keyword">if</span> _<span class="syn-operator">,</span> ok <span class="syn-operator">:=</span> msg<span class="syn-operator">.</span><span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>StepMsg<span class="syn-operator">)</span><span class="syn-operator">;</span> ok <span class="syn-operator">{</span>
-			amount <span class="syn-operator">=</span> <span class="syn-builtin">min</span><span class="syn-operator">(</span><span class="syn-number">100</span><span class="syn-operator">,</span> amount<span class="syn-operator">+</span><span class="syn-number">5</span><span class="syn-operator">)</span>
-			<span class="syn-function">emit</span><span class="syn-operator">(</span>e<span class="syn-operator">,</span> <span class="syn-keyword">map</span><span class="syn-operator">[</span><span class="syn-builtin">string</span><span class="syn-operator">]</span><span class="syn-builtin">any</span><span class="syn-operator">{</span><span class="syn-string">&#34;type&#34;</span><span class="syn-operator">:</span> <span class="syn-string">&#34;progress&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;amount&#34;</span><span class="syn-operator">:</span> amount<span class="syn-operator">}</span><span class="syn-operator">)</span>
-		<span class="syn-operator">}</span>
-
-		<span class="syn-keyword">return</span> <span class="syn-builtin">nil</span>
-	<span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Progress&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> m<span class="syn-operator">.</span><span class="syn-function">ViewAs</span><span class="syn-operator">(</span>amount<span class="syn-operator">/</span><span class="syn-number">100</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;  %.0f%%&#34;</span><span class="syn-operator">,</span> amount<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Ctrl+N advances by five percent.&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
-<span class="syn-operator">}</span></code></pre>
+<span class="syn-keyword">return</span> progress<span class="syn-operator">.</span><span class="syn-function">ViewAs</span><span class="syn-operator">(</span>completed<span class="syn-operator">/</span>total<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  68%&#34;</span>
+</code></pre>
 </div>
 
 </section>
@@ -254,10 +231,15 @@ Ctrl+N advances by five percent.</pre></figure>
 <div class="component-subheading"><h3 id="feedback/time-preview"><a class="heading-permalink" href="#feedback%2ftime-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Timers variants">
-<a id="tab-feedback/time-0" href="#panel-feedback%2ftime-0" role="tab" aria-controls="panel-feedback/time-0" aria-selected="true">Default</a><a id="tab-feedback/time-1" href="#panel-feedback%2ftime-1" role="tab" aria-controls="panel-feedback/time-1" aria-selected="false">Narrow</a><a id="tab-feedback/time-2" href="#panel-feedback%2ftime-2" role="tab" aria-controls="panel-feedback/time-2" aria-selected="false">256 colors</a><a id="tab-feedback/time-3" href="#panel-feedback%2ftime-3" role="tab" aria-controls="panel-feedback/time-3" aria-selected="false">16 colors</a><a id="tab-feedback/time-4" href="#panel-feedback%2ftime-4" role="tab" aria-controls="panel-feedback/time-4" aria-selected="false">Monochrome</a>
+<a id="tab-feedback/time-example" href="#panel-feedback%2ftime-example" role="tab" aria-controls="panel-feedback/time-example" aria-selected="true">Example</a>
+<a id="tab-feedback/time-0" href="#panel-feedback%2ftime-0" role="tab" aria-controls="panel-feedback/time-0" aria-selected="false">Demo</a><a id="tab-feedback/time-1" href="#panel-feedback%2ftime-1" role="tab" aria-controls="panel-feedback/time-1" aria-selected="false">Narrow</a><a id="tab-feedback/time-2" href="#panel-feedback%2ftime-2" role="tab" aria-controls="panel-feedback/time-2" aria-selected="false">256 colors</a><a id="tab-feedback/time-3" href="#panel-feedback%2ftime-3" role="tab" aria-controls="panel-feedback/time-3" aria-selected="false">16 colors</a><a id="tab-feedback/time-4" href="#panel-feedback%2ftime-4" role="tab" aria-controls="panel-feedback/time-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/time-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/time-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">Countdown  1m0s
+Stopwatch  0s</pre></figure>
 </div>
 <div id="panel-feedback/time-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/time-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Time components</span>                                                                                     
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Time components</span>                                                                                     
                                                                                                     
 Countdown  1m0s                                                                                     
 Stopwatch  0s                                                                                       
@@ -295,32 +277,13 @@ Enable Live to run the native timers.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="feedback/time-code"><a class="heading-permalink" href="#feedback%2ftime-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">timeStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
-	timer <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewTimer</span><span class="syn-operator">(</span>time<span class="syn-operator">.</span>Minute<span class="syn-operator">)</span>
-	watch <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewStopwatch</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
-
-	<span class="syn-keyword">return</span> <span class="syn-operator">&amp;</span>scene<span class="syn-operator">{</span>init<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span><span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
-		<span class="syn-keyword">if</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Live <span class="syn-operator">{</span>
-			<span class="syn-keyword">return</span> tea<span class="syn-operator">.</span><span class="syn-function">Batch</span><span class="syn-operator">(</span>timer<span class="syn-operator">.</span><span class="syn-function">Init</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> watch<span class="syn-operator">.</span><span class="syn-function">Init</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
-		<span class="syn-operator">}</span>
-
-		<span class="syn-keyword">return</span> <span class="syn-builtin">nil</span>
-	<span class="syn-operator">}</span><span class="syn-operator">,</span> update<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
-		<span class="syn-keyword">var</span> a<span class="syn-operator">,</span> b tea<span class="syn-operator">.</span>Cmd
-
-		timer<span class="syn-operator">,</span> a <span class="syn-operator">=</span> timer<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span>
-		watch<span class="syn-operator">,</span> b <span class="syn-operator">=</span> watch<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span>
-
-		<span class="syn-keyword">if</span> <span class="syn-operator">!</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Live <span class="syn-operator">{</span>
-			<span class="syn-keyword">return</span> <span class="syn-builtin">nil</span>
-		<span class="syn-operator">}</span>
-
-		<span class="syn-keyword">return</span> tea<span class="syn-operator">.</span><span class="syn-function">Batch</span><span class="syn-operator">(</span>a<span class="syn-operator">,</span> b<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span><span class="syn-operator">,</span> view<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Time components&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;Countdown  &#34;</span> <span class="syn-operator">+</span> timer<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;\nStopwatch  &#34;</span> <span class="syn-operator">+</span> watch<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-function">footer</span><span class="syn-operator">(</span><span class="syn-string">&#34;Enable Live to run the native timers.&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
-<span class="syn-operator">}</span></code></pre>
+<div class="component-subheading"><h3 id="feedback/time-code"><a class="heading-permalink" href="#feedback%2ftime-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/feedback_time.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/time" title="time"><code>time</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">timer <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewTimer</span><span class="syn-operator">(</span>time<span class="syn-operator">.</span>Minute<span class="syn-operator">)</span>
+stopwatch <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewStopwatch</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<span class="syn-comment">// Return their Init commands with tea.Batch and forward tick messages to Update.</span>
+<span class="syn-keyword">return</span> <span class="syn-string">&#34;Countdown  &#34;</span> <span class="syn-operator">+</span> timer<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;\nStopwatch  &#34;</span> <span class="syn-operator">+</span> stopwatch<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
@@ -331,10 +294,16 @@ Enable Live to run the native timers.</pre></figure>
 <div class="component-subheading"><h3 id="feedback/log-level-preview"><a class="heading-permalink" href="#feedback%2flog-level-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Log level variants">
-<a id="tab-feedback/log-level-0" href="#panel-feedback%2flog-level-0" role="tab" aria-controls="panel-feedback/log-level-0" aria-selected="true">Default</a><a id="tab-feedback/log-level-1" href="#panel-feedback%2flog-level-1" role="tab" aria-controls="panel-feedback/log-level-1" aria-selected="false">Narrow</a><a id="tab-feedback/log-level-2" href="#panel-feedback%2flog-level-2" role="tab" aria-controls="panel-feedback/log-level-2" aria-selected="false">256 colors</a><a id="tab-feedback/log-level-3" href="#panel-feedback%2flog-level-3" role="tab" aria-controls="panel-feedback/log-level-3" aria-selected="false">16 colors</a><a id="tab-feedback/log-level-4" href="#panel-feedback%2flog-level-4" role="tab" aria-controls="panel-feedback/log-level-4" aria-selected="false">Monochrome</a><a id="tab-feedback/log-level-5" href="#panel-feedback%2flog-level-5" role="tab" aria-controls="panel-feedback/log-level-5" aria-selected="false">Bright</a><a id="tab-feedback/log-level-6" href="#panel-feedback%2flog-level-6" role="tab" aria-controls="panel-feedback/log-level-6" aria-selected="false">Normal</a><a id="tab-feedback/log-level-7" href="#panel-feedback%2flog-level-7" role="tab" aria-controls="panel-feedback/log-level-7" aria-selected="false">Dim</a>
+<a id="tab-feedback/log-level-example" href="#panel-feedback%2flog-level-example" role="tab" aria-controls="panel-feedback/log-level-example" aria-selected="true">Example</a>
+<a id="tab-feedback/log-level-0" href="#panel-feedback%2flog-level-0" role="tab" aria-controls="panel-feedback/log-level-0" aria-selected="false">Demo</a><a id="tab-feedback/log-level-1" href="#panel-feedback%2flog-level-1" role="tab" aria-controls="panel-feedback/log-level-1" aria-selected="false">Narrow</a><a id="tab-feedback/log-level-2" href="#panel-feedback%2flog-level-2" role="tab" aria-controls="panel-feedback/log-level-2" aria-selected="false">256 colors</a><a id="tab-feedback/log-level-3" href="#panel-feedback%2flog-level-3" role="tab" aria-controls="panel-feedback/log-level-3" aria-selected="false">16 colors</a><a id="tab-feedback/log-level-4" href="#panel-feedback%2flog-level-4" role="tab" aria-controls="panel-feedback/log-level-4" aria-selected="false">Monochrome</a><a id="tab-feedback/log-level-5" href="#panel-feedback%2flog-level-5" role="tab" aria-controls="panel-feedback/log-level-5" aria-selected="false">Bright</a><a id="tab-feedback/log-level-6" href="#panel-feedback%2flog-level-6" role="tab" aria-controls="panel-feedback/log-level-6" aria-selected="false">Normal</a><a id="tab-feedback/log-level-7" href="#panel-feedback%2flog-level-7" role="tab" aria-controls="panel-feedback/log-level-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-feedback/log-level-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">INFO </span><span style="background-color:#202f40;"> </span> Request complete
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">WARN </span><span style="background-color:#32322f;"> </span> Retry scheduled 
+<span style="background-color:#f28b82;"> </span><span style="color:#101722;background-color:#f28b82;font-weight:bold;">ERROR</span><span style="background-color:#f28b82;"> </span> Upstream timeout</pre></figure>
 </div>
 <div id="panel-feedback/log-level-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                                                        
+<figure><figcaption>Demo · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                                                        
                                                                                 
 <span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">TRACE</span><span style="background-color:#252b34;"> </span>                                                                         
 <span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">DEBUG</span><span style="background-color:#1e313d;"> </span>                                                                         
@@ -409,13 +378,15 @@ Enable Live to run the native timers.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="feedback/log-level-code"><a class="heading-permalink" href="#feedback%2flog-level-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/log-level.go.txt">Usage snippet</a> · <a href="https://github.com/lanej/charmed/blob/main/feedback/log_level.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">level <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>log<span class="syn-operator">.</span>WarnLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
-line <span class="syn-operator">:=</span> level <span class="syn-operator">+</span> <span class="syn-string">&#34; &#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">Label</span><span class="syn-operator">(</span><span class="syn-string">&#34;Retry scheduled&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+<div class="component-subheading"><h3 id="feedback/log-level-code"><a class="heading-permalink" href="#feedback%2flog-level-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/feedback_log_level.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/feedback/log_level.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/charm.land/log/v2" title="charm.land/log/v2"><code>log</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
 
-<span class="syn-comment">// Rendering a severity performs no logging or process exit.</span>
-fatal <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>log<span class="syn-operator">.</span>FatalLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Bright<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
-trace <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>feedback<span class="syn-operator">.</span>TraceLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Dim<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>log<span class="syn-operator">.</span>InfoLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Request complete&#34;</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>log<span class="syn-operator">.</span>WarnLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Retry scheduled&#34;</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>log<span class="syn-operator">.</span>ErrorLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Bright<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Upstream timeout&#34;</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
 </code></pre>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="atoms-text.html#text/pill">text/pill</a> </p>
@@ -427,10 +398,17 @@ trace <span class="syn-operator">:=</span> feedback<span class="syn-operator">.<
 <div class="component-subheading"><h3 id="feedback/status-preview"><a class="heading-permalink" href="#feedback%2fstatus-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Status variants">
-<a id="tab-feedback/status-0" href="#panel-feedback%2fstatus-0" role="tab" aria-controls="panel-feedback/status-0" aria-selected="true">Default</a><a id="tab-feedback/status-1" href="#panel-feedback%2fstatus-1" role="tab" aria-controls="panel-feedback/status-1" aria-selected="false">Narrow</a><a id="tab-feedback/status-2" href="#panel-feedback%2fstatus-2" role="tab" aria-controls="panel-feedback/status-2" aria-selected="false">256 colors</a><a id="tab-feedback/status-3" href="#panel-feedback%2fstatus-3" role="tab" aria-controls="panel-feedback/status-3" aria-selected="false">16 colors</a><a id="tab-feedback/status-4" href="#panel-feedback%2fstatus-4" role="tab" aria-controls="panel-feedback/status-4" aria-selected="false">Monochrome</a><a id="tab-feedback/status-5" href="#panel-feedback%2fstatus-5" role="tab" aria-controls="panel-feedback/status-5" aria-selected="false">Bright</a><a id="tab-feedback/status-6" href="#panel-feedback%2fstatus-6" role="tab" aria-controls="panel-feedback/status-6" aria-selected="false">Normal</a><a id="tab-feedback/status-7" href="#panel-feedback%2fstatus-7" role="tab" aria-controls="panel-feedback/status-7" aria-selected="false">Dim</a>
+<a id="tab-feedback/status-example" href="#panel-feedback%2fstatus-example" role="tab" aria-controls="panel-feedback/status-example" aria-selected="true">Example</a>
+<a id="tab-feedback/status-0" href="#panel-feedback%2fstatus-0" role="tab" aria-controls="panel-feedback/status-0" aria-selected="false">Demo</a><a id="tab-feedback/status-1" href="#panel-feedback%2fstatus-1" role="tab" aria-controls="panel-feedback/status-1" aria-selected="false">Narrow</a><a id="tab-feedback/status-2" href="#panel-feedback%2fstatus-2" role="tab" aria-controls="panel-feedback/status-2" aria-selected="false">256 colors</a><a id="tab-feedback/status-3" href="#panel-feedback%2fstatus-3" role="tab" aria-controls="panel-feedback/status-3" aria-selected="false">16 colors</a><a id="tab-feedback/status-4" href="#panel-feedback%2fstatus-4" role="tab" aria-controls="panel-feedback/status-4" aria-selected="false">Monochrome</a><a id="tab-feedback/status-5" href="#panel-feedback%2fstatus-5" role="tab" aria-controls="panel-feedback/status-5" aria-selected="false">Bright</a><a id="tab-feedback/status-6" href="#panel-feedback%2fstatus-6" role="tab" aria-controls="panel-feedback/status-6" aria-selected="false">Normal</a><a id="tab-feedback/status-7" href="#panel-feedback%2fstatus-7" role="tab" aria-controls="panel-feedback/status-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-feedback/status-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ OK</span><span style="background-color:#223334;"> </span>     
+<span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">! WARN</span><span style="background-color:#f2c879;"> </span>   
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ RUNNING</span><span style="background-color:#1e313d;"> </span>
+<span style="background-color:#161e2a;"> </span><span style="color:#829bc3;background-color:#161e2a;">? UNKNOWN</span><span style="background-color:#161e2a;"> </span></pre></figure>
 </div>
 <div id="panel-feedback/status-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 80 × 14 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Status atoms / normal                                                           
+<figure><figcaption>Demo · truecolor · 80 × 14 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Status atoms / normal                                                           
                                                                                 
 <span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ OK</span><span style="background-color:#223334;"> </span>                                                                          
 <span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">! WARN</span><span style="background-color:#32322f;"> </span>                                                                        
@@ -545,112 +523,16 @@ trace <span class="syn-operator">:=</span> feedback<span class="syn-operator">.<
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="feedback/status-code"><a class="heading-permalink" href="#feedback%2fstatus-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/feedback/status.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">package</span> feedback
+<div class="component-subheading"><h3 id="feedback/status-code"><a class="heading-permalink" href="#feedback%2fstatus-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/feedback_status.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/feedback/status.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
 
-<span class="syn-keyword">import</span> <span class="syn-operator">(</span>
-	<span class="syn-string">&#34;image/color&#34;</span>
-
-	<span class="syn-string">&#34;github.com/charmbracelet/x/ansi&#34;</span>
-	<span class="syn-string">&#34;github.com/lanej/charmed/text&#34;</span>
-	<span class="syn-string">&#34;github.com/lanej/charmed/theme&#34;</span>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	feedback<span class="syn-operator">.</span>OK<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span>Warn<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Bright<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span>Running<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span>Unknown<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Dim<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
 <span class="syn-operator">)</span>
-
-<span class="syn-comment">// Status is display state, independent of attention-rule evaluation.</span>
-<span class="syn-keyword">type</span> Status <span class="syn-builtin">string</span>
-
-<span class="syn-keyword">const</span> <span class="syn-operator">(</span>
-	OK           Status <span class="syn-operator">=</span> <span class="syn-string">&#34;OK&#34;</span>
-	Warn         Status <span class="syn-operator">=</span> <span class="syn-string">&#34;WARN&#34;</span>
-	Error        Status <span class="syn-operator">=</span> <span class="syn-string">&#34;ERROR&#34;</span>
-	Unknown      Status <span class="syn-operator">=</span> <span class="syn-string">&#34;UNKNOWN&#34;</span>
-	Off          Status <span class="syn-operator">=</span> <span class="syn-string">&#34;OFF&#34;</span>
-	Pending      Status <span class="syn-operator">=</span> <span class="syn-string">&#34;PENDING&#34;</span>
-	Running      Status <span class="syn-operator">=</span> <span class="syn-string">&#34;RUNNING&#34;</span>
-	Paused       Status <span class="syn-operator">=</span> <span class="syn-string">&#34;PAUSED&#34;</span>
-	Disabled     Status <span class="syn-operator">=</span> <span class="syn-string">&#34;DISABLED&#34;</span>
-	Connected    Status <span class="syn-operator">=</span> <span class="syn-string">&#34;CONNECTED&#34;</span>
-	Disconnected Status <span class="syn-operator">=</span> <span class="syn-string">&#34;DISCONNECTED&#34;</span>
-<span class="syn-operator">)</span>
-
-<span class="syn-comment">// Statuses returns the display catalog in its learning order.</span>
-<span class="syn-keyword">func</span> <span class="syn-function">Statuses</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>Status <span class="syn-operator">{</span>
-	<span class="syn-keyword">return</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>Status<span class="syn-operator">{</span>OK<span class="syn-operator">,</span> Warn<span class="syn-operator">,</span> Error<span class="syn-operator">,</span> Unknown<span class="syn-operator">,</span> Off<span class="syn-operator">,</span> Pending<span class="syn-operator">,</span> Running<span class="syn-operator">,</span> Paused<span class="syn-operator">,</span> Disabled<span class="syn-operator">,</span> Connected<span class="syn-operator">,</span> Disconnected<span class="syn-operator">}</span>
-<span class="syn-operator">}</span>
-
-<span class="syn-comment">// MaxStatusWidth includes the glyph, separating space and horizontal insets.</span>
-<span class="syn-comment">// All emphasis levels retain this geometry.</span>
-<span class="syn-keyword">func</span> <span class="syn-function">MaxStatusWidth</span><span class="syn-operator">(</span>t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">int</span> <span class="syn-operator">{</span>
-	width <span class="syn-operator">:=</span> <span class="syn-number">0</span>
-	<span class="syn-keyword">for</span> _<span class="syn-operator">,</span> status <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> <span class="syn-function">Statuses</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
-		width <span class="syn-operator">=</span> <span class="syn-builtin">max</span><span class="syn-operator">(</span>width<span class="syn-operator">,</span> ansi<span class="syn-operator">.</span><span class="syn-function">StringWidth</span><span class="syn-operator">(</span>status<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> t<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">return</span> width
-<span class="syn-operator">}</span>
-
-<span class="syn-keyword">func</span> <span class="syn-operator">(</span>s Status<span class="syn-operator">)</span> <span class="syn-function">View</span><span class="syn-operator">(</span>emphasis text<span class="syn-operator">.</span>Emphasis<span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">,</span> options <span class="syn-operator">...</span>text<span class="syn-operator">.</span>Presentation<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	tone <span class="syn-operator">:=</span> text<span class="syn-operator">.</span>Neutral
-	glyph <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span>GlyphUnknown
-
-	<span class="syn-keyword">switch</span> s <span class="syn-operator">{</span>
-	<span class="syn-keyword">case</span> OK<span class="syn-operator">:</span>
-		tone <span class="syn-operator">=</span> text<span class="syn-operator">.</span>Success
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphOK
-	<span class="syn-keyword">case</span> Warn<span class="syn-operator">:</span>
-		tone <span class="syn-operator">=</span> text<span class="syn-operator">.</span>Warning
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphWarning
-	<span class="syn-keyword">case</span> Error<span class="syn-operator">:</span>
-		tone <span class="syn-operator">=</span> text<span class="syn-operator">.</span>Danger
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphError
-	<span class="syn-keyword">case</span> Unknown<span class="syn-operator">:</span>
-		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Unknown<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimUnknown<span class="syn-operator">)</span>
-	<span class="syn-keyword">case</span> Off<span class="syn-operator">:</span>
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphOff
-		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Inactive<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimInactive<span class="syn-operator">)</span>
-	<span class="syn-keyword">case</span> Pending<span class="syn-operator">:</span>
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphPending
-		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Pending<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimPending<span class="syn-operator">)</span>
-	<span class="syn-keyword">case</span> Running<span class="syn-operator">:</span>
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphRunning
-		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Running<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimRunning<span class="syn-operator">)</span>
-	<span class="syn-keyword">case</span> Paused<span class="syn-operator">:</span>
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphPaused
-		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Paused<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimPaused<span class="syn-operator">)</span>
-	<span class="syn-keyword">case</span> Connected<span class="syn-operator">:</span>
-		tone <span class="syn-operator">=</span> text<span class="syn-operator">.</span>Success
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphConnected
-	<span class="syn-keyword">case</span> Disconnected<span class="syn-operator">:</span>
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphDisconnected
-
-		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Inactive<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimInactive<span class="syn-operator">)</span>
-	<span class="syn-keyword">case</span> Disabled<span class="syn-operator">:</span>
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphDisabled
-		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Inactive<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimInactive<span class="syn-operator">)</span>
-	<span class="syn-keyword">default</span><span class="syn-operator">:</span>
-		s <span class="syn-operator">=</span> Unknown
-		t <span class="syn-operator">=</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Unknown<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimUnknown<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	mode <span class="syn-operator">:=</span> text<span class="syn-operator">.</span>DefaultPresentation
-	<span class="syn-keyword">if</span> <span class="syn-builtin">len</span><span class="syn-operator">(</span>options<span class="syn-operator">)</span> <span class="syn-operator">&gt;</span> <span class="syn-number">0</span> <span class="syn-operator">{</span>
-		mode <span class="syn-operator">=</span> options<span class="syn-operator">[</span><span class="syn-number">0</span><span class="syn-operator">]</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">return</span> text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span>mode<span class="syn-operator">.</span><span class="syn-function">Format</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span><span class="syn-function">Glyph</span><span class="syn-operator">(</span>glyph<span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">string</span><span class="syn-operator">(</span>s<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">,</span> tone<span class="syn-operator">,</span> t<span class="syn-operator">,</span> emphasis<span class="syn-operator">)</span>
-<span class="syn-operator">}</span>
-
-<span class="syn-keyword">func</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">,</span> normal<span class="syn-operator">,</span> dim color<span class="syn-operator">.</span>Color<span class="syn-operator">)</span> theme<span class="syn-operator">.</span>Theme <span class="syn-operator">{</span>
-	<span class="syn-keyword">if</span> normal <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
-		t<span class="syn-operator">.</span>Foreground <span class="syn-operator">=</span> normal
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">if</span> dim <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
-		t<span class="syn-operator">.</span>DimForeground <span class="syn-operator">=</span> dim
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">return</span> t
-<span class="syn-operator">}</span>
 </code></pre>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="atoms-text.html#text/pill">text/pill</a> </p>
@@ -662,10 +544,15 @@ trace <span class="syn-operator">:=</span> feedback<span class="syn-operator">.<
 <div class="component-subheading"><h3 id="feedback/connection-preview"><a class="heading-permalink" href="#feedback%2fconnection-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Connection variants">
-<a id="tab-feedback/connection-0" href="#panel-feedback%2fconnection-0" role="tab" aria-controls="panel-feedback/connection-0" aria-selected="true">Default</a><a id="tab-feedback/connection-1" href="#panel-feedback%2fconnection-1" role="tab" aria-controls="panel-feedback/connection-1" aria-selected="false">Narrow</a><a id="tab-feedback/connection-2" href="#panel-feedback%2fconnection-2" role="tab" aria-controls="panel-feedback/connection-2" aria-selected="false">256 colors</a><a id="tab-feedback/connection-3" href="#panel-feedback%2fconnection-3" role="tab" aria-controls="panel-feedback/connection-3" aria-selected="false">16 colors</a><a id="tab-feedback/connection-4" href="#panel-feedback%2fconnection-4" role="tab" aria-controls="panel-feedback/connection-4" aria-selected="false">Monochrome</a><a id="tab-feedback/connection-5" href="#panel-feedback%2fconnection-5" role="tab" aria-controls="panel-feedback/connection-5" aria-selected="false">Bright</a><a id="tab-feedback/connection-6" href="#panel-feedback%2fconnection-6" role="tab" aria-controls="panel-feedback/connection-6" aria-selected="false">Normal</a><a id="tab-feedback/connection-7" href="#panel-feedback%2fconnection-7" role="tab" aria-controls="panel-feedback/connection-7" aria-selected="false">Dim</a>
+<a id="tab-feedback/connection-example" href="#panel-feedback%2fconnection-example" role="tab" aria-controls="panel-feedback/connection-example" aria-selected="true">Example</a>
+<a id="tab-feedback/connection-0" href="#panel-feedback%2fconnection-0" role="tab" aria-controls="panel-feedback/connection-0" aria-selected="false">Demo</a><a id="tab-feedback/connection-1" href="#panel-feedback%2fconnection-1" role="tab" aria-controls="panel-feedback/connection-1" aria-selected="false">Narrow</a><a id="tab-feedback/connection-2" href="#panel-feedback%2fconnection-2" role="tab" aria-controls="panel-feedback/connection-2" aria-selected="false">256 colors</a><a id="tab-feedback/connection-3" href="#panel-feedback%2fconnection-3" role="tab" aria-controls="panel-feedback/connection-3" aria-selected="false">16 colors</a><a id="tab-feedback/connection-4" href="#panel-feedback%2fconnection-4" role="tab" aria-controls="panel-feedback/connection-4" aria-selected="false">Monochrome</a><a id="tab-feedback/connection-5" href="#panel-feedback%2fconnection-5" role="tab" aria-controls="panel-feedback/connection-5" aria-selected="false">Bright</a><a id="tab-feedback/connection-6" href="#panel-feedback%2fconnection-6" role="tab" aria-controls="panel-feedback/connection-6" aria-selected="false">Normal</a><a id="tab-feedback/connection-7" href="#panel-feedback%2fconnection-7" role="tab" aria-controls="panel-feedback/connection-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-feedback/connection-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>   
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ DISCONNECTED</span><span style="background-color:#252b34;"> </span></pre></figure>
 </div>
 <div id="panel-feedback/connection-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>                                                   
+<figure><figcaption>Demo · truecolor · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>                                                   
 <span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ DISCONNECTED</span><span style="background-color:#252b34;"> </span></pre></figure>
 </div><div id="panel-feedback/connection-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-1" tabindex="0">
 <figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>                           
@@ -692,13 +579,14 @@ trace <span class="syn-operator">:=</span> feedback<span class="syn-operator">.<
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="feedback/connection-code"><a class="heading-permalink" href="#feedback%2fconnection-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/connection.go.txt">Usage snippet</a> · <a href="https://github.com/lanej/charmed/blob/main/story/chrome.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">connected <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span>Connected<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
-disconnected <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span>Disconnected<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+<div class="component-subheading"><h3 id="feedback/connection-code"><a class="heading-permalink" href="#feedback%2fconnection-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/feedback_connection.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/story/chrome.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
 
-<span class="syn-comment">// Choose the state from application observations; rendering performs no I/O.</span>
-footer <span class="syn-operator">:=</span> layout<span class="syn-operator">.</span>Footer<span class="syn-operator">{</span>Help<span class="syn-operator">:</span> <span class="syn-string">&#34;Ctrl+C quit&#34;</span><span class="syn-operator">,</span> Status<span class="syn-operator">:</span> connected<span class="syn-operator">}</span>
-view <span class="syn-operator">:=</span> footer<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-number">64</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	feedback<span class="syn-operator">.</span>Connected<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span>Disconnected<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
 </code></pre>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="atoms-feedback.html#feedback/status">feedback/status</a> </p>
@@ -710,10 +598,15 @@ view <span class="syn-operator">:=</span> footer<span class="syn-operator">.</sp
 <div class="component-subheading"><h3 id="feedback/follow-preview"><a class="heading-permalink" href="#feedback%2ffollow-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Follow variants">
-<a id="tab-feedback/follow-0" href="#panel-feedback%2ffollow-0" role="tab" aria-controls="panel-feedback/follow-0" aria-selected="true">Default</a><a id="tab-feedback/follow-1" href="#panel-feedback%2ffollow-1" role="tab" aria-controls="panel-feedback/follow-1" aria-selected="false">Narrow</a><a id="tab-feedback/follow-2" href="#panel-feedback%2ffollow-2" role="tab" aria-controls="panel-feedback/follow-2" aria-selected="false">256 colors</a><a id="tab-feedback/follow-3" href="#panel-feedback%2ffollow-3" role="tab" aria-controls="panel-feedback/follow-3" aria-selected="false">16 colors</a><a id="tab-feedback/follow-4" href="#panel-feedback%2ffollow-4" role="tab" aria-controls="panel-feedback/follow-4" aria-selected="false">Monochrome</a>
+<a id="tab-feedback/follow-example" href="#panel-feedback%2ffollow-example" role="tab" aria-controls="panel-feedback/follow-example" aria-selected="true">Example</a>
+<a id="tab-feedback/follow-0" href="#panel-feedback%2ffollow-0" role="tab" aria-controls="panel-feedback/follow-0" aria-selected="false">Demo</a><a id="tab-feedback/follow-1" href="#panel-feedback%2ffollow-1" role="tab" aria-controls="panel-feedback/follow-1" aria-selected="false">Narrow</a><a id="tab-feedback/follow-2" href="#panel-feedback%2ffollow-2" role="tab" aria-controls="panel-feedback/follow-2" aria-selected="false">256 colors</a><a id="tab-feedback/follow-3" href="#panel-feedback%2ffollow-3" role="tab" aria-controls="panel-feedback/follow-3" aria-selected="false">16 colors</a><a id="tab-feedback/follow-4" href="#panel-feedback%2ffollow-4" role="tab" aria-controls="panel-feedback/follow-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/follow-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/follow-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ FOLLOW</span><span style="background-color:#1e313d;"> </span>
+<span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span></pre></figure>
 </div>
 <div id="panel-feedback/follow-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/follow-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Browsing mode / shared status atoms                                                                 
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Browsing mode / shared status atoms                                                                 
                                                                                                     
 <span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ FOLLOW</span><span style="background-color:#1e313d;"> </span>                                                                                          
 <span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span>                                                                                          
@@ -751,20 +644,15 @@ view <span class="syn-operator">:=</span> footer<span class="syn-operator">.</sp
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="feedback/follow-code"><a class="heading-permalink" href="#feedback%2ffollow-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/feedback/controls.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// Follow distinguishes live-follow mode from paused history browsing.</span>
-<span class="syn-keyword">func</span> <span class="syn-function">Follow</span><span class="syn-operator">(</span>following <span class="syn-builtin">bool</span><span class="syn-operator">,</span> emphasis text<span class="syn-operator">.</span>Emphasis<span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">,</span> options <span class="syn-operator">...</span>text<span class="syn-operator">.</span>Presentation<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">if</span> <span class="syn-operator">!</span>following <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> Paused<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>emphasis<span class="syn-operator">,</span> t<span class="syn-operator">,</span> options<span class="syn-operator">...</span><span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
+<div class="component-subheading"><h3 id="feedback/follow-code"><a class="heading-permalink" href="#feedback%2ffollow-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/feedback_follow.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/feedback/controls.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
 
-	mode <span class="syn-operator">:=</span> text<span class="syn-operator">.</span>DefaultPresentation
-	<span class="syn-keyword">if</span> <span class="syn-builtin">len</span><span class="syn-operator">(</span>options<span class="syn-operator">)</span> <span class="syn-operator">&gt;</span> <span class="syn-number">0</span> <span class="syn-operator">{</span>
-		mode <span class="syn-operator">=</span> options<span class="syn-operator">[</span><span class="syn-number">0</span><span class="syn-operator">]</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">return</span> text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span>mode<span class="syn-operator">.</span><span class="syn-function">Format</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span><span class="syn-function">Glyph</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>GlyphRunning<span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-string">&#34;FOLLOW&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Neutral<span class="syn-operator">,</span> <span class="syn-function">statusTheme</span><span class="syn-operator">(</span>t<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Running<span class="syn-operator">,</span> t<span class="syn-operator">.</span>DimRunning<span class="syn-operator">)</span><span class="syn-operator">,</span> emphasis<span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	feedback<span class="syn-operator">.</span><span class="syn-function">Follow</span><span class="syn-operator">(</span><span class="syn-builtin">true</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span><span class="syn-function">Follow</span><span class="syn-operator">(</span><span class="syn-builtin">false</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="atoms-feedback.html#feedback/status">feedback/status</a> </p>
 </section>
@@ -775,10 +663,21 @@ view <span class="syn-operator">:=</span> footer<span class="syn-operator">.</sp
 <div class="component-subheading"><h3 id="feedback/scrollbar-preview"><a class="heading-permalink" href="#feedback%2fscrollbar-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Scrollbar variants">
-<a id="tab-feedback/scrollbar-0" href="#panel-feedback%2fscrollbar-0" role="tab" aria-controls="panel-feedback/scrollbar-0" aria-selected="true">Default</a><a id="tab-feedback/scrollbar-1" href="#panel-feedback%2fscrollbar-1" role="tab" aria-controls="panel-feedback/scrollbar-1" aria-selected="false">Narrow</a><a id="tab-feedback/scrollbar-2" href="#panel-feedback%2fscrollbar-2" role="tab" aria-controls="panel-feedback/scrollbar-2" aria-selected="false">256 colors</a><a id="tab-feedback/scrollbar-3" href="#panel-feedback%2fscrollbar-3" role="tab" aria-controls="panel-feedback/scrollbar-3" aria-selected="false">16 colors</a><a id="tab-feedback/scrollbar-4" href="#panel-feedback%2fscrollbar-4" role="tab" aria-controls="panel-feedback/scrollbar-4" aria-selected="false">Monochrome</a>
+<a id="tab-feedback/scrollbar-example" href="#panel-feedback%2fscrollbar-example" role="tab" aria-controls="panel-feedback/scrollbar-example" aria-selected="true">Example</a>
+<a id="tab-feedback/scrollbar-0" href="#panel-feedback%2fscrollbar-0" role="tab" aria-controls="panel-feedback/scrollbar-0" aria-selected="false">Demo</a><a id="tab-feedback/scrollbar-1" href="#panel-feedback%2fscrollbar-1" role="tab" aria-controls="panel-feedback/scrollbar-1" aria-selected="false">Narrow</a><a id="tab-feedback/scrollbar-2" href="#panel-feedback%2fscrollbar-2" role="tab" aria-controls="panel-feedback/scrollbar-2" aria-selected="false">256 colors</a><a id="tab-feedback/scrollbar-3" href="#panel-feedback%2fscrollbar-3" role="tab" aria-controls="panel-feedback/scrollbar-3" aria-selected="false">16 colors</a><a id="tab-feedback/scrollbar-4" href="#panel-feedback%2fscrollbar-4" role="tab" aria-controls="panel-feedback/scrollbar-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/scrollbar-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/scrollbar-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#67d4c0;font-weight:bold;">┃</span>
+<span style="color:#67d4c0;font-weight:bold;">┃</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span></pre></figure>
 </div>
 <div id="panel-feedback/scrollbar-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/scrollbar-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Scrollbar / top · middle · bottom                                                                   
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Scrollbar / top · middle · bottom                                                                   
                                                                                                     
 <span style="color:#67d4c0;font-weight:bold;">┃</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
 <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
@@ -861,35 +760,11 @@ No overflow = reserved blank gutter</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="feedback/scrollbar-code"><a class="heading-permalink" href="#feedback%2fscrollbar-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/feedback/controls.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-operator">(</span>s Scrollbar<span class="syn-operator">)</span> <span class="syn-function">View</span><span class="syn-operator">(</span>t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">if</span> s<span class="syn-operator">.</span>Height <span class="syn-operator">&lt;=</span> <span class="syn-number">0</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-string">&#34;&#34;</span>
-	<span class="syn-operator">}</span>
-
-	rows <span class="syn-operator">:=</span> <span class="syn-builtin">make</span><span class="syn-operator">(</span><span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">string</span><span class="syn-operator">,</span> s<span class="syn-operator">.</span>Height<span class="syn-operator">)</span>
-	<span class="syn-keyword">for</span> i <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> rows <span class="syn-operator">{</span>
-		rows<span class="syn-operator">[</span>i<span class="syn-operator">]</span> <span class="syn-operator">=</span> <span class="syn-string">&#34; &#34;</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">if</span> s<span class="syn-operator">.</span>Total <span class="syn-operator">&lt;=</span> <span class="syn-builtin">max</span><span class="syn-operator">(</span><span class="syn-number">0</span><span class="syn-operator">,</span> s<span class="syn-operator">.</span>Visible<span class="syn-operator">)</span> <span class="syn-operator">||</span> s<span class="syn-operator">.</span>Total <span class="syn-operator">&lt;=</span> <span class="syn-number">0</span> <span class="syn-operator">||</span> s<span class="syn-operator">.</span>Visible <span class="syn-operator">&lt;=</span> <span class="syn-number">0</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> <span class="syn-string">&#34;\n&#34;</span><span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	thumb <span class="syn-operator">:=</span> <span class="syn-builtin">max</span><span class="syn-operator">(</span><span class="syn-number">1</span><span class="syn-operator">,</span> <span class="syn-builtin">min</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Height<span class="syn-operator">,</span> <span class="syn-builtin">int</span><span class="syn-operator">(</span>math<span class="syn-operator">.</span><span class="syn-function">Round</span><span class="syn-operator">(</span><span class="syn-builtin">float64</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Visible<span class="syn-operator">)</span><span class="syn-operator">/</span><span class="syn-builtin">float64</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Total<span class="syn-operator">)</span><span class="syn-operator">*</span><span class="syn-builtin">float64</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Height<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
-	offset <span class="syn-operator">:=</span> <span class="syn-builtin">min</span><span class="syn-operator">(</span><span class="syn-builtin">max</span><span class="syn-operator">(</span><span class="syn-number">0</span><span class="syn-operator">,</span> s<span class="syn-operator">.</span>Offset<span class="syn-operator">)</span><span class="syn-operator">,</span> s<span class="syn-operator">.</span>Total<span class="syn-operator">-</span>s<span class="syn-operator">.</span>Visible<span class="syn-operator">)</span>
-
-	start <span class="syn-operator">:=</span> <span class="syn-builtin">int</span><span class="syn-operator">(</span>math<span class="syn-operator">.</span><span class="syn-function">Round</span><span class="syn-operator">(</span><span class="syn-builtin">float64</span><span class="syn-operator">(</span>offset<span class="syn-operator">)</span> <span class="syn-operator">/</span> <span class="syn-builtin">float64</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Total<span class="syn-operator">-</span>s<span class="syn-operator">.</span>Visible<span class="syn-operator">)</span> <span class="syn-operator">*</span> <span class="syn-builtin">float64</span><span class="syn-operator">(</span>s<span class="syn-operator">.</span>Height<span class="syn-operator">-</span>thumb<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
-	<span class="syn-keyword">for</span> i <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> rows <span class="syn-operator">{</span>
-		<span class="syn-keyword">if</span> i <span class="syn-operator">&gt;=</span> start <span class="syn-operator">&amp;&amp;</span> i <span class="syn-operator">&lt;</span> start<span class="syn-operator">+</span>thumb <span class="syn-operator">{</span>
-			rows<span class="syn-operator">[</span>i<span class="syn-operator">]</span> <span class="syn-operator">=</span> t<span class="syn-operator">.</span><span class="syn-function">Heading</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span><span class="syn-function">Glyph</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>GlyphScrollThumb<span class="syn-operator">)</span><span class="syn-operator">)</span>
-		<span class="syn-operator">}</span> <span class="syn-keyword">else</span> <span class="syn-operator">{</span>
-			rows<span class="syn-operator">[</span>i<span class="syn-operator">]</span> <span class="syn-operator">=</span> t<span class="syn-operator">.</span><span class="syn-function">Subtle</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span><span class="syn-function">Glyph</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>GlyphScrollTrack<span class="syn-operator">)</span><span class="syn-operator">)</span>
-		<span class="syn-operator">}</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">return</span> strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> <span class="syn-string">&#34;\n&#34;</span><span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<div class="component-subheading"><h3 id="feedback/scrollbar-code"><a class="heading-permalink" href="#feedback%2fscrollbar-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/feedback_scrollbar.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/feedback/controls.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">scrollbar <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span>Scrollbar<span class="syn-operator">{</span>Total<span class="syn-operator">:</span> <span class="syn-number">100</span><span class="syn-operator">,</span> Visible<span class="syn-operator">:</span> <span class="syn-number">20</span><span class="syn-operator">,</span> Offset<span class="syn-operator">:</span> <span class="syn-number">35</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">8</span><span class="syn-operator">}</span>
+<span class="syn-keyword">return</span> scrollbar<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>

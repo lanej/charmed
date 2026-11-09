@@ -118,10 +118,16 @@
 <div class="component-subheading"><h3 id="input/field-preview"><a class="heading-permalink" href="#input%2ffield-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Labeled field variants">
-<a id="tab-input/field-0" href="#panel-input%2ffield-0" role="tab" aria-controls="panel-input/field-0" aria-selected="true">Default</a><a id="tab-input/field-1" href="#panel-input%2ffield-1" role="tab" aria-controls="panel-input/field-1" aria-selected="false">Narrow</a><a id="tab-input/field-2" href="#panel-input%2ffield-2" role="tab" aria-controls="panel-input/field-2" aria-selected="false">256 colors</a><a id="tab-input/field-3" href="#panel-input%2ffield-3" role="tab" aria-controls="panel-input/field-3" aria-selected="false">16 colors</a><a id="tab-input/field-4" href="#panel-input%2ffield-4" role="tab" aria-controls="panel-input/field-4" aria-selected="false">Monochrome</a>
+<a id="tab-input/field-example" href="#panel-input%2ffield-example" role="tab" aria-controls="panel-input/field-example" aria-selected="true">Example</a>
+<a id="tab-input/field-0" href="#panel-input%2ffield-0" role="tab" aria-controls="panel-input/field-0" aria-selected="false">Demo</a><a id="tab-input/field-1" href="#panel-input%2ffield-1" role="tab" aria-controls="panel-input/field-1" aria-selected="false">Narrow</a><a id="tab-input/field-2" href="#panel-input%2ffield-2" role="tab" aria-controls="panel-input/field-2" aria-selected="false">256 colors</a><a id="tab-input/field-3" href="#panel-input%2ffield-3" role="tab" aria-controls="panel-input/field-3" aria-selected="false">16 colors</a><a id="tab-input/field-4" href="#panel-input%2ffield-4" role="tab" aria-controls="panel-input/field-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-input/field-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/field-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#67d4c0;font-weight:bold;">Environment</span>
+<span style="color:#a8a8a8;">&gt; </span><span style="color:#eeeeee;">production</span> <span style="color:#eeeeee;">                           </span>
+<span style="color:#a8a8a8;">Use at least three characters.</span></pre></figure>
 </div>
 <div id="panel-input/field-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/field-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Environment name</span>                                                                                    
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Environment name</span>                                                                                    
 <span style="color:#67d4c0;font-weight:bold;">&gt; </span><span style="color:#eeeeee;">production</span><span style="color:#101722;background-color:#67d4c0;"> </span><span style="color:#eeeeee;">                                                                                       </span>
 <span style="color:#a8a8a8;">Use at least three characters.</span></pre></figure>
 </div><div id="panel-input/field-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/field-1" tabindex="0">
@@ -144,16 +150,24 @@ Use at least three characters.</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="input/field-code"><a class="heading-permalink" href="#input%2ffield-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/field.go.txt">Usage snippet</a> · <a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">field <span class="syn-operator">:=</span> input<span class="syn-operator">.</span>Field<span class="syn-operator">{</span>
-    Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Environment&#34;</span><span class="syn-operator">,</span> Help<span class="syn-operator">:</span> <span class="syn-string">&#34;Use at least three characters.&#34;</span><span class="syn-operator">,</span> Theme<span class="syn-operator">:</span> palette<span class="syn-operator">,</span>
-    Input<span class="syn-operator">:</span> input<span class="syn-operator">.</span><span class="syn-function">NewText</span><span class="syn-operator">(</span>input<span class="syn-operator">.</span>TextOptions<span class="syn-operator">{</span>
-        Value<span class="syn-operator">:</span> <span class="syn-string">&#34;production&#34;</span><span class="syn-operator">,</span> Width<span class="syn-operator">:</span> <span class="syn-number">24</span><span class="syn-operator">,</span> Theme<span class="syn-operator">:</span> palette<span class="syn-operator">,</span> Validate<span class="syn-operator">:</span> validateName<span class="syn-operator">,</span>
-    <span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">,</span>
+<div class="component-subheading"><h3 id="input/field-code"><a class="heading-permalink" href="#input%2ffield-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/input_field.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/story/molecules.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/errors" title="errors"><code>errors</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/input" title="github.com/lanej/charmed/input"><code>input</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+field <span class="syn-operator">:=</span> input<span class="syn-operator">.</span>Field<span class="syn-operator">{</span>
+	Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Environment&#34;</span><span class="syn-operator">,</span> Help<span class="syn-operator">:</span> <span class="syn-string">&#34;Use at least three characters.&#34;</span><span class="syn-operator">,</span> Theme<span class="syn-operator">:</span> palette<span class="syn-operator">,</span>
+	Input<span class="syn-operator">:</span> input<span class="syn-operator">.</span><span class="syn-function">NewText</span><span class="syn-operator">(</span>input<span class="syn-operator">.</span>TextOptions<span class="syn-operator">{</span>
+		Value<span class="syn-operator">:</span> <span class="syn-string">&#34;production&#34;</span><span class="syn-operator">,</span> Width<span class="syn-operator">:</span> <span class="syn-number">40</span><span class="syn-operator">,</span> Theme<span class="syn-operator">:</span> palette<span class="syn-operator">,</span>
+		Validate<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>value <span class="syn-builtin">string</span><span class="syn-operator">)</span> <span class="syn-builtin">error</span> <span class="syn-operator">{</span>
+			<span class="syn-keyword">if</span> <span class="syn-builtin">len</span><span class="syn-operator">(</span>value<span class="syn-operator">)</span> <span class="syn-operator">&lt;</span> <span class="syn-number">3</span> <span class="syn-operator">{</span>
+				<span class="syn-keyword">return</span> errors<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span><span class="syn-string">&#34;use at least three characters&#34;</span><span class="syn-operator">)</span>
+			<span class="syn-operator">}</span>
+
+			<span class="syn-keyword">return</span> <span class="syn-builtin">nil</span>
+		<span class="syn-operator">}</span><span class="syn-operator">,</span>
+	<span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">,</span>
 <span class="syn-operator">}</span>
-field<span class="syn-operator">.</span>Input<span class="syn-operator">.</span><span class="syn-function">Resize</span><span class="syn-operator">(</span><span class="syn-number">40</span><span class="syn-operator">)</span>
-cmd <span class="syn-operator">:=</span> field<span class="syn-operator">.</span>Input<span class="syn-operator">.</span><span class="syn-function">Focus</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-comment">// Forward the native command from your parent model.</span>
-view <span class="syn-operator">:=</span> field<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<span class="syn-comment">// In Init, return field.Input.Focus(); in Update, forward messages to field.Input.</span>
+<span class="syn-keyword">return</span> field<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 </code></pre>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="atoms-input.html#input/text">input/text</a> </p>

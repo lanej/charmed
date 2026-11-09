@@ -118,10 +118,16 @@
 <div class="component-subheading"><h3 id="text/url-preview"><a class="heading-permalink" href="#text%2furl-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="URL variants">
-<a id="tab-text/url-0" href="#panel-text%2furl-0" role="tab" aria-controls="panel-text/url-0" aria-selected="true">Default</a><a id="tab-text/url-1" href="#panel-text%2furl-1" role="tab" aria-controls="panel-text/url-1" aria-selected="false">Narrow</a><a id="tab-text/url-2" href="#panel-text%2furl-2" role="tab" aria-controls="panel-text/url-2" aria-selected="false">256 colors</a><a id="tab-text/url-3" href="#panel-text%2furl-3" role="tab" aria-controls="panel-text/url-3" aria-selected="false">16 colors</a><a id="tab-text/url-4" href="#panel-text%2furl-4" role="tab" aria-controls="panel-text/url-4" aria-selected="false">Monochrome</a><a id="tab-text/url-5" href="#panel-text%2furl-5" role="tab" aria-controls="panel-text/url-5" aria-selected="false">light</a><a id="tab-text/url-6" href="#panel-text%2furl-6" role="tab" aria-controls="panel-text/url-6" aria-selected="false">contrast</a>
+<a id="tab-text/url-example" href="#panel-text%2furl-example" role="tab" aria-controls="panel-text/url-example" aria-selected="true">Example</a>
+<a id="tab-text/url-0" href="#panel-text%2furl-0" role="tab" aria-controls="panel-text/url-0" aria-selected="false">Demo</a><a id="tab-text/url-1" href="#panel-text%2furl-1" role="tab" aria-controls="panel-text/url-1" aria-selected="false">Narrow</a><a id="tab-text/url-2" href="#panel-text%2furl-2" role="tab" aria-controls="panel-text/url-2" aria-selected="false">256 colors</a><a id="tab-text/url-3" href="#panel-text%2furl-3" role="tab" aria-controls="panel-text/url-3" aria-selected="false">16 colors</a><a id="tab-text/url-4" href="#panel-text%2furl-4" role="tab" aria-controls="panel-text/url-4" aria-selected="false">Monochrome</a><a id="tab-text/url-5" href="#panel-text%2furl-5" role="tab" aria-controls="panel-text/url-5" aria-selected="false">light</a><a id="tab-text/url-6" href="#panel-text%2furl-6" role="tab" aria-controls="panel-text/url-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/url-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/url-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">/v1/labels                                                 
+/v1/labels?expand=rate&amp;locale=en_US                        
+https://api.example.test/v1/labels?expand=rate&amp;locale=en_US</pre></figure>
 </div>
 <div id="panel-text/url-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/url-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">URL display / captured source unchanged                                                             
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">URL display / captured source unchanged                                                             
                                                                                                     
 path                                                                                                
 /v1/labels/p_42                                                                                     
@@ -224,40 +230,16 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/url-code"><a class="heading-permalink" href="#text%2furl-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/url.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// FormatURL changes only display. Escaped paths and query ordering are retained;</span>
-<span class="syn-comment">// malformed or opaque targets fall back to the captured value without guessing.</span>
-<span class="syn-keyword">func</span> <span class="syn-function">FormatURL</span><span class="syn-operator">(</span>value <span class="syn-builtin">string</span><span class="syn-operator">,</span> format URLFormat<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">switch</span> format <span class="syn-operator">{</span>
-	<span class="syn-keyword">case</span> DefaultURLFormat<span class="syn-operator">:</span>
-		format <span class="syn-operator">=</span> PathAndQuery
-	<span class="syn-keyword">case</span> FullURL<span class="syn-operator">:</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">Inline</span><span class="syn-operator">(</span>value<span class="syn-operator">)</span>
-	<span class="syn-keyword">case</span> PathOnly<span class="syn-operator">,</span> PathAndQuery<span class="syn-operator">,</span> HostAndPath<span class="syn-operator">:</span>
-	<span class="syn-keyword">default</span><span class="syn-operator">:</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">Inline</span><span class="syn-operator">(</span>value<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
+<div class="component-subheading"><h3 id="text/url-code"><a class="heading-permalink" href="#text%2furl-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_url.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/url.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">url <span class="syn-operator">:=</span> <span class="syn-string">&#34;https://api.example.test/v1/labels?expand=rate&amp;locale=en_US&#34;</span>
 
-	parsed<span class="syn-operator">,</span> err <span class="syn-operator">:=</span> url<span class="syn-operator">.</span><span class="syn-function">Parse</span><span class="syn-operator">(</span>value<span class="syn-operator">)</span>
-	<span class="syn-keyword">if</span> err <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">||</span> parsed<span class="syn-operator">.</span>Opaque <span class="syn-operator">!=</span> <span class="syn-string">&#34;&#34;</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">Inline</span><span class="syn-operator">(</span>value<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	path <span class="syn-operator">:=</span> parsed<span class="syn-operator">.</span><span class="syn-function">EscapedPath</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
-	<span class="syn-keyword">if</span> path <span class="syn-operator">==</span> <span class="syn-string">&#34;&#34;</span> <span class="syn-operator">&amp;&amp;</span> parsed<span class="syn-operator">.</span>Host <span class="syn-operator">!=</span> <span class="syn-string">&#34;&#34;</span> <span class="syn-operator">{</span>
-		path <span class="syn-operator">=</span> <span class="syn-string">&#34;/&#34;</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">if</span> format <span class="syn-operator">!=</span> PathOnly <span class="syn-operator">&amp;&amp;</span> <span class="syn-operator">(</span>parsed<span class="syn-operator">.</span>RawQuery <span class="syn-operator">!=</span> <span class="syn-string">&#34;&#34;</span> <span class="syn-operator">||</span> parsed<span class="syn-operator">.</span>ForceQuery<span class="syn-operator">)</span> <span class="syn-operator">{</span>
-		path <span class="syn-operator">+=</span> <span class="syn-string">&#34;?&#34;</span> <span class="syn-operator">+</span> parsed<span class="syn-operator">.</span>RawQuery
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">if</span> format <span class="syn-operator">==</span> HostAndPath <span class="syn-operator">{</span>
-		path <span class="syn-operator">=</span> parsed<span class="syn-operator">.</span>Host <span class="syn-operator">+</span> path
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">return</span> <span class="syn-function">Inline</span><span class="syn-operator">(</span>path<span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">FormatURL</span><span class="syn-operator">(</span>url<span class="syn-operator">,</span> text<span class="syn-operator">.</span>PathOnly<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">FormatURL</span><span class="syn-operator">(</span>url<span class="syn-operator">,</span> text<span class="syn-operator">.</span>PathAndQuery<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">FormatURL</span><span class="syn-operator">(</span>url<span class="syn-operator">,</span> text<span class="syn-operator">.</span>FullURL<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
@@ -268,10 +250,17 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
 <div class="component-subheading"><h3 id="text/http-method-preview"><a class="heading-permalink" href="#text%2fhttp-method-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Method variants">
-<a id="tab-text/http-method-0" href="#panel-text%2fhttp-method-0" role="tab" aria-controls="panel-text/http-method-0" aria-selected="true">Default</a><a id="tab-text/http-method-1" href="#panel-text%2fhttp-method-1" role="tab" aria-controls="panel-text/http-method-1" aria-selected="false">Narrow</a><a id="tab-text/http-method-2" href="#panel-text%2fhttp-method-2" role="tab" aria-controls="panel-text/http-method-2" aria-selected="false">256 colors</a><a id="tab-text/http-method-3" href="#panel-text%2fhttp-method-3" role="tab" aria-controls="panel-text/http-method-3" aria-selected="false">16 colors</a><a id="tab-text/http-method-4" href="#panel-text%2fhttp-method-4" role="tab" aria-controls="panel-text/http-method-4" aria-selected="false">Monochrome</a><a id="tab-text/http-method-5" href="#panel-text%2fhttp-method-5" role="tab" aria-controls="panel-text/http-method-5" aria-selected="false">light</a><a id="tab-text/http-method-6" href="#panel-text%2fhttp-method-6" role="tab" aria-controls="panel-text/http-method-6" aria-selected="false">contrast</a>
+<a id="tab-text/http-method-example" href="#panel-text%2fhttp-method-example" role="tab" aria-controls="panel-text/http-method-example" aria-selected="true">Example</a>
+<a id="tab-text/http-method-0" href="#panel-text%2fhttp-method-0" role="tab" aria-controls="panel-text/http-method-0" aria-selected="false">Demo</a><a id="tab-text/http-method-1" href="#panel-text%2fhttp-method-1" role="tab" aria-controls="panel-text/http-method-1" aria-selected="false">Narrow</a><a id="tab-text/http-method-2" href="#panel-text%2fhttp-method-2" role="tab" aria-controls="panel-text/http-method-2" aria-selected="false">256 colors</a><a id="tab-text/http-method-3" href="#panel-text%2fhttp-method-3" role="tab" aria-controls="panel-text/http-method-3" aria-selected="false">16 colors</a><a id="tab-text/http-method-4" href="#panel-text%2fhttp-method-4" role="tab" aria-controls="panel-text/http-method-4" aria-selected="false">Monochrome</a><a id="tab-text/http-method-5" href="#panel-text%2fhttp-method-5" role="tab" aria-controls="panel-text/http-method-5" aria-selected="false">light</a><a id="tab-text/http-method-6" href="#panel-text%2fhttp-method-6" role="tab" aria-controls="panel-text/http-method-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/http-method-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-method-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"> <span style="color:#99c8d4;font-weight:bold;">GET</span>    
+ <span style="color:#e1cd91;font-weight:bold;">POST</span>   
+ <span style="color:#c3b2df;font-weight:bold;">PATCH</span>  
+ <span style="color:#e6b6bf;font-weight:bold;">DELETE</span></pre></figure>
 </div>
 <div id="panel-text/http-method-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-method-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP methods / categorical colors                                                                   
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP methods / categorical colors                                                                   
                                                                                                     
  <span style="color:#99c8d4;font-weight:bold;">GET</span>                                                                                                
  <span style="color:#a1acbd;font-weight:bold;">HEAD</span>                                                                                               
@@ -379,31 +368,15 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/http-method-code"><a class="heading-permalink" href="#text%2fhttp-method-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/http.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span>method <span class="syn-builtin">string</span><span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	foreground <span class="syn-operator">:=</span> t<span class="syn-operator">.</span>HTTP<span class="syn-operator">.</span>Other
+<div class="component-subheading"><h3 id="text/http-method-code"><a class="heading-permalink" href="#text%2fhttp-method-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_http_method.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/http.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
 
-	<span class="syn-keyword">switch</span> method <span class="syn-operator">{</span>
-	<span class="syn-keyword">case</span> http<span class="syn-operator">.</span>MethodGet<span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>HTTP<span class="syn-operator">.</span>Read
-	<span class="syn-keyword">case</span> http<span class="syn-operator">.</span>MethodPost<span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>HTTP<span class="syn-operator">.</span>Create
-	<span class="syn-keyword">case</span> http<span class="syn-operator">.</span>MethodPut<span class="syn-operator">,</span> http<span class="syn-operator">.</span>MethodPatch<span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>HTTP<span class="syn-operator">.</span>Change
-	<span class="syn-keyword">case</span> http<span class="syn-operator">.</span>MethodDelete<span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>HTTP<span class="syn-operator">.</span>Delete
-	<span class="syn-keyword">case</span> http<span class="syn-operator">.</span>MethodHead<span class="syn-operator">,</span> http<span class="syn-operator">.</span>MethodOptions<span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>HTTP<span class="syn-operator">.</span>Meta
-	<span class="syn-keyword">case</span> http<span class="syn-operator">.</span>MethodConnect<span class="syn-operator">,</span> http<span class="syn-operator">.</span>MethodTrace<span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>HTTP<span class="syn-operator">.</span>Other
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">if</span> method <span class="syn-operator">==</span> <span class="syn-string">&#34;&#34;</span> <span class="syn-operator">{</span>
-		method <span class="syn-operator">=</span> <span class="syn-string">&#34;?&#34;</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">return</span> <span class="syn-function">httpAtom</span><span class="syn-operator">(</span><span class="syn-function">Inline</span><span class="syn-operator">(</span>method<span class="syn-operator">)</span><span class="syn-operator">,</span> foreground<span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;GET&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;POST&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;PATCH&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;DELETE&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
@@ -414,10 +387,16 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
 <div class="component-subheading"><h3 id="text/http-status-preview"><a class="heading-permalink" href="#text%2fhttp-status-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Status code variants">
-<a id="tab-text/http-status-0" href="#panel-text%2fhttp-status-0" role="tab" aria-controls="panel-text/http-status-0" aria-selected="true">Default</a><a id="tab-text/http-status-1" href="#panel-text%2fhttp-status-1" role="tab" aria-controls="panel-text/http-status-1" aria-selected="false">Narrow</a><a id="tab-text/http-status-2" href="#panel-text%2fhttp-status-2" role="tab" aria-controls="panel-text/http-status-2" aria-selected="false">256 colors</a><a id="tab-text/http-status-3" href="#panel-text%2fhttp-status-3" role="tab" aria-controls="panel-text/http-status-3" aria-selected="false">16 colors</a><a id="tab-text/http-status-4" href="#panel-text%2fhttp-status-4" role="tab" aria-controls="panel-text/http-status-4" aria-selected="false">Monochrome</a><a id="tab-text/http-status-5" href="#panel-text%2fhttp-status-5" role="tab" aria-controls="panel-text/http-status-5" aria-selected="false">light</a><a id="tab-text/http-status-6" href="#panel-text%2fhttp-status-6" role="tab" aria-controls="panel-text/http-status-6" aria-selected="false">contrast</a>
+<a id="tab-text/http-status-example" href="#panel-text%2fhttp-status-example" role="tab" aria-controls="panel-text/http-status-example" aria-selected="true">Example</a>
+<a id="tab-text/http-status-0" href="#panel-text%2fhttp-status-0" role="tab" aria-controls="panel-text/http-status-0" aria-selected="false">Demo</a><a id="tab-text/http-status-1" href="#panel-text%2fhttp-status-1" role="tab" aria-controls="panel-text/http-status-1" aria-selected="false">Narrow</a><a id="tab-text/http-status-2" href="#panel-text%2fhttp-status-2" role="tab" aria-controls="panel-text/http-status-2" aria-selected="false">256 colors</a><a id="tab-text/http-status-3" href="#panel-text%2fhttp-status-3" role="tab" aria-controls="panel-text/http-status-3" aria-selected="false">16 colors</a><a id="tab-text/http-status-4" href="#panel-text%2fhttp-status-4" role="tab" aria-controls="panel-text/http-status-4" aria-selected="false">Monochrome</a><a id="tab-text/http-status-5" href="#panel-text%2fhttp-status-5" role="tab" aria-controls="panel-text/http-status-5" aria-selected="false">light</a><a id="tab-text/http-status-6" href="#panel-text%2fhttp-status-6" role="tab" aria-controls="panel-text/http-status-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/http-status-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"> <span style="color:#86cf9a;font-weight:bold;">200</span>  OK         
+ <span style="color:#f2c879;font-weight:bold;">404</span>  Not Found  
+ <span style="color:#f28b82;font-weight:bold;">502</span>  Bad Gateway</pre></figure>
 </div>
 <div id="panel-text/http-status-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP response codes / exact observations                                                            
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP response codes / exact observations                                                            
                                                                                                     
  <span style="color:#78b8ed;font-weight:bold;">100</span>  Continue                                                                                      
  <span style="color:#86cf9a;font-weight:bold;">200</span>  OK                                                                                            
@@ -545,30 +524,16 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/http-status-code"><a class="heading-permalink" href="#text%2fhttp-status-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/http.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// HTTPStatusCode preserves invalid observed codes rather than coercing them into a class.</span>
-<span class="syn-comment">// Zero denotes an unavailable code; request lifecycle is displayed by the owning molecule.</span>
-<span class="syn-keyword">func</span> <span class="syn-function">HTTPStatusCode</span><span class="syn-operator">(</span>code <span class="syn-builtin">int</span><span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	foreground<span class="syn-operator">,</span> label <span class="syn-operator">:=</span> t<span class="syn-operator">.</span>Unknown<span class="syn-operator">,</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprint</span><span class="syn-operator">(</span>code<span class="syn-operator">)</span>
-	<span class="syn-keyword">switch</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">case</span> code <span class="syn-operator">==</span> <span class="syn-number">0</span><span class="syn-operator">:</span>
-		label <span class="syn-operator">=</span> <span class="syn-string">&#34;?&#34;</span>
-	<span class="syn-keyword">case</span> code <span class="syn-operator">&gt;=</span> <span class="syn-number">100</span> <span class="syn-operator">&amp;&amp;</span> code <span class="syn-operator">&lt;</span> <span class="syn-number">200</span><span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>Info
-	<span class="syn-keyword">case</span> code <span class="syn-operator">&gt;=</span> <span class="syn-number">200</span> <span class="syn-operator">&amp;&amp;</span> code <span class="syn-operator">&lt;</span> <span class="syn-number">300</span><span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>Success
-	<span class="syn-keyword">case</span> code <span class="syn-operator">&gt;=</span> <span class="syn-number">300</span> <span class="syn-operator">&amp;&amp;</span> code <span class="syn-operator">&lt;</span> <span class="syn-number">400</span><span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>Info
-	<span class="syn-keyword">case</span> code <span class="syn-operator">&gt;=</span> <span class="syn-number">400</span> <span class="syn-operator">&amp;&amp;</span> code <span class="syn-operator">&lt;</span> <span class="syn-number">500</span><span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>Warning
-	<span class="syn-keyword">case</span> code <span class="syn-operator">&gt;=</span> <span class="syn-number">500</span> <span class="syn-operator">&amp;&amp;</span> code <span class="syn-operator">&lt;</span> <span class="syn-number">600</span><span class="syn-operator">:</span>
-		foreground <span class="syn-operator">=</span> t<span class="syn-operator">.</span>Danger
-	<span class="syn-keyword">default</span><span class="syn-operator">:</span>
-		label <span class="syn-operator">+=</span> <span class="syn-string">&#34;?&#34;</span>
-	<span class="syn-operator">}</span>
+<div class="component-subheading"><h3 id="text/http-status-code"><a class="heading-permalink" href="#text%2fhttp-status-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_http_status.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/http.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
 
-	<span class="syn-keyword">return</span> <span class="syn-function">httpAtom</span><span class="syn-operator">(</span>label<span class="syn-operator">,</span> foreground<span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">HTTPStatusCode</span><span class="syn-operator">(</span><span class="syn-number">200</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; OK&#34;</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">HTTPStatusCode</span><span class="syn-operator">(</span><span class="syn-number">404</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Not Found&#34;</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">HTTPStatusCode</span><span class="syn-operator">(</span><span class="syn-number">502</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Bad Gateway&#34;</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>

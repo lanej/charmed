@@ -118,10 +118,16 @@
 <div class="component-subheading"><h3 id="text/pending-preview"><a class="heading-permalink" href="#text%2fpending-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Pending variants">
-<a id="tab-text/pending-0" href="#panel-text%2fpending-0" role="tab" aria-controls="panel-text/pending-0" aria-selected="true">Default</a><a id="tab-text/pending-1" href="#panel-text%2fpending-1" role="tab" aria-controls="panel-text/pending-1" aria-selected="false">Narrow</a><a id="tab-text/pending-2" href="#panel-text%2fpending-2" role="tab" aria-controls="panel-text/pending-2" aria-selected="false">256 colors</a><a id="tab-text/pending-3" href="#panel-text%2fpending-3" role="tab" aria-controls="panel-text/pending-3" aria-selected="false">16 colors</a><a id="tab-text/pending-4" href="#panel-text%2fpending-4" role="tab" aria-controls="panel-text/pending-4" aria-selected="false">Monochrome</a><a id="tab-text/pending-5" href="#panel-text%2fpending-5" role="tab" aria-controls="panel-text/pending-5" aria-selected="false">light</a><a id="tab-text/pending-6" href="#panel-text%2fpending-6" role="tab" aria-controls="panel-text/pending-6" aria-selected="false">contrast</a>
+<a id="tab-text/pending-example" href="#panel-text%2fpending-example" role="tab" aria-controls="panel-text/pending-example" aria-selected="true">Example</a>
+<a id="tab-text/pending-0" href="#panel-text%2fpending-0" role="tab" aria-controls="panel-text/pending-0" aria-selected="false">Demo</a><a id="tab-text/pending-1" href="#panel-text%2fpending-1" role="tab" aria-controls="panel-text/pending-1" aria-selected="false">Narrow</a><a id="tab-text/pending-2" href="#panel-text%2fpending-2" role="tab" aria-controls="panel-text/pending-2" aria-selected="false">256 colors</a><a id="tab-text/pending-3" href="#panel-text%2fpending-3" role="tab" aria-controls="panel-text/pending-3" aria-selected="false">16 colors</a><a id="tab-text/pending-4" href="#panel-text%2fpending-4" role="tab" aria-controls="panel-text/pending-4" aria-selected="false">Monochrome</a><a id="tab-text/pending-5" href="#panel-text%2fpending-5" role="tab" aria-controls="panel-text/pending-5" aria-selected="false">light</a><a id="tab-text/pending-6" href="#panel-text%2fpending-6" role="tab" aria-controls="panel-text/pending-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/pending-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pending-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">  <span style="color:#8ca8e8;">◷</span>        
+ <span style="color:#8ca8e8;">◷ PENDING</span> 
+ <span style="color:#8ca8e8;">...</span></pre></figure>
 </div>
 <div id="panel-text/pending-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pending-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Pending / stable default                                                                            
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Pending / stable default                                                                            
                                                                                                     
   <span style="color:#8ca8e8;">◷</span>   Pending                                                                                       
                                                                                                     
@@ -208,12 +214,16 @@ Three equal-width frames
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/pending-code"><a class="heading-permalink" href="#text%2fpending-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/observability.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// Pending renders a stable glyph by default. Supplying a frame opts into a</span>
-<span class="syn-comment">// three-cell ellipsis; the caller owns ticks, pause policy, and reduced motion.</span>
-<span class="syn-keyword">func</span> <span class="syn-function">Pending</span><span class="syn-operator">(</span>t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">,</span> frame <span class="syn-operator">...</span><span class="syn-builtin">uint</span><span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">return</span> <span class="syn-function">PendingWithPresentation</span><span class="syn-operator">(</span>GlyphOnly<span class="syn-operator">,</span> t<span class="syn-operator">,</span> frame<span class="syn-operator">...</span><span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<div class="component-subheading"><h3 id="text/pending-code"><a class="heading-permalink" href="#text%2fpending-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_pending.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/observability.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Pending</span><span class="syn-operator">(</span>palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">PendingWithPresentation</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>GlyphAndLabel<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Pending</span><span class="syn-operator">(</span>palette<span class="syn-operator">,</span> <span class="syn-number">2</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-comment">// Optional animation frame supplied by your clock.</span>
+<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
@@ -224,10 +234,18 @@ Three equal-width frames
 <div class="component-subheading"><h3 id="text/observation-preview"><a class="heading-permalink" href="#text%2fobservation-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Observation variants">
-<a id="tab-text/observation-0" href="#panel-text%2fobservation-0" role="tab" aria-controls="panel-text/observation-0" aria-selected="true">Default</a><a id="tab-text/observation-1" href="#panel-text%2fobservation-1" role="tab" aria-controls="panel-text/observation-1" aria-selected="false">Narrow</a><a id="tab-text/observation-2" href="#panel-text%2fobservation-2" role="tab" aria-controls="panel-text/observation-2" aria-selected="false">256 colors</a><a id="tab-text/observation-3" href="#panel-text%2fobservation-3" role="tab" aria-controls="panel-text/observation-3" aria-selected="false">16 colors</a><a id="tab-text/observation-4" href="#panel-text%2fobservation-4" role="tab" aria-controls="panel-text/observation-4" aria-selected="false">Monochrome</a><a id="tab-text/observation-5" href="#panel-text%2fobservation-5" role="tab" aria-controls="panel-text/observation-5" aria-selected="false">light</a><a id="tab-text/observation-6" href="#panel-text%2fobservation-6" role="tab" aria-controls="panel-text/observation-6" aria-selected="false">contrast</a>
+<a id="tab-text/observation-example" href="#panel-text%2fobservation-example" role="tab" aria-controls="panel-text/observation-example" aria-selected="true">Example</a>
+<a id="tab-text/observation-0" href="#panel-text%2fobservation-0" role="tab" aria-controls="panel-text/observation-0" aria-selected="false">Demo</a><a id="tab-text/observation-1" href="#panel-text%2fobservation-1" role="tab" aria-controls="panel-text/observation-1" aria-selected="false">Narrow</a><a id="tab-text/observation-2" href="#panel-text%2fobservation-2" role="tab" aria-controls="panel-text/observation-2" aria-selected="false">256 colors</a><a id="tab-text/observation-3" href="#panel-text%2fobservation-3" role="tab" aria-controls="panel-text/observation-3" aria-selected="false">16 colors</a><a id="tab-text/observation-4" href="#panel-text%2fobservation-4" role="tab" aria-controls="panel-text/observation-4" aria-selected="false">Monochrome</a><a id="tab-text/observation-5" href="#panel-text%2fobservation-5" role="tab" aria-controls="panel-text/observation-5" aria-selected="false">light</a><a id="tab-text/observation-6" href="#panel-text%2fobservation-6" role="tab" aria-controls="panel-text/observation-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/observation-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/observation-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#99c8d4;">≡ Log entry</span>      
+<span style="color:#c3b2df;">⋈ trace-c7</span>       
+<span style="color:#e1cd91;">─ carrier</span>        
+<span style="color:#78b8ed;">↑ carrier.example</span>
+<span style="color:#78b8ed;">↓ API consumer</span></pre></figure>
 </div>
 <div id="panel-text/observation-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/observation-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Observation identities                                                                              
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Observation identities                                                                              
                                                                                                     
 <span style="color:#99c8d4;">≡ Log entry</span>                                                                                         
 <span style="color:#c3b2df;">⋈ Trace trace-c7</span>                                                                                    
@@ -321,10 +339,18 @@ ASCII fallbacks: L / T / S / ^ / v</pre></figure>
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/observation-code"><a class="heading-permalink" href="#text%2fobservation-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/observability.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">Log</span><span class="syn-operator">(</span>label <span class="syn-builtin">string</span><span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">,</span> options <span class="syn-operator">...</span>Presentation<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">return</span> <span class="syn-function">observation</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>GlyphLog<span class="syn-operator">,</span> label<span class="syn-operator">,</span> t<span class="syn-operator">.</span>HTTP<span class="syn-operator">.</span>Read<span class="syn-operator">,</span> t<span class="syn-operator">,</span> options<span class="syn-operator">...</span><span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<div class="component-subheading"><h3 id="text/observation-code"><a class="heading-permalink" href="#text%2fobservation-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_observation.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/observability.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Log</span><span class="syn-operator">(</span><span class="syn-string">&#34;Log entry&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Trace</span><span class="syn-operator">(</span><span class="syn-string">&#34;trace-c7&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Span</span><span class="syn-operator">(</span><span class="syn-string">&#34;carrier&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Upstream</span><span class="syn-operator">(</span><span class="syn-string">&#34;carrier.example&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Downstream</span><span class="syn-operator">(</span><span class="syn-string">&#34;API consumer&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
@@ -335,10 +361,14 @@ ASCII fallbacks: L / T / S / ^ / v</pre></figure>
 <div class="component-subheading"><h3 id="text/time-preview"><a class="heading-permalink" href="#text%2ftime-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Time variants">
-<a id="tab-text/time-0" href="#panel-text%2ftime-0" role="tab" aria-controls="panel-text/time-0" aria-selected="true">Default</a><a id="tab-text/time-1" href="#panel-text%2ftime-1" role="tab" aria-controls="panel-text/time-1" aria-selected="false">Narrow</a><a id="tab-text/time-2" href="#panel-text%2ftime-2" role="tab" aria-controls="panel-text/time-2" aria-selected="false">256 colors</a><a id="tab-text/time-3" href="#panel-text%2ftime-3" role="tab" aria-controls="panel-text/time-3" aria-selected="false">16 colors</a><a id="tab-text/time-4" href="#panel-text%2ftime-4" role="tab" aria-controls="panel-text/time-4" aria-selected="false">Monochrome</a><a id="tab-text/time-5" href="#panel-text%2ftime-5" role="tab" aria-controls="panel-text/time-5" aria-selected="false">light</a><a id="tab-text/time-6" href="#panel-text%2ftime-6" role="tab" aria-controls="panel-text/time-6" aria-selected="false">contrast</a>
+<a id="tab-text/time-example" href="#panel-text%2ftime-example" role="tab" aria-controls="panel-text/time-example" aria-selected="true">Example</a>
+<a id="tab-text/time-0" href="#panel-text%2ftime-0" role="tab" aria-controls="panel-text/time-0" aria-selected="false">Demo</a><a id="tab-text/time-1" href="#panel-text%2ftime-1" role="tab" aria-controls="panel-text/time-1" aria-selected="false">Narrow</a><a id="tab-text/time-2" href="#panel-text%2ftime-2" role="tab" aria-controls="panel-text/time-2" aria-selected="false">256 colors</a><a id="tab-text/time-3" href="#panel-text%2ftime-3" role="tab" aria-controls="panel-text/time-3" aria-selected="false">16 colors</a><a id="tab-text/time-4" href="#panel-text%2ftime-4" role="tab" aria-controls="panel-text/time-4" aria-selected="false">Monochrome</a><a id="tab-text/time-5" href="#panel-text%2ftime-5" role="tab" aria-controls="panel-text/time-5" aria-selected="false">light</a><a id="tab-text/time-6" href="#panel-text%2ftime-6" role="tab" aria-controls="panel-text/time-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/time-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/time-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">12:04:00.123  842ms</pre></figure>
 </div>
 <div id="panel-text/time-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/time-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Abbreviated time / exact source retained                                                            
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Abbreviated time / exact source retained                                                            
                                                                                                     
 12:04:01.234  from 2026-11-08T12:04:01.234567Z                                                      
 --:--:--.---  unavailable                                                                           
@@ -439,27 +469,11 @@ Latency / compact rounded display
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/time-code"><a class="heading-permalink" href="#text%2ftime-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/observability.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// ShortDuration rounds for compact display, without changing the observation.</span>
-<span class="syn-comment">// Values under one microsecond retain nanoseconds; negative values retain sign.</span>
-<span class="syn-keyword">func</span> <span class="syn-function">ShortDuration</span><span class="syn-operator">(</span>value time<span class="syn-operator">.</span>Duration<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">var</span> resolution time<span class="syn-operator">.</span>Duration
-
-	<span class="syn-keyword">switch</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">case</span> value <span class="syn-operator">&gt;</span> <span class="syn-operator">-</span>time<span class="syn-operator">.</span>Microsecond <span class="syn-operator">&amp;&amp;</span> value <span class="syn-operator">&lt;</span> time<span class="syn-operator">.</span>Microsecond<span class="syn-operator">:</span>
-		resolution <span class="syn-operator">=</span> time<span class="syn-operator">.</span>Nanosecond
-	<span class="syn-keyword">case</span> value <span class="syn-operator">&gt;</span> <span class="syn-operator">-</span>time<span class="syn-operator">.</span>Millisecond <span class="syn-operator">&amp;&amp;</span> value <span class="syn-operator">&lt;</span> time<span class="syn-operator">.</span>Millisecond<span class="syn-operator">:</span>
-		resolution <span class="syn-operator">=</span> time<span class="syn-operator">.</span>Microsecond
-	<span class="syn-keyword">case</span> value <span class="syn-operator">&gt;</span> <span class="syn-operator">-</span>time<span class="syn-operator">.</span>Second <span class="syn-operator">&amp;&amp;</span> value <span class="syn-operator">&lt;</span> time<span class="syn-operator">.</span>Second<span class="syn-operator">:</span>
-		resolution <span class="syn-operator">=</span> time<span class="syn-operator">.</span>Millisecond
-	<span class="syn-keyword">case</span> value <span class="syn-operator">&gt;</span> <span class="syn-operator">-</span>time<span class="syn-operator">.</span>Minute <span class="syn-operator">&amp;&amp;</span> value <span class="syn-operator">&lt;</span> time<span class="syn-operator">.</span>Minute<span class="syn-operator">:</span>
-		resolution <span class="syn-operator">=</span> <span class="syn-number">10</span> <span class="syn-operator">*</span> time<span class="syn-operator">.</span>Millisecond
-	<span class="syn-keyword">default</span><span class="syn-operator">:</span>
-		resolution <span class="syn-operator">=</span> time<span class="syn-operator">.</span>Second
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">return</span> value<span class="syn-operator">.</span><span class="syn-function">Round</span><span class="syn-operator">(</span>resolution<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">String</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<div class="component-subheading"><h3 id="text/time-code"><a class="heading-permalink" href="#text%2ftime-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_time.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/observability.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/time" title="time"><code>time</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">at <span class="syn-operator">:=</span> time<span class="syn-operator">.</span><span class="syn-function">Date</span><span class="syn-operator">(</span><span class="syn-number">2026</span><span class="syn-operator">,</span> <span class="syn-number">11</span><span class="syn-operator">,</span> <span class="syn-number">8</span><span class="syn-operator">,</span> <span class="syn-number">12</span><span class="syn-operator">,</span> <span class="syn-number">4</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">123000000</span><span class="syn-operator">,</span> time<span class="syn-operator">.</span>UTC<span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> text<span class="syn-operator">.</span><span class="syn-function">TimeOfDay</span><span class="syn-operator">(</span>at<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  &#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">ShortDuration</span><span class="syn-operator">(</span><span class="syn-number">842</span><span class="syn-operator">*</span>time<span class="syn-operator">.</span>Millisecond<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>

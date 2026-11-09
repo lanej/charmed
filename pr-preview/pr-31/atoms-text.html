@@ -118,10 +118,17 @@
 <div class="component-subheading"><h3 id="text/primitives-preview"><a class="heading-permalink" href="#text%2fprimitives-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Primitives variants">
-<a id="tab-text/primitives-0" href="#panel-text%2fprimitives-0" role="tab" aria-controls="panel-text/primitives-0" aria-selected="true">Default</a><a id="tab-text/primitives-1" href="#panel-text%2fprimitives-1" role="tab" aria-controls="panel-text/primitives-1" aria-selected="false">Narrow</a><a id="tab-text/primitives-2" href="#panel-text%2fprimitives-2" role="tab" aria-controls="panel-text/primitives-2" aria-selected="false">256 colors</a><a id="tab-text/primitives-3" href="#panel-text%2fprimitives-3" role="tab" aria-controls="panel-text/primitives-3" aria-selected="false">16 colors</a><a id="tab-text/primitives-4" href="#panel-text%2fprimitives-4" role="tab" aria-controls="panel-text/primitives-4" aria-selected="false">Monochrome</a>
+<a id="tab-text/primitives-example" href="#panel-text%2fprimitives-example" role="tab" aria-controls="panel-text/primitives-example" aria-selected="true">Example</a>
+<a id="tab-text/primitives-0" href="#panel-text%2fprimitives-0" role="tab" aria-controls="panel-text/primitives-0" aria-selected="false">Demo</a><a id="tab-text/primitives-1" href="#panel-text%2fprimitives-1" role="tab" aria-controls="panel-text/primitives-1" aria-selected="false">Narrow</a><a id="tab-text/primitives-2" href="#panel-text%2fprimitives-2" role="tab" aria-controls="panel-text/primitives-2" aria-selected="false">256 colors</a><a id="tab-text/primitives-3" href="#panel-text%2fprimitives-3" role="tab" aria-controls="panel-text/primitives-3" aria-selected="false">16 colors</a><a id="tab-text/primitives-4" href="#panel-text%2fprimitives-4" role="tab" aria-controls="panel-text/primitives-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-text/primitives-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/primitives-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#eeeeee;">production</span>          
+<span style="color:#67d4c0;font-weight:bold;">[READY]</span> <span style="color:#67d4c0;font-weight:bold;">[3 SELECTED]</span>
+<span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">Success</span><span style="background-color:#86cf9a;"> </span>           
+<span style="color:#67d4c0;font-weight:bold;">Enter</span> <span style="color:#a8a8a8;">select</span></pre></figure>
 </div>
 <div id="panel-text/primitives-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/primitives-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Text primitives</span>                                                                                     
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Text primitives</span>                                                                                     
                                                                                                     
 <span style="color:#eeeeee;">production</span>                                                                                          
                                                                                                     
@@ -179,16 +186,17 @@ production
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/primitives-code"><a class="heading-permalink" href="#text%2fprimitives-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">textStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">return</span> <span class="syn-function">static</span><span class="syn-operator">(</span><span class="syn-keyword">func</span><span class="syn-operator">(</span>layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-		t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<div class="component-subheading"><h3 id="text/primitives-code"><a class="heading-permalink" href="#text%2fprimitives-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_primitives.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/story/atoms.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
 
-		<span class="syn-keyword">return</span> <span class="syn-function">title</span><span class="syn-operator">(</span><span class="syn-string">&#34;Text primitives&#34;</span><span class="syn-operator">,</span> e<span class="syn-operator">)</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">Label</span><span class="syn-operator">(</span>e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span>Value<span class="syn-operator">,</span> t<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;\n\n&#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">Badge</span><span class="syn-operator">(</span><span class="syn-string">&#34;READY&#34;</span><span class="syn-operator">,</span> t<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34; &#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">Badge</span><span class="syn-operator">(</span><span class="syn-string">&#34;3 SELECTED&#34;</span><span class="syn-operator">,</span> t<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;\n\n&#34;</span> <span class="syn-operator">+</span>
-			text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span><span class="syn-string">&#34;Success&#34;</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Success<span class="syn-operator">,</span> t<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34; &#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span><span class="syn-string">&#34;Info&#34;</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Info<span class="syn-operator">,</span> t<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;\n&#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span><span class="syn-string">&#34;Warning&#34;</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Warning<span class="syn-operator">,</span> t<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34; &#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span><span class="syn-string">&#34;Danger&#34;</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Danger<span class="syn-operator">,</span> t<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;\n\n&#34;</span> <span class="syn-operator">+</span>
-			text<span class="syn-operator">.</span><span class="syn-function">KeyHint</span><span class="syn-operator">(</span><span class="syn-string">&#34;Enter&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;select&#34;</span><span class="syn-operator">,</span> t<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;   &#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">KeyHint</span><span class="syn-operator">(</span><span class="syn-string">&#34;Esc&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;dismiss&#34;</span><span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
-<span class="syn-operator">}</span></code></pre>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Label</span><span class="syn-operator">(</span><span class="syn-string">&#34;production&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Badge</span><span class="syn-operator">(</span><span class="syn-string">&#34;READY&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; &#34;</span><span class="syn-operator">+</span>text<span class="syn-operator">.</span><span class="syn-function">Badge</span><span class="syn-operator">(</span><span class="syn-string">&#34;3 SELECTED&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span><span class="syn-string">&#34;Success&#34;</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Success<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">KeyHint</span><span class="syn-operator">(</span><span class="syn-string">&#34;Enter&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;select&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
@@ -199,10 +207,14 @@ production
 <div class="component-subheading"><h3 id="text/signed-number-preview"><a class="heading-permalink" href="#text%2fsigned-number-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Signed number variants">
-<a id="tab-text/signed-number-0" href="#panel-text%2fsigned-number-0" role="tab" aria-controls="panel-text/signed-number-0" aria-selected="true">Default</a><a id="tab-text/signed-number-1" href="#panel-text%2fsigned-number-1" role="tab" aria-controls="panel-text/signed-number-1" aria-selected="false">Narrow</a><a id="tab-text/signed-number-2" href="#panel-text%2fsigned-number-2" role="tab" aria-controls="panel-text/signed-number-2" aria-selected="false">256 colors</a><a id="tab-text/signed-number-3" href="#panel-text%2fsigned-number-3" role="tab" aria-controls="panel-text/signed-number-3" aria-selected="false">16 colors</a><a id="tab-text/signed-number-4" href="#panel-text%2fsigned-number-4" role="tab" aria-controls="panel-text/signed-number-4" aria-selected="false">Monochrome</a><a id="tab-text/signed-number-5" href="#panel-text%2fsigned-number-5" role="tab" aria-controls="panel-text/signed-number-5" aria-selected="false">Bright</a><a id="tab-text/signed-number-6" href="#panel-text%2fsigned-number-6" role="tab" aria-controls="panel-text/signed-number-6" aria-selected="false">Normal</a><a id="tab-text/signed-number-7" href="#panel-text%2fsigned-number-7" role="tab" aria-controls="panel-text/signed-number-7" aria-selected="false">Dim</a>
+<a id="tab-text/signed-number-example" href="#panel-text%2fsigned-number-example" role="tab" aria-controls="panel-text/signed-number-example" aria-selected="true">Example</a>
+<a id="tab-text/signed-number-0" href="#panel-text%2fsigned-number-0" role="tab" aria-controls="panel-text/signed-number-0" aria-selected="false">Demo</a><a id="tab-text/signed-number-1" href="#panel-text%2fsigned-number-1" role="tab" aria-controls="panel-text/signed-number-1" aria-selected="false">Narrow</a><a id="tab-text/signed-number-2" href="#panel-text%2fsigned-number-2" role="tab" aria-controls="panel-text/signed-number-2" aria-selected="false">256 colors</a><a id="tab-text/signed-number-3" href="#panel-text%2fsigned-number-3" role="tab" aria-controls="panel-text/signed-number-3" aria-selected="false">16 colors</a><a id="tab-text/signed-number-4" href="#panel-text%2fsigned-number-4" role="tab" aria-controls="panel-text/signed-number-4" aria-selected="false">Monochrome</a><a id="tab-text/signed-number-5" href="#panel-text%2fsigned-number-5" role="tab" aria-controls="panel-text/signed-number-5" aria-selected="false">Bright</a><a id="tab-text/signed-number-6" href="#panel-text%2fsigned-number-6" role="tab" aria-controls="panel-text/signed-number-6" aria-selected="false">Normal</a><a id="tab-text/signed-number-7" href="#panel-text%2fsigned-number-7" role="tab" aria-controls="panel-text/signed-number-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-text/signed-number-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/signed-number-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#f28b82;font-weight:bold;">+0.180pp</span></pre></figure>
 </div>
 <div id="panel-text/signed-number-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/signed-number-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Signed number / normal                                                          
+<figure><figcaption>Demo · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Signed number / normal                                                          
                                                                                 
 Positive means improvement   <span style="color:#86cf9a;">+0.180pp</span>                                           
 Higher server-error rate     <span style="color:#f28b82;">+0.180pp</span>                                           
@@ -269,66 +281,14 @@ Unavailable                 <span style="color:#eeeeee;">n/a</span></pre></figur
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/signed-number-code"><a class="heading-permalink" href="#text%2fsigned-number-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/signed.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">package</span> text
-
-<span class="syn-keyword">import</span> <span class="syn-operator">(</span>
-	<span class="syn-string">&#34;fmt&#34;</span>
-	<span class="syn-string">&#34;math&#34;</span>
-
-	<span class="syn-string">&#34;github.com/lanej/charmed/theme&#34;</span>
-<span class="syn-operator">)</span>
-
-<span class="syn-comment">// SignTones is application policy: positive can mean improvement or regression.</span>
-<span class="syn-comment">// Unspecified positive/negative tones default to success/danger respectively.</span>
-<span class="syn-keyword">type</span> SignTones <span class="syn-keyword">struct</span><span class="syn-operator">{</span> Positive<span class="syn-operator">,</span> Negative<span class="syn-operator">,</span> Zero Tone <span class="syn-operator">}</span>
-
-<span class="syn-comment">// SignedNumber keeps exact sign and units when color is unavailable. Zero defaults to</span>
-<span class="syn-comment">// neutral; missing and non-finite observations are unavailable, never zero.</span>
-<span class="syn-keyword">type</span> SignedNumber <span class="syn-keyword">struct</span> <span class="syn-operator">{</span>
-	Value     <span class="syn-builtin">float64</span>
-	Available <span class="syn-builtin">bool</span>
-	Precision <span class="syn-builtin">int</span>
-	Unit      <span class="syn-builtin">string</span>
-	Tones     SignTones
-	Emphasis  Emphasis
+<div class="component-subheading"><h3 id="text/signed-number-code"><a class="heading-permalink" href="#text%2fsigned-number-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_signed_number.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/signed.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">change <span class="syn-operator">:=</span> text<span class="syn-operator">.</span>SignedNumber<span class="syn-operator">{</span>
+	Value<span class="syn-operator">:</span> <span class="syn-number">.18</span><span class="syn-operator">,</span> Available<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">,</span> Precision<span class="syn-operator">:</span> <span class="syn-number">3</span><span class="syn-operator">,</span> Unit<span class="syn-operator">:</span> <span class="syn-string">&#34;pp&#34;</span><span class="syn-operator">,</span> Emphasis<span class="syn-operator">:</span> text<span class="syn-operator">.</span>Bright<span class="syn-operator">,</span>
+	Tones<span class="syn-operator">:</span> text<span class="syn-operator">.</span>SignTones<span class="syn-operator">{</span>Positive<span class="syn-operator">:</span> text<span class="syn-operator">.</span>Danger<span class="syn-operator">,</span> Negative<span class="syn-operator">:</span> text<span class="syn-operator">.</span>Success<span class="syn-operator">}</span><span class="syn-operator">,</span>
 <span class="syn-operator">}</span>
 
-<span class="syn-keyword">func</span> <span class="syn-operator">(</span>n SignedNumber<span class="syn-operator">)</span> <span class="syn-function">valid</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-builtin">bool</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">return</span> n<span class="syn-operator">.</span>Available <span class="syn-operator">&amp;&amp;</span> <span class="syn-operator">!</span>math<span class="syn-operator">.</span><span class="syn-function">IsNaN</span><span class="syn-operator">(</span>n<span class="syn-operator">.</span>Value<span class="syn-operator">)</span> <span class="syn-operator">&amp;&amp;</span> <span class="syn-operator">!</span>math<span class="syn-operator">.</span><span class="syn-function">IsInf</span><span class="syn-operator">(</span>n<span class="syn-operator">.</span>Value<span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">)</span>
-<span class="syn-operator">}</span>
-<span class="syn-keyword">func</span> <span class="syn-operator">(</span>n SignedNumber<span class="syn-operator">)</span> <span class="syn-function">Label</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">if</span> <span class="syn-operator">!</span>n<span class="syn-operator">.</span><span class="syn-function">valid</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-string">&#34;n/a&#34;</span>
-	<span class="syn-operator">}</span>
-	value <span class="syn-operator">:=</span> n<span class="syn-operator">.</span>Value
-	<span class="syn-keyword">if</span> value <span class="syn-operator">==</span> <span class="syn-number">0</span> <span class="syn-operator">{</span>
-		value <span class="syn-operator">=</span> <span class="syn-number">0</span>
-	<span class="syn-operator">}</span> <span class="syn-comment">// Canonicalize IEEE negative zero.</span>
-	precision <span class="syn-operator">:=</span> <span class="syn-builtin">max</span><span class="syn-operator">(</span><span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-builtin">min</span><span class="syn-operator">(</span><span class="syn-number">9</span><span class="syn-operator">,</span> n<span class="syn-operator">.</span>Precision<span class="syn-operator">)</span><span class="syn-operator">)</span>
-	<span class="syn-keyword">if</span> value <span class="syn-operator">!=</span> <span class="syn-number">0</span> <span class="syn-operator">&amp;&amp;</span> math<span class="syn-operator">.</span><span class="syn-function">Abs</span><span class="syn-operator">(</span>value<span class="syn-operator">)</span> <span class="syn-operator">&lt;</span> <span class="syn-number">.5</span><span class="syn-operator">*</span>math<span class="syn-operator">.</span><span class="syn-function">Pow10</span><span class="syn-operator">(</span><span class="syn-operator">-</span>precision<span class="syn-operator">)</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;%+.3g%s&#34;</span><span class="syn-operator">,</span> value<span class="syn-operator">,</span> n<span class="syn-operator">.</span>Unit<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-	<span class="syn-keyword">return</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;%+.*f%s&#34;</span><span class="syn-operator">,</span> precision<span class="syn-operator">,</span> value<span class="syn-operator">,</span> n<span class="syn-operator">.</span>Unit<span class="syn-operator">)</span>
-<span class="syn-operator">}</span>
-<span class="syn-keyword">func</span> <span class="syn-operator">(</span>n SignedNumber<span class="syn-operator">)</span> <span class="syn-function">View</span><span class="syn-operator">(</span>t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	tone <span class="syn-operator">:=</span> n<span class="syn-operator">.</span>Tones<span class="syn-operator">.</span>Zero
-	<span class="syn-keyword">if</span> <span class="syn-operator">!</span>n<span class="syn-operator">.</span><span class="syn-function">valid</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
-		tone <span class="syn-operator">=</span> Neutral
-	<span class="syn-operator">}</span>
-	<span class="syn-keyword">if</span> n<span class="syn-operator">.</span><span class="syn-function">valid</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">&amp;&amp;</span> n<span class="syn-operator">.</span>Value <span class="syn-operator">&gt;</span> <span class="syn-number">0</span> <span class="syn-operator">{</span>
-		tone <span class="syn-operator">=</span> n<span class="syn-operator">.</span>Tones<span class="syn-operator">.</span>Positive
-		<span class="syn-keyword">if</span> tone <span class="syn-operator">==</span> <span class="syn-string">&#34;&#34;</span> <span class="syn-operator">{</span>
-			tone <span class="syn-operator">=</span> Success
-		<span class="syn-operator">}</span>
-	<span class="syn-operator">}</span> <span class="syn-keyword">else</span> <span class="syn-keyword">if</span> n<span class="syn-operator">.</span><span class="syn-function">valid</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">&amp;&amp;</span> n<span class="syn-operator">.</span>Value <span class="syn-operator">&lt;</span> <span class="syn-number">0</span> <span class="syn-operator">{</span>
-		tone <span class="syn-operator">=</span> n<span class="syn-operator">.</span>Tones<span class="syn-operator">.</span>Negative
-		<span class="syn-keyword">if</span> tone <span class="syn-operator">==</span> <span class="syn-string">&#34;&#34;</span> <span class="syn-operator">{</span>
-			tone <span class="syn-operator">=</span> Danger
-		<span class="syn-operator">}</span>
-	<span class="syn-operator">}</span>
-	<span class="syn-keyword">return</span> <span class="syn-function">ToneStyle</span><span class="syn-operator">(</span>tone<span class="syn-operator">,</span> n<span class="syn-operator">.</span>Emphasis<span class="syn-operator">,</span> t<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>n<span class="syn-operator">.</span><span class="syn-function">Label</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
-<span class="syn-operator">}</span>
+<span class="syn-keyword">return</span> change<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
 </code></pre>
 </div>
 
@@ -340,10 +300,16 @@ Unavailable                 <span style="color:#eeeeee;">n/a</span></pre></figur
 <div class="component-subheading"><h3 id="text/pill-preview"><a class="heading-permalink" href="#text%2fpill-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Color pill variants">
-<a id="tab-text/pill-0" href="#panel-text%2fpill-0" role="tab" aria-controls="panel-text/pill-0" aria-selected="true">Default</a><a id="tab-text/pill-1" href="#panel-text%2fpill-1" role="tab" aria-controls="panel-text/pill-1" aria-selected="false">Narrow</a><a id="tab-text/pill-2" href="#panel-text%2fpill-2" role="tab" aria-controls="panel-text/pill-2" aria-selected="false">256 colors</a><a id="tab-text/pill-3" href="#panel-text%2fpill-3" role="tab" aria-controls="panel-text/pill-3" aria-selected="false">16 colors</a><a id="tab-text/pill-4" href="#panel-text%2fpill-4" role="tab" aria-controls="panel-text/pill-4" aria-selected="false">Monochrome</a><a id="tab-text/pill-5" href="#panel-text%2fpill-5" role="tab" aria-controls="panel-text/pill-5" aria-selected="false">Bright</a><a id="tab-text/pill-6" href="#panel-text%2fpill-6" role="tab" aria-controls="panel-text/pill-6" aria-selected="false">Normal</a><a id="tab-text/pill-7" href="#panel-text%2fpill-7" role="tab" aria-controls="panel-text/pill-7" aria-selected="false">Dim</a>
+<a id="tab-text/pill-example" href="#panel-text%2fpill-example" role="tab" aria-controls="panel-text/pill-example" aria-selected="true">Example</a>
+<a id="tab-text/pill-0" href="#panel-text%2fpill-0" role="tab" aria-controls="panel-text/pill-0" aria-selected="false">Demo</a><a id="tab-text/pill-1" href="#panel-text%2fpill-1" role="tab" aria-controls="panel-text/pill-1" aria-selected="false">Narrow</a><a id="tab-text/pill-2" href="#panel-text%2fpill-2" role="tab" aria-controls="panel-text/pill-2" aria-selected="false">256 colors</a><a id="tab-text/pill-3" href="#panel-text%2fpill-3" role="tab" aria-controls="panel-text/pill-3" aria-selected="false">16 colors</a><a id="tab-text/pill-4" href="#panel-text%2fpill-4" role="tab" aria-controls="panel-text/pill-4" aria-selected="false">Monochrome</a><a id="tab-text/pill-5" href="#panel-text%2fpill-5" role="tab" aria-controls="panel-text/pill-5" aria-selected="false">Bright</a><a id="tab-text/pill-6" href="#panel-text%2fpill-6" role="tab" aria-controls="panel-text/pill-6" aria-selected="false">Normal</a><a id="tab-text/pill-7" href="#panel-text%2fpill-7" role="tab" aria-controls="panel-text/pill-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-text/pill-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pill-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">Ready</span><span style="background-color:#86cf9a;"> </span>      
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">Warning</span><span style="background-color:#32322f;"> </span>    
+<span style="background-color:#19202a;"> </span><span style="color:#a8a8a8;background-color:#19202a;">Unavailable</span><span style="background-color:#19202a;"> </span></pre></figure>
 </div>
 <div id="panel-text/pill-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pill-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Pills / tone and emphasis                                                       
+<figure><figcaption>Demo · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Pills / tone and emphasis                                                       
                                                                                 
 bright  <span style="background-color:#eeeeee;"> </span><span style="color:#101722;background-color:#eeeeee;font-weight:bold;">neutral</span><span style="background-color:#eeeeee;"> </span>  <span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">success</span><span style="background-color:#86cf9a;"> </span>  <span style="background-color:#78b8ed;"> </span><span style="color:#101722;background-color:#78b8ed;font-weight:bold;">info</span><span style="background-color:#78b8ed;"> </span>  <span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">warning</span><span style="background-color:#f2c879;"> </span>  <span style="background-color:#f28b82;"> </span><span style="color:#101722;background-color:#f28b82;font-weight:bold;">danger</span><span style="background-color:#f28b82;"> </span>                       
 normal  <span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">neutral</span><span style="background-color:#313741;"> </span>  <span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">success</span><span style="background-color:#223334;"> </span>  <span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">info</span><span style="background-color:#202f40;"> </span>  <span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">warning</span><span style="background-color:#32322f;"> </span>  <span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">danger</span><span style="background-color:#322830;"> </span>                       
@@ -416,32 +382,16 @@ Selected emphasis  <span style="background-color:#141d2a;"> </span><span style="
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/pill-code"><a class="heading-permalink" href="#text%2fpill-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/text.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// Pill keeps its text label in every profile; color supplements its meaning.</span>
-<span class="syn-comment">// Semantic fills use contrasting theme surfaces, with brackets in ASCII mode.</span>
-<span class="syn-keyword">func</span> <span class="syn-function">Pill</span><span class="syn-operator">(</span>value <span class="syn-builtin">string</span><span class="syn-operator">,</span> tone Tone<span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">,</span> emphasis <span class="syn-operator">...</span>Emphasis<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	level <span class="syn-operator">:=</span> Bright <span class="syn-comment">// Preserve existing filled pills for three-argument calls.</span>
-	<span class="syn-keyword">if</span> <span class="syn-builtin">len</span><span class="syn-operator">(</span>emphasis<span class="syn-operator">)</span> <span class="syn-operator">&gt;</span> <span class="syn-number">0</span> <span class="syn-operator">{</span>
-		level <span class="syn-operator">=</span> emphasis<span class="syn-operator">[</span><span class="syn-number">0</span><span class="syn-operator">]</span>
-	<span class="syn-operator">}</span>
+<div class="component-subheading"><h3 id="text/pill-code"><a class="heading-permalink" href="#text%2fpill-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_pill.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/text.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
 
-	<span class="syn-keyword">if</span> t<span class="syn-operator">.</span>ASCII <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">ToneStyle</span><span class="syn-operator">(</span>tone<span class="syn-operator">,</span> level<span class="syn-operator">,</span> t<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;[&#34;</span> <span class="syn-operator">+</span> value <span class="syn-operator">+</span> <span class="syn-string">&#34;]&#34;</span><span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	fill <span class="syn-operator">:=</span> <span class="syn-function">toneColor</span><span class="syn-operator">(</span>tone<span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-
-	style <span class="syn-operator">:=</span> <span class="syn-function">ToneStyle</span><span class="syn-operator">(</span>tone<span class="syn-operator">,</span> level<span class="syn-operator">,</span> t<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Padding</span><span class="syn-operator">(</span><span class="syn-number">0</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span>InlinePadding<span class="syn-operator">)</span>
-	<span class="syn-keyword">switch</span> level <span class="syn-operator">{</span>
-	<span class="syn-keyword">case</span> Bright<span class="syn-operator">:</span>
-		style <span class="syn-operator">=</span> style<span class="syn-operator">.</span><span class="syn-function">Foreground</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span>Background<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Background</span><span class="syn-operator">(</span>fill<span class="syn-operator">)</span>
-	<span class="syn-keyword">case</span> Dim<span class="syn-operator">:</span>
-		style <span class="syn-operator">=</span> style<span class="syn-operator">.</span><span class="syn-function">Background</span><span class="syn-operator">(</span><span class="syn-function">blend</span><span class="syn-operator">(</span>fill<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Background<span class="syn-operator">,</span> dimPillTint<span class="syn-operator">)</span><span class="syn-operator">)</span>
-	<span class="syn-keyword">default</span><span class="syn-operator">:</span>
-		style <span class="syn-operator">=</span> style<span class="syn-operator">.</span><span class="syn-function">Background</span><span class="syn-operator">(</span><span class="syn-function">blend</span><span class="syn-operator">(</span>fill<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Background<span class="syn-operator">,</span> normalPillTint<span class="syn-operator">)</span><span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-	<span class="syn-keyword">return</span> style<span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>value<span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span><span class="syn-string">&#34;Ready&#34;</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Success<span class="syn-operator">,</span> palette<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Bright<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span><span class="syn-string">&#34;Warning&#34;</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Warning<span class="syn-operator">,</span> palette<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span><span class="syn-string">&#34;Unavailable&#34;</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Neutral<span class="syn-operator">,</span> palette<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Dim<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
@@ -452,10 +402,16 @@ Selected emphasis  <span style="background-color:#141d2a;"> </span><span style="
 <div class="component-subheading"><h3 id="text/presentation-preview"><a class="heading-permalink" href="#text%2fpresentation-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Presentation variants">
-<a id="tab-text/presentation-0" href="#panel-text%2fpresentation-0" role="tab" aria-controls="panel-text/presentation-0" aria-selected="true">Default</a><a id="tab-text/presentation-1" href="#panel-text%2fpresentation-1" role="tab" aria-controls="panel-text/presentation-1" aria-selected="false">Narrow</a><a id="tab-text/presentation-2" href="#panel-text%2fpresentation-2" role="tab" aria-controls="panel-text/presentation-2" aria-selected="false">256 colors</a><a id="tab-text/presentation-3" href="#panel-text%2fpresentation-3" role="tab" aria-controls="panel-text/presentation-3" aria-selected="false">16 colors</a><a id="tab-text/presentation-4" href="#panel-text%2fpresentation-4" role="tab" aria-controls="panel-text/presentation-4" aria-selected="false">Monochrome</a>
+<a id="tab-text/presentation-example" href="#panel-text%2fpresentation-example" role="tab" aria-controls="panel-text/presentation-example" aria-selected="true">Example</a>
+<a id="tab-text/presentation-0" href="#panel-text%2fpresentation-0" role="tab" aria-controls="panel-text/presentation-0" aria-selected="false">Demo</a><a id="tab-text/presentation-1" href="#panel-text%2fpresentation-1" role="tab" aria-controls="panel-text/presentation-1" aria-selected="false">Narrow</a><a id="tab-text/presentation-2" href="#panel-text%2fpresentation-2" role="tab" aria-controls="panel-text/presentation-2" aria-selected="false">256 colors</a><a id="tab-text/presentation-3" href="#panel-text%2fpresentation-3" role="tab" aria-controls="panel-text/presentation-3" aria-selected="false">16 colors</a><a id="tab-text/presentation-4" href="#panel-text%2fpresentation-4" role="tab" aria-controls="panel-text/presentation-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-text/presentation-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/presentation-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">●</span><span style="background-color:#223334;"> </span>          
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">CONNECTED</span><span style="background-color:#223334;"> </span></pre></figure>
 </div>
 <div id="panel-text/presentation-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/presentation-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Semantic atom presentation                                                                          
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Semantic atom presentation                                                                          
                                                                                                     
 both                    glyph                   label                                               
                                                                                                     
@@ -507,30 +463,16 @@ T Trace                 T                       Trace
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/presentation-code"><a class="heading-permalink" href="#text%2fpresentation-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/presentation.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// Format escapes caller labels and keeps absent parts from adding stray spaces.</span>
-<span class="syn-keyword">func</span> <span class="syn-operator">(</span>p Presentation<span class="syn-operator">)</span> <span class="syn-function">Format</span><span class="syn-operator">(</span>glyph<span class="syn-operator">,</span> label <span class="syn-builtin">string</span><span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	glyph<span class="syn-operator">,</span> label <span class="syn-operator">=</span> <span class="syn-function">Inline</span><span class="syn-operator">(</span>glyph<span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-function">Inline</span><span class="syn-operator">(</span>label<span class="syn-operator">)</span>
+<div class="component-subheading"><h3 id="text/presentation-code"><a class="heading-permalink" href="#text%2fpresentation-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_presentation.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/presentation.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
 
-	<span class="syn-keyword">switch</span> p <span class="syn-operator">{</span>
-	<span class="syn-keyword">case</span> GlyphOnly<span class="syn-operator">:</span>
-		<span class="syn-keyword">return</span> glyph
-	<span class="syn-keyword">case</span> LabelOnly<span class="syn-operator">:</span>
-		<span class="syn-keyword">return</span> label
-	<span class="syn-keyword">case</span> DefaultPresentation<span class="syn-operator">,</span> GlyphAndLabel<span class="syn-operator">:</span>
-	<span class="syn-keyword">default</span><span class="syn-operator">:</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">if</span> glyph <span class="syn-operator">==</span> <span class="syn-string">&#34;&#34;</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> label
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">if</span> label <span class="syn-operator">==</span> <span class="syn-string">&#34;&#34;</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> glyph
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">return</span> glyph <span class="syn-operator">+</span> <span class="syn-string">&#34; &#34;</span> <span class="syn-operator">+</span> label
-<span class="syn-operator">}</span></code></pre>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	feedback<span class="syn-operator">.</span>Connected<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">,</span> text<span class="syn-operator">.</span>GlyphAndLabel<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span>Connected<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">,</span> text<span class="syn-operator">.</span>GlyphOnly<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span>Connected<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">,</span> text<span class="syn-operator">.</span>LabelOnly<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
@@ -541,10 +483,15 @@ T Trace                 T                       Trace
 <div class="component-subheading"><h3 id="text/disclosure-preview"><a class="heading-permalink" href="#text%2fdisclosure-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Disclosure variants">
-<a id="tab-text/disclosure-0" href="#panel-text%2fdisclosure-0" role="tab" aria-controls="panel-text/disclosure-0" aria-selected="true">Default</a><a id="tab-text/disclosure-1" href="#panel-text%2fdisclosure-1" role="tab" aria-controls="panel-text/disclosure-1" aria-selected="false">Narrow</a><a id="tab-text/disclosure-2" href="#panel-text%2fdisclosure-2" role="tab" aria-controls="panel-text/disclosure-2" aria-selected="false">256 colors</a><a id="tab-text/disclosure-3" href="#panel-text%2fdisclosure-3" role="tab" aria-controls="panel-text/disclosure-3" aria-selected="false">16 colors</a><a id="tab-text/disclosure-4" href="#panel-text%2fdisclosure-4" role="tab" aria-controls="panel-text/disclosure-4" aria-selected="false">Monochrome</a>
+<a id="tab-text/disclosure-example" href="#panel-text%2fdisclosure-example" role="tab" aria-controls="panel-text/disclosure-example" aria-selected="true">Example</a>
+<a id="tab-text/disclosure-0" href="#panel-text%2fdisclosure-0" role="tab" aria-controls="panel-text/disclosure-0" aria-selected="false">Demo</a><a id="tab-text/disclosure-1" href="#panel-text%2fdisclosure-1" role="tab" aria-controls="panel-text/disclosure-1" aria-selected="false">Narrow</a><a id="tab-text/disclosure-2" href="#panel-text%2fdisclosure-2" role="tab" aria-controls="panel-text/disclosure-2" aria-selected="false">256 colors</a><a id="tab-text/disclosure-3" href="#panel-text%2fdisclosure-3" role="tab" aria-controls="panel-text/disclosure-3" aria-selected="false">16 colors</a><a id="tab-text/disclosure-4" href="#panel-text%2fdisclosure-4" role="tab" aria-controls="panel-text/disclosure-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-text/disclosure-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/disclosure-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#67d4c0;font-weight:bold;">▾ Request headers</span>
+<span style="color:#67d4c0;font-weight:bold;">▸ Response body</span></pre></figure>
 </div>
 <div id="panel-text/disclosure-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/disclosure-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Optional disclosure controls                                                                        
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Optional disclosure controls                                                                        
                                                                                                     
 <span style="color:#67d4c0;font-weight:bold;">▸ Response</span>                                                                                          
 <span style="color:#67d4c0;font-weight:bold;">▾ Response</span>                                                                                          
@@ -592,16 +539,15 @@ Folding disabled: all content stays open
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/disclosure-code"><a class="heading-permalink" href="#text%2fdisclosure-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/disclosure.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// Disclosure labels a fold without owning its expansion state or key handling.</span>
-<span class="syn-keyword">func</span> <span class="syn-function">Disclosure</span><span class="syn-operator">(</span>label <span class="syn-builtin">string</span><span class="syn-operator">,</span> open <span class="syn-builtin">bool</span><span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">,</span> options <span class="syn-operator">...</span>Presentation<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	glyph <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span>GlyphCollapsed
-	<span class="syn-keyword">if</span> open <span class="syn-operator">{</span>
-		glyph <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphExpanded
-	<span class="syn-operator">}</span>
+<div class="component-subheading"><h3 id="text/disclosure-code"><a class="heading-permalink" href="#text%2fdisclosure-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_disclosure.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/disclosure.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
 
-	<span class="syn-keyword">return</span> t<span class="syn-operator">.</span><span class="syn-function">Heading</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-function">presentation</span><span class="syn-operator">(</span>options<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Format</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span><span class="syn-function">Glyph</span><span class="syn-operator">(</span>glyph<span class="syn-operator">)</span><span class="syn-operator">,</span> label<span class="syn-operator">)</span><span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Disclosure</span><span class="syn-operator">(</span><span class="syn-string">&#34;Request headers&#34;</span><span class="syn-operator">,</span> <span class="syn-builtin">true</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Disclosure</span><span class="syn-operator">(</span><span class="syn-string">&#34;Response body&#34;</span><span class="syn-operator">,</span> <span class="syn-builtin">false</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
@@ -612,10 +558,14 @@ Folding disabled: all content stays open
 <div class="component-subheading"><h3 id="text/key-hint-preview"><a class="heading-permalink" href="#text%2fkey-hint-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Key hint variants">
-<a id="tab-text/key-hint-0" href="#panel-text%2fkey-hint-0" role="tab" aria-controls="panel-text/key-hint-0" aria-selected="true">Default</a><a id="tab-text/key-hint-1" href="#panel-text%2fkey-hint-1" role="tab" aria-controls="panel-text/key-hint-1" aria-selected="false">Narrow</a><a id="tab-text/key-hint-2" href="#panel-text%2fkey-hint-2" role="tab" aria-controls="panel-text/key-hint-2" aria-selected="false">256 colors</a><a id="tab-text/key-hint-3" href="#panel-text%2fkey-hint-3" role="tab" aria-controls="panel-text/key-hint-3" aria-selected="false">16 colors</a><a id="tab-text/key-hint-4" href="#panel-text%2fkey-hint-4" role="tab" aria-controls="panel-text/key-hint-4" aria-selected="false">Monochrome</a>
+<a id="tab-text/key-hint-example" href="#panel-text%2fkey-hint-example" role="tab" aria-controls="panel-text/key-hint-example" aria-selected="true">Example</a>
+<a id="tab-text/key-hint-0" href="#panel-text%2fkey-hint-0" role="tab" aria-controls="panel-text/key-hint-0" aria-selected="false">Demo</a><a id="tab-text/key-hint-1" href="#panel-text%2fkey-hint-1" role="tab" aria-controls="panel-text/key-hint-1" aria-selected="false">Narrow</a><a id="tab-text/key-hint-2" href="#panel-text%2fkey-hint-2" role="tab" aria-controls="panel-text/key-hint-2" aria-selected="false">256 colors</a><a id="tab-text/key-hint-3" href="#panel-text%2fkey-hint-3" role="tab" aria-controls="panel-text/key-hint-3" aria-selected="false">16 colors</a><a id="tab-text/key-hint-4" href="#panel-text%2fkey-hint-4" role="tab" aria-controls="panel-text/key-hint-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-text/key-hint-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/key-hint-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#67d4c0;font-weight:bold;">Enter</span> <span style="color:#a8a8a8;">select</span>  <span style="color:#67d4c0;font-weight:bold;">Esc</span> <span style="color:#a8a8a8;">dismiss</span></pre></figure>
 </div>
 <div id="panel-text/key-hint-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/key-hint-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Keyboard action atoms                                                                               
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Keyboard action atoms                                                                               
                                                                                                     
 <span style="color:#67d4c0;font-weight:bold;">Tab</span> <span style="color:#a8a8a8;">next pane</span>                                                                                       
 <span style="color:#67d4c0;font-weight:bold;">F</span> <span style="color:#a8a8a8;">resume follow</span>                                                                                     
@@ -653,10 +603,11 @@ Folding disabled: all content stays open
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/key-hint-code"><a class="heading-permalink" href="#text%2fkey-hint-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/text.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">KeyHint</span><span class="syn-operator">(</span>key<span class="syn-operator">,</span> description <span class="syn-builtin">string</span><span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	<span class="syn-keyword">return</span> t<span class="syn-operator">.</span><span class="syn-function">Heading</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>key<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34; &#34;</span> <span class="syn-operator">+</span> t<span class="syn-operator">.</span><span class="syn-function">Subtle</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>description<span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<div class="component-subheading"><h3 id="text/key-hint-code"><a class="heading-permalink" href="#text%2fkey-hint-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_key_hint.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/text.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> text<span class="syn-operator">.</span><span class="syn-function">KeyHint</span><span class="syn-operator">(</span><span class="syn-string">&#34;Enter&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;select&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  &#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">KeyHint</span><span class="syn-operator">(</span><span class="syn-string">&#34;Esc&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;dismiss&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
@@ -667,10 +618,18 @@ Folding disabled: all content stays open
 <div class="component-subheading"><h3 id="text/syntax-preview"><a class="heading-permalink" href="#text%2fsyntax-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="Syntax variants">
-<a id="tab-text/syntax-0" href="#panel-text%2fsyntax-0" role="tab" aria-controls="panel-text/syntax-0" aria-selected="true">Default</a><a id="tab-text/syntax-1" href="#panel-text%2fsyntax-1" role="tab" aria-controls="panel-text/syntax-1" aria-selected="false">Narrow</a><a id="tab-text/syntax-2" href="#panel-text%2fsyntax-2" role="tab" aria-controls="panel-text/syntax-2" aria-selected="false">256 colors</a><a id="tab-text/syntax-3" href="#panel-text%2fsyntax-3" role="tab" aria-controls="panel-text/syntax-3" aria-selected="false">16 colors</a><a id="tab-text/syntax-4" href="#panel-text%2fsyntax-4" role="tab" aria-controls="panel-text/syntax-4" aria-selected="false">Monochrome</a><a id="tab-text/syntax-5" href="#panel-text%2fsyntax-5" role="tab" aria-controls="panel-text/syntax-5" aria-selected="false">light</a><a id="tab-text/syntax-6" href="#panel-text%2fsyntax-6" role="tab" aria-controls="panel-text/syntax-6" aria-selected="false">contrast</a>
+<a id="tab-text/syntax-example" href="#panel-text%2fsyntax-example" role="tab" aria-controls="panel-text/syntax-example" aria-selected="true">Example</a>
+<a id="tab-text/syntax-0" href="#panel-text%2fsyntax-0" role="tab" aria-controls="panel-text/syntax-0" aria-selected="false">Demo</a><a id="tab-text/syntax-1" href="#panel-text%2fsyntax-1" role="tab" aria-controls="panel-text/syntax-1" aria-selected="false">Narrow</a><a id="tab-text/syntax-2" href="#panel-text%2fsyntax-2" role="tab" aria-controls="panel-text/syntax-2" aria-selected="false">256 colors</a><a id="tab-text/syntax-3" href="#panel-text%2fsyntax-3" role="tab" aria-controls="panel-text/syntax-3" aria-selected="false">16 colors</a><a id="tab-text/syntax-4" href="#panel-text%2fsyntax-4" role="tab" aria-controls="panel-text/syntax-4" aria-selected="false">Monochrome</a><a id="tab-text/syntax-5" href="#panel-text%2fsyntax-5" role="tab" aria-controls="panel-text/syntax-5" aria-selected="false">light</a><a id="tab-text/syntax-6" href="#panel-text%2fsyntax-6" role="tab" aria-controls="panel-text/syntax-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/syntax-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/syntax-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#eeeeee;">{</span>
+<span style="color:#eeeeee;">\t  </span><span style="color:#a9c4e5;">&#34;error&#34;</span><span style="color:#eeeeee;">: </span><span style="color:#99c8d4;">&#34;upstream_timeout&#34;</span><span style="color:#eeeeee;">,</span>
+<span style="color:#eeeeee;">\t  </span><span style="color:#a9c4e5;">&#34;retryable&#34;</span><span style="color:#eeeeee;">: </span><span style="color:#c3b2df;">true</span><span style="color:#eeeeee;">,</span>
+<span style="color:#eeeeee;">\t  </span><span style="color:#a9c4e5;">&#34;attempt&#34;</span><span style="color:#eeeeee;">: </span><span style="color:#e1cd91;">2</span>
+<span style="color:#eeeeee;">\t}</span></pre></figure>
 </div>
 <div id="panel-text/syntax-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/syntax-0" tabindex="0">
-<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">application/problem+json; charset=utf-8                                                             
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">application/problem+json; charset=utf-8                                                             
                                                                                                     
 <span style="color:#eeeeee;">{                                                                                                   </span>
 <span style="color:#eeeeee;">  </span><span style="color:#a9c4e5;">&#34;error&#34;</span><span style="color:#eeeeee;">: </span><span style="color:#99c8d4;">&#34;upstream_timeout&#34;</span><span style="color:#eeeeee;">,                                                                      </span>
@@ -729,63 +688,16 @@ Folding disabled: all content stays open
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="text/syntax-code"><a class="heading-permalink" href="#text%2fsyntax-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/text/syntax.go">Fixture source</a> · <a href="">Upstream</a></span></div>
-<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-comment">// Syntax highlights escaped source without changing whitespace or executing content.</span>
-<span class="syn-keyword">func</span> <span class="syn-function">Syntax</span><span class="syn-operator">(</span>source<span class="syn-operator">,</span> language <span class="syn-builtin">string</span><span class="syn-operator">,</span> t theme<span class="syn-operator">.</span>Theme<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
-	source <span class="syn-operator">=</span> <span class="syn-function">Escape</span><span class="syn-operator">(</span>source<span class="syn-operator">)</span>
-	<span class="syn-keyword">if</span> language <span class="syn-operator">==</span> <span class="syn-string">&#34;form&#34;</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">formSyntax</span><span class="syn-operator">(</span>source<span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
+<div class="component-subheading"><h3 id="text/syntax-code"><a class="heading-permalink" href="#text%2fsyntax-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/text_syntax.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/text/syntax.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">body <span class="syn-operator">:=</span> <span class="syn-string">`{
+	  &#34;error&#34;: &#34;upstream_timeout&#34;,
+	  &#34;retryable&#34;: true,
+	  &#34;attempt&#34;: 2
+	}`</span>
 
-	<span class="syn-keyword">if</span> t<span class="syn-operator">.</span>Mode <span class="syn-operator">==</span> theme<span class="syn-operator">.</span>Mono <span class="syn-operator">||</span> language <span class="syn-operator">==</span> <span class="syn-string">&#34;text&#34;</span> <span class="syn-operator">||</span> language <span class="syn-operator">==</span> <span class="syn-string">&#34;&#34;</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">sourceText</span><span class="syn-operator">(</span>source<span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	lexer <span class="syn-operator">:=</span> lexers<span class="syn-operator">.</span><span class="syn-function">Get</span><span class="syn-operator">(</span>language<span class="syn-operator">)</span>
-	<span class="syn-keyword">if</span> lexer <span class="syn-operator">==</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">sourceText</span><span class="syn-operator">(</span>source<span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	iterator<span class="syn-operator">,</span> err <span class="syn-operator">:=</span> lexer<span class="syn-operator">.</span><span class="syn-function">Tokenise</span><span class="syn-operator">(</span><span class="syn-builtin">nil</span><span class="syn-operator">,</span> source<span class="syn-operator">)</span>
-	<span class="syn-keyword">if</span> err <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">sourceText</span><span class="syn-operator">(</span>source<span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	builder <span class="syn-operator">:=</span> chroma<span class="syn-operator">.</span><span class="syn-function">NewStyleBuilder</span><span class="syn-operator">(</span><span class="syn-string">&#34;charmed&#34;</span><span class="syn-operator">)</span>
-
-	<span class="syn-keyword">for</span> _<span class="syn-operator">,</span> role <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-keyword">struct</span> <span class="syn-operator">{</span>
-		token chroma<span class="syn-operator">.</span>TokenType
-		color color<span class="syn-operator">.</span>Color
-	<span class="syn-operator">}</span><span class="syn-operator">{</span>
-		<span class="syn-operator">{</span>chroma<span class="syn-operator">.</span>Text<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Foreground<span class="syn-operator">}</span><span class="syn-operator">,</span>
-		<span class="syn-operator">{</span>chroma<span class="syn-operator">.</span>Keyword<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Syntax<span class="syn-operator">.</span>Keyword<span class="syn-operator">}</span><span class="syn-operator">,</span>
-		<span class="syn-operator">{</span>chroma<span class="syn-operator">.</span>LiteralString<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Syntax<span class="syn-operator">.</span>String<span class="syn-operator">}</span><span class="syn-operator">,</span>
-		<span class="syn-operator">{</span>chroma<span class="syn-operator">.</span>LiteralNumber<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Syntax<span class="syn-operator">.</span>Number<span class="syn-operator">}</span><span class="syn-operator">,</span>
-		<span class="syn-operator">{</span>chroma<span class="syn-operator">.</span>Name<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Syntax<span class="syn-operator">.</span>Name<span class="syn-operator">}</span><span class="syn-operator">,</span>
-		<span class="syn-operator">{</span>chroma<span class="syn-operator">.</span>Comment<span class="syn-operator">,</span> t<span class="syn-operator">.</span>Syntax<span class="syn-operator">.</span>Comment<span class="syn-operator">}</span><span class="syn-operator">,</span>
-	<span class="syn-operator">}</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">if</span> role<span class="syn-operator">.</span>color <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
-			r<span class="syn-operator">,</span> g<span class="syn-operator">,</span> b<span class="syn-operator">,</span> _ <span class="syn-operator">:=</span> role<span class="syn-operator">.</span>color<span class="syn-operator">.</span><span class="syn-function">RGBA</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
-			builder<span class="syn-operator">.</span><span class="syn-function">Add</span><span class="syn-operator">(</span>role<span class="syn-operator">.</span>token<span class="syn-operator">,</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;#%02x%02x%02x&#34;</span><span class="syn-operator">,</span> r<span class="syn-operator">&gt;&gt;</span><span class="syn-number">8</span><span class="syn-operator">,</span> g<span class="syn-operator">&gt;&gt;</span><span class="syn-number">8</span><span class="syn-operator">,</span> b<span class="syn-operator">&gt;&gt;</span><span class="syn-number">8</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
-		<span class="syn-operator">}</span>
-	<span class="syn-operator">}</span>
-
-	style<span class="syn-operator">,</span> err <span class="syn-operator">:=</span> builder<span class="syn-operator">.</span><span class="syn-function">Build</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
-	<span class="syn-keyword">if</span> err <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">sourceText</span><span class="syn-operator">(</span>source<span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">var</span> output bytes<span class="syn-operator">.</span>Buffer
-	<span class="syn-keyword">if</span> err <span class="syn-operator">:=</span> formatters<span class="syn-operator">.</span>TTY16m<span class="syn-operator">.</span><span class="syn-function">Format</span><span class="syn-operator">(</span><span class="syn-operator">&amp;</span>output<span class="syn-operator">,</span> style<span class="syn-operator">,</span> iterator<span class="syn-operator">)</span><span class="syn-operator">;</span> err <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">sourceText</span><span class="syn-operator">(</span>source<span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">if</span> ansi<span class="syn-operator">.</span><span class="syn-function">Strip</span><span class="syn-operator">(</span>output<span class="syn-operator">.</span><span class="syn-function">String</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span> <span class="syn-operator">!=</span> source <span class="syn-operator">{</span>
-		<span class="syn-keyword">return</span> <span class="syn-function">sourceText</span><span class="syn-operator">(</span>source<span class="syn-operator">,</span> t<span class="syn-operator">)</span>
-	<span class="syn-operator">}</span>
-
-	<span class="syn-keyword">return</span> output<span class="syn-operator">.</span><span class="syn-function">String</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
-<span class="syn-operator">}</span></code></pre>
+<span class="syn-keyword">return</span> text<span class="syn-operator">.</span><span class="syn-function">Syntax</span><span class="syn-operator">(</span>body<span class="syn-operator">,</span> <span class="syn-string">&#34;json&#34;</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+</code></pre>
 </div>
 
 </section>
