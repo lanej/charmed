@@ -14,6 +14,8 @@ func chromeDefinitions() []Definition {
 		{ID: "feedback/connection", Title: "Atoms/Feedback/Connection", Level: "Atoms", Family: "feedback", Description: "Connected and disconnected describe connectivity independently of health, severity or unknown state. Labels and glyphs remain visible in every profile.", Source: "story/chrome.go", ExampleSource: "docs/snippets/connection.go.txt", Symbol: "connectionStory", Controls: []string{"emphasis"}, Composes: []string{"feedback/status"}, Defaults: DefaultConfig(), Factory: connectionStory},
 		{ID: "navigation/tabs", Title: "Molecules/Navigation/Tabs", Level: "Molecules", Family: "navigation", Description: "Focused arrow-key navigation with stable selection, visible overflow and shared selection styling.", Source: "story/chrome.go", ExampleSource: "docs/snippets/tabs.go.txt", Symbol: "tabsStory", Composes: []string{"foundations/layout"}, Defaults: DefaultConfig(), Factory: tabsStory},
 		{ID: "layout/header", Title: "Molecules/Layout/Header", Level: "Molecules", Family: "layout", Description: "Title and trailing actions with an optional context row. Narrow widths preserve the title before actions.", Source: "story/chrome.go", ExampleSource: "docs/snippets/header.go.txt", Symbol: "headerStory", Composes: []string{"foundations/layout"}, Defaults: DefaultConfig(), Factory: headerStory},
+		{ID: "layout/identity-header", Title: "Molecules/Layout/Identity header", Level: "Molecules", Family: "layout", Description: "A request UUID or other entity identifier is the headline. Narrow terminals move the kind above the complete identifier before wrapping.", Source: "story/chrome.go", ExampleSource: "docs/snippets/identity-header.go.txt", Symbol: "identityHeaderStory", Composes: []string{"foundations/layout"}, Defaults: DefaultConfig(), Factory: identityHeaderStory},
+		{ID: "layout/section", Title: "Molecules/Layout/Foldable section", Level: "Molecules", Family: "layout", Description: "A panel folds to one heading row, returning space to sibling content. The application owns state and bindings; press Enter to toggle this specimen.", Source: "story/chrome.go", ExampleSource: "docs/snippets/section.go.txt", Symbol: "sectionStory", Composes: []string{"foundations/layout", "text/disclosure"}, Defaults: DefaultConfig(), Factory: sectionStory},
 		{ID: "layout/footer", Title: "Molecules/Layout/Footer", Level: "Molecules", Family: "layout", Description: "Keyboard help and right-aligned status share one row. Narrow widths preserve help before status.", Source: "story/chrome.go", ExampleSource: "docs/snippets/footer.go.txt", Symbol: "footerStory", Composes: []string{"foundations/layout", "text/primitives", "feedback/status"}, Defaults: DefaultConfig(), Factory: footerStory},
 		{ID: "template/application", Title: "Templates/Application shell", Level: "Templates", Family: "pattern", Description: "A header, tab bar, active content panel and footer compose a resizable application shell. Left/Right changes the visible section.", Source: "story/chrome.go", Symbol: "applicationStory", Composes: []string{"layout/header", "navigation/tabs", "layout/footer", "foundations/layout", "feedback/status"}, Defaults: DefaultConfig(), Factory: applicationStory},
 	}
@@ -66,6 +68,27 @@ func footerStory(e Environment) (runtime.Scene, error) {
 		t := e.Config.Palette()
 		return (layout.Footer{Help: text.KeyHint("?", "help", t) + "  " + text.KeyHint("q", "quit", t), Status: feedback.Connected.View(text.Normal, t)}).View(size.Width, t)
 	}), nil
+}
+
+func identityHeaderStory(e Environment) (runtime.Scene, error) {
+	return static(func(size layout.Size) string {
+		return (layout.IdentityHeader{Kind: "Request", ID: "01234567-89ab-cdef-0123-456789abcdef", Context: "POST /v2/shipments/shp_fixture/buy · HTTP 500 · 12.5ms"}).View(size.Width, e.Config.Palette())
+	}), nil
+}
+
+func sectionStory(e Environment) (runtime.Scene, error) {
+	section := layout.Section{Title: "Request timeline", Content: "POST /v2/shipments/shp_fixture/buy   500   12.5ms", NoFolds: e.Config.NoFolds}
+
+	return &scene{update: func(msg tea.Msg) tea.Cmd {
+		if key, ok := msg.(tea.KeyPressMsg); ok && key.String() == "enter" && !section.NoFolds {
+			section.Collapsed = !section.Collapsed
+		}
+
+		return nil
+	}, view: func(size layout.Size) string {
+		top := section.Height(3)
+		return layout.Column(section.View(layout.Size{Width: size.Width, Height: top}, e.Config.Palette(), true), layout.Panel("Response", "Internal server error\nCould not purchase shipment", layout.Size{Width: size.Width, Height: max(0, size.Height-top)}, e.Config.Palette(), false))
+	}}, nil
 }
 
 func applicationStory(e Environment) (runtime.Scene, error) {

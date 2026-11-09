@@ -11,6 +11,22 @@ import (
 
 const timelineMinimumWidth = 36
 
+// TimelineHeight reports the unpadded content rows, including the axis, group
+// headings and optional legend. Parents can cap this to retain detail space.
+func (m *HTTPLog) TimelineHeight() int {
+	start, _ := timelineRange(m.records, m.TimelineNow)
+	if start.IsZero() {
+		return 1
+	}
+
+	height := 1 + len(m.timelineRows())
+	if m.TimelineLegend {
+		height++
+	}
+
+	return height
+}
+
 // TimelineView projects retained requests onto one shared time axis. now is an
 // explicit observation time for pending requests; zero leaves their end unknown.
 // Completed stops require a known nonnegative duration. Group order is first-seen;

@@ -43,6 +43,24 @@ func TestLogFixtureFlagsRejectUnknownPane(t *testing.T) {
 	}
 }
 
+func TestNoHelpHidesEveryLogFixtureFooter(t *testing.T) {
+	for _, id := range []string{"pattern/log-inspector", "collection/http-log", "collection/log-tree"} {
+		config := story.DefaultConfig()
+		config.NoHelp = true
+
+		frame, err := story.Frame(id, config)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		for _, hint := range []string{"Tab panes", "list/details", "End follow", "Ctrl+N append", "g flat/trace", "Enter expand"} {
+			if strings.Contains(ansi.Strip(frame), hint) {
+				t.Fatalf("%s leaked footer hint %q", id, hint)
+			}
+		}
+	}
+}
+
 func TestHTTPTimelineFixtureEmpty(t *testing.T) {
 	config := story.DefaultConfig()
 	config.Timeline = true

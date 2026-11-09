@@ -167,8 +167,12 @@ func (m *CommandPalette) View() string {
 		}
 	}
 
-	content := m.Search.View() + "\n\n" + results + "\n" + m.Theme.Subtle().Render(ansi.Truncate(text.Inline(status), width, "…")) + "\n" + footer
-	height := min(m.size.Height, m.Results.Height()+paletteChromeHeight+2)
+	content := m.Search.View() + "\n\n" + results + "\n" + m.Theme.Subtle().Render(ansi.Truncate(text.Inline(status), width, "…"))
+	if m.helpVisible {
+		content += "\n" + footer
+	}
+
+	height := min(m.size.Height, m.Results.Height()+m.chromeHeight()+2)
 	panel := layout.Panel("Commands", content, layout.Size{Width: m.size.Width, Height: height}, m.Theme, true)
 
 	return m.Theme.Text().Background(m.Theme.Surface).Render(panel)

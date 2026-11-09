@@ -1,6 +1,7 @@
 inspector, err := pattern.NewLogInspector(pattern.LogInspectorOptions{
     Theme: palette, Requests: exchanges, Logs: records,
-    Layout: pattern.InspectorTimeline,
+    // The default layout adapts to terminal size and timeline content.
+    NoHelp: true,
     TimelineGroups: []collection.HTTPGroup{
         collection.GroupByService, collection.GroupByEndpoint,
     },
@@ -12,5 +13,9 @@ if err != nil {
 inspector.Resize(layout.Size{Width: 120, Height: 44})
 inspector.SelectRequest("http-2")
 // Forward Bubble Tea messages through inspector.Update(msg).
-inspector.SetLayout(pattern.InspectorColumns)
+inspector.SetPaneCollapsed("request", true) // Give the response both columns.
+inspector.FocusPane("response")
+// ? toggles the entire keyboard footer; z folds the focused component.
+// Native payload styles and key maps live on inspector.Request / inspector.Response.
+inspector.SetHelpVisible(true)
 view := inspector.View()

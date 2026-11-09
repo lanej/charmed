@@ -46,7 +46,7 @@ func TestInspectorLayoutsPreserveCorrelationAndNativeState(t *testing.T) {
 		}
 
 		view := ansi.Strip(m.View())
-		if preset != pattern.InspectorFocused && (!strings.Contains(view, "HTTP details") || !strings.Contains(view, "Related logs")) {
+		if preset != pattern.InspectorFocused && (!strings.Contains(view, "Response") || !strings.Contains(view, "Related logs")) {
 			t.Fatalf("layout %s dropped a pane", preset)
 		}
 	}
@@ -77,7 +77,7 @@ func TestInspectorLayoutsFitAndAdapt(t *testing.T) {
 		for _, size := range []layout.Size{{Width: 160, Height: 44}, {Width: 120, Height: 38}, {Width: 80, Height: 24}, {Width: 40, Height: 16}, {Width: 1, Height: 1}, {}} {
 			m.Resize(size)
 
-			for _, pane := range []string{"requests", "http", "logs"} {
+			for _, pane := range []string{"requests", "request", "response", "logs"} {
 				m.FocusPane(pane)
 
 				view := ansi.Strip(m.View())
@@ -118,7 +118,7 @@ func TestInspectorLayoutKeyboardCycle(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	for _, want := range []pattern.InspectorLayout{pattern.InspectorTimeline, pattern.InspectorColumns, pattern.InspectorFocused, pattern.InspectorSidebar} {
+	for _, want := range []pattern.InspectorLayout{pattern.InspectorColumns, pattern.InspectorFocused, pattern.InspectorSidebar, pattern.InspectorTimeline} {
 		m.Update(tea.KeyPressMsg{Code: 'L'})
 
 		if m.Layout() != want {

@@ -38,6 +38,8 @@ func commandPaletteStory(e Environment) (runtime.Scene, error) {
 		return nil, err
 	}
 
+	m.SetHelpVisible(!e.Config.NoHelp)
+
 	if _, err := m.SetKeyLayout(e.Config.KeyLayout); err != nil {
 		return nil, err
 	}

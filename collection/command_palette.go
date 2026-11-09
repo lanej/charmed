@@ -47,12 +47,13 @@ type CommandPalette struct {
 	keyLayout   interaction.KeyLayout
 	mode        PaletteMode
 	backdrop    layout.BackdropMode
+	helpVisible bool
 }
 
 func NewCommandPalette(commands []Command, width, height int, t theme.Theme) (*CommandPalette, error) {
 	d := &commandDelegate{theme: t}
 	m := &CommandPalette{
-		Theme: t, DimBackdrop: true, delegate: d, mode: PaletteSearch,
+		Theme: t, DimBackdrop: true, delegate: d, mode: PaletteSearch, helpVisible: true,
 		Search:  input.NewText(input.TextOptions{Placeholder: "Search commands…", Width: width, Theme: t}),
 		Results: list.New(nil, d, width, height),
 		Keys:    PaletteKeyMap{Open: key.NewBinding(key.WithKeys("ctrl+k"), key.WithHelp("Ctrl+K", "commands")), Close: key.NewBinding(key.WithKeys("esc"), key.WithHelp("Esc", "close")), Execute: key.NewBinding(key.WithKeys("enter"), key.WithHelp("Enter", "run")), Navigate: key.NewBinding(key.WithKeys("esc"), key.WithHelp("Esc", "normal")), Search: key.NewBinding(key.WithKeys("i", "/"), key.WithHelp("i", "search"))},
@@ -81,6 +82,23 @@ func NewCommandPalette(commands []Command, width, height int, t theme.Theme) (*C
 // SetMatchHighlighting changes emphasis without changing fuzzy matching or selection.
 func (m *CommandPalette) SetMatchHighlighting(enabled bool) { m.delegate.highlightMatches = enabled }
 func (m *CommandPalette) MatchHighlighting() bool           { return m.delegate.highlightMatches }
+
+// SetHelpVisible hides only the keyboard instruction row. Status, disabled
+// reasons and all bindings remain available; hidden help returns a content row.
+func (m *CommandPalette) SetHelpVisible(visible bool) {
+	m.helpVisible = visible
+	m.Resize(m.size)
+}
+
+func (m *CommandPalette) HelpVisible() bool { return m.helpVisible }
+
+func (m *CommandPalette) chromeHeight() int {
+	if !m.helpVisible {
+		return paletteChromeHeight - 1
+	}
+
+	return paletteChromeHeight
+}
 
 func (m *CommandPalette) IsOpen() bool { return m.opened }
 func (m *CommandPalette) SelectedID() string {
@@ -170,9 +188,9 @@ func (m *CommandPalette) Resize(size layout.Size) {
 	m.size = layout.Size{Width: min(PaletteMaxWidth, max(0, size.Width)), Height: max(0, size.Height)}
 	inner := layout.PanelContentSize(m.size)
 	m.Search.Resize(inner.Width)
-	m.delegate.descriptions = inner.Width >= paletteDescriptionWidth && inner.Height >= paletteChromeHeight+2
+	m.delegate.descriptions = inner.Width >= paletteDescriptionWidth && inner.Height >= m.chromeHeight()+2
 	rows := min(PaletteMaxResults, max(1, len(m.Results.Items())))
-	height := min(max(1, inner.Height-paletteChromeHeight), rows*m.delegate.Height())
+	height := min(max(1, inner.Height-m.chromeHeight()), rows*m.delegate.Height())
 	m.Results.SetSize(max(1, inner.Width), height)
 }
 
