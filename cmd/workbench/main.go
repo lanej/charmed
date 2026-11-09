@@ -65,6 +65,7 @@ func command() *cobra.Command {
 		cmd.Flags().StringVar(&c.InspectorLayout, "log-layout", "", "Inspector layout: sidebar, timeline, columns or focused")
 		cmd.Flags().StringSliceVar(&c.TimelineGroups, "timeline-group-by", nil, "Group timeline by service, host, port or endpoint")
 		cmd.Flags().BoolVar(&c.Timeline, "timeline", false, "Show HTTP requests on a shared time axis")
+		cmd.Flags().BoolVar(&c.HighlightMatches, "highlight-matches", false, "Underline command search matches")
 		cmd.Flags().StringVar(&c.CommandQuery, "command-query", "", "Initial command palette search")
 		cmd.Flags().BoolVar(&c.CommandPalette, "command-palette", false, "Open the floating command palette")
 		cmd.Flags().BoolVar(&c.RawBody, "raw-body", false, "Show captured HTTP body formatting")

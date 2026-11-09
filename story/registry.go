@@ -49,6 +49,7 @@ type Config struct {
 	InspectorLayout    string     `json:"inspectorLayout"`
 	TimelineGroups     []string   `json:"timelineGroups"`
 	Timeline           bool       `json:"timeline"`
+	HighlightMatches   bool       `json:"highlightMatches"`
 	CommandQuery       string     `json:"commandQuery"`
 	CommandPalette     bool       `json:"commandPalette"`
 	RawBody            bool       `json:"rawBody"`

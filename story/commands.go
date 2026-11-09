@@ -38,6 +38,7 @@ func commandPaletteStory(e Environment) (runtime.Scene, error) {
 		return nil, err
 	}
 
+	m.SetMatchHighlighting(e.Config.HighlightMatches)
 	m.Open()
 	m.SetQuery(e.Config.Value)
 

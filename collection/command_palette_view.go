@@ -22,8 +22,9 @@ type commandItem struct {
 func (c commandItem) FilterValue() string { return c.command.Label }
 
 type commandDelegate struct {
-	theme        theme.Theme
-	descriptions bool
+	theme            theme.Theme
+	descriptions     bool
+	highlightMatches bool
 }
 
 func (d *commandDelegate) Height() int {
@@ -56,6 +57,23 @@ func (d *commandDelegate) Render(w io.Writer, model list.Model, index int, item 
 
 	style = style.Width(width)
 
+	actionStyle := style.Width(0).Bold(true)
+	if model.Index() != index && command.DisabledReason == "" && d.theme.Accent != nil {
+		actionStyle = actionStyle.Foreground(d.theme.Accent)
+	}
+
+	if command.DisabledReason != "" {
+		actionStyle = actionStyle.Bold(false)
+		if d.theme.Muted != nil {
+			actionStyle = actionStyle.Foreground(d.theme.Muted)
+		}
+	}
+
+	secondaryStyle := style.Bold(false)
+	if d.theme.Muted != nil {
+		secondaryStyle = secondaryStyle.Foreground(d.theme.Muted)
+	}
+
 	marker := "  "
 	if model.Index() == index {
 		marker = d.theme.Glyph(theme.GlyphRight) + " "
@@ -64,8 +82,8 @@ func (d *commandDelegate) Render(w io.Writer, model list.Model, index int, item 
 	var highlighted strings.Builder
 
 	for i, r := range []rune(label) {
-		runeStyle := style.Width(0)
-		if slices.Contains(entry.matches, i) {
+		runeStyle := actionStyle
+		if d.highlightMatches && slices.Contains(entry.matches, i) {
 			runeStyle = runeStyle.Underline(true)
 		}
 
@@ -97,8 +115,8 @@ func (d *commandDelegate) Render(w io.Writer, model list.Model, index int, item 
 
 	suffixWidth := min(ansi.StringWidth(suffix), width/3)
 	labelWidth := max(1, width-suffixWidth-4)
-	line := style.Width(0).Render(marker) + ansi.Truncate(label, labelWidth, style.Width(0).Render("…"))
-	line += style.Width(0).Render(strings.Repeat(" ", max(0, width-ansi.StringWidth(line)-suffixWidth)) + ansi.Truncate(suffix, suffixWidth, ""))
+	line := style.Width(0).Render(marker) + ansi.Truncate(label, labelWidth, actionStyle.Render("…"))
+	line += secondaryStyle.Width(0).Render(strings.Repeat(" ", max(0, width-ansi.StringWidth(line)-suffixWidth)) + ansi.Truncate(suffix, suffixWidth, ""))
 
 	if d.descriptions {
 		description := command.Description
@@ -106,7 +124,7 @@ func (d *commandDelegate) Render(w io.Writer, model list.Model, index int, item 
 			description = command.DisabledReason
 		}
 
-		line += "\n" + style.Render("  "+ansi.Truncate(text.Inline(description), max(1, width-2), "…"))
+		line += "\n" + secondaryStyle.Render("  "+ansi.Truncate(text.Inline(description), max(1, width-2), "…"))
 	}
 
 	if _, err := fmt.Fprint(w, line); err != nil {

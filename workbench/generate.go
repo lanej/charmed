@@ -81,13 +81,14 @@ func Generate(out string) error {
 			}
 		}
 		if d.ID == "collection/command-palette" || d.ID == "pattern/log-inspector" {
-			for _, sample := range []struct{ name, query string }{{"Commands", ""}, {"Commands filtered", "laytm"}, {"Commands unavailable", "Scope: trace"}, {"Commands empty", "zzzzzz"}} {
+			for _, sample := range []struct{ name, query string }{{"Commands", ""}, {"Commands filtered", "laytm"}, {"Commands highlighted", "laytm"}, {"Commands unavailable", "Scope: trace"}, {"Commands empty", "zzzzzz"}} {
 				variants = append(variants, struct {
 					name   string
 					change func(*story.Config)
 				}{name: sample.name, change: func(c *story.Config) {
 					c.CommandPalette = true
 					c.Value = sample.query
+					c.HighlightMatches = sample.name == "Commands highlighted"
 
 					c.CommandQuery = sample.query
 					if d.ID == "pattern/log-inspector" && sample.name == "Commands unavailable" {

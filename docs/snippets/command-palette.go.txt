@@ -5,6 +5,7 @@ palette, err := collection.NewCommandPalette([]collection.Command{
 if err != nil {
     return err
 }
+palette.SetMatchHighlighting(true) // Optional; fuzzy search works without emphasis.
 // In Update, open on your binding and route input while the palette is open.
 cmd := palette.Open()
 // Forward CommandSelectedMsg.ID to application-owned actions.

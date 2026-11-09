@@ -76,6 +76,10 @@ func NewCommandPalette(commands []Command, width, height int, t theme.Theme) (*C
 	return m, nil
 }
 
+// SetMatchHighlighting changes emphasis without changing fuzzy matching or selection.
+func (m *CommandPalette) SetMatchHighlighting(enabled bool) { m.delegate.highlightMatches = enabled }
+func (m *CommandPalette) MatchHighlighting() bool           { return m.delegate.highlightMatches }
+
 func (m *CommandPalette) IsOpen() bool { return m.opened }
 func (m *CommandPalette) SelectedID() string {
 	if item, ok := m.Results.SelectedItem().(commandItem); ok {

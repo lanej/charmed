@@ -271,6 +271,7 @@ func logInspectorStory(e Environment) (runtime.Scene, error) {
 	}
 
 	if e.Config.CommandPalette {
+		m.Palette.SetMatchHighlighting(e.Config.HighlightMatches)
 		m.OpenCommands()
 		m.Palette.SetQuery(e.Config.CommandQuery)
 	}
