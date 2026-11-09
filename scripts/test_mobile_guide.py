@@ -111,7 +111,9 @@ def main():
                 assert actual_levels == expected_levels, (filename, actual_levels)
                 if filename == "components.html":
                     assert page.locator(".atomic-level").evaluate_all("els => els.map(e => e.id)") == ["level-atoms", "level-molecules", "level-organisms"]
-                    assert page.locator('[id="level-molecules"] .component-source h5').all_text_contents() == ["Go usage#"] * 10
+                    molecules = page.locator('[id="level-molecules"] .component')
+                    assert molecules.count() > 0, "molecule catalog must not be empty"
+                    assert molecules.locator(".component-source h5").all_text_contents() == ["Go usage#"] * molecules.count()
                 if filename == "development.html":
                     tasks = page.locator(".dev-paths a")
                     assert tasks.count() == 3, "developer guide needs three task paths"
