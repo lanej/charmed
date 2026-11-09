@@ -38,6 +38,9 @@ func organismsDefinitions() []Definition {
 	)
 	for i := range d {
 		switch d[i].ID {
+		case "collection/tree", "collection/table":
+			d[i].Level = "Atoms"
+			d[i].Title = strings.Replace(d[i].Title, "Organisms/", "Atoms/", 1)
 		case "text/markdown":
 			d[i].Upstream = "https://github.com/charmbracelet/glamour"
 			d[i].Composes = []string{"collection/viewport"}

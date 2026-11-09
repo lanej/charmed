@@ -119,7 +119,10 @@ func TestNarrowFoundationCatalogKeepsAllGlyphsAndSelection(t *testing.T) {
 	for _, mode := range []theme.Mode{theme.Dark, theme.Mono} {
 		c.Theme = mode
 
-		glyphs, err := story.Frame("foundations/glyphs", c)
+		glyphConfig := c
+		glyphConfig.Rows = (len(theme.Glyphs())+1)/2 + 2
+
+		glyphs, err := story.Frame("foundations/glyphs", glyphConfig)
 		if err != nil {
 			t.Fatal(err)
 		}

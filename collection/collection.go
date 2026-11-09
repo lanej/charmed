@@ -80,7 +80,7 @@ func NewTree(root *tree.Node, width, height int, t theme.Theme) tree.Model {
 	m := tree.New(root, width, height)
 	s := tree.DefaultStyles(t.IsDark())
 	s.NodeStyle = t.Control()
-	s.SelectedNodeStyle = t.Focus()
+	s.SelectedNodeStyle = t.Selection()
 	s.ParentNodeStyle = t.Heading().Padding(0, theme.InlinePadding)
 	s.RootNodeStyle = t.Heading().Padding(0, theme.InlinePadding)
 	s.CursorStyle = t.Heading()

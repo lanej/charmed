@@ -127,7 +127,7 @@ func TestStaticGuide(t *testing.T) {
 					}
 				}
 
-				if permalink && n.Parent != nil && (n.Parent.Data == "h2" || n.Parent.Data == "h3" || n.Parent.Data == "h4") {
+				if permalink && n.Parent != nil && (n.Parent.Data == "h2" || n.Parent.Data == "h3" || n.Parent.Data == "h4" || n.Parent.Data == "h5") {
 					if u, err := url.Parse(href); err == nil {
 						headingLinks[name][u.Fragment] = true
 					}
@@ -251,7 +251,7 @@ func TestStaticGuide(t *testing.T) {
 			t.Errorf("missing sidebar link for %s", d.ID)
 		}
 
-		for _, id := range []string{d.ID, d.ID + "-preview", d.ID + "-code", "family-" + d.Family} {
+		for _, id := range []string{d.ID, d.ID + "-preview", d.ID + "-code", "level-" + strings.ToLower(d.Level), "level-" + strings.ToLower(d.Level) + "-" + d.Family} {
 			if !headingLinks[target][id] {
 				t.Errorf("%s: missing self-link on heading %q", target, id)
 			}
@@ -291,6 +291,10 @@ func TestCuratedSnippetsFocusOnConsumerAPIs(t *testing.T) {
 
 	for _, definition := range story.Definitions() {
 		if definition.ExampleSource == "" {
+			if definition.Level == "Molecules" {
+				t.Errorf("%s: molecule needs a focused consumer example", definition.ID)
+			}
+
 			continue
 		}
 

@@ -1,0 +1,7 @@
+rule := attention.Rule{
+    Warn:  &attention.Bounds{Upper: attention.Limit(60)},
+    Error: &attention.Bounds{Upper: attention.Limit(80)},
+}
+result := rule.Evaluate(68, true) // Value and availability are separate.
+view := feedback.Attention(result.Level, palette)
+// With no boundaries the rule is Off; unavailable data is Unknown.

@@ -17,26 +17,38 @@ import (
 )
 
 type Config struct {
-	Columns           int        `json:"columns"`
-	Rows              int        `json:"rows"`
-	Theme             theme.Mode `json:"theme"`
-	Profile           string     `json:"profile"`
-	ASCII             bool       `json:"ascii"`
-	ReducedMotion     bool       `json:"reducedMotion"`
-	Live              bool       `json:"live"`
-	State             string     `json:"state"`
-	Value             string     `json:"value"`
-	Series            int        `json:"series"`
-	Amount            float64    `json:"amount"`
-	Legend            bool       `json:"legend"`
-	Horizontal        bool       `json:"horizontal"`
-	Sigma             int        `json:"sigma"`
-	Scenario          string     `json:"scenario"`
-	ReferenceID       string     `json:"referenceID"`
-	CandidateID       string     `json:"candidateID"`
-	Boundaries        bool       `json:"boundaries"`
-	ComparisonVariant string     `json:"comparisonVariant"`
-	Emphasis          string     `json:"emphasis"`
+	Columns            int        `json:"columns"`
+	Rows               int        `json:"rows"`
+	Theme              theme.Mode `json:"theme"`
+	Profile            string     `json:"profile"`
+	ASCII              bool       `json:"ascii"`
+	ReducedMotion      bool       `json:"reducedMotion"`
+	Live               bool       `json:"live"`
+	State              string     `json:"state"`
+	Value              string     `json:"value"`
+	Series             int        `json:"series"`
+	Amount             float64    `json:"amount"`
+	Legend             bool       `json:"legend"`
+	Horizontal         bool       `json:"horizontal"`
+	Sigma              int        `json:"sigma"`
+	Scenario           string     `json:"scenario"`
+	ReferenceID        string     `json:"referenceID"`
+	CandidateID        string     `json:"candidateID"`
+	Boundaries         bool       `json:"boundaries"`
+	ComparisonVariant  string     `json:"comparisonVariant"`
+	Emphasis           string     `json:"emphasis"`
+	SymbolStyle        string     `json:"symbolStyle"`
+	URLStyle           string     `json:"urlStyle"`
+	VerboseDetails     bool       `json:"verboseDetails"`
+	ColumnLabels       bool       `json:"columnLabels"`
+	NoFolds            bool       `json:"noFolds"`
+	LogPane            string     `json:"logPane"`
+	TraceLogs          bool       `json:"traceLogs"`
+	DetachedLogDetails bool       `json:"detachedLogDetails"`
+	InspectorLayout    string     `json:"inspectorLayout"`
+	TimelineGroups     []string   `json:"timelineGroups"`
+	Timeline           bool       `json:"timeline"`
+	RawBody            bool       `json:"rawBody"`
 }
 
 func DefaultConfig() Config {
@@ -44,6 +56,28 @@ func DefaultConfig() Config {
 }
 
 func (c Config) Validate() error {
+	if !slices.Contains([]string{"", "sidebar", "timeline", "columns", "focused"}, c.InspectorLayout) {
+		return errors.New("log layout must be sidebar, timeline, columns or focused")
+	}
+
+	for _, group := range c.TimelineGroups {
+		if !slices.Contains([]string{"service", "host", "port", "endpoint"}, group) {
+			return errors.New("timeline group must be service, host, port or endpoint")
+		}
+	}
+
+	if !slices.Contains([]string{"", "both", "glyph", "label"}, c.SymbolStyle) {
+		return errors.New("symbol style must be both, glyph or label")
+	}
+
+	if !slices.Contains([]string{"", "path", "path-query", "host-path", "full"}, c.URLStyle) {
+		return errors.New("URL style must be path, path-query, host-path or full")
+	}
+
+	if !slices.Contains([]string{"", "requests", "http", "logs"}, c.LogPane) {
+		return errors.New("log pane must be requests, http or logs")
+	}
+
 	if !slices.Contains([]string{"", "stacked", "bands"}, c.ComparisonVariant) {
 		return errors.New("comparison variant must be stacked or bands")
 	}

@@ -1,0 +1,6 @@
+pages := feedback.NewPaginator(50, 10, palette)
+// In Update, forward the native command and use the selected page's bounds.
+pages, cmd = pages.Update(msg)
+start, end := pages.GetSliceBounds(len(items))
+visible := items[start:end]
+view := pages.View()

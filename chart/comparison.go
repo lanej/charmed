@@ -33,6 +33,14 @@ type DistributionComparison struct {
 }
 
 func (d DistributionComparison) View(width int, t theme.Theme) string {
+	if width <= 0 {
+		return ""
+	}
+
+	if len(d.Series) == 0 {
+		return t.Subtle().Render(ansi.Wrap("No observations", width, ""))
+	}
+
 	low, high := math.Inf(1), math.Inf(-1)
 	for _, s := range d.Series {
 		if s.Members > 0 {
@@ -69,15 +77,23 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 	prefixWidth := 0
 	if d.Compact {
 		prefixWidth = min(29, max(8, width/3))
+
+		for _, series := range d.Series {
+			value := fmt.Sprintf("%.3f%s", series.Mean, d.Unit)
+			if prefixWidth >= width || prefixWidth < lipgloss.Width(value)+2 {
+				prefixWidth = 0
+				break
+			}
+		}
 	}
 
 	for i, s := range d.Series {
 		style := t.Text().Foreground(t.SeriesColor(i))
 		if s.Members == 0 {
 			if d.Compact {
-				lines = append(lines, style.Render(ansi.Truncate(s.Label, max(1, prefixWidth-5), "~")+" n/a"))
+				lines = append(lines, style.Render(ansi.Wrap(s.Label+" n/a", width, "")))
 			} else {
-				lines = append(lines, style.Render(s.Label+" host mean n/a"), "Insufficient member samples")
+				lines = append(lines, style.Render(ansi.Wrap(s.Label+" host mean n/a", width, "")), t.Subtle().Render(ansi.Wrap("Insufficient member samples", width, "")))
 			}
 			continue
 		}
@@ -86,7 +102,8 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 			spread = fmt.Sprintf("%.3f%s", s.StdDev, d.SpreadUnit)
 		}
 		if !d.Compact {
-			lines = append(lines, style.Render(fmt.Sprintf("%s mean %.3f%s s=%s n=%d", s.Label, s.Mean, d.Unit, spread, s.Members)))
+			label := fmt.Sprintf("%s mean %.3f%s s=%s n=%d", s.Label, s.Mean, d.Unit, spread, s.Members)
+			lines = append(lines, style.Render(ansi.Wrap(label, width, "")))
 		}
 		opts := BandOptions{Min: low, Max: high, Center: s.Mean, Selected: s.Selected, Series: i, Markers: d.Markers}
 		if s.HasSpread {
@@ -97,21 +114,32 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 		prefix := ""
 		if d.Compact {
 			value := fmt.Sprintf("%.3f%s", s.Mean, d.Unit)
-			labelWidth := max(1, prefixWidth-len(value)-2)
-			label := ansi.Truncate(s.Label, labelWidth, "~")
-			prefix = style.Render(layout.Fit(label+strings.Repeat(" ", max(1, labelWidth-lipgloss.Width(label)+1))+value,
-				layout.Size{Width: prefixWidth, Height: 1}))
+			if prefixWidth == 0 {
+				lines = append(lines, style.Render(ansi.Wrap(s.Label+" "+value, width, "")))
+			} else {
+				labelWidth := prefixWidth - lipgloss.Width(value) - 1
+				label := ansi.Truncate(s.Label, labelWidth, "~")
+				prefix = style.Render(layout.Fit(label, layout.Size{Width: labelWidth, Height: 1}) + " " + value)
+			}
 		}
-		lines = append(lines, prefix+IntervalBand(opts, max(1, width-prefixWidth), t))
+
+		lines = append(lines, prefix+IntervalBand(opts, max(1, width-lipgloss.Width(prefix)), t))
 		if d.ShowLegend {
 			legend = append(legend, opts.legendEntries(s.Label+" ", t)...)
 		}
 	}
 	if math.IsInf(low, 0) {
-		lines = append(lines, "No eligible host spread")
+		lines = append(lines, t.Subtle().Render(ansi.Wrap("No eligible host spread", width, "")))
 	} else {
 		left, right := fmt.Sprintf("%.3f%s", low, d.Unit), fmt.Sprintf("%.3f%s", high, d.Unit)
-		lines = append(lines, strings.Repeat(" ", prefixWidth)+left+strings.Repeat(" ", max(1, width-prefixWidth-len(left)-len(right)))+right)
+		axisWidth := width - prefixWidth
+		labelWidth := lipgloss.Width(left) + lipgloss.Width(right)
+
+		if labelWidth+1 <= axisWidth {
+			lines = append(lines, strings.Repeat(" ", prefixWidth)+left+strings.Repeat(" ", axisWidth-labelWidth)+right)
+		} else {
+			lines = append(lines, t.Subtle().Render(ansi.Wrap(left+"  "+right, width, "")))
+		}
 	}
 	if d.ShowLegend {
 		if key := renderLegend(legend, width, t); key != "" {

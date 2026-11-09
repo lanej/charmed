@@ -1,0 +1,16 @@
+inspector, err := pattern.NewLogInspector(pattern.LogInspectorOptions{
+    Theme: palette, Requests: exchanges, Logs: records,
+    Layout: pattern.InspectorTimeline,
+    TimelineGroups: []collection.HTTPGroup{
+        collection.GroupByService, collection.GroupByEndpoint,
+    },
+    TimelineNow: observedAt, DetachedLogDetails: true,
+})
+if err != nil {
+    return err
+}
+inspector.Resize(layout.Size{Width: 120, Height: 44})
+inspector.SelectRequest("http-2")
+// Forward Bubble Tea messages through inspector.Update(msg).
+inspector.SetLayout(pattern.InspectorColumns)
+view := inspector.View()

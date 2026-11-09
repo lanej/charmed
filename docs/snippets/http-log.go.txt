@@ -1,0 +1,11 @@
+requests := collection.NewHTTPLog(80, 30, palette)
+requests.SetURLFormat(text.PathAndQuery)
+if err := requests.SetEntries(exchanges); err != nil {
+    return err
+}
+requests.Select("http-2")
+// Forward Bubble Tea messages through requests.Update(msg).
+requests.Resize(width, height)
+view := requests.View()
+// Optional timeline: set Timeline and supply an observed TimelineNow.
+requests.SetTimelineGrouping(collection.GroupByService, collection.GroupByEndpoint)

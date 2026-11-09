@@ -44,6 +44,12 @@ def check_menu(page, output):
     assert 48 <= top < 150, f"fragment target is obscured or misplaced: {top}"
     page.screenshot(path=str(output / "deployment-mobile.png"))
     summary.tap()
+    page.locator('.mobile-nav .nav-level').filter(has_text="Screens").tap()
+    page.wait_for_timeout(100)
+    assert not menu.evaluate("el => el.open"), "atomic navigation must close the menu"
+    assert page.evaluate("document.activeElement.id") == "level-screens"
+    assert 48 <= page.locator('[id="level-screens"]').bounding_box()["y"] < 150
+    summary.tap()
     page.keyboard.press("Escape")
     assert not menu.evaluate("el => el.open")
     assert summary.evaluate("el => el === document.activeElement"), "Escape must restore focus"
@@ -100,6 +106,14 @@ def main():
                     assert not values["menuOpen"], (filename, values)
                 if filename in ("examples.html", "development.html") and width in (390, 1440):
                     page.screenshot(path=str(args.output / f"{filename.removesuffix('.html')}-{width}.png"))
+                expected_levels = ["Foundations", "Atoms", "Molecules", "Organisms", "Templates", "Screens"]
+                actual_levels = page.locator(".desktop-nav .nav-level").all_text_contents()
+                assert actual_levels == expected_levels, (filename, actual_levels)
+                if filename == "components.html":
+                    assert page.locator(".atomic-level").evaluate_all("els => els.map(e => e.id)") == ["level-atoms", "level-molecules", "level-organisms"]
+                    molecules = page.locator('[id="level-molecules"] .component')
+                    assert molecules.count() > 0, "molecule catalog must not be empty"
+                    assert molecules.locator(".component-source h5").all_text_contents() == ["Go usage#"] * molecules.count()
                 if filename == "development.html":
                     tasks = page.locator(".dev-paths a")
                     assert tasks.count() == 3, "developer guide needs three task paths"
