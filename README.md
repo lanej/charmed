@@ -63,7 +63,7 @@ The core uses upstream Charm v2 modules. It has no JavaScript runtime requiremen
 [Browse the guide](https://lanej.github.io/charmed/) for foundations, components grouped by capability, composition examples and the deployment telemetry contract. Components share sections rather than individual pages, but every fixture has a sidebar link. Each fixture leads with a saved native preview and variant tabs, followed by its highlighted usage snippet or linked fixture implementation. CLI instructions remain in the development guide. See the [brand sheet](https://lanej.github.io/charmed/brand.html) for visual tokens and identity.
 
 ```sh
-go run ./cmd/workbench generate --out docs
+just docs
 ```
 
 The generator writes `docs/dist/` using Go alone. GitHub Actions uploads this directory to Pages; the published guide uses ordinary HTML, CSS, images and links. It needs no npm or preview service. A tiny local script enhances keyboard-accessible variant tabs; without JavaScript all snapshots remain visible. Saved terminal frames preserve truecolor as static HTML, with separate 256-color, 16-color and monochrome fallback tabs; run a native fixture for keyboard interaction and animation. See [foundations](docs/foundations.md) for glyph, spacing and panel allocation contracts.
@@ -79,11 +79,11 @@ WASM remains optional because the current Booba route requires a patched Bubble 
 ## Verify
 
 ```sh
-bash scripts/check-go.sh
-go run ./cmd/workbench generate --out docs
+just check
+just docs
 ```
 
-The Go quality command uses the module's Go version by default and runs module tidiness, strict lint and formatting, uncached race tests, and reachable-vulnerability analysis. The same command runs on Linux and macOS in CI. Existing lint and style findings are recorded in a shrinking baseline; new findings fail, and resolved allowances must be removed with `bash scripts/check-go.sh ratchet`. Run `bash scripts/check-go.sh lint` for the lint gate alone.
+Install [just](https://github.com/casey/just#installation) and [ShellCheck](https://github.com/koalaman/shellcheck#installing), then run `just` to list targets. `just check` uses the module's Go version by default and runs ShellCheck, module tidiness, strict lint and formatting, uncached race tests, and reachable-vulnerability analysis. The same target runs on Linux and macOS in CI, with ShellCheck pinned to 0.11.0. Existing Go lint and style findings are recorded in a shrinking baseline; new findings fail, and resolved allowances must be removed with `just ratchet`. Use `just shellcheck`, `just lint`, `just test` or `just vuln` for individual gates; `just lint` includes ShellCheck. Use `just fmt path/to/file.go` or `just fix ./path/to/package` for scoped fixes. `just run` starts the service fixture; pass a story ID and flags for another fixture.
 
 Checks also exercise cell bounds, deterministic frames, focus and selection, resize, background updates, native process cleanup, static guide generation and component links.
 

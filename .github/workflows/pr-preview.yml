@@ -42,8 +42,11 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
+      - uses: extractions/setup-just@f8a3cce218d9f83db3a2ecd90e41ac3de6cdfd9b # v3
+        with:
+          just-version: '1.59.0'
       - name: Compile isolated preview without any write token
-        run: go run ./cmd/workbench generate --out docs
+        run: just docs
       - name: Stamp source revision and discourage indexing
         id: revision
         run: |

@@ -18,7 +18,10 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-      - run: go run ./cmd/workbench generate --out docs
+      - uses: extractions/setup-just@f8a3cce218d9f83db3a2ecd90e41ac3de6cdfd9b # v3
+        with:
+          just-version: '1.59.0'
+      - run: just docs
       - run: python3 scripts/test_preview_pr.py
       - uses: actions/upload-artifact@v4
         with:
