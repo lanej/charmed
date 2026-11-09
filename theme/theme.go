@@ -27,6 +27,7 @@ type Theme struct {
 	Unknown, Inactive, DimUnknown, DimInactive                  color.Color
 	Pending, Running, Paused, DimPending, DimRunning, DimPaused color.Color
 	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger   color.Color
+	Trace, Debug, Fatal, DimTrace, DimDebug, DimFatal           color.Color
 	Series, Sequential                                          []color.Color
 	Permissions                                                 PermissionColors
 	HTTP                                                        HTTPColors
@@ -42,6 +43,8 @@ func New(mode Mode) Theme {
 		t.Muted, t.Border, t.Accent = hex("#526176"), hex("#94a3b8"), hex("#075985")
 		t.Success, t.Warning, t.Danger = hex("#166534"), hex("#92400e"), hex("#b91c1c")
 		t.Info = hex("#1d4ed8")
+		t.Trace, t.Debug, t.Fatal = hex("#626262"), hex("#0e667b"), hex("#a21caf")
+		t.DimTrace, t.DimDebug, t.DimFatal = hex("#666666"), hex("#477483"), hex("#96529c")
 		t.SelectionBackground = hex("#d1e8e3")
 		t.Unknown, t.Inactive = hex("#475e86"), hex("#626262")
 		t.DimUnknown, t.DimInactive = hex("#5c6e8a"), hex("#666666")
@@ -56,6 +59,8 @@ func New(mode Mode) Theme {
 		t.Muted, t.Border, t.Accent = hex("#d0d0d0"), hex("#ffffff"), hex("#67e8f9")
 		t.Success, t.Warning, t.Danger = hex("#86efac"), hex("#fde047"), hex("#fca5a5")
 		t.Info = hex("#93c5fd")
+		t.Trace, t.Debug, t.Fatal = hex("#b0b0b0"), hex("#67e8f9"), hex("#f0abfc")
+		t.DimTrace, t.DimDebug, t.DimFatal = hex("#929292"), hex("#69b5c0"), hex("#c387ce")
 		t.SelectionBackground = hex("#1c4245")
 		t.Unknown, t.Inactive = hex("#b7c9ed"), hex("#b0b0b0")
 		t.DimUnknown, t.DimInactive = hex("#8da4cb"), hex("#929292")
@@ -76,6 +81,8 @@ func New(mode Mode) Theme {
 		t.Muted, t.Border, t.Accent = hex("#a8a8a8"), hex("#475569"), hex("#67d4c0")
 		t.Success, t.Warning, t.Danger = hex("#86cf9a"), hex("#f2c879"), hex("#f28b82")
 		t.Info = hex("#78b8ed")
+		t.Trace, t.Debug, t.Fatal = hex("#9a9a9a"), hex("#70c6d8"), hex("#e49aef")
+		t.DimTrace, t.DimDebug, t.DimFatal = hex("#898989"), hex("#519bab"), hex("#b477bd")
 		t.SelectionBackground = hex("#24433f")
 		t.Unknown, t.Inactive = hex("#a7bce0"), hex("#9a9a9a")
 		t.DimUnknown, t.DimInactive = hex("#829bc3"), hex("#898989")

@@ -35,7 +35,7 @@ func TestDimTokensRemainReadableAndSeriesDoNotAliasSemanticRoles(t *testing.T) {
 			t.Fatalf("%s selection surface makes nested plain text unreadable", mode)
 		}
 
-		for _, dim := range []color.Color{palette.DimForeground, palette.DimSuccess, palette.DimInfo, palette.DimWarning, palette.DimDanger, palette.DimUnknown, palette.DimInactive, palette.DimPending, palette.DimRunning, palette.DimPaused} {
+		for _, dim := range []color.Color{palette.DimForeground, palette.DimSuccess, palette.DimInfo, palette.DimWarning, palette.DimDanger, palette.DimUnknown, palette.DimInactive, palette.DimPending, palette.DimRunning, palette.DimPaused, palette.DimTrace, palette.DimDebug, palette.DimFatal} {
 			value := luminance(dim)
 
 			ratio := (max(value, background) + .05) / (min(value, background) + .05)
