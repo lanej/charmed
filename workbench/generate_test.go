@@ -48,6 +48,13 @@ func TestStaticGuide(t *testing.T) {
 		}
 
 		name := filepath.Base(path)
+
+		for _, internal := range []string{"Fixture implementation", "func Example", "package snippets", "e.Config", "return &amp;scene"} {
+			if bytes.Contains(data, []byte(internal)) {
+				t.Errorf("%s exposes example scaffolding or fixture implementation: %s", name, internal)
+			}
+		}
+
 		pages[name] = data
 		ids[name] = map[string]bool{}
 		navComponents[name] = map[string]bool{}
@@ -208,8 +215,8 @@ func TestStaticGuide(t *testing.T) {
 		t.Error("light permission preview must retain its theme foreground and background")
 	}
 
-	if !bytes.Contains(pages["atoms-chart.html"], []byte("&lt;")) {
-		t.Error("expected escaped source or snapshot content")
+	if !bytes.Contains(pages["molecules-input.html"], []byte("&lt;")) {
+		t.Error("the field validation example must escape its less-than operator")
 	}
 
 	if !bytes.Contains(pages["atoms-input.html"], []byte(`class="variant-tablist" role="tablist"`)) {
@@ -292,23 +299,11 @@ func TestStaticGuide(t *testing.T) {
 	}
 }
 
-func TestCuratedSnippetsFocusOnConsumerAPIs(t *testing.T) {
-	expected := map[string]string{
-		"chart/sparkline":        "docs/snippets/sparkline.go.txt",
-		"chart/comparison-panel": "docs/snippets/comparison-panel.go.txt",
-	}
-
+func TestEveryComponentHasAConsumerExample(t *testing.T) {
 	for _, definition := range story.Definitions() {
-		if definition.ExampleSource == "" {
-			if definition.Level == "Molecules" {
-				t.Errorf("%s: molecule needs a focused consumer example", definition.ID)
-			}
-
+		if definition.ExampleSource == "" || !strings.HasSuffix(definition.ExampleSource, ".go") {
+			t.Errorf("%s needs a compiled consumer example", definition.ID)
 			continue
-		}
-
-		if want, ok := expected[definition.ID]; ok && definition.ExampleSource != want {
-			t.Errorf("%s: example source = %q, want %q", definition.ID, definition.ExampleSource, want)
 		}
 
 		source, err := os.ReadFile(filepath.Join("..", definition.ExampleSource))
@@ -316,14 +311,10 @@ func TestCuratedSnippetsFocusOnConsumerAPIs(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		for _, scaffolding := range []string{"package main", "func main()", "import ("} {
-			if bytes.Contains(source, []byte(scaffolding)) {
-				t.Errorf("%s: unnecessary program scaffolding %q", definition.ID, scaffolding)
+		for _, internal := range []string{"github.com/lanej/charmed/story", "/deployment/fixture", "e.Config", "sampleSeries(", "sampleValues("} {
+			if bytes.Contains(source, []byte(internal)) {
+				t.Errorf("%s: consumer example depends on %s", definition.ID, internal)
 			}
-		}
-
-		if lines := strings.Count(string(source), "\n"); lines > 30 {
-			t.Errorf("%s: usage example is %d lines; keep it focused", definition.ID, lines)
 		}
 	}
 }

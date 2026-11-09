@@ -1,6 +1,0 @@
-footer := layout.Footer{
-    Help: text.KeyHint("?", "help", palette) + "  " +
-        text.KeyHint("q", "quit", palette),
-    Status: feedback.Connected.View(text.Normal, palette),
-}
-view := footer.View(64, palette)

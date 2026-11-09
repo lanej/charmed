@@ -1,9 +1,0 @@
-field := input.Field{
-    Label: "Environment", Help: "Use at least three characters.", Theme: palette,
-    Input: input.NewText(input.TextOptions{
-        Value: "production", Width: 24, Theme: palette, Validate: validateName,
-    }),
-}
-field.Input.Resize(40)
-cmd := field.Input.Focus() // Forward the native command from your parent model.
-view := field.View()

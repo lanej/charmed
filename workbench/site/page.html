@@ -105,7 +105,11 @@
 <div class="component-subheading"><h3 id="{{.ID}}-preview"><a class="heading-permalink" href="#{{.ID}}-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="{{name .Title}} variants">
-{{range $i, $snapshot := .Snapshots}}<a id="tab-{{$component.ID}}-{{$i}}" href="#panel-{{$component.ID}}-{{$i}}" role="tab" aria-controls="panel-{{$component.ID}}-{{$i}}" aria-selected="{{if eq $i 0}}true{{else}}false{{end}}">{{.Name}}</a>{{end}}
+<a id="tab-{{.ID}}-example" href="#panel-{{.ID}}-example" role="tab" aria-controls="panel-{{.ID}}-example" aria-selected="true">Example</a>
+{{range $i, $snapshot := .Snapshots}}<a id="tab-{{$component.ID}}-{{$i}}" href="#panel-{{$component.ID}}-{{$i}}" role="tab" aria-controls="panel-{{$component.ID}}-{{$i}}" aria-selected="false">{{.Name}}</a>{{end}}
+</div>
+<div id="panel-{{.ID}}-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-{{.ID}}-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">{{terminal .ExampleFrame}}</pre></figure>
 </div>
 {{range $i, $snapshot := .Snapshots}}<div id="panel-{{$component.ID}}-{{$i}}" class="variant-panel" role="tabpanel" aria-labelledby="tab-{{$component.ID}}-{{$i}}" tabindex="0">
 <figure><figcaption>{{.Name}} · {{.Config.Profile}} · {{.Config.Columns}} × {{.Config.Rows}} terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="{{.Config.Theme}}" style="color:{{snapshotForeground .Config}};background-color:{{snapshotBackground .Config}}">{{terminal .Frame}}</pre></figure>
@@ -113,7 +117,8 @@
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="{{.ID}}-code"><a class="heading-permalink" href="#{{.ID}}-code"><span>{{if .ExampleSource}}Go usage{{else}}Fixture implementation{{end}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>{{if .ExampleSource}}<a href="https://github.com/lanej/charmed/blob/main/{{.ExampleSource}}">Usage snippet</a> · {{end}}<a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">Fixture source</a> · <a href="{{.Upstream}}">Upstream</a></span></div>
+<div class="component-subheading"><h3 id="{{.ID}}-code"><a class="heading-permalink" href="#{{.ID}}-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/{{.ExampleSource}}">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">Implementation</a></span></div>
+<p class="example-imports">Imports: {{range $i, $import := .ExampleImports}}{{if $i}} · {{end}}<a href="https://pkg.go.dev/{{.Path}}" title="{{.Path}}"><code>{{.Name}}</code></a>{{end}}</p>
 <pre tabindex="0" class="code-block source-code"><code class="language-go">{{highlight .Code "go"}}</code></pre>
 </div>
 {{if .Composes}}<p class="composition-line">Composed from: {{range .Composes}}<a class="dependency" href="{{link .}}">{{.}}</a> {{end}}</p>{{end}}

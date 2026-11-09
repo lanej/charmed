@@ -1,6 +1,0 @@
-options := chart.PanelOptions{ShowLegend: true}
-plot := chart.NewTimeSeries(series, options.PlotSize(size, series, palette), palette)
-
-// On resize, reserve the actual wrapped legend height before resizing the plot.
-plot.Resize(options.PlotSize(size, series, palette))
-view := chart.Panel("Throughput", plot, series, size, palette, false, options)

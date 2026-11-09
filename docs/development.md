@@ -33,7 +33,7 @@ Organize Go packages by capability rather than atomic level. Use atoms, molecule
 
 1. Implement a wrapper only where it establishes useful defaults, semantics, or reusable composition.
 2. Register a deterministic story in the matching `story/` file. Set `Definition.Level` and `Definition.Family` to place it on a category and subgroup page. Set its actual building blocks in `Definition.Composes` so the catalog can link them.
-3. Supply a short consumer-oriented example in `docs/snippets/` when the full fixture would obscure the public API.
+3. Add a consumer example in `docs/snippets/<story_id>.go` (replace `/` and `-` with `_`) and register its renderer in `docs/snippets/render.go`. Include sample data, construction and rendering using public APIs. These are ordinary Go functions, compiled and linted with the library. The generator displays the function body without package or outer-function scaffolding and renders that same function in the default **Example** tab. Keep fixture variants in the other tabs; implementation source is linked separately. Missing or empty examples fail the guide build.
 
 Keep services and decisions outside UI models. The registry rejects duplicate IDs, composition cycles, and references to higher atomic levels. See [DESIGN.md](https://github.com/lanej/charmed/blob/main/DESIGN.md) for the design constraints.
 

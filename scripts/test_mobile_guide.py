@@ -211,6 +211,13 @@ def main():
                     molecules = page.locator(".component")
                     assert molecules.count() > 0, "molecule groups must not be empty"
                     assert molecules.locator(".component-source h3").all_text_contents() == ["Go usage#"] * molecules.count()
+                for component in page.locator(".component").all():
+                    example = component.locator('[role="tab"]').first
+                    assert example.inner_text() == "Example"
+                    assert example.get_attribute("aria-selected") == "true"
+                    assert component.locator('[id$="-example"][role="tabpanel"]').is_visible()
+                    code = component.locator(".source-code").inner_text()
+                    assert not any(internal in code for internal in ("e.Config", "sampleSeries(", "package snippets", "func Example"))
                 if filename == "development.html":
                     tasks = page.locator(".dev-paths a")
                     assert tasks.count() == 3, "developer guide needs three task paths"

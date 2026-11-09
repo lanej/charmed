@@ -35,10 +35,6 @@ func foundationsDefinitions() []Definition {
 			d[i].Upstream = "https://pkg.go.dev/io/fs#FileMode"
 		}
 
-		if d[i].ID == "foundations/tokens" {
-			d[i].ExampleSource = "docs/snippets/foundation-tokens.go.txt"
-		}
-
 		if d[i].ID == "feedback/motion" {
 			d[i].Upstream = "https://github.com/charmbracelet/harmonica"
 			d[i].Step = true
