@@ -32,6 +32,8 @@ func Render(id string) (string, error) {
 		return ExampleFeedbackProgress(), nil
 	case "feedback/time":
 		return ExampleFeedbackTime(), nil
+	case "collection/json-viewer":
+		return ExampleCollectionJSONViewer()
 	case "collection/viewport":
 		return ExampleCollectionViewport(), nil
 	case "chart/sparkline":

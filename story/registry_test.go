@@ -35,7 +35,7 @@ func TestCatalogFramesAreDeterministicAndBounded(t *testing.T) {
 						t.Fatal(err)
 					}
 					if a != b {
-						t.Fatalf("nondeterministic %s frame at %v", mode, size)
+						t.Fatalf("nondeterministic %s frame at %v\nfirst: %q\nsecond: %q", mode, size, a, b)
 					}
 					if lipgloss.Width(a) != c.Columns || lipgloss.Height(a) != c.Rows {
 						t.Fatalf("escaped %dx%d allocation", c.Columns, c.Rows)

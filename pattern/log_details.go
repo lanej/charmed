@@ -4,6 +4,7 @@ import (
 	"charm.land/bubbles/v2/viewport"
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
+	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
 )
@@ -17,6 +18,7 @@ type inspectorDetails struct {
 }
 
 func (m *LogInspector) resizeDetailPanes() {
+	reset := m.prepareJSONSelection()
 	size := m.regions.details
 	requestClosed, responseClosed := m.PaneCollapsed(requestDataPane), m.PaneCollapsed(httpPane)
 
@@ -46,29 +48,22 @@ func (m *LogInspector) resizeDetailPanes() {
 	}
 
 	m.detailRegions = regions
-	reset := m.detailID != m.HTTP.SelectedID()
-
-	m.detailID = m.HTTP.SelectedID()
 	for _, pane := range []struct {
 		model     *viewport.Model
 		size      layout.Size
 		collapsed bool
 		content   func(int) string
-	}{{&m.Request, regions.request, requestClosed, m.HTTP.RequestContent}, {&m.Response, regions.response, responseClosed, m.HTTP.ResponseContent}} {
-		offset := pane.model.YOffset()
+		payload   func(int) (string, collection.HTTPBody, bool)
+		viewer    *collection.JSONViewer
+		state     collection.JSONState
+	}{{&m.Request, regions.request, requestClosed, m.HTTP.RequestContent, m.HTTP.RequestPayload, m.RequestJSON, m.jsonStates[m.detailID].request}, {&m.Response, regions.response, responseClosed, m.HTTP.ResponseContent, m.HTTP.ResponsePayload, m.ResponseJSON, m.jsonStates[m.detailID].response}} {
 		if !pane.collapsed {
 			content := layout.PanelContentSize(pane.size)
 			pane.model.SetWidth(max(1, content.Width-inspectorScrollbarWidth(content.Width, m.HTTP.ShowScrollbar)))
 			pane.model.SetHeight(max(1, content.Height))
 		}
 
-		pane.model.SetContent(pane.content(pane.model.Width()))
-
-		if reset {
-			pane.model.GotoTop()
-		} else {
-			pane.model.SetYOffset(offset)
-		}
+		m.refreshJSONPayload(pane.viewer, pane.model, pane.payload, pane.content, reset, pane.state)
 	}
 }
 
@@ -81,6 +76,7 @@ func inspectorScrollbarWidth(width int, enabled bool) int {
 }
 
 func (m *LogInspector) detailPanesView(size layout.Size) string {
+	m.syncJSONFocus()
 	request := m.section(requestDataPane, "Request", m.payloadViewport(m.Request, m.detailRegions.request), m.detailRegions.request)
 	response := m.section(httpPane, "Response", m.payloadViewport(m.Response, m.detailRegions.response), m.detailRegions.response)
 
@@ -112,6 +108,10 @@ func (m *LogInspector) updateDetailPane(msg tea.Msg) tea.Cmd {
 		case "3", "r":
 			return m.updateHTTPControls(msg)
 		}
+	}
+
+	if viewer := m.focusedJSON(); viewer != nil && viewer.Interactive() {
+		return viewer.Update(msg)
 	}
 
 	var cmd tea.Cmd

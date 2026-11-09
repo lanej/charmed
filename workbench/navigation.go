@@ -90,6 +90,8 @@ func familyName(family string) string {
 		return "Collections"
 	case "commands":
 		return "Commands"
+	case "data":
+		return "Data"
 	case "diagram":
 		return "Diagrams"
 	case "feedback":

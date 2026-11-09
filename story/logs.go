@@ -22,6 +22,7 @@ func logDefinitions() []Definition {
 	config.Columns, config.Rows = 120, 38
 
 	return []Definition{
+		{ID: "collection/json-viewer", Title: "Molecules/Data/JSON viewer", Level: "Molecules", Family: "data", Description: "Syntax-highlighted JSON with foldable objects and arrays, native viewport navigation and exact source evidence.", Source: "story/json.go", Symbol: "jsonStory", Composes: []string{"collection/viewport", "text/disclosure", "text/syntax"}, Defaults: config, Factory: jsonStory},
 		{ID: "text/presentation", Title: "Atoms/Text/Presentation", Level: "Atoms", Family: "text", Description: "Glyph and label, glyph only, or label only; shared policy for semantic atoms.", Source: "text/presentation.go", Symbol: "Format", Defaults: DefaultConfig(), Factory: presentationStory},
 		{ID: "text/url", Title: "Atoms/HTTP/URL", Level: "Atoms", Family: "http", Description: "Path, path with query, host with path, or exact captured URL display; no network requests or mutation.", Source: "text/url.go", Symbol: "FormatURL", Defaults: DefaultConfig(), Factory: urlStory},
 		{ID: "feedback/follow", Title: "Atoms/Feedback/Follow", Level: "Atoms", Family: "feedback", Description: "Follow mode and paused browsing reuse lifecycle status colors, glyphs and insets.", Source: "feedback/controls.go", Symbol: "Follow", Composes: []string{"feedback/status"}, Defaults: DefaultConfig(), Factory: followStory},
@@ -36,7 +37,7 @@ func logDefinitions() []Definition {
 		{ID: "text/syntax", Title: "Atoms/Text/Syntax", Level: "Atoms", Family: "text", Description: "Content-type aware lexical highlighting; terminal controls stay visible as escaped data.", Source: "text/syntax.go", Symbol: "Syntax", Defaults: DefaultConfig(), Factory: syntaxStory},
 		{ID: "collection/log-tree", Title: "Molecules/Logs/Structured log tree", Level: "Molecules", Family: "logs", Description: "Trace and span hierarchy with expandable ordered fields, stable identities and retained follow state.", Source: "story/logs.go", Symbol: "logTreeStory", Composes: []string{"collection/tree", "text/observation", "text/time", "text/disclosure", "feedback/scrollbar"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: logTreeStory},
 		{ID: "collection/http-log", Title: "Molecules/Logs/HTTP log", Level: "Molecules", Family: "logs", Description: "Request summaries and captured headers/bodies with syntax highlighting, pretty/raw views and explicit capture states.", Source: "story/logs.go", Symbol: "httpLogStory", Composes: []string{"collection/table", "text/http-method", "text/url", "text/http-status", "text/pending", "text/time", "text/disclosure", "feedback/scrollbar", "text/syntax", "collection/viewport"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: httpLogStory},
-		{ID: "pattern/log-inspector", Title: "Organisms/Logs/Correlated inspector", Level: "Organisms", Family: "logs", Description: "Select HTTP requests to inspect exact request logs, widen to trace scope, or browse switchable narrow views.", Source: "story/logs.go", Symbol: "logInspectorStory", Composes: []string{"collection/http-log", "collection/log-tree", "collection/command-palette", "feedback/follow", "text/presentation", "text/key-hint", "layout/section", "layout/identity-header", "foundations/layout"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: logInspectorStory},
+		{ID: "pattern/log-inspector", Title: "Organisms/Logs/Correlated inspector", Level: "Organisms", Family: "logs", Description: "Select HTTP requests to inspect exact request logs, widen to trace scope, or browse switchable narrow views.", Source: "story/logs.go", Symbol: "logInspectorStory", Composes: []string{"collection/http-log", "collection/json-viewer", "collection/log-tree", "collection/command-palette", "feedback/follow", "text/presentation", "text/key-hint", "layout/section", "layout/identity-header", "foundations/layout"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: logInspectorStory},
 	}
 }
 
@@ -246,6 +247,12 @@ func logInspectorStory(e Environment) (runtime.Scene, error) {
 		requests, logs = singleRequestFixture()
 	}
 
+	if e.Config.JSONFolded {
+		for i := range requests {
+			requests[i].ResponseBody = collection.HTTPBody{State: collection.Captured, ContentType: "application/json", Bytes: []byte(jsonFixture)}
+		}
+	}
+
 	if e.Config.State == "empty" {
 		requests = nil
 		logs = nil
@@ -298,6 +305,11 @@ func logInspectorStory(e Environment) (runtime.Scene, error) {
 	}
 
 	m.HTTP.ResizeDetails(70, 18)
+
+	if e.Config.JSONFolded {
+		m.ResponseJSON.SetCollapsed(1, true)
+		m.ResponseJSON.Select(1)
+	}
 
 	m.Logs.Follow = false
 	m.Logs.Select("log-2")

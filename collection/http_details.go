@@ -36,9 +36,21 @@ func (m *HTTPLog) SummaryContent(width int) string {
 // for independent native viewports. Raw/capture/parameter policies remain owned
 // by HTTPLog; callers own pane folding, sizing, scrolling and focus.
 func (m *HTTPLog) RequestContent(width int) string {
-	record, ok := m.Selected()
+	prefix, body, ok := m.RequestPayload(width)
 	if !ok {
 		return "Select an HTTP request"
+	}
+
+	return prefix + "\n" + ansi.Wrap(body.View(m.Raw, m.BodyPreviewBytes, m.Theme), max(1, width), "")
+}
+
+// RequestPayload and ResponsePayload expose a styled header/parameter prefix
+// and copied body for interactive payload renderers. Capture metadata and the
+// content-type fallback are identical to the standalone content views.
+func (m *HTTPLog) RequestPayload(width int) (string, HTTPBody, bool) {
+	record, ok := m.Selected()
+	if !ok {
+		return "", HTTPBody{}, false
 	}
 
 	parts := []string{}
@@ -46,22 +58,27 @@ func (m *HTTPLog) RequestContent(width int) string {
 		parts = append(parts, parameters)
 	}
 
-	parts = append(parts, m.payloadContent(record.RequestHeaders, record.RequestBody, max(1, width)))
+	parts = append(parts, headerView(record.RequestHeaders, m.Theme, max(1, width)))
 
-	return strings.Join(parts, "\n\n")
+	return strings.Join(parts, "\n\n"), bodyWithContentType(record.RequestBody, record.RequestHeaders), true
 }
 
 func (m *HTTPLog) ResponseContent(width int) string {
-	record, ok := m.Selected()
+	prefix, body, ok := m.ResponsePayload(width)
 	if !ok {
 		return "Select an HTTP request"
 	}
 
-	return m.payloadContent(record.ResponseHeaders, record.ResponseBody, max(1, width))
+	return prefix + "\n" + ansi.Wrap(body.View(m.Raw, m.BodyPreviewBytes, m.Theme), max(1, width), "")
 }
 
-func (m *HTTPLog) payloadContent(headers http.Header, body HTTPBody, width int) string {
-	return ansi.Wrap(headerView(headers, m.Theme, width)+"\n"+bodyWithContentType(body, headers).View(m.Raw, m.BodyPreviewBytes, m.Theme), width, "")
+func (m *HTTPLog) ResponsePayload(width int) (string, HTTPBody, bool) {
+	record, ok := m.Selected()
+	if !ok {
+		return "", HTTPBody{}, false
+	}
+
+	return headerView(record.ResponseHeaders, m.Theme, max(1, width)), bodyWithContentType(record.ResponseBody, record.ResponseHeaders), true
 }
 
 func (m *HTTPLog) detailSections(record HTTPExchange, width int) string {

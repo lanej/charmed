@@ -2,6 +2,8 @@
 
 Browse [Atoms](atoms.html), [Molecules](molecules.html) and [Organisms](organisms.html), then choose a capability group. Each group has its own page with native previews, variant tabs and Go examples. Components link to their dependencies across categories.
 
+The [JSON viewer](molecules-data.html#collection/json-viewer) supports syntax-highlighted, foldable objects and arrays. Its [usage and lifecycle guide](json-viewer.html) covers native viewport customization, source fidelity and bounded parsing. The correlated inspector composes it into both HTTP payload panes.
+
 The contracts below describe sizing, state and native customization across the catalog.
 
 Time-series traces use native braille dots for finer terminal resolution. Shared axes and series colors retain their meaning; ASCII mode keeps its numeric fallback.

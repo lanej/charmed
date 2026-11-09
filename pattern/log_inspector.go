@@ -64,6 +64,7 @@ type LogInspector struct {
 	Palette                         *collection.CommandPalette
 	Logs                            *collection.LogTree
 	Request, Response               viewport.Model
+	RequestJSON, ResponseJSON       *collection.JSONViewer
 	focus                           interaction.Focus
 	palette                         theme.Theme
 	size, contentSize               layout.Size
@@ -78,6 +79,7 @@ type LogInspector struct {
 	folding, showHelp, showHeadline bool
 	detailID                        string
 	detailRegions                   inspectorDetails
+	jsonStates                      map[string]inspectorJSONState
 }
 
 func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
@@ -88,6 +90,9 @@ func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
 
 	m := &LogInspector{palette: o.Theme, limit: limit, focus: interaction.NewFocus(requestPane, requestDataPane, httpPane, logPane), collapsed: map[string]bool{}, folding: !o.NoFolds, showHelp: !o.NoHelp, showHeadline: !o.NoHeadline}
 	m.Request, m.Response = collection.NewViewport("", 40, 12), collection.NewViewport("", 60, 12)
+	m.RequestJSON, m.ResponseJSON = collection.NewJSONViewer(40, 12, o.Theme), collection.NewJSONViewer(60, 12, o.Theme)
+	m.RequestJSON.Model, m.ResponseJSON.Model = &m.Request, &m.Response
+	m.jsonStates = map[string]inspectorJSONState{}
 	m.HTTP = collection.NewHTTPLog(40, 12, o.Theme)
 	m.Symbols = o.Symbols
 	m.HTTP.Symbols = o.Symbols
@@ -162,6 +167,7 @@ func (m *LogInspector) SetEntries(requests []collection.HTTPExchange, logs []col
 
 	m.logs = slices.Clone(logs[max(0, len(logs)-m.limit):])
 	m.correlate()
+	m.pruneJSONStates()
 
 	return nil
 }
@@ -172,6 +178,7 @@ func (m *LogInspector) UpsertRequests(requests ...collection.HTTPExchange) error
 	}
 
 	m.correlate()
+	m.pruneJSONStates()
 
 	return nil
 }
@@ -495,8 +502,14 @@ func (m *LogInspector) contentView() string {
 			keys = m.Request.KeyMap
 		}
 
-		help += text.KeyHint(keys.Up.Help().Key+"/"+keys.Down.Help().Key, "scroll", m.palette)
-		if m.HTTP.Folding {
+		viewer := m.focusedJSON()
+		if viewer != nil && viewer.Interactive() {
+			help += text.KeyHint(keys.Up.Help().Key+"/"+keys.Down.Help().Key, "fields", m.palette) + " · " + text.KeyHint(viewer.Toggle.Help().Key, "fold JSON", m.palette)
+		} else {
+			help += text.KeyHint(keys.Up.Help().Key+"/"+keys.Down.Help().Key, "scroll", m.palette)
+		}
+
+		if m.HTTP.Folding && (viewer == nil || !viewer.Interactive()) {
 			help += " · " + text.KeyHint("1/2/3", "sections", m.palette)
 		}
 

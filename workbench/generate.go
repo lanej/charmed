@@ -242,7 +242,7 @@ func Generate(out string) error {
 		}
 
 		if d.ID == "pattern/log-inspector" {
-			for _, name := range []string{"Single request", "Folded logs", "Request folded", "Response folded", "No instructions", "Single request narrow"} {
+			for _, name := range []string{"Single request", "Folded logs", "Request folded", "Response folded", "No instructions", "Single request narrow", "JSON folding"} {
 				variants = append(variants, struct {
 					name   string
 					change func(*story.Config)
@@ -250,6 +250,8 @@ func Generate(out string) error {
 					c.SingleRequest, c.DetachedLogDetails = true, true
 
 					c.Columns, c.Rows, c.LogPane = 160, 44, "http"
+
+					c.JSONFolded = name == "JSON folding"
 					if name == "Folded logs" {
 						c.CollapsedPanes = []string{"logs"}
 					}
@@ -315,6 +317,28 @@ func Generate(out string) error {
 					c.TraceLogs = variant.trace
 					if variant.pane != "" {
 						c.Columns, c.Rows = 40, 24
+					}
+				}})
+			}
+		}
+
+		if d.ID == "collection/json-viewer" {
+			for _, name := range []string{"Folded containers", "Narrow JSON", "Raw JSON", "Invalid JSON", "No instructions", "No folds"} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: name, change: func(c *story.Config) {
+					c.JSONFolded = name == "Folded containers"
+					c.RawBody = name == "Raw JSON"
+					c.NoHelp = name == "No instructions"
+
+					c.NoFolds = name == "No folds"
+					if name == "Narrow JSON" {
+						c.Columns, c.Rows = 44, 32
+					}
+
+					if name == "Invalid JSON" {
+						c.State = "error"
 					}
 				}})
 			}

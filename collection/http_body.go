@@ -30,6 +30,24 @@ type HTTPBody struct {
 	ContentType, Encoding string
 }
 
+// JSONFoldable permits structural parsing only for complete, declared JSON in
+// supported text encodings within the preview budget. Syntax is validated by
+// JSONViewer; malformed JSON therefore keeps a visible parsing diagnostic.
+func (b HTTPBody) JSONFoldable(limit int) bool {
+	if b.State != Captured || len(b.Bytes) == 0 || len(b.Bytes) > max(1, limit) || !utf8.Valid(b.Bytes) {
+		return false
+	}
+
+	if b.Encoding != "" && !strings.EqualFold(b.Encoding, "identity") {
+		return false
+	}
+
+	_, params, err := mime.ParseMediaType(b.ContentType)
+	charset := strings.ToLower(params["charset"])
+
+	return err == nil && text.ContentLanguage(b.ContentType) == "json" && (charset == "" || charset == "utf-8" || charset == "us-ascii")
+}
+
 func (b HTTPBody) Validate() error {
 	switch b.State {
 	case NotCaptured, Captured, Truncated, Redacted:

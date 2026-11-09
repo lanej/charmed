@@ -55,6 +55,10 @@ func Syntax(source, language string, t theme.Theme) string {
 		return sourceText(source, t)
 	}
 
+	if language == "json" {
+		return jsonSyntax(source, t)
+	}
+
 	lexer := lexers.Get(language)
 	if lexer == nil {
 		return sourceText(source, t)
