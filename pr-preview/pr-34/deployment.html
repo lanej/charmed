@@ -18,8 +18,33 @@
 <nav aria-label="Guide">
 <div class="nav-pages"><a href="index.html" >Showcase</a>
 <p class="nav-title">Atomic design</p>
-<a class="nav-level" href="foundations.html#level-foundations">Foundations</a><a class="nav-level" href="components.html#level-atoms">Atoms</a><a class="nav-level" href="components.html#level-molecules">Molecules</a><a class="nav-level" href="components.html#level-organisms">Organisms</a><a class="nav-level" href="examples.html#level-templates">Templates</a><a class="nav-level" href="examples.html#level-screens">Screens</a>
-<a href="deployment.html" aria-current="page">Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" aria-current="page">Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 </nav>
 
@@ -30,12 +55,38 @@
 <nav aria-label="Guide">
 <div class="nav-pages"><a href="index.html" >Showcase</a>
 <p class="nav-title">Atomic design</p>
-<a class="nav-level" href="foundations.html#level-foundations">Foundations</a><a class="nav-level" href="components.html#level-atoms">Atoms</a><a class="nav-level" href="components.html#level-molecules">Molecules</a><a class="nav-level" href="components.html#level-organisms">Organisms</a><a class="nav-level" href="examples.html#level-templates">Templates</a><a class="nav-level" href="examples.html#level-screens">Screens</a>
-<a href="deployment.html" aria-current="page">Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" aria-current="page">Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 </nav>
 </aside>
 <main id="main">
+
 
 
 <h1 id="compare-a-deployment-across-a-fleet">Compare a deployment across a fleet</h1>
@@ -239,6 +290,7 @@ err <span class="syn-operator">:=</span> screen<span class="syn-operator">.</spa
 <p>Each <code class="inline-code">Window</code> has an inclusive start and exclusive end, and each <code class="inline-code">Sample</code> supplies a version/cohort ID, member ID, request count, and an explicit count for every configured metric. Supply <strong>interval counts</strong>, handling cumulative-counter resets and rate-to-count conversion in that adapter. Windows must be ordered, nonoverlapping and equal in duration; gaps and absent hosts are allowed. The UI never queries a telemetry service. The application supplies a <code class="inline-code">MetricTones</code> map; the generic comparison component has no built-in HTTP status policy.</p>
 <p>Call <code class="inline-code">SetData</code> on the Bubble Tea update thread when new data arrives. Invalid updates return an error and preserve the existing screen. Valid updates copy the data and retain the selected host where it still exists. Appending windows follows the latest window only when it was already selected; inspecting an older window keeps that window selected. For comparisons scoped to a route or region, supply that matched population and label it in <code class="inline-code">Scope</code>.</p>
 <p>The optional <code class="inline-code">Emit</code> callback reports member selection, time window, active metric, band-limit changes, presentation variants and attention transitions. Applications own statistical inference, notification delivery and deployment decisions. Supply <code class="inline-code">MetricSigns</code> independently of <code class="inline-code">MetricTones</code> and <code class="inline-code">Boundaries</code> when composing your own domain.</p>
+
 
 
 

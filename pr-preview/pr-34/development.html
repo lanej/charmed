@@ -18,8 +18,33 @@
 <nav aria-label="Guide">
 <div class="nav-pages"><a href="index.html" >Showcase</a>
 <p class="nav-title">Atomic design</p>
-<a class="nav-level" href="foundations.html#level-foundations">Foundations</a><a class="nav-level" href="components.html#level-atoms">Atoms</a><a class="nav-level" href="components.html#level-molecules">Molecules</a><a class="nav-level" href="components.html#level-organisms">Organisms</a><a class="nav-level" href="examples.html#level-templates">Templates</a><a class="nav-level" href="examples.html#level-screens">Screens</a>
-<a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" aria-current="page">Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" aria-current="page">Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 </nav>
 
@@ -30,8 +55,33 @@
 <nav aria-label="Guide">
 <div class="nav-pages"><a href="index.html" >Showcase</a>
 <p class="nav-title">Atomic design</p>
-<a class="nav-level" href="foundations.html#level-foundations">Foundations</a><a class="nav-level" href="components.html#level-atoms">Atoms</a><a class="nav-level" href="components.html#level-molecules">Molecules</a><a class="nav-level" href="components.html#level-organisms">Organisms</a><a class="nav-level" href="examples.html#level-templates">Templates</a><a class="nav-level" href="examples.html#level-screens">Screens</a>
-<a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" aria-current="page">Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" aria-current="page">Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 </nav>
 </aside>
@@ -49,6 +99,7 @@
 </div>
 </section>
 
+
 <h2 id="use-charmed"><a class="heading-permalink" href="#use-charmed"><span>Use Charmed</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Charmed wraps native <a href="https://charm.sh/">Charm</a> and ntcharts components with shared themes, terminal-cell sizing, and composition conventions. Application code owns its state and business decisions; widgets remain ordinary Go models.</p>
 <p>Start with a component and pass the same theme to related elements:</p>
@@ -60,7 +111,7 @@ field <span class="syn-operator">:=</span> input<span class="syn-operator">.</sp
 <span class="syn-operator">}</span><span class="syn-operator">)</span>
 cmd <span class="syn-operator">:=</span> field<span class="syn-operator">.</span><span class="syn-function">Focus</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 </code></pre>
-<p>Explore the <a href="components.html#input/text">input components</a>, <a href="components.html#chart/sparkline">charts</a>, and <a href="examples.html#screen/services">complete screens</a>. The catalog shows the visual first, then a focused usage snippet. Full fixture implementations are linked separately.</p>
+<p>Explore the <a href="atoms-input.html#input/text">input components</a>, <a href="atoms-chart.html#chart/sparkline">charts</a>, and <a href="screens-pattern.html#screen/services">complete screens</a>. The catalog shows the visual first, then a focused usage snippet. Full fixture implementations are linked separately.</p>
 <h2 id="inspect-a-native-fixture"><a class="heading-permalink" href="#inspect-a-native-fixture"><span>Inspect a native fixture</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>The documentation snapshots are deterministic captures of real Go components, not browser recreations. Use the terminal runner when you need to inspect keyboard behavior, animation, focus, or resizing.</p>
 <pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench list
@@ -71,8 +122,8 @@ cmd <span class="syn-operator">:=</span> field<span class="syn-operator">.</span
 <p>Organize Go packages by capability rather than atomic level. Use atoms, molecules, and organisms to describe <strong>composition depth in the catalog</strong>, not to create extra package layers.</p>
 <ol>
 <li>Implement a wrapper only where it establishes useful defaults, semantics, or reusable composition.</li>
-<li>Register a deterministic story in the matching <code class="inline-code">story/</code> file. Set its actual building blocks in <code class="inline-code">Definition<span class="syn-operator">.</span>Composes</code> so the catalog can link them.</li>
-<li>Supply a short consumer-oriented example in <code class="inline-code">docs/snippets/</code> when the full fixture would obscure the public API.</li>
+<li>Register a deterministic story in the matching <code class="inline-code">story/</code> file. Set <code class="inline-code">Definition<span class="syn-operator">.</span>Level</code> and <code class="inline-code">Definition<span class="syn-operator">.</span>Family</code> to place it on a category and subgroup page. Set its actual building blocks in <code class="inline-code">Definition<span class="syn-operator">.</span>Composes</code> so the catalog can link them.</li>
+<li>Add a consumer example in <code class="inline-code">docs/snippets/&lt;story_id&gt;.go</code> (replace <code class="inline-code">/</code> and <code class="inline-code"><span class="syn-operator">-</span></code> with <code class="inline-code">_</code>) and register its renderer in <code class="inline-code">docs/snippets/render.go</code>. Include sample data, construction and rendering using public APIs. These are ordinary Go functions, compiled and linted with the library. The generator displays the function body without package or outer-function scaffolding and renders that same function in the default <strong>Example</strong> tab. Keep fixture variants in the other tabs; implementation source is linked separately. Missing or empty examples fail the guide build.</li>
 </ol>
 <p>Keep services and decisions outside UI models. The registry rejects duplicate IDs, composition cycles, and references to higher atomic levels. See <a href="https://github.com/lanej/charmed/blob/main/DESIGN.md">DESIGN.md</a> for the design constraints.</p>
 <h2 id="verify-changes"><a class="heading-permalink" href="#verify-changes"><span>Verify changes</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
@@ -80,13 +131,14 @@ cmd <span class="syn-operator">:=</span> field<span class="syn-operator">.</span
 <span class="syn-command">just</span> docs
 </code></pre>
 <p>Install <a href="https://github.com/casey/just#installation">just</a> and <a href="https://github.com/koalaman/shellcheck#installing">ShellCheck</a>, then run <code class="inline-code">just</code> to list targets. The targets select the module's Go version unless explicitly overridden. <code class="inline-code">just check</code> runs ShellCheck and checks formatting, vet, module tidiness, strict Go lint, uncached race tests, and reachable vulnerabilities on Linux and macOS. CI pins ShellCheck to 0.11.0. For a quicker iteration, run <code class="inline-code">just lint</code>, which includes ShellCheck; use <code class="inline-code">just shellcheck</code>, <code class="inline-code">just test</code> or <code class="inline-code">just vuln</code> for individual gates and <code class="inline-code">just fmt path/to/file.go</code> or <code class="inline-code">just fix ./path/to/package</code> for scoped fixes. Existing Go lint debt is in a shrinking baseline: new findings must be fixed, and resolved findings removed with <code class="inline-code">just ratchet</code>. Never enlarge the baseline to accept new findings.</p>
-<p>The generator writes the static guide to <code class="inline-code">docs/dist/</code>, validates source and composition, and preserves terminal output colors. The responsive browser check covers mobile and desktop layouts, navigation, and fragment links.</p>
+<p>The generator writes the static guide to <code class="inline-code">docs/dist/</code>, validates source and composition, and preserves terminal output colors. Each atomic level has a visual overview; its capability groups have separate pages generated from the registry. Overview cards link directly to those pages and show excerpts of saved native snapshots, selected in <code class="inline-code">workbench/specimen.go</code>. Counts, navigation and composition links update with the stories. Existing component, code and variant bookmarks redirect to their new group pages. The responsive browser check covers mobile and desktop layouts, navigation, and fragment links.</p>
 <h2 id="publish-documentation"><a class="heading-permalink" href="#publish-documentation"><span>Publish documentation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Edit <code class="inline-code">docs/*.md</code>, catalog stories in <code class="inline-code">story/</code>, and the shared site template/styles in <code class="inline-code">workbench/site/</code>. Generate locally before opening a pull request.</p>
 <p>Every same-repository documentation PR gets an isolated preview at <code class="inline-code">lanej.io/charmed/pr-preview/pr-&lt;number&gt;/</code>. The PR description is updated with <strong>direct links to rendered pages</strong> after the publisher verifies that the live revision matches the PR head. Previews refresh on push, are excluded from search indexing, and are removed when the PR closes. Forks receive CI checks but no privileged preview publication.</p>
-<p>Merging to <code class="inline-code">main</code> publishes the tested static bundle through GitHub Pages. No separate documentation server or JavaScript build tool is required; the small client script only enhances variant tabs and the mobile navigation.</p>
+<p>Merging to <code class="inline-code">main</code> publishes the tested static bundle through GitHub Pages. No separate documentation server or JavaScript build tool is required; the small client script enhances variant tabs and mobile navigation, and forwards published bookmarks to their current pages.</p>
 <h2 id="coverage"><a class="heading-permalink" href="#coverage"><span>Coverage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>The inventory below is generated from the registry and distinguishes implemented components from optional integrations. The bundled JuliaMono font preserves braille and box-drawing glyph geometry; see its <a href="assets/JuliaMono-LICENSE.txt">license</a>.</p>
+
 
 
 
