@@ -12,10 +12,14 @@ graph := diagram.StateDiagram{
         {From: "running", To: "idle", Label: "cancel"},
         {From: "running", To: "failed", Label: "fail"},
     },
-    Active: "running",
+    Active: "done",
+    Trace: diagram.TransitionTrace{
+        Steps: []int{0, 1, 3, 0, 2}, // start, retry, cancel, start, finish.
+        Last: 1,           // Last N steps; zero defaults to one. All: true shows the whole path.
+    },
 }
 rendered, err := graph.View(width, palette)
 if err != nil {
     return err
 }
-// Set Active and render again when application state changes.
+// Update Active and Trace.Steps when application state changes, then render again.

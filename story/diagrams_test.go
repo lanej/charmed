@@ -36,6 +36,17 @@ func TestStateDiagramStoryUpdatesAndResizes(t *testing.T) {
 		t.Fatal("Left did not restore the active state marker")
 	}
 
+	for _, mode := range []string{"last 3", "all", "last"} {
+		_, _ = model.Update(tea.KeyPressMsg{Code: 'h', Text: "h"})
+		if !strings.Contains(ansi.Strip(model.View().Content), "H: "+mode) {
+			t.Fatalf("trace mode %s unavailable", mode)
+		}
+	}
+
+	if model.View().Content != original {
+		t.Fatal("trace mode cycle changed replay position")
+	}
+
 	_, _ = model.Update(tea.WindowSizeMsg{Width: 40, Height: 12})
 
 	narrow := ansi.Strip(model.View().Content)

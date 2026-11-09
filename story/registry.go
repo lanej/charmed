@@ -25,6 +25,7 @@ type Config struct {
 	ReducedMotion      bool       `json:"reducedMotion"`
 	Live               bool       `json:"live"`
 	State              string     `json:"state"`
+	TraceWindow        string     `json:"traceWindow"`
 	Value              string     `json:"value"`
 	Series             int        `json:"series"`
 	Amount             float64    `json:"amount"`
@@ -56,6 +57,10 @@ func DefaultConfig() Config {
 }
 
 func (c Config) Validate() error {
+	if !slices.Contains([]string{"", "last", "last-3", "all"}, c.TraceWindow) {
+		return errors.New("trace window must be last, last-3 or all")
+	}
+
 	if !slices.Contains([]string{"", "sidebar", "timeline", "columns", "focused"}, c.InspectorLayout) {
 		return errors.New("log layout must be sidebar, timeline, columns or focused")
 	}

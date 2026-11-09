@@ -70,6 +70,17 @@ func Generate(out string) error {
 				c.ReducedMotion = true
 			}},
 		}
+		if d.ID == "diagram/state-transitions" {
+			for _, trace := range []struct{ name, state string }{{"Last 3 transitions", "last-3"}, {"Whole path", "all"}} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{
+					name: trace.name, change: func(c *story.Config) { c.TraceWindow = trace.state },
+				})
+			}
+		}
+
 		if d.ID == "input/text" {
 			variants = append(variants,
 				struct {

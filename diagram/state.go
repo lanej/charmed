@@ -37,6 +37,7 @@ type StateDiagram struct {
 	States      []State
 	Transitions []Transition
 	Active      string
+	Trace       TransitionTrace
 }
 
 // View renders labeled nodes and directed edges without a legend. It prefers
@@ -45,6 +46,11 @@ type StateDiagram struct {
 // Labels are single-line plain text; height depends on the chosen layout.
 func (d StateDiagram) View(width int, t theme.Theme) (string, error) {
 	nodes, edges, err := d.validate()
+	if err != nil {
+		return "", err
+	}
+
+	steps, err := d.traceSteps()
 	if err != nil {
 		return "", err
 	}
@@ -65,7 +71,7 @@ func (d StateDiagram) View(width int, t theme.Theme) (string, error) {
 		drawing = vertical
 	}
 
-	out := drawing.render(d.Active, t)
+	out := drawing.render(d.Active, steps, t)
 	if t.Mode == theme.Mono {
 		out = ansi.Strip(out)
 	}
