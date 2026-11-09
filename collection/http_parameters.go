@@ -12,7 +12,7 @@ import (
 
 // Parameters are decoded from supplied observations; route parameters require
 // application routing knowledge and are not inferred from path segments.
-func (m *HTTPLog) parameterView(record HTTPExchange, width int) string {
+func (m *HTTPLog) parameterSources(record HTTPExchange) (string, string) {
 	target, _, _ := strings.Cut(record.URL, "#")
 	_, query, _ := strings.Cut(target, "?")
 	form := ""
@@ -23,6 +23,23 @@ func (m *HTTPLog) parameterView(record HTTPExchange, width int) string {
 	if err == nil && media == "application/x-www-form-urlencoded" && body.State == Captured && (body.Encoding == "" || strings.EqualFold(body.Encoding, "identity")) && (charset == "" || charset == "utf-8" || charset == "us-ascii") && len(body.Bytes) <= max(1, m.BodyPreviewBytes) {
 		form = string(body.Bytes)
 	}
+
+	return query, form
+}
+
+func (m *HTTPLog) HasParameters() bool {
+	record, ok := m.Selected()
+	if !ok {
+		return false
+	}
+
+	query, form := m.parameterSources(record)
+
+	return query != "" || form != ""
+}
+
+func (m *HTTPLog) parameterView(record HTTPExchange, width int) string {
+	query, form := m.parameterSources(record)
 
 	if query == "" && form == "" {
 		return ""

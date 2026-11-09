@@ -51,6 +51,7 @@ type LogInspectorOptions struct {
 type LogInspector struct {
 	Symbols            text.Presentation
 	HTTP               *collection.HTTPLog
+	Palette            *collection.CommandPalette
 	Logs               *collection.LogTree
 	focus              interaction.Focus
 	palette            theme.Theme
@@ -96,11 +97,24 @@ func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
 		return nil, fmt.Errorf("unknown inspector layout %q", o.Layout)
 	}
 
+	palette, err := collection.NewCommandPalette(nil, 72, 24, o.Theme)
+	if err != nil {
+		return nil, err
+	}
+
+	m.Palette = palette
 	m.Resize(layout.Size{Width: 120, Height: 36})
 
 	return m, nil
 }
-func (m *LogInspector) Init() tea.Cmd              { return nil }
+
+func (m *LogInspector) Init() tea.Cmd {
+	if m.Palette != nil && m.Palette.IsOpen() {
+		return m.Palette.Search.Focus()
+	}
+
+	return nil
+}
 func (m *LogInspector) FocusPane(id string) bool   { return m.focus.Set(id) }
 func (m *LogInspector) FocusedPane() string        { return m.focus.Current() }
 func (m *LogInspector) Scope() CorrelationScope    { return m.scope }
@@ -234,10 +248,20 @@ func (m *LogInspector) correlate() {
 	if err := m.Logs.SetEntries(matched); err != nil {
 		m.correlationMessage = "Invalid correlated records: " + text.Inline(err.Error())
 	}
+
+	if m.Palette != nil && m.Palette.IsOpen() {
+		if err := m.Palette.SetCommands(m.Commands()); err != nil {
+			m.correlationMessage = "Invalid commands: " + text.Inline(err.Error())
+		}
+	}
 }
 
 func (m *LogInspector) Resize(size layout.Size) {
 	m.size = size
+	if m.Palette != nil {
+		m.Palette.Resize(size)
+	}
+
 	m.active, m.regions = planInspector(size, m.preferred)
 	m.wide = m.active != InspectorFocused
 	m.HTTP.Timeline = m.active == InspectorTimeline || (!m.wide && m.preferred == InspectorTimeline)
@@ -250,7 +274,7 @@ func (m *LogInspector) Resize(size layout.Size) {
 	m.Logs.Resize(logs.Width, max(1, logs.Height-1))
 }
 
-func (m *LogInspector) Update(msg tea.Msg) tea.Cmd {
+func (m *LogInspector) updateContent(msg tea.Msg) tea.Cmd {
 	if key, ok := msg.(tea.KeyPressMsg); ok {
 		if m.focus.Handle(msg) {
 			return nil
@@ -309,7 +333,7 @@ func (m *LogInspector) Update(msg tea.Msg) tea.Cmd {
 	return nil
 }
 
-func (m *LogInspector) View() string {
+func (m *LogInspector) contentView() string {
 	focused := m.focus.Current()
 
 	requests := func(size layout.Size) string {
@@ -350,6 +374,12 @@ func (m *LogInspector) View() string {
 	}
 
 	help := text.KeyHint("Tab", "panes", m.palette) + " · " + text.KeyHint("L", "layout", m.palette) + " · " + text.KeyHint("Alt+1/2/3", "views", m.palette) + "\n"
+
+	if m.size.Width >= 70 {
+		help = strings.TrimSuffix(help, "\n") + " · " + text.KeyHint(m.Palette.Keys.Open.Help().Key, "commands", m.palette) + "\n"
+	} else {
+		help = text.KeyHint("Tab", "panes", m.palette) + " · " + text.KeyHint(m.Palette.Keys.Open.Help().Key, "commands", m.palette) + "\n"
+	}
 
 	switch focused {
 	case requestPane:

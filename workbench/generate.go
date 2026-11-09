@@ -80,6 +80,32 @@ func Generate(out string) error {
 				})
 			}
 		}
+		if d.ID == "collection/command-palette" || d.ID == "pattern/log-inspector" {
+			for _, sample := range []struct{ name, query string }{{"Commands", ""}, {"Commands filtered", "laytm"}, {"Commands unavailable", "Scope: trace"}, {"Commands empty", "zzzzzz"}} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: sample.name, change: func(c *story.Config) {
+					c.CommandPalette = true
+					c.Value = sample.query
+
+					c.CommandQuery = sample.query
+					if d.ID == "pattern/log-inspector" && sample.name == "Commands unavailable" {
+						c.State = "loading"
+					}
+
+					c.InspectorLayout = "timeline"
+					c.DetachedLogDetails = true
+					c.TimelineGroups = []string{"service", "endpoint"}
+				}})
+			}
+
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Commands narrow", change: func(c *story.Config) { c.CommandPalette = true; c.Columns = 40; c.Rows = 20 }})
+
+		}
 
 		if d.ID == "input/text" {
 			variants = append(variants,
@@ -94,7 +120,7 @@ func Generate(out string) error {
 			)
 		}
 
-		if d.ID == "foundations/permissions" || d.Family == "logs" || d.Family == "http" || d.ID == "text/syntax" {
+		if d.ID == "foundations/permissions" || d.Family == "commands" || d.Family == "logs" || d.Family == "http" || d.ID == "text/syntax" {
 			for _, mode := range []theme.Mode{theme.Light, theme.Contrast} {
 				variants = append(variants, struct {
 					name   string

@@ -1,0 +1,13 @@
+palette, err := collection.NewCommandPalette([]collection.Command{
+    {ID: "refresh", Label: "Refresh observations", Shortcut: "F5"},
+    {ID: "trace", Label: "Scope: trace", DisabledReason: "No trace selected"},
+}, width, height, theme)
+if err != nil {
+    return err
+}
+// In Update, open on your binding and route input while the palette is open.
+cmd := palette.Open()
+// Forward CommandSelectedMsg.ID to application-owned actions.
+palette.Resize(layout.Size{Width: width, Height: height})
+view := layout.CenterOverlay(background, palette.View(),
+    layout.Size{Width: width, Height: height}, theme, palette.DimBackdrop)
