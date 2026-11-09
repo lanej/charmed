@@ -67,13 +67,13 @@ func (c Config) Validate() error {
 	if !slices.Contains([]string{"", "last", "last-3", "all"}, c.TraceWindow) {
 		return errors.New("trace window must be last, last-3 or all")
 	}
+
 	if _, ok := interaction.Navigation(c.KeyLayout); !ok {
 		return errors.New("key layout must be standard or vim")
 	}
 
 	if !c.PaletteBackdrop.Valid() {
 		return errors.New("palette backdrop must be dim, monochrome or none")
-
 	}
 
 	if !slices.Contains([]string{"", "sidebar", "timeline", "columns", "focused"}, c.InspectorLayout) {

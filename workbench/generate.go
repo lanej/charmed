@@ -155,7 +155,6 @@ func Generate(out string) error {
 				name   string
 				change func(*story.Config)
 			}{name: "Commands narrow", change: func(c *story.Config) { c.CommandPalette = true; c.Columns = 40; c.Rows = 20 }})
-
 		}
 
 		if d.ID == "input/text" {
