@@ -6,11 +6,14 @@ import (
 	"strings"
 
 	"charm.land/bubbles/v2/table"
+	"charm.land/lipgloss/v2"
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/collection"
+	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/runtime"
 	"github.com/lanej/charmed/text"
+	"github.com/lanej/charmed/theme"
 )
 
 func waffleFixture(e Environment) chart.Waffle {
@@ -60,18 +63,63 @@ func waffleHeaderStory(e Environment) (runtime.Scene, error) {
 		w := waffleFixture(e)
 		t := e.Config.Palette()
 
-		var rows []table.Row
-		if e.Config.State == "empty" {
-			rows = nil
-		} else {
-			ready := w.Parts[0].Count
-			rows = []table.Row{{"checkout", fmt.Sprint(min(24, ready)), "ready"}, {"labels", fmt.Sprint(min(28, max(0, ready-24))), "ready"}, {"rating", fmt.Sprint(max(0, ready-52)), "ready"}, {"tracking", fmt.Sprint(w.Parts[1].Count), "pending"}, {"events", fmt.Sprint(w.Parts[2].Count), "failed"}}
+		statusMode := text.GlyphAndLabel
+		if size.Width < 28 {
+			statusMode = text.GlyphOnly
 		}
 
-		list := collection.NewTable([]table.Column{{Title: "SERVICE", Width: max(10, size.Width-29)}, {Title: "INSTANCES", Width: 10}, {Title: "STATE", Width: 10}}, rows, size.Width, 7, t)
+		statusWidth := 5
+		for _, status := range []feedback.Status{feedback.OK, feedback.Pending, feedback.Error} {
+			statusWidth = max(statusWidth, lipgloss.Width(status.View(text.Normal, t, statusMode)))
+		}
 
-		return w.StatusHeader("PRODUCTION", layout.Size{Width: size.Width, Height: 2}, t) + "\n\n" + list.View()
+		magnitudeWidth := min(24, max(9, size.Width/3))
+		serviceWidth := max(3, size.Width-statusWidth-magnitudeWidth-3)
+		magnitudeWidth = max(3, size.Width-statusWidth-serviceWidth-3)
+		scale := 1
+
+		var rows []table.Row
+
+		if len(w.Parts) > 0 {
+			ready := w.Parts[0].Count
+			counts := []int{min(24, ready), min(28, max(0, ready-24)), max(0, ready-52), w.Parts[1].Count, w.Parts[2].Count}
+			names := []string{"checkout", "labels", "rating", "tracking", "events"}
+			states := []feedback.Status{feedback.OK, feedback.OK, feedback.OK, feedback.Pending, feedback.Error}
+
+			for _, count := range counts {
+				scale = max(scale, count)
+			}
+
+			for i, count := range counts {
+				rows = append(rows, table.Row{names[i], waffleMagnitude(count, scale, magnitudeWidth, t), states[i].View(text.Normal, t, statusMode)})
+			}
+		}
+
+		list := collection.NewDenseTable([]table.Column{{Title: "SERVICE", Width: serviceWidth}, {Title: "INSTANCES", Width: magnitudeWidth}, {Title: "STATE", Width: statusWidth}}, rows, size.Width, 7, t)
+
+		caption := ""
+		if len(rows) > 0 {
+			caption = t.Subtle().Render(fmt.Sprintf("Instance scale: 0–%d", scale))
+		}
+
+		return w.StatusHeader("PRODUCTION", layout.Size{Width: size.Width, Height: 2}, t) + "\n\n" + list.View() + "\n" + caption
 	}), nil
+}
+
+func waffleMagnitude(count, scale, width int, t theme.Theme) string {
+	label := fmt.Sprintf("%3d", count)
+	if width < 8 {
+		return label
+	}
+
+	bar := feedback.NewProgress(width-4, t)
+	bar.EmptyColor = t.Border
+
+	if !t.ASCII {
+		bar.Full, bar.Empty = '━', '─'
+	}
+
+	return label + " " + bar.ViewAs(float64(count)/float64(scale))
 }
 
 func waffleConfig() Config { c := atomConfig(); c.Rows = 16; c.Amount = 92; return c }
