@@ -32,6 +32,7 @@ func organismsDefinitions() []Definition {
 		widget("text/markdown", "Organisms/Text/Markdown", "Organisms", "text", "Glamour renders Markdown within a native scrollable viewport.", "markdownStory", nil, markdownStory),
 		widget("form/settings", "Organisms/Forms/Settings", "Organisms", "form", "A Huh form owns its nested focus and validation.", "formStory", nil, formStory),
 	}
+
 	d = append(d,
 		Definition{ID: "collection/logs", Title: "Organisms/Collections/Log viewer", Level: "Organisms", Family: "collection", Description: "Structured Charm Log entries in a bounded, scrollable viewport.", Source: "story/organisms.go", Symbol: "logStory", Upstream: "https://github.com/charmbracelet/log", Composes: []string{"collection/viewport"}, Step: true, Defaults: DefaultConfig(), Factory: logStory},
 		Definition{ID: "chart/comparison-panel", Title: "Organisms/Charts/Comparison panel", Level: "Organisms", Family: "chart", Description: "A distribution comparison and native time-series history compose one reusable metric panel.", Source: "story/organisms.go", ExampleSource: "docs/snippets/comparison-panel.go.txt", Symbol: "comparisonPanelStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"sigma"}, Composes: []string{"chart/distributions", "chart/timeseries", "foundations/layout"}, Defaults: DefaultConfig(), Factory: comparisonPanelStory},
@@ -39,12 +40,14 @@ func organismsDefinitions() []Definition {
 	for i := range d {
 		switch d[i].ID {
 		case "text/markdown":
+			d[i].ExampleSource = "docs/snippets/markdown.go.txt"
 			d[i].Upstream = "https://github.com/charmbracelet/glamour"
 			d[i].Composes = []string{"collection/viewport"}
 		case "form/settings":
 			d[i].Upstream = "https://github.com/charmbracelet/huh"
 		}
 	}
+
 	return d
 }
 
@@ -133,15 +136,19 @@ func fileStory(e Environment) (runtime.Scene, error) {
 }
 
 func markdownStory(e Environment) (runtime.Scene, error) {
-	content := "# Terminal documentation\n\nGlamour renders **Markdown** inside a Bubbles viewport.\n\n- Theme follows the terminal palette\n- Content wraps to its allocated width\n- Navigation belongs to this region\n\n```go\nfield := input.NewText(options)\ncmd := field.Focus()\n```\n\n## Composition\n\nKeep content, focus and layout independent.\n"
+	content := "# Terminal documentation\n\nUse `field.Focus()` with **Markdown**, *emphasis*, and [Glamour](https://github.com/charmbracelet/glamour).\n\n- Theme follows the terminal palette\n- Prose wraps to its allocated width\n\n```go\n// Focus a native input\nfield := input.NewText(options)\ncmd := field.Focus()\n```\n\n> Keep content, focus and layout independent.\n\n| Content | Rendering |\n| --- | --- |\n| Inline code | Literal spans |\n| Fenced source | Syntax highlighting |\n"
+
 	rendered, err := text.Markdown(content, e.Config.Columns, e.Config.Palette())
 	if err != nil {
 		return nil, err
 	}
+
 	m := collection.NewViewport(rendered, e.Config.Columns, e.Config.Rows)
+
 	return &scene{resize: func(s layout.Size) {
 		m.SetWidth(s.Width)
 		m.SetHeight(s.Height)
+
 		if out, err := text.Markdown(content, s.Width, e.Config.Palette()); err == nil {
 			m.SetContent(out)
 		}

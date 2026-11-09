@@ -8,6 +8,7 @@ import (
 
 	"charm.land/glamour/v2"
 	"charm.land/glamour/v2/styles"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -53,6 +54,7 @@ func Pill(value string, tone Tone, t theme.Theme, emphasis ...Emphasis) string {
 	default:
 		style = style.Background(blend(fill, t.Background, normalPillTint))
 	}
+
 	return style.Render(value)
 }
 
@@ -66,21 +68,43 @@ func Markdown(content string, width int, t theme.Theme) (string, error) {
 	if !t.IsDark() {
 		style = styles.LightStyleConfig
 	}
+
 	if t.Mode == theme.Mono {
 		style = styles.NoTTYStyleConfig
+	} else {
+		style.Document.Color = markdownColor(t.Foreground)
+		style.Heading.Color = markdownColor(t.Accent)
+		style.H1.BackgroundColor = nil
+		style.H1.Color = style.Heading.Color
+		style.Code.Color = markdownColor(t.Accent)
+		style.Code.BackgroundColor = markdownColor(t.Surface)
+		style.Link.Color = markdownColor(t.Info)
+		style.LinkText.Color = markdownColor(t.Accent)
 	}
-	// WHY: A filled upstream H1 palette bypasses the shared theme and can lose contrast.
-	style.Document.Color = markdownColor(t.Foreground)
-	style.Heading.Color = markdownColor(t.Accent)
-	style.H1.BackgroundColor = nil
-	style.H1.Color = style.Heading.Color
+	// WHY: Glamour caches custom Chroma styles globally under one name, so the
+	// first rendered palette would otherwise leak into subsequent themes.
+	style.CodeBlock.Chroma = nil
 
-	r, err := glamour.NewTermRenderer(glamour.WithStyles(style), glamour.WithWordWrap(max(1, width)))
+	style.CodeBlock.Theme = "github-dark"
+	if !t.IsDark() {
+		style.CodeBlock.Theme = "github"
+	}
+
+	if t.Mode == theme.Mono {
+		style.CodeBlock.Theme = ""
+	}
+
+	r, err := glamour.NewTermRenderer(glamour.WithStyles(style), glamour.WithWordWrap(max(1, width)), glamour.WithChromaFormatter("terminal16m"))
 	if err != nil {
 		return "", err
 	}
+
 	out, err := r.Render(content)
-	return strings.TrimSpace(out), err
+	if t.Mode == theme.Mono {
+		out = ansi.Strip(out)
+	}
+
+	return strings.Trim(out, "\n"), err
 }
 
 func markdownColor(c color.Color) *string {

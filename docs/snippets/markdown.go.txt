@@ -1,0 +1,7 @@
+content := "# Help\n\nCall `field.Focus()` to **focus** the input.\n\n```go\ncmd := field.Focus()\n```\n"
+rendered, err := text.Markdown(content, width, palette)
+if err != nil {
+    return err
+}
+viewport := collection.NewViewport(rendered, width, height)
+// Re-render Markdown at the new width before updating viewport content on resize.

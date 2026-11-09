@@ -21,6 +21,7 @@ import (
 
 func atomsDefinitions() []Definition {
 	d := []Definition{
+		widget("text/code", "Atoms/Text/Code", "Atoms", "text", "Literal inline code and syntax-highlighted source blocks share Markdown rendering defaults.", "codeStory", nil, codeStory),
 		widget("text/primitives", "Atoms/Text/Primitives", "Atoms", "text", "Labels, badges and keyboard hints share semantic roles.", "textStory", []string{"value"}, textStory),
 		widget("input/text", "Atoms/Input/Text", "Atoms", "input", "A focused input with a native virtual cursor and shared theme.", "inputStory", []string{"value", "state"}, inputStory),
 		widget("input/textarea", "Atoms/Input/Textarea", "Atoms", "input", "Multiline input with native editing and bounded dimensions.", "areaStory", []string{"value"}, areaStory),
@@ -60,6 +61,8 @@ func atomsDefinitions() []Definition {
 	)
 	for i := range d {
 		switch d[i].ID {
+		case "text/code":
+			d[i].ExampleSource = "docs/snippets/code.go.txt"
 		case "input/text":
 			d[i].States = []string{"ready", "disabled"}
 		case "feedback/spinner":
@@ -78,6 +81,19 @@ func atomsDefinitions() []Definition {
 	}
 
 	return d
+}
+
+func codeStory(e Environment) (runtime.Scene, error) {
+	return static(func(s layout.Size) string {
+		t := e.Config.Palette()
+
+		block, err := text.CodeBlock("// Shared terminal defaults\nfield := input.NewText(options)\ncmd := field.Focus()", "go", s.Width, t)
+		if err != nil {
+			return err.Error()
+		}
+
+		return title("Code", e) + "Call " + text.InlineCode("field.Focus()", t) + " to focus the input.\n\n" + block
+	}), nil
 }
 
 func textStory(e Environment) (runtime.Scene, error) {

@@ -1,0 +1,6 @@
+inline := text.InlineCode("field.Focus()", palette)
+block, err := text.CodeBlock("field := input.NewText(options)", "go", width, palette)
+if err != nil {
+    return err
+}
+// Compose inline and block with your other terminal content.
