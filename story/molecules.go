@@ -34,7 +34,8 @@ func moleculesDefinitions() []Definition {
 	)
 
 	snippets := map[string]string{
-		"input/field": "field", "feedback/paginator": "paginator",
+		"chart/waffle-header": "waffle",
+		"input/field":         "field", "feedback/paginator": "paginator",
 		"feedback/help": "help", "chart/band-matrix": "band-matrix",
 		"chart/metric": "metric-trend", "chart/panel": "chart-panel",
 		"feedback/attention": "attention", "chart/distributions": "distributions",
