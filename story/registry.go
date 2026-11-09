@@ -45,6 +45,7 @@ type Config struct {
 	LogPane            string     `json:"logPane"`
 	TraceLogs          bool       `json:"traceLogs"`
 	DetachedLogDetails bool       `json:"detachedLogDetails"`
+	TimelineGroups     []string   `json:"timelineGroups"`
 	Timeline           bool       `json:"timeline"`
 	RawBody            bool       `json:"rawBody"`
 }
@@ -54,6 +55,12 @@ func DefaultConfig() Config {
 }
 
 func (c Config) Validate() error {
+	for _, group := range c.TimelineGroups {
+		if !slices.Contains([]string{"service", "host", "port", "endpoint"}, group) {
+			return errors.New("timeline group must be service, host, port or endpoint")
+		}
+	}
+
 	if !slices.Contains([]string{"", "both", "glyph", "label"}, c.SymbolStyle) {
 		return errors.New("symbol style must be both, glyph or label")
 	}

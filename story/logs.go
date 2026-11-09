@@ -172,6 +172,23 @@ func httpLogStory(e Environment) (runtime.Scene, error) {
 
 	m := collection.NewHTTPLog(e.Config.Columns, e.Config.Rows-2, e.Config.Palette())
 	m.Timeline = e.Config.Timeline
+
+	var groups []collection.HTTPGroup
+
+	for _, group := range e.Config.TimelineGroups {
+		switch group {
+		case "service":
+			groups = append(groups, collection.GroupByService)
+		case "host":
+			groups = append(groups, collection.GroupByHost)
+		case "port":
+			groups = append(groups, collection.GroupByPort)
+		case "endpoint":
+			groups = append(groups, collection.GroupByEndpoint)
+		}
+	}
+
+	m.SetTimelineGrouping(groups...)
 	m.TimelineLegend = e.Config.Legend
 	m.TimelineNow = time.Date(2026, 11, 8, 12, 4, 4, 0, time.UTC)
 	m.Symbols = text.Presentation(e.Config.SymbolStyle)
@@ -406,6 +423,11 @@ func urlStory(e Environment) (runtime.Scene, error) {
 func TimelineFixture() []collection.HTTPExchange {
 	records, _ := LogFixture()
 	at := records[0].Time
+	records[0].Service = "api"
+	records[1].Service = "api"
+	records[2].Service = "carrier"
+	records[2].URL = "https://carrier.example:8443/v1/shipments/p_42"
+	records[3].Service = "api"
 	records[0].Duration = 2200 * time.Millisecond
 	records[1].Time = at.Add(350 * time.Millisecond)
 	records[1].Duration = 2800 * time.Millisecond
@@ -413,5 +435,5 @@ func TimelineFixture() []collection.HTTPExchange {
 	records[2].Duration = 600 * time.Millisecond
 	records[3].Time = at.Add(1600 * time.Millisecond)
 
-	return append(records, collection.HTTPExchange{ID: "http-5", Time: at.Add(2500 * time.Millisecond), Method: "QUERY", URL: "https://api.example.test/v1/search", Completed: true, StatusCode: 200, DurationKnown: true, Duration: 900 * time.Millisecond})
+	return append(records, collection.HTTPExchange{ID: "http-5", Service: "carrier", Time: at.Add(2500 * time.Millisecond), Method: "QUERY", URL: "https://carrier.example:8443/v1/rates", Completed: true, StatusCode: 200, DurationKnown: true, Duration: 900 * time.Millisecond}, collection.HTTPExchange{ID: "http-6", Service: "events", Time: at.Add(1800 * time.Millisecond), Method: "POST", URL: "http://events.internal:9090/events", Completed: true, StatusCode: 202, DurationKnown: true, Duration: 600 * time.Millisecond})
 }

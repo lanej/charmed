@@ -62,6 +62,7 @@ func command() *cobra.Command {
 		cmd.Flags().BoolVar(&c.NoFolds, "no-folds", false, "Keep log fields and HTTP sections expanded without fold controls")
 		cmd.Flags().BoolVar(&c.TraceLogs, "trace-logs", false, "Show related logs across the selected trace")
 		cmd.Flags().BoolVar(&c.DetachedLogDetails, "detached-log-details", false, "Show selected log fields outside the hierarchy")
+		cmd.Flags().StringSliceVar(&c.TimelineGroups, "timeline-group-by", nil, "Group timeline by service, host, port or endpoint")
 		cmd.Flags().BoolVar(&c.Timeline, "timeline", false, "Show HTTP requests on a shared time axis")
 		cmd.Flags().BoolVar(&c.RawBody, "raw-body", false, "Show captured HTTP body formatting")
 		cmd.Flags().StringVar(&c.Emphasis, "emphasis", c.Emphasis, "Atom emphasis: bright, normal or dim")

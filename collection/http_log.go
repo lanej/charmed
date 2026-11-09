@@ -22,6 +22,7 @@ import (
 // handle is retained. DurationKnown distinguishes unavailable latency from zero.
 type HTTPExchange struct {
 	ID, RequestID, TraceID          string
+	Service                         string
 	Time                            time.Time
 	Method, URL                     string
 	StatusCode                      int
@@ -35,6 +36,7 @@ type HTTPExchange struct {
 // HTTPLog exposes native table and viewport models. Resize keeps custom styles
 // and key maps; data changes rebuild rows and the selected detail content.
 type HTTPLog struct {
+	TimelineGroupBy                  []HTTPGroup
 	Timeline                         bool
 	TimelineLegend                   bool
 	TimelineNow                      time.Time
@@ -174,9 +176,15 @@ func (m *HTTPLog) Resize(width, height int) {
 	m.height = max(1, height)
 	m.listWidth = max(1, width)
 	m.detailsWidth = max(1, width)
-	m.ResizeList(width, max(1, height/3))
+
+	listHeight := max(1, height/3)
+	if m.Timeline {
+		listHeight = max(1, height/2)
+	}
+
+	m.ResizeList(width, listHeight)
 	m.Details.SetWidth(max(1, width-m.scrollbarWidth()))
-	m.Details.SetHeight(max(1, height-height/3-2))
+	m.Details.SetHeight(max(1, height-listHeight-2))
 	m.rebuildRows()
 	m.refreshDetails(false)
 }
@@ -309,10 +317,21 @@ func (m *HTTPLog) UpdateRequests(msg tea.Msg) tea.Cmd {
 
 	var cmd tea.Cmd
 
+	records := m.records
+	if m.Timeline && len(m.TimelineGroupBy) > 0 {
+		records = m.timelineRecords()
+		for i, record := range records {
+			if record.ID == m.selectedID {
+				m.Table.SetCursor(i)
+				break
+			}
+		}
+	}
+
 	m.Table, cmd = m.Table.Update(msg)
-	if len(m.records) > 0 {
+	if len(records) > 0 {
 		index := min(max(0, m.Table.Cursor()), len(m.records)-1)
-		m.Select(m.records[index].ID)
+		m.Select(records[index].ID)
 	}
 
 	return cmd

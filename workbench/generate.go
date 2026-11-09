@@ -121,7 +121,14 @@ func Generate(out string) error {
 			variants = append(variants, struct {
 				name   string
 				change func(*story.Config)
-			}{name: "Timeline", change: func(c *story.Config) { c.Timeline = true; c.Legend = true }})
+			}{name: "Timeline", change: func(c *story.Config) { c.Timeline = true; c.Legend = true }}, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Timeline grouped", change: func(c *story.Config) {
+				c.Timeline = true
+				c.Legend = true
+				c.TimelineGroups = []string{"service", "endpoint"}
+			}})
 		}
 
 		if d.ID == "pattern/log-inspector" || d.ID == "collection/http-log" {

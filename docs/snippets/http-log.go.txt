@@ -8,3 +8,4 @@ requests.Select("http-2")
 requests.Resize(width, height)
 view := requests.View()
 // Optional timeline: set Timeline and supply an observed TimelineNow.
+requests.SetTimelineGrouping(collection.GroupByService, collection.GroupByEndpoint)
