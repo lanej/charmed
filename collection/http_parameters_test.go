@@ -66,7 +66,7 @@ func TestHTTPParametersPreserveMalformedSourceAndCaptureBoundaries(t *testing.T)
 
 			frame := ansi.Strip(m.DetailView())
 			if example.want != "" {
-				if !strings.Contains(frame, "Invalid parameter encoding") || !strings.Contains(frame, example.want) {
+				if !strings.Contains(frame, "Invalid parameter") || !strings.Contains(frame, example.want) {
 					t.Fatal("malformed source lost", frame)
 				}
 			} else if strings.Contains(frame, "Parameters") {

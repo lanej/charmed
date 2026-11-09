@@ -16,11 +16,13 @@ const (
 )
 
 const (
-	inspectorMinLogs           = 40
-	inspectorTimelineMinHeight = 28
-	inspectorRequestsShare     = .34
-	inspectorDetailsShare      = .60
-	inspectorTimelineShare     = .40
+	inspectorMinLogs               = 40
+	inspectorTimelineMinHeight     = 28
+	inspectorTimelinePreferredLogs = 52
+	inspectorRequestsShare         = .34
+	inspectorDetailsShare          = .60
+	inspectorTimelineShare         = .40
+	inspectorTimelineDetailsShare  = 2.0 / 3
 )
 
 type inspectorRegions struct{ requests, details, logs layout.Size }
@@ -70,7 +72,8 @@ func planInspector(size layout.Size, preset InspectorLayout) (InspectorLayout, i
 	if preset == InspectorTimeline && size.Width >= inspectorMinDetails+inspectorMinLogs+theme.SpaceSmall && size.Height >= inspectorTimelineMinHeight {
 		top := max(10, int(float64(height)*inspectorTimelineShare))
 		bottom := height - top
-		detailsWidth := max(inspectorMinDetails, (size.Width-theme.SpaceSmall)/2)
+		logsMinimum := min(inspectorTimelinePreferredLogs, size.Width-theme.SpaceSmall-inspectorMinDetails)
+		detailsWidth := min(size.Width-theme.SpaceSmall-logsMinimum, max(inspectorMinDetails, int(float64(size.Width-theme.SpaceSmall)*inspectorTimelineDetailsShare)))
 		logsWidth := size.Width - theme.SpaceSmall - detailsWidth
 
 		return InspectorTimeline, inspectorRegions{requests: layout.Size{Width: size.Width, Height: top}, details: layout.Size{Width: detailsWidth, Height: bottom}, logs: layout.Size{Width: logsWidth, Height: bottom}}

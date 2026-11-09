@@ -61,7 +61,7 @@ type HTTPLog struct {
 }
 
 func NewHTTPLog(width, height int, t theme.Theme) *HTTPLog {
-	m := &HTTPLog{Theme: t, Limit: DefaultLogLimit, BodyPreviewBytes: DefaultBodyPreviewBytes, Follow: true, URLFormat: text.PathAndQuery, Folding: true, ShowScrollbar: true, RequestOpen: true, ResponseOpen: true, ParametersOpen: true}
+	m := &HTTPLog{Theme: t, Limit: DefaultLogLimit, BodyPreviewBytes: DefaultBodyPreviewBytes, Follow: true, URLFormat: text.DefaultURLFormat, Folding: true, ShowScrollbar: true, RequestOpen: true, ResponseOpen: true, ParametersOpen: true}
 	m.Table = NewDenseTable(nil, nil, max(1, width), max(1, height), t)
 	m.Details = NewViewport("", width, height)
 	m.Resize(width, height)
@@ -231,7 +231,12 @@ func (m *HTTPLog) target(value string) string {
 		return text.Inline(m.URLFormatter(value))
 	}
 
-	return text.FormatURL(value, m.URLFormat)
+	format := m.URLFormat
+	if format == text.DefaultURLFormat {
+		format = text.PathOnly
+	}
+
+	return text.FormatURL(value, format)
 }
 
 func (m *HTTPLog) ResizeDetails(width, height int) {
@@ -508,29 +513,7 @@ func (m *HTTPLog) refreshDetails(reset bool) {
 
 	rows = append(rows, "")
 
-	if parameters := m.parameterView(record, width); parameters != "" {
-		rows = append(rows, parameters, "")
-	}
-
-	for _, part := range []struct {
-		name    string
-		open    bool
-		headers http.Header
-		body    HTTPBody
-	}{{"Request", m.RequestOpen, record.RequestHeaders, record.RequestBody}, {"Response", m.ResponseOpen, record.ResponseHeaders, record.ResponseBody}} {
-		heading := m.Theme.Heading().Render(part.name)
-		if m.Folding {
-			marker := text.Disclosure("", part.open, m.Theme, m.Symbols)
-			if marker != "" {
-				heading = marker + " " + heading
-			}
-		}
-
-		rows = append(rows, heading)
-		if part.open {
-			rows = append(rows, headerView(part.headers, m.Theme, width), bodyWithContentType(part.body, part.headers).View(m.Raw, m.BodyPreviewBytes, m.Theme), "")
-		}
-	}
+	rows = append(rows, m.detailSections(record, width))
 
 	content := ansi.Wrap(strings.Join(rows, "\n"), max(1, m.Details.Width()), "")
 	m.Details.SetContent(content)

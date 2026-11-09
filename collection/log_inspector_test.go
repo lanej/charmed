@@ -560,7 +560,7 @@ func TestHTTPMinimalSummaryAndURLModesKeepCapturedSource(t *testing.T) {
 	}
 
 	frame := ansi.Strip(m.DetailView())
-	if !strings.Contains(frame, "PATCH /v1/parcels%2F42?tag=a%2Bb") || strings.Contains(frame, "Method") || strings.Contains(frame, "Target") || strings.Contains(frame, "Latency") {
+	if !strings.Contains(frame, "PATCH /v1/parcels%2F42") || strings.Contains(frame, "Method") || strings.Contains(frame, "Target") || strings.Contains(frame, "Latency") {
 		t.Fatal("HTTP summary retained redundant labels", frame)
 	}
 
