@@ -86,12 +86,12 @@ def check_catalog_navigation(browser, site, output):
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     page.goto(base + "atoms.html")
-    page.locator('.group-card h2 a[href="atoms-chart.html"]').click()
+    page.locator('.group-card[href="atoms-chart.html"]').click()
     page.wait_for_url(base + "atoms-chart.html")
     assert page.locator('.desktop-nav [aria-current="page"]').inner_text() == "Charts"
     assert page.locator(".component").count() >= 10
     page.locator('.desktop-nav .nav-level[href="molecules.html"]').click()
-    page.locator('.group-card h2 a[href="molecules-commands.html"]').click()
+    page.locator('.group-card[href="molecules-commands.html"]').click()
     page.wait_for_url(base + "molecules-commands.html")
     page.locator('.dependency').filter(has_text="input/text").click()
     page.wait_for_url(base + "atoms-input.html#input/text")
@@ -195,6 +195,17 @@ def main():
                 if filename in [level.lower() + ".html" for level in expected_levels]:
                     assert page.locator(".component").count() == 0, "category pages must stay lightweight"
                     assert page.locator(".group-card").count() > 0
+                    assert page.locator(".group-card details, .group-card summary, .group-card button").count() == 0
+                    specimens = page.locator(".group-specimen pre")
+                    assert specimens.count() == page.locator(".group-card").count()
+                    assert all(text.strip() for text in specimens.all_text_contents()), "every group needs a native example"
+                    assert specimens.evaluate_all("""els => els.every(el => {
+                        const sample = el.getBoundingClientRect();
+                        const card = el.parentElement.getBoundingClientRect();
+                        return el.scrollWidth <= el.clientWidth + 1 &&
+                            sample.left >= card.left && sample.right <= card.right &&
+                            sample.top >= card.top && sample.bottom <= card.bottom;
+                    })"""), (filename, width, "clipped specimen")
                     assert page.locator('.desktop-nav [aria-current="page"]').count() == 1
                 if filename.startswith("molecules-"):
                     molecules = page.locator(".component")

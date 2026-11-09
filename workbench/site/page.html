@@ -52,11 +52,11 @@
 <p class="catalog-count">{{.Count}} component{{if ne .Count 1}}s{{end}} · {{len .Groups}} group{{if ne (len .Groups) 1}}s{{end}}</p>
 </section>
 <div class="category-groups">
-{{range .Groups}}<section class="group-card">
-<div class="group-card-heading"><h2><a href="{{.File}}">{{.Name}} <span aria-hidden="true">→</span></a></h2><span>{{len .Entries}}</span></div>
-<p class="group-card-preview">{{range $i, $entry := .Entries}}{{if lt $i 3}}{{if $i}} · {{end}}{{name .Title}}{{end}}{{end}}{{if gt (len .Entries) 3}} …{{end}}</p>
-<details class="group-contents"><summary>Show components</summary><ul>{{range .Entries}}<li><a href="{{link .ID}}">{{name .Title}}</a></li>{{end}}</ul></details>
-</section>{{else}}<p>No fixtures are published in this category yet.</p>{{end}}
+{{range .Groups}}<a class="group-card" href="{{.File}}" aria-label="{{.Name}}, {{len .Entries}} component{{if ne (len .Entries) 1}}s{{end}}">
+<div class="group-specimen" data-specimen="{{.Specimen.ID}}" aria-hidden="true"><pre>{{.Specimen.Content}}</pre></div>
+<div class="group-card-body"><div class="group-card-heading"><h2>{{.Name}}</h2><span class="group-card-arrow" aria-hidden="true">→</span></div>
+<p class="group-card-caption"><span>{{.Specimen.Name}}</span><span>{{len .Entries}} component{{if ne (len .Entries) 1}}s{{end}}</span></p></div>
+</a>{{else}}<p>No fixtures are published in this category yet.</p>{{end}}
 </div>
 {{end}}
 {{.Page.Content}}

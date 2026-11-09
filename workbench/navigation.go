@@ -17,6 +17,7 @@ type guideLevel struct {
 type guideGroup struct {
 	Name, Family, File, Anchor string
 	Entries                    []ManifestEntry
+	Specimen                   guideSpecimen
 }
 
 type guideLink struct {
@@ -67,7 +68,7 @@ func levelDescription(level string) string {
 	case "Foundations":
 		return "Shared rules for color, type, spacing, geometry and interaction. Start here to keep every component consistent."
 	case "Atoms":
-		return "Individual controls and visual primitives. Use these pieces directly or combine them into a larger behavior."
+		return "Controls and visual primitives, ready to compose."
 	case "Molecules":
 		return "Small compositions with one purpose: a labeled field, a metric with history, or a searchable command palette."
 	case "Organisms":

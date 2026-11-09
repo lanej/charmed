@@ -208,23 +208,26 @@ nav .nav-family-link { font-weight: 400; color: var(--muted); }
 .component-subheading h5 { margin: 0; font-size: 17px; }
 
 /* Category overviews and focused capability pages share the compiled catalog. */
-.catalog-intro { margin-bottom: 28px; scroll-margin-top: 4.5rem; }
-.catalog-intro .eyebrow { margin-top: 0; }
-.catalog-description { color: var(--muted); font-size: 18px; max-width: 65ch; }
+.catalog-intro { margin-bottom: 24px; scroll-margin-top: 4.5rem; }
+.catalog-intro .eyebrow { margin: 0 0 10px; font-size: 12px; }
+.catalog-intro h1 { font-size: clamp(32px,4vw,44px); margin: 0 0 16px; }
+.catalog-description { color: var(--muted); font-size: 17px; max-width: 62ch; margin: 0 0 14px; }
 .catalog-count { color: var(--muted); font-size: 13px; }
 .catalog-breadcrumb { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
-.category-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 16px; margin: 28px 0 40px; }
-.group-card { min-width: 0; padding: 20px; border: 1px solid var(--line); background: var(--surface); }
-.group-card-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-.group-card-heading h2 { margin: 0; font-size: 21px; }
-.group-card-heading h2 a { color: var(--text); text-decoration: none; }
-.group-card-heading h2 a:hover { color: var(--accent); }
-.group-card-heading > span { color: var(--muted); font-size: 13px; }
-.group-card-preview { color: var(--muted); font-size: 13px; margin: 12px 0 4px; }
-.group-contents { padding: 0; margin: 0; border: 0; background: transparent; }
-.group-contents summary { font-size: 13px; padding: 8px 0; }
-.group-card ul { padding: 0; margin: 12px 0 0; list-style: none; }
-.group-card li a { display: block; padding: 5px 0; text-decoration: none; font-size: 14px; }
+.category-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 28px 0 40px; }
+.group-card { display: block; min-width: 0; overflow: hidden; border: 1px solid color-mix(in srgb, var(--line) 55%, transparent); border-radius: 8px; background: var(--surface); color: var(--text); text-decoration: none; transition: border-color .15s, background .15s; }
+.group-card:hover { border-color: var(--accent); background: color-mix(in srgb, var(--surface) 90%, var(--accent)); }
+.group-card:focus-visible { outline-offset: 4px; }
+.group-specimen { display: grid; place-items: center; height: 216px; padding: 18px; container-type: inline-size; overflow: hidden; background: var(--bg); border-bottom: 1px solid color-mix(in srgb, var(--line) 35%, transparent); }
+.group-specimen pre { width: max-content; max-width: 100%; border: 0; background: transparent; padding: 0; margin: 0; overflow: hidden; white-space: pre; font-size: clamp(9px,4cqw,11.5px); line-height: 1.25; pointer-events: none; }
+.group-card-body { padding: 18px 20px; }
+.group-card-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.group-card-heading h2 { margin: 0; font-size: 19px; }
+.group-card-arrow { color: var(--accent); transition: transform .15s; }
+.group-card:hover .group-card-arrow { transform: translateX(3px); }
+.group-card-caption { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; margin: 5px 0 0; font-size: 12px; color: var(--muted); }
+@media(prefers-reduced-motion: reduce) { .group-card, .group-card-arrow { transition: none; } .group-card:hover .group-card-arrow { transform: none; } }
+@media(max-width:1000px) { .category-groups { grid-template-columns: 1fr; } }
 .group-jump-links { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 24px 0; list-style: none; }
 .group-jump-links a { display: block; padding: 5px 12px; border: 1px solid var(--line); background: var(--surface); text-decoration: none; font-size: 13px; }
 .component > h2 { font-size: 24px; margin: 0 0 12px; }
@@ -239,11 +242,13 @@ nav .nav-group { font-size: 13px; padding-block: 5px; }
   .catalog-intro { margin-bottom: 20px; }
   .catalog-intro .eyebrow { display: none; }
   .catalog-description { font-size: 16px; }
-  .category-groups { grid-template-columns: 1fr; gap: 12px; margin-top: 20px; }
-  .group-card { padding: 16px; }
-  .group-card-heading h2 { margin-top: 0; font-size: 21px; }
-  .group-contents summary { min-height: 44px; }
-  .group-card li a, .group-jump-links a { min-height: 44px; display: flex; align-items: center; }
+  .category-groups { grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
+  .group-specimen { height: 190px; padding: 16px; }
+  .group-specimen pre { font-size: clamp(9px,4cqw,10.5px); }
+  .group-card-body { padding: 14px 16px; }
+  .group-card-heading h2 { margin: 0; font-size: 19px; }
+  .group-card-caption { margin: 5px 0 0; }
+  .group-jump-links a { min-height: 44px; display: flex; align-items: center; }
   .catalog-breadcrumb { font-size: 13px; }
   .component > h2 { font-size: 22px; }
   .component-subheading h3 { font-size: 17px; }

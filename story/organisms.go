@@ -175,7 +175,15 @@ func formStory(e Environment) (runtime.Scene, error) {
 		huh.NewConfirm().Title("Enable environment?").Value(&enabled)), huh.NewGroup(
 		huh.NewText().Title("Notes").Value(&note), huh.NewNote().Title("Ready").Description("Your fixture settings are ready to submit.")))
 
-	return &scene{init: f.Init, resize: func(s layout.Size) { f.WithWidth(s.Width).WithHeight(s.Height) }, update: func(msg tea.Msg) tea.Cmd {
+	return &scene{init: f.Init, resize: func(s layout.Size) {
+		f.WithWidth(s.Width).WithHeight(s.Height)
+
+		if e.capture {
+			// Prepare the native group viewport with explicit geometry. Do not execute
+			// focus, terminal queries, or other initialization commands during capture.
+			_, _ = f.Update(tea.WindowSizeMsg{Width: s.Width, Height: s.Height})
+		}
+	}, update: func(msg tea.Msg) tea.Cmd {
 		_, cmd := f.Update(msg)
 		if f.State == huh.StateCompleted {
 			emit(e, map[string]any{"type": "submitted", "name": name, "region": region, "enabled": enabled, "features": features})

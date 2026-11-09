@@ -59,6 +59,11 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		{File: "brand.html", Title: "Brand sheet", Source: "brand.md", Resource: true},
 	}
 	navigation := atomicNavigation(entries)
+
+	if err := addSpecimens(navigation); err != nil {
+		return err
+	}
+
 	pages = append(pages, catalogPages(navigation)...)
 
 	brand := newBrandPalette(theme.New(theme.Dark))
