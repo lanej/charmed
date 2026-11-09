@@ -80,6 +80,8 @@ func TestLifecycleStatusesKeepLabelsGlyphsAndReservedWidth(t *testing.T) {
 			{feedback.Running, "▶", ">"},
 			{feedback.Paused, "‖", "="},
 			{feedback.Disabled, "⊘", "/"},
+			{feedback.Connected, "●", "+"},
+			{feedback.Disconnected, "○", "-"},
 		} {
 			glyph := state.unicode
 			if palette.ASCII {
@@ -98,8 +100,8 @@ func TestLifecycleStatusesKeepLabelsGlyphsAndReservedWidth(t *testing.T) {
 			}
 		}
 
-		if feedback.MaxStatusWidth(palette) != 12 {
-			t.Fatal("status allocation must fit the twelve-cell DISABLED pill")
+		if feedback.MaxStatusWidth(palette) != 16 {
+			t.Fatal("status allocation must fit the sixteen-cell DISCONNECTED pill")
 		}
 	}
 }

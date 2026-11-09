@@ -20,3 +20,7 @@ In the native deployment screen, arrows choose hosts and windows, brackets choos
 Switch between the deployment fixture's stacked and disconnected-band snapshots using the variant tabs, then inspect the corresponding Go implementation below the preview.
 
 ## Screen fixtures
+
+## Application shell
+
+The application shell fixture composes `layout.Header`, `navigation.Tabs`, `layout.Panel` and `layout.Footer`. The header reserves two rows, the tab bar and footer one each, and the panel receives the remaining height. Left/Right or Home/End changes the active section and its content; resize keeps the selected tab. The fixture contains synthetic display data. In an application with focusable content, use the parent focus scope to focus or blur the tab bar before forwarding keys.

@@ -11,6 +11,7 @@ import (
 	"charm.land/bubbles/v2/viewport"
 	tea "charm.land/bubbletea/v2"
 	"github.com/NimbleMarkets/ntcharts/v2/linechart/timeserieslinechart"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/feedback"
@@ -118,7 +119,12 @@ func (m *Dashboard) Resize(size layout.Size) {
 
 	paddingWidth := collection.TablePaddingWidth(columnCount)
 	w := max(paddingWidth, layout.PanelContentSize(layout.Size{Width: m.leftWidth}).Width)
-	statusWidth := feedback.MaxStatusWidth(m.theme)
+
+	statusWidth := 1
+	for _, service := range m.services {
+		statusWidth = max(statusWidth, ansi.StringWidth(serviceStatus(service.Status).View(text.Bright, m.theme)))
+	}
+
 	m.Table.SetColumns([]table.Column{{Title: "SERVICE", Width: max(1, w-statusWidth-paddingWidth)}, {Title: "STATE", Width: statusWidth}})
 	m.Table.SetWidth(w)
 	m.Table.SetHeight(max(1, m.tableHeight-1))

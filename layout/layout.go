@@ -91,7 +91,11 @@ func Panel(title, content string, size Size, t theme.Theme, focused bool) string
 	innerWidth := size.Width - 2*theme.BorderCells
 	frame := t.FrameBorder()
 	border := t.BorderStyle(focused)
+
 	label := ansi.Truncate(" "+title+" ", innerWidth, "")
+	if title == "" {
+		label = ""
+	}
 
 	labelStyle := t.Subtle()
 	if focused {

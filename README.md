@@ -26,11 +26,12 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 | Package | Includes |
 | --- | --- |
 | `theme` | Dark, light, high-contrast and monochrome themes; semantic and dim colors; independent series colors; named glyphs, spacing, ASCII and motion policies |
-| `layout` | ANSI-aware fitting, cell rectangles, responsive splits, stacks and panels |
+| `layout` | ANSI-aware fitting, cell rectangles, responsive splits, stacks, panels, headers and footers |
+| `navigation` | Keyboard-driven tabs with stable selection and overflow indicators |
 | `interaction` | Focus scopes and typed selection/submission events |
 | `input` | Bubbles text input, textarea, virtual cursor and labeled field composition |
 | `collection` | Native tables, lists, trees, file pickers, viewports and bounded structured logs |
-| `feedback` | Attention indicators, spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
+| `feedback` | Health, lifecycle and connection status atoms, attention indicators, spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
 | `attention` | Optional one-sided or two-sided warn/error boundaries, explicit unknown/off states and typed transitions |
 | `form` | Themed Huh forms with native nested focus and validation |
 | `text` | Labels, badges, semantic pills, key hints and Glamour Markdown rendering |
