@@ -1,4 +1,4 @@
-# Foundations
+## Foundation contracts
 
 Themes, cell geometry, focus and motion are shared across every component. Choose semantic roles rather than embedding color decisions in application widgets. Layout parents allocate rectangles in terminal columns and rows; focus scopes route keys to the active child.
 

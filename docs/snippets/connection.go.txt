@@ -1,6 +1,0 @@
-connected := feedback.Connected.View(text.Normal, palette)
-disconnected := feedback.Disconnected.View(text.Normal, palette)
-
-// Choose the state from application observations; rendering performs no I/O.
-footer := layout.Footer{Help: "Ctrl+C quit", Status: connected}
-view := footer.View(64, palette)

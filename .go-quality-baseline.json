@@ -716,7 +716,6 @@
     {"path": "theme/theme.go", "linter": "exhaustive", "text": "missing cases in switch of type theme.Mode: theme.Dark", "source": "switch mode {", "count": 1},
     {"path": "theme/theme.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return t.Series[index%len(t.Series)]", "count": 1},
     {"path": "workbench/generate.go", "linter": "gosec", "text": "G304: Potential file inclusion via variable", "source": "data, err := os.ReadFile(filepath.Join(dir, \"go.mod\"))", "count": 1},
-    {"path": "workbench/generate.go", "linter": "gosec", "text": "G304: Potential file inclusion via variable", "source": "data, err := os.ReadFile(path)", "count": 1},
     {"path": "workbench/generate_test.go", "linter": "gosec", "text": "G304: Potential file inclusion via variable", "source": "after, err := os.ReadFile(filepath.Join(directory, name))", "count": 1},
     {"path": "workbench/generate_test.go", "linter": "gosec", "text": "G304: Potential file inclusion via variable", "source": "data, err := os.ReadFile(path)", "count": 1},
     {"path": "workbench/highlight.go", "linter": "errcheck", "text": "Error return value of `out.WriteByte` is not checked", "source": "out.WriteByte('\\n')", "count": 1},
@@ -866,21 +865,16 @@
     {"path": "workbench/server_test.go", "linter": "wsl_v5", "text": "missing whitespace above this line (never cuddle decl)", "source": "var output strings.Builder", "count": 1},
     {"path": "workbench/server_test.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many statements above defer)", "source": "ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)", "count": 1},
     {"path": "workbench/server_test.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many statements above if)", "source": "build := exec.Command(\"go\", \"build\", \"-o\", binary, \"../cmd/workbench\")", "count": 1},
-    {"path": "workbench/site.go", "linter": "gosec", "text": "G203: The used method does not auto-escape HTML. This can potentially lead to 'Cross-site Scripting' vulnerabilities, in case the attacker controls the input.", "source": "page.Content = template.HTML(rendered)", "count": 1},
     {"path": "workbench/site.go", "linter": "gosec", "text": "G304: Potential file inclusion via variable", "source": "data, err := os.ReadFile(path)", "count": 1},
-    {"path": "workbench/site.go", "linter": "gosec", "text": "G304: Potential file inclusion via variable", "source": "source, err := os.ReadFile(filepath.Join(root, \"docs\", strings.TrimSuffix(page.File, \".html\")+\".md\"))", "count": 1},
     {"path": "workbench/site.go", "linter": "govet", "text": "shadow: declaration of \"err\" shadows declaration at line <line>", "source": "if err := layout.Execute(&output, struct {", "count": 1},
     {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (invalid statement above assign)", "source": "funcs := template.FuncMap{", "count": 1},
-    {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (invalid statement above assign)", "source": "page.Showcase = append(page.Showcase, showcaseItem{item.Title, item.Description, \"components.html#\" + item.ID, frame, narrow})", "count": 1},
     {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (invalid statement above assign)", "source": "preview.Snapshots = append(preview.Snapshots, Snapshot{Name: \"Narrow\", Config: c, Frame: narrow})", "count": 1},
     {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (invalid statement above if)", "source": "if page.File == \"development.html\" {", "count": 1},
     {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (invalid statement above range)", "source": "for _, page := range pages {", "count": 1},
-    {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (never cuddle decl)", "source": "var content bytes.Buffer", "count": 1},
     {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (no shared variables above range)", "source": "for i := range pages {", "count": 1},
     {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above branch)", "source": "break", "count": 1},
     {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return \"\", fmt.Errorf(\"unknown component link %q\", id)", "count": 1},
     {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many statements above if)", "source": "layout, err := template.New(\"page.html\").Funcs(funcs).ParseFS(siteFiles, \"site/page.html\", \"site/mark.svg\")", "count": 1},
-    {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many statements above if)", "source": "narrow, err := story.Frame(preview.ID, c)", "count": 1},
-    {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many statements above if)", "source": "source, err := os.ReadFile(filepath.Join(root, \"docs\", strings.TrimSuffix(page.File, \".html\")+\".md\"))", "count": 1}
+    {"path": "workbench/site.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many statements above if)", "source": "narrow, err := story.Frame(preview.ID, c)", "count": 1}
   ]
 }

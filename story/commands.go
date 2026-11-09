@@ -14,7 +14,7 @@ func commandDefinitions() []Definition {
 	config.Columns, config.Rows = 88, 28
 	config.Value = ""
 
-	return []Definition{{ID: "collection/command-palette", Title: "Molecules/Navigation/Command palette", Level: "Molecules", Family: "commands", Description: "Fuzzy-searchable commands with shortcuts, current settings and unavailable reasons; applications own execution.", Source: "story/commands.go", Symbol: "commandPaletteStory", ExampleSource: "docs/snippets/command-palette.go.txt", Composes: []string{"input/text", "text/key-hint", "foundations/layout"}, Controls: []string{"state", "value"}, States: []string{"ready", "empty", "disabled"}, Defaults: config, Factory: commandPaletteStory}}
+	return []Definition{{ID: "collection/command-palette", Title: "Molecules/Navigation/Command palette", Level: "Molecules", Family: "commands", Description: "Fuzzy-searchable commands with shortcuts, current settings and unavailable reasons; applications own execution.", Source: "story/commands.go", Symbol: "commandPaletteStory", Composes: []string{"input/text", "text/key-hint", "foundations/layout"}, Controls: []string{"state", "value"}, States: []string{"ready", "empty", "disabled"}, Defaults: config, Factory: commandPaletteStory}}
 }
 
 func commandPaletteStory(e Environment) (runtime.Scene, error) {

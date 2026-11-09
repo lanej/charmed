@@ -14,7 +14,7 @@ field := input.NewText(input.TextOptions{
 cmd := field.Focus()
 ```
 
-Explore the [input components](components.html#input/text), [charts](components.html#chart/sparkline), and [complete screens](examples.html#screen/services). The catalog shows the visual first, then a focused usage snippet. Full fixture implementations are linked separately.
+Explore the [input components](atoms-input.html#input/text), [charts](atoms-chart.html#chart/sparkline), and [complete screens](screens-pattern.html#screen/services). The catalog shows the visual first, then a focused usage snippet. Full fixture implementations are linked separately.
 
 ## Inspect a native fixture
 
@@ -32,8 +32,8 @@ Run from the repository root with **Go 1.26.10+**. Use Ctrl+C to exit. You can p
 Organize Go packages by capability rather than atomic level. Use atoms, molecules, and organisms to describe **composition depth in the catalog**, not to create extra package layers.
 
 1. Implement a wrapper only where it establishes useful defaults, semantics, or reusable composition.
-2. Register a deterministic story in the matching `story/` file. Set its actual building blocks in `Definition.Composes` so the catalog can link them.
-3. Supply a short consumer-oriented example in `docs/snippets/` when the full fixture would obscure the public API.
+2. Register a deterministic story in the matching `story/` file. Set `Definition.Level` and `Definition.Family` to place it on a category and subgroup page. Set its actual building blocks in `Definition.Composes` so the catalog can link them.
+3. Add a consumer example in `docs/snippets/<story_id>.go` (replace `/` and `-` with `_`) and register its renderer in `docs/snippets/render.go`. Include sample data, construction and rendering using public APIs. These are ordinary Go functions, compiled and linted with the library. The generator displays the function body without package or outer-function scaffolding and renders that same function in the default **Example** tab. Keep fixture variants in the other tabs; implementation source is linked separately. Missing or empty examples fail the guide build.
 
 Keep services and decisions outside UI models. The registry rejects duplicate IDs, composition cycles, and references to higher atomic levels. See [DESIGN.md](https://github.com/lanej/charmed/blob/main/DESIGN.md) for the design constraints.
 
@@ -46,7 +46,7 @@ just docs
 
 Install [just](https://github.com/casey/just#installation) and [ShellCheck](https://github.com/koalaman/shellcheck#installing), then run `just` to list targets. The targets select the module's Go version unless explicitly overridden. `just check` runs ShellCheck and checks formatting, vet, module tidiness, strict Go lint, uncached race tests, and reachable vulnerabilities on Linux and macOS. CI pins ShellCheck to 0.11.0. For a quicker iteration, run `just lint`, which includes ShellCheck; use `just shellcheck`, `just test` or `just vuln` for individual gates and `just fmt path/to/file.go` or `just fix ./path/to/package` for scoped fixes. Existing Go lint debt is in a shrinking baseline: new findings must be fixed, and resolved findings removed with `just ratchet`. Never enlarge the baseline to accept new findings.
 
-The generator writes the static guide to `docs/dist/`, validates source and composition, and preserves terminal output colors. The responsive browser check covers mobile and desktop layouts, navigation, and fragment links.
+The generator writes the static guide to `docs/dist/`, validates source and composition, and preserves terminal output colors. Each atomic level has a visual overview; its capability groups have separate pages generated from the registry. Overview cards link directly to those pages and show excerpts of saved native snapshots, selected in `workbench/specimen.go`. Counts, navigation and composition links update with the stories. Existing component, code and variant bookmarks redirect to their new group pages. The responsive browser check covers mobile and desktop layouts, navigation, and fragment links.
 
 ## Publish documentation
 
@@ -54,7 +54,7 @@ Edit `docs/*.md`, catalog stories in `story/`, and the shared site template/styl
 
 Every same-repository documentation PR gets an isolated preview at `lanej.io/charmed/pr-preview/pr-<number>/`. The PR description is updated with **direct links to rendered pages** after the publisher verifies that the live revision matches the PR head. Previews refresh on push, are excluded from search indexing, and are removed when the PR closes. Forks receive CI checks but no privileged preview publication.
 
-Merging to `main` publishes the tested static bundle through GitHub Pages. No separate documentation server or JavaScript build tool is required; the small client script only enhances variant tabs and the mobile navigation.
+Merging to `main` publishes the tested static bundle through GitHub Pages. No separate documentation server or JavaScript build tool is required; the small client script enhances variant tabs and mobile navigation, and forwards published bookmarks to their current pages.
 
 ## Coverage
 

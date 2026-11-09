@@ -2,14 +2,12 @@ package workbench
 
 import (
 	"fmt"
-	"go/ast"
-	"go/parser"
-	"go/token"
 	"os"
 	"path/filepath"
 	"slices"
 	"strings"
 
+	"github.com/lanej/charmed/docs/snippets"
 	"github.com/lanej/charmed/interaction"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/story"
@@ -23,8 +21,10 @@ type Snapshot struct {
 }
 type ManifestEntry struct {
 	story.Definition
-	Code      string     `json:"code"`
-	Snapshots []Snapshot `json:"snapshots"`
+	Code           string        `json:"code"`
+	ExampleImports []usageImport `json:"exampleImports"`
+	ExampleFrame   string        `json:"exampleFrame"`
+	Snapshots      []Snapshot    `json:"snapshots"`
 }
 
 // Generate writes reproducible documentation inputs from the compiled Go registry.
@@ -46,13 +46,22 @@ func Generate(out string) error {
 			return err
 		}
 
-		entry := ManifestEntry{Definition: d, Code: code}
+		frame, err := snippets.Render(d.ID)
+		if err != nil {
+			return fmt.Errorf("render usage example %s: %w", d.ID, err)
+		}
+
+		if strings.TrimSpace(frame) == "" {
+			return fmt.Errorf("usage example %s rendered no content", d.ID)
+		}
+
+		entry := ManifestEntry{Definition: d, Code: code.Code, ExampleImports: code.Imports, ExampleFrame: frame}
 
 		variants := []struct {
 			name   string
 			change func(*story.Config)
 		}{
-			{"Default", func(*story.Config) {}},
+			{"Demo", func(*story.Config) {}},
 			{"Narrow", func(c *story.Config) {
 				c.Columns, c.Rows = 40, 16
 				if d.ID == "foundations/permissions" || d.ID == "diagram/state-transitions" {
@@ -420,37 +429,4 @@ func moduleRoot() (string, error) {
 
 		dir = parent
 	}
-}
-
-func sourceSymbol(path, symbol string) (string, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return "", err
-	}
-
-	if symbol == "" {
-		return string(data), nil
-	}
-
-	fset := token.NewFileSet()
-
-	file, err := parser.ParseFile(fset, path, data, parser.ParseComments)
-	if err != nil {
-		return "", err
-	}
-
-	for _, decl := range file.Decls {
-		if fn, ok := decl.(*ast.FuncDecl); ok && fn.Name.Name == symbol {
-			start := fset.Position(fn.Pos()).Offset
-			if fn.Doc != nil {
-				start = fset.Position(fn.Doc.Pos()).Offset
-			}
-
-			end := fset.Position(fn.End()).Offset
-
-			return string(data[start:end]), nil
-		}
-	}
-
-	return "", fmt.Errorf("source symbol %s missing from %s", symbol, path)
 }

@@ -1,8 +1,0 @@
-// Values and dimensions come from the application.
-values := []float64{32, 37, 34, 40, 44, 41, 47, 45, 52, 49}
-spark := chart.NewSparkline(
-    values,
-    layout.Size{Width: 48, Height: 5},
-    theme.New(theme.Dark),
-)
-view := spark.View()

@@ -207,7 +207,7 @@ type Definition struct {
 	Defaults    Config                                   `json:"defaults"`
 	Factory     func(Environment) (runtime.Scene, error) `json:"-"`
 
-	// ExampleSource is a small runnable consumer example; Source remains the fixture implementation.
+	// ExampleSource is a compiled consumer example; Source remains the implementation.
 	ExampleSource string `json:"exampleSource,omitempty"`
 }
 
