@@ -69,18 +69,22 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		{File: "components.html", Title: "Components"},
 		{File: "examples.html", Title: "Composition & examples"},
 		{File: "deployment.html", Title: "Compare a deployment"},
+		{File: "json-viewer.html", Title: "JSON viewer"},
 		{File: "development.html", Title: "Develop & publish"},
 		{File: "brand.html", Title: "Brand sheet"},
 	}
 	brand := newBrandPalette(theme.New(theme.Dark))
 	markdown := goldmark.New(goldmark.WithExtensions(extension.GFM), goldmark.WithParserOptions(parser.WithAutoHeadingID()))
+
 	for i := range pages {
 		page := &pages[i]
 		page.Brand = brand
+
 		source, err := os.ReadFile(filepath.Join(root, "docs", strings.TrimSuffix(page.File, ".html")+".md"))
 		if err != nil {
 			return err
 		}
+
 		var content bytes.Buffer
 		if err := markdown.Convert(source, &content); err != nil {
 			return err
@@ -127,6 +131,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 				if err != nil {
 					return err
 				}
+
 				page.Showcase = append(page.Showcase, showcaseItem{item.Title, item.Description, "components.html#" + item.ID, frame, narrow})
 			}
 
@@ -145,16 +150,20 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 					preview.Snapshots = []Snapshot{{Name: "Default", Config: c, Frame: frame}}
 					c.Columns = 40
 					c.Rows = 28
+
 					narrow, err := story.Frame(preview.ID, c)
 					if err != nil {
 						return err
 					}
+
 					preview.Snapshots = append(preview.Snapshots, Snapshot{Name: "Narrow", Config: c, Frame: narrow})
 					page.Preview = &preview
+
 					break
 				}
 			}
 		}
+
 		if page.File == "development.html" {
 			page.Coverage = CoverageInventory()
 		}
@@ -162,6 +171,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		page.Levels = groupLevels(page.File, entries)
 		page.Navigation = atomicNavigation()
 	}
+
 	funcs := template.FuncMap{
 		"navhref":            navHref,
 		"lower":              strings.ToLower,
@@ -176,13 +186,16 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 					return storyPage(entry) + "#" + id, nil
 				}
 			}
+
 			return "", fmt.Errorf("unknown component link %q", id)
 		},
 	}
+
 	layout, err := template.New("page.html").Funcs(funcs).ParseFS(siteFiles, "site/page.html", "site/mark.svg")
 	if err != nil {
 		return err
 	}
+
 	for _, page := range pages {
 		var output bytes.Buffer
 		if err := layout.Execute(&output, struct {

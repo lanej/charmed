@@ -59,6 +59,7 @@ type Config struct {
 	CommandQuery       string                `json:"commandQuery"`
 	CommandPalette     bool                  `json:"commandPalette"`
 	RawBody            bool                  `json:"rawBody"`
+	JSONFolded         bool                  `json:"jsonFolded"`
 	TraceWindow        string                `json:"traceWindow"`
 }
 

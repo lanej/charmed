@@ -89,6 +89,16 @@ func (m *HTTPLog) Entries() []HTTPExchange {
 	return out
 }
 
+// IDs returns retained observation identities without copying captured bodies.
+func (m *HTTPLog) IDs() []string {
+	ids := make([]string, len(m.records))
+	for i, record := range m.records {
+		ids[i] = record.ID
+	}
+
+	return ids
+}
+
 func cloneExchange(record HTTPExchange) HTTPExchange {
 	record.RequestHeaders = record.RequestHeaders.Clone()
 	record.ResponseHeaders = record.ResponseHeaders.Clone()

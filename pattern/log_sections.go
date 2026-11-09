@@ -51,6 +51,7 @@ func (m *LogInspector) SetFolding(enabled bool) {
 	m.folding = enabled
 	if !enabled {
 		clear(m.collapsed)
+		clear(m.jsonStates)
 	}
 
 	m.HTTP.SetFolding(enabled)

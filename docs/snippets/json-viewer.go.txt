@@ -1,0 +1,20 @@
+payload := []byte(`{
+  "shipment": {"id": "shp_42", "options": {"insurance": true, "currency": "USD"}},
+  "rates": [{"carrier": "USPS", "rate": 8.500}, {"carrier": "UPS", "rate": 12.50}],
+  "attempt": 1,
+  "attempt": 2,
+  "sequence": 9007199254740993
+}`)
+
+viewer := collection.NewJSONViewer(100, 30, palette)
+if err := viewer.SetSource(payload); err != nil {
+    // The viewer displays a bounded source fallback with the diagnostic.
+    return err
+}
+
+// Forward Bubble Tea messages through viewer.Update(msg).
+// Enter folds objects/arrays; arrows navigate; paging scrolls wrapped values.
+view := viewer.View()
+
+// Native viewport customization stays available through viewer.Model.
+// Set viewer.Raw = true, then viewer.Refresh(), to inspect the original source.

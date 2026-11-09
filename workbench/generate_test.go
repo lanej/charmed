@@ -26,8 +26,8 @@ func TestStaticGuide(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if len(files) != 7 {
-		t.Fatalf("got %d pages, want seven grouped guides", len(files))
+	if len(files) != 8 {
+		t.Fatalf("got %d pages, want eight guides", len(files))
 	}
 
 	pages := map[string][]byte{}

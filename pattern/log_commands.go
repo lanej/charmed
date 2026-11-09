@@ -82,6 +82,13 @@ func (m *LogInspector) Commands() []collection.Command {
 
 	commands = append(commands, collection.Command{ID: "body/raw", Label: bodyMode, Description: "Switch captured body formatting", Shortcut: "r", Keywords: []string{"pretty", "syntax", "raw", "body"}, DisabledReason: rawReason})
 
+	jsonReason, jsonShortcut := "Select an object or array in a JSON payload", "Enter"
+	if viewer := m.focusedJSON(); viewer != nil && viewer.CanFold() && !m.PaneCollapsed(m.FocusedPane()) {
+		jsonReason, jsonShortcut = "", viewer.Toggle.Help().Key
+	}
+
+	commands = append(commands, collection.Command{ID: "json/toggle", Label: "JSON: fold/unfold selected container", Description: "Toggle this object or array inside the payload", Shortcut: jsonShortcut, DisabledReason: jsonReason})
+
 	for _, section := range []struct {
 		id, label, shortcut string
 		open                bool
@@ -159,6 +166,10 @@ func (m *LogInspector) runCommand(id string) tea.Cmd {
 		m.Resize(m.size)
 	case "body":
 		return m.updateHTTPControls(tea.KeyPressMsg{Code: 'r'})
+	case "json":
+		if viewer := m.focusedJSON(); viewer != nil {
+			viewer.SetCollapsed(viewer.Selected(), !viewer.Collapsed(viewer.Selected()))
+		}
 	case "section":
 		code := map[string]rune{"request": '1', "response": '2', "parameters": '3'}[value]
 		return m.updateHTTPControls(tea.KeyPressMsg{Code: code})

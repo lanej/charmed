@@ -1,5 +1,7 @@
 # Components
 
+The [JSON viewer](#collection/json-viewer) is a reusable molecule for syntax-highlighted, foldable objects and arrays. Its [usage and lifecycle guide](json-viewer.html) covers native viewport customization, source fidelity and bounded parsing. The correlated inspector composes it into both HTTP payload panes.
+
 Browse Atoms, Molecules and Organisms in composition order, then by capability within each level. Go packages follow capabilities. Every component has a direct link in the sidebar. Each entry leads with a native terminal preview, groups alternate snapshots into tabs, and shows highlighted Go usage snippets immediately afterward. Snippets focus on the consumer API rather than a compilable program or the fixture machinery.
 
 Use the Atomic design navigation to jump between levels, and the page outline to reach a component or your browser's Find command to search the entire page. Saved frames preserve terminal geometry and semantic color; use the native runner to inspect colors, focus and animation.
