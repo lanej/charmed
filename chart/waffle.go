@@ -20,15 +20,16 @@ type WafflePart struct {
 	Tone  text.Tone
 }
 
-// Waffle renders ordered categories as equal-area cells. Letters A-Z identify
-// categories independently of color and match Legend. At most 26 parts are supported.
+// Waffle renders ordered categories as equal-area cells. Patterned square markers
+// match Legend; ASCII uses letters A-Z. At most 26 parts are supported.
 // Counts must be nonnegative and their sum must fit an int. Zero totals are empty.
 type Waffle struct {
 	Parts []WafflePart
 }
 
-// View fills a row-major rectangle using largest-remainder rounding; ties favor
-// input order. Each cell represents total/cells observations, so small categories
+// View fills a row-major grid with a space between cells. A width of 19 holds
+// ten columns. Largest-remainder rounding favors input order for ties. Each cell represents
+// total/cells observations, so small categories
 // may receive no cells. Keep Legend or Header visible to retain exact counts.
 // Allocations above 10,000 cells return an unpadded fallback.
 func (w Waffle) View(size layout.Size, t theme.Theme) string {
@@ -49,22 +50,23 @@ func (w Waffle) View(size layout.Size, t theme.Theme) string {
 		return layout.Fit("No observations", size)
 	}
 
-	counts := w.cells(size.Width*size.Height, total)
-	cells := make([]string, 0, size.Width*size.Height)
+	columns := (size.Width + 1) / 2
+	counts := w.cells(columns*size.Height, total)
+	cells := make([]string, 0, columns*size.Height)
 
 	for i, count := range counts {
 		style := text.ToneStyle(w.Parts[i].Tone, text.Normal, t)
 		for range count {
-			cells = append(cells, style.Render(string(rune('A'+i))))
+			cells = append(cells, style.Render(waffleMarker(i, t)))
 		}
 	}
 
 	rows := make([]string, size.Height)
 	for y := range rows {
-		rows[y] = strings.Join(cells[y*size.Width:(y+1)*size.Width], "")
+		rows[y] = strings.Join(cells[y*columns:(y+1)*columns], " ")
 	}
 
-	return strings.Join(rows, "\n")
+	return layout.Fit(strings.Join(rows, "\n"), size)
 }
 
 // Legend retains exact counts, including categories rounded out of the grid.
@@ -80,7 +82,7 @@ func (w Waffle) Legend(t theme.Theme) string {
 
 	parts := make([]string, len(w.Parts))
 	for i, part := range w.Parts {
-		label := fmt.Sprintf("%c %s %d", 'A'+i, waffleLabel(part.Label), part.Count)
+		label := fmt.Sprintf("%s %s %d", waffleMarker(i, t), waffleLabel(part.Label), part.Count)
 		parts[i] = text.ToneStyle(part.Tone, text.Normal, t).Render(label)
 	}
 
@@ -103,11 +105,59 @@ func (w Waffle) Header(title string, width int, t theme.Theme) string {
 
 	total, valid := w.total()
 	if valid && total > 0 && remaining >= 5 {
-		grid := w.View(layout.Size{Width: min(20, remaining), Height: 1}, t)
+		grid := w.View(layout.Size{Width: min(39, remaining), Height: 1}, t)
 		summary += " [" + grid + "]"
 	}
 
 	return layout.Fit(summary, layout.Size{Width: width, Height: 1})
+}
+
+// StatusHeader places a 20-cell micro-grid beside a title and exact counts in
+// two rows. If either row cannot fit, it drops the grid before clipping text.
+// A one-row allocation uses Header instead.
+func (w Waffle) StatusHeader(title string, size layout.Size, t theme.Theme) string {
+	if size.Width <= 0 || size.Height <= 0 {
+		return ""
+	}
+
+	if size.Height == 1 {
+		return w.Header(title, size.Width, t)
+	}
+
+	total, valid := w.total()
+	if !valid || total == 0 {
+		return layout.Fit(w.Header(title, size.Width, t), size)
+	}
+
+	heading := t.Heading().Render(waffleLabel(title)) + t.Subtle().Render(fmt.Sprintf("  /  %d total", total))
+	summary := w.Legend(t)
+	content := heading + "\n" + summary
+
+	const gridWidth = 19
+
+	const gap = "   "
+
+	if size.Width >= gridWidth+len(gap)+max(lipgloss.Width(heading), lipgloss.Width(summary)) {
+		grid := w.View(layout.Size{Width: gridWidth, Height: 2}, t)
+		content = layout.Row(grid, gap+heading+"\n"+gap+summary)
+	}
+
+	return layout.Fit(content, size)
+}
+
+func waffleMarker(index int, t theme.Theme) string {
+	if index < 0 || index >= 26 {
+		return "?"
+	}
+
+	if !t.ASCII {
+		patterns := []string{"■", "▧", "▨", "▦"}
+		if index < len(patterns) {
+			return patterns[index]
+		}
+	}
+
+	return string("ABCDEFGHIJKLMNOPQRSTUVWXYZ"[index])
 }
 
 func (w Waffle) total() (int, bool) {
