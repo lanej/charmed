@@ -35,7 +35,7 @@ func organismsDefinitions() []Definition {
 
 	d = append(d,
 		Definition{ID: "collection/logs", Title: "Organisms/Collections/Log viewer", Level: "Organisms", Family: "collection", Description: "Structured Charm Log entries in a bounded, scrollable viewport.", Source: "story/organisms.go", Symbol: "logStory", Upstream: "https://github.com/charmbracelet/log", Composes: []string{"collection/viewport", "feedback/log-level"}, Step: true, Defaults: DefaultConfig(), Factory: logStory},
-		Definition{ID: "chart/comparison-panel", Title: "Organisms/Charts/Comparison panel", Level: "Organisms", Family: "chart", Description: "A distribution comparison and native time-series history compose one reusable metric panel.", Source: "story/organisms.go", ExampleSource: "docs/snippets/comparison-panel.go.txt", Symbol: "comparisonPanelStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"sigma"}, Composes: []string{"chart/distributions", "chart/timeseries", "foundations/layout"}, Defaults: DefaultConfig(), Factory: comparisonPanelStory},
+		Definition{ID: "chart/comparison-panel", Title: "Organisms/Charts/Comparison panel", Level: "Organisms", Family: "chart", Description: "A distribution comparison and native time-series history compose one reusable metric panel.", Source: "story/organisms.go", Symbol: "comparisonPanelStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"sigma"}, Composes: []string{"chart/distributions", "chart/timeseries", "foundations/layout"}, Defaults: DefaultConfig(), Factory: comparisonPanelStory},
 	)
 	for i := range d {
 		switch d[i].ID {
@@ -175,7 +175,15 @@ func formStory(e Environment) (runtime.Scene, error) {
 		huh.NewConfirm().Title("Enable environment?").Value(&enabled)), huh.NewGroup(
 		huh.NewText().Title("Notes").Value(&note), huh.NewNote().Title("Ready").Description("Your fixture settings are ready to submit.")))
 
-	return &scene{init: f.Init, resize: func(s layout.Size) { f.WithWidth(s.Width).WithHeight(s.Height) }, update: func(msg tea.Msg) tea.Cmd {
+	return &scene{init: f.Init, resize: func(s layout.Size) {
+		f.WithWidth(s.Width).WithHeight(s.Height)
+
+		if e.capture {
+			// Prepare the native group viewport with explicit geometry. Do not execute
+			// focus, terminal queries, or other initialization commands during capture.
+			_, _ = f.Update(tea.WindowSizeMsg{Width: s.Width, Height: s.Height})
+		}
+	}, update: func(msg tea.Msg) tea.Cmd {
 		_, cmd := f.Update(msg)
 		if f.State == huh.StateCompleted {
 			emit(e, map[string]any{"type": "submitted", "name": name, "region": region, "enabled": enabled, "features": features})

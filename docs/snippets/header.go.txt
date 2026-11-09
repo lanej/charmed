@@ -1,7 +1,0 @@
-header := layout.Header{
-    Title: "Service workbench",
-    Context: "Production / us-west-2",
-    Actions: text.KeyHint("r", "refresh", palette),
-}
-view := header.View(64, palette)
-// Bind r in the application; Header only renders the hint.

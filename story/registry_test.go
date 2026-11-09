@@ -83,6 +83,22 @@ func TestStoriesDoNotShareState(t *testing.T) {
 	}
 }
 
+func TestFormCaptureContainsFields(t *testing.T) {
+	c := story.DefaultConfig()
+	c.Columns, c.Rows = 40, 16
+
+	frame, err := story.Frame("form/settings", c)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, field := range []string{"Environment", "Region", "Features"} {
+		if !strings.Contains(ansi.Strip(frame), field) {
+			t.Fatalf("form capture omitted %s: %s", field, ansi.Strip(frame))
+		}
+	}
+}
+
 func TestRejectsInvalidStoryConfiguration(t *testing.T) {
 	c := story.DefaultConfig()
 	c.Columns = 100000

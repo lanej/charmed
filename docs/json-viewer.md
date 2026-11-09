@@ -1,8 +1,8 @@
 # JSON viewer
 
-The [JSON viewer molecule](components.html#collection/json-viewer) keeps syntax-highlighted JSON readable while letting you fold objects and arrays. It starts expanded. Collapsed containers display their field or item count. Member order, duplicate keys, exact number text, string escapes and original source bytes are retained. Formatting never decodes objects into maps or converts numbers to floating point.
+The [JSON viewer molecule](molecules-data.html#collection/json-viewer) keeps syntax-highlighted JSON readable while letting you fold objects and arrays. It starts expanded. Collapsed containers display their field or item count. Member order, duplicate keys, exact number text, string escapes and original source bytes are retained. Formatting never decodes objects into maps or converts numbers to floating point.
 
-Create a viewer with `collection.NewJSONViewer(width, height, palette)`, pass JSON bytes to `SetSource`, forward Bubble Tea messages through `Update`, and render `View`. `SetSource` copies its input. Invalid or over-budget input clears stale structure, returns a diagnostic and displays a bounded source fallback. The [consumer example](components.html#collection/json-viewer) shows a complete payload and setup.
+Create a viewer with `collection.NewJSONViewer(width, height, palette)`, pass JSON bytes to `SetSource`, forward Bubble Tea messages through `Update`, and render `View`. `SetSource` copies its input. Invalid or over-budget input clears stale structure, returns a diagnostic and displays a bounded source fallback. The [consumer example](molecules-data.html#collection/json-viewer) shows a complete payload and setup.
 
 ## Interaction
 

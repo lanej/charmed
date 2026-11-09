@@ -1,8 +1,0 @@
-section := layout.Section{
-    Title: "Request timeline", Content: timeline,
-    Collapsed: timelineCollapsed,
-}
-height := section.Height(preferredTimelineHeight)
-timelineView := section.View(layout.Size{Width: width, Height: height}, palette, focused)
-// Allocate the remaining height to details; the application owns toggle bindings.
-detailsHeight := max(0, availableHeight-height)

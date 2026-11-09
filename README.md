@@ -62,7 +62,7 @@ The core uses upstream Charm v2 modules. It has no JavaScript runtime requiremen
 
 ## Static guide
 
-[Browse the guide](https://lanej.github.io/charmed/) for foundations, components grouped by capability, composition examples and the deployment telemetry contract. Components share sections rather than individual pages, but every fixture has a sidebar link. Each fixture leads with a saved native preview and variant tabs, followed by its highlighted usage snippet or linked fixture implementation. CLI instructions remain in the development guide. See the [brand sheet](https://lanej.github.io/charmed/brand.html) for visual tokens and identity.
+[Browse the guide](https://lanej.github.io/charmed/) by atomic category and capability group. Each component starts with the output of a compiled consumer example, followed by its Go usage and import links. Examples include their data and setup; package declarations and outer functions stay out of the page. Additional fixture variants remain in tabs, and implementation source is linked separately. CLI instructions remain in the development guide. See the [brand sheet](https://lanej.github.io/charmed/brand.html) for visual tokens and identity.
 
 ```sh
 just docs

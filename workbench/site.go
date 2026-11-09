@@ -23,34 +23,21 @@ import (
 var siteFiles embed.FS
 
 type guidePage struct {
-	File, Title string
-	Content     template.HTML
-	Levels      []guideLevel
-	Navigation  []guideLink
-	Coverage    []Coverage
-	Preview     *ManifestEntry
-	Showcase    []showcaseItem
-	Atoms       []string
-	Brand       brandPalette
+	File, Title      string
+	Source, Category string
+	Overview         *guideLevel
+	Legacy           []guideLink
+	Resource         bool
+	Content          template.HTML
+	Levels           []guideLevel
+	Navigation       []guideLevel
+	Coverage         []Coverage
+	Preview          *ManifestEntry
+	Showcase         []showcaseItem
+	Atoms            []string
+	Brand            brandPalette
 }
-type (
-	showcaseItem struct{ Title, Description, Link, Frame, NarrowFrame string }
-	guideGroup   struct {
-		Name, Anchor, LegacyAnchor string
-		Entries                    []ManifestEntry
-	}
-)
-
-func storyPage(entry ManifestEntry) string {
-	switch entry.Level {
-	case "Foundations":
-		return "foundations.html"
-	case "Screens", "Templates":
-		return "examples.html"
-	default:
-		return "components.html"
-	}
-}
+type showcaseItem struct{ Title, Description, Link, Frame, NarrowFrame string }
 
 func writeSite(out, root string, entries []ManifestEntry) error {
 	directory := filepath.Join(out, "dist")
@@ -64,15 +51,22 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 	}
 
 	pages := []guidePage{
-		{File: "index.html", Title: "Charmed"},
-		{File: "foundations.html", Title: "Foundations"},
-		{File: "components.html", Title: "Components"},
-		{File: "examples.html", Title: "Composition & examples"},
-		{File: "deployment.html", Title: "Compare a deployment"},
-		{File: "json-viewer.html", Title: "JSON viewer"},
-		{File: "development.html", Title: "Develop & publish"},
-		{File: "brand.html", Title: "Brand sheet"},
+		{File: "index.html", Title: "Charmed", Source: "index.md"},
+		{File: "components.html", Title: "Component reference", Source: "components.md", Resource: true},
+		{File: "examples.html", Title: "Composition guide", Source: "examples.md", Resource: true},
+		{File: "deployment.html", Title: "Compare a deployment", Source: "deployment.md", Resource: true},
+		{File: "json-viewer.html", Title: "JSON viewer", Source: "json-viewer.md", Resource: true},
+		{File: "development.html", Title: "Develop & publish", Source: "development.md", Resource: true},
+		{File: "brand.html", Title: "Brand sheet", Source: "brand.md", Resource: true},
 	}
+	navigation := atomicNavigation(entries)
+
+	if err := addSpecimens(navigation); err != nil {
+		return err
+	}
+
+	pages = append(pages, catalogPages(navigation)...)
+
 	brand := newBrandPalette(theme.New(theme.Dark))
 	markdown := goldmark.New(goldmark.WithExtensions(extension.GFM), goldmark.WithParserOptions(parser.WithAutoHeadingID()))
 
@@ -80,19 +74,20 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		page := &pages[i]
 		page.Brand = brand
 
-		source, err := os.ReadFile(filepath.Join(root, "docs", strings.TrimSuffix(page.File, ".html")+".md"))
-		if err != nil {
-			return err
+		if page.Source != "" {
+			source, err := os.ReadFile(filepath.Join(root, "docs", page.Source)) //nolint:gosec // WHY: Source names come only from the compiled guide catalog, never request input.
+			if err != nil {
+				return err
+			}
+
+			var content bytes.Buffer
+			if err := markdown.Convert(source, &content); err != nil {
+				return err
+			}
+
+			page.Content = template.HTML(highlightMarkdown(content.String())) //nolint:gosec // WHY: Only repository-authored Markdown passes through the escaping Markdown and code renderers.
 		}
 
-		var content bytes.Buffer
-		if err := markdown.Convert(source, &content); err != nil {
-			return err
-		}
-		// WHY: Only repository-authored Markdown passes through the HTML renderer.
-		rendered := highlightMarkdown(content.String())
-
-		page.Content = template.HTML(rendered)
 		if page.File == "index.html" {
 			t := theme.New(theme.Dark)
 
@@ -132,7 +127,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 					return err
 				}
 
-				page.Showcase = append(page.Showcase, showcaseItem{item.Title, item.Description, "components.html#" + item.ID, frame, narrow})
+				page.Showcase = append(page.Showcase, showcaseItem{item.Title, item.Description, storyPage(ManifestEntry{Definition: d}) + "#" + item.ID, frame, narrow})
 			}
 
 			for i := range entries {
@@ -168,13 +163,13 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 			page.Coverage = CoverageInventory()
 		}
 
-		page.Levels = groupLevels(page.File, entries)
-		page.Navigation = atomicNavigation()
+		page.Navigation = navigation
+		page.Legacy = legacyLinks(page.File, navigation)
 	}
 
 	funcs := template.FuncMap{
-		"navhref":            navHref,
 		"lower":              strings.ToLower,
+		"familyName":         familyName,
 		"terminal":           terminalHTML,
 		"snapshotForeground": snapshotForeground,
 		"snapshotBackground": snapshotBackground,

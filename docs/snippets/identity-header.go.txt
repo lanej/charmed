@@ -1,9 +1,0 @@
-headline := layout.IdentityHeader{
-    Kind: "Request", ID: requestUUID,
-    Context: "POST /v2/shipments/shp_fixture/buy · HTTP 500",
-}
-header := headline.View(size.Width, palette)
-bodyHeight := max(0, size.Height-lipgloss.Height(header))
-// Construct the inspector with NoHeadline: true when supplying this header.
-inspector.Resize(layout.Size{Width: size.Width, Height: bodyHeight})
-view := layout.Column(header, inspector.View())
