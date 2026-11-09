@@ -32,7 +32,7 @@ func ExamplePatternLogInspector() (string, error) {
 
 	inspector, err := pattern.NewLogInspector(pattern.LogInspectorOptions{
 		Theme: theme.New(theme.Dark), Requests: requests, Logs: records,
-		Layout: pattern.InspectorColumns, DetachedLogDetails: true,
+		NoHelp: true, DetachedLogDetails: true, // The default layout adapts to available space.
 	})
 	if err != nil {
 		return "", err
@@ -40,6 +40,9 @@ func ExamplePatternLogInspector() (string, error) {
 
 	inspector.Resize(layout.Size{Width: 100, Height: 30})
 	inspector.SelectRequest("http-2")
+	// Optional: inspector.SetPaneCollapsed("request", true) gives the response both columns.
+	// inspector.SetHelpVisible(true) restores keyboard hints; FocusPane("response") changes focus.
+	// Customize payload styles on inspector.Request and inspector.Response.
 
 	return inspector.View(), nil
 }

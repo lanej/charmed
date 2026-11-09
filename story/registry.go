@@ -43,6 +43,9 @@ type Config struct {
 	VerboseDetails     bool                  `json:"verboseDetails"`
 	ColumnLabels       bool                  `json:"columnLabels"`
 	NoFolds            bool                  `json:"noFolds"`
+	NoHelp             bool                  `json:"noHelp"`
+	SingleRequest      bool                  `json:"singleRequest"`
+	CollapsedPanes     []string              `json:"collapsedPanes"`
 	LogPane            string                `json:"logPane"`
 	TraceLogs          bool                  `json:"traceLogs"`
 	DetachedLogDetails bool                  `json:"detachedLogDetails"`
@@ -64,6 +67,12 @@ func DefaultConfig() Config {
 }
 
 func (c Config) Validate() error {
+	for _, pane := range c.CollapsedPanes {
+		if !slices.Contains([]string{"requests", "request", "response", "http", "logs"}, pane) {
+			return errors.New("collapsed pane must be requests, request, response, http or logs")
+		}
+	}
+
 	if !slices.Contains([]string{"", "last", "last-3", "all"}, c.TraceWindow) {
 		return errors.New("trace window must be last, last-3 or all")
 	}
@@ -94,8 +103,8 @@ func (c Config) Validate() error {
 		return errors.New("URL style must be path, path-query, host-path or full")
 	}
 
-	if !slices.Contains([]string{"", "requests", "http", "logs"}, c.LogPane) {
-		return errors.New("log pane must be requests, http or logs")
+	if !slices.Contains([]string{"", "requests", "request", "response", "http", "logs"}, c.LogPane) {
+		return errors.New("log pane must be requests, request, response, http or logs")
 	}
 
 	if !slices.Contains([]string{"", "stacked", "bands"}, c.ComparisonVariant) {

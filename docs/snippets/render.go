@@ -98,6 +98,10 @@ func Render(id string) (string, error) {
 		return ExampleNavigationTabs(), nil
 	case "layout/header":
 		return ExampleLayoutHeader(), nil
+	case "layout/identity-header":
+		return ExampleLayoutIdentityHeader(), nil
+	case "layout/section":
+		return ExampleLayoutSection(), nil
 	case "layout/footer":
 		return ExampleLayoutFooter(), nil
 	case "template/application":

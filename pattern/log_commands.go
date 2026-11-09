@@ -20,14 +20,33 @@ func commandState(active bool) string {
 
 // Commands returns current availability without executing application actions.
 func (m *LogInspector) Commands() []collection.Command {
-	commands := []collection.Command{}
+	commands := []collection.Command{{ID: "layout/auto", Label: "Layout: auto", Description: "Adapt to terminal size and timeline content", State: commandState(m.Layout() == InspectorAuto)}}
 	for _, preset := range []InspectorLayout{InspectorSidebar, InspectorTimeline, InspectorColumns, InspectorFocused} {
 		commands = append(commands, collection.Command{ID: "layout/" + string(preset), Label: "Layout: " + string(preset), Description: "Arrange requests, HTTP details and related logs", Keywords: []string{"view", "arrangement"}, State: commandState(m.Layout() == preset || m.Layout() == InspectorAuto && m.ActiveLayout() == preset)})
 	}
 
-	for _, pane := range []struct{ id, label, shortcut string }{{requestPane, "HTTP requests", "Alt+1"}, {httpPane, "HTTP details", "Alt+2"}, {logPane, "Related logs", "Alt+3"}} {
+	for _, pane := range []struct{ id, label, shortcut string }{{requestPane, "HTTP requests", "Alt+1"}, {requestDataPane, "Request", "Alt+4"}, {httpPane, "Response", "Alt+2"}, {logPane, "Related logs", "Alt+3"}} {
 		commands = append(commands, collection.Command{ID: "pane/" + pane.id, Label: "Focus: " + pane.label, Description: "Move keyboard focus to this pane", Shortcut: pane.shortcut, State: commandState(m.FocusedPane() == pane.id)})
+
+		label := "Collapse pane: " + pane.label
+		if m.PaneCollapsed(pane.id) {
+			label = "Expand pane: " + pane.label
+		}
+
+		reason := ""
+		if !m.folding {
+			reason = "Section folding is disabled"
+		}
+
+		commands = append(commands, collection.Command{ID: "fold/" + pane.id, Label: label, Description: "Return this pane's space to expanded content", DisabledReason: reason})
 	}
+
+	helpLabel := "Show instructions"
+	if m.HelpVisible() {
+		helpLabel = "Hide instructions"
+	}
+
+	commands = append(commands, collection.Command{ID: "help/toggle", Label: helpLabel, Shortcut: "?", Description: "Toggle keyboard instructions without disabling shortcuts"})
 
 	for _, follow := range []struct {
 		id, label string
@@ -117,7 +136,15 @@ func (m *LogInspector) runCommand(id string) tea.Cmd {
 	category, value, _ := strings.Cut(id, "/")
 	switch category {
 	case "layout":
-		m.SetLayout(InspectorLayout(value))
+		if value == "auto" {
+			m.SetLayout(InspectorAuto)
+		} else {
+			m.SetLayout(InspectorLayout(value))
+		}
+	case "fold":
+		m.SetPaneCollapsed(value, !m.PaneCollapsed(value))
+	case "help":
+		m.SetHelpVisible(!m.HelpVisible())
 	case "pane":
 		m.FocusPane(value)
 	case "scope":
@@ -129,11 +156,12 @@ func (m *LogInspector) runCommand(id string) tea.Cmd {
 	case "url":
 		m.HTTP.SetURLFormatter(nil)
 		m.HTTP.SetURLFormat(text.URLFormat(value))
+		m.Resize(m.size)
 	case "body":
-		return m.HTTP.UpdateDetails(tea.KeyPressMsg{Code: 'r'})
+		return m.updateHTTPControls(tea.KeyPressMsg{Code: 'r'})
 	case "section":
 		code := map[string]rune{"request": '1', "response": '2', "parameters": '3'}[value]
-		return m.HTTP.UpdateDetails(tea.KeyPressMsg{Code: code})
+		return m.updateHTTPControls(tea.KeyPressMsg{Code: code})
 	case "follow":
 		if value == requestPane {
 			if m.HTTP.Follow {

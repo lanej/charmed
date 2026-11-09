@@ -28,7 +28,11 @@ Transition tracing is opt-in through `Trace: diagram.TransitionTrace{Steps: []in
 
 [Header](molecules-layout.html#layout/header) places a title on the left and actions on the right, with a second context row when `Context` is nonempty. Reserve one row without context or two with context. Actions disappear if they cannot fit beside the full title; the title clips only when it exceeds the allocation. Action strings are display content: the application owns their bindings and effects.
 
-[Footer](molecules-layout.html#layout/footer) places help on the left and status on the right in one row. Status disappears when both cannot fit, then help clips to the allocation. Both fields accept styled text, including native help output. Header and footer fields use only their first line; none of these components wrap. Widths are terminal cells, including wide Unicode labels and ANSI styling; nonpositive widths render nothing.
+[Footer](molecules-layout.html#layout/footer) places help on the left and status on the right in one row. Status disappears when both cannot fit, then help clips to the allocation. Both fields accept styled text, including native help output. Header and footer fields use only their first line; these two components do not wrap. Widths are terminal cells, including wide Unicode labels and ANSI styling; nonpositive widths render nothing.
+
+[Identity header](molecules-layout.html#layout/identity-header) promotes a request UUID or another entity ID to the headline. `Kind`, `ID` and optional `Context` are escaped data; optional `Actions` accepts styled display text. The kind moves above the identifier when needed, then the identifier wraps without abbreviation. Reserve `lipgloss.Height(header.View(width, palette))` rows before allocating content. Actions appear only when they fit beside a single-line headline.
+
+[Foldable section](molecules-layout.html#layout/section) composes a panel and a disclosure marker. Set `Collapsed` to render only the heading, and use `Height(expandedHeight)` when returning space to siblings. `NoFolds` shows all content without disclosure markers. `Title` and `Content` accept styled text; state, keys and focus belong to the caller.
 
 See the [application shell](templates-pattern.html#template/application) for these components composed around an active content panel. Sidebar navigation, breadcrumbs and toolbars remain separate future patterns.
 

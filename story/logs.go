@@ -36,7 +36,7 @@ func logDefinitions() []Definition {
 		{ID: "text/syntax", Title: "Atoms/Text/Syntax", Level: "Atoms", Family: "text", Description: "Content-type aware lexical highlighting; terminal controls stay visible as escaped data.", Source: "text/syntax.go", Symbol: "Syntax", Defaults: DefaultConfig(), Factory: syntaxStory},
 		{ID: "collection/log-tree", Title: "Molecules/Logs/Structured log tree", Level: "Molecules", Family: "logs", Description: "Trace and span hierarchy with expandable ordered fields, stable identities and retained follow state.", Source: "story/logs.go", Symbol: "logTreeStory", Composes: []string{"collection/tree", "text/observation", "text/time", "text/disclosure", "feedback/scrollbar"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: logTreeStory},
 		{ID: "collection/http-log", Title: "Molecules/Logs/HTTP log", Level: "Molecules", Family: "logs", Description: "Request summaries and captured headers/bodies with syntax highlighting, pretty/raw views and explicit capture states.", Source: "story/logs.go", Symbol: "httpLogStory", Composes: []string{"collection/table", "text/http-method", "text/url", "text/http-status", "text/pending", "text/time", "text/disclosure", "feedback/scrollbar", "text/syntax", "collection/viewport"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: httpLogStory},
-		{ID: "pattern/log-inspector", Title: "Organisms/Logs/Correlated inspector", Level: "Organisms", Family: "logs", Description: "Select HTTP requests to inspect exact request logs, widen to trace scope, or browse switchable narrow views.", Source: "story/logs.go", Symbol: "logInspectorStory", Composes: []string{"collection/http-log", "collection/log-tree", "collection/command-palette", "feedback/follow", "text/presentation", "text/key-hint", "foundations/layout"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: logInspectorStory},
+		{ID: "pattern/log-inspector", Title: "Organisms/Logs/Correlated inspector", Level: "Organisms", Family: "logs", Description: "Select HTTP requests to inspect exact request logs, widen to trace scope, or browse switchable narrow views.", Source: "story/logs.go", Symbol: "logInspectorStory", Composes: []string{"collection/http-log", "collection/log-tree", "collection/command-palette", "feedback/follow", "text/presentation", "text/key-hint", "layout/section", "layout/identity-header", "foundations/layout"}, Controls: []string{"state"}, Step: true, Defaults: config, Factory: logInspectorStory},
 	}
 }
 
@@ -118,7 +118,7 @@ func logTreeStory(e Environment) (runtime.Scene, error) {
 
 	step := 0
 
-	return &scene{resize: func(s layout.Size) { m.Resize(s.Width, max(1, s.Height-2)) }, update: func(msg tea.Msg) tea.Cmd {
+	return &scene{resize: func(s layout.Size) { m.Resize(s.Width, logStoryHeight(s.Height, e.Config.NoHelp)) }, update: func(msg tea.Msg) tea.Cmd {
 		if _, ok := msg.(runtime.StepMsg); ok {
 			step++
 			return logStep(m, step)
@@ -126,6 +126,10 @@ func logTreeStory(e Environment) (runtime.Scene, error) {
 
 		return m.Update(msg)
 	}, view: func(layout.Size) string {
+		if e.Config.NoHelp {
+			return m.View()
+		}
+
 		t := e.Config.Palette()
 
 		hints := []string{text.KeyHint("g", "flat/trace", t), text.KeyHint("End", "follow", t), text.KeyHint("Ctrl+N", "append", t)}
@@ -199,7 +203,7 @@ func httpLogStory(e Environment) (runtime.Scene, error) {
 
 	step := 0
 
-	return &scene{resize: func(s layout.Size) { m.Resize(s.Width, max(1, s.Height-2)) }, update: func(msg tea.Msg) tea.Cmd {
+	return &scene{resize: func(s layout.Size) { m.Resize(s.Width, logStoryHeight(s.Height, e.Config.NoHelp)) }, update: func(msg tea.Msg) tea.Cmd {
 		if _, ok := msg.(runtime.StepMsg); ok {
 			step++
 
@@ -213,6 +217,10 @@ func httpLogStory(e Environment) (runtime.Scene, error) {
 
 		return m.Update(msg)
 	}, view: func(layout.Size) string {
+		if e.Config.NoHelp {
+			return m.View()
+		}
+
 		t := e.Config.Palette()
 
 		hints := []string{text.KeyHint("Tab", "list/details", t)}
@@ -234,12 +242,16 @@ func logInspectorStory(e Environment) (runtime.Scene, error) {
 		requests = TimelineFixture()
 	}
 
+	if e.Config.SingleRequest {
+		requests, logs = singleRequestFixture()
+	}
+
 	if e.Config.State == "empty" {
 		requests = nil
 		logs = nil
 	}
 
-	m, err := pattern.NewLogInspector(pattern.LogInspectorOptions{Theme: e.Config.Palette(), Requests: requests, Logs: logs, Symbols: text.Presentation(e.Config.SymbolStyle), URLFormat: text.URLFormat(e.Config.URLStyle), VerboseDetails: e.Config.VerboseDetails, ColumnLabels: e.Config.ColumnLabels, DetachedLogDetails: e.Config.DetachedLogDetails, Layout: pattern.InspectorLayout(e.Config.InspectorLayout), KeyLayout: e.Config.KeyLayout, BackdropMode: e.Config.PaletteBackdrop, TimelineGroups: timelineGroups(e.Config.TimelineGroups), TimelineNow: time.Date(2026, 11, 8, 12, 4, 4, 0, time.UTC)})
+	m, err := pattern.NewLogInspector(pattern.LogInspectorOptions{NoHelp: e.Config.NoHelp, NoFolds: e.Config.NoFolds, Theme: e.Config.Palette(), Requests: requests, Logs: logs, Symbols: text.Presentation(e.Config.SymbolStyle), URLFormat: text.URLFormat(e.Config.URLStyle), VerboseDetails: e.Config.VerboseDetails, ColumnLabels: e.Config.ColumnLabels, DetachedLogDetails: e.Config.DetachedLogDetails, Layout: pattern.InspectorLayout(e.Config.InspectorLayout), KeyLayout: e.Config.KeyLayout, BackdropMode: e.Config.PaletteBackdrop, TimelineGroups: timelineGroups(e.Config.TimelineGroups), TimelineNow: time.Date(2026, 11, 8, 12, 4, 4, 0, time.UTC)})
 	if err != nil {
 		return nil, err
 	}
@@ -251,15 +263,20 @@ func logInspectorStory(e Environment) (runtime.Scene, error) {
 	}
 
 	if e.Config.State == "error" {
-		requests[1].ResponseBody.Bytes = []byte(`{"error":`)
-		if err := m.UpsertRequests(requests[1]); err != nil {
+		selected := min(1, len(requests)-1)
+
+		requests[selected].ResponseBody.Bytes = []byte(`{"error":`)
+		if err := m.UpsertRequests(requests[selected]); err != nil {
 			return nil, err
 		}
 	}
 
-	m.HTTP.RequestOpen = false
-	m.HTTP.SetFolding(!e.Config.NoFolds)
-	m.Logs.SetFolding(!e.Config.NoFolds)
+	m.HTTP.RequestOpen = true
+	m.SetFolding(!e.Config.NoFolds)
+
+	for _, pane := range e.Config.CollapsedPanes {
+		m.SetPaneCollapsed(pane, true)
+	}
 
 	m.HTTP.Raw = e.Config.RawBody
 	if e.Config.TraceLogs {
@@ -311,6 +328,25 @@ func logInspectorStory(e Environment) (runtime.Scene, error) {
 
 		return m.Update(msg)
 	}}, nil
+}
+
+func singleRequestFixture() ([]collection.HTTPExchange, []collection.LogRecord) {
+	const id = "01234567-89ab-cdef-0123-456789abcdef"
+
+	requests, logs := LogFixture()
+	request := requests[1]
+	request.RequestID, request.TraceID = id, ""
+	request.URL = "/v2/shipments/shp_fixture/buy"
+	request.StatusCode = http.StatusInternalServerError
+	request.Duration = 12500 * time.Microsecond
+	request.RequestHeaders = http.Header{"Content-Type": {"application/json"}, "X-Ep-Request-Uuid": {id}}
+	request.ResponseHeaders = request.RequestHeaders.Clone()
+	request.RequestBody.Bytes = []byte(`{"rate":{"id":"rate_fixture"}}`)
+	request.ResponseBody.Bytes = []byte(`{"error":{"code":"INTERNAL_SERVER_ERROR","message":"Could not purchase shipment: the carrier returned an internal server error"}}`)
+	record := logs[1]
+	record.RequestID, record.TraceID, record.SpanID = id, "", ""
+
+	return []collection.HTTPExchange{request}, []collection.LogRecord{record}
 }
 
 func stepExchange(step int) collection.HTTPExchange {
@@ -454,4 +490,12 @@ func timelineGroups(names []string) []collection.HTTPGroup {
 	}
 
 	return groups
+}
+
+func logStoryHeight(height int, noHelp bool) int {
+	if noHelp {
+		return max(1, height)
+	}
+
+	return max(1, height-2)
 }
