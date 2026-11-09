@@ -22,7 +22,7 @@ func TestBodyCaptureStatesContentTypesAndRawPreservation(t *testing.T) {
 	pretty := ansi.Strip(body.View(false, 4096, palette))
 
 	raw := ansi.Strip(body.View(true, 4096, palette))
-	if !strings.Contains(pretty, "\n  \"n\": 1") || !strings.Contains(raw, string(original)) || !bytes.Equal(body.Bytes, original) {
+	if !strings.HasPrefix(pretty, "{") || !strings.Contains(pretty, "\n  \"n\": 1") || !strings.Contains(raw, string(original)) || !bytes.Equal(body.Bytes, original) {
 		t.Fatal("pretty/raw lost captured bytes", pretty, raw)
 	}
 

@@ -357,7 +357,7 @@ func (m *LogInspector) View() string {
 	case httpPane:
 		help += text.KeyHint(m.palette.Glyph(theme.GlyphUp)+"/"+m.palette.Glyph(theme.GlyphDown), "scroll", m.palette)
 		if m.HTTP.Folding {
-			help += " · " + text.KeyHint("1/2", "sections", m.palette)
+			help += " · " + text.KeyHint("1/2/3", "sections", m.palette)
 		}
 
 		if m.HTTP.CanToggleRaw() {

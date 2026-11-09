@@ -80,7 +80,7 @@ func (b HTTPBody) View(raw bool, limit int, t theme.Theme) string {
 
 	language := text.ContentLanguage(b.ContentType)
 
-	media, params, parseErr := mime.ParseMediaType(b.ContentType)
+	_, params, parseErr := mime.ParseMediaType(b.ContentType)
 	if charset := strings.ToLower(params["charset"]); charset != "" && charset != "utf-8" && charset != "us-ascii" {
 		return bodySummary(preview, len(b.Bytes), "unsupported charset "+text.Inline(charset), notices, raw, t)
 	}
@@ -118,21 +118,12 @@ func (b HTTPBody) View(raw bool, limit int, t theme.Theme) string {
 		notices = append(notices, "[JSON formatting depth limit: showing captured source]")
 	}
 
-	mode := "highlighted source"
-	if raw {
-		mode = "raw captured source"
-	} else if language == "json" {
-		mode = "JSON / pretty when valid"
-	}
-
-	heading := t.Subtle().Render(text.Inline(media) + " · " + mode)
-
 	content := text.Syntax(source, language, t)
 	if len(notices) > 0 {
 		content += "\n" + t.Subtle().Render(strings.Join(notices, " "))
 	}
 
-	return heading + "\n" + content
+	return content
 }
 
 func bodySummary(preview []byte, total int, label string, notices []string, raw bool, t theme.Theme) string {

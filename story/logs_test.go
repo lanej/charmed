@@ -10,7 +10,7 @@ import (
 )
 
 func TestLogInspectorSavedPanesAreNativeAndDeterministic(t *testing.T) {
-	for pane, expected := range map[string]string{"requests": "HTTP requests", "http": "upstream_timeout", "logs": "Carrier"} {
+	for pane, expected := range map[string]string{"requests": "HTTP requests", "http": "Parameters", "logs": "Carrier"} {
 		for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Mono} {
 			config := story.DefaultConfig()
 			config.Columns, config.Rows = 40, 24

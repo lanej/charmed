@@ -73,7 +73,7 @@ func LogFixture() ([]collection.HTTPExchange, []collection.LogRecord) {
 	at := time.Date(2026, 11, 8, 12, 4, 0, 0, time.UTC)
 	requests := []collection.HTTPExchange{
 		{ID: "http-1", RequestID: "req-81", TraceID: "trace-c7", Time: at, Method: "GET", URL: "https://api.example.test/v1/parcels", StatusCode: 200, Completed: true, Duration: 12 * time.Millisecond, DurationKnown: true, ResponseHeaders: http.Header{"Content-Type": {"application/json"}}, ResponseBody: collection.HTTPBody{State: collection.Captured, ContentType: "application/json", Bytes: []byte(`{"parcels":[],"count":0}`)}},
-		{ID: "http-2", RequestID: "req-82", TraceID: "trace-c7", Time: at.Add(time.Second), Method: "POST", URL: "https://api.example.test/v1/labels", StatusCode: 502, Completed: true, Duration: 842 * time.Millisecond, DurationKnown: true, RequestHeaders: http.Header{"Content-Type": {"application/json"}, "X-Request-Id": {"req-82"}}, ResponseHeaders: http.Header{"Content-Type": {"application/problem+json; charset=utf-8"}, "Retry-After": {"1"}}, RequestBody: collection.HTTPBody{State: collection.Captured, ContentType: "application/json", Bytes: []byte(`{"parcel_id":"p_42","service":"express"}`)}, ResponseBody: collection.HTTPBody{State: collection.Captured, ContentType: "application/problem+json; charset=utf-8", Bytes: []byte(`{"error":"upstream_timeout","retryable":true,"attempt":2}`)}},
+		{ID: "http-2", RequestID: "req-82", TraceID: "trace-c7", Time: at.Add(time.Second), Method: "POST", URL: "https://api.example.test/v1/labels?expand=rate&expand=tracking&locale=en_US", StatusCode: 502, Completed: true, Duration: 842 * time.Millisecond, DurationKnown: true, RequestHeaders: http.Header{"Content-Type": {"application/json"}, "X-Request-Id": {"req-82"}}, ResponseHeaders: http.Header{"Content-Type": {"application/problem+json; charset=utf-8"}, "Retry-After": {"1"}}, RequestBody: collection.HTTPBody{State: collection.Captured, ContentType: "application/json", Bytes: []byte(`{"parcel_id":"p_42","service":"express"}`)}, ResponseBody: collection.HTTPBody{State: collection.Captured, ContentType: "application/problem+json; charset=utf-8", Bytes: []byte(`{"error":"upstream_timeout","retryable":true,"attempt":2}`)}},
 		{ID: "http-3", RequestID: "req-83", TraceID: "trace-d1", Time: at.Add(2 * time.Second), Method: "PATCH", URL: "https://api.example.test/v1/parcels/p_42", StatusCode: 204, Completed: true, Duration: 8 * time.Millisecond, DurationKnown: true, ResponseBody: collection.HTTPBody{State: collection.Captured}},
 		{ID: "http-4", Time: at.Add(3 * time.Second), Method: "GET", URL: "https://api.example.test/health", Completed: false},
 	}
@@ -221,7 +221,7 @@ func httpLogStory(e Environment) (runtime.Scene, error) {
 		}
 
 		if m.Folding {
-			hints = append(hints, text.KeyHint("1/2", "sections", t))
+			hints = append(hints, text.KeyHint("1/2/3", "sections", t))
 		}
 
 		return m.View() + "\n" + strings.Join(hints, " · ")

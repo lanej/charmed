@@ -51,6 +51,7 @@ type HTTPLog struct {
 	Limit, BodyPreviewBytes          int
 	Follow, Raw                      bool
 	RequestOpen, ResponseOpen        bool
+	ParametersOpen                   bool
 	records                          []HTTPExchange
 	selectedID                       string
 	listWidth, height                int
@@ -60,7 +61,7 @@ type HTTPLog struct {
 }
 
 func NewHTTPLog(width, height int, t theme.Theme) *HTTPLog {
-	m := &HTTPLog{Theme: t, Limit: DefaultLogLimit, BodyPreviewBytes: DefaultBodyPreviewBytes, Follow: true, URLFormat: text.PathAndQuery, Folding: true, ShowScrollbar: true, RequestOpen: true, ResponseOpen: true}
+	m := &HTTPLog{Theme: t, Limit: DefaultLogLimit, BodyPreviewBytes: DefaultBodyPreviewBytes, Follow: true, URLFormat: text.PathAndQuery, Folding: true, ShowScrollbar: true, RequestOpen: true, ResponseOpen: true, ParametersOpen: true}
 	m.Table = NewDenseTable(nil, nil, max(1, width), max(1, height), t)
 	m.Details = NewViewport("", width, height)
 	m.Resize(width, height)
@@ -296,7 +297,7 @@ func (m *HTTPLog) scrollbarWidth() int {
 func (m *HTTPLog) SetFolding(enabled bool) {
 	m.Folding = enabled
 	if !enabled {
-		m.RequestOpen, m.ResponseOpen = true, true
+		m.RequestOpen, m.ResponseOpen, m.ParametersOpen = true, true, true
 	}
 
 	m.refreshDetails(false)
@@ -358,6 +359,16 @@ func (m *HTTPLog) UpdateDetails(msg tea.Msg) tea.Cmd {
 			m.refreshDetails(false)
 
 			return nil
+		case "3":
+			if !m.Folding {
+				return nil
+			}
+
+			m.ParametersOpen = !m.ParametersOpen
+			m.refreshDetails(false)
+
+			return nil
+
 		case "2":
 			if !m.Folding {
 				return nil
@@ -496,6 +507,10 @@ func (m *HTTPLog) refreshDetails(reset bool) {
 	}
 
 	rows = append(rows, "")
+
+	if parameters := m.parameterView(record, width); parameters != "" {
+		rows = append(rows, parameters, "")
+	}
 
 	for _, part := range []struct {
 		name    string
