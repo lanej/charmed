@@ -35,3 +35,20 @@ func TestPercentCellsPreserveValueAndAbsoluteScale(t *testing.T) {
 		t.Fatal("missing data rendered as zero")
 	}
 }
+
+func TestPercentBarKeepsTinyNonzeroLabelsAndBounds(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Mono} {
+		for _, value := range []float64{0.000001, math.SmallestNonzeroFloat64} {
+			wide := ansi.Strip(feedback.PercentBar(value, true, 38, theme.New(mode)))
+			if strings.Contains(wide, "0.000%") || !strings.Contains(wide, "e-") || !strings.HasSuffix(wide, "%") {
+				t.Fatalf("tiny percentage was rounded to zero: %q", wide)
+			}
+
+			for _, width := range []int{0, 1, 5, 8, 16, 38} {
+				if ansi.StringWidth(feedback.PercentBar(value, true, width, theme.New(mode))) != width {
+					t.Fatalf("percentage escaped width %d", width)
+				}
+			}
+		}
+	}
+}

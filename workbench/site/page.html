@@ -88,7 +88,7 @@
 {{range $i, $snapshot := .Snapshots}}<a id="tab-{{$component.ID}}-{{$i}}" href="#panel-{{$component.ID}}-{{$i}}" role="tab" aria-controls="panel-{{$component.ID}}-{{$i}}" aria-selected="{{if eq $i 0}}true{{else}}false{{end}}">{{.Name}}</a>{{end}}
 </div>
 {{range $i, $snapshot := .Snapshots}}<div id="panel-{{$component.ID}}-{{$i}}" class="variant-panel" role="tabpanel" aria-labelledby="tab-{{$component.ID}}-{{$i}}" tabindex="0">
-<figure><figcaption>{{.Name}} · {{.Config.Profile}} · {{.Config.Columns}} × {{.Config.Rows}} terminal cells</figcaption><pre tabindex="0" class="terminal">{{terminal .Frame}}</pre></figure>
+<figure><figcaption>{{.Name}} · {{.Config.Profile}} · {{.Config.Columns}} × {{.Config.Rows}} terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="{{.Config.Theme}}" style="color:{{snapshotForeground .Config}};background-color:{{snapshotBackground .Config}}">{{terminal .Frame}}</pre></figure>
 </div>{{end}}
 </div>
 </div>

@@ -5,6 +5,7 @@ import (
 	"charm.land/bubbles/v2/textarea"
 	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -20,19 +21,22 @@ type TextOptions struct {
 type Text struct {
 	textinput.Model
 	Disabled bool
+	palette  theme.Theme
 }
 
 func NewText(o TextOptions) Text {
 	m := Text{Model: textinput.New(), Disabled: o.Disabled}
-	m.Prompt = "> "
+	m.Prompt = defaultPrompt
 	m.Placeholder, m.Validate = o.Placeholder, o.Validate
 	m.SetValue(o.Value)
-	m.SetWidth(max(1, o.Width-2))
+	m.Resize(o.Width)
 	m.SetVirtualCursor(true)
 	m.SetTheme(o.Theme)
 	return m
 }
+
 func (m *Text) SetTheme(t theme.Theme) {
+	m.palette = t
 	s := textinput.DefaultStyles(t.IsDark())
 	s.Focused.Text, s.Blurred.Text = t.Text(), t.Text()
 	s.Focused.Prompt, s.Blurred.Prompt = t.Heading(), t.Subtle()
@@ -41,14 +45,60 @@ func (m *Text) SetTheme(t theme.Theme) {
 	s.Cursor.Color, s.Cursor.Blink = t.Accent, !t.ReducedMotion
 	m.SetStyles(s)
 }
+
 func (m *Text) Focus() tea.Cmd {
 	if m.Disabled {
 		return nil
 	}
 	return m.Model.Focus()
 }
-func (m *Text) Resize(columns int) { m.SetWidth(max(1, columns-2)) }
-func (m Text) Init() tea.Cmd       { return nil }
+
+const defaultPrompt = "> "
+
+// View applies disabled presentation to a copy, retaining native customization.
+func (m Text) View() string {
+	native := m.Model
+	if m.Disabled {
+		native.Blur()
+
+		if native.Prompt == defaultPrompt {
+			native.Prompt = m.palette.Glyph(theme.GlyphDisabled) + " "
+		}
+
+		styles := native.Styles()
+
+		dim := m.palette.DimInactive
+		if dim == nil {
+			dim = m.palette.Muted
+		}
+
+		if dim != nil {
+			styles.Blurred.Text = styles.Blurred.Text.Foreground(dim)
+			styles.Blurred.Prompt = styles.Blurred.Prompt.Foreground(dim)
+			styles.Blurred.Placeholder = styles.Blurred.Placeholder.Foreground(dim)
+		}
+
+		native.SetStyles(styles)
+	}
+
+	return native.View()
+}
+
+// Cursor suppresses the native real cursor while the wrapper is disabled.
+func (m Text) Cursor() *tea.Cursor {
+	if m.Disabled {
+		return nil
+	}
+
+	return m.Model.Cursor()
+}
+
+func (m Text) Focused() bool { return !m.Disabled && m.Model.Focused() }
+func (m *Text) Resize(columns int) {
+	m.SetWidth(max(1, columns-ansi.StringWidth(m.Prompt)-1))
+	m.SetCursor(m.Position())
+}
+func (m Text) Init() tea.Cmd { return nil }
 func (m Text) Update(msg tea.Msg) (Text, tea.Cmd) {
 	if m.Disabled {
 		return m, nil
@@ -69,10 +119,17 @@ func NewArea(width, height int, t theme.Theme) Area {
 	s.Focused.Text, s.Blurred.Text = t.Text(), t.Text()
 	s.Focused.Prompt, s.Blurred.Prompt = t.Heading(), t.Subtle()
 	s.Focused.Placeholder, s.Blurred.Placeholder = t.Subtle(), t.Subtle()
+	s.Focused.CursorLine = t.Text().Background(t.Surface)
+	s.Blurred.CursorLine = t.Text()
+	s.Focused.LineNumber, s.Blurred.LineNumber = t.Subtle(), t.Subtle()
+	s.Focused.CursorLineNumber, s.Blurred.CursorLineNumber = t.Heading(), t.Subtle()
+	s.Focused.EndOfBuffer, s.Blurred.EndOfBuffer = t.Subtle(), t.Subtle()
+	s.Focused.Selection, s.Blurred.Selection = t.Selection().Padding(0), t.Selection().Padding(0)
 	s.Cursor.Color, s.Cursor.Blink = t.Accent, !t.ReducedMotion
 	m.SetStyles(s)
 	return m
 }
+
 func (m Area) Update(msg tea.Msg) (Area, tea.Cmd) {
 	var cmd tea.Cmd
 	m.Model, cmd = m.Model.Update(msg)

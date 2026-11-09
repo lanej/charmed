@@ -23,12 +23,18 @@ func foundationsDefinitions() []Definition {
 		widget("foundations/theme", "Foundations/Theme", "Foundations", "theme", "Semantic roles, terminal palettes, contrast and no-color output.", "themeStory", nil, themeStory),
 		widget("foundations/layout", "Foundations/Layout", "Foundations", "layout", "Cell-based panels and responsive allocation.", "layoutStory", nil, layoutStory),
 		widget("foundations/glyphs", "Foundations/Glyphs", "Foundations", "theme", "Named semantic glyphs, explicit ASCII equivalents and adjacent labels.", "glyphStory", nil, glyphStory),
+		widget("foundations/permissions", "Foundations/Permissions", "Foundations", "text", "Colored permission combinations, exact rwx details, unknown data and explicit special bits.", "permissionsStory", nil, permissionsStory),
 		widget("foundations/tokens", "Foundations/Spacing, borders and selection", "Foundations", "theme", "Cell spacing scale, normal and focused border roles, and readable collection selection.", "tokensStory", nil, tokensStory),
 		widget("foundations/focus", "Foundations/Focus and spacing", "Foundations", "theme", "One cell on both sides of controls and panel content. Focus and emphasis retain the same allocation.", "focusStory", nil, focusStory),
 		widget("feedback/motion", "Foundations/Motion", "Foundations", "motion", "A Harmonica spring stepped explicitly by the owner; reduced motion resolves immediately.", "motionStory", []string{"amount"}, motionStory),
 	}
 
 	for i := range d {
+		if d[i].ID == "foundations/permissions" {
+			d[i].Source = "story/permissions.go"
+			d[i].Upstream = "https://pkg.go.dev/io/fs#FileMode"
+		}
+
 		if d[i].ID == "foundations/tokens" {
 			d[i].ExampleSource = "docs/snippets/foundation-tokens.go.txt"
 		}
@@ -38,6 +44,7 @@ func foundationsDefinitions() []Definition {
 			d[i].Step = true
 		}
 	}
+
 	return d
 }
 
@@ -114,22 +121,27 @@ func layoutStory(e Environment) (runtime.Scene, error) {
 		left, right, split := layout.Split(size.Width, 1, 20, 30, .4)
 		height := max(3, size.Height-4)
 		a := layout.Panel("Navigation", "Cell-based dimensions\nBorders included in size", layout.Size{Width: left, Height: height}, t, true)
+
 		b := layout.Panel("Content", "The right pane adapts to available space.\nNarrow terminals stack the same panels.", layout.Size{Width: right, Height: height}, t, false)
 		if split {
 			return title("Responsive layout", e) + layout.Row(a, " ", b)
 		}
+
 		height = max(3, height/2)
+
 		return title("Stacked layout", e) + layout.Column(layout.Panel("Navigation", "Same content", layout.Size{Width: left, Height: height}, t, true), layout.Panel("Content", "Same state", layout.Size{Width: right, Height: height}, t, false))
 	}), nil
 }
 
 func motionStory(e Environment) (runtime.Scene, error) {
 	m := feedback.NewMotion(e.Config.Palette())
+
 	return &scene{update: func(msg tea.Msg) tea.Cmd {
 		if _, ok := msg.(runtime.StepMsg); ok {
 			m.Step(e.Config.Amount)
 			emit(e, map[string]any{"type": "motion", "position": m.Position})
 		}
+
 		return nil
 	}, view: func(layout.Size) string {
 		return title("Spring motion", e) + fmt.Sprintf("Position %.2f  /  Target %.0f\n\nVelocity %.2f", m.Position, e.Config.Amount, m.Velocity) + footer("Ctrl+N steps the spring. Reduced motion resolves immediately.", e)

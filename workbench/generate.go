@@ -30,11 +30,14 @@ func Generate(out string) error {
 	if err := story.Validate(); err != nil {
 		return err
 	}
+
 	root, err := moduleRoot()
 	if err != nil {
 		return err
 	}
+
 	var entries []ManifestEntry
+
 	for _, d := range story.Definitions() {
 		code, err := exampleCode(root, d)
 		if err != nil {
@@ -42,12 +45,18 @@ func Generate(out string) error {
 		}
 
 		entry := ManifestEntry{Definition: d, Code: code}
+
 		variants := []struct {
 			name   string
 			change func(*story.Config)
 		}{
 			{"Default", func(*story.Config) {}},
-			{"Narrow", func(c *story.Config) { c.Columns = 40; c.Rows = 16 }},
+			{"Narrow", func(c *story.Config) {
+				c.Columns, c.Rows = 40, 16
+				if d.ID == "foundations/permissions" {
+					c.Rows = d.Defaults.Rows
+				}
+			}},
 			{"256 colors", func(c *story.Config) { c.Profile = "ansi256" }},
 			{"16 colors", func(c *story.Config) { c.Profile = "ansi16" }},
 			{"Monochrome", func(c *story.Config) {
@@ -57,12 +66,35 @@ func Generate(out string) error {
 				c.ReducedMotion = true
 			}},
 		}
+		if d.ID == "input/text" {
+			variants = append(variants,
+				struct {
+					name   string
+					change func(*story.Config)
+				}{"Empty", func(c *story.Config) { c.Value = "" }},
+				struct {
+					name   string
+					change func(*story.Config)
+				}{"Disabled", func(c *story.Config) { c.State = "disabled" }},
+			)
+		}
+
+		if d.ID == "foundations/permissions" {
+			for _, mode := range []theme.Mode{theme.Light, theme.Contrast} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: string(mode), change: func(c *story.Config) { c.Theme = mode }})
+			}
+		}
+
 		if slices.Contains(d.Controls, "legend") {
 			variants = append(variants, struct {
 				name   string
 				change func(*story.Config)
 			}{"With legend", func(c *story.Config) { c.Legend = true }})
 		}
+
 		if slices.Contains(d.Controls, "comparisonVariant") {
 			variants = append(variants, struct {
 				name   string
@@ -71,6 +103,7 @@ func Generate(out string) error {
 				name: "Disconnected bands", change: func(c *story.Config) { c.ComparisonVariant = "bands" },
 			})
 		}
+
 		if slices.Contains(d.Controls, "emphasis") {
 			for _, emphasis := range []string{"bright", "normal", "dim"} {
 				variants = append(variants, struct {
@@ -81,16 +114,19 @@ func Generate(out string) error {
 				})
 			}
 		}
+
 		if slices.Contains(d.Controls, "boundaries") {
 			variants = append(variants, struct {
 				name   string
 				change func(*story.Config)
 			}{name: "No boundaries", change: func(c *story.Config) { c.Boundaries = false }})
 		}
+
 		for _, scenario := range d.Scenarios {
 			if scenario == d.Defaults.Scenario {
 				continue
 			}
+
 			variants = append(variants, struct {
 				name   string
 				change func(*story.Config)
@@ -111,8 +147,10 @@ func Generate(out string) error {
 
 			entry.Snapshots = append(entry.Snapshots, Snapshot{Name: v.name, Config: c, Frame: frame})
 		}
+
 		entries = append(entries, entry)
 	}
+
 	return writeSite(out, root, entries)
 }
 
@@ -121,40 +159,51 @@ func moduleRoot() (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	for {
 		data, err := os.ReadFile(filepath.Join(dir, "go.mod"))
 		if err == nil && strings.Contains(string(data), "module github.com/lanej/charmed") {
 			return dir, nil
 		}
+
 		parent := filepath.Dir(dir)
 		if parent == dir {
 			return "", fmt.Errorf("run generate from the Charmed repository")
 		}
+
 		dir = parent
 	}
 }
+
 func sourceSymbol(path, symbol string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return "", err
 	}
+
 	if symbol == "" {
 		return string(data), nil
 	}
+
 	fset := token.NewFileSet()
+
 	file, err := parser.ParseFile(fset, path, data, parser.ParseComments)
 	if err != nil {
 		return "", err
 	}
+
 	for _, decl := range file.Decls {
 		if fn, ok := decl.(*ast.FuncDecl); ok && fn.Name.Name == symbol {
 			start := fset.Position(fn.Pos()).Offset
 			if fn.Doc != nil {
 				start = fset.Position(fn.Doc.Pos()).Offset
 			}
+
 			end := fset.Position(fn.End()).Offset
+
 			return string(data[start:end]), nil
 		}
 	}
+
 	return "", fmt.Errorf("source symbol %s missing from %s", symbol, path)
 }

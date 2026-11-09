@@ -174,9 +174,11 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		}
 	}
 	funcs := template.FuncMap{
-		"terminal":  terminalHTML,
-		"highlight": highlightCode,
-		"name":      func(title string) string { parts := strings.Split(title, "/"); return parts[len(parts)-1] },
+		"terminal":           terminalHTML,
+		"snapshotForeground": snapshotForeground,
+		"snapshotBackground": snapshotBackground,
+		"highlight":          highlightCode,
+		"name":               func(title string) string { parts := strings.Split(title, "/"); return parts[len(parts)-1] },
 		"link": func(id string) (string, error) {
 			for _, entry := range entries {
 				if entry.ID == id {
@@ -199,8 +201,8 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 			return err
 		}
 
-		if err := os.WriteFile(filepath.Join(directory, page.File), output.Bytes(), 0644); err != nil {
-			return err
+		if writeErr := os.WriteFile(filepath.Join(directory, page.File), output.Bytes(), 0600); writeErr != nil {
+			return writeErr
 		}
 	}
 
@@ -218,12 +220,12 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		return err
 	}
 
-	if err := os.WriteFile(filepath.Join(directory, "tabs.js"), tabs, 0644); err != nil {
-		return err
+	if writeErr := os.WriteFile(filepath.Join(directory, "tabs.js"), tabs, 0600); writeErr != nil {
+		return writeErr
 	}
 
-	if err := os.MkdirAll(filepath.Join(directory, "assets"), 0755); err != nil {
-		return err
+	if writeErr := os.MkdirAll(filepath.Join(directory, "assets"), 0750); writeErr != nil {
+		return writeErr
 	}
 	// The downloadable asset and inline lockups share one vector source.
 	mark, err := siteFiles.ReadFile("site/mark.svg")
@@ -231,8 +233,8 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		return err
 	}
 
-	if err := os.WriteFile(filepath.Join(directory, "assets", "charmed-mark.svg"), mark, 0644); err != nil {
-		return err
+	if writeErr := os.WriteFile(filepath.Join(directory, "assets", "charmed-mark.svg"), mark, 0600); writeErr != nil {
+		return writeErr
 	}
 
 	assets, err := filepath.Glob(filepath.Join(root, "docs", "assets", "*"))

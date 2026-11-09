@@ -27,8 +27,9 @@ func NewSparkline(values []float64, size layout.Size, t theme.Theme) Sparkline {
 	m.rebuild()
 	return m
 }
+
 func (m *Sparkline) rebuild() {
-	m.Bubble = sparkline.New(max(1, m.size.Width), max(1, m.size.Height), sparkline.WithStyle(m.theme.Heading()))
+	m.Bubble = sparkline.New(max(1, m.size.Width), max(1, m.size.Height), sparkline.WithStyle(m.theme.SeriesStyle(0)))
 	for _, v := range m.values {
 		if !math.IsNaN(v) && !math.IsInf(v, 0) {
 			m.Bubble.Push(v)
@@ -41,6 +42,7 @@ func (m *Sparkline) SetData(values []float64) {
 	m.values = append([]float64(nil), values...)
 	m.rebuild()
 }
+
 func (m Sparkline) View() string {
 	if len(m.values) == 0 {
 		return layout.Fit("No data", m.size)
@@ -70,6 +72,7 @@ func NewTimeSeries(series []TimeSeriesData, size layout.Size, t theme.Theme, opt
 	m.SetData(series)
 	return m
 }
+
 func (m *TimeSeries) SetData(series []TimeSeriesData) {
 	m.series = make([]TimeSeriesData, len(series))
 	for i, s := range series {
@@ -78,6 +81,7 @@ func (m *TimeSeries) SetData(series []TimeSeriesData) {
 	}
 	m.rebuild()
 }
+
 func (m *TimeSeries) Resize(size layout.Size) {
 	if m.size == size {
 		return
@@ -143,12 +147,14 @@ func (m *TimeSeries) rebuild() {
 	}
 	m.Bubble.DrawBrailleAll()
 }
+
 func (m TimeSeries) Update(msg tea.Msg) (TimeSeries, tea.Cmd) {
 	var cmd tea.Cmd
 	m.Bubble, cmd = m.Bubble.Update(msg)
 	m.Bubble.DrawBrailleAll()
 	return m, cmd
 }
+
 func (m TimeSeries) View() string {
 	count := 0
 	for _, s := range m.series {
