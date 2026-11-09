@@ -29,6 +29,8 @@ type Theme struct {
 	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger   color.Color
 	Series, Sequential                                          []color.Color
 	Permissions                                                 PermissionColors
+	HTTP                                                        HTTPColors
+	Syntax                                                      SyntaxColors
 }
 
 func New(mode Mode) Theme {
@@ -86,6 +88,7 @@ func New(mode Mode) Theme {
 
 	t.FocusBorder, t.SelectionForeground = t.Accent, t.Foreground
 	t.Permissions = permissionColors(t.Mode)
+	t.HTTP, t.Syntax = httpColors(t.Mode)
 
 	return t
 }

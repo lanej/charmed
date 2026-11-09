@@ -30,11 +30,18 @@ const (
 	GlyphRight       Glyph = "right"
 	GlyphLoading     Glyph = "loading"
 	GlyphUnavailable Glyph = "unavailable"
+	GlyphLog         Glyph = "log"
+	GlyphTrace       Glyph = "trace"
+	GlyphSpan        Glyph = "span"
+	GlyphUpstream    Glyph = "upstream"
+	GlyphDownstream  Glyph = "downstream"
+	GlyphScrollTrack Glyph = "scroll-track"
+	GlyphScrollThumb Glyph = "scroll-thumb"
 )
 
 // Glyphs returns the semantic catalog in display order.
 func Glyphs() []Glyph {
-	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable}
+	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable, GlyphLog, GlyphTrace, GlyphSpan, GlyphUpstream, GlyphDownstream, GlyphScrollTrack, GlyphScrollThumb}
 }
 
 // Glyph returns a compact mark. Callers keep a text label for semantic states.
@@ -92,6 +99,20 @@ func (t Theme) Glyph(glyph Glyph) string {
 		unicode, ascii = "→", ">"
 	case GlyphLoading:
 		unicode, ascii = "…", "."
+	case GlyphScrollTrack:
+		unicode, ascii = "│", "|"
+	case GlyphScrollThumb:
+		unicode, ascii = "┃", "#"
+	case GlyphLog:
+		unicode, ascii = "≡", "L"
+	case GlyphTrace:
+		unicode, ascii = "⋈", "T"
+	case GlyphSpan:
+		unicode, ascii = "─", "S"
+	case GlyphUpstream:
+		unicode, ascii = "↑", "^"
+	case GlyphDownstream:
+		unicode, ascii = "↓", "v"
 	case GlyphUnavailable:
 		unicode, ascii = "—", "-"
 	default:

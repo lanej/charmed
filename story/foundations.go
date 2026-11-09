@@ -75,11 +75,15 @@ func themeStory(e Environment) (runtime.Scene, error) {
 }
 
 func glyphStory(e Environment) (runtime.Scene, error) {
-	return static(func(layout.Size) string {
+	return static(func(size layout.Size) string {
 		t := e.Config.Palette()
 		fallback := t
 		fallback.ASCII = true
-		rows := []string{"Meaning     U A     Meaning     U A", ""}
+		rows := []string{}
+		// WHY: Keep every glyph visible in the fixed-height narrow specimen.
+		if (len(theme.Glyphs())+foundationColumns-1)/foundationColumns+2 <= size.Height {
+			rows = append(rows, "Meaning     U A     Meaning     U A", "")
+		}
 
 		var cells []string
 

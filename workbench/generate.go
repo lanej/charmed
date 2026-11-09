@@ -56,6 +56,10 @@ func Generate(out string) error {
 				if d.ID == "foundations/permissions" {
 					c.Rows = d.Defaults.Rows
 				}
+
+				if d.ID == "foundations/glyphs" {
+					c.Rows = (len(theme.Glyphs())+1)/2 + 2
+				}
 			}},
 			{"256 colors", func(c *story.Config) { c.Profile = "ansi256" }},
 			{"16 colors", func(c *story.Config) { c.Profile = "ansi16" }},
@@ -79,13 +83,96 @@ func Generate(out string) error {
 			)
 		}
 
-		if d.ID == "foundations/permissions" {
+		if d.ID == "foundations/permissions" || d.Family == "logs" || d.Family == "http" || d.ID == "text/syntax" {
 			for _, mode := range []theme.Mode{theme.Light, theme.Contrast} {
 				variants = append(variants, struct {
 					name   string
 					change func(*story.Config)
 				}{name: string(mode), change: func(c *story.Config) { c.Theme = mode }})
 			}
+		}
+
+		if d.Family == "logs" && slices.Contains(d.Controls, "state") {
+			for _, state := range []string{"empty", "error", "loading"} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: strings.ToUpper(state[:1]) + state[1:], change: func(c *story.Config) { c.State = state }})
+			}
+		}
+
+		if d.ID == "pattern/log-inspector" || d.ID == "collection/log-tree" || d.ID == "collection/http-log" {
+			for _, mode := range []string{"glyph", "label"} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: strings.ToUpper(mode[:1]) + mode[1:] + " only", change: func(c *story.Config) { c.SymbolStyle = mode }})
+			}
+		}
+
+		if d.ID == "collection/log-tree" || d.ID == "pattern/log-inspector" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Focused leaf", change: func(c *story.Config) { c.DetachedLogDetails = true }})
+		}
+
+		if d.ID == "collection/http-log" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Timeline", change: func(c *story.Config) { c.Timeline = true; c.Legend = true }})
+		}
+
+		if d.ID == "pattern/log-inspector" || d.ID == "collection/http-log" {
+			for _, format := range []string{"full", "host-path", "path"} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: "URL " + format, change: func(c *story.Config) { c.URLStyle = format }})
+			}
+
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Labeled summary", change: func(c *story.Config) { c.VerboseDetails = true; c.ColumnLabels = true }})
+		}
+
+		if d.ID == "pattern/log-inspector" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Focused narrow", change: func(c *story.Config) { c.DetachedLogDetails = true; c.Columns = 40; c.Rows = 24; c.LogPane = "logs" }})
+			for _, variant := range []struct {
+				name, pane string
+				trace      bool
+			}{{"Narrow details", "http", false}, {"Narrow logs", "logs", false}, {"Trace context", "", true}} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: variant.name, change: func(c *story.Config) {
+					c.LogPane = variant.pane
+
+					c.TraceLogs = variant.trace
+					if variant.pane != "" {
+						c.Columns, c.Rows = 40, 24
+					}
+				}})
+			}
+		}
+
+		if d.ID == "collection/log-tree" || d.ID == "collection/http-log" || d.ID == "pattern/log-inspector" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "No folds", change: func(c *story.Config) { c.NoFolds = true }})
+		}
+
+		if d.ID == "collection/http-log" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Raw body", change: func(c *story.Config) { c.RawBody = true }})
 		}
 
 		if slices.Contains(d.Controls, "legend") {
