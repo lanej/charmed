@@ -1,0 +1,19 @@
+graph := diagram.StateDiagram{
+    States: []diagram.State{
+        {ID: "idle", Label: "Idle", Initial: true},
+        {ID: "running", Label: "Running"},
+        {ID: "done", Label: "Done", Final: true},
+    },
+    Transitions: []diagram.Transition{
+        {From: "idle", To: "running", Label: "start"},
+        {From: "running", To: "running", Label: "retry"},
+        {From: "running", To: "done", Label: "finish"},
+        {From: "running", To: "idle", Label: "cancel"},
+    },
+    Active: "running",
+}
+rendered, err := graph.View(width, palette)
+if err != nil {
+    return err
+}
+// Set Active and render again when application state changes.
