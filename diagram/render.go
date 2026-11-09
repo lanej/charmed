@@ -48,11 +48,12 @@ func (d drawing) render(active string, t theme.Theme) string {
 	}
 
 	for _, node := range d.nodes {
-		semantic := nodeColor(node.state, t)
+		isActive := node.state.ID == active
+		semantic := nodeColor(node.state, isActive, t)
 
 		border := uv.Style{Fg: semantic}
-		if node.state.ID == active {
-			border.Fg = t.Accent
+		if isActive {
+			border.Attrs = uv.AttrBold
 		}
 
 		for y := 0; y < node.h; y++ {
@@ -80,21 +81,14 @@ func (d drawing) render(active string, t theme.Theme) string {
 				}
 
 				if mask != 0 {
-					put(node.x+x, node.y+y, nodeGlyph(mask|masks[node.y+y][node.x+x], node.state, ascii), border)
+					put(node.x+x, node.y+y, nodeGlyph(mask|masks[node.y+y][node.x+x], node.state, isActive, ascii), border)
 				}
 			}
 		}
 
-		label := t.Text()
-		if node.state.Outcome != OutcomeNone {
-			label = label.Foreground(semantic)
-		}
-
-		if node.state.ID == active {
+		label := t.Text().Foreground(semantic)
+		if isActive {
 			label = label.Bold(true)
-			if node.state.Outcome == OutcomeNone {
-				label = label.Foreground(t.Accent)
-			}
 		}
 
 		drawText(screen, node.x+2, node.y+1, label.Render(node.label))
@@ -158,20 +152,32 @@ func drawText(screen uv.ScreenBuffer, x, y int, value string) {
 	uv.NewStyledString(value).Draw(screen, uv.Rect(x, y, ansi.StringWidth(value), 1))
 }
 
-func nodeColor(s State, t theme.Theme) color.Color {
+func nodeColor(s State, active bool, t theme.Theme) color.Color {
 	switch s.Outcome {
 	case OutcomeNone:
-		return t.Border
+		if active {
+			return t.Accent
+		}
+
+		return t.DimForeground
 	case OutcomeSuccess:
-		return t.Success
+		if active {
+			return t.Success
+		}
+
+		return t.DimSuccess
 	case OutcomeError:
-		return t.Danger
+		if active {
+			return t.Danger
+		}
+
+		return t.DimDanger
 	default:
 		return t.Foreground
 	}
 }
 
-func nodeGlyph(mask uint8, s State, ascii bool) rune {
+func nodeGlyph(mask uint8, s State, active, ascii bool) rune {
 	if s.Final {
 		if ascii {
 			if mask == east|west {
@@ -217,6 +223,11 @@ func nodeGlyph(mask uint8, s State, ascii bool) rune {
 
 			return '╯'
 		}
+	}
+
+	if active && !ascii {
+		glyphs := [16]rune{' ', '┃', '┃', '┃', '━', '┗', '┏', '┣', '━', '┛', '┓', '┫', '━', '┻', '┳', '╋'}
+		return glyphs[mask]
 	}
 
 	return lineGlyph(mask, ascii)

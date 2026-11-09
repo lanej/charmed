@@ -365,3 +365,47 @@ func TestOutcomesAreIndependentOfFinalAndActive(t *testing.T) {
 		t.Fatal("active changed geometry")
 	}
 }
+
+func TestPossibleAndActiveStateEmphasis(t *testing.T) {
+	for _, tc := range []struct {
+		outcome       diagram.StateOutcome
+		brightR, dimR uint8
+	}{
+		{diagram.OutcomeNone, 23, 11}, {diagram.OutcomeSuccess, 29, 13}, {diagram.OutcomeError, 31, 17},
+	} {
+		outcome := tc.outcome
+		palette := theme.New(theme.Dark)
+		palette.Accent = color.RGBA{R: 23, G: 89, B: 151, A: 255}
+		palette.Success = color.RGBA{R: 29, G: 89, B: 151, A: 255}
+		palette.Danger = color.RGBA{R: 31, G: 89, B: 151, A: 255}
+		palette.DimForeground = color.RGBA{R: 11, G: 37, B: 61, A: 255}
+		palette.DimSuccess = color.RGBA{R: 13, G: 37, B: 61, A: 255}
+		palette.DimDanger = color.RGBA{R: 17, G: 37, B: 61, A: 255}
+		d := diagram.StateDiagram{States: []diagram.State{{ID: "Current", Outcome: outcome}, {ID: "Possible", Outcome: outcome}}, Active: "Current"}
+
+		out, err := d.View(100, palette)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if !strings.Contains(out, fmt.Sprintf("\x1b[38;2;%d;89;151;1m", tc.brightR)) || !strings.Contains(out, fmt.Sprintf("\x1b[38;2;%d;37;61m", tc.dimR)) {
+			t.Fatalf("bright and dim semantic colors missing: %s", out)
+		}
+
+		plain := ansi.Strip(out)
+		if !strings.Contains(plain, "┏━") || !strings.Contains(plain, "┌─") || !strings.Contains(plain, "active") {
+			t.Fatalf("current and possible states lack distinct borders: %s", out)
+		}
+
+		d.Active = "Possible"
+
+		moved, err := d.View(100, palette)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if moved == out || !strings.Contains(ansi.Strip(moved), "┏━") {
+			t.Fatal("active emphasis did not move with current state")
+		}
+	}
+}
