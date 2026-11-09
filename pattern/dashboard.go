@@ -120,7 +120,7 @@ func (m *Dashboard) Resize(size layout.Size) {
 	paddingWidth := collection.TablePaddingWidth(columnCount)
 	w := max(paddingWidth, layout.PanelContentSize(layout.Size{Width: m.leftWidth}).Width)
 
-	statusWidth := 1
+	statusWidth := ansi.StringWidth("STATE")
 	for _, service := range m.services {
 		statusWidth = max(statusWidth, ansi.StringWidth(serviceStatus(service.Status).View(text.Bright, m.theme)))
 	}

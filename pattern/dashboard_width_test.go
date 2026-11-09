@@ -43,3 +43,16 @@ func TestDashboardStatusAllocationPreservesServiceNames(t *testing.T) {
 		}
 	}
 }
+
+func TestEmptyDashboardKeepsNativeStatusHeading(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Mono} {
+		m := pattern.NewDashboard(pattern.DashboardOptions{Theme: theme.New(mode)})
+		for _, width := range []int{40, 90, 100} {
+			m.Resize(layout.Size{Width: width, Height: 34})
+
+			if view := ansi.Strip(m.Table.View()); !strings.Contains(view, "STATE") {
+				t.Fatalf("%s at %d columns clipped empty status heading: %s", mode, width, view)
+			}
+		}
+	}
+}
