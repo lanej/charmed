@@ -1,7 +1,9 @@
 package diagram_test
 
 import (
+	"fmt"
 	"reflect"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -13,7 +15,7 @@ import (
 func TestStateDiagramSimpleDirectedTransition(t *testing.T) {
 	d := diagram.StateDiagram{States: []diagram.State{{ID: "A", Initial: true}, {ID: "B", Final: true}}, Transitions: []diagram.Transition{{From: "A", To: "B", Label: "go"}}}
 
-	out, err := d.View(40, theme.New(theme.Mono))
+	out, err := d.View(80, theme.New(theme.Mono))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -24,14 +26,12 @@ func TestStateDiagramSimpleDirectedTransition(t *testing.T) {
 	}
 
 	want := []string{
-		"+---------+   +-------+",
-		"| A       |   | B     |",
-		"| initial |   | final |",
-		"+-+-------+   +-+-----+",
-		"  |             ^",
-		"  |             |",
-		"  +-------------+        go",
+		"+-----------------+        +---------------+",
+		"| A               +-- go ->+ B             |",
+		"| initial         |        | final         |",
+		"+-----------------+        +---------------+",
 	}
+
 	if !reflect.DeepEqual(lines, want) {
 		t.Fatalf("directed transition differs:\n%s", out)
 	}
@@ -63,19 +63,23 @@ func TestStateDiagramRetainsCyclesParallelEdgesAndSelfLoops(t *testing.T) {
 		}
 
 		plain := ansi.Strip(a)
-		for _, label := range []string{"Idle", "Running", "Done", "start", "retry", "finish", "cancel", "resume", "active", "initial", "final", "Crossings do not join transitions."} {
+		for _, label := range []string{"Idle", "Running", "Done", "start", "retry", "finish", "cancel", "resume", "active", "initial", "final"} {
 			if strings.Count(plain, label) != 1 {
 				t.Fatalf("lost or duplicated %q in %q", label, plain)
 			}
 		}
 
-		arrow := "↑"
+		arrows := strings.Count(plain, "▶") + strings.Count(plain, "◀") + strings.Count(plain, "▲")
 		if mode == theme.Mono {
-			arrow = "^"
+			arrows = strings.Count(plain, ">") + strings.Count(plain, "<") + strings.Count(plain, "^")
 		}
 
-		if strings.Count(plain, arrow) != len(d.Transitions) {
-			t.Fatal("a transition lost its destination arrow")
+		if arrows != len(d.Transitions) {
+			t.Fatalf("transition lost its arrow: %q", plain)
+		}
+
+		if strings.Contains(plain, "Crossings") {
+			t.Fatal("diagram requires a legend")
 		}
 
 		for _, line := range strings.Split(a, "\n") {
@@ -113,7 +117,7 @@ func TestStateDiagramRejectsInvalidGraphsWithoutPartialOutput(t *testing.T) {
 	}
 
 	d := diagram.StateDiagram{States: []diagram.State{{ID: "a"}, {ID: "b"}}, Transitions: []diagram.Transition{{From: "a", To: "b", Label: "transition"}}}
-	for _, width := range []int{-1, 0, 5, 20} {
+	for _, width := range []int{-1, 0, 5} {
 		out, err := d.View(width, theme.New(theme.Dark))
 		if err == nil || out != "" || !strings.Contains(err.Error(), "columns") {
 			t.Fatalf("narrow allocation lost topology: %q, %v", out, err)
@@ -159,22 +163,17 @@ func TestStateDiagramLoopAndReverseRouting(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	lines := strings.Split(out, "\n")[4:11]
-	for i := range lines {
-		lines[i] = strings.TrimRight(lines[i][:21], " ")
+	lines := strings.Split(out, "\n")
+	if !strings.Contains(lines[1], "A") || !strings.Contains(lines[1], "go") || !strings.Contains(lines[1], "B") {
+		t.Fatalf("forward label is detached from its nodes: %q", out)
 	}
 
-	want := []string{
-		"  | ^ | ^       ^ |",
-		"  | | | |       | |",
-		"  +-+ | |       | |",
-		"      | |       | |",
-		"      +-+-------+ |",
-		"        |         |",
-		"        +---------+",
+	if !strings.Contains(lines[2], "<- back") {
+		t.Fatalf("reverse edge lacks its inline label and arrow: %q", out)
 	}
-	if !reflect.DeepEqual(lines, want) {
-		t.Fatalf("loop or reverse transition was rewired:\n%s", out)
+
+	if !strings.Contains(lines[len(lines)-1], "loop") || !strings.Contains(lines[len(lines)-2], "^") {
+		t.Fatalf("self-loop label or destination lost: %q", out)
 	}
 
 	d.Active = "A"
@@ -193,5 +192,113 @@ func TestStateDiagramLoopAndReverseRouting(t *testing.T) {
 
 	if strings.Split(a, "\n")[0] != strings.Split(b, "\n")[0] {
 		t.Fatal("active marker moved the state boxes")
+	}
+}
+
+func TestStateDiagramNarrowReflowKeepsLabelsOnEdges(t *testing.T) {
+	d := diagram.StateDiagram{States: []diagram.State{{ID: "idle", Label: "Idle", Initial: true}, {ID: "running", Label: "Running"}, {ID: "done", Label: "Done", Final: true}}, Transitions: []diagram.Transition{{From: "idle", To: "running", Label: "start"}, {From: "running", To: "running", Label: "retry"}, {From: "running", To: "done", Label: "finish"}, {From: "running", To: "idle", Label: "cancel"}}, Active: "running"}
+
+	out, err := d.View(40, theme.New(theme.Mono))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, line := range strings.Split(out, "\n") {
+		if ansi.StringWidth(line) > 40 {
+			t.Fatal("vertical diagram escaped width")
+		}
+	}
+
+	for _, label := range []string{"Idle", "Running", "Done", "start", "retry", "finish", "cancel"} {
+		if strings.Count(out, label) != 1 {
+			t.Fatalf("vertical diagram lost or duplicated %q: %q", label, out)
+		}
+	}
+
+	if strings.Contains(out, "Crossings") {
+		t.Fatal("diagram has a legend")
+	}
+
+	if len(regexp.MustCompile(`(?m)^[ |]*v[ |]*$`).FindAllString(out, -1)) != 2 {
+		t.Fatalf("vertical edges lost arrowheads: %q", out)
+	}
+
+	if !strings.Contains(out, "| start") || !strings.Contains(out, "| finish") || !strings.Contains(out, "| retry") {
+		t.Fatalf("vertical labels detached from paths: %q", out)
+	}
+}
+
+func TestStateDiagramWidthGuidanceIsSufficient(t *testing.T) {
+	d := diagram.StateDiagram{States: []diagram.State{{ID: "A"}, {ID: "B"}}, Transitions: []diagram.Transition{{From: "A", To: "B"}, {From: "B", To: "A"}}}
+
+	_, err := d.View(1, theme.New(theme.Mono))
+	if err == nil {
+		t.Fatal("expected insufficient width")
+	}
+
+	var required, available int
+	if _, scanErr := fmt.Sscanf(err.Error(), "state diagram needs %d columns; available %d", &required, &available); scanErr != nil {
+		t.Fatal(scanErr)
+	}
+
+	if _, renderErr := d.View(required, theme.New(theme.Mono)); renderErr != nil {
+		t.Fatalf("reported minimum is insufficient: %v", renderErr)
+	}
+}
+
+func TestStateDiagramLifecycleFitsEightyColumns(t *testing.T) {
+	d := diagram.StateDiagram{States: []diagram.State{{ID: "disconnected", Label: "Disconnected", Initial: true}, {ID: "connecting", Label: "Connecting"}, {ID: "connected", Label: "Connected"}, {ID: "retrying", Label: "Retrying"}, {ID: "failed", Label: "Failed"}, {ID: "closed", Label: "Closed", Final: true}}, Transitions: []diagram.Transition{{From: "disconnected", To: "connecting", Label: "connect"}, {From: "connecting", To: "connected", Label: "success"}, {From: "connecting", To: "retrying", Label: "timeout"}, {From: "retrying", To: "connecting", Label: "retry"}, {From: "connecting", To: "failed", Label: "failure"}, {From: "connected", To: "closed", Label: "close"}}, Active: "connected"}
+
+	out, err := d.View(80, theme.New(theme.Mono))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, state := range d.States {
+		if !strings.Contains(out, state.Label) {
+			t.Fatalf("lost state %s", state.ID)
+		}
+	}
+
+	for _, line := range strings.Split(out, "\n") {
+		if ansi.StringWidth(line) > 80 {
+			t.Fatal("lifecycle diagram exceeded 80 columns")
+		}
+	}
+}
+
+func TestStateDiagramComplexEdgesSurviveBothLayouts(t *testing.T) {
+	d := diagram.StateDiagram{States: []diagram.State{{ID: "a", Label: "Alpha", Initial: true}, {ID: "b", Label: "Beta"}, {ID: "c", Label: "Gamma"}, {ID: "d", Label: "Delta", Final: true}}, Transitions: []diagram.Transition{{From: "a", To: "c", Label: "skip"}, {From: "b", To: "d", Label: "ship"}, {From: "c", To: "a", Label: "reset"}, {From: "a", To: "c", Label: "resend"}, {From: "b", To: "b", Label: "retry"}, {From: "c", To: "c", Label: "again"}, {From: "a", To: "b", Label: "start"}, {From: "b", To: "c", Label: "advance"}, {From: "c", To: "d", Label: "finish"}}, Active: "b"}
+	for _, width := range []int{80, 100, 120} {
+		out, err := d.View(width, theme.New(theme.Dark))
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		plain := ansi.Strip(out)
+		for _, state := range d.States {
+			if strings.Count(plain, state.Label) != 1 {
+				t.Fatalf("lost node %s", state.ID)
+			}
+		}
+
+		for _, edge := range d.Transitions {
+			if strings.Count(plain, edge.Label) != 1 {
+				t.Fatalf("lost or overpainted edge label %q at width %d:\n%s", edge.Label, width, plain)
+			}
+		}
+
+		count := 0
+		for _, arrow := range []string{"▶", "◀", "▲", "▼"} {
+			count += strings.Count(plain, arrow)
+		}
+
+		if count != len(d.Transitions) {
+			t.Fatalf("lost destination arrow at width %d: %d arrows for %d edges\n%s", width, count, len(d.Transitions), plain)
+		}
+
+		if strings.Contains(plain, "Crossings") {
+			t.Fatal("complex graph needs a legend")
+		}
 	}
 }

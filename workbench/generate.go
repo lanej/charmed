@@ -53,7 +53,7 @@ func Generate(out string) error {
 			{"Default", func(*story.Config) {}},
 			{"Narrow", func(c *story.Config) {
 				c.Columns, c.Rows = 40, 16
-				if d.ID == "foundations/permissions" {
+				if d.ID == "foundations/permissions" || d.ID == "diagram/state-transitions" {
 					c.Rows = d.Defaults.Rows
 				}
 

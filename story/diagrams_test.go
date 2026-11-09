@@ -39,8 +39,21 @@ func TestStateDiagramStoryUpdatesAndResizes(t *testing.T) {
 	_, _ = model.Update(tea.WindowSizeMsg{Width: 40, Height: 12})
 
 	narrow := ansi.Strip(model.View().Content)
-	if !strings.Contains(narrow, "columns") || strings.Contains(narrow, "retry") {
+	if !strings.Contains(narrow, "needs more rows") || strings.Contains(narrow, "retry") {
 		t.Fatal("narrow view displayed a partial graph instead of allocation guidance")
+	}
+
+	_, _ = model.Update(tea.WindowSizeMsg{Width: 40, Height: 30})
+
+	vertical := ansi.Strip(model.View().Content)
+	for _, label := range []string{"Idle", "Running", "Done", "start", "retry", "finish", "cancel"} {
+		if !strings.Contains(vertical, label) {
+			t.Fatalf("narrow layout lost %q", label)
+		}
+	}
+
+	if strings.Contains(vertical, "Crossings") {
+		t.Fatal("narrow graph needs a legend")
 	}
 
 	_, _ = model.Update(tea.WindowSizeMsg{Width: 100, Height: 8})

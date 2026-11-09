@@ -7,30 +7,53 @@ const (
 	west
 )
 
-func route(edges []edgeLayout, width int) [][]uint8 {
-	if len(edges) == 0 {
-		return nil
-	}
-
-	rows := make([][]uint8, 3+2*(len(edges)-1))
+func (d drawing) routes() [][]uint8 {
+	rows := make([][]uint8, d.height)
 	for i := range rows {
-		rows[i] = make([]uint8, width)
+		rows[i] = make([]uint8, d.width)
 	}
 
-	for i, edge := range edges {
-		lane := 2 + 2*i
+	for _, edge := range d.edges {
+		for i := 1; i < len(edge.points); i++ {
+			a, b := edge.points[i-1], edge.points[i]
 
-		for _, x := range []int{edge.from, edge.to} {
-			rows[0][x] |= north
-			for y := 0; y < lane; y++ {
-				rows[y][x] |= south
-				rows[y+1][x] |= north
+			dx, dy := 0, 0
+			if b.x > a.x {
+				dx = 1
+			} else if b.x < a.x {
+				dx = -1
 			}
-		}
 
-		for x := min(edge.from, edge.to); x < max(edge.from, edge.to); x++ {
-			rows[lane][x] |= east
-			rows[lane][x+1] |= west
+			if b.y > a.y {
+				dy = 1
+			} else if b.y < a.y {
+				dy = -1
+			}
+
+			for a != b {
+				next := point{a.x + dx, a.y + dy}
+				if dx == 1 {
+					rows[a.y][a.x] |= east
+					rows[next.y][next.x] |= west
+				}
+
+				if dx == -1 {
+					rows[a.y][a.x] |= west
+					rows[next.y][next.x] |= east
+				}
+
+				if dy == 1 {
+					rows[a.y][a.x] |= south
+					rows[next.y][next.x] |= north
+				}
+
+				if dy == -1 {
+					rows[a.y][a.x] |= north
+					rows[next.y][next.x] |= south
+				}
+
+				a = next
+			}
 		}
 	}
 
@@ -51,10 +74,14 @@ func lineGlyph(mask uint8, ascii bool) rune {
 			return '|'
 		}
 
+		if mask == north|south|east|west {
+			return '-'
+		}
+
 		return '+'
 	}
 
-	glyphs := [16]rune{' ', '│', '│', '│', '─', '└', '┌', '├', '─', '┘', '┐', '┤', '─', '┴', '┬', '┼'}
+	glyphs := [16]rune{' ', '│', '│', '│', '─', '└', '┌', '├', '─', '┘', '┐', '┤', '─', '┴', '┬', '─'}
 
 	return glyphs[mask]
 }

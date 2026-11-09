@@ -17,7 +17,7 @@ import (
 
 func moleculesDefinitions() []Definition {
 	d := []Definition{
-		{ID: "diagram/state-transitions", Title: "Molecules/Diagrams/State transitions", Level: "Molecules", Family: "diagram", Description: "Directed transitions, branches, cycles and self-loops retain their labels; active, initial and final markers survive monochrome rendering.", Source: "story/diagrams.go", Symbol: "stateDiagramStory", Defaults: DefaultConfig(), Factory: stateDiagramStory},
+		{ID: "diagram/state-transitions", Title: "Molecules/Diagrams/State transitions", Level: "Molecules", Family: "diagram", Description: "Labeled arrows connect state boxes directly, with local self-loops and vertical layout for narrow regions.", Source: "story/diagrams.go", Symbol: "stateDiagramStory", Defaults: DefaultConfig(), Factory: stateDiagramStory},
 		widget("input/field", "Molecules/Input/Labeled field", "Molecules", "input", "Label, help and validation composed around the same input atom.", "fieldStory", []string{"value", "state"}, fieldStory),
 		widget("feedback/paginator", "Molecules/Feedback/Pagination", "Molecules", "feedback", "Native pagination logic with shared active and inactive styles.", "paginatorStory", nil, paginatorStory),
 		widget("feedback/help", "Molecules/Feedback/Help", "Molecules", "feedback", "Help is generated from the same native key bindings that handle input.", "helpStory", nil, helpStory),
