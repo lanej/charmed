@@ -12,20 +12,22 @@ import (
 type Status string
 
 const (
-	OK       Status = "OK"
-	Warn     Status = "WARN"
-	Error    Status = "ERROR"
-	Unknown  Status = "UNKNOWN"
-	Off      Status = "OFF"
-	Pending  Status = "PENDING"
-	Running  Status = "RUNNING"
-	Paused   Status = "PAUSED"
-	Disabled Status = "DISABLED"
+	OK           Status = "OK"
+	Warn         Status = "WARN"
+	Error        Status = "ERROR"
+	Unknown      Status = "UNKNOWN"
+	Off          Status = "OFF"
+	Pending      Status = "PENDING"
+	Running      Status = "RUNNING"
+	Paused       Status = "PAUSED"
+	Disabled     Status = "DISABLED"
+	Connected    Status = "CONNECTED"
+	Disconnected Status = "DISCONNECTED"
 )
 
 // Statuses returns the display catalog in its learning order.
 func Statuses() []Status {
-	return []Status{OK, Warn, Error, Unknown, Off, Pending, Running, Paused, Disabled}
+	return []Status{OK, Warn, Error, Unknown, Off, Pending, Running, Paused, Disabled, Connected, Disconnected}
 }
 
 // MaxStatusWidth includes the glyph, separating space and horizontal insets.
@@ -67,6 +69,13 @@ func (s Status) View(emphasis text.Emphasis, t theme.Theme, options ...text.Pres
 	case Paused:
 		glyph = theme.GlyphPaused
 		t = statusTheme(t, t.Paused, t.DimPaused)
+	case Connected:
+		tone = text.Success
+		glyph = theme.GlyphConnected
+	case Disconnected:
+		glyph = theme.GlyphDisconnected
+
+		t = statusTheme(t, t.Inactive, t.DimInactive)
 	case Disabled:
 		glyph = theme.GlyphDisabled
 		t = statusTheme(t, t.Inactive, t.DimInactive)

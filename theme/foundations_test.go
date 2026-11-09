@@ -96,6 +96,8 @@ func TestNamedGlyphFallbacksKeepStateAndWidth(t *testing.T) {
 		{theme.GlyphRunning, "▶", ">"},
 		{theme.GlyphPaused, "‖", "="},
 		{theme.GlyphDisabled, "⊘", "/"},
+		{theme.GlyphConnected, "●", "+"},
+		{theme.GlyphDisconnected, "○", "-"},
 		{theme.GlyphSearch, "⌕", "/"},
 		{theme.GlyphFilter, "▽", "f"},
 		{theme.GlyphSort, "↕", "s"},

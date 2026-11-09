@@ -4,44 +4,46 @@ package theme
 type Glyph string
 
 const (
-	GlyphOK          Glyph = "ok"
-	GlyphWarning     Glyph = "warning"
-	GlyphError       Glyph = "error"
-	GlyphUnknown     Glyph = "unknown"
-	GlyphOff         Glyph = "off"
-	GlyphPending     Glyph = "pending"
-	GlyphRunning     Glyph = "running"
-	GlyphPaused      Glyph = "paused"
-	GlyphDisabled    Glyph = "disabled"
-	GlyphSearch      Glyph = "search"
-	GlyphFilter      Glyph = "filter"
-	GlyphSort        Glyph = "sort"
-	GlyphRefresh     Glyph = "refresh"
-	GlyphLink        Glyph = "link"
-	GlyphExpand      Glyph = "expand"
-	GlyphInfo        Glyph = "info"
-	GlyphSelected    Glyph = "selected"
-	GlyphUnselected  Glyph = "unselected"
-	GlyphExpanded    Glyph = "expanded"
-	GlyphCollapsed   Glyph = "collapsed"
-	GlyphUp          Glyph = "up"
-	GlyphDown        Glyph = "down"
-	GlyphLeft        Glyph = "left"
-	GlyphRight       Glyph = "right"
-	GlyphLoading     Glyph = "loading"
-	GlyphUnavailable Glyph = "unavailable"
-	GlyphLog         Glyph = "log"
-	GlyphTrace       Glyph = "trace"
-	GlyphSpan        Glyph = "span"
-	GlyphUpstream    Glyph = "upstream"
-	GlyphDownstream  Glyph = "downstream"
-	GlyphScrollTrack Glyph = "scroll-track"
-	GlyphScrollThumb Glyph = "scroll-thumb"
+	GlyphOK           Glyph = "ok"
+	GlyphWarning      Glyph = "warning"
+	GlyphError        Glyph = "error"
+	GlyphUnknown      Glyph = "unknown"
+	GlyphOff          Glyph = "off"
+	GlyphPending      Glyph = "pending"
+	GlyphRunning      Glyph = "running"
+	GlyphPaused       Glyph = "paused"
+	GlyphDisabled     Glyph = "disabled"
+	GlyphConnected    Glyph = "connected"
+	GlyphDisconnected Glyph = "disconnected"
+	GlyphSearch       Glyph = "search"
+	GlyphFilter       Glyph = "filter"
+	GlyphSort         Glyph = "sort"
+	GlyphRefresh      Glyph = "refresh"
+	GlyphLink         Glyph = "link"
+	GlyphExpand       Glyph = "expand"
+	GlyphInfo         Glyph = "info"
+	GlyphSelected     Glyph = "selected"
+	GlyphUnselected   Glyph = "unselected"
+	GlyphExpanded     Glyph = "expanded"
+	GlyphCollapsed    Glyph = "collapsed"
+	GlyphUp           Glyph = "up"
+	GlyphDown         Glyph = "down"
+	GlyphLeft         Glyph = "left"
+	GlyphRight        Glyph = "right"
+	GlyphLoading      Glyph = "loading"
+	GlyphUnavailable  Glyph = "unavailable"
+	GlyphLog          Glyph = "log"
+	GlyphTrace        Glyph = "trace"
+	GlyphSpan         Glyph = "span"
+	GlyphUpstream     Glyph = "upstream"
+	GlyphDownstream   Glyph = "downstream"
+	GlyphScrollTrack  Glyph = "scroll-track"
+	GlyphScrollThumb  Glyph = "scroll-thumb"
 )
 
 // Glyphs returns the semantic catalog in display order.
 func Glyphs() []Glyph {
-	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable, GlyphLog, GlyphTrace, GlyphSpan, GlyphUpstream, GlyphDownstream, GlyphScrollTrack, GlyphScrollThumb}
+	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphConnected, GlyphDisconnected, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable, GlyphLog, GlyphTrace, GlyphSpan, GlyphUpstream, GlyphDownstream, GlyphScrollTrack, GlyphScrollThumb}
 }
 
 // Glyph returns a compact mark. Callers keep a text label for semantic states.
@@ -67,6 +69,10 @@ func (t Theme) Glyph(glyph Glyph) string {
 		unicode, ascii = "‖", "="
 	case GlyphDisabled:
 		unicode, ascii = "⊘", "/"
+	case GlyphConnected:
+		unicode, ascii = "●", "+"
+	case GlyphDisconnected:
+		unicode, ascii = "○", "-"
 	case GlyphSearch:
 		unicode, ascii = "⌕", "/"
 	case GlyphFilter:
