@@ -234,7 +234,7 @@
 <p><a href="#layout/footer">Footer</a> places help on the left and status on the right in one row. Status disappears when both cannot fit, then help clips to the allocation. Both fields accept styled text, including native help output. Header and footer fields use only their first line; none of these components wrap. Widths are terminal cells, including wide Unicode labels and ANSI styling; nonpositive widths render nothing.</p>
 <p>See the <a href="examples.html#template/application">application shell</a> for these components composed around an active content panel. Sidebar navigation, breadcrumbs and toolbars remain separate future patterns.</p>
 <h2 id="log-levels"><a class="heading-permalink" href="#log-levels"><span>Log levels</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p><a href="#feedback/log-level">Log level atoms</a> render native <code class="inline-code">log<span class="syn-operator">.</span>DebugLevel</code>, <code class="inline-code">InfoLevel</code>, <code class="inline-code">WarnLevel</code>, <code class="inline-code">ErrorLevel</code> and <code class="inline-code">FatalLevel</code> with <code class="inline-code">feedback.LogLevel(level, text.Normal, palette)</code>. Severity sets the semantic tone; bright, normal and dim emphasis remain independent. The five labels reserve equal cell widths, including in ASCII/monochrome output. Unknown native values display <code class="inline-code">LEVEL n</code> neutrally, preserving the value rather than claiming a known severity. Rendering FATAL performs no logging or exit. <code class="inline-code">collection<span class="syn-operator">.</span>LogViewer</code> composes the atom between its timestamp and message, retaining Charm Log’s structured-field formatting, bounded history and scroll behavior.</p>
+<p><a href="#feedback/log-level">Log level atoms</a> render <code class="inline-code">feedback<span class="syn-operator">.</span>TraceLevel</code> and native <code class="inline-code">log<span class="syn-operator">.</span>DebugLevel</code>, <code class="inline-code">InfoLevel</code>, <code class="inline-code">WarnLevel</code>, <code class="inline-code">ErrorLevel</code> and <code class="inline-code">FatalLevel</code> with <code class="inline-code">feedback.LogLevel(level, text.Normal, palette)</code>. TRACE uses subdued neutral, DEBUG cyan, INFO blue, WARN amber, ERROR red and FATAL magenta. Severity sets the semantic tone; bright, normal and dim emphasis remain independent. The six labels reserve equal cell widths, including in ASCII/monochrome output. Theme fields <code class="inline-code">Trace</code>, <code class="inline-code">Debug</code>, <code class="inline-code">Fatal</code> and their <code class="inline-code">Dim</code> counterparts allow customization. <code class="inline-code">feedback<span class="syn-operator">.</span>TraceLevel</code> is a typed <code class="inline-code">log<span class="syn-operator">.</span><span class="syn-function">Level</span><span class="syn-operator">(</span><span class="syn-operator">-</span><span class="syn-number">8</span><span class="syn-operator">)</span></code> extension for display and <code class="inline-code">collection<span class="syn-operator">.</span>LogEntry</code>; Charm Log’s native <code class="inline-code">String</code> and <code class="inline-code">ParseLevel</code> do not recognize it. Other unknown values display <code class="inline-code">LEVEL n</code> neutrally, preserving the value rather than claiming a known severity. Rendering FATAL performs no logging or exit. <code class="inline-code">collection<span class="syn-operator">.</span>LogViewer</code> composes the atom between its timestamp and message, retaining Charm Log’s structured-field formatting, bounded history and scroll behavior.</p>
 
 
 
@@ -3682,7 +3682,7 @@ Enable Live to run the native timers.</pre></figure>
 </section>
 
 <section class="component" id="feedback/log-level">
-<p class="eyebrow"><a href="#level-atoms">Atoms</a> / feedback</p><h4><a class="heading-permalink" href="#feedback%2flog-level" aria-label="Link to Log level component"><span>Log level</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><p>Native log severities with stable label widths, semantic tones and independent emphasis.</p>
+<p class="eyebrow"><a href="#level-atoms">Atoms</a> / feedback</p><h4><a class="heading-permalink" href="#feedback%2flog-level" aria-label="Link to Log level component"><span>Log level</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><p>Six log severities from TRACE to FATAL with distinct tones, stable label widths and independent emphasis.</p>
 <div class="component-preview">
 <div class="component-subheading"><h5 id="feedback/log-level-preview"><a class="heading-permalink" href="#feedback%2flog-level-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h5><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
@@ -3692,38 +3692,43 @@ Enable Live to run the native timers.</pre></figure>
 <div id="panel-feedback/log-level-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-0" tabindex="0">
 <figure><figcaption>Default · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                                                        
                                                                                 
-<span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">DEBUG</span><span style="background-color:#313741;"> </span>                                                                         
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">TRACE</span><span style="background-color:#252b34;"> </span>                                                                         
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">DEBUG</span><span style="background-color:#1e313d;"> </span>                                                                         
 <span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">INFO </span><span style="background-color:#202f40;"> </span>                                                                         
 <span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">WARN </span><span style="background-color:#32322f;"> </span>                                                                         
 <span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">ERROR</span><span style="background-color:#322830;"> </span>                                                                         
-<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">FATAL</span><span style="background-color:#322830;"> </span></pre></figure>
+<span style="background-color:#302b41;"> </span><span style="color:#e49aef;background-color:#302b41;">FATAL</span><span style="background-color:#302b41;"> </span></pre></figure>
 </div><div id="panel-feedback/log-level-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-1" tabindex="0">
 <figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                
                                         
-<span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">DEBUG</span><span style="background-color:#313741;"> </span>                                 
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">TRACE</span><span style="background-color:#252b34;"> </span>                                 
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">DEBUG</span><span style="background-color:#1e313d;"> </span>                                 
 <span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">INFO </span><span style="background-color:#202f40;"> </span>                                 
 <span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">WARN </span><span style="background-color:#32322f;"> </span>                                 
 <span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">ERROR</span><span style="background-color:#322830;"> </span>                                 
-<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">FATAL</span><span style="background-color:#322830;"> </span></pre></figure>
+<span style="background-color:#302b41;"> </span><span style="color:#e49aef;background-color:#302b41;">FATAL</span><span style="background-color:#302b41;"> </span></pre></figure>
 </div><div id="panel-feedback/log-level-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-2" tabindex="0">
 <figure><figcaption>256 colors · ansi256 · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                                                        
                                                                                 
-<span style="background-color:#3a3a3a;"> </span><span style="color:#eeeeee;background-color:#3a3a3a;">DEBUG</span><span style="background-color:#3a3a3a;"> </span>                                                                         
+<span style="background-color:#00005f;"> </span><span style="color:#9e9e9e;background-color:#00005f;">TRACE</span><span style="background-color:#00005f;"> </span>                                                                         
+<span style="background-color:#005f5f;"> </span><span style="color:#5fd7d7;background-color:#005f5f;">DEBUG</span><span style="background-color:#005f5f;"> </span>                                                                         
 <span style="background-color:#00005f;"> </span><span style="color:#87afff;background-color:#00005f;">INFO </span><span style="background-color:#00005f;"> </span>                                                                         
 <span style="background-color:#303030;"> </span><span style="color:#ffd787;background-color:#303030;">WARN </span><span style="background-color:#303030;"> </span>                                                                         
 <span style="background-color:#5f005f;"> </span><span style="color:#ff8787;background-color:#5f005f;">ERROR</span><span style="background-color:#5f005f;"> </span>                                                                         
-<span style="background-color:#5f005f;"> </span><span style="color:#ff8787;background-color:#5f005f;">FATAL</span><span style="background-color:#5f005f;"> </span></pre></figure>
+<span style="background-color:#5f005f;"> </span><span style="color:#d787ff;background-color:#5f005f;">FATAL</span><span style="background-color:#5f005f;"> </span></pre></figure>
 </div><div id="panel-feedback/log-level-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-3" tabindex="0">
 <figure><figcaption>16 colors · ansi16 · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                                                        
                                                                                 
-<span style="background-color:#000000;"> </span><span style="color:#ffffff;background-color:#000000;">DEBUG</span><span style="background-color:#000000;"> </span>                                                                         
+<span style="background-color:#000080;"> </span><span style="color:#c0c0c0;background-color:#000080;">TRACE</span><span style="background-color:#000080;"> </span>                                                                         
+<span style="background-color:#008080;"> </span><span style="color:#00ffff;background-color:#008080;">DEBUG</span><span style="background-color:#008080;"> </span>                                                                         
 <span style="background-color:#000080;"> </span><span style="color:#0000ff;background-color:#000080;">INFO </span><span style="background-color:#000080;"> </span>                                                                         
 <span style="background-color:#000000;"> </span><span style="color:#ff0000;background-color:#000000;">WARN </span><span style="background-color:#000000;"> </span>                                                                         
 <span style="background-color:#800080;"> </span><span style="color:#ff0000;background-color:#800080;">ERROR</span><span style="background-color:#800080;"> </span>                                                                         
-<span style="background-color:#800080;"> </span><span style="color:#ff0000;background-color:#800080;">FATAL</span><span style="background-color:#800080;"> </span></pre></figure>
+<span style="background-color:#800080;"> </span><span style="color:#0000ff;background-color:#800080;">FATAL</span><span style="background-color:#800080;"> </span></pre></figure>
 </div><div id="panel-feedback/log-level-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-4" tabindex="0">
 <figure><figcaption>Monochrome · none · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Log level atoms / normal                                                        
                                                                                 
+[TRACE]                                                                         
 [DEBUG]                                                                         
 [INFO ]                                                                         
 [WARN ]                                                                         
@@ -3732,27 +3737,30 @@ Enable Live to run the native timers.</pre></figure>
 </div><div id="panel-feedback/log-level-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-5" tabindex="0">
 <figure><figcaption>Bright · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / bright                                                        
                                                                                 
-<span style="background-color:#eeeeee;"> </span><span style="color:#101722;background-color:#eeeeee;font-weight:bold;">DEBUG</span><span style="background-color:#eeeeee;"> </span>                                                                         
+<span style="background-color:#9a9a9a;"> </span><span style="color:#101722;background-color:#9a9a9a;font-weight:bold;">TRACE</span><span style="background-color:#9a9a9a;"> </span>                                                                         
+<span style="background-color:#70c6d8;"> </span><span style="color:#101722;background-color:#70c6d8;font-weight:bold;">DEBUG</span><span style="background-color:#70c6d8;"> </span>                                                                         
 <span style="background-color:#78b8ed;"> </span><span style="color:#101722;background-color:#78b8ed;font-weight:bold;">INFO </span><span style="background-color:#78b8ed;"> </span>                                                                         
 <span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">WARN </span><span style="background-color:#f2c879;"> </span>                                                                         
 <span style="background-color:#f28b82;"> </span><span style="color:#101722;background-color:#f28b82;font-weight:bold;">ERROR</span><span style="background-color:#f28b82;"> </span>                                                                         
-<span style="background-color:#f28b82;"> </span><span style="color:#101722;background-color:#f28b82;font-weight:bold;">FATAL</span><span style="background-color:#f28b82;"> </span></pre></figure>
+<span style="background-color:#e49aef;"> </span><span style="color:#101722;background-color:#e49aef;font-weight:bold;">FATAL</span><span style="background-color:#e49aef;"> </span></pre></figure>
 </div><div id="panel-feedback/log-level-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-6" tabindex="0">
 <figure><figcaption>Normal · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                                                        
                                                                                 
-<span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">DEBUG</span><span style="background-color:#313741;"> </span>                                                                         
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">TRACE</span><span style="background-color:#252b34;"> </span>                                                                         
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">DEBUG</span><span style="background-color:#1e313d;"> </span>                                                                         
 <span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">INFO </span><span style="background-color:#202f40;"> </span>                                                                         
 <span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">WARN </span><span style="background-color:#32322f;"> </span>                                                                         
 <span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">ERROR</span><span style="background-color:#322830;"> </span>                                                                         
-<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">FATAL</span><span style="background-color:#322830;"> </span></pre></figure>
+<span style="background-color:#302b41;"> </span><span style="color:#e49aef;background-color:#302b41;">FATAL</span><span style="background-color:#302b41;"> </span></pre></figure>
 </div><div id="panel-feedback/log-level-7" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-7" tabindex="0">
 <figure><figcaption>Dim · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / dim                                                           
                                                                                 
-<span style="background-color:#19202a;"> </span><span style="color:#a8a8a8;background-color:#19202a;">DEBUG</span><span style="background-color:#19202a;"> </span>                                                                         
+<span style="background-color:#161c27;"> </span><span style="color:#898989;background-color:#161c27;">TRACE</span><span style="background-color:#161c27;"> </span>                                                                         
+<span style="background-color:#141e29;"> </span><span style="color:#519bab;background-color:#141e29;">DEBUG</span><span style="background-color:#141e29;"> </span>                                                                         
 <span style="background-color:#141d2a;"> </span><span style="color:#5a8fb9;background-color:#141d2a;">INFO </span><span style="background-color:#141d2a;"> </span>                                                                         
 <span style="background-color:#191e25;"> </span><span style="color:#b5945c;background-color:#191e25;">WARN </span><span style="background-color:#191e25;"> </span>                                                                         
 <span style="background-color:#191c26;"> </span><span style="color:#c17670;background-color:#191c26;">ERROR</span><span style="background-color:#191c26;"> </span>                                                                         
-<span style="background-color:#191c26;"> </span><span style="color:#c17670;background-color:#191c26;">FATAL</span><span style="background-color:#191c26;"> </span></pre></figure>
+<span style="background-color:#181c2a;"> </span><span style="color:#b477bd;background-color:#181c2a;">FATAL</span><span style="background-color:#181c2a;"> </span></pre></figure>
 </div>
 </div>
 </div>
@@ -3763,6 +3771,7 @@ line <span class="syn-operator">:=</span> level <span class="syn-operator">+</sp
 
 <span class="syn-comment">// Rendering a severity performs no logging or process exit.</span>
 fatal <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>log<span class="syn-operator">.</span>FatalLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Bright<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+trace <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>feedback<span class="syn-operator">.</span>TraceLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Dim<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
 </code></pre>
 </div>
 <p class="composition-line">Composed from: <a class="dependency" href="components.html#text/pill">text/pill</a> </p>
