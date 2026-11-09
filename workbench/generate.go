@@ -233,6 +233,36 @@ func Generate(out string) error {
 		}
 
 		if d.ID == "pattern/log-inspector" {
+			for _, name := range []string{"Single request", "Folded logs", "Request folded", "Response folded", "No instructions", "Single request narrow"} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: name, change: func(c *story.Config) {
+					c.SingleRequest, c.DetachedLogDetails = true, true
+
+					c.Columns, c.Rows, c.LogPane = 160, 44, "http"
+					if name == "Folded logs" {
+						c.CollapsedPanes = []string{"logs"}
+					}
+
+					if name == "Request folded" {
+						c.CollapsedPanes = []string{"request"}
+					}
+
+					if name == "Response folded" {
+						c.CollapsedPanes = []string{"response"}
+					}
+
+					if name == "No instructions" {
+						c.NoHelp = true
+					}
+
+					if name == "Single request narrow" {
+						c.Columns, c.Rows = 60, 40
+					}
+				}})
+			}
+
 			for _, preset := range []string{"sidebar", "timeline", "columns", "focused"} {
 				variants = append(variants, struct {
 					name   string

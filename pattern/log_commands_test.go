@@ -28,7 +28,7 @@ func TestInspectorVimPresetAndNativeOverridesSurviveUpdates(t *testing.T) {
 		t.Fatal("composed preset not applied")
 	}
 
-	for _, binding := range []key.Binding{m.HTTP.Details.KeyMap.Down, m.Logs.Model.KeyMap.Down, m.Logs.Details.KeyMap.Down} {
+	for _, binding := range []key.Binding{m.Request.KeyMap.Down, m.Response.KeyMap.Down, m.HTTP.Details.KeyMap.Down, m.Logs.Model.KeyMap.Down, m.Logs.Details.KeyMap.Down} {
 		if !key.Matches(tea.KeyPressMsg{Code: 'j'}, binding) {
 			t.Fatal("detail/tree navigation missing")
 		}
@@ -111,7 +111,7 @@ func TestInspectorPaletteIsolatesInputAndRestoresFocus(t *testing.T) {
 	}
 
 	m.OpenCommands()
-	m.Palette.SetQuery("Focus: HTTP details")
+	m.Palette.SetQuery("Focus: Response")
 
 	cmd = m.Update(tea.KeyPressMsg{Code: tea.KeyEnter})
 	if cmd == nil {

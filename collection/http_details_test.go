@@ -19,7 +19,7 @@ func TestHTTPDetailsUseHorizontalSpaceAndStackWhenNarrow(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	for _, width := range []int{120, 63, 62, 40, 120} {
+	for _, width := range []int{120, 69, 68, 40, 120} {
 		m.ResizeDetails(width, 60)
 
 		frame := ansi.Strip(m.DetailView())
@@ -39,7 +39,7 @@ func TestHTTPDetailsUseHorizontalSpaceAndStackWhenNarrow(t *testing.T) {
 			}
 		}
 
-		if sideBySide != (width >= 63) {
+		if sideBySide != (width >= 69) {
 			t.Fatal("responsive sections did not follow available content width", width, frame)
 		}
 
@@ -61,5 +61,35 @@ func TestHTTPDetailsUseHorizontalSpaceAndStackWhenNarrow(t *testing.T) {
 	selected, _ := m.Selected()
 	if selected.URL != record.URL {
 		t.Fatal("display formatting altered capture")
+	}
+}
+
+func TestHTTPDetailsKeepUUIDHeadersAndResponseLinesIntact(t *testing.T) {
+	const (
+		id      = "01234567-89ab-cdef-0123-456789abcdef"
+		message = "Could not purchase shipment: the carrier returned an internal server error"
+	)
+
+	m := collection.NewHTTPLog(105, 60, theme.New(theme.Dark))
+
+	record := collection.HTTPExchange{ID: "request", RequestID: id, RequestHeaders: http.Header{"X-Ep-Request-Uuid": {id}}, ResponseHeaders: http.Header{"X-Ep-Request-Uuid": {id}}, RequestBody: collection.HTTPBody{State: collection.Captured, Bytes: []byte(`{"rate":"rate_fixture"}`), ContentType: "application/json"}, ResponseBody: collection.HTTPBody{State: collection.Captured, Bytes: []byte(`{"message":"` + message + `"}`), ContentType: "application/json"}}
+	if err := m.SetEntries([]collection.HTTPExchange{record}); err != nil {
+		t.Fatal(err)
+	}
+
+	for _, width := range []int{105, 180, 105} {
+		m.ResizeDetails(width, 60)
+
+		view := ansi.Strip(m.DetailView())
+		if strings.Count(view, "X-Ep-Request-Uuid: "+id) != 2 || !strings.Contains(view, message) {
+			t.Fatalf("width %d fragmented captured evidence:\n%s", width, view)
+		}
+	}
+
+	m.RequestOpen = false
+	m.ResizeDetails(105, 60)
+
+	if view := ansi.Strip(m.DetailView()); !strings.Contains(view, message) || strings.Contains(view, "rate_fixture") {
+		t.Fatalf("folded request still occupies response space:\n%s", view)
 	}
 }

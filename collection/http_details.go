@@ -16,32 +16,83 @@ const (
 	httpDetailColumnGap   = 3
 )
 
+// SummaryContent renders the selected exchange's metadata without bodies or
+// keyboard instructions. It does not change the native combined Details view.
+func (m *HTTPLog) SummaryContent(width int) string {
+	record, ok := m.Selected()
+	if !ok {
+		return "Select an HTTP request"
+	}
+
+	rows := m.summaryRows(record, max(1, width))
+	if record.TraceID != "" {
+		rows = append(rows, detailLine("Trace ID", emptyID(record.TraceID), max(1, width)))
+	}
+
+	return ansi.Wrap(strings.Join(rows, "\n"), max(1, width), "")
+}
+
+// RequestContent and ResponseContent expose the selected directional payloads
+// for independent native viewports. Raw/capture/parameter policies remain owned
+// by HTTPLog; callers own pane folding, sizing, scrolling and focus.
+func (m *HTTPLog) RequestContent(width int) string {
+	record, ok := m.Selected()
+	if !ok {
+		return "Select an HTTP request"
+	}
+
+	parts := []string{}
+	if parameters := m.parameterView(record, max(1, width)); parameters != "" {
+		parts = append(parts, parameters)
+	}
+
+	parts = append(parts, m.payloadContent(record.RequestHeaders, record.RequestBody, max(1, width)))
+
+	return strings.Join(parts, "\n\n")
+}
+
+func (m *HTTPLog) ResponseContent(width int) string {
+	record, ok := m.Selected()
+	if !ok {
+		return "Select an HTTP request"
+	}
+
+	return m.payloadContent(record.ResponseHeaders, record.ResponseBody, max(1, width))
+}
+
+func (m *HTTPLog) payloadContent(headers http.Header, body HTTPBody, width int) string {
+	return ansi.Wrap(headerView(headers, m.Theme, width)+"\n"+bodyWithContentType(body, headers).View(m.Raw, m.BodyPreviewBytes, m.Theme), width, "")
+}
+
 func (m *HTTPLog) detailSections(record HTTPExchange, width int) string {
-	if width < httpParameterMinWidth+httpBodyMinWidth+httpDetailColumnGap {
-		parts := []string{}
-		if parameters := m.parameterView(record, width); parameters != "" {
-			parts = append(parts, parameters)
-		}
-
-		parts = append(parts, m.exchangeSection("Request", m.RequestOpen, record.RequestHeaders, record.RequestBody, width), m.exchangeSection("Response", m.ResponseOpen, record.ResponseHeaders, record.ResponseBody, width))
-
-		return strings.Join(parts, "\n\n")
+	left := m.requestSections(record, width)
+	right := m.exchangeSection("Response", m.ResponseOpen, record.ResponseHeaders, record.ResponseBody, width)
+	leftMinimum := max(httpParameterMinWidth, lipgloss.Width(left))
+	rightMinimum := max(httpBodyMinWidth, lipgloss.Width(right))
+	// WHY: A fixed breakpoint can split UUIDs and payloads even when a stacked
+	// view would display the captured lines intact. Closed columns need no width.
+	if width < leftMinimum+rightMinimum+httpDetailColumnGap || m.Folding && (!m.ResponseOpen || !m.RequestOpen && (!m.HasParameters() || !m.ParametersOpen)) {
+		return left + "\n\n" + right
 	}
 
-	leftWidth := max(httpParameterMinWidth, (width-httpDetailColumnGap)/3)
+	leftWidth := min(width-httpDetailColumnGap-rightMinimum, max(leftMinimum, (width-httpDetailColumnGap)/3))
 	rightWidth := width - leftWidth - httpDetailColumnGap
-
-	left := []string{}
-	if parameters := m.parameterView(record, leftWidth); parameters != "" {
-		left = append(left, parameters)
-	}
-
-	left = append(left, m.exchangeSection("Request", m.RequestOpen, record.RequestHeaders, record.RequestBody, leftWidth))
-	leftContent := ansi.Wrap(strings.Join(left, "\n\n"), leftWidth, "")
+	leftContent := m.requestSections(record, leftWidth)
 	rightContent := m.exchangeSection("Response", m.ResponseOpen, record.ResponseHeaders, record.ResponseBody, rightWidth)
 	leftContent = layout.Fit(leftContent, layout.Size{Width: leftWidth, Height: lipgloss.Height(leftContent)})
 
 	return layout.Row(leftContent, strings.Repeat(" ", httpDetailColumnGap), rightContent)
+}
+
+func (m *HTTPLog) requestSections(record HTTPExchange, width int) string {
+	left := []string{}
+	if parameters := m.parameterView(record, width); parameters != "" {
+		left = append(left, parameters)
+	}
+
+	left = append(left, m.exchangeSection("Request", m.RequestOpen, record.RequestHeaders, record.RequestBody, width))
+
+	return ansi.Wrap(strings.Join(left, "\n\n"), width, "")
 }
 
 func (m *HTTPLog) exchangeSection(name string, open bool, headers http.Header, body HTTPBody, width int) string {

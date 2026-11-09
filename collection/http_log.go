@@ -474,6 +474,32 @@ func (m *HTTPLog) refreshDetails(reset bool) {
 	}
 
 	width := max(1, m.Details.Width())
+	rows := m.summaryRows(record, width)
+
+	rows = append(rows, "")
+	if m.VerboseDetails || record.RequestID != "" {
+		rows = append(rows, detailLine("Request ID", emptyID(record.RequestID), width))
+	}
+
+	if m.VerboseDetails || record.TraceID != "" {
+		rows = append(rows, detailLine("Trace ID", emptyID(record.TraceID), width))
+	}
+
+	rows = append(rows, "")
+
+	rows = append(rows, m.detailSections(record, width))
+
+	content := ansi.Wrap(strings.Join(rows, "\n"), max(1, m.Details.Width()), "")
+	m.Details.SetContent(content)
+
+	if reset {
+		m.Details.GotoTop()
+	} else {
+		m.Details.SetYOffset(offset)
+	}
+}
+
+func (m *HTTPLog) summaryRows(record HTTPExchange, width int) []string {
 	rows := []string{}
 
 	status := text.HTTPStatusCode(record.StatusCode, m.Theme)
@@ -502,27 +528,7 @@ func (m *HTTPLog) refreshDetails(reset bool) {
 		}
 	}
 
-	rows = append(rows, "")
-	if m.VerboseDetails || record.RequestID != "" {
-		rows = append(rows, detailLine("Request ID", emptyID(record.RequestID), width))
-	}
-
-	if m.VerboseDetails || record.TraceID != "" {
-		rows = append(rows, detailLine("Trace ID", emptyID(record.TraceID), width))
-	}
-
-	rows = append(rows, "")
-
-	rows = append(rows, m.detailSections(record, width))
-
-	content := ansi.Wrap(strings.Join(rows, "\n"), max(1, m.Details.Width()), "")
-	m.Details.SetContent(content)
-
-	if reset {
-		m.Details.GotoTop()
-	} else {
-		m.Details.SetYOffset(offset)
-	}
+	return rows
 }
 
 func emptyID(value string) string {
@@ -545,7 +551,12 @@ func headerView(headers http.Header, t theme.Theme, width int) string {
 
 	for _, key := range keys {
 		for _, value := range headers[key] {
-			rows = append(rows, hangingWrap(logStyle(t, t.Syntax.Name).Render(text.Inline(key))+": ", text.Inline(value), width))
+			prefix, escaped := logStyle(t, t.Syntax.Name).Render(text.Inline(key))+": ", text.Inline(value)
+			if ansi.StringWidth(prefix)+ansi.StringWidth(escaped) > width && ansi.StringWidth(escaped) <= width {
+				rows = append(rows, ansi.Wrap(strings.TrimSpace(prefix), width, "")+"\n"+escaped)
+			} else {
+				rows = append(rows, hangingWrap(prefix, escaped, width))
+			}
 		}
 	}
 

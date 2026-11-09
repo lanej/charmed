@@ -33,6 +33,8 @@ func (m *LogInspector) SetKeyLayout(preset interaction.KeyLayout) (tea.Cmd, erro
 	treeKeys.GoToTop, treeKeys.GoToBottom = nav.Top, nav.Bottom
 	treeKeys.Open, treeKeys.Close = nav.Right, nav.Left
 	setViewportNavigation(&m.HTTP.Details, nav)
+	setViewportNavigation(&m.Request, nav)
+	setViewportNavigation(&m.Response, nav)
 	setViewportNavigation(&m.Logs.Details, nav)
 
 	return cmd, nil

@@ -6,7 +6,9 @@ import (
 	"strings"
 	"time"
 
+	"charm.land/bubbles/v2/viewport"
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/interaction"
@@ -24,6 +26,7 @@ const (
 
 const (
 	requestPane          = "requests"
+	requestDataPane      = "request"
 	httpPane             = "http"
 	logPane              = "logs"
 	inspectorMinRequests = 34
@@ -45,26 +48,36 @@ type LogInspectorOptions struct {
 	Logs                         []collection.LogRecord
 	Limit                        int
 	NoFolds                      bool
+	NoHelp, NoHeadline           bool
 	DetachedLogDetails           bool
 }
 
 // LogInspector owns coordinated UI state. Producers send observations through
 // the application's Bubble Tea update loop; this model performs no capture I/O.
+// Request and Response are independently scrollable native viewports. Apply
+// payload styles/key maps there; HTTP.Details remains the standalone combined
+// view and is not rendered by this inspector. Resizing and data updates own
+// payload content, preserve same-selection offsets and reset both on selection changes.
 type LogInspector struct {
-	Symbols            text.Presentation
-	HTTP               *collection.HTTPLog
-	Palette            *collection.CommandPalette
-	Logs               *collection.LogTree
-	focus              interaction.Focus
-	palette            theme.Theme
-	size               layout.Size
-	regions            inspectorRegions
-	preferred, active  InspectorLayout
-	wide               bool
-	scope              CorrelationScope
-	logs               []collection.LogRecord
-	limit              int
-	correlationMessage string
+	Symbols                         text.Presentation
+	HTTP                            *collection.HTTPLog
+	Palette                         *collection.CommandPalette
+	Logs                            *collection.LogTree
+	Request, Response               viewport.Model
+	focus                           interaction.Focus
+	palette                         theme.Theme
+	size, contentSize               layout.Size
+	regions                         inspectorRegions
+	preferred, active               InspectorLayout
+	wide                            bool
+	scope                           CorrelationScope
+	logs                            []collection.LogRecord
+	limit                           int
+	correlationMessage              string
+	collapsed                       map[string]bool
+	folding, showHelp, showHeadline bool
+	detailID                        string
+	detailRegions                   inspectorDetails
 }
 
 func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
@@ -73,7 +86,8 @@ func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
 		limit = collection.DefaultLogLimit
 	}
 
-	m := &LogInspector{palette: o.Theme, limit: limit, focus: interaction.NewFocus(requestPane, httpPane, logPane)}
+	m := &LogInspector{palette: o.Theme, limit: limit, focus: interaction.NewFocus(requestPane, requestDataPane, httpPane, logPane), collapsed: map[string]bool{}, folding: !o.NoFolds, showHelp: !o.NoHelp, showHeadline: !o.NoHeadline}
+	m.Request, m.Response = collection.NewViewport("", 40, 12), collection.NewViewport("", 60, 12)
 	m.HTTP = collection.NewHTTPLog(40, 12, o.Theme)
 	m.Symbols = o.Symbols
 	m.HTTP.Symbols = o.Symbols
@@ -105,6 +119,8 @@ func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
 	}
 
 	m.Palette = palette
+	m.Palette.SetHelpVisible(m.showHelp)
+
 	if !m.Palette.SetBackdropMode(o.BackdropMode) {
 		return nil, fmt.Errorf("unknown backdrop mode %q", o.BackdropMode)
 	}
@@ -127,7 +143,7 @@ func (m *LogInspector) Init() tea.Cmd {
 
 	return nil
 }
-func (m *LogInspector) FocusPane(id string) bool   { return m.focus.Set(id) }
+func (m *LogInspector) FocusPane(id string) bool   { return m.focus.Set(inspectorPaneID(id)) }
 func (m *LogInspector) FocusedPane() string        { return m.focus.Current() }
 func (m *LogInspector) Scope() CorrelationScope    { return m.scope }
 func (m *LogInspector) CorrelationMessage() string { return m.correlationMessage }
@@ -202,6 +218,7 @@ func (m *LogInspector) SetSymbols(mode text.Presentation) {
 	m.Symbols = mode
 	m.HTTP.SetSymbols(mode)
 	m.Logs.SetSymbols(mode)
+	m.Resize(m.size)
 }
 
 func (m *LogInspector) SetScope(scope CorrelationScope) bool {
@@ -266,6 +283,8 @@ func (m *LogInspector) correlate() {
 			m.correlationMessage = "Invalid commands: " + text.Inline(err.Error())
 		}
 	}
+
+	m.Resize(m.size)
 }
 
 func (m *LogInspector) Resize(size layout.Size) {
@@ -274,16 +293,34 @@ func (m *LogInspector) Resize(size layout.Size) {
 		m.Palette.Resize(size)
 	}
 
-	m.active, m.regions = planInspector(size, m.preferred)
+	bodySize := size
+	if m.showHelp {
+		bodySize.Height -= 2
+	}
+
+	if headline := m.headlineView(); headline != "" {
+		bodySize.Height -= lipgloss.Height(headline)
+	}
+
+	m.contentSize = bodySize
+	m.active, m.regions = planInspector(bodySize, m.preferred, m.HTTP.TimelineHeight())
+	m.regions = foldInspector(bodySize, m.active, m.regions, map[string]bool{requestPane: m.PaneCollapsed(requestPane), httpPane: m.PaneCollapsed(requestDataPane) && m.PaneCollapsed(httpPane), logPane: m.PaneCollapsed(logPane)})
 	m.wide = m.active != InspectorFocused
 	m.HTTP.Timeline = m.active == InspectorTimeline || (!m.wide && m.preferred == InspectorTimeline)
 	requests := layout.PanelContentSize(m.regions.requests)
 	details := layout.PanelContentSize(m.regions.details)
 	logs := layout.PanelContentSize(m.regions.logs)
-	m.HTTP.Resize(requests.Width, requests.Height)
 	m.HTTP.ResizeList(requests.Width, requests.Height)
-	m.HTTP.ResizeDetails(details.Width, details.Height)
-	m.Logs.Resize(logs.Width, max(1, logs.Height-1))
+
+	if !m.PaneCollapsed(httpPane) {
+		m.HTTP.ResizeDetails(details.Width, details.Height)
+	}
+
+	if !m.PaneCollapsed(logPane) {
+		m.Logs.Resize(logs.Width, max(1, logs.Height-1))
+	}
+
+	m.resizeDetailPanes()
 }
 
 func (m *LogInspector) updateContent(msg tea.Msg) tea.Cmd {
@@ -293,6 +330,16 @@ func (m *LogInspector) updateContent(msg tea.Msg) tea.Cmd {
 		}
 
 		switch key.String() {
+		case "1", "2":
+			if m.focus.Current() == requestDataPane || m.focus.Current() == httpPane {
+				return m.updateHTTPControls(msg)
+			}
+		case "?":
+			m.SetHelpVisible(!m.HelpVisible())
+			return nil
+		case "z":
+			m.SetPaneCollapsed(m.focus.Current(), !m.PaneCollapsed(m.focus.Current()))
+			return nil
 		case "L":
 			m.cycleLayout()
 			return nil
@@ -304,6 +351,9 @@ func (m *LogInspector) updateContent(msg tea.Msg) tea.Cmd {
 			return nil
 		case "alt+3":
 			m.focus.Set(logPane)
+			return nil
+		case "alt+4":
+			m.focus.Set(requestDataPane)
 			return nil
 		case "t":
 			if m.scope == TraceScope {
@@ -326,6 +376,10 @@ func (m *LogInspector) updateContent(msg tea.Msg) tea.Cmd {
 		}
 	}
 
+	if m.PaneCollapsed(m.focus.Current()) {
+		return nil
+	}
+
 	switch m.focus.Current() {
 	case requestPane:
 		before := m.HTTP.SelectedID()
@@ -336,8 +390,8 @@ func (m *LogInspector) updateContent(msg tea.Msg) tea.Cmd {
 		}
 
 		return cmd
-	case httpPane:
-		return m.HTTP.UpdateDetails(msg)
+	case requestDataPane, httpPane:
+		return m.updateDetailPane(msg)
 	case logPane:
 		return m.Logs.Update(msg)
 	}
@@ -354,13 +408,13 @@ func (m *LogInspector) contentView() string {
 			title = "Request timeline"
 		}
 
-		return layout.Panel(title+" · "+feedback.Follow(m.HTTP.Follow, text.Normal, m.palette, m.Symbols), m.HTTP.ListView(), size, m.palette, focused == requestPane)
+		return m.section(requestPane, title+" · "+feedback.Follow(m.HTTP.Follow, text.Normal, m.palette, m.Symbols), m.HTTP.ListView(), size)
 	}
 	details := func(size layout.Size) string {
-		return layout.Panel("HTTP details", m.HTTP.DetailView(), size, m.palette, focused == httpPane)
+		return m.detailPanesView(size)
 	}
 	logs := func(size layout.Size) string {
-		return layout.Panel("Related logs · "+feedback.Follow(m.Logs.Follow, text.Normal, m.palette, m.Symbols), m.palette.Subtle().Render(m.correlationMessage)+"\n"+m.Logs.View(), size, m.palette, focused == logPane)
+		return m.section(logPane, "Related logs · "+feedback.Follow(m.Logs.Follow, text.Normal, m.palette, m.Symbols), m.palette.Subtle().Render(m.correlationMessage)+"\n"+m.Logs.View(), size)
 	}
 
 	var content string
@@ -368,15 +422,45 @@ func (m *LogInspector) contentView() string {
 	switch m.active {
 	case InspectorAuto, InspectorSidebar:
 		content = layout.Row(requests(m.regions.requests), " ", layout.Column(details(m.regions.details), logs(m.regions.logs)))
+		if m.regions.requestsAbove {
+			content = layout.Column(requests(m.regions.requests), details(m.regions.details), logs(m.regions.logs))
+		}
 	case InspectorTimeline:
 		content = layout.Column(requests(m.regions.requests), layout.Row(details(m.regions.details), " ", logs(m.regions.logs)))
+		if m.regions.bottomStacked {
+			content = layout.Column(requests(m.regions.requests), details(m.regions.details), logs(m.regions.logs))
+		}
 	case InspectorColumns:
-		content = layout.Row(requests(m.regions.requests), " ", details(m.regions.details), " ", logs(m.regions.logs))
+		var headings, columns []string
+
+		for _, pane := range []struct{ id, view string }{{requestPane, requests(m.regions.requests)}, {httpPane, details(m.regions.details)}, {logPane, logs(m.regions.logs)}} {
+			if m.PaneCollapsed(pane.id) && (pane.id != httpPane || m.PaneCollapsed(requestDataPane)) {
+				headings = append(headings, pane.view)
+			} else {
+				columns = append(columns, pane.view)
+			}
+		}
+
+		var parts []string
+
+		for i, column := range columns {
+			if i > 0 {
+				parts = append(parts, " ")
+			}
+
+			parts = append(parts, column)
+		}
+
+		if len(parts) > 0 {
+			headings = append(headings, layout.Row(parts...))
+		}
+
+		content = layout.Column(headings...)
 	case InspectorFocused:
 		switch focused {
 		case requestPane:
 			content = requests(m.regions.requests)
-		case httpPane:
+		case requestDataPane, httpPane:
 			content = details(m.regions.details)
 		case logPane:
 			content = logs(m.regions.logs)
@@ -385,19 +469,33 @@ func (m *LogInspector) contentView() string {
 		content = ""
 	}
 
-	help := text.KeyHint("Tab", "panes", m.palette) + " · " + text.KeyHint("L", "layout", m.palette) + " · " + text.KeyHint("Alt+1/2/3", "views", m.palette) + "\n"
+	content = layout.Fit(content, m.contentSize)
+	if headline := m.headlineView(); headline != "" {
+		content = headline + "\n" + content
+	}
+
+	if !m.showHelp {
+		return layout.Fit(content, m.size)
+	}
+
+	help := text.KeyHint("Tab", "panes", m.palette) + " · " + text.KeyHint("L", "layout", m.palette) + " · " + text.KeyHint("Alt+1/2/3/4", "views", m.palette) + "\n"
 
 	if m.size.Width >= 70 {
-		help = strings.TrimSuffix(help, "\n") + " · " + text.KeyHint(m.Palette.Keys.Open.Help().Key, "commands", m.palette) + "\n"
+		help = strings.TrimSuffix(help, "\n") + " · " + text.KeyHint(m.Palette.Keys.Open.Help().Key, "commands", m.palette) + " · " + text.KeyHint("?", "help", m.palette) + "\n"
 	} else {
-		help = text.KeyHint("Tab", "panes", m.palette) + " · " + text.KeyHint(m.Palette.Keys.Open.Help().Key, "commands", m.palette) + "\n"
+		help = text.KeyHint("Tab", "panes", m.palette) + " · " + text.KeyHint("?", "help", m.palette) + " · " + text.KeyHint(m.Palette.Keys.Open.Help().Key, "commands", m.palette) + "\n"
 	}
 
 	switch focused {
 	case requestPane:
 		help += text.KeyHint(m.HTTP.Table.KeyMap.LineUp.Help().Key+"/"+m.HTTP.Table.KeyMap.LineDown.Help().Key, "select", m.palette) + " · " + text.KeyHint("F", "follow", m.palette)
-	case httpPane:
-		help += text.KeyHint(m.HTTP.Details.KeyMap.Up.Help().Key+"/"+m.HTTP.Details.KeyMap.Down.Help().Key, "scroll", m.palette)
+	case requestDataPane, httpPane:
+		keys := m.Response.KeyMap
+		if focused == requestDataPane {
+			keys = m.Request.KeyMap
+		}
+
+		help += text.KeyHint(keys.Up.Help().Key+"/"+keys.Down.Help().Key, "scroll", m.palette)
 		if m.HTTP.Folding {
 			help += " · " + text.KeyHint("1/2/3", "sections", m.palette)
 		}
@@ -425,6 +523,16 @@ func (m *LogInspector) contentView() string {
 
 	if selected, ok := m.HTTP.Selected(); ok && selected.TraceID != "" && focused == requestPane {
 		help += " · " + text.KeyHint("t", "scope", m.palette)
+	}
+
+	if m.folding {
+		label := "fold pane"
+		if m.PaneCollapsed(focused) {
+			label = "expand pane"
+			help = strings.SplitN(help, "\n", 2)[0] + "\nPane folded"
+		}
+
+		help += " · " + text.KeyHint("z", label, m.palette)
 	}
 
 	return layout.Fit(content+"\n"+m.palette.Subtle().Render(help), m.size)
