@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Foundations / Theme · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Foundations / Theme</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<p class="nav-title">Atomic design</p>
+
+<div class="nav-category is-active">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+<div class="nav-groups"><a class="nav-group" href="foundations-layout.html" >Layout</a><a class="nav-group" href="foundations-motion.html" >Motion</a><a class="nav-group" href="foundations-text.html" >Text</a><a class="nav-group" href="foundations-theme.html" aria-current="page">Theme</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">18</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#foundations%2ftheme">Theme</a><a class="nav-component" href="#foundations%2fglyphs">Glyphs</a><a class="nav-component" href="#foundations%2ftokens">Spacing, borders and selection</a><a class="nav-component" href="#foundations%2ffocus">Focus and spacing</a></div>
+
+</div>
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<p class="nav-title">Atomic design</p>
+
+<div class="nav-category is-active">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+<div class="nav-groups"><a class="nav-group" href="foundations-layout.html" >Layout</a><a class="nav-group" href="foundations-motion.html" >Motion</a><a class="nav-group" href="foundations-text.html" >Text</a><a class="nav-group" href="foundations-theme.html" aria-current="page">Theme</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">18</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#foundations%2ftheme">Theme</a><a class="nav-component" href="#foundations%2fglyphs">Glyphs</a><a class="nav-component" href="#foundations%2ftokens">Spacing, borders and selection</a><a class="nav-component" href="#foundations%2ffocus">Focus and spacing</a></div>
+
+</div>
+</nav>
+</aside>
+<main id="main">
+
+
+
+
+
+
+
+
+<section class="atomic-level" id="level-foundations">
+<p class="catalog-breadcrumb"><a href="foundations.html">Foundations</a><span aria-hidden="true"> / </span>Theme</p>
+
+<section class="component-family" id="level-foundations-theme"><h1><a class="heading-permalink" href="#level-foundations-theme"><span>Theme</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">4 components · <a href="foundations.html">All foundations</a></p>
+<ul class="group-jump-links" aria-label="Components in Theme"><li><a href="#foundations%2ftheme">Theme</a></li><li><a href="#foundations%2fglyphs">Glyphs</a></li><li><a href="#foundations%2ftokens">Spacing, borders and selection</a></li><li><a href="#foundations%2ffocus">Focus and spacing</a></li></ul>
+
+
+<section class="component" id="foundations/theme">
+<p class="eyebrow"><a href="foundations.html">Foundations</a> / Theme</p><h2><a class="heading-permalink" href="#foundations%2ftheme" aria-label="Link to Theme component"><span>Theme</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p>Semantic roles, terminal palettes, contrast and no-color output.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="foundations/theme-preview"><a class="heading-permalink" href="#foundations%2ftheme-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Theme variants">
+<a id="tab-foundations/theme-0" href="#panel-foundations%2ftheme-0" role="tab" aria-controls="panel-foundations/theme-0" aria-selected="true">Default</a><a id="tab-foundations/theme-1" href="#panel-foundations%2ftheme-1" role="tab" aria-controls="panel-foundations/theme-1" aria-selected="false">Narrow</a><a id="tab-foundations/theme-2" href="#panel-foundations%2ftheme-2" role="tab" aria-controls="panel-foundations/theme-2" aria-selected="false">256 colors</a><a id="tab-foundations/theme-3" href="#panel-foundations%2ftheme-3" role="tab" aria-controls="panel-foundations/theme-3" aria-selected="false">16 colors</a><a id="tab-foundations/theme-4" href="#panel-foundations%2ftheme-4" role="tab" aria-controls="panel-foundations/theme-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-foundations/theme-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/theme-0" tabindex="0">
+<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Semantic tokens / normal and dim                                                                    
+                                                                                                    
+<span style="color:#eeeeee;">Primary content</span>                                                                                     
+<span style="color:#a8a8a8;">Supporting information</span>                                                                              
+<span style="color:#67d4c0;font-weight:bold;">Accent / interaction</span>                                                                                
+                                                                                                    
+<span style="color:#eeeeee;">neutral  </span>  <span style="color:#a8a8a8;">dim neutral</span>                                                                              
+<span style="color:#86cf9a;">success  </span>  <span style="color:#629c73;">dim success</span>                                                                              
+<span style="color:#78b8ed;">info     </span>  <span style="color:#5a8fb9;">dim info</span>                                                                                 
+<span style="color:#f2c879;">warning  </span>  <span style="color:#b5945c;">dim warning</span>                                                                              
+<span style="color:#f28b82;">danger   </span>  <span style="color:#c17670;">dim danger</span>                                                                               
+<span style="color:#a7bce0;">unknown  </span>  <span style="color:#829bc3;">dim unknown</span>                                                                              
+<span style="color:#9a9a9a;">off      </span>  <span style="color:#898989;">dim off</span>                                                                                  
+                                                                                                    
+Categorical data / independent palette                                                              
+<span style="color:#b9a7f5;">1 ━━</span>  <span style="color:#87b5f9;">2 ━━</span>  <span style="color:#e49ac2;">3 ━━</span>  <span style="color:#d7b58b;">4 ━━</span>  <span style="color:#8f9de8;">5 ━━</span></pre></figure>
+</div><div id="panel-foundations/theme-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/theme-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Semantic tokens / normal and dim        
+                                        
+<span style="color:#eeeeee;">Primary content</span>                         
+<span style="color:#a8a8a8;">Supporting information</span>                  
+<span style="color:#67d4c0;font-weight:bold;">Accent / interaction</span>                    
+                                        
+<span style="color:#eeeeee;">neutral  </span>  <span style="color:#a8a8a8;">dim neutral</span>                  
+<span style="color:#86cf9a;">success  </span>  <span style="color:#629c73;">dim success</span>                  
+<span style="color:#78b8ed;">info     </span>  <span style="color:#5a8fb9;">dim info</span>                     
+<span style="color:#f2c879;">warning  </span>  <span style="color:#b5945c;">dim warning</span>                  
+<span style="color:#f28b82;">danger   </span>  <span style="color:#c17670;">dim danger</span>                   
+<span style="color:#a7bce0;">unknown  </span>  <span style="color:#829bc3;">dim unknown</span>                  
+<span style="color:#9a9a9a;">off      </span>  <span style="color:#898989;">dim off</span>                      
+                                        
+Categorical data / independent palette  
+<span style="color:#b9a7f5;">1 ━━</span>  <span style="color:#87b5f9;">2 ━━</span>  <span style="color:#e49ac2;">3 ━━</span>  <span style="color:#d7b58b;">4 ━━</span>  <span style="color:#8f9de8;">5 ━━</span></pre></figure>
+</div><div id="panel-foundations/theme-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/theme-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Semantic tokens / normal and dim                                                                    
+                                                                                                    
+<span style="color:#eeeeee;">Primary content</span>                                                                                     
+<span style="color:#a8a8a8;">Supporting information</span>                                                                              
+<span style="color:#5fd7af;font-weight:bold;">Accent / interaction</span>                                                                                
+                                                                                                    
+<span style="color:#eeeeee;">neutral  </span>  <span style="color:#a8a8a8;">dim neutral</span>                                                                              
+<span style="color:#87d787;">success  </span>  <span style="color:#5faf87;">dim success</span>                                                                              
+<span style="color:#87afff;">info     </span>  <span style="color:#5f87af;">dim info</span>                                                                                 
+<span style="color:#ffd787;">warning  </span>  <span style="color:#af875f;">dim warning</span>                                                                              
+<span style="color:#ff8787;">danger   </span>  <span style="color:#af875f;">dim danger</span>                                                                               
+<span style="color:#afafd7;">unknown  </span>  <span style="color:#87afd7;">dim unknown</span>                                                                              
+<span style="color:#9e9e9e;">off      </span>  <span style="color:#8a8a8a;">dim off</span>                                                                                  
+                                                                                                    
+Categorical data / independent palette                                                              
+<span style="color:#afafff;">1 ━━</span>  <span style="color:#87afff;">2 ━━</span>  <span style="color:#d787af;">3 ━━</span>  <span style="color:#d7af87;">4 ━━</span>  <span style="color:#87afd7;">5 ━━</span></pre></figure>
+</div><div id="panel-foundations/theme-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/theme-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Semantic tokens / normal and dim                                                                    
+                                                                                                    
+<span style="color:#ffffff;">Primary content</span>                                                                                     
+<span style="color:#c0c0c0;">Supporting information</span>                                                                              
+<span style="color:#00ff00;font-weight:bold;">Accent / interaction</span>                                                                                
+                                                                                                    
+<span style="color:#ffffff;">neutral  </span>  <span style="color:#c0c0c0;">dim neutral</span>                                                                              
+<span style="color:#00ff00;">success  </span>  <span style="color:#008000;">dim success</span>                                                                              
+<span style="color:#0000ff;">info     </span>  <span style="color:#000080;">dim info</span>                                                                                 
+<span style="color:#ff0000;">warning  </span>  <span style="color:#800000;">dim warning</span>                                                                              
+<span style="color:#ff0000;">danger   </span>  <span style="color:#800000;">dim danger</span>                                                                               
+<span style="color:#0000ff;">unknown  </span>  <span style="color:#0000ff;">dim unknown</span>                                                                              
+<span style="color:#c0c0c0;">off      </span>  <span style="color:#c0c0c0;">dim off</span>                                                                                  
+                                                                                                    
+Categorical data / independent palette                                                              
+<span style="color:#0000ff;">1 ━━</span>  <span style="color:#0000ff;">2 ━━</span>  <span style="color:#ff0000;">3 ━━</span>  <span style="color:#ff0000;">4 ━━</span>  <span style="color:#0000ff;">5 ━━</span></pre></figure>
+</div><div id="panel-foundations/theme-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/theme-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Semantic tokens / normal and dim                                                                    
+                                                                                                    
+Primary content                                                                                     
+Supporting information                                                                              
+<span style="font-weight:bold;">Accent / interaction</span>                                                                                
+                                                                                                    
+neutral    dim neutral                                                                              
+success    dim success                                                                              
+info       dim info                                                                                 
+warning    dim warning                                                                              
+danger     dim danger                                                                               
+unknown    dim unknown                                                                              
+off        dim off                                                                                  
+                                                                                                    
+Categorical data / independent palette</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="foundations/theme-code"><a class="heading-permalink" href="#foundations%2ftheme-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">themeStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
+	<span class="syn-keyword">return</span> <span class="syn-function">static</span><span class="syn-operator">(</span><span class="syn-keyword">func</span><span class="syn-operator">(</span>size layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
+		t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+
+		rows <span class="syn-operator">:=</span> <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">string</span><span class="syn-operator">{</span><span class="syn-string">&#34;Semantic tokens / normal and dim&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Primary content&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Subtle</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Supporting information&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Heading</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Accent / interaction&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">}</span>
+		<span class="syn-keyword">for</span> _<span class="syn-operator">,</span> tone <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>text<span class="syn-operator">.</span>Tone<span class="syn-operator">{</span>text<span class="syn-operator">.</span>Neutral<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Success<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Info<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Warning<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Danger<span class="syn-operator">}</span> <span class="syn-operator">{</span>
+			rows <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> text<span class="syn-operator">.</span><span class="syn-function">ToneStyle</span><span class="syn-operator">(</span>tone<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> t<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;%-9s&#34;</span><span class="syn-operator">,</span> tone<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34;  &#34;</span><span class="syn-operator">+</span>text<span class="syn-operator">.</span><span class="syn-function">ToneStyle</span><span class="syn-operator">(</span>tone<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Dim<span class="syn-operator">,</span> t<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;dim &#34;</span><span class="syn-operator">+</span><span class="syn-builtin">string</span><span class="syn-operator">(</span>tone<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+		<span class="syn-operator">}</span>
+
+		rows <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span>
+			t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Foreground</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span>Unknown<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;unknown  &#34;</span><span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34;  &#34;</span><span class="syn-operator">+</span>t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Foreground</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span>DimUnknown<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;dim unknown&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span>
+			t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Foreground</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span>Inactive<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;off      &#34;</span><span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34;  &#34;</span><span class="syn-operator">+</span>t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Foreground</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span>DimInactive<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;dim off&#34;</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+
+		rows <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Categorical data / independent palette&#34;</span><span class="syn-operator">)</span>
+
+		<span class="syn-keyword">var</span> series <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">string</span>
+		<span class="syn-keyword">for</span> i<span class="syn-operator">,</span> color <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> t<span class="syn-operator">.</span>Series <span class="syn-operator">{</span>
+			series <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>series<span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Text</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Foreground</span><span class="syn-operator">(</span>color<span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;%d ━━&#34;</span><span class="syn-operator">,</span> i<span class="syn-operator">+</span><span class="syn-number">1</span><span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+		<span class="syn-operator">}</span>
+
+		rows <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span>series<span class="syn-operator">,</span> <span class="syn-string">&#34;  &#34;</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+
+		<span class="syn-keyword">return</span> strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> <span class="syn-string">&#34;\n&#34;</span><span class="syn-operator">)</span>
+	<span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+<span class="syn-operator">}</span></code></pre>
+</div>
+
+</section>
+
+<section class="component" id="foundations/glyphs">
+<p class="eyebrow"><a href="foundations.html">Foundations</a> / Theme</p><h2><a class="heading-permalink" href="#foundations%2fglyphs" aria-label="Link to Glyphs component"><span>Glyphs</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p>Named semantic glyphs, explicit ASCII equivalents and adjacent labels.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="foundations/glyphs-preview"><a class="heading-permalink" href="#foundations%2fglyphs-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Glyphs variants">
+<a id="tab-foundations/glyphs-0" href="#panel-foundations%2fglyphs-0" role="tab" aria-controls="panel-foundations/glyphs-0" aria-selected="true">Default</a><a id="tab-foundations/glyphs-1" href="#panel-foundations%2fglyphs-1" role="tab" aria-controls="panel-foundations/glyphs-1" aria-selected="false">Narrow</a><a id="tab-foundations/glyphs-2" href="#panel-foundations%2fglyphs-2" role="tab" aria-controls="panel-foundations/glyphs-2" aria-selected="false">256 colors</a><a id="tab-foundations/glyphs-3" href="#panel-foundations%2fglyphs-3" role="tab" aria-controls="panel-foundations/glyphs-3" aria-selected="false">16 colors</a><a id="tab-foundations/glyphs-4" href="#panel-foundations%2fglyphs-4" role="tab" aria-controls="panel-foundations/glyphs-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-foundations/glyphs-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/glyphs-0" tabindex="0">
+<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Meaning     U A     Meaning     U A                                                                 
+                                                                                                    
+ok           ✓ +    warning      ! !                                                                
+error        × x    unknown      ? ?                                                                
+off          ○ -    pending      ◷ p                                                                
+running      ▶ &gt;    paused       ‖ =                                                                
+disabled     ⊘ /    connected    ● +                                                                
+disconnected ○ -    info         i i                                                                
+search       ⌕ /    filter       ▽ f                                                                
+sort         ↕ s    refresh      ↻ r                                                                
+link         ↗ @    expand       ⤢ +                                                                
+selected     ● *    unselected   ○ o                                                                
+expanded     ▾ v    collapsed    ▸ &gt;                                                                
+up           ↑ ^    down         ↓ v                                                                
+left         ← &lt;    right        → &gt;                                                                
+loading      … .    unavailable  — -                                                                
+log          ≡ L    trace        ⋈ T                                                                
+span         ─ S    upstream     ↑ ^                                                                
+downstream   ↓ v    scroll-track │ |                                                                
+scroll-thumb ┃ #</pre></figure>
+</div><div id="panel-foundations/glyphs-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/glyphs-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 20 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Meaning     U A     Meaning     U A     
+                                        
+ok           ✓ +    warning      ! !    
+error        × x    unknown      ? ?    
+off          ○ -    pending      ◷ p    
+running      ▶ &gt;    paused       ‖ =    
+disabled     ⊘ /    connected    ● +    
+disconnected ○ -    info         i i    
+search       ⌕ /    filter       ▽ f    
+sort         ↕ s    refresh      ↻ r    
+link         ↗ @    expand       ⤢ +    
+selected     ● *    unselected   ○ o    
+expanded     ▾ v    collapsed    ▸ &gt;    
+up           ↑ ^    down         ↓ v    
+left         ← &lt;    right        → &gt;    
+loading      … .    unavailable  — -    
+log          ≡ L    trace        ⋈ T    
+span         ─ S    upstream     ↑ ^    
+downstream   ↓ v    scroll-track │ |    
+scroll-thumb ┃ #</pre></figure>
+</div><div id="panel-foundations/glyphs-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/glyphs-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Meaning     U A     Meaning     U A                                                                 
+                                                                                                    
+ok           ✓ +    warning      ! !                                                                
+error        × x    unknown      ? ?                                                                
+off          ○ -    pending      ◷ p                                                                
+running      ▶ &gt;    paused       ‖ =                                                                
+disabled     ⊘ /    connected    ● +                                                                
+disconnected ○ -    info         i i                                                                
+search       ⌕ /    filter       ▽ f                                                                
+sort         ↕ s    refresh      ↻ r                                                                
+link         ↗ @    expand       ⤢ +                                                                
+selected     ● *    unselected   ○ o                                                                
+expanded     ▾ v    collapsed    ▸ &gt;                                                                
+up           ↑ ^    down         ↓ v                                                                
+left         ← &lt;    right        → &gt;                                                                
+loading      … .    unavailable  — -                                                                
+log          ≡ L    trace        ⋈ T                                                                
+span         ─ S    upstream     ↑ ^                                                                
+downstream   ↓ v    scroll-track │ |                                                                
+scroll-thumb ┃ #</pre></figure>
+</div><div id="panel-foundations/glyphs-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/glyphs-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Meaning     U A     Meaning     U A                                                                 
+                                                                                                    
+ok           ✓ +    warning      ! !                                                                
+error        × x    unknown      ? ?                                                                
+off          ○ -    pending      ◷ p                                                                
+running      ▶ &gt;    paused       ‖ =                                                                
+disabled     ⊘ /    connected    ● +                                                                
+disconnected ○ -    info         i i                                                                
+search       ⌕ /    filter       ▽ f                                                                
+sort         ↕ s    refresh      ↻ r                                                                
+link         ↗ @    expand       ⤢ +                                                                
+selected     ● *    unselected   ○ o                                                                
+expanded     ▾ v    collapsed    ▸ &gt;                                                                
+up           ↑ ^    down         ↓ v                                                                
+left         ← &lt;    right        → &gt;                                                                
+loading      … .    unavailable  — -                                                                
+log          ≡ L    trace        ⋈ T                                                                
+span         ─ S    upstream     ↑ ^                                                                
+downstream   ↓ v    scroll-track │ |                                                                
+scroll-thumb ┃ #</pre></figure>
+</div><div id="panel-foundations/glyphs-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/glyphs-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Meaning     U A     Meaning     U A                                                                 
+                                                                                                    
+ok           + +    warning      ! !                                                                
+error        x x    unknown      ? ?                                                                
+off          - -    pending      p p                                                                
+running      &gt; &gt;    paused       = =                                                                
+disabled     / /    connected    + +                                                                
+disconnected - -    info         i i                                                                
+search       / /    filter       f f                                                                
+sort         s s    refresh      r r                                                                
+link         @ @    expand       + +                                                                
+selected     * *    unselected   o o                                                                
+expanded     v v    collapsed    &gt; &gt;                                                                
+up           ^ ^    down         v v                                                                
+left         &lt; &lt;    right        &gt; &gt;                                                                
+loading      . .    unavailable  - -                                                                
+log          L L    trace        T T                                                                
+span         S S    upstream     ^ ^                                                                
+downstream   v v    scroll-track | |                                                                
+scroll-thumb # #</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="foundations/glyphs-code"><a class="heading-permalink" href="#foundations%2fglyphs-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">glyphStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
+	<span class="syn-keyword">return</span> <span class="syn-function">static</span><span class="syn-operator">(</span><span class="syn-keyword">func</span><span class="syn-operator">(</span>size layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
+		t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+		fallback <span class="syn-operator">:=</span> t
+		fallback<span class="syn-operator">.</span>ASCII <span class="syn-operator">=</span> <span class="syn-builtin">true</span>
+		rows <span class="syn-operator">:=</span> <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">string</span><span class="syn-operator">{</span><span class="syn-operator">}</span>
+		<span class="syn-comment">// WHY: Keep every glyph visible in the fixed-height narrow specimen.</span>
+		<span class="syn-keyword">if</span> <span class="syn-operator">(</span><span class="syn-builtin">len</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span><span class="syn-function">Glyphs</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">+</span>foundationColumns<span class="syn-operator">-</span><span class="syn-number">1</span><span class="syn-operator">)</span><span class="syn-operator">/</span>foundationColumns<span class="syn-operator">+</span><span class="syn-number">2</span> <span class="syn-operator">&lt;=</span> size<span class="syn-operator">.</span>Height <span class="syn-operator">{</span>
+			rows <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> <span class="syn-string">&#34;Meaning     U A     Meaning     U A&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">)</span>
+		<span class="syn-operator">}</span>
+
+		<span class="syn-keyword">var</span> cells <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">string</span>
+
+		nameWidth <span class="syn-operator">:=</span> <span class="syn-number">0</span>
+		<span class="syn-keyword">for</span> _<span class="syn-operator">,</span> glyph <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> theme<span class="syn-operator">.</span><span class="syn-function">Glyphs</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
+			nameWidth <span class="syn-operator">=</span> <span class="syn-builtin">max</span><span class="syn-operator">(</span>nameWidth<span class="syn-operator">,</span> <span class="syn-builtin">len</span><span class="syn-operator">(</span>glyph<span class="syn-operator">)</span><span class="syn-operator">)</span>
+		<span class="syn-operator">}</span>
+
+		<span class="syn-keyword">for</span> _<span class="syn-operator">,</span> glyph <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> theme<span class="syn-operator">.</span><span class="syn-function">Glyphs</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
+			cells <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>cells<span class="syn-operator">,</span> layout<span class="syn-operator">.</span><span class="syn-function">Fit</span><span class="syn-operator">(</span>fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;%-*s %s %s&#34;</span><span class="syn-operator">,</span> nameWidth<span class="syn-operator">,</span> glyph<span class="syn-operator">,</span> t<span class="syn-operator">.</span><span class="syn-function">Glyph</span><span class="syn-operator">(</span>glyph<span class="syn-operator">)</span><span class="syn-operator">,</span> fallback<span class="syn-operator">.</span><span class="syn-function">Glyph</span><span class="syn-operator">(</span>glyph<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> foundationColumnWidth<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">1</span><span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+		<span class="syn-operator">}</span>
+
+		<span class="syn-keyword">for</span> i <span class="syn-operator">:=</span> <span class="syn-number">0</span><span class="syn-operator">;</span> i <span class="syn-operator">&lt;</span> <span class="syn-builtin">len</span><span class="syn-operator">(</span>cells<span class="syn-operator">)</span><span class="syn-operator">;</span> i <span class="syn-operator">+=</span> foundationColumns <span class="syn-operator">{</span>
+			rows <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span>cells<span class="syn-operator">[</span>i<span class="syn-operator">:</span><span class="syn-builtin">min</span><span class="syn-operator">(</span>i<span class="syn-operator">+</span>foundationColumns<span class="syn-operator">,</span> <span class="syn-builtin">len</span><span class="syn-operator">(</span>cells<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">]</span><span class="syn-operator">,</span> strings<span class="syn-operator">.</span><span class="syn-function">Repeat</span><span class="syn-operator">(</span><span class="syn-string">&#34; &#34;</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span>SpaceMedium<span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+		<span class="syn-operator">}</span>
+
+		<span class="syn-keyword">return</span> strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> <span class="syn-string">&#34;\n&#34;</span><span class="syn-operator">)</span>
+	<span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+<span class="syn-operator">}</span></code></pre>
+</div>
+
+</section>
+
+<section class="component" id="foundations/tokens">
+<p class="eyebrow"><a href="foundations.html">Foundations</a> / Theme</p><h2><a class="heading-permalink" href="#foundations%2ftokens" aria-label="Link to Spacing, borders and selection component"><span>Spacing, borders and selection</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p>Cell spacing scale, normal and focused border roles, and readable collection selection.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="foundations/tokens-preview"><a class="heading-permalink" href="#foundations%2ftokens-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Spacing, borders and selection variants">
+<a id="tab-foundations/tokens-0" href="#panel-foundations%2ftokens-0" role="tab" aria-controls="panel-foundations/tokens-0" aria-selected="true">Default</a><a id="tab-foundations/tokens-1" href="#panel-foundations%2ftokens-1" role="tab" aria-controls="panel-foundations/tokens-1" aria-selected="false">Narrow</a><a id="tab-foundations/tokens-2" href="#panel-foundations%2ftokens-2" role="tab" aria-controls="panel-foundations/tokens-2" aria-selected="false">256 colors</a><a id="tab-foundations/tokens-3" href="#panel-foundations%2ftokens-3" role="tab" aria-controls="panel-foundations/tokens-3" aria-selected="false">16 colors</a><a id="tab-foundations/tokens-4" href="#panel-foundations%2ftokens-4" role="tab" aria-controls="panel-foundations/tokens-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-foundations/tokens-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/tokens-0" tabindex="0">
+<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Cell spacing / horizontal examples                                                                  
+                                                                                                    
+none   0  ||                                                                                        
+small  1  | |                                                                                       
+medium 2  |  |                                                                                      
+large  4  |    |                                                                                    
+                                                                                                    
+<span style="color:#475569;">┌</span><span style="color:#a8a8a8;"> Normal </span><span style="color:#475569;">────────┐</span>  <span style="color:#67d4c0;font-weight:bold;">┌ Focused ───────┐</span>                                                              
+<span style="color:#475569;">│</span> Border         <span style="color:#475569;">│</span>  <span style="color:#67d4c0;font-weight:bold;">│</span> FocusBorder    <span style="color:#67d4c0;font-weight:bold;">│</span>                                                              
+<span style="color:#475569;">└────────────────┘</span>  <span style="color:#67d4c0;font-weight:bold;">└────────────────┘</span>                                                              
+                                                                                                    
+Selection / stable insets                                                                           
+rest     | <span style="color:#eeeeee;">Value</span> |                                                                                  
+focused  |<span style="background-color:#67d4c0;"> </span><span style="color:#101722;background-color:#67d4c0;font-weight:bold;">Value</span><span style="background-color:#67d4c0;"> </span>|                                                                                  
+selected |<span style="background-color:#24433f;"> </span><span style="color:#eeeeee;background-color:#24433f;font-weight:bold;">Value</span><span style="background-color:#24433f;"> </span>|</pre></figure>
+</div><div id="panel-foundations/tokens-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/tokens-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Cell spacing / horizontal examples      
+                                        
+none   0  ||                            
+small  1  | |                           
+medium 2  |  |                          
+large  4  |    |                        
+                                        
+<span style="color:#475569;">┌</span><span style="color:#a8a8a8;"> Normal </span><span style="color:#475569;">────────┐</span>  <span style="color:#67d4c0;font-weight:bold;">┌ Focused ───────┐</span>  
+<span style="color:#475569;">│</span> Border         <span style="color:#475569;">│</span>  <span style="color:#67d4c0;font-weight:bold;">│</span> FocusBorder    <span style="color:#67d4c0;font-weight:bold;">│</span>  
+<span style="color:#475569;">└────────────────┘</span>  <span style="color:#67d4c0;font-weight:bold;">└────────────────┘</span>  
+                                        
+Selection / stable insets               
+rest     | <span style="color:#eeeeee;">Value</span> |                      
+focused  |<span style="background-color:#67d4c0;"> </span><span style="color:#101722;background-color:#67d4c0;font-weight:bold;">Value</span><span style="background-color:#67d4c0;"> </span>|                      
+selected |<span style="background-color:#24433f;"> </span><span style="color:#eeeeee;background-color:#24433f;font-weight:bold;">Value</span><span style="background-color:#24433f;"> </span>|</pre></figure>
+</div><div id="panel-foundations/tokens-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/tokens-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Cell spacing / horizontal examples                                                                  
+                                                                                                    
+none   0  ||                                                                                        
+small  1  | |                                                                                       
+medium 2  |  |                                                                                      
+large  4  |    |                                                                                    
+                                                                                                    
+<span style="color:#585858;">┌</span><span style="color:#a8a8a8;"> Normal </span><span style="color:#585858;">────────┐</span>  <span style="color:#5fd7af;font-weight:bold;">┌ Focused ───────┐</span>                                                              
+<span style="color:#585858;">│</span> Border         <span style="color:#585858;">│</span>  <span style="color:#5fd7af;font-weight:bold;">│</span> FocusBorder    <span style="color:#5fd7af;font-weight:bold;">│</span>                                                              
+<span style="color:#585858;">└────────────────┘</span>  <span style="color:#5fd7af;font-weight:bold;">└────────────────┘</span>                                                              
+                                                                                                    
+Selection / stable insets                                                                           
+rest     | <span style="color:#eeeeee;">Value</span> |                                                                                  
+focused  |<span style="background-color:#5fd7af;"> </span><span style="color:#1c1c1c;background-color:#5fd7af;font-weight:bold;">Value</span><span style="background-color:#5fd7af;"> </span>|                                                                                  
+selected |<span style="background-color:#005f5f;"> </span><span style="color:#eeeeee;background-color:#005f5f;font-weight:bold;">Value</span><span style="background-color:#005f5f;"> </span>|</pre></figure>
+</div><div id="panel-foundations/tokens-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/tokens-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Cell spacing / horizontal examples                                                                  
+                                                                                                    
+none   0  ||                                                                                        
+small  1  | |                                                                                       
+medium 2  |  |                                                                                      
+large  4  |    |                                                                                    
+                                                                                                    
+<span style="color:#808080;">┌</span><span style="color:#c0c0c0;"> Normal </span><span style="color:#808080;">────────┐</span>  <span style="color:#00ff00;font-weight:bold;">┌ Focused ───────┐</span>                                                              
+<span style="color:#808080;">│</span> Border         <span style="color:#808080;">│</span>  <span style="color:#00ff00;font-weight:bold;">│</span> FocusBorder    <span style="color:#00ff00;font-weight:bold;">│</span>                                                              
+<span style="color:#808080;">└────────────────┘</span>  <span style="color:#00ff00;font-weight:bold;">└────────────────┘</span>                                                              
+                                                                                                    
+Selection / stable insets                                                                           
+rest     | <span style="color:#ffffff;">Value</span> |                                                                                  
+focused  |<span style="background-color:#00ff00;"> </span><span style="color:#000000;background-color:#00ff00;font-weight:bold;">Value</span><span style="background-color:#00ff00;"> </span>|                                                                                  
+selected |<span style="background-color:#008080;"> </span><span style="color:#ffffff;background-color:#008080;font-weight:bold;">Value</span><span style="background-color:#008080;"> </span>|</pre></figure>
+</div><div id="panel-foundations/tokens-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/tokens-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Cell spacing / horizontal examples                                                                  
+                                                                                                    
+none   0  ||                                                                                        
+small  1  | |                                                                                       
+medium 2  |  |                                                                                      
+large  4  |    |                                                                                    
+                                                                                                    
++ Normal --------+  <span style="font-weight:bold;">+ Focused -------+</span>                                                              
+| Border         |  <span style="font-weight:bold;">|</span> FocusBorder    <span style="font-weight:bold;">|</span>                                                              
++----------------+  <span style="font-weight:bold;">+----------------+</span>                                                              
+                                                                                                    
+Selection / stable insets                                                                           
+rest     | Value |                                                                                  
+focused  |<span style="color:#101722;background-color:#eeeeee;"> </span><span style="color:#101722;background-color:#eeeeee;font-weight:bold;">Value</span><span style="color:#101722;background-color:#eeeeee;"> </span>|                                                                                  
+selected |<span style="color:#101722;background-color:#eeeeee;"> </span><span style="color:#101722;background-color:#eeeeee;font-weight:bold;">Value</span><span style="color:#101722;background-color:#eeeeee;"> </span>|</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="foundations/tokens-code"><a class="heading-permalink" href="#foundations%2ftokens-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/foundation-tokens.go.txt">Usage snippet</a> · <a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">t <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-comment">// Keep shape and color separate; native Lip Gloss styles stay available.</span>
+frame <span class="syn-operator">:=</span> lipgloss<span class="syn-operator">.</span><span class="syn-function">NewStyle</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span>
+    <span class="syn-function">Border</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span><span class="syn-function">FrameBorder</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">.</span>
+    <span class="syn-function">BorderForeground</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span><span class="syn-function">BorderStyle</span><span class="syn-operator">(</span><span class="syn-builtin">true</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">GetForeground</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span><span class="syn-operator">.</span>
+    <span class="syn-function">Padding</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>SpaceNone<span class="syn-operator">,</span> theme<span class="syn-operator">.</span>InlinePadding<span class="syn-operator">)</span>
+
+selected <span class="syn-operator">:=</span> t<span class="syn-operator">.</span><span class="syn-function">Selection</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Selected item&#34;</span><span class="syn-operator">)</span>
+control <span class="syn-operator">:=</span> t<span class="syn-operator">.</span><span class="syn-function">Control</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>t<span class="syn-operator">.</span><span class="syn-function">Glyph</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>GlyphSearch<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34; Search&#34;</span><span class="syn-operator">)</span>
+view <span class="syn-operator">:=</span> frame<span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span>control <span class="syn-operator">+</span> <span class="syn-string">&#34;\n&#34;</span> <span class="syn-operator">+</span> selected<span class="syn-operator">)</span>
+</code></pre>
+</div>
+
+</section>
+
+<section class="component" id="foundations/focus">
+<p class="eyebrow"><a href="foundations.html">Foundations</a> / Theme</p><h2><a class="heading-permalink" href="#foundations%2ffocus" aria-label="Link to Focus and spacing component"><span>Focus and spacing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p>One cell on both sides of controls and panel content. Focus and emphasis retain the same allocation.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="foundations/focus-preview"><a class="heading-permalink" href="#foundations%2ffocus-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Focus and spacing variants">
+<a id="tab-foundations/focus-0" href="#panel-foundations%2ffocus-0" role="tab" aria-controls="panel-foundations/focus-0" aria-selected="true">Default</a><a id="tab-foundations/focus-1" href="#panel-foundations%2ffocus-1" role="tab" aria-controls="panel-foundations/focus-1" aria-selected="false">Narrow</a><a id="tab-foundations/focus-2" href="#panel-foundations%2ffocus-2" role="tab" aria-controls="panel-foundations/focus-2" aria-selected="false">256 colors</a><a id="tab-foundations/focus-3" href="#panel-foundations%2ffocus-3" role="tab" aria-controls="panel-foundations/focus-3" aria-selected="false">16 colors</a><a id="tab-foundations/focus-4" href="#panel-foundations%2ffocus-4" role="tab" aria-controls="panel-foundations/focus-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-foundations/focus-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/focus-0" tabindex="0">
+<figure><figcaption>Default · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Stable control insets / 1 cell per side                                                             
+                                                                                                    
+Normal  | <span style="color:#eeeeee;">Value</span> |                                                                                   
+Focused |<span style="background-color:#67d4c0;"> </span><span style="color:#101722;background-color:#67d4c0;font-weight:bold;">Value</span><span style="background-color:#67d4c0;"> </span>|                                                                                   
+Row     |<span style="background-color:#24433f;"> </span><span style="color:#eeeeee;background-color:#24433f;font-weight:bold;">Value</span><span style="background-color:#24433f;"> </span>|                                                                                   
+                                                                                                    
+bright  |<span style="background-color:#78b8ed;"> </span><span style="color:#101722;background-color:#78b8ed;font-weight:bold;">Value</span><span style="background-color:#78b8ed;"> </span>|                                                                                   
+normal  |<span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">Value</span><span style="background-color:#202f40;"> </span>|                                                                                   
+dim     |<span style="background-color:#141d2a;"> </span><span style="color:#5a8fb9;background-color:#141d2a;">Value</span><span style="background-color:#141d2a;"> </span>|                                                                                   
+                                                                                                    
+<span style="color:#67d4c0;font-weight:bold;">┌ Content gutter ──────────────────────────────────────────────────────────────────────────────────┐</span>
+<span style="color:#67d4c0;font-weight:bold;">│</span> Text starts one cell from the border.                                                            <span style="color:#67d4c0;font-weight:bold;">│</span>
+<span style="color:#67d4c0;font-weight:bold;">└──────────────────────────────────────────────────────────────────────────────────────────────────┘</span></pre></figure>
+</div><div id="panel-foundations/focus-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/focus-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Stable control insets / 1 cell per side 
+                                        
+Normal  | <span style="color:#eeeeee;">Value</span> |                       
+Focused |<span style="background-color:#67d4c0;"> </span><span style="color:#101722;background-color:#67d4c0;font-weight:bold;">Value</span><span style="background-color:#67d4c0;"> </span>|                       
+Row     |<span style="background-color:#24433f;"> </span><span style="color:#eeeeee;background-color:#24433f;font-weight:bold;">Value</span><span style="background-color:#24433f;"> </span>|                       
+                                        
+bright  |<span style="background-color:#78b8ed;"> </span><span style="color:#101722;background-color:#78b8ed;font-weight:bold;">Value</span><span style="background-color:#78b8ed;"> </span>|                       
+normal  |<span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">Value</span><span style="background-color:#202f40;"> </span>|                       
+dim     |<span style="background-color:#141d2a;"> </span><span style="color:#5a8fb9;background-color:#141d2a;">Value</span><span style="background-color:#141d2a;"> </span>|                       
+                                        
+<span style="color:#67d4c0;font-weight:bold;">┌ Content gutter ──────────────────────┐</span>
+<span style="color:#67d4c0;font-weight:bold;">│</span> Text starts one cell from the border <span style="color:#67d4c0;font-weight:bold;">│</span>
+<span style="color:#67d4c0;font-weight:bold;">└──────────────────────────────────────┘</span></pre></figure>
+</div><div id="panel-foundations/focus-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/focus-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Stable control insets / 1 cell per side                                                             
+                                                                                                    
+Normal  | <span style="color:#eeeeee;">Value</span> |                                                                                   
+Focused |<span style="background-color:#5fd7af;"> </span><span style="color:#1c1c1c;background-color:#5fd7af;font-weight:bold;">Value</span><span style="background-color:#5fd7af;"> </span>|                                                                                   
+Row     |<span style="background-color:#005f5f;"> </span><span style="color:#eeeeee;background-color:#005f5f;font-weight:bold;">Value</span><span style="background-color:#005f5f;"> </span>|                                                                                   
+                                                                                                    
+bright  |<span style="background-color:#87afff;"> </span><span style="color:#1c1c1c;background-color:#87afff;font-weight:bold;">Value</span><span style="background-color:#87afff;"> </span>|                                                                                   
+normal  |<span style="background-color:#00005f;"> </span><span style="color:#87afff;background-color:#00005f;">Value</span><span style="background-color:#00005f;"> </span>|                                                                                   
+dim     |<span style="background-color:#1c1c1c;"> </span><span style="color:#5f87af;background-color:#1c1c1c;">Value</span><span style="background-color:#1c1c1c;"> </span>|                                                                                   
+                                                                                                    
+<span style="color:#5fd7af;font-weight:bold;">┌ Content gutter ──────────────────────────────────────────────────────────────────────────────────┐</span>
+<span style="color:#5fd7af;font-weight:bold;">│</span> Text starts one cell from the border.                                                            <span style="color:#5fd7af;font-weight:bold;">│</span>
+<span style="color:#5fd7af;font-weight:bold;">└──────────────────────────────────────────────────────────────────────────────────────────────────┘</span></pre></figure>
+</div><div id="panel-foundations/focus-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/focus-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Stable control insets / 1 cell per side                                                             
+                                                                                                    
+Normal  | <span style="color:#ffffff;">Value</span> |                                                                                   
+Focused |<span style="background-color:#00ff00;"> </span><span style="color:#000000;background-color:#00ff00;font-weight:bold;">Value</span><span style="background-color:#00ff00;"> </span>|                                                                                   
+Row     |<span style="background-color:#008080;"> </span><span style="color:#ffffff;background-color:#008080;font-weight:bold;">Value</span><span style="background-color:#008080;"> </span>|                                                                                   
+                                                                                                    
+bright  |<span style="background-color:#0000ff;"> </span><span style="color:#000000;background-color:#0000ff;font-weight:bold;">Value</span><span style="background-color:#0000ff;"> </span>|                                                                                   
+normal  |<span style="background-color:#000080;"> </span><span style="color:#0000ff;background-color:#000080;">Value</span><span style="background-color:#000080;"> </span>|                                                                                   
+dim     |<span style="background-color:#000000;"> </span><span style="color:#000080;background-color:#000000;">Value</span><span style="background-color:#000000;"> </span>|                                                                                   
+                                                                                                    
+<span style="color:#00ff00;font-weight:bold;">┌ Content gutter ──────────────────────────────────────────────────────────────────────────────────┐</span>
+<span style="color:#00ff00;font-weight:bold;">│</span> Text starts one cell from the border.                                                            <span style="color:#00ff00;font-weight:bold;">│</span>
+<span style="color:#00ff00;font-weight:bold;">└──────────────────────────────────────────────────────────────────────────────────────────────────┘</span></pre></figure>
+</div><div id="panel-foundations/focus-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/focus-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Stable control insets / 1 cell per side                                                             
+                                                                                                    
+Normal  | Value |                                                                                   
+Focused |<span style="color:#101722;background-color:#eeeeee;"> </span><span style="color:#101722;background-color:#eeeeee;font-weight:bold;">Value</span><span style="color:#101722;background-color:#eeeeee;"> </span>|                                                                                   
+Row     |<span style="color:#101722;background-color:#eeeeee;"> </span><span style="color:#101722;background-color:#eeeeee;font-weight:bold;">Value</span><span style="color:#101722;background-color:#eeeeee;"> </span>|                                                                                   
+                                                                                                    
+bright  |<span style="font-weight:bold;">[Value]</span>|                                                                                   
+normal  |[Value]|                                                                                   
+dim     |[Value]|                                                                                   
+                                                                                                    
+<span style="font-weight:bold;">+ Content gutter ----------------------------------------------------------------------------------+</span>
+<span style="font-weight:bold;">|</span> Text starts one cell from the border.                                                            <span style="font-weight:bold;">|</span>
+<span style="font-weight:bold;">+--------------------------------------------------------------------------------------------------+</span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="foundations/focus-code"><a class="heading-permalink" href="#foundations%2ffocus-code"><span>Fixture implementation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/story/foundations.go">Fixture source</a> · <a href="https://github.com/charmbracelet/bubbles">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">focusStory</span><span class="syn-operator">(</span>e Environment<span class="syn-operator">)</span> <span class="syn-operator">(</span>runtime<span class="syn-operator">.</span>Scene<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
+	<span class="syn-keyword">return</span> <span class="syn-function">static</span><span class="syn-operator">(</span><span class="syn-keyword">func</span><span class="syn-operator">(</span>size layout<span class="syn-operator">.</span>Size<span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
+		t <span class="syn-operator">:=</span> e<span class="syn-operator">.</span>Config<span class="syn-operator">.</span><span class="syn-function">Palette</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+
+		rows <span class="syn-operator">:=</span> <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">string</span><span class="syn-operator">{</span>fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;Stable control insets / %d cell per side&#34;</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span>InlinePadding<span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Normal  |&#34;</span> <span class="syn-operator">+</span> t<span class="syn-operator">.</span><span class="syn-function">Control</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Value&#34;</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;|&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Focused |&#34;</span> <span class="syn-operator">+</span> t<span class="syn-operator">.</span><span class="syn-function">Focus</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Value&#34;</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;|&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Row     |&#34;</span> <span class="syn-operator">+</span> t<span class="syn-operator">.</span><span class="syn-function">Selection</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">.</span><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-string">&#34;Value&#34;</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;|&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">}</span>
+		<span class="syn-keyword">for</span> _<span class="syn-operator">,</span> emphasis <span class="syn-operator">:=</span> <span class="syn-keyword">range</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>text<span class="syn-operator">.</span>Emphasis<span class="syn-operator">{</span>text<span class="syn-operator">.</span>Bright<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Dim<span class="syn-operator">}</span> <span class="syn-operator">{</span>
+			rows <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> fmt<span class="syn-operator">.</span><span class="syn-function">Sprintf</span><span class="syn-operator">(</span><span class="syn-string">&#34;%-7s |&#34;</span><span class="syn-operator">,</span> emphasis<span class="syn-operator">)</span><span class="syn-operator">+</span>text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span><span class="syn-string">&#34;Value&#34;</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Info<span class="syn-operator">,</span> t<span class="syn-operator">,</span> emphasis<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34;|&#34;</span><span class="syn-operator">)</span>
+		<span class="syn-operator">}</span>
+
+		rows <span class="syn-operator">=</span> <span class="syn-builtin">append</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span><span class="syn-string">&#34;Content gutter&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Text starts one cell from the border.&#34;</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> size<span class="syn-operator">.</span>Width<span class="syn-operator">,</span> Height<span class="syn-operator">:</span> foundationPanelHeight<span class="syn-operator">}</span><span class="syn-operator">,</span> t<span class="syn-operator">,</span> <span class="syn-builtin">true</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+
+		<span class="syn-keyword">return</span> strings<span class="syn-operator">.</span><span class="syn-function">Join</span><span class="syn-operator">(</span>rows<span class="syn-operator">,</span> <span class="syn-string">&#34;\n&#34;</span><span class="syn-operator">)</span>
+	<span class="syn-operator">}</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+<span class="syn-operator">}</span></code></pre>
+</div>
+
+</section>
+</section>
+</section>
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+

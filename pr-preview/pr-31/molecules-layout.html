@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Molecules / Layout · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Molecules / Layout</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<p class="nav-title">Atomic design</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">18</span></a>
+<div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-diagram.html" >Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" aria-current="page">Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#layout%2fheader">Header</a><a class="nav-component" href="#layout%2ffooter">Footer</a></div>
+
+</div>
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<p class="nav-title">Atomic design</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">18</span></a>
+<div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-diagram.html" >Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" aria-current="page">Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#layout%2fheader">Header</a><a class="nav-component" href="#layout%2ffooter">Footer</a></div>
+
+</div>
+</nav>
+</aside>
+<main id="main">
+
+
+
+
+
+
+
+
+<section class="atomic-level" id="level-molecules">
+<p class="catalog-breadcrumb"><a href="molecules.html">Molecules</a><span aria-hidden="true"> / </span>Layout</p>
+
+<section class="component-family" id="level-molecules-layout"><h1><a class="heading-permalink" href="#level-molecules-layout"><span>Layout</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">2 components · <a href="molecules.html">All molecules</a></p>
+<ul class="group-jump-links" aria-label="Components in Layout"><li><a href="#layout%2fheader">Header</a></li><li><a href="#layout%2ffooter">Footer</a></li></ul>
+
+
+<section class="component" id="layout/header">
+<p class="eyebrow"><a href="molecules.html">Molecules</a> / Layout</p><h2><a class="heading-permalink" href="#layout%2fheader" aria-label="Link to Header component"><span>Header</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p>Title and trailing actions with an optional context row. Narrow widths preserve the title before actions.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="layout/header-preview"><a class="heading-permalink" href="#layout%2fheader-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Header variants">
+<a id="tab-layout/header-0" href="#panel-layout%2fheader-0" role="tab" aria-controls="panel-layout/header-0" aria-selected="true">Default</a><a id="tab-layout/header-1" href="#panel-layout%2fheader-1" role="tab" aria-controls="panel-layout/header-1" aria-selected="false">Narrow</a><a id="tab-layout/header-2" href="#panel-layout%2fheader-2" role="tab" aria-controls="panel-layout/header-2" aria-selected="false">256 colors</a><a id="tab-layout/header-3" href="#panel-layout%2fheader-3" role="tab" aria-controls="panel-layout/header-3" aria-selected="false">16 colors</a><a id="tab-layout/header-4" href="#panel-layout%2fheader-4" role="tab" aria-controls="panel-layout/header-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-layout/header-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/header-0" tabindex="0">
+<figure><figcaption>Default · truecolor · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Service workbench</span>                                      <span style="color:#67d4c0;font-weight:bold;">r</span> <span style="color:#a8a8a8;">refresh</span>
+<span style="color:#a8a8a8;">Production / us-west-2</span></pre></figure>
+</div><div id="panel-layout/header-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/header-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Service workbench</span>              <span style="color:#67d4c0;font-weight:bold;">r</span> <span style="color:#a8a8a8;">refresh</span>
+<span style="color:#a8a8a8;">Production / us-west-2</span></pre></figure>
+</div><div id="panel-layout/header-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/header-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">Service workbench</span>                                      <span style="color:#5fd7af;font-weight:bold;">r</span> <span style="color:#a8a8a8;">refresh</span>
+<span style="color:#a8a8a8;">Production / us-west-2</span></pre></figure>
+</div><div id="panel-layout/header-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/header-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">Service workbench</span>                                      <span style="color:#00ff00;font-weight:bold;">r</span> <span style="color:#c0c0c0;">refresh</span>
+<span style="color:#c0c0c0;">Production / us-west-2</span></pre></figure>
+</div><div id="panel-layout/header-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/header-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">Service workbench</span>                                      <span style="font-weight:bold;">r</span> refresh
+Production / us-west-2</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="layout/header-code"><a class="heading-permalink" href="#layout%2fheader-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/header.go.txt">Usage snippet</a> · <a href="https://github.com/lanej/charmed/blob/main/story/chrome.go">Fixture source</a> · <a href="">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">header <span class="syn-operator">:=</span> layout<span class="syn-operator">.</span>Header<span class="syn-operator">{</span>
+    Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Service workbench&#34;</span><span class="syn-operator">,</span>
+    Context<span class="syn-operator">:</span> <span class="syn-string">&#34;Production / us-west-2&#34;</span><span class="syn-operator">,</span>
+    Actions<span class="syn-operator">:</span> text<span class="syn-operator">.</span><span class="syn-function">KeyHint</span><span class="syn-operator">(</span><span class="syn-string">&#34;r&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;refresh&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">}</span>
+view <span class="syn-operator">:=</span> header<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-number">64</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+<span class="syn-comment">// Bind r in the application; Header only renders the hint.</span>
+</code></pre>
+</div>
+<p class="composition-line">Composed from: <a class="dependency" href="foundations-layout.html#foundations/layout">foundations/layout</a> </p>
+</section>
+
+<section class="component" id="layout/footer">
+<p class="eyebrow"><a href="molecules.html">Molecules</a> / Layout</p><h2><a class="heading-permalink" href="#layout%2ffooter" aria-label="Link to Footer component"><span>Footer</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p>Keyboard help and right-aligned status share one row. Narrow widths preserve help before status.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="layout/footer-preview"><a class="heading-permalink" href="#layout%2ffooter-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Footer variants">
+<a id="tab-layout/footer-0" href="#panel-layout%2ffooter-0" role="tab" aria-controls="panel-layout/footer-0" aria-selected="true">Default</a><a id="tab-layout/footer-1" href="#panel-layout%2ffooter-1" role="tab" aria-controls="panel-layout/footer-1" aria-selected="false">Narrow</a><a id="tab-layout/footer-2" href="#panel-layout%2ffooter-2" role="tab" aria-controls="panel-layout/footer-2" aria-selected="false">256 colors</a><a id="tab-layout/footer-3" href="#panel-layout%2ffooter-3" role="tab" aria-controls="panel-layout/footer-3" aria-selected="false">16 colors</a><a id="tab-layout/footer-4" href="#panel-layout%2ffooter-4" role="tab" aria-controls="panel-layout/footer-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-layout/footer-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/footer-0" tabindex="0">
+<figure><figcaption>Default · truecolor · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">?</span> <span style="color:#a8a8a8;">help</span>  <span style="color:#67d4c0;font-weight:bold;">q</span> <span style="color:#a8a8a8;">quit</span>                                     <span style="color:#a8a8a8;background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span></pre></figure>
+</div><div id="panel-layout/footer-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/footer-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">?</span> <span style="color:#a8a8a8;">help</span>  <span style="color:#67d4c0;font-weight:bold;">q</span> <span style="color:#a8a8a8;">quit</span>             <span style="color:#a8a8a8;background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span></pre></figure>
+</div><div id="panel-layout/footer-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/footer-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">?</span> <span style="color:#a8a8a8;">help</span>  <span style="color:#5fd7af;font-weight:bold;">q</span> <span style="color:#a8a8a8;">quit</span>                                     <span style="color:#a8a8a8;background-color:#005f5f;"> </span><span style="color:#87d787;background-color:#005f5f;">● CONNECTED</span><span style="background-color:#005f5f;"> </span></pre></figure>
+</div><div id="panel-layout/footer-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/footer-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">?</span> <span style="color:#c0c0c0;">help</span>  <span style="color:#00ff00;font-weight:bold;">q</span> <span style="color:#c0c0c0;">quit</span>                                     <span style="color:#c0c0c0;background-color:#008080;"> </span><span style="color:#00ff00;background-color:#008080;">● CONNECTED</span><span style="background-color:#008080;"> </span></pre></figure>
+</div><div id="panel-layout/footer-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/footer-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">?</span> help  <span style="font-weight:bold;">q</span> quit                                     [+ CONNECTED]</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="layout/footer-code"><a class="heading-permalink" href="#layout%2ffooter-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/footer.go.txt">Usage snippet</a> · <a href="https://github.com/lanej/charmed/blob/main/story/chrome.go">Fixture source</a> · <a href="">Upstream</a></span></div>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">footer <span class="syn-operator">:=</span> layout<span class="syn-operator">.</span>Footer<span class="syn-operator">{</span>
+    Help<span class="syn-operator">:</span> text<span class="syn-operator">.</span><span class="syn-function">KeyHint</span><span class="syn-operator">(</span><span class="syn-string">&#34;?&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;help&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  &#34;</span> <span class="syn-operator">+</span>
+        text<span class="syn-operator">.</span><span class="syn-function">KeyHint</span><span class="syn-operator">(</span><span class="syn-string">&#34;q&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;quit&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+    Status<span class="syn-operator">:</span> feedback<span class="syn-operator">.</span>Connected<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">}</span>
+view <span class="syn-operator">:=</span> footer<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-number">64</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<p class="composition-line">Composed from: <a class="dependency" href="foundations-layout.html#foundations/layout">foundations/layout</a> <a class="dependency" href="atoms-text.html#text/primitives">text/primitives</a> <a class="dependency" href="atoms-feedback.html#feedback/status">feedback/status</a> </p>
+</section>
+</section>
+</section>
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
