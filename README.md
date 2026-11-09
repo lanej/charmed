@@ -35,6 +35,7 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 | `form` | Themed Huh forms with native nested focus and validation |
 | `text` | Labels, badges, semantic pills, key hints and Glamour Markdown rendering |
 | `chart` | Sparklines, time series, line/scatter, bars, heatmaps, streamline/waveline, OHLC, canvas, interval bands, cohort distributions, comparison panels and portable pictures |
+| `diagram` | State transition diagrams with labeled directed edges, cycles, self-loops and initial/final/active markers |
 | `cohort` | Validated interval counts, request-weighted rates and unweighted member sample spread |
 | `pattern` | Service workbench and cohort comparison with linked plots, member selection and inspection |
 | `runtime` | One root Bubble Tea terminal session |

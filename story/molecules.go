@@ -17,6 +17,7 @@ import (
 
 func moleculesDefinitions() []Definition {
 	d := []Definition{
+		{ID: "diagram/state-transitions", Title: "Molecules/Diagrams/State transitions", Level: "Molecules", Family: "diagram", Description: "Labeled arrows connect state boxes directly, with distinct initial and terminal borders, optional success/error outcomes, and vertical layout for narrow regions.", Source: "story/diagrams.go", Symbol: "stateDiagramStory", Controls: []string{"traceWindow"}, Defaults: stateDiagramConfig(), Factory: stateDiagramStory},
 		widget("input/field", "Molecules/Input/Labeled field", "Molecules", "input", "Label, help and validation composed around the same input atom.", "fieldStory", []string{"value", "state"}, fieldStory),
 		widget("feedback/paginator", "Molecules/Feedback/Pagination", "Molecules", "feedback", "Native pagination logic with shared active and inactive styles.", "paginatorStory", nil, paginatorStory),
 		widget("feedback/help", "Molecules/Feedback/Help", "Molecules", "feedback", "Help is generated from the same native key bindings that handle input.", "helpStory", nil, helpStory),
@@ -34,8 +35,9 @@ func moleculesDefinitions() []Definition {
 	)
 
 	snippets := map[string]string{
-		"chart/waffle-header": "waffle",
-		"input/field":         "field", "feedback/paginator": "paginator",
+		"diagram/state-transitions": "state-transitions",
+		"chart/waffle-header":       "waffle",
+		"input/field":               "field", "feedback/paginator": "paginator",
 		"feedback/help": "help", "chart/band-matrix": "band-matrix",
 		"chart/metric": "metric-trend", "chart/panel": "chart-panel",
 		"feedback/attention": "attention", "chart/distributions": "distributions",
