@@ -9,6 +9,7 @@ import (
 
 	"charm.land/bubbles/v2/spinner"
 	tea "charm.land/bubbletea/v2"
+	"charm.land/log/v2"
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/feedback"
@@ -55,6 +56,7 @@ func atomsDefinitions() []Definition {
 		Definition{ID: "chart/waffle", Title: "Atoms/Charts/Waffle", Level: "Atoms", Family: "chart", Description: "Equal-area category cells with deterministic rounding and exact labeled counts. Patterned squares and an ASCII fallback retain category identity.", Source: "chart/waffle.go", ExampleSource: "docs/snippets/waffle.go.txt", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Defaults: waffleConfig(), Factory: waffleStory},
 		Definition{ID: "text/signed-number", Title: "Atoms/Text/Signed number", Level: "Atoms", Family: "text", Description: "Exact signed values, configurable positive/negative tones, neutral zero, tiny-value preservation and explicit unavailable state.", Source: "text/signed.go", Controls: []string{"amount", "state", "emphasis"}, States: []string{"ready", "empty"}, Defaults: atomConfig(), Factory: signedNumberStory},
 		Definition{ID: "text/pill", Title: "Atoms/Text/Color pill", Level: "Atoms", Family: "text", Description: "Semantic tone and bright, normal or dim emphasis are independent. ASCII output retains the label.", Source: "text/text.go", Symbol: "Pill", Controls: []string{"value", "emphasis"}, Defaults: atomConfig(), Factory: pillsStory},
+		Definition{ID: "feedback/log-level", Title: "Atoms/Feedback/Log level", Level: "Atoms", Family: "feedback", Description: "Native log severities with stable label widths, semantic tones and independent emphasis.", Source: "feedback/log_level.go", Symbol: "LogLevel", ExampleSource: "docs/snippets/log-level.go.txt", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: atomConfig(), Factory: logLevelStory},
 		Definition{ID: "feedback/status", Title: "Atoms/Feedback/Status", Level: "Atoms", Family: "feedback", Description: "Health, lifecycle and connection states share semantic colors, named glyphs and emphasis-independent spacing.", Source: "feedback/status.go", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: func() Config { c := atomConfig(); c.Rows = 14; return c }(), Factory: statusStory},
 		Definition{ID: "chart/picture", Title: "Atoms/Graphics/Picture", Level: "Atoms", Family: "graphics", Description: "Portable glyph rendering of an embedded image; no external image service.", Source: "story/atoms.go", Symbol: "pictureStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Defaults: DefaultConfig(), Factory: pictureStory},
 		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma", "legend"}, States: []string{"ready", "empty"}, Defaults: DefaultConfig(), Factory: bandStory},
@@ -308,3 +310,14 @@ func statusStory(e Environment) (runtime.Scene, error) {
 }
 
 func atomConfig() Config { c := DefaultConfig(); c.Columns = 80; c.Rows = 12; return c }
+
+func logLevelStory(e Environment) (runtime.Scene, error) {
+	return static(func(layout.Size) string {
+		rows := []string{"Log level atoms / " + e.Config.Emphasis, ""}
+		for _, level := range []log.Level{log.DebugLevel, log.InfoLevel, log.WarnLevel, log.ErrorLevel, log.FatalLevel} {
+			rows = append(rows, feedback.LogLevel(level, text.Emphasis(e.Config.Emphasis), e.Config.Palette()))
+		}
+
+		return strings.Join(rows, "\n")
+	}), nil
+}

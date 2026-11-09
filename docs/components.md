@@ -31,3 +31,7 @@ Transition tracing is opt-in through `Trace: diagram.TransitionTrace{Steps: []in
 [Footer](#layout/footer) places help on the left and status on the right in one row. Status disappears when both cannot fit, then help clips to the allocation. Both fields accept styled text, including native help output. Header and footer fields use only their first line; none of these components wrap. Widths are terminal cells, including wide Unicode labels and ANSI styling; nonpositive widths render nothing.
 
 See the [application shell](examples.html#template/application) for these components composed around an active content panel. Sidebar navigation, breadcrumbs and toolbars remain separate future patterns.
+
+## Log levels
+
+[Log level atoms](#feedback/log-level) render native `log.DebugLevel`, `InfoLevel`, `WarnLevel`, `ErrorLevel` and `FatalLevel` with `feedback.LogLevel(level, text.Normal, palette)`. Severity sets the semantic tone; bright, normal and dim emphasis remain independent. The five labels reserve equal cell widths, including in ASCII/monochrome output. Unknown native values display `LEVEL n` neutrally, preserving the value rather than claiming a known severity. Rendering FATAL performs no logging or exit. `collection.LogViewer` composes the atom between its timestamp and message, retaining Charm Log’s structured-field formatting, bounded history and scroll behavior.

@@ -1,0 +1,5 @@
+level := feedback.LogLevel(log.WarnLevel, text.Normal, palette)
+line := level + " " + text.Label("Retry scheduled", palette)
+
+// Rendering a severity performs no logging or process exit.
+fatal := feedback.LogLevel(log.FatalLevel, text.Bright, palette)
