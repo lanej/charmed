@@ -9,8 +9,17 @@ import (
 
 	uv "github.com/charmbracelet/ultraviolet"
 	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/story"
 	"github.com/lanej/charmed/theme"
 )
+
+func snapshotForeground(config story.Config) string {
+	return terminalColor(config.Palette().Foreground)
+}
+
+func snapshotBackground(config story.Config) string {
+	return terminalColor(config.Palette().Background)
+}
 
 // terminalHTML renders saved cells, preserving RGB and escaping all terminal text.
 // NOTE: Links and terminal control effects are never emitted as HTML capabilities.

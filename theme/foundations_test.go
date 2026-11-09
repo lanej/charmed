@@ -144,3 +144,35 @@ func TestCustomBorderAndSelectionTokensRemainIndependent(t *testing.T) {
 		t.Fatal("partial custom theme lost accent/text fallbacks")
 	}
 }
+
+func TestSequentialScalesOrderIntensityIndependentlyOfCategories(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast, theme.Mono} {
+		palette := theme.New(mode)
+		if len(palette.Sequential) < 2 {
+			t.Fatal("heatmap needs an ordered scale")
+		}
+
+		for i := 1; i < len(palette.Sequential); i++ {
+			before, after := luminance(palette.Sequential[i-1]), luminance(palette.Sequential[i])
+			if (mode == theme.Light && after >= before) || (mode != theme.Light && after <= before) {
+				t.Fatalf("%s heatmap intensity is not monotonic", mode)
+			}
+		}
+	}
+}
+
+func TestPermissionColorsRemainReadableOnContentAndSelection(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast} {
+		palette := theme.New(mode)
+		roles := palette.Permissions
+
+		for _, foreground := range []color.Color{roles.Read, roles.Write, roles.Execute, roles.WriteExecute, roles.None, roles.Unknown} {
+			for _, background := range []color.Color{palette.Background, palette.Surface, palette.SelectionBackground} {
+				fg, bg := luminance(foreground), luminance(background)
+				if (max(fg, bg)+.05)/(min(fg, bg)+.05) < 4.5 {
+					t.Fatalf("%s permission color is unreadable on a supported surface", mode)
+				}
+			}
+		}
+	}
+}

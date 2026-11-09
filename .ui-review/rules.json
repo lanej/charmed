@@ -68,7 +68,7 @@
   {
     "id": "guide-native-terminal-background",
     "type": "style",
-    "selector": "main pre.terminal",
+    "selector": "main pre.terminal:not([data-theme]), main pre.terminal[data-theme=\"dark\"]",
     "property": "background-color",
     "allowed": [
       "rgb(16, 23, 34)"
@@ -76,5 +76,53 @@
     "severity": "error",
     "reason": "Native truecolor frames use the canonical theme background so dim tokens retain their contrast.",
     "optional": true
+  },
+  {
+    "id": "guide-native-light-background",
+    "type": "style",
+    "selector": "main pre.terminal[data-theme=\"light\"]",
+    "property": "background-color",
+    "allowed": [
+      "rgb(248, 250, 252)"
+    ],
+    "severity": "error",
+    "optional": true,
+    "reason": "Saved light frames retain their canonical native background independently of the guide chrome."
+  },
+  {
+    "id": "guide-native-contrast-background",
+    "type": "style",
+    "selector": "main pre.terminal[data-theme=\"contrast\"]",
+    "property": "background-color",
+    "allowed": [
+      "rgb(0, 0, 0)"
+    ],
+    "severity": "error",
+    "optional": true,
+    "reason": "Saved contrast frames retain their canonical native background independently of the guide chrome."
+  },
+  {
+    "id": "guide-native-mono-background",
+    "type": "style",
+    "selector": "main pre.terminal[data-theme=\"mono\"]",
+    "property": "background-color",
+    "allowed": [
+      "rgb(0, 0, 0)"
+    ],
+    "severity": "error",
+    "optional": true,
+    "reason": "Saved mono frames retain their canonical native background independently of the guide chrome."
+  },
+  {
+    "id": "guide-native-light-foreground",
+    "type": "style",
+    "selector": "main pre.terminal[data-theme=\"light\"]",
+    "property": "color",
+    "allowed": [
+      "rgb(23, 32, 51)"
+    ],
+    "severity": "error",
+    "optional": true,
+    "reason": "Unstyled runs after ANSI resets inherit the native light-theme foreground."
   }
 ]

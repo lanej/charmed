@@ -21,6 +21,7 @@ func moleculesDefinitions() []Definition {
 		widget("feedback/paginator", "Molecules/Feedback/Pagination", "Molecules", "feedback", "Native pagination logic with shared active and inactive styles.", "paginatorStory", nil, paginatorStory),
 		widget("feedback/help", "Molecules/Feedback/Help", "Molecules", "feedback", "Help is generated from the same native key bindings that handle input.", "helpStory", nil, helpStory),
 	}
+
 	d = append(d,
 		Definition{ID: "chart/band-matrix", Title: "Molecules/Charts/Band matrix", Level: "Molecules", Family: "chart", Description: "Directly labeled, disconnected distribution rows composed in a rectangular frame.", Source: "chart/comparison.go", Controls: []string{"sigma"}, Composes: []string{"chart/distributions", "foundations/layout"}, Defaults: DefaultConfig(), Factory: bandMatrixStory},
 		Definition{ID: "chart/metric", Title: "Molecules/Charts/Metric trend", Level: "Molecules", Family: "chart", Description: "A metric value, unit and sparkline share one bounded allocation.", Source: "story/molecules.go", Symbol: "metricStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"amount"}, Composes: []string{"chart/sparkline"}, Defaults: DefaultConfig(), Factory: metricStory},
@@ -35,29 +36,38 @@ func moleculesDefinitions() []Definition {
 			d[i].States = []string{"ready", "error"}
 			d[i].Composes = []string{"input/text"}
 		}
+
 		if slices.Contains(d[i].Controls, "boundaries") {
 			d[i].Defaults.Boundaries = true
 		}
 	}
+
 	return d
 }
 
 func fieldStory(e Environment) (runtime.Scene, error) {
-	f := input.Field{Label: "Environment name", Help: "Use at least three characters.", Theme: e.Config.Palette(), Input: input.NewText(input.TextOptions{Theme: e.Config.Palette(), Value: e.Config.Value, Width: e.Config.Columns - 2, Validate: func(s string) error {
+	f := input.Field{Label: "Environment name", Help: "Use at least three characters.", Theme: e.inputPalette(), Input: input.NewText(input.TextOptions{Theme: e.inputPalette(), Value: e.Config.Value, Width: e.Config.Columns - 2, Validate: func(s string) error {
 		if len(s) < 3 {
 			return errors.New("enter at least three characters")
 		}
+
 		return nil
 	}})}
 	if e.Config.State == "error" {
 		f.Input.SetValue("x")
 		f.Input.Err = errors.New("enter at least three characters")
 	}
+
+	if e.capture {
+		_ = f.Input.Focus()
+	}
+
 	return &scene{init: f.Input.Focus, resize: func(s layout.Size) { f.Input.Resize(s.Width) }, update: func(msg tea.Msg) tea.Cmd { var cmd tea.Cmd; f.Input, cmd = f.Input.Update(msg); return cmd }, view: func(layout.Size) string { return title("Labeled field", e) + f.View() }}, nil
 }
 
 func paginatorStory(e Environment) (runtime.Scene, error) {
 	m := feedback.NewPaginator(50, 10, e.Config.Palette())
+
 	return &scene{update: func(msg tea.Msg) tea.Cmd { var cmd tea.Cmd; m, cmd = m.Update(msg); return cmd }, view: func(layout.Size) string {
 		return title("Pagination", e) + m.View() + fmt.Sprintf("\n\nPage %d of %d", m.Page+1, m.TotalPages) + footer("Left / right changes page", e)
 	}}, nil
@@ -72,6 +82,7 @@ func (k helpKeys) FullHelp() [][]key.Binding { return [][]key.Binding{k.ShortHel
 func helpStory(e Environment) (runtime.Scene, error) {
 	m := feedback.NewHelp(e.Config.Columns, e.Config.Palette())
 	keys := helpKeys{key.NewBinding(key.WithKeys("tab"), key.WithHelp("tab", "next field")), key.NewBinding(key.WithKeys("enter"), key.WithHelp("enter", "select"))}
+
 	return &scene{resize: func(s layout.Size) { m.SetWidth(s.Width) }, view: func(layout.Size) string { return title("Help from key bindings", e) + m.View(keys) }}, nil
 }
 
@@ -85,7 +96,9 @@ func panelStory(e Environment) (runtime.Scene, error) {
 	data := sampleSeries(e.Config.Series, 0, e.Config.Amount)
 	plot := chart.NewTimeSeries(data, e.Config.Size(), e.Config.Palette())
 	plot.Focus()
+
 	options := chart.PanelOptions{ShowLegend: e.Config.Legend}
+
 	return &scene{resize: func(size layout.Size) { plot.Resize(chart.PanelPlotSize(size, options)) }, update: func(msg tea.Msg) tea.Cmd { var cmd tea.Cmd; plot, cmd = plot.Update(msg); return cmd }, view: func(size layout.Size) string {
 		return chart.Panel("Request throughput", plot, data, size, e.Config.Palette(), true, options)
 	}}, nil
@@ -97,11 +110,14 @@ func attentionStory(e Environment) (runtime.Scene, error) {
 		if e.Config.Boundaries {
 			rule = attention.Rule{Warn: &attention.Bounds{Upper: attention.Limit(60)}, Error: &attention.Bounds{Upper: attention.Limit(80)}}
 		}
+
 		result := rule.Evaluate(e.Config.Amount, e.Config.State != "empty")
+
 		indicator := feedback.Attention(result.Level, e.Config.Palette())
 		if result.Level == attention.Off {
 			indicator = "OFF / no boundaries"
 		}
+
 		return title("Composed attention indicator", e) + indicator + fmt.Sprintf("\n\nValue %.0f\n%s\n\n", e.Config.Amount, rule.Summary("units")) + "Rules are optional. Missing measurements are UNKNOWN.\nEquality triggers; ERROR takes precedence over WARN.\nThe indicator composes the shared semantic pill atom."
 	}), nil
 }
@@ -109,10 +125,12 @@ func attentionStory(e Environment) (runtime.Scene, error) {
 func distributionStory(e Environment) (runtime.Scene, error) {
 	return static(func(size layout.Size) string {
 		selected := 40.0
+
 		d := chart.DistributionComparison{Series: []chart.DistributionSeries{{Label: "R", Mean: 20, StdDev: 3, Members: 64, HasSpread: true}, {Label: "C", Mean: 30, StdDev: 8, Members: 32, HasSpread: true, Selected: &selected}}, ShowLegend: e.Config.Legend, Sigma: e.Config.Sigma, Min: 0, Max: 60, Unit: "%", SpreadUnit: "pp"}
 		if e.Config.Boundaries {
 			d.Markers = []chart.BandMarker{{Value: 26, Glyph: 'W', Label: "warning boundary", Style: feedback.AttentionStyle(attention.Warn, e.Config.Palette())}, {Value: 29, Glyph: 'E', Label: "error boundary", Style: feedback.AttentionStyle(attention.Error, e.Config.Palette())}}
 		}
+
 		return title("Composed cohort distributions", e) + d.View(size.Width, e.Config.Palette())
 	}), nil
 }
@@ -133,6 +151,7 @@ func percentStory(e Environment) (runtime.Scene, error) {
 func bandMatrixStory(e Environment) (runtime.Scene, error) {
 	return static(func(size layout.Size) string {
 		matrix := chart.BandMatrix{Title: fmt.Sprintf("Host mean +/- %ds", e.Config.Sigma)}
+
 		for _, metric := range []struct {
 			label    string
 			mean, sd float64
@@ -144,6 +163,7 @@ func bandMatrixStory(e Environment) (runtime.Scene, error) {
 			}}
 			matrix.Rows = append(matrix.Rows, chart.BandRow{Title: metric.label, Distribution: d})
 		}
+
 		return matrix.View(size, e.Config.Palette(), false)
 	}), nil
 }

@@ -27,7 +27,8 @@ type Theme struct {
 	Unknown, Inactive, DimUnknown, DimInactive                  color.Color
 	Pending, Running, Paused, DimPending, DimRunning, DimPaused color.Color
 	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger   color.Color
-	Series                                                      []color.Color
+	Series, Sequential                                          []color.Color
+	Permissions                                                 PermissionColors
 }
 
 func New(mode Mode) Theme {
@@ -46,6 +47,7 @@ func New(mode Mode) Theme {
 		t.DimPending, t.DimRunning, t.DimPaused = hex("#526fa0"), hex("#426f7c"), hex("#7f6b51")
 		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#526176"), hex("#477451"), hex("#526fa8"), hex("#8a6841"), hex("#a05b5b")
 		t.Series = colors("#6654ad", "#3568b0", "#a3497f", "#8c663d", "#575ba6")
+		t.Sequential = colors("#e5ecf7", "#b6cbea", "#80a4d3", "#4e79b0", "#1d3e6e")
 	case Contrast:
 		t.Background, t.Foreground = hex("#000000"), hex("#ffffff")
 		t.Surface = hex("#151515")
@@ -59,10 +61,12 @@ func New(mode Mode) Theme {
 		t.DimPending, t.DimRunning, t.DimPaused = hex("#8ba2da"), hex("#65aab7"), hex("#b5a28a")
 		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#c0c0c0"), hex("#6cbe80"), hex("#739ac7"), hex("#c5b75a"), hex("#d48282")
 		t.Series = colors("#c8b4ff", "#9ac2ff", "#f4b0d8", "#e8c49a", "#abb6ff")
+		t.Sequential = colors("#18283f", "#354f76", "#5b81b0", "#8db5e1", "#d9ebff")
 	case Mono:
 		t.ASCII, t.ReducedMotion = true, true
 		t.Background, t.Surface = hex("#000000"), hex("#151515")
 		t.Foreground, t.Muted, t.Border, t.Accent = hex("#ffffff"), hex("#bdbdbd"), hex("#777777"), hex("#ffffff")
+		t.Sequential = colors("#202020", "#505050", "#808080", "#b0b0b0", "#eeeeee")
 	default:
 		t.Mode = Dark
 		t.Background, t.Foreground = hex("#101722"), hex("#eeeeee")
@@ -77,9 +81,11 @@ func New(mode Mode) Theme {
 		t.DimPending, t.DimRunning, t.DimPaused = hex("#758fc4"), hex("#519bab"), hex("#a59682")
 		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#a8a8a8"), hex("#629c73"), hex("#5a8fb9"), hex("#b5945c"), hex("#c17670")
 		t.Series = colors("#b9a7f5", "#87b5f9", "#e49ac2", "#d7b58b", "#8f9de8")
+		t.Sequential = colors("#202844", "#354b72", "#4e70a1", "#729bd0", "#afcbef")
 	}
 
 	t.FocusBorder, t.SelectionForeground = t.Accent, t.Foreground
+	t.Permissions = permissionColors(t.Mode)
 
 	return t
 }
@@ -139,4 +145,14 @@ func (t Theme) SeriesColor(index int) color.Color {
 		return nil
 	}
 	return t.Series[index%len(t.Series)]
+}
+
+// SeriesStyle keeps plotted data independent of interaction emphasis.
+func (t Theme) SeriesStyle(index int) lipgloss.Style {
+	style := t.Text()
+	if color := t.SeriesColor(index); color != nil {
+		style = style.Foreground(color)
+	}
+
+	return style
 }
