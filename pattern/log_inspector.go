@@ -33,6 +33,8 @@ const (
 
 type LogInspectorOptions struct {
 	Layout                       InspectorLayout
+	KeyLayout                    interaction.KeyLayout
+	BackdropMode                 layout.BackdropMode
 	TimelineGroups               []collection.HTTPGroup
 	TimelineNow                  time.Time
 	Symbols                      text.Presentation
@@ -51,6 +53,7 @@ type LogInspectorOptions struct {
 type LogInspector struct {
 	Symbols            text.Presentation
 	HTTP               *collection.HTTPLog
+	Palette            *collection.CommandPalette
 	Logs               *collection.LogTree
 	focus              interaction.Focus
 	palette            theme.Theme
@@ -96,11 +99,34 @@ func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
 		return nil, fmt.Errorf("unknown inspector layout %q", o.Layout)
 	}
 
+	palette, err := collection.NewCommandPalette(nil, 72, 24, o.Theme)
+	if err != nil {
+		return nil, err
+	}
+
+	m.Palette = palette
+	if !m.Palette.SetBackdropMode(o.BackdropMode) {
+		return nil, fmt.Errorf("unknown backdrop mode %q", o.BackdropMode)
+	}
+
+	if o.KeyLayout != interaction.DefaultKeys {
+		if _, err := m.SetKeyLayout(o.KeyLayout); err != nil {
+			return nil, err
+		}
+	}
+
 	m.Resize(layout.Size{Width: 120, Height: 36})
 
 	return m, nil
 }
-func (m *LogInspector) Init() tea.Cmd              { return nil }
+
+func (m *LogInspector) Init() tea.Cmd {
+	if m.Palette != nil && m.Palette.IsOpen() && m.Palette.Mode() == collection.PaletteSearch {
+		return m.Palette.Search.Focus()
+	}
+
+	return nil
+}
 func (m *LogInspector) FocusPane(id string) bool   { return m.focus.Set(id) }
 func (m *LogInspector) FocusedPane() string        { return m.focus.Current() }
 func (m *LogInspector) Scope() CorrelationScope    { return m.scope }
@@ -234,10 +260,20 @@ func (m *LogInspector) correlate() {
 	if err := m.Logs.SetEntries(matched); err != nil {
 		m.correlationMessage = "Invalid correlated records: " + text.Inline(err.Error())
 	}
+
+	if m.Palette != nil && m.Palette.IsOpen() {
+		if err := m.Palette.SetCommands(m.Commands()); err != nil {
+			m.correlationMessage = "Invalid commands: " + text.Inline(err.Error())
+		}
+	}
 }
 
 func (m *LogInspector) Resize(size layout.Size) {
 	m.size = size
+	if m.Palette != nil {
+		m.Palette.Resize(size)
+	}
+
 	m.active, m.regions = planInspector(size, m.preferred)
 	m.wide = m.active != InspectorFocused
 	m.HTTP.Timeline = m.active == InspectorTimeline || (!m.wide && m.preferred == InspectorTimeline)
@@ -250,7 +286,7 @@ func (m *LogInspector) Resize(size layout.Size) {
 	m.Logs.Resize(logs.Width, max(1, logs.Height-1))
 }
 
-func (m *LogInspector) Update(msg tea.Msg) tea.Cmd {
+func (m *LogInspector) updateContent(msg tea.Msg) tea.Cmd {
 	if key, ok := msg.(tea.KeyPressMsg); ok {
 		if m.focus.Handle(msg) {
 			return nil
@@ -309,7 +345,7 @@ func (m *LogInspector) Update(msg tea.Msg) tea.Cmd {
 	return nil
 }
 
-func (m *LogInspector) View() string {
+func (m *LogInspector) contentView() string {
 	focused := m.focus.Current()
 
 	requests := func(size layout.Size) string {
@@ -351,11 +387,17 @@ func (m *LogInspector) View() string {
 
 	help := text.KeyHint("Tab", "panes", m.palette) + " · " + text.KeyHint("L", "layout", m.palette) + " · " + text.KeyHint("Alt+1/2/3", "views", m.palette) + "\n"
 
+	if m.size.Width >= 70 {
+		help = strings.TrimSuffix(help, "\n") + " · " + text.KeyHint(m.Palette.Keys.Open.Help().Key, "commands", m.palette) + "\n"
+	} else {
+		help = text.KeyHint("Tab", "panes", m.palette) + " · " + text.KeyHint(m.Palette.Keys.Open.Help().Key, "commands", m.palette) + "\n"
+	}
+
 	switch focused {
 	case requestPane:
-		help += text.KeyHint(m.palette.Glyph(theme.GlyphUp)+"/"+m.palette.Glyph(theme.GlyphDown), "select", m.palette) + " · " + text.KeyHint("F", "follow", m.palette)
+		help += text.KeyHint(m.HTTP.Table.KeyMap.LineUp.Help().Key+"/"+m.HTTP.Table.KeyMap.LineDown.Help().Key, "select", m.palette) + " · " + text.KeyHint("F", "follow", m.palette)
 	case httpPane:
-		help += text.KeyHint(m.palette.Glyph(theme.GlyphUp)+"/"+m.palette.Glyph(theme.GlyphDown), "scroll", m.palette)
+		help += text.KeyHint(m.HTTP.Details.KeyMap.Up.Help().Key+"/"+m.HTTP.Details.KeyMap.Down.Help().Key, "scroll", m.palette)
 		if m.HTTP.Folding {
 			help += " · " + text.KeyHint("1/2/3", "sections", m.palette)
 		}
