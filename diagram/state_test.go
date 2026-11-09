@@ -2,6 +2,7 @@ package diagram_test
 
 import (
 	"fmt"
+	"image/color"
 	"reflect"
 	"regexp"
 	"strings"
@@ -26,10 +27,10 @@ func TestStateDiagramSimpleDirectedTransition(t *testing.T) {
 	}
 
 	want := []string{
-		"+-----------------+        +---------------+",
-		"| A               +-- go ->+ B             |",
+		"(-----------------)        #===============#",
+		"| A               +-- go -># B             |",
 		"| initial         |        | final         |",
-		"+-----------------+        +---------------+",
+		"(-----------------)        #===============#",
 	}
 
 	if !reflect.DeepEqual(lines, want) {
@@ -102,6 +103,7 @@ func TestStateDiagramRejectsInvalidGraphsWithoutPartialOutput(t *testing.T) {
 	for _, d := range []diagram.StateDiagram{
 		{States: []diagram.State{{ID: "a"}, {ID: "a"}}},
 		{States: []diagram.State{{ID: ""}}},
+		{States: []diagram.State{{ID: "a", Outcome: diagram.StateOutcome(99)}}},
 		{States: []diagram.State{{ID: "a", Initial: true}, {ID: "b", Initial: true}}},
 		{States: []diagram.State{{ID: "a"}}, Active: "missing"},
 		{States: []diagram.State{{ID: "a"}}, Transitions: []diagram.Transition{{From: "a", To: "missing"}}},
@@ -300,5 +302,66 @@ func TestStateDiagramComplexEdgesSurviveBothLayouts(t *testing.T) {
 		if strings.Contains(plain, "Crossings") {
 			t.Fatal("complex graph needs a legend")
 		}
+	}
+}
+
+func TestStateKindsAndOutcomes(t *testing.T) {
+	d := diagram.StateDiagram{States: []diagram.State{
+		{ID: "Start", Initial: true},
+		{ID: "Neutral", Final: true},
+		{ID: "Accepted", Final: true, Outcome: diagram.OutcomeSuccess},
+		{ID: "Rejected", Final: true, Outcome: diagram.OutcomeError},
+	}}
+
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast, theme.Mono} {
+		for _, width := range []int{40, 200} {
+			palette := theme.New(mode)
+
+			out, err := d.View(width, palette)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			plain := ansi.Strip(out)
+			for _, label := range []string{"Start", "Neutral", "Accepted", "Rejected", "initial", "success", "error"} {
+				if !strings.Contains(plain, label) {
+					t.Fatalf("lost %q in %s", label, plain)
+				}
+			}
+
+			if mode == theme.Mono {
+				if out != plain || !strings.Contains(plain, "(---") || !strings.Contains(plain, "#===") {
+					t.Fatalf("missing ASCII state shapes: %s", out)
+				}
+			} else if !strings.Contains(plain, "╭─") || !strings.Contains(plain, "╔═") {
+				t.Fatalf("missing Unicode state shapes: %s", out)
+			}
+		}
+	}
+}
+
+func TestOutcomesAreIndependentOfFinalAndActive(t *testing.T) {
+	d := diagram.StateDiagram{States: []diagram.State{{ID: "A", Initial: true, Outcome: diagram.OutcomeError}, {ID: "B", Final: true, Outcome: diagram.OutcomeSuccess}}, Transitions: []diagram.Transition{{From: "A", To: "B", Label: "recover"}}, Active: "B"}
+	palette := theme.New(theme.Dark)
+	palette.Success = color.RGBA{R: 19, G: 83, B: 147, A: 255}
+
+	out, err := d.View(100, palette)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !strings.Contains(ansi.Strip(out), "success, active") || !strings.Contains(out, "\x1b[38;2;19;83;147;1mB") {
+		t.Fatalf("active state lost custom success color or marker: %s", out)
+	}
+
+	d.Active = ""
+
+	inactive, err := d.View(100, palette)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if strings.Count(out, "\n") != strings.Count(inactive, "\n") || ansi.StringWidth(strings.Split(out, "\n")[0]) != ansi.StringWidth(strings.Split(inactive, "\n")[0]) {
+		t.Fatal("active changed geometry")
 	}
 }

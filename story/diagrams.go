@@ -12,8 +12,8 @@ import (
 
 func stateDiagramStory(e Environment) (runtime.Scene, error) {
 	graph := diagram.StateDiagram{
-		States:      []diagram.State{{ID: "idle", Label: "Idle", Initial: true}, {ID: "running", Label: "Running"}, {ID: "done", Label: "Done", Final: true}},
-		Transitions: []diagram.Transition{{From: "idle", To: "running", Label: "start"}, {From: "running", To: "running", Label: "retry"}, {From: "running", To: "done", Label: "finish"}, {From: "running", To: "idle", Label: "cancel"}},
+		States:      []diagram.State{{ID: "idle", Label: "Idle", Initial: true}, {ID: "running", Label: "Running"}, {ID: "done", Label: "Done", Final: true, Outcome: diagram.OutcomeSuccess}, {ID: "failed", Label: "Failed", Final: true, Outcome: diagram.OutcomeError}},
+		Transitions: []diagram.Transition{{From: "idle", To: "running", Label: "start"}, {From: "running", To: "running", Label: "retry"}, {From: "running", To: "done", Label: "finish"}, {From: "running", To: "idle", Label: "cancel"}, {From: "running", To: "failed", Label: "fail"}},
 	}
 	active := 1
 
@@ -45,4 +45,11 @@ func stateDiagramStory(e Environment) (runtime.Scene, error) {
 			return title("State transitions", e) + out + footer("Left/Right changes the active marker", e)
 		},
 	}, nil
+}
+
+func stateDiagramConfig() Config {
+	c := DefaultConfig()
+	c.Columns, c.Rows = 120, 40
+
+	return c
 }

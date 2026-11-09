@@ -79,18 +79,7 @@ func planDiagram(input []nodeBox, edges []link, vertical bool) drawing {
 	for i := range d.nodes {
 		n := &d.nodes[i]
 
-		possible := "active"
-		if n.state.Initial {
-			possible = "initial, active"
-		}
-
-		if n.state.Final {
-			possible = "final, active"
-		}
-
-		if n.state.Initial && n.state.Final {
-			possible = "initial, final, active"
-		}
+		possible := n.state.markers(true)
 
 		n.w = max(7, ansi.StringWidth(n.label)+4, ansi.StringWidth(possible)+4)
 		n.h = 4

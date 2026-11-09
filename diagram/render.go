@@ -1,6 +1,7 @@
 package diagram
 
 import (
+	"image/color"
 	"strings"
 
 	uv "github.com/charmbracelet/ultraviolet"
@@ -47,7 +48,9 @@ func (d drawing) render(active string, t theme.Theme) string {
 	}
 
 	for _, node := range d.nodes {
-		border := uv.Style{Fg: t.Border}
+		semantic := nodeColor(node.state, t)
+
+		border := uv.Style{Fg: semantic}
 		if node.state.ID == active {
 			border.Fg = t.Accent
 		}
@@ -77,18 +80,25 @@ func (d drawing) render(active string, t theme.Theme) string {
 				}
 
 				if mask != 0 {
-					put(node.x+x, node.y+y, lineGlyph(mask|masks[node.y+y][node.x+x], ascii), border)
+					put(node.x+x, node.y+y, nodeGlyph(mask|masks[node.y+y][node.x+x], node.state, ascii), border)
 				}
 			}
 		}
 
 		label := t.Text()
+		if node.state.Outcome != OutcomeNone {
+			label = label.Foreground(semantic)
+		}
+
 		if node.state.ID == active {
-			label = label.Foreground(t.Accent).Bold(true)
+			label = label.Bold(true)
+			if node.state.Outcome == OutcomeNone {
+				label = label.Foreground(t.Accent)
+			}
 		}
 
 		drawText(screen, node.x+2, node.y+1, label.Render(node.label))
-		drawText(screen, node.x+2, node.y+2, t.Subtle().Render(node.markers))
+		drawText(screen, node.x+2, node.y+2, t.Text().Foreground(semantic).Render(node.markers))
 	}
 
 	for _, edge := range d.edges {
@@ -146,4 +156,68 @@ func drawText(screen uv.ScreenBuffer, x, y int, value string) {
 	}
 
 	uv.NewStyledString(value).Draw(screen, uv.Rect(x, y, ansi.StringWidth(value), 1))
+}
+
+func nodeColor(s State, t theme.Theme) color.Color {
+	switch s.Outcome {
+	case OutcomeNone:
+		return t.Border
+	case OutcomeSuccess:
+		return t.Success
+	case OutcomeError:
+		return t.Danger
+	default:
+		return t.Foreground
+	}
+}
+
+func nodeGlyph(mask uint8, s State, ascii bool) rune {
+	if s.Final {
+		if ascii {
+			if mask == east|west {
+				return '='
+			}
+
+			if mask&(north|south) != 0 && mask&(east|west) != 0 {
+				return '#'
+			}
+
+			return lineGlyph(mask, true)
+		}
+
+		glyphs := [16]rune{' ', '║', '║', '║', '═', '╚', '╔', '╟', '═', '╝', '╗', '╢', '═', '╧', '╤', '╪'}
+
+		return glyphs[mask]
+	}
+
+	if s.Initial {
+		switch mask {
+		case south | east:
+			if ascii {
+				return '('
+			}
+
+			return '╭'
+		case south | west:
+			if ascii {
+				return ')'
+			}
+
+			return '╮'
+		case north | east:
+			if ascii {
+				return '('
+			}
+
+			return '╰'
+		case north | west:
+			if ascii {
+				return ')'
+			}
+
+			return '╯'
+		}
+	}
+
+	return lineGlyph(mask, ascii)
 }

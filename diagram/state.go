@@ -10,11 +10,22 @@ import (
 	"github.com/lanej/charmed/theme"
 )
 
+// StateOutcome optionally gives a state semantic success or error styling.
+// Outcomes do not imply Final or execute transitions.
+type StateOutcome uint8
+
+const (
+	OutcomeNone StateOutcome = iota
+	OutcomeSuccess
+	OutcomeError
+)
+
 // State names a node. Empty Label uses ID. Initial and Final are visible markers;
 // at most one state may be initial, and final states cannot have outgoing edges.
 type State struct {
 	ID, Label      string
 	Initial, Final bool
+	Outcome        StateOutcome
 }
 
 // Transition is a directed edge. Parallel transitions and self-loops are retained.
@@ -92,20 +103,13 @@ func (d StateDiagram) validate() ([]nodeBox, []link, error) {
 			label = state.ID
 		}
 
-		var markers []string
-		if state.Initial {
-			markers = append(markers, "initial")
+		switch state.Outcome {
+		case OutcomeNone, OutcomeSuccess, OutcomeError:
+		default:
+			return nil, nil, fmt.Errorf("state %q has invalid outcome %d", state.ID, state.Outcome)
 		}
 
-		if state.Final {
-			markers = append(markers, "final")
-		}
-
-		if state.ID == d.Active {
-			markers = append(markers, "active")
-		}
-
-		nodes[i] = nodeBox{state: state, label: label, markers: strings.Join(markers, ", ")}
+		nodes[i] = nodeBox{state: state, label: label, markers: state.markers(state.ID == d.Active)}
 	}
 
 	if d.Active != "" {
@@ -147,4 +151,30 @@ func singleLine(value string) bool {
 	}
 
 	return true
+}
+
+func (s State) markers(active bool) string {
+	var parts []string
+	if s.Initial {
+		parts = append(parts, "initial")
+	}
+
+	if s.Final && s.Outcome == OutcomeNone {
+		parts = append(parts, "final")
+	}
+
+	switch s.Outcome {
+	case OutcomeNone:
+	case OutcomeSuccess:
+		parts = append(parts, "success")
+	case OutcomeError:
+		parts = append(parts, "error")
+	default:
+	}
+
+	if active {
+		parts = append(parts, "active")
+	}
+
+	return strings.Join(parts, ", ")
 }

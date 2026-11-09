@@ -11,7 +11,7 @@ import (
 
 func TestStateDiagramStoryUpdatesAndResizes(t *testing.T) {
 	config := story.DefaultConfig()
-	config.Columns, config.Rows = 100, 30
+	config.Columns, config.Rows = 120, 40
 
 	model, err := story.New("diagram/state-transitions", config, nil)
 	if err != nil {
@@ -43,10 +43,10 @@ func TestStateDiagramStoryUpdatesAndResizes(t *testing.T) {
 		t.Fatal("narrow view displayed a partial graph instead of allocation guidance")
 	}
 
-	_, _ = model.Update(tea.WindowSizeMsg{Width: 40, Height: 30})
+	_, _ = model.Update(tea.WindowSizeMsg{Width: 40, Height: 40})
 
 	vertical := ansi.Strip(model.View().Content)
-	for _, label := range []string{"Idle", "Running", "Done", "start", "retry", "finish", "cancel"} {
+	for _, label := range []string{"Idle", "Running", "Done", "start", "retry", "finish", "cancel", "Failed", "success", "error", "fail"} {
 		if !strings.Contains(vertical, label) {
 			t.Fatalf("narrow layout lost %q", label)
 		}
@@ -61,7 +61,7 @@ func TestStateDiagramStoryUpdatesAndResizes(t *testing.T) {
 		t.Fatal("short view silently clipped graph topology")
 	}
 
-	_, _ = model.Update(tea.WindowSizeMsg{Width: 100, Height: 30})
+	_, _ = model.Update(tea.WindowSizeMsg{Width: 120, Height: 40})
 	if model.View().Content != original {
 		t.Fatal("resize lost the caller graph or active state")
 	}
