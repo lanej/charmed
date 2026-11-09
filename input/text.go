@@ -2,9 +2,12 @@
 package input
 
 import (
+	"strings"
+
 	"charm.land/bubbles/v2/textarea"
 	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/theme"
 )
@@ -94,10 +97,16 @@ func (m Text) Cursor() *tea.Cursor {
 }
 
 func (m Text) Focused() bool { return !m.Disabled && m.Model.Focused() }
+
+// Resize includes the native prompt and the extra cell reserved for its cursor.
 func (m *Text) Resize(columns int) {
 	m.SetWidth(max(1, columns-ansi.StringWidth(m.Prompt)-1))
-	m.SetCursor(m.Position())
+	position := m.Position()
+	// WHY: Native overflow handling does not shrink a viewport containing the cursor.
+	m.CursorEnd()
+	m.SetCursor(position)
 }
+
 func (m Text) Init() tea.Cmd { return nil }
 func (m Text) Update(msg tea.Msg) (Text, tea.Cmd) {
 	if m.Disabled {
@@ -144,12 +153,23 @@ type Field struct {
 }
 
 func (f Field) View() string {
-	s := f.Theme.Heading().Render(f.Label) + "\n" + f.Input.View()
+	control := f.Input.View()
+	width := max(1, lipgloss.Width(control))
+
+	var lines []string
+
+	if f.Label != "" {
+		lines = append(lines, f.Theme.Heading().Render(ansi.Wrap(f.Label, width, "")))
+	}
+
+	lines = append(lines, control)
+
 	if f.Input.Err != nil {
-		return s + "\n" + f.Theme.Text().Foreground(f.Theme.Danger).Render("! "+f.Input.Err.Error())
+		message := f.Theme.Glyph(theme.GlyphError) + " " + f.Input.Err.Error()
+		lines = append(lines, f.Theme.Text().Foreground(f.Theme.Danger).Render(ansi.Wrap(message, width, "")))
+	} else if f.Help != "" {
+		lines = append(lines, f.Theme.Subtle().Render(ansi.Wrap(f.Help, width, "")))
 	}
-	if f.Help != "" {
-		s += "\n" + f.Theme.Subtle().Render(f.Help)
-	}
-	return s
+
+	return strings.Join(lines, "\n")
 }

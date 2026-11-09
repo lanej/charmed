@@ -1,0 +1,15 @@
+selected := 40.0
+comparison := chart.DistributionComparison{
+    Series: []chart.DistributionSeries{
+        {Label: "Reference", Mean: 20, StdDev: 3, Members: 64, HasSpread: true},
+        {Label: "Candidate", Mean: 30, StdDev: 8, Members: 32, HasSpread: true, Selected: &selected},
+    },
+    Sigma: 3, Min: 0, Max: 60, Unit: "%", SpreadUnit: "pp",
+    ShowLegend: true,
+    Markers: []chart.BandMarker{
+        {Value: 26, Glyph: 'W', Label: "warning boundary", Style: feedback.AttentionStyle(attention.Warn, palette)},
+        {Value: 29, Glyph: 'E', Label: "error boundary", Style: feedback.AttentionStyle(attention.Error, palette)},
+    },
+}
+view := comparison.View(64, palette)
+// Markers are optional caller-supplied boundaries; no rule is inferred from spread.

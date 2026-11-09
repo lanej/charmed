@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"charm.land/lipgloss/v2"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/theme"
 )
@@ -26,6 +27,17 @@ func renderLegend(entries []legendEntry, width int, t theme.Theme) string {
 			continue
 		}
 		seen[token] = true
+		if strings.Contains(token, "\n") || lipgloss.Width(token) > width {
+			if line != "" {
+				lines = append(lines, line)
+				line = ""
+			}
+
+			lines = append(lines, wrapLegendEntry(entry, width, t)...)
+
+			continue
+		}
+
 		if line != "" && lipgloss.Width(line)+2+lipgloss.Width(token) > width {
 			lines = append(lines, line)
 			line = ""
@@ -39,6 +51,32 @@ func renderLegend(entries []legendEntry, width int, t theme.Theme) string {
 		lines = append(lines, line)
 	}
 	return strings.Join(lines, "\n")
+}
+
+func wrapLegendEntry(entry legendEntry, width int, t theme.Theme) []string {
+	prefixWidth := lipgloss.Width(entry.glyph) + 1
+	if prefixWidth >= width {
+		lines := []string{layout.Fit(entry.style.Render(entry.glyph), layout.Size{Width: width, Height: 1})}
+		for _, label := range strings.Split(ansi.Wrap(entry.label, width, ""), "\n") {
+			lines = append(lines, t.Text().Render(label))
+		}
+
+		return lines
+	}
+
+	labels := strings.Split(ansi.Wrap(entry.label, width-prefixWidth, ""), "\n")
+
+	lines := make([]string, len(labels))
+	for i, label := range labels {
+		prefix := strings.Repeat(" ", prefixWidth)
+		if i == 0 {
+			prefix = entry.style.Render(entry.glyph) + " "
+		}
+
+		lines[i] = prefix + t.Text().Render(label)
+	}
+
+	return lines
 }
 
 func bandStyle(o BandOptions, t theme.Theme) lipgloss.Style {

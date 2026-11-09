@@ -1,0 +1,5 @@
+next := key.NewBinding(key.WithKeys("tab"), key.WithHelp("tab", "next field"))
+selectItem := key.NewBinding(key.WithKeys("enter"), key.WithHelp("enter", "select"))
+help := feedback.NewHelp(40, palette)
+view := help.ShortHelpView([]key.Binding{next, selectItem})
+// Use these same bindings in Update: key.Matches(msg, next).

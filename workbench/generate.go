@@ -182,6 +182,16 @@ func Generate(out string) error {
 			}{"With legend", func(c *story.Config) { c.Legend = true }})
 		}
 
+		if d.ID == "chart/panel" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{"Narrow with legend", func(c *story.Config) {
+				c.Columns, c.Rows = 40, 16
+				c.Series, c.Legend = 4, true
+			}})
+		}
+
 		if slices.Contains(d.Controls, "comparisonVariant") {
 			variants = append(variants, struct {
 				name   string

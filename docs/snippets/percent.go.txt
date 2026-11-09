@@ -1,0 +1,4 @@
+view := feedback.PercentBar(68, true, 30, palette)
+// The value is on a fixed 0–100 scale, displayed as a bar plus an exact percentage.
+missing := feedback.PercentBar(0, false, 30, palette)
+// Unavailable measurements render n/a; a known zero remains 0.000%.

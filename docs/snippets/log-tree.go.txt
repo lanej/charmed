@@ -1,0 +1,9 @@
+logs := collection.NewLogTree(60, 20, palette)
+logs.SetDetachedDetails(true)
+if err := logs.SetEntries(records); err != nil {
+    return err
+}
+logs.Select("log-3")
+// Forward Bubble Tea messages through logs.Update(msg).
+logs.Resize(width, height)
+view := logs.View()
