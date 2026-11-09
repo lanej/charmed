@@ -8,6 +8,7 @@ import (
 	"charm.land/log/v2"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/collection"
+	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -36,5 +37,14 @@ func TestLogViewerKeepsAtomsFieldsAndBoundedHistory(t *testing.T) {
 
 	if !strings.Contains(ansi.Strip(viewer.View()), "LEVEL 19") {
 		t.Fatal("unknown entry silently discarded")
+	}
+}
+
+func TestLogViewerRetainsTrace(t *testing.T) {
+	viewer := collection.NewLogViewer(100, 2, theme.New(theme.Mono))
+	viewer.Append(collection.LogEntry{Level: feedback.TraceLevel, Message: "handler entered", Fields: []any{"request", "one"}})
+
+	if got := ansi.Strip(viewer.View()); !strings.Contains(got, "[TRACE] handler entered request=one") {
+		t.Fatalf("trace entry lost or mislabeled: %q", got)
 	}
 }
