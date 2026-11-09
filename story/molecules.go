@@ -24,6 +24,7 @@ func moleculesDefinitions() []Definition {
 	}
 
 	d = append(d,
+		Definition{ID: "chart/waffle-header", Title: "Molecules/Charts/Waffle status header", Level: "Molecules", Family: "chart", Description: "A fleet micro-grid above a service list with shared-scale instance bars and semantic status atoms. A one-row option supports tighter headers.", Source: "chart/waffle.go", ExampleSource: "docs/snippets/waffle.go.txt", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Composes: []string{"chart/waffle", "collection/table", "feedback/status", "feedback/progress"}, Defaults: waffleConfig(), Factory: waffleHeaderStory},
 		Definition{ID: "chart/band-matrix", Title: "Molecules/Charts/Band matrix", Level: "Molecules", Family: "chart", Description: "Directly labeled, disconnected distribution rows composed in a rectangular frame.", Source: "chart/comparison.go", Controls: []string{"sigma"}, Composes: []string{"chart/distributions", "foundations/layout"}, Defaults: DefaultConfig(), Factory: bandMatrixStory},
 		Definition{ID: "chart/metric", Title: "Molecules/Charts/Metric trend", Level: "Molecules", Family: "chart", Description: "A metric value, unit and sparkline share one bounded allocation; unavailable values and missing history remain distinct.", Source: "story/molecules.go", Symbol: "metricStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Composes: []string{"chart/sparkline"}, Defaults: DefaultConfig(), Factory: metricStory},
 		Definition{ID: "chart/panel", Title: "Molecules/Charts/Chart panel", Level: "Molecules", Family: "chart", Description: "A chart and title compose into a reusable region with an optional color-matched legend.", Source: "story/molecules.go", Symbol: "panelStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"series", "amount", "legend"}, Composes: []string{"chart/timeseries", "foundations/layout"}, Defaults: DefaultConfig(), Factory: panelStory},
@@ -35,6 +36,7 @@ func moleculesDefinitions() []Definition {
 
 	snippets := map[string]string{
 		"diagram/state-transitions": "state-transitions",
+		"chart/waffle-header":       "waffle",
 		"input/field":               "field", "feedback/paginator": "paginator",
 		"feedback/help": "help", "chart/band-matrix": "band-matrix",
 		"chart/metric": "metric-trend", "chart/panel": "chart-panel",
