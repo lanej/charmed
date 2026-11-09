@@ -19,7 +19,7 @@ func InlineCode(value string, t theme.Theme) string {
 // CodeBlock renders literal source with the same highlighting as Markdown fences.
 // Language is a lexer name such as "go" or "bash"; unknown names use plain text.
 // Width controls the document allocation; long source lines can overflow it.
-func CodeBlock(source, language string, width int, t theme.Theme) (string, error) {
+func CodeBlock(source, language string, width int, t theme.Theme, options ...MarkdownOptions) (string, error) {
 	// WHY: A longer fence keeps embedded Markdown fences inside the source.
 	fence := "~~~"
 	for strings.Contains(source, fence) {
@@ -41,5 +41,5 @@ func CodeBlock(source, language string, width int, t theme.Theme) (string, error
 		source += "\n"
 	}
 
-	return Markdown(fence+language+"\n"+source+fence+"\n", width, t)
+	return Markdown(fence+language+"\n"+source+fence+"\n", width, t, options...)
 }

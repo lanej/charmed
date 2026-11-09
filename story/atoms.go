@@ -87,7 +87,7 @@ func codeStory(e Environment) (runtime.Scene, error) {
 	return static(func(s layout.Size) string {
 		t := e.Config.Palette()
 
-		block, err := text.CodeBlock("// Shared terminal defaults\nfield := input.NewText(options)\ncmd := field.Focus()", "go", s.Width, t)
+		block, err := text.CodeBlock("// Shared terminal defaults\noptions := input.TextOptions{Value: \"production\", Width: 32}\nfield := input.NewText(options)\ncmd := field.Focus()", "go", s.Width, t)
 		if err != nil {
 			return err.Error()
 		}
