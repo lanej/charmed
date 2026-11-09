@@ -38,6 +38,11 @@ func commandPaletteStory(e Environment) (runtime.Scene, error) {
 		return nil, err
 	}
 
+	if _, err := m.SetKeyLayout(e.Config.KeyLayout); err != nil {
+		return nil, err
+	}
+
+	m.SetBackdropMode(e.Config.PaletteBackdrop)
 	m.SetMatchHighlighting(e.Config.HighlightMatches)
 	m.Open()
 	m.SetQuery(e.Config.Value)
@@ -46,9 +51,19 @@ func commandPaletteStory(e Environment) (runtime.Scene, error) {
 		m.SetQuery("Scope: trace")
 	}
 
+	if e.Config.CommandNormal {
+		m.Update(tea.KeyPressMsg{Code: tea.KeyEscape})
+	}
+
 	selected := ""
 
-	return &scene{init: m.Search.Focus, resize: m.Resize, update: func(msg tea.Msg) tea.Cmd {
+	return &scene{init: func() tea.Cmd {
+		if m.Mode() == collection.PaletteSearch {
+			return m.Search.Focus()
+		}
+
+		return nil
+	}, resize: m.Resize, update: func(msg tea.Msg) tea.Cmd {
 		if action, ok := msg.(collection.CommandSelectedMsg); ok {
 			selected = action.ID
 			return nil
@@ -65,6 +80,6 @@ func commandPaletteStory(e Environment) (runtime.Scene, error) {
 			return layout.Fit(background, size)
 		}
 
-		return layout.CenterOverlay(background, m.View(), size, e.Config.Palette(), m.DimBackdrop)
+		return layout.CenterOverlayWithBackdrop(background, m.View(), size, e.Config.Palette(), m.BackdropMode())
 	}}, nil
 }

@@ -6,11 +6,63 @@ import (
 	"charm.land/bubbles/v2/key"
 	tea "charm.land/bubbletea/v2"
 	"github.com/lanej/charmed/collection"
+	"github.com/lanej/charmed/interaction"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/pattern"
 	"github.com/lanej/charmed/story"
 	"github.com/lanej/charmed/theme"
 )
+
+func TestInspectorVimPresetAndNativeOverridesSurviveUpdates(t *testing.T) {
+	requests, logs := story.LogFixture()
+
+	m, err := pattern.NewLogInspector(pattern.LogInspectorOptions{Theme: theme.New(theme.Dark), Requests: requests, Logs: logs, KeyLayout: interaction.VimKeys, BackdropMode: layout.BackdropNone})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	m.SelectRequest("http-2")
+	m.Update(tea.KeyPressMsg{Code: 'j', Text: "j"})
+
+	if m.HTTP.SelectedID() != "http-3" || m.Palette.KeyLayout() != interaction.VimKeys || m.Palette.BackdropMode() != layout.BackdropNone {
+		t.Fatal("composed preset not applied")
+	}
+
+	for _, binding := range []key.Binding{m.HTTP.Details.KeyMap.Down, m.Logs.Model.KeyMap.Down, m.Logs.Details.KeyMap.Down} {
+		if !key.Matches(tea.KeyPressMsg{Code: 'j'}, binding) {
+			t.Fatal("detail/tree navigation missing")
+		}
+	}
+
+	m.HTTP.Table.KeyMap.LineDown = key.NewBinding(key.WithKeys("x"), key.WithHelp("x", "down"))
+	m.Resize(layout.Size{Width: 120, Height: 38})
+
+	if upsertErr := m.UpsertRequests(requests[2]); upsertErr != nil {
+		t.Fatal(upsertErr)
+	}
+
+	m.Update(tea.KeyPressMsg{Code: 'x'})
+
+	if m.HTTP.SelectedID() != "http-4" {
+		t.Fatal("update replaced native movement override")
+	}
+
+	m.OpenCommands()
+	m.Update(tea.KeyPressMsg{Code: tea.KeyEscape})
+
+	if m.Palette.Mode() != collection.PaletteNavigate {
+		t.Fatal("inspector did not route Esc to modal palette")
+	}
+
+	if _, layoutErr := m.SetKeyLayout("unknown"); layoutErr == nil || m.Palette.Mode() != collection.PaletteNavigate {
+		t.Fatal("invalid preset mutated mode")
+	}
+
+	cmd, err := m.SetKeyLayout(interaction.StandardKeys)
+	if err != nil || cmd == nil || m.Palette.Mode() != collection.PaletteSearch {
+		t.Fatal("runtime preset did not restore search focus")
+	}
+}
 
 func TestInspectorPaletteIsolatesInputAndRestoresFocus(t *testing.T) {
 	requests, logs := story.LogFixture()

@@ -9,6 +9,7 @@ import (
 	"charm.land/bubbles/v2/list"
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/interaction"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
@@ -51,14 +52,10 @@ func (d *commandDelegate) Render(w io.Writer, model list.Model, index int, item 
 		style = d.theme.Subtle()
 	}
 
-	if model.Index() == index {
-		style = d.theme.Selection().Padding(0)
-	}
-
 	style = style.Width(width)
 
 	actionStyle := style.Width(0).Bold(true)
-	if model.Index() != index && command.DisabledReason == "" && d.theme.Accent != nil {
+	if command.DisabledReason == "" && d.theme.Accent != nil {
 		actionStyle = actionStyle.Foreground(d.theme.Accent)
 	}
 
@@ -116,7 +113,7 @@ func (d *commandDelegate) Render(w io.Writer, model list.Model, index int, item 
 	suffixWidth := min(ansi.StringWidth(suffix), width/3)
 	labelWidth := max(1, width-suffixWidth-4)
 	line := style.Width(0).Render(marker) + ansi.Truncate(label, labelWidth, actionStyle.Render("…"))
-	line += secondaryStyle.Width(0).Render(strings.Repeat(" ", max(0, width-ansi.StringWidth(line)-suffixWidth)) + ansi.Truncate(suffix, suffixWidth, ""))
+	line += secondaryStyle.Width(0).Bold(true).Render(strings.Repeat(" ", max(0, width-ansi.StringWidth(line)-suffixWidth)) + ansi.Truncate(suffix, suffixWidth, ""))
 
 	if d.descriptions {
 		description := command.Description
@@ -155,7 +152,21 @@ func (m *CommandPalette) View() string {
 	}
 
 	execute := m.Keys.Execute.Help().Desc
-	footer := text.KeyHint(m.Theme.Glyph(theme.GlyphUp)+m.Theme.Glyph(theme.GlyphDown), "select", m.Theme) + " · " + text.KeyHint(m.Keys.Execute.Help().Key, execute, m.Theme) + " · " + text.KeyHint(m.Keys.Close.Help().Key, "cancel", m.Theme)
+	movement := m.Results.KeyMap.CursorUp.Help().Key + "/" + m.Results.KeyMap.CursorDown.Help().Key
+
+	footer := text.KeyHint(movement, "select", m.Theme) + " · " + text.KeyHint(m.Keys.Execute.Help().Key, execute, m.Theme) + " · " + text.KeyHint(m.Keys.Close.Help().Key, "cancel", m.Theme)
+	if m.keyLayout == interaction.VimKeys {
+		switch m.mode {
+		case PaletteSearch:
+			status = "SEARCH · " + status
+			footer = text.KeyHint("↑↓", "select", m.Theme) + " · " + text.KeyHint(m.Keys.Navigate.Help().Key, "normal", m.Theme) + " · " + text.KeyHint(m.Keys.Execute.Help().Key, "run", m.Theme)
+		case PaletteNavigate:
+			status = "NORMAL · " + status
+			footer = text.KeyHint(movement, "move", m.Theme) + " · " + text.KeyHint(m.Keys.Search.Help().Key, "search", m.Theme) + " · " + text.KeyHint(m.Keys.Close.Help().Key, "close", m.Theme)
+		default:
+		}
+	}
+
 	content := m.Search.View() + "\n\n" + results + "\n" + m.Theme.Subtle().Render(ansi.Truncate(text.Inline(status), width, "…")) + "\n" + footer
 	height := min(m.size.Height, m.Results.Height()+paletteChromeHeight+2)
 	panel := layout.Panel("Commands", content, layout.Size{Width: m.size.Width, Height: height}, m.Theme, true)

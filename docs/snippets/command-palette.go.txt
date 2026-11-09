@@ -5,10 +5,13 @@ palette, err := collection.NewCommandPalette([]collection.Command{
 if err != nil {
     return err
 }
+_, err = palette.SetKeyLayout(interaction.VimKeys)
+if err != nil { return err }
+palette.SetBackdropMode(layout.BackdropDim)
 palette.SetMatchHighlighting(true) // Optional; fuzzy search works without emphasis.
 // In Update, open on your binding and route input while the palette is open.
 cmd := palette.Open()
 // Forward CommandSelectedMsg.ID to application-owned actions.
 palette.Resize(layout.Size{Width: width, Height: height})
-view := layout.CenterOverlay(background, palette.View(),
-    layout.Size{Width: width, Height: height}, theme, palette.DimBackdrop)
+view := layout.CenterOverlayWithBackdrop(background, palette.View(),
+    layout.Size{Width: width, Height: height}, theme, palette.BackdropMode())

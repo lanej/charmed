@@ -5,9 +5,32 @@ import (
 	"testing"
 
 	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/interaction"
+	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/story"
 	"github.com/lanej/charmed/theme"
 )
+
+func TestCommandConfigurationRejectsUnknownPresetsAndBackdrops(t *testing.T) {
+	config := story.DefaultConfig()
+
+	config.KeyLayout = "unknown"
+	if config.Validate() == nil {
+		t.Fatal("unknown key layout accepted")
+	}
+
+	config.KeyLayout = interaction.VimKeys
+
+	config.PaletteBackdrop = "unknown"
+	if config.Validate() == nil {
+		t.Fatal("unknown backdrop accepted")
+	}
+
+	config.PaletteBackdrop = layout.BackdropMonochrome
+	if err := config.Validate(); err != nil {
+		t.Fatal(err)
+	}
+}
 
 func TestCommandPaletteFixtureInitialFocusAndDeterministicStates(t *testing.T) {
 	definition, err := story.Find("collection/command-palette")

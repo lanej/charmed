@@ -190,5 +190,5 @@ func (m *LogInspector) View() string {
 		return base
 	}
 
-	return layout.CenterOverlay(base, m.Palette.View(), m.size, m.palette, m.Palette.DimBackdrop)
+	return layout.CenterOverlayWithBackdrop(base, m.Palette.View(), m.size, m.palette, m.Palette.BackdropMode())
 }

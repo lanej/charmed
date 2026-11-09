@@ -33,6 +33,8 @@ const (
 
 type LogInspectorOptions struct {
 	Layout                       InspectorLayout
+	KeyLayout                    interaction.KeyLayout
+	BackdropMode                 layout.BackdropMode
 	TimelineGroups               []collection.HTTPGroup
 	TimelineNow                  time.Time
 	Symbols                      text.Presentation
@@ -103,13 +105,23 @@ func NewLogInspector(o LogInspectorOptions) (*LogInspector, error) {
 	}
 
 	m.Palette = palette
+	if !m.Palette.SetBackdropMode(o.BackdropMode) {
+		return nil, fmt.Errorf("unknown backdrop mode %q", o.BackdropMode)
+	}
+
+	if o.KeyLayout != interaction.DefaultKeys {
+		if _, err := m.SetKeyLayout(o.KeyLayout); err != nil {
+			return nil, err
+		}
+	}
+
 	m.Resize(layout.Size{Width: 120, Height: 36})
 
 	return m, nil
 }
 
 func (m *LogInspector) Init() tea.Cmd {
-	if m.Palette != nil && m.Palette.IsOpen() {
+	if m.Palette != nil && m.Palette.IsOpen() && m.Palette.Mode() == collection.PaletteSearch {
 		return m.Palette.Search.Focus()
 	}
 
@@ -383,9 +395,9 @@ func (m *LogInspector) contentView() string {
 
 	switch focused {
 	case requestPane:
-		help += text.KeyHint(m.palette.Glyph(theme.GlyphUp)+"/"+m.palette.Glyph(theme.GlyphDown), "select", m.palette) + " · " + text.KeyHint("F", "follow", m.palette)
+		help += text.KeyHint(m.HTTP.Table.KeyMap.LineUp.Help().Key+"/"+m.HTTP.Table.KeyMap.LineDown.Help().Key, "select", m.palette) + " · " + text.KeyHint("F", "follow", m.palette)
 	case httpPane:
-		help += text.KeyHint(m.palette.Glyph(theme.GlyphUp)+"/"+m.palette.Glyph(theme.GlyphDown), "scroll", m.palette)
+		help += text.KeyHint(m.HTTP.Details.KeyMap.Up.Help().Key+"/"+m.HTTP.Details.KeyMap.Down.Help().Key, "scroll", m.palette)
 		if m.HTTP.Folding {
 			help += " · " + text.KeyHint("1/2/3", "sections", m.palette)
 		}

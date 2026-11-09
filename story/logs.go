@@ -239,7 +239,7 @@ func logInspectorStory(e Environment) (runtime.Scene, error) {
 		logs = nil
 	}
 
-	m, err := pattern.NewLogInspector(pattern.LogInspectorOptions{Theme: e.Config.Palette(), Requests: requests, Logs: logs, Symbols: text.Presentation(e.Config.SymbolStyle), URLFormat: text.URLFormat(e.Config.URLStyle), VerboseDetails: e.Config.VerboseDetails, ColumnLabels: e.Config.ColumnLabels, DetachedLogDetails: e.Config.DetachedLogDetails, Layout: pattern.InspectorLayout(e.Config.InspectorLayout), TimelineGroups: timelineGroups(e.Config.TimelineGroups), TimelineNow: time.Date(2026, 11, 8, 12, 4, 4, 0, time.UTC)})
+	m, err := pattern.NewLogInspector(pattern.LogInspectorOptions{Theme: e.Config.Palette(), Requests: requests, Logs: logs, Symbols: text.Presentation(e.Config.SymbolStyle), URLFormat: text.URLFormat(e.Config.URLStyle), VerboseDetails: e.Config.VerboseDetails, ColumnLabels: e.Config.ColumnLabels, DetachedLogDetails: e.Config.DetachedLogDetails, Layout: pattern.InspectorLayout(e.Config.InspectorLayout), KeyLayout: e.Config.KeyLayout, BackdropMode: e.Config.PaletteBackdrop, TimelineGroups: timelineGroups(e.Config.TimelineGroups), TimelineNow: time.Date(2026, 11, 8, 12, 4, 4, 0, time.UTC)})
 	if err != nil {
 		return nil, err
 	}
@@ -274,6 +274,10 @@ func logInspectorStory(e Environment) (runtime.Scene, error) {
 		m.Palette.SetMatchHighlighting(e.Config.HighlightMatches)
 		m.OpenCommands()
 		m.Palette.SetQuery(e.Config.CommandQuery)
+
+		if e.Config.CommandNormal {
+			m.Palette.Update(tea.KeyPressMsg{Code: tea.KeyEscape})
+		}
 	}
 
 	m.HTTP.ResizeDetails(70, 18)

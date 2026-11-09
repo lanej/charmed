@@ -10,6 +10,8 @@ import (
 	"slices"
 	"strings"
 
+	"github.com/lanej/charmed/interaction"
+	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/story"
 	"github.com/lanej/charmed/theme"
 )
@@ -80,7 +82,55 @@ func Generate(out string) error {
 				})
 			}
 		}
+
 		if d.ID == "collection/command-palette" || d.ID == "pattern/log-inspector" {
+			for _, mode := range []layout.BackdropMode{layout.BackdropDim, layout.BackdropMonochrome, layout.BackdropNone} {
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: "Backdrop " + string(mode), change: func(c *story.Config) {
+					c.CommandPalette = true
+					c.Value = "laytm"
+					c.CommandQuery = "laytm"
+					c.PaletteBackdrop = mode
+					c.DetachedLogDetails = true
+					c.InspectorLayout = "timeline"
+					c.TimelineGroups = []string{"service", "endpoint"}
+				}})
+			}
+
+			for _, normal := range []bool{false, true} {
+				name := "Vim search"
+				if normal {
+					name = "Vim normal"
+				}
+
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: name, change: func(c *story.Config) {
+					c.CommandPalette = true
+					c.CommandQuery = "laytm"
+					c.Value = "laytm"
+					c.KeyLayout = interaction.VimKeys
+					c.CommandNormal = normal
+					c.DetachedLogDetails = true
+				}})
+			}
+
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Vim narrow", change: func(c *story.Config) {
+				c.CommandPalette = true
+				c.CommandQuery = ""
+				c.Value = ""
+				c.KeyLayout = interaction.VimKeys
+				c.CommandNormal = true
+				c.Columns = 40
+				c.Rows = 20
+			}})
+
 			for _, sample := range []struct{ name, query string }{{"Commands", ""}, {"Commands filtered", "laytm"}, {"Commands highlighted", "laytm"}, {"Commands unavailable", "Scope: trace"}, {"Commands empty", "zzzzzz"}} {
 				variants = append(variants, struct {
 					name   string

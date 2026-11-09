@@ -33,6 +33,10 @@ func TestPaletteMatchEmphasisIsOptionalAndActionRemainsDistinct(t *testing.T) {
 
 			for _, line := range uv.NewStyledString(m.Results.View()).Lines(ansi.GraphemeWidth) {
 				for _, cell := range line {
+					if cell.Style.Bg != nil || cell.Style.Attrs&uv.AttrReverse != 0 {
+						t.Fatal("palette row acquired a background fill")
+					}
+
 					underlined = underlined || cell.Style.Underline != uv.UnderlineNone
 					switch cell.Content {
 					case "L":
@@ -40,7 +44,7 @@ func TestPaletteMatchEmphasisIsOptionalAndActionRemainsDistinct(t *testing.T) {
 					case "A":
 						description = cell.Style.Attrs&uv.AttrBold == 0
 					case "F":
-						shortcut = cell.Style.Attrs&uv.AttrBold == 0
+						shortcut = cell.Style.Attrs&uv.AttrBold != 0
 					}
 				}
 			}

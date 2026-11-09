@@ -11,48 +11,52 @@ import (
 	"github.com/charmbracelet/colorprofile"
 
 	"github.com/lanej/charmed/examples/deployment/fixture"
+	"github.com/lanej/charmed/interaction"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/runtime"
 	"github.com/lanej/charmed/theme"
 )
 
 type Config struct {
-	Columns            int        `json:"columns"`
-	Rows               int        `json:"rows"`
-	Theme              theme.Mode `json:"theme"`
-	Profile            string     `json:"profile"`
-	ASCII              bool       `json:"ascii"`
-	ReducedMotion      bool       `json:"reducedMotion"`
-	Live               bool       `json:"live"`
-	State              string     `json:"state"`
-	TraceWindow        string     `json:"traceWindow"`
-	Value              string     `json:"value"`
-	Series             int        `json:"series"`
-	Amount             float64    `json:"amount"`
-	Legend             bool       `json:"legend"`
-	Horizontal         bool       `json:"horizontal"`
-	Sigma              int        `json:"sigma"`
-	Scenario           string     `json:"scenario"`
-	ReferenceID        string     `json:"referenceID"`
-	CandidateID        string     `json:"candidateID"`
-	Boundaries         bool       `json:"boundaries"`
-	ComparisonVariant  string     `json:"comparisonVariant"`
-	Emphasis           string     `json:"emphasis"`
-	SymbolStyle        string     `json:"symbolStyle"`
-	URLStyle           string     `json:"urlStyle"`
-	VerboseDetails     bool       `json:"verboseDetails"`
-	ColumnLabels       bool       `json:"columnLabels"`
-	NoFolds            bool       `json:"noFolds"`
-	LogPane            string     `json:"logPane"`
-	TraceLogs          bool       `json:"traceLogs"`
-	DetachedLogDetails bool       `json:"detachedLogDetails"`
-	InspectorLayout    string     `json:"inspectorLayout"`
-	TimelineGroups     []string   `json:"timelineGroups"`
-	Timeline           bool       `json:"timeline"`
-	HighlightMatches   bool       `json:"highlightMatches"`
-	CommandQuery       string     `json:"commandQuery"`
-	CommandPalette     bool       `json:"commandPalette"`
-	RawBody            bool       `json:"rawBody"`
+	Columns            int                   `json:"columns"`
+	Rows               int                   `json:"rows"`
+	Theme              theme.Mode            `json:"theme"`
+	Profile            string                `json:"profile"`
+	ASCII              bool                  `json:"ascii"`
+	ReducedMotion      bool                  `json:"reducedMotion"`
+	Live               bool                  `json:"live"`
+	State              string                `json:"state"`
+	Value              string                `json:"value"`
+	Series             int                   `json:"series"`
+	Amount             float64               `json:"amount"`
+	Legend             bool                  `json:"legend"`
+	Horizontal         bool                  `json:"horizontal"`
+	Sigma              int                   `json:"sigma"`
+	Scenario           string                `json:"scenario"`
+	ReferenceID        string                `json:"referenceID"`
+	CandidateID        string                `json:"candidateID"`
+	Boundaries         bool                  `json:"boundaries"`
+	ComparisonVariant  string                `json:"comparisonVariant"`
+	Emphasis           string                `json:"emphasis"`
+	SymbolStyle        string                `json:"symbolStyle"`
+	URLStyle           string                `json:"urlStyle"`
+	VerboseDetails     bool                  `json:"verboseDetails"`
+	ColumnLabels       bool                  `json:"columnLabels"`
+	NoFolds            bool                  `json:"noFolds"`
+	LogPane            string                `json:"logPane"`
+	TraceLogs          bool                  `json:"traceLogs"`
+	DetachedLogDetails bool                  `json:"detachedLogDetails"`
+	InspectorLayout    string                `json:"inspectorLayout"`
+	TimelineGroups     []string              `json:"timelineGroups"`
+	Timeline           bool                  `json:"timeline"`
+	KeyLayout          interaction.KeyLayout `json:"keyLayout"`
+	PaletteBackdrop    layout.BackdropMode   `json:"paletteBackdrop"`
+	CommandNormal      bool                  `json:"commandNormal"`
+	HighlightMatches   bool                  `json:"highlightMatches"`
+	CommandQuery       string                `json:"commandQuery"`
+	CommandPalette     bool                  `json:"commandPalette"`
+	RawBody            bool                  `json:"rawBody"`
+	TraceWindow        string                `json:"traceWindow"`
 }
 
 func DefaultConfig() Config {
@@ -62,6 +66,14 @@ func DefaultConfig() Config {
 func (c Config) Validate() error {
 	if !slices.Contains([]string{"", "last", "last-3", "all"}, c.TraceWindow) {
 		return errors.New("trace window must be last, last-3 or all")
+	}
+	if _, ok := interaction.Navigation(c.KeyLayout); !ok {
+		return errors.New("key layout must be standard or vim")
+	}
+
+	if !c.PaletteBackdrop.Valid() {
+		return errors.New("palette backdrop must be dim, monochrome or none")
+
 	}
 
 	if !slices.Contains([]string{"", "sidebar", "timeline", "columns", "focused"}, c.InspectorLayout) {

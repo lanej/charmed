@@ -9,6 +9,7 @@ import (
 	"charm.land/bubbles/v2/list"
 	tea "charm.land/bubbletea/v2"
 	"github.com/lanej/charmed/input"
+	"github.com/lanej/charmed/interaction"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
@@ -29,7 +30,7 @@ type Command struct {
 
 type CommandSelectedMsg struct{ ID string }
 
-type PaletteKeyMap struct{ Open, Close, Execute key.Binding }
+type PaletteKeyMap struct{ Open, Close, Execute, Navigate, Search key.Binding }
 
 // CommandPalette retains native search and list customization on resize and
 // command updates. Results/items and their geometry are owned by the wrapper.
@@ -38,20 +39,23 @@ type CommandPalette struct {
 	Results     list.Model
 	Keys        PaletteKeyMap
 	Theme       theme.Theme
-	DimBackdrop bool
+	DimBackdrop bool // Deprecated: use SetBackdropMode for explicit backdrop presentation.
 	commands    []Command
 	size        layout.Size
 	opened      bool
 	delegate    *commandDelegate
+	keyLayout   interaction.KeyLayout
+	mode        PaletteMode
+	backdrop    layout.BackdropMode
 }
 
 func NewCommandPalette(commands []Command, width, height int, t theme.Theme) (*CommandPalette, error) {
 	d := &commandDelegate{theme: t}
 	m := &CommandPalette{
-		Theme: t, DimBackdrop: true, delegate: d,
+		Theme: t, DimBackdrop: true, delegate: d, mode: PaletteSearch,
 		Search:  input.NewText(input.TextOptions{Placeholder: "Search commands…", Width: width, Theme: t}),
 		Results: list.New(nil, d, width, height),
-		Keys:    PaletteKeyMap{Open: key.NewBinding(key.WithKeys("ctrl+k"), key.WithHelp("Ctrl+K", "commands")), Close: key.NewBinding(key.WithKeys("esc"), key.WithHelp("Esc", "close")), Execute: key.NewBinding(key.WithKeys("enter"), key.WithHelp("Enter", "run"))},
+		Keys:    PaletteKeyMap{Open: key.NewBinding(key.WithKeys("ctrl+k"), key.WithHelp("Ctrl+K", "commands")), Close: key.NewBinding(key.WithKeys("esc"), key.WithHelp("Esc", "close")), Execute: key.NewBinding(key.WithKeys("enter"), key.WithHelp("Enter", "run")), Navigate: key.NewBinding(key.WithKeys("esc"), key.WithHelp("Esc", "normal")), Search: key.NewBinding(key.WithKeys("i", "/"), key.WithHelp("i", "search"))},
 	}
 	m.Results.SetShowTitle(false)
 	m.Results.SetShowFilter(false)
@@ -60,12 +64,10 @@ func NewCommandPalette(commands []Command, width, height int, t theme.Theme) (*C
 	m.Results.SetShowHelp(false)
 	m.Results.SetShowPagination(false)
 	m.Results.DisableQuitKeybindings()
-	m.Results.KeyMap.CursorUp.SetKeys("up")
-	m.Results.KeyMap.CursorDown.SetKeys("down")
-	m.Results.KeyMap.PrevPage.SetKeys("pgup")
-	m.Results.KeyMap.NextPage.SetKeys("pgdown")
-	m.Results.KeyMap.GoToStart.SetKeys("home")
-	m.Results.KeyMap.GoToEnd.SetKeys("end")
+
+	if _, err := m.SetKeyLayout(interaction.DefaultKeys); err != nil {
+		return nil, err
+	}
 
 	if err := m.SetCommands(commands); err != nil {
 		return nil, err
@@ -113,6 +115,7 @@ func (m *CommandPalette) SetCommands(commands []Command) error {
 
 func (m *CommandPalette) Open() tea.Cmd {
 	m.opened = true
+	m.mode = PaletteSearch
 	m.Search.SetValue("")
 	m.filter(false)
 
@@ -188,6 +191,10 @@ func (m *CommandPalette) Update(msg tea.Msg) tea.Cmd {
 			return nil
 		}
 
+		if cmd, handled := m.modalKey(pressed); handled {
+			return cmd
+		}
+
 		if key.Matches(pressed, m.Keys.Close) {
 			m.Close()
 			return nil
@@ -206,7 +213,9 @@ func (m *CommandPalette) Update(msg tea.Msg) tea.Cmd {
 		}
 
 		keys := m.Results.KeyMap
-		if key.Matches(pressed, keys.CursorUp, keys.CursorDown, keys.NextPage, keys.PrevPage, keys.GoToStart, keys.GoToEnd) {
+
+		printableSearch := m.keyLayout == interaction.VimKeys && m.mode == PaletteSearch && (pressed.Text != "" || len([]rune(pressed.String())) == 1)
+		if !printableSearch && key.Matches(pressed, keys.CursorUp, keys.CursorDown, keys.NextPage, keys.PrevPage, keys.GoToStart, keys.GoToEnd) {
 			var cmd tea.Cmd
 
 			m.Results, cmd = m.Results.Update(msg)
@@ -219,6 +228,20 @@ func (m *CommandPalette) Update(msg tea.Msg) tea.Cmd {
 		return nil
 	}
 
+	if m.mode == PaletteNavigate {
+		if _, pasted := msg.(tea.PasteMsg); !pasted {
+			return nil
+		}
+
+		m.mode = PaletteSearch
+
+		return tea.Batch(m.Search.Focus(), m.updateSearch(msg))
+	}
+
+	return m.updateSearch(msg)
+}
+
+func (m *CommandPalette) updateSearch(msg tea.Msg) tea.Cmd {
 	before := m.Search.Value()
 
 	var cmd tea.Cmd
