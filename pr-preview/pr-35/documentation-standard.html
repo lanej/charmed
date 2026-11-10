@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Documentation standard · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Documentation standard</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="documentation-standard.html" aria-current="page">Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="documentation-standard.html" aria-current="page">Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+</aside>
+<main id="main">
+
+
+
+<h1 id="documentation-as-a-designed-interface">Documentation as a designed interface</h1>
+<p>Every page should help someone decide what to use and produce a useful result. The versioned <a href="https://github.com/lanej/charmed/blob/49a30550ad5b0541379e2f32ef8c1f564e307225/docs/standards.json">standard configuration</a> defines bounded variation for each page type; the shared component template supplies a consistent reading order.</p>
+<h2 id="content-rhythm"><a class="heading-permalink" href="#content-rhythm"><span>Content rhythm</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Let W be the visible words in a text run and P its prose blocks. A run crosses headings and blank lines until a meaningful artifact. Both W and P have bounds; W/P has a minimum when P exceeds one, discouraging piles of small paragraphs.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Profile</th>
+<th>Words per paragraph</th>
+<th>Words between artifacts</th>
+<th>Maximum prose blocks</th>
+<th>Minimum W/P</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overview</td>
+<td>12–90</td>
+<td>12–240</td>
+<td>4</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Tutorial</td>
+<td>18–90</td>
+<td>18–240</td>
+<td>4</td>
+<td>24</td>
+</tr>
+<tr>
+<td>Recipe</td>
+<td>14–100</td>
+<td>14–300</td>
+<td>4</td>
+<td>24</td>
+</tr>
+<tr>
+<td>Reference</td>
+<td>14–100</td>
+<td>14–360</td>
+<td>5</td>
+<td>24</td>
+</tr>
+<tr>
+<td>Contributor</td>
+<td>14–100</td>
+<td>14–300</td>
+<td>4</td>
+<td>24</td>
+</tr>
+</tbody>
+</table>
+<p>Words include inline code and link labels, excluding destinations and formatting. List content contributes to the same run budget. Headings never reset it. Adjacent artifacts may need no intervening prose: a native preview followed by its usage code is an intentional pair.</p>
+<p>A code block must contain useful code, an image needs at least six descriptive alternative-text words, and a comparison table needs two data rows and two columns. Captions, decorative images and empty blocks cannot reset the budget. Combine related explanation before adding another section or artifact.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Component contract</th>
+<th>Accepted range or requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>When to use it</td>
+<td>One paragraph of 6–65 words</td>
+</tr>
+<tr>
+<td>Minimal consumer example</td>
+<td>1–48 displayed lines, with explicit data and no fixture dependencies</td>
+</tr>
+<tr>
+<td>Updates, focus and sizing</td>
+<td>One paragraph of 28–100 words</td>
+</tr>
+<tr>
+<td>Example output</td>
+<td>1–36 native rows, with meaningful initialized content</td>
+</tr>
+<tr>
+<td>Runnable source</td>
+<td>A linked Go file plus the exact catalog-render command</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rendered-layout"><a class="heading-permalink" href="#rendered-layout"><span>Rendered layout</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Templates place the purpose, native example, usage code, lifecycle guidance and run command in that order. Prose stays within a readable column; wide native output retains terminal geometry. Code remains fully visible vertically, with horizontal scrolling confined to its block when necessary.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Rendered measurement</th>
+<th>Accepted range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prose measure on a wide allocation</td>
+<td>28–72 character widths</td>
+</tr>
+<tr>
+<td>Component heading to first useful preview</td>
+<td>0–540 pixels</td>
+</tr>
+<tr>
+<td>Default example height</td>
+<td>20–600 pixels</td>
+</tr>
+<tr>
+<td>Gap between preview and usage</td>
+<td>0–180 pixels</td>
+</tr>
+<tr>
+<td>Section spacing</td>
+<td>20–64 pixels</td>
+</tr>
+</tbody>
+</table>
+<p>Chromium measures these bounds at mobile and desktop widths, alongside overflow, selected examples and navigation. Source compilation cannot establish visual usefulness: reviewers must inspect whether the chosen data and framing demonstrate the component. The file picker must show loaded files, and chart axes must make the plotted observations understandable.</p>
+<h2 id="review-and-exceptions"><a class="heading-permalink" href="#review-and-exceptions"><span>Review and exceptions</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Run the fast source gate while editing and install the staged-tree commit hook once per checkout. CI runs the same source gate, validates generated local links and component structure, then measures the browser layout. Skipping a local hook does not bypass those checks.</p>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">just</span> docs-check
+<span class="syn-command">just</span> hooks
+<span class="syn-command">just</span> docs
+</code></pre>
+<p>Failures report a file, line, rule, observed value, accepted range and suggested correction. Bounds live in one configuration. A reviewed exception must identify an exact finding, reason, owner and future review date; stale, ambiguous or expired exceptions fail. There are no initial exceptions or blanket suppressions.</p>
+<p>Review the <a href="atoms-chart.html#chart/timeseries">chart</a>, <a href="atoms-input.html#input/text">input</a> and <a href="organisms-logs.html#pattern/log-inspector">inspector</a> together when changing the template. They cover static data, editable state and a coordinated composition. Retain representative mobile and desktop screenshots in the PR, then review the published preview before merging.</p>
+
+
+
+
+
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
