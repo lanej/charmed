@@ -52,6 +52,11 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 
 	pages := []guidePage{
 		{File: "index.html", Title: "Charmed", Source: "index.md"},
+		{File: "getting-started.html", Title: "Getting started", Source: "getting-started.md"},
+		{File: "recipes.html", Title: "Recipes", Source: "recipes.md"},
+		{File: "documentation-standard.html", Title: "Documentation standard", Source: "documentation-standard.md", Resource: true},
+		{File: "log-inspector.html", Title: "Log inspector", Source: "log-inspector.md", Resource: true},
+		{File: "command-palette.html", Title: "Command palette", Source: "command-palette.md", Resource: true},
 		{File: "components.html", Title: "Component reference", Source: "components.md", Resource: true},
 		{File: "examples.html", Title: "Composition guide", Source: "examples.md", Resource: true},
 		{File: "deployment.html", Title: "Compare a deployment", Source: "deployment.md", Resource: true},
@@ -200,7 +205,12 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 			return err
 		}
 
-		if writeErr := writeGuideFile(directory, page.File, output.Bytes()); writeErr != nil {
+		rendered, sourceErr := documentationSource(output.String(), os.Getenv("GITHUB_SHA"))
+		if sourceErr != nil {
+			return sourceErr
+		}
+
+		if writeErr := writeGuideFile(directory, page.File, []byte(rendered)); writeErr != nil {
 			return writeErr
 		}
 	}

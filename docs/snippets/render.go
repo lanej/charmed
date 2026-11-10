@@ -115,7 +115,7 @@ func Render(id string) (string, error) {
 	case "collection/tree":
 		return ExampleCollectionTree(), nil
 	case "collection/files":
-		return ExampleCollectionFiles(), nil
+		return ExampleCollectionFiles()
 	case "text/markdown":
 		return ExampleTextMarkdown()
 	case "form/settings":

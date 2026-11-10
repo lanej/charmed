@@ -1,21 +1,68 @@
 # Command palette
 
-`collection.CommandPalette` is a reusable molecule for fuzzy-searchable application commands. Supply stable IDs, labels, descriptions, keywords, shortcut hints, current-state text and optional disabled reasons. `CommandSelectedMsg` carries the selected ID; the application executes the action. Commands with disabled reasons remain searchable but cannot activate. Invalid IDs, empty labels and duplicate IDs reject command replacement atomically. Caller-owned command data is copied.
+Use `collection.CommandPalette` to search application commands without moving execution policy into a widget. Commands carry stable IDs, labels, descriptions, keywords, shortcut hints and optional disabled reasons. Disabled commands remain searchable but cannot execute; invalid replacement data leaves existing commands intact.
 
-`Open()` resets search and focuses the input; forward its returned Bubble Tea command. `Update()` handles the configurable `Keys.Open`, `Keys.Close` and `Keys.Execute` bindings, defaulting to Ctrl+K, Esc and Enter. Activation closes and blurs the palette before returning its message; cancellation emits no action. With the Vim preset, Esc first leaves search for navigation, then closes from navigation. Route keyboard and paste messages exclusively to an open palette. Keep processing application observations and command messages normally. The palette does not own application focus; retain the previous pane until an action explicitly changes it.
+```sh
+go run ./examples/catalog collection/command-palette
+go run ./cmd/workbench run pattern/log-inspector --command-palette
+```
 
-`Search` and `Results` expose native text-input and list capabilities. Resize preserves their styles, key maps and custom input prompt. The wrapper owns list items, filtering, selection reconciliation and geometry; `SetCommands` preserves the selected command ID if it still matches, otherwise selects the first result. Search changes select the best fuzzy match. Match highlighting is off by default; call `SetMatchHighlighting(true)` to underline matching label characters without changing results or selection. `MatchHighlighting()` reports the setting; keyword-only matches need not underline the label. Navigation defaults to arrows, Page Up/Down and Home/End, leaving printable letters available for typing. No command execution occurs during rendering or search.
+## Ownership and lifecycle
 
-Selection uses a directional marker without a row background. Action labels remain distinct from descriptions, and the current-state/shortcut column is bold. Disabled actions remain muted. The panel is capped at 72 columns and eight visible results. Descriptions disappear in narrow or short allocations; the selected disabled reason remains in the status line. Very small allocations clip gracefully, preserving the search line before lower content. `layout.CenterOverlayWithBackdrop` composes the opaque foreground at the center of the actual terminal-cell allocation. `SetBackdropMode` accepts `layout.BackdropDim` (default), `BackdropMonochrome`, or `BackdropNone`, and rejects unknown values without mutation. Dim blends existing foreground, background and underline colors halfway toward the theme background while preserving text, attributes and links. Monochrome removes categorical styling and uses one semantic foreground; none retains the original presentation. A theme without a known background keeps original colors when dimming. `BackdropMode()` returns the effective mode. The legacy `DimBackdrop` boolean remains an opt-out only when no explicit mode has been set; an explicit mode takes precedence. `CenterOverlay` retains its boolean convenience entrypoint. Monochrome terminals keep the focused boundary and selection marker.
+The palette emits a selected command ID; the application performs the action. While the palette is open, route keyboard and paste input exclusively to it. Continue processing observations normally, and retain the previously focused pane until an accepted action explicitly changes it.
 
-Keyboard presets are shared through `interaction.KeyLayout`. `SetKeyLayout(interaction.StandardKeys)` uses arrows, Page Up/Down and Home/End. `SetKeyLayout(interaction.VimKeys)` adds j/k, Ctrl+B/F paging and G for the last result, with Home retained for the first result. Palettes open in SEARCH mode so every printable character, including j/k, stays available to fuzzy search. Esc enters NORMAL mode, blurs the search cursor and enables letter movement. In NORMAL mode i or / resumes search without inserting a character; Esc closes, and Enter executes. Pasting in NORMAL mode resumes search. Mode is visible in the status line; resizing and command replacement preserve it. Reopening starts a fresh search.
+| Operation | Application contract |
+| --- | --- |
+| Open | Call Open and return its focus command; query resets and the search input focuses |
+| Update | Process configurable open, close and execute keys; activation closes and blurs before emitting CommandSelectedMsg |
+| Cancel | Dismiss without an action and restore the prior focus region |
+| Replace | Supply unique nonempty IDs and labels; caller-owned data is copied atomically |
+| Resize | Retain native Search and Results customization, including prompts, styles and key maps |
+| Selection | Retain a still-matching ID on command replacement; a changed query selects the best fuzzy match |
 
-Apply presets before native key-map overrides. `SetKeyLayout` returns `(tea.Cmd, error)`; invalid presets are atomic, and an open palette returns to SEARCH without changing its query or selection. Forward the returned command to initialize focus. Fine-grained movement bindings remain on `Results.KeyMap`; use `key.WithHelp` when overriding bindings so the footer reflects them. `Keys.Navigate` and `Keys.Search` configure modal transitions independently of `Keys.Close`. Resize, reopening and filtering do not reapply presets over custom bindings.
+## Search and presentation
 
-`pattern.LogInspector.Palette` exposes the same molecule. `OpenCommands()` loads current inspector commands and returns its focus command. The inspector routes keyboard and paste input to the open palette, retains pane focus on dismissal, and keeps ingestion and correlation active. Availability is refreshed when correlated observations change and before accepting a command. Commands use current state rather than trusting an earlier enabled result. Inspector commands cover layouts, focus, follow/pause, request/trace scope, raw/pretty body display, URL formatting and HTTP section folds. URL format commands replace a custom formatter deliberately. Global application exit bindings can still take precedence over the palette.
+Match highlighting is opt-in through SetMatchHighlighting. It underlines matching label characters without changing results or selection; keyword-only matches need not underline a label. Rendering and searching never execute application commands, regardless of whether a result is enabled.
 
-Run `go run ./cmd/workbench run pattern/log-inspector --command-palette` for the live example, or add `--command-query laytm` for a filtered palette. The catalog includes open, filtered, unavailable, no-match, narrow, light and monochrome specimens.
+| Presentation | Contract |
+| --- | --- |
+| Selection | Directional marker without a row background; action and description remain distinct |
+| Availability | Disabled actions are muted, with the selected reason retained in the status line |
+| Size | At most 72 columns and eight visible results; descriptions disappear before essential search content |
+| Backdrop | Dim by default; monochrome or unchanged backdrop can be selected explicitly |
+| Dim | Blend existing colors halfway toward a known background, retaining text, attributes and links |
+| Monochrome | Use one semantic foreground while retaining focus and selection markers |
+| Instructions | SetHelpVisible(false) reclaims the keyboard-hint row without removing counts or disabled reasons |
 
-Inspector configuration supplies `LogInspectorOptions.KeyLayout` and `BackdropMode`, or `SetKeyLayout` for an existing model. Explicit presets apply across the palette, request table, log tree, request and response viewports, and native log details; arrows remain available in Vim mode. Vim detail navigation adds h/j/k/l and Ctrl+U/D half-page scrolling. Log grouping retains g; Home selects the first tree item. An unspecified inspector preset preserves native component defaults. The workbench exposes `--key-layout standard|vim` and `--palette-backdrop dim|monochrome|none`, also represented by the JSON configuration fields `keyLayout` and `paletteBackdrop`.
+SetBackdropMode rejects unknown values without mutation. An explicit mode takes precedence over the legacy DimBackdrop opt-out; themes without a known background preserve existing colors when dimming. CenterOverlayWithBackdrop composes the opaque foreground within the parent's actual cell allocation.
 
-`SetHelpVisible(false)` removes the bottom keyboard-instruction row and reclaims its allocation; `HelpVisible()` reports that state. Search, selection, execution and cancellation bindings remain active, and status counts or disabled reasons remain visible. The correlated inspector synchronizes this setting with its own `NoHelp` / `SetHelpVisible` option.
+## Keyboard layouts
+
+Standard navigation uses arrows, paging and endpoint keys, leaving printable characters for search. The Vim preset adds a visible SEARCH/NORMAL mode distinction. Apply presets before native key-map overrides; later resize, filtering and reopening preserve those overrides.
+
+| Mode or key | Behavior |
+| --- | --- |
+| SEARCH | Printable characters, including j/k, edit the query |
+| Esc in SEARCH | Blur the cursor and enter NORMAL |
+| NORMAL | j/k navigate, Ctrl+B/F page, G selects the last result, Home the first |
+| i or / in NORMAL | Resume search without inserting the transition key |
+| Paste in NORMAL | Resume search and accept the paste |
+| Esc in NORMAL | Close the palette |
+| Enter | Execute an available result and close |
+
+SetKeyLayout returns a command and error. Invalid presets change nothing; changing an open palette's preset returns it to SEARCH while preserving query and selection. Forward that command. Fine-grained movement stays on Results.KeyMap; key.WithHelp keeps displayed hints aligned with custom bindings.
+
+## Inspector integration
+
+The inspector exposes the same molecule as Palette. OpenCommands refreshes current actions and returns its focus command. Availability is checked again before accepting a selection, so an action uses current observations and state rather than trusting an earlier enabled result.
+
+| Inspector control | Configuration |
+| --- | --- |
+| Layout, focus, follow and correlation | Commands are rebuilt from current inspector state |
+| Raw/pretty bodies and folds | Commands operate on the selected request and focused payload |
+| URL format | Choosing a built-in format deliberately replaces a custom formatter |
+| Keyboard preset | KeyLayout applies across palette, request table, log tree and payload viewports |
+| Backdrop | BackdropMode chooses dim, monochrome or unchanged presentation independently |
+| Instructions | Inspector NoHelp and SetHelpVisible synchronize the palette's keyboard-hint row |
+
+Use workbench flags `--key-layout standard|vim` and `--palette-backdrop dim|monochrome|none` to inspect those choices. Global application exit bindings may take precedence over the palette. The [inspector guide](log-inspector.html) covers ingestion, correlation and the lifetime of native child customization.

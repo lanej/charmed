@@ -1,61 +1,66 @@
 ## Use Charmed
 
-Charmed wraps native [Charm](https://charm.sh/) and ntcharts components with shared themes, terminal-cell sizing, and composition conventions. Application code owns its state and business decisions; widgets remain ordinary Go models.
+Start with [Getting started](getting-started.html) to install Charmed and run an editable field. This contributor guide covers adding capabilities, checking their documentation and publishing the verified site. The [documentation standard](documentation-standard.html) defines the content and rendered bounds used throughout the guide.
 
-Start with a component and pass the same theme to related elements:
-
-```go
-palette := theme.New(theme.Dark)
-field := input.NewText(input.TextOptions{
-    Placeholder: "Environment name",
-    Width:       40,
-    Theme:       palette,
-})
-cmd := field.Focus()
-```
-
-Explore the [input components](atoms-input.html#input/text), [charts](atoms-chart.html#chart/sparkline), and [complete screens](screens-pattern.html#screen/services). The catalog shows the visual first, then a focused usage snippet. Full fixture implementations are linked separately.
-
-## Inspect a native fixture
-
-The documentation snapshots are deterministic captures of real Go components, not browser recreations. Use the terminal runner when you need to inspect keyboard behavior, animation, focus, or resizing.
-
-```sh
-go run ./cmd/workbench list
-go run ./cmd/workbench run screen/services
-```
-
-Run from the repository root with **Go 1.26.10+**. Use Ctrl+C to exit. You can pass fixture-specific options such as `--theme light`, `--legend`, or `--columns 40`; see the [component registry](https://github.com/lanej/charmed/blob/main/story/catalog.go) for available fixtures.
+| Work | Entry point |
+| --- | --- |
+| Use a public component | [Component catalog](atoms.html) and its consumer example |
+| Coordinate a complete screen | [Recipes](recipes.html) and the composition guide |
+| Change library behavior | Native Go packages, registry stories and retained-behavior tests |
+| Change the guide | Markdown, consumer examples and the shared site template |
 
 ## Add a component
 
-Organize Go packages by capability rather than atomic level. Use atoms, molecules, and organisms to describe **composition depth in the catalog**, not to create extra package layers.
+Organize Go packages by capability. Atomic categories describe composition depth rather than package layers. Implement a wrapper where useful defaults, semantics or reusable composition justify one, then document the native API and any lifecycle operation that reapplies customization.
 
-1. Implement a wrapper only where it establishes useful defaults, semantics, or reusable composition.
-2. Register a deterministic story in the matching `story/` file. Set `Definition.Level` and `Definition.Family` to place it on a category and subgroup page. Set its actual building blocks in `Definition.Composes` so the catalog can link them.
-3. Add a consumer example in `docs/snippets/<story_id>.go` (replace `/` and `-` with `_`) and register its renderer in `docs/snippets/render.go`. Include sample data, construction and rendering using public APIs. These are ordinary Go functions, compiled and linted with the library. The generator displays the function body without package or outer-function scaffolding and renders that same function in the default **Example** tab. Keep fixture variants in the other tabs; implementation source is linked separately. Missing or empty examples fail the guide build.
+| Required piece | Purpose |
+| --- | --- |
+| Native implementation | Preserve deliberate upstream capabilities described in ARCHITECTURE.md |
+| Registry story | Set Level, Family and actual Composes dependencies; duplicate IDs, cycles and upward-level dependencies are rejected |
+| Consumer example | Add docs/snippets/story_id.go with explicit sample data, construction and rendering through public APIs |
+| Renderer registration | Add the example to docs/snippets/render.go; the displayed body produces the default Example frame |
+| Integration guidance | Document data updates, focus, sizing and customization in docs/component-guidance.json |
+| Page profile | Classify new Markdown in docs/standards.json and use the shared template |
 
-Keep services and decisions outside UI models. The registry rejects duplicate IDs, composition cycles, and references to higher atomic levels. See [DESIGN.md](https://github.com/lanej/charmed/blob/main/DESIGN.md) for the design constraints.
+Keep fixtures independent of production services and application decisions. Consumer examples are compiled and linted with the library. Missing examples fail generation, and the output must be visually useful after initialization. Fixture variants explore states beyond the minimal example; implementation source stays separately linked.
 
 ## Verify changes
 
+Install just and ShellCheck, then use the checked-in targets for local work. The fast source gate checks complete documentation sources without compiling Go; the optional staged-tree hook runs that same gate before a commit, and CI enforces it independently.
+
 ```sh
+just hooks
+just docs-check
+just lint
+just ratchet
 just check
 just docs
 ```
 
-Install [just](https://github.com/casey/just#installation) and [ShellCheck](https://github.com/koalaman/shellcheck#installing), then run `just` to list targets. The targets select the module's Go version unless explicitly overridden. `just check` runs ShellCheck and checks formatting, vet, module tidiness, strict Go lint, uncached race tests, and reachable vulnerabilities on Linux and macOS. CI pins ShellCheck to 0.11.0. For a quicker iteration, run `just lint`, which includes ShellCheck; use `just shellcheck`, `just test` or `just vuln` for individual gates and `just fmt path/to/file.go` or `just fix ./path/to/package` for scoped fixes. Existing Go lint debt is in a shrinking baseline: new findings must be fixed, and resolved findings removed with `just ratchet`. Never enlarge the baseline to accept new findings.
+| Gate | What it establishes |
+| --- | --- |
+| docs-check | Paragraph and run budgets, example length, required task sections and declared profiles |
+| lint | Formatting, vet, module tidiness, strict Go lint and ShellCheck |
+| ratchet | Remove resolved findings; never grow the existing baseline |
+| check | Full lint, uncached race tests and reachable-vulnerability checks |
+| docs | Source checks, native generation, component structure and local file/anchor validation |
+| Responsive CI | Browser overflow, content measure, artifact placement, visible examples, touch, keyboard and no-JavaScript navigation |
 
-The generator writes the static guide to `docs/dist/`, validates source and composition, and preserves terminal output colors. Each atomic level has a visual overview; its capability groups have separate pages generated from the registry. Overview cards link directly to those pages and show excerpts of saved native snapshots, selected in `workbench/specimen.go`. Counts, navigation and composition links update with the stories. Existing component, code and variant bookmarks redirect to their new group pages. The responsive browser check covers mobile and desktop layouts, navigation, and fragment links.
+The full Go quality gate runs on Linux and macOS. Bounds and diagnostics support review, rather than proving the example is understandable. Inspect the chart, input and inspector together at desktop and mobile sizes, then retain representative screenshots when changing the shared template.
 
 ## Publish documentation
 
-Edit `docs/*.md`, catalog stories in `story/`, and the shared site template/styles in `workbench/site/`. Generate locally before opening a pull request.
+Every same-repository documentation PR receives an isolated preview under lanej.io/charmed/pr-preview/pr-number. The publisher verifies the live revision before updating direct links in the PR description. Review those pages before merge; previews refresh on push and disappear after closure.
 
-Every same-repository documentation PR gets an isolated preview at `lanej.io/charmed/pr-preview/pr-<number>/`. The PR description is updated with **direct links to rendered pages** after the publisher verifies that the live revision matches the PR head. Previews refresh on push, are excluded from search indexing, and are removed when the PR closes. Forks receive CI checks but no privileged preview publication.
+| Publication boundary | Behavior |
+| --- | --- |
+| Pull request | Build, validate and measure the static guide; retain browser evidence |
+| Same-repository preview | Publish an isolated no-index snapshot and verify its revision |
+| Fork pull request | Run checks without privileged preview publication |
+| Main branch | Publish the tested bundle through GitHub Pages |
 
-Merging to `main` publishes the tested static bundle through GitHub Pages. No separate documentation server or JavaScript build tool is required; the small client script enhances variant tabs and mobile navigation, and forwards published bookmarks to their current pages.
+The small browser script enhances variant tabs, mobile navigation and legacy bookmarks. Ordinary document links and navigation remain usable without JavaScript. No separate documentation server or browser build tool is required to publish the generated guide.
 
 ## Coverage
 
-The inventory below is generated from the registry and distinguishes implemented components from optional integrations. The bundled JuliaMono font preserves braille and box-drawing glyph geometry; see its [license](assets/JuliaMono-LICENSE.txt).
+The inventory below distinguishes implemented native components from optional integrations. The bundled JuliaMono font preserves braille and box-drawing geometry; its [license](assets/JuliaMono-LICENSE.txt) travels with the generated assets and remains available from the published site.

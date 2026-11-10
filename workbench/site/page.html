@@ -100,7 +100,7 @@
 {{range .Entries}}
 {{$component := .}}
 <section class="component" id="{{.ID}}">
-<p class="eyebrow"><a href="{{.Level | lower}}.html">{{.Level}}</a> / {{familyName .Family}}</p><h2><a class="heading-permalink" href="#{{.ID}}" aria-label="Link to {{name .Title}} component"><span>{{name .Title}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p>{{.Description}}</p>
+<p class="eyebrow"><a href="{{.Level | lower}}.html">{{.Level}}</a> / {{familyName .Family}}</p><h2><a class="heading-permalink" href="#{{.ID}}" aria-label="Link to {{name .Title}} component"><span>{{name .Title}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">{{.Use}}</p>
 <div class="component-preview">
 <div class="component-subheading"><h3 id="{{.ID}}-preview"><a class="heading-permalink" href="#{{.ID}}-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
@@ -117,10 +117,12 @@
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h3 id="{{.ID}}-code"><a class="heading-permalink" href="#{{.ID}}-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/{{.ExampleSource}}">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">Implementation</a></span></div>
+<div class="component-subheading"><h3 id="{{.ID}}-code"><a class="heading-permalink" href="#{{.ID}}-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: {{range $i, $import := .ExampleImports}}{{if $i}} · {{end}}<a href="https://pkg.go.dev/{{.Path}}" title="{{.Path}}"><code>{{.Name}}</code></a>{{end}}</p>
 <pre tabindex="0" class="code-block source-code"><code class="language-go">{{highlight .Code "go"}}</code></pre>
 </div>
+<section class="component-integration" aria-labelledby="{{.ID}}-integration"><h3 id="{{.ID}}-integration"><a class="heading-permalink" href="#{{.ID}}-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>{{.Integration}}</p></section>
+<div class="component-run"><h3 id="{{.ID}}-run"><a class="heading-permalink" href="#{{.ID}}-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh">{{highlight (printf "go run ./examples/catalog %s" .ID) "sh"}}</code></pre><p><a href="https://github.com/lanej/charmed/blob/main/{{.ExampleSource}}">Example source</a> · <a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 {{if .Composes}}<p class="composition-line">Composed from: {{range .Composes}}<a class="dependency" href="{{link .}}">{{.}}</a> {{end}}</p>{{end}}
 </section>{{end}}
 </section>{{end}}
@@ -132,13 +134,15 @@
 {{define "guide-nav"}}
 <nav aria-label="Guide">
 <div class="nav-pages"><a href="index.html" {{if eq .Page.File "index.html"}}aria-current="page"{{end}}>Showcase</a>
-<p class="nav-title">Atomic design</p>
+<a href="getting-started.html" {{if eq .Page.File "getting-started.html"}}aria-current="page"{{end}}>Getting started</a>
+<a href="recipes.html" {{if eq .Page.File "recipes.html"}}aria-current="page"{{end}}>Recipes</a>
+<p class="nav-title">Component catalog</p>
 {{range .Page.Navigation}}
 <div class="nav-category {{if eq .Name $.Page.Category}}is-active{{end}}">
 <a class="nav-level" href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Name}}<span class="nav-count">{{.Count}}</span></a>
 {{if eq .Name $.Page.Category}}<div class="nav-groups">{{range .Groups}}<a class="nav-group" href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Name}}</a>{{end}}</div>{{end}}
 </div>{{end}}
-<p class="nav-title">Guides</p>
+<p class="nav-title">Reference &amp; contributors</p>
 {{range .Pages}}{{if .Resource}}<a href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Title}}</a>{{end}}{{end}}</div>
 {{if .Page.Levels}}
 <div class="nav-outline"><p class="nav-title">On this page</p>

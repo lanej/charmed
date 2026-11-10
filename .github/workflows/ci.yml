@@ -21,6 +21,8 @@ jobs:
       - uses: extractions/setup-just@f8a3cce218d9f83db3a2ecd90e41ac3de6cdfd9b # v3
         with:
           just-version: '1.59.0'
+      - name: Check documentation content contract
+        run: just docs-check
       - run: just docs
       - run: python3 scripts/test_preview_pr.py
       - uses: actions/upload-artifact@v4

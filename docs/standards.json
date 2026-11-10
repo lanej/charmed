@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "profiles": {
+    "overview": {
+      "paragraph_words": [
+        12,
+        90
+      ],
+      "run_words": [
+        12,
+        240
+      ],
+      "run_blocks": [
+        1,
+        4
+      ],
+      "mean_words_min": 20,
+      "code_lines": [
+        1,
+        32
+      ]
+    },
+    "tutorial": {
+      "paragraph_words": [
+        18,
+        90
+      ],
+      "run_words": [
+        18,
+        240
+      ],
+      "run_blocks": [
+        1,
+        4
+      ],
+      "mean_words_min": 24,
+      "code_lines": [
+        1,
+        48
+      ]
+    },
+    "recipe": {
+      "paragraph_words": [
+        14,
+        100
+      ],
+      "run_words": [
+        14,
+        300
+      ],
+      "run_blocks": [
+        1,
+        4
+      ],
+      "mean_words_min": 24,
+      "code_lines": [
+        1,
+        48
+      ]
+    },
+    "reference": {
+      "paragraph_words": [
+        14,
+        100
+      ],
+      "run_words": [
+        14,
+        360
+      ],
+      "run_blocks": [
+        1,
+        5
+      ],
+      "mean_words_min": 24,
+      "code_lines": [
+        1,
+        48
+      ]
+    },
+    "contributor": {
+      "paragraph_words": [
+        14,
+        100
+      ],
+      "run_words": [
+        14,
+        300
+      ],
+      "run_blocks": [
+        1,
+        4
+      ],
+      "mean_words_min": 24,
+      "code_lines": [
+        1,
+        48
+      ]
+    }
+  },
+  "pages": {
+    "index.md": {
+      "profile": "overview"
+    },
+    "atoms.md": {
+      "profile": "overview"
+    },
+    "molecules.md": {
+      "profile": "overview"
+    },
+    "organisms.md": {
+      "profile": "overview"
+    },
+    "templates.md": {
+      "profile": "overview"
+    },
+    "screens.md": {
+      "profile": "overview"
+    },
+    "foundations.md": {
+      "profile": "reference"
+    },
+    "components.md": {
+      "profile": "reference"
+    },
+    "brand.md": {
+      "profile": "reference"
+    },
+    "command-palette.md": {
+      "profile": "reference"
+    },
+    "json-viewer.md": {
+      "profile": "reference"
+    },
+    "log-inspector.md": {
+      "profile": "reference"
+    },
+    "deployment.md": {
+      "profile": "recipe"
+    },
+    "examples.md": {
+      "profile": "recipe"
+    },
+    "getting-started.md": {
+      "profile": "tutorial",
+      "sections": [
+        "Install",
+        "Build your first app",
+        "Run and change it"
+      ]
+    },
+    "recipes.md": {
+      "profile": "overview",
+      "sections": [
+        "Choose a task"
+      ]
+    },
+    "development.md": {
+      "profile": "contributor",
+      "sections": [
+        "Add a component",
+        "Verify changes",
+        "Publish documentation"
+      ]
+    },
+    "documentation-standard.md": {
+      "profile": "contributor",
+      "sections": [
+        "Content rhythm",
+        "Rendered layout",
+        "Review and exceptions"
+      ]
+    }
+  },
+  "component": {
+    "use_words": [
+      6,
+      65
+    ],
+    "integration_words": [
+      28,
+      100
+    ],
+    "code_lines": [
+      1,
+      48
+    ],
+    "preview_rows": [
+      1,
+      36
+    ],
+    "preview_columns": [
+      1,
+      120
+    ]
+  },
+  "rendered": {
+    "prose_width_ch": [
+      28,
+      72
+    ],
+    "first_artifact_px": [
+      0,
+      540
+    ],
+    "preview_height_px": [
+      20,
+      600
+    ],
+    "artifact_gap_px": [
+      0,
+      180
+    ],
+    "section_gap_px": [
+      20,
+      64
+    ]
+  },
+  "exceptions": [],
+  "artifact": {
+    "table_rows": [
+      2,
+      20
+    ],
+    "table_cell_words": [
+      1,
+      70
+    ],
+    "image_alt_words": [
+      6,
+      40
+    ]
+  }
+}
