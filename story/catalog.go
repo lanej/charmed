@@ -9,9 +9,10 @@ import (
 
 func definitions() []Definition {
 	var d []Definition
-	for _, level := range [][]Definition{foundationsDefinitions(), atomsDefinitions(), moleculesDefinitions(), chromeDefinitions(), organismsDefinitions(), screensDefinitions(), logDefinitions(), commandDefinitions()} {
+	for _, level := range [][]Definition{foundationsDefinitions(), atomsDefinitions(), moleculesDefinitions(), chromeDefinitions(), organismsDefinitions(), screensDefinitions(), logDefinitions(), commandDefinitions(), dataAtomDefinitions()} {
 		d = append(d, level...)
 	}
+
 	for i := range d {
 		d[i].ExampleSource = "docs/snippets/" + strings.NewReplacer("/", "_", "-", "_").Replace(d[i].ID) + ".go"
 
@@ -19,6 +20,7 @@ func definitions() []Definition {
 			d[i].States = []string{"ready", "empty", "loading", "error"}
 		}
 	}
+
 	return d
 }
 

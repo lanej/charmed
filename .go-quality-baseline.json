@@ -632,8 +632,6 @@
     {"path": "story/atoms_charts.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many statements above if)", "source": "_, pulse := msg.(chartPulse)", "count": 1},
     {"path": "story/atoms_charts.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many statements above range)", "source": "data[i].Label = names[i]", "count": 1},
     {"path": "story/atoms_charts.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many statements above range)", "source": "names := []string{\"open\", \"high\", \"low\", \"close\"}", "count": 1},
-    {"path": "story/catalog.go", "linter": "wsl_v5", "text": "missing whitespace above this line (invalid statement above range)", "source": "for i := range d {", "count": 1},
-    {"path": "story/catalog.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return d", "count": 1},
     {"path": "story/hierarchy.go", "linter": "staticcheck", "text": "QF1001: could apply De Morgan's law", "source": "if !(r >= 'a' && r <= 'z' || r >= '0' && r <= '9' || r == '-') {", "count": 1},
     {"path": "story/hierarchy.go", "linter": "wsl_v5", "text": "missing whitespace above this line (invalid statement above assign)", "source": "byID[d.ID] = d", "count": 1},
     {"path": "story/hierarchy.go", "linter": "wsl_v5", "text": "missing whitespace above this line (invalid statement above assign)", "source": "seen[id] = true", "count": 1},

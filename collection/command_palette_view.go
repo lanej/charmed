@@ -3,7 +3,6 @@ package collection
 import (
 	"fmt"
 	"io"
-	"slices"
 	"strings"
 
 	"charm.land/bubbles/v2/list"
@@ -45,7 +44,6 @@ func (d *commandDelegate) Render(w io.Writer, model list.Model, index int, item 
 
 	command := entry.command
 	width := max(1, model.Width())
-	label := text.Inline(command.Label)
 
 	style := d.theme.Text()
 	if command.DisabledReason != "" {
@@ -76,22 +74,15 @@ func (d *commandDelegate) Render(w io.Writer, model list.Model, index int, item 
 		marker = d.theme.Glyph(theme.GlyphRight) + " "
 	}
 
-	var highlighted strings.Builder
+	var ranges []text.MatchRange
 
-	for i, r := range []rune(label) {
-		runeStyle := actionStyle
-		if d.highlightMatches && slices.Contains(entry.matches, i) {
-			runeStyle = runeStyle.Underline(true)
-		}
-
-		part := runeStyle.Render(string(r))
-
-		if _, err := highlighted.WriteString(part); err != nil {
-			return
+	if d.highlightMatches {
+		for _, index := range entry.matches {
+			ranges = append(ranges, text.MatchRange{Start: index, End: index + 1})
 		}
 	}
 
-	label = highlighted.String()
+	label := text.HighlightMatches(text.Inline(command.Label), ranges, actionStyle, actionStyle.Underline(true))
 
 	suffix := text.Inline(command.State)
 	if command.Shortcut != "" {
