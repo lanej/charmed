@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Molecules / Diagrams · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Molecules / Diagrams</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<p class="nav-title">Atomic design</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">52</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+<div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-data.html" >Data</a><a class="nav-group" href="molecules-diagram.html" aria-current="page">Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" >Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#diagram%2fstate-transitions">State transitions</a></div>
+
+</div>
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<p class="nav-title">Atomic design</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">52</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+<div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-data.html" >Data</a><a class="nav-group" href="molecules-diagram.html" aria-current="page">Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" >Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#diagram%2fstate-transitions">State transitions</a></div>
+
+</div>
+</nav>
+</aside>
+<main id="main">
+
+
+
+
+
+
+
+
+<section class="atomic-level" id="level-molecules">
+<p class="catalog-breadcrumb"><a href="molecules.html">Molecules</a><span aria-hidden="true"> / </span>Diagrams</p>
+
+<section class="component-family" id="level-molecules-diagram"><h1><a class="heading-permalink" href="#level-molecules-diagram"><span>Diagrams</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">1 component · <a href="molecules.html">All molecules</a></p>
+<ul class="group-jump-links" aria-label="Components in Diagrams"><li><a href="#diagram%2fstate-transitions">State transitions</a></li></ul>
+
+
+<section class="component" id="diagram/state-transitions">
+<p class="eyebrow"><a href="molecules.html">Molecules</a> / Diagrams</p><h2><a class="heading-permalink" href="#diagram%2fstate-transitions" aria-label="Link to State transitions component"><span>State transitions</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p>Labeled arrows connect state boxes directly, with distinct initial and terminal borders, optional success/error outcomes, and vertical layout for narrow regions.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="diagram/state-transitions-preview"><a class="heading-permalink" href="#diagram%2fstate-transitions-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="State transitions variants">
+<a id="tab-diagram/state-transitions-example" href="#panel-diagram%2fstate-transitions-example" role="tab" aria-controls="panel-diagram/state-transitions-example" aria-selected="true">Example</a>
+<a id="tab-diagram/state-transitions-0" href="#panel-diagram%2fstate-transitions-0" role="tab" aria-controls="panel-diagram/state-transitions-0" aria-selected="false">Demo</a><a id="tab-diagram/state-transitions-1" href="#panel-diagram%2fstate-transitions-1" role="tab" aria-controls="panel-diagram/state-transitions-1" aria-selected="false">Narrow</a><a id="tab-diagram/state-transitions-2" href="#panel-diagram%2fstate-transitions-2" role="tab" aria-controls="panel-diagram/state-transitions-2" aria-selected="false">256 colors</a><a id="tab-diagram/state-transitions-3" href="#panel-diagram%2fstate-transitions-3" role="tab" aria-controls="panel-diagram/state-transitions-3" aria-selected="false">16 colors</a><a id="tab-diagram/state-transitions-4" href="#panel-diagram%2fstate-transitions-4" role="tab" aria-controls="panel-diagram/state-transitions-4" aria-selected="false">Monochrome</a><a id="tab-diagram/state-transitions-5" href="#panel-diagram%2fstate-transitions-5" role="tab" aria-controls="panel-diagram/state-transitions-5" aria-selected="false">Last 3 transitions</a><a id="tab-diagram/state-transitions-6" href="#panel-diagram%2fstate-transitions-6" role="tab" aria-controls="panel-diagram/state-transitions-6" aria-selected="false">Whole path</a>
+</div>
+<div id="panel-diagram/state-transitions-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-diagram/state-transitions-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;">╭───────────────────╮</span>                 
+<span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">Idle</span>              <span style="color:#a8a8a8;">│</span>                 
+<span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">initial</span>           <span style="color:#a8a8a8;">│</span>                 
+<span style="color:#a8a8a8;">╰┬────────┬─────────╯</span>                 
+ <span style="color:#a8a8a8;">│</span>        <span style="color:#a8a8a8;">▲</span>                           
+ <span style="color:#a8a8a8;">│ start </span> <span style="color:#a8a8a8;">│ cancel </span>                   
+ <span style="color:#a8a8a8;">▼</span>        <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#eeeeee;">┌┴────────┴─────────┐</span>                 
+<span style="color:#eeeeee;">│</span> <span style="color:#eeeeee;">Running</span>           <span style="color:#eeeeee;">├</span><span style="color:#a8a8a8;">───────────┐</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span>           <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">├</span><span style="color:#a8a8a8;">─┐</span>         <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span> <span style="color:#a8a8a8;">│ retry </span>  <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span> <span style="color:#a8a8a8;">│</span>         <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span> <span style="color:#a8a8a8;">│</span>         <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">├</span><span style="color:#a8a8a8;">◀┘</span>         <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">└┬──────────────────┘</span>           <span style="color:#a8a8a8;">│</span>     
+ <span style="color:#67d4c0;font-weight:bold;">┃</span>                              <span style="color:#a8a8a8;">│</span>     
+ <span style="color:#67d4c0;font-weight:bold;">┃ finish </span>                      <span style="color:#a8a8a8;">│ fail</span>
+ <span style="color:#67d4c0;font-weight:bold;">▼</span>                              <span style="color:#a8a8a8;">│</span>     
+<span style="color:#86cf9a;font-weight:bold;">╔╧══════════════════╗</span>           <span style="color:#a8a8a8;">│</span>     
+<span style="color:#86cf9a;font-weight:bold;">║</span> <span style="color:#86cf9a;font-weight:bold;">Done</span>              <span style="color:#86cf9a;font-weight:bold;">║</span>           <span style="color:#a8a8a8;">│</span>     
+<span style="color:#86cf9a;font-weight:bold;">║</span> <span style="color:#86cf9a;">success, active</span>   <span style="color:#86cf9a;font-weight:bold;">║</span>           <span style="color:#a8a8a8;">│</span>     
+<span style="color:#86cf9a;font-weight:bold;">╚═══════════════════╝</span>           <span style="color:#a8a8a8;">│</span>     
+                                <span style="color:#a8a8a8;">│</span>     
+                                <span style="color:#a8a8a8;">│</span>     
+                                <span style="color:#a8a8a8;">│</span>     
+<span style="color:#c17670;">╔═══════════════════╗</span>           <span style="color:#a8a8a8;">│</span>     
+<span style="color:#c17670;">║</span> <span style="color:#c17670;">Failed</span>            <span style="color:#c17670;">╟</span><span style="color:#a8a8a8;">◀──────────┘</span>     
+<span style="color:#c17670;">║</span> <span style="color:#c17670;">error</span>             <span style="color:#c17670;">║</span>                 
+<span style="color:#c17670;">║</span>                   <span style="color:#c17670;">║</span>                 
+<span style="color:#c17670;">╚═══════════════════╝</span></pre></figure>
+</div>
+<div id="panel-diagram/state-transitions-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-diagram/state-transitions-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 120 × 40 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">State transitions</span>                                                                                                       
+                                                                                                                        
+<span style="color:#a8a8a8;">╭─────────────────╮</span>            <span style="color:#eeeeee;">┌─────────────┐</span>            <span style="color:#86cf9a;font-weight:bold;">╔═════════════════╗</span>   <span style="color:#c17670;">╔═══════════════╗</span>                       
+<span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">Idle</span>            <span style="color:#a8a8a8;">├── start ──▶</span><span style="color:#eeeeee;">┤</span> <span style="color:#eeeeee;">Running</span>     <span style="color:#eeeeee;">├</span><span style="color:#67d4c0;font-weight:bold;">━━ finish ━▶</span><span style="color:#86cf9a;font-weight:bold;">╢</span> <span style="color:#86cf9a;font-weight:bold;">Done</span>            <span style="color:#86cf9a;font-weight:bold;">║</span>   <span style="color:#c17670;">║</span> <span style="color:#c17670;">Failed</span>        <span style="color:#c17670;">║</span>                       
+<span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">initial</span>         <span style="color:#a8a8a8;">├◀─ cancel ──</span><span style="color:#eeeeee;">┤</span>             <span style="color:#eeeeee;">│</span>            <span style="color:#86cf9a;font-weight:bold;">║</span> <span style="color:#86cf9a;">success, active</span> <span style="color:#86cf9a;font-weight:bold;">║</span>   <span style="color:#c17670;">║</span> <span style="color:#c17670;">error</span>         <span style="color:#c17670;">║</span>                       
+<span style="color:#a8a8a8;">╰─────────────────╯</span>            <span style="color:#eeeeee;">└┬─┬─────────┬┘</span>            <span style="color:#86cf9a;font-weight:bold;">╚═════════════════╝</span>   <span style="color:#c17670;">╚╤══════════════╝</span>                       
+                                <span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">│</span>         <span style="color:#a8a8a8;">▲</span>                                    <span style="color:#a8a8a8;">▲</span>                                      
+                                <span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">└─ retry ─┘</span>                                    <span style="color:#a8a8a8;">│</span>                                      
+                                <span style="color:#a8a8a8;">│</span>                                                <span style="color:#a8a8a8;">│</span>                                      
+                                <span style="color:#a8a8a8;">└──────────────── fail ──────────────────────────┘</span>                                      
+                                                                                                                        
+<span style="color:#a8a8a8;">Left/Right replay; H: last</span></pre></figure>
+</div><div id="panel-diagram/state-transitions-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-diagram/state-transitions-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 40 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">State transitions</span>                       
+                                        
+<span style="color:#a8a8a8;">╭───────────────────╮</span>                   
+<span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">Idle</span>              <span style="color:#a8a8a8;">│</span>                   
+<span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">initial</span>           <span style="color:#a8a8a8;">│</span>                   
+<span style="color:#a8a8a8;">╰┬────────┬─────────╯</span>                   
+ <span style="color:#a8a8a8;">│</span>        <span style="color:#a8a8a8;">▲</span>                             
+ <span style="color:#a8a8a8;">│ start </span> <span style="color:#a8a8a8;">│ cancel </span>                     
+ <span style="color:#a8a8a8;">▼</span>        <span style="color:#a8a8a8;">│</span>                             
+<span style="color:#eeeeee;">┌┴────────┴─────────┐</span>                   
+<span style="color:#eeeeee;">│</span> <span style="color:#eeeeee;">Running</span>           <span style="color:#eeeeee;">├</span><span style="color:#a8a8a8;">───────────┐</span>       
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span>           <span style="color:#a8a8a8;">│</span>       
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">├</span><span style="color:#a8a8a8;">─┐</span>         <span style="color:#a8a8a8;">│</span>       
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span> <span style="color:#a8a8a8;">│ retry </span>  <span style="color:#a8a8a8;">│</span>       
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span> <span style="color:#a8a8a8;">│</span>         <span style="color:#a8a8a8;">│</span>       
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span> <span style="color:#a8a8a8;">│</span>         <span style="color:#a8a8a8;">│</span>       
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">├</span><span style="color:#a8a8a8;">◀┘</span>         <span style="color:#a8a8a8;">│</span>       
+<span style="color:#eeeeee;">└┬──────────────────┘</span>           <span style="color:#a8a8a8;">│</span>       
+ <span style="color:#67d4c0;font-weight:bold;">┃</span>                              <span style="color:#a8a8a8;">│</span>       
+ <span style="color:#67d4c0;font-weight:bold;">┃ finish </span>                      <span style="color:#a8a8a8;">│ fail</span>  
+ <span style="color:#67d4c0;font-weight:bold;">▼</span>                              <span style="color:#a8a8a8;">│</span>       
+<span style="color:#86cf9a;font-weight:bold;">╔╧══════════════════╗</span>           <span style="color:#a8a8a8;">│</span>       
+<span style="color:#86cf9a;font-weight:bold;">║</span> <span style="color:#86cf9a;font-weight:bold;">Done</span>              <span style="color:#86cf9a;font-weight:bold;">║</span>           <span style="color:#a8a8a8;">│</span>       
+<span style="color:#86cf9a;font-weight:bold;">║</span> <span style="color:#86cf9a;">success, active</span>   <span style="color:#86cf9a;font-weight:bold;">║</span>           <span style="color:#a8a8a8;">│</span>       
+<span style="color:#86cf9a;font-weight:bold;">╚═══════════════════╝</span>           <span style="color:#a8a8a8;">│</span>       
+                                <span style="color:#a8a8a8;">│</span>       
+                                <span style="color:#a8a8a8;">│</span>       
+                                <span style="color:#a8a8a8;">│</span>       
+<span style="color:#c17670;">╔═══════════════════╗</span>           <span style="color:#a8a8a8;">│</span>       
+<span style="color:#c17670;">║</span> <span style="color:#c17670;">Failed</span>            <span style="color:#c17670;">╟</span><span style="color:#a8a8a8;">◀──────────┘</span>       
+<span style="color:#c17670;">║</span> <span style="color:#c17670;">error</span>             <span style="color:#c17670;">║</span>                   
+<span style="color:#c17670;">║</span>                   <span style="color:#c17670;">║</span>                   
+<span style="color:#c17670;">╚═══════════════════╝</span>                   
+                                        
+<span style="color:#a8a8a8;">Left/Right replay; H: last</span></pre></figure>
+</div><div id="panel-diagram/state-transitions-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-diagram/state-transitions-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 120 × 40 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">State transitions</span>                                                                                                       
+                                                                                                                        
+<span style="color:#a8a8a8;">╭─────────────────╮</span>            <span style="color:#eeeeee;">┌─────────────┐</span>            <span style="color:#87d787;font-weight:bold;">╔═════════════════╗</span>   <span style="color:#af875f;">╔═══════════════╗</span>                       
+<span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">Idle</span>            <span style="color:#a8a8a8;">├── start ──▶</span><span style="color:#eeeeee;">┤</span> <span style="color:#eeeeee;">Running</span>     <span style="color:#eeeeee;">├</span><span style="color:#5fd7af;font-weight:bold;">━━ finish ━▶</span><span style="color:#87d787;font-weight:bold;">╢</span> <span style="color:#87d787;font-weight:bold;">Done</span>            <span style="color:#87d787;font-weight:bold;">║</span>   <span style="color:#af875f;">║</span> <span style="color:#af875f;">Failed</span>        <span style="color:#af875f;">║</span>                       
+<span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">initial</span>         <span style="color:#a8a8a8;">├◀─ cancel ──</span><span style="color:#eeeeee;">┤</span>             <span style="color:#eeeeee;">│</span>            <span style="color:#87d787;font-weight:bold;">║</span> <span style="color:#87d787;">success, active</span> <span style="color:#87d787;font-weight:bold;">║</span>   <span style="color:#af875f;">║</span> <span style="color:#af875f;">error</span>         <span style="color:#af875f;">║</span>                       
+<span style="color:#a8a8a8;">╰─────────────────╯</span>            <span style="color:#eeeeee;">└┬─┬─────────┬┘</span>            <span style="color:#87d787;font-weight:bold;">╚═════════════════╝</span>   <span style="color:#af875f;">╚╤══════════════╝</span>                       
+                                <span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">│</span>         <span style="color:#a8a8a8;">▲</span>                                    <span style="color:#a8a8a8;">▲</span>                                      
+                                <span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">└─ retry ─┘</span>                                    <span style="color:#a8a8a8;">│</span>                                      
+                                <span style="color:#a8a8a8;">│</span>                                                <span style="color:#a8a8a8;">│</span>                                      
+                                <span style="color:#a8a8a8;">└──────────────── fail ──────────────────────────┘</span>                                      
+                                                                                                                        
+<span style="color:#a8a8a8;">Left/Right replay; H: last</span></pre></figure>
+</div><div id="panel-diagram/state-transitions-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-diagram/state-transitions-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 120 × 40 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">State transitions</span>                                                                                                       
+                                                                                                                        
+<span style="color:#c0c0c0;">╭─────────────────╮</span>            <span style="color:#ffffff;">┌─────────────┐</span>            <span style="color:#00ff00;font-weight:bold;">╔═════════════════╗</span>   <span style="color:#800000;">╔═══════════════╗</span>                       
+<span style="color:#c0c0c0;">│</span> <span style="color:#c0c0c0;">Idle</span>            <span style="color:#c0c0c0;">├── start ──▶</span><span style="color:#ffffff;">┤</span> <span style="color:#ffffff;">Running</span>     <span style="color:#ffffff;">├</span><span style="color:#00ff00;font-weight:bold;">━━ finish ━▶╢</span> <span style="color:#00ff00;font-weight:bold;">Done</span>            <span style="color:#00ff00;font-weight:bold;">║</span>   <span style="color:#800000;">║</span> <span style="color:#800000;">Failed</span>        <span style="color:#800000;">║</span>                       
+<span style="color:#c0c0c0;">│</span> <span style="color:#c0c0c0;">initial</span>         <span style="color:#c0c0c0;">├◀─ cancel ──</span><span style="color:#ffffff;">┤</span>             <span style="color:#ffffff;">│</span>            <span style="color:#00ff00;font-weight:bold;">║</span> <span style="color:#00ff00;">success, active</span> <span style="color:#00ff00;font-weight:bold;">║</span>   <span style="color:#800000;">║</span> <span style="color:#800000;">error</span>         <span style="color:#800000;">║</span>                       
+<span style="color:#c0c0c0;">╰─────────────────╯</span>            <span style="color:#ffffff;">└┬─┬─────────┬┘</span>            <span style="color:#00ff00;font-weight:bold;">╚═════════════════╝</span>   <span style="color:#800000;">╚╤══════════════╝</span>                       
+                                <span style="color:#c0c0c0;">│</span> <span style="color:#c0c0c0;">│</span>         <span style="color:#c0c0c0;">▲</span>                                    <span style="color:#c0c0c0;">▲</span>                                      
+                                <span style="color:#c0c0c0;">│</span> <span style="color:#c0c0c0;">└─ retry ─┘</span>                                    <span style="color:#c0c0c0;">│</span>                                      
+                                <span style="color:#c0c0c0;">│</span>                                                <span style="color:#c0c0c0;">│</span>                                      
+                                <span style="color:#c0c0c0;">└──────────────── fail ──────────────────────────┘</span>                                      
+                                                                                                                        
+<span style="color:#c0c0c0;">Left/Right replay; H: last</span></pre></figure>
+</div><div id="panel-diagram/state-transitions-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-diagram/state-transitions-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 120 × 40 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">State transitions</span>                                                                                                       
+                                                                                                                        
+(-----------------)            +-------------+            #=================#   #===============#                       
+| Idle            +-- start --&gt;+ Running     +== finish =&gt;# Done            |   | Failed        |                       
+| initial         +&lt;- cancel --+             |            | success, active |   | error         |                       
+(-----------------)            ++-+---------++            #=================#   ##==============#                       
+                                | |         ^                                    ^                                      
+                                | +- retry -+                                    |                                      
+                                |                                                |                                      
+                                +---------------- fail --------------------------+                                      
+                                                                                                                        
+Left/Right replay; H: last</pre></figure>
+</div><div id="panel-diagram/state-transitions-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-diagram/state-transitions-5" tabindex="0">
+<figure><figcaption>Last 3 transitions · truecolor · 120 × 40 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">State transitions</span>                                                                                                       
+                                                                                                                        
+<span style="color:#eeeeee;">╭─────────────────╮</span>            <span style="color:#eeeeee;">┌─────────────┐</span>            <span style="color:#86cf9a;font-weight:bold;">╔═════════════════╗</span>   <span style="color:#c17670;">╔═══════════════╗</span>                       
+<span style="color:#eeeeee;">│</span> <span style="color:#eeeeee;">Idle</span>            <span style="color:#eeeeee;">├── start ──▶┤</span> <span style="color:#eeeeee;">Running</span>     <span style="color:#eeeeee;">├</span><span style="color:#67d4c0;font-weight:bold;">━━ finish ━▶</span><span style="color:#86cf9a;font-weight:bold;">╢</span> <span style="color:#86cf9a;font-weight:bold;">Done</span>            <span style="color:#86cf9a;font-weight:bold;">║</span>   <span style="color:#c17670;">║</span> <span style="color:#c17670;">Failed</span>        <span style="color:#c17670;">║</span>                       
+<span style="color:#eeeeee;">│</span> <span style="color:#eeeeee;">initial</span>         <span style="color:#eeeeee;">├◀─ cancel ──┤</span>             <span style="color:#eeeeee;">│</span>            <span style="color:#86cf9a;font-weight:bold;">║</span> <span style="color:#86cf9a;">success, active</span> <span style="color:#86cf9a;font-weight:bold;">║</span>   <span style="color:#c17670;">║</span> <span style="color:#c17670;">error</span>         <span style="color:#c17670;">║</span>                       
+<span style="color:#eeeeee;">╰─────────────────╯</span>            <span style="color:#eeeeee;">└┬─┬─────────┬┘</span>            <span style="color:#86cf9a;font-weight:bold;">╚═════════════════╝</span>   <span style="color:#c17670;">╚╤══════════════╝</span>                       
+                                <span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">│</span>         <span style="color:#a8a8a8;">▲</span>                                    <span style="color:#a8a8a8;">▲</span>                                      
+                                <span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">└─ retry ─┘</span>                                    <span style="color:#a8a8a8;">│</span>                                      
+                                <span style="color:#a8a8a8;">│</span>                                                <span style="color:#a8a8a8;">│</span>                                      
+                                <span style="color:#a8a8a8;">└──────────────── fail ──────────────────────────┘</span>                                      
+                                                                                                                        
+<span style="color:#a8a8a8;">Left/Right replay; H: last 3</span></pre></figure>
+</div><div id="panel-diagram/state-transitions-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-diagram/state-transitions-6" tabindex="0">
+<figure><figcaption>Whole path · truecolor · 120 × 40 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">State transitions</span>                                                                                                       
+                                                                                                                        
+<span style="color:#eeeeee;">╭─────────────────╮</span>            <span style="color:#eeeeee;">┌─────────────┐</span>            <span style="color:#86cf9a;font-weight:bold;">╔═════════════════╗</span>   <span style="color:#c17670;">╔═══════════════╗</span>                       
+<span style="color:#eeeeee;">│</span> <span style="color:#eeeeee;">Idle</span>            <span style="color:#eeeeee;">├── start ──▶┤</span> <span style="color:#eeeeee;">Running</span>     <span style="color:#eeeeee;">├</span><span style="color:#67d4c0;font-weight:bold;">━━ finish ━▶</span><span style="color:#86cf9a;font-weight:bold;">╢</span> <span style="color:#86cf9a;font-weight:bold;">Done</span>            <span style="color:#86cf9a;font-weight:bold;">║</span>   <span style="color:#c17670;">║</span> <span style="color:#c17670;">Failed</span>        <span style="color:#c17670;">║</span>                       
+<span style="color:#eeeeee;">│</span> <span style="color:#eeeeee;">initial</span>         <span style="color:#eeeeee;">├◀─ cancel ──┤</span>             <span style="color:#eeeeee;">│</span>            <span style="color:#86cf9a;font-weight:bold;">║</span> <span style="color:#86cf9a;">success, active</span> <span style="color:#86cf9a;font-weight:bold;">║</span>   <span style="color:#c17670;">║</span> <span style="color:#c17670;">error</span>         <span style="color:#c17670;">║</span>                       
+<span style="color:#eeeeee;">╰─────────────────╯</span>            <span style="color:#eeeeee;">└┬─┬─────────┬┘</span>            <span style="color:#86cf9a;font-weight:bold;">╚═════════════════╝</span>   <span style="color:#c17670;">╚╤══════════════╝</span>                       
+                                <span style="color:#a8a8a8;">│</span> <span style="color:#eeeeee;">│</span>         <span style="color:#eeeeee;">▲</span>                                    <span style="color:#a8a8a8;">▲</span>                                      
+                                <span style="color:#a8a8a8;">│</span> <span style="color:#eeeeee;">└─ retry ─┘</span>                                    <span style="color:#a8a8a8;">│</span>                                      
+                                <span style="color:#a8a8a8;">│</span>                                                <span style="color:#a8a8a8;">│</span>                                      
+                                <span style="color:#a8a8a8;">└──────────────── fail ──────────────────────────┘</span>                                      
+                                                                                                                        
+<span style="color:#a8a8a8;">Left/Right replay; H: all</span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="diagram/state-transitions-code"><a class="heading-permalink" href="#diagram%2fstate-transitions-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/docs/snippets/diagram_state_transitions.go">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/story/diagrams.go">Implementation</a></span></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/diagram" title="github.com/lanej/charmed/diagram"><code>diagram</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+graph <span class="syn-operator">:=</span> diagram<span class="syn-operator">.</span>StateDiagram<span class="syn-operator">{</span>
+	States<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>diagram<span class="syn-operator">.</span>State<span class="syn-operator">{</span>
+		<span class="syn-operator">{</span>ID<span class="syn-operator">:</span> <span class="syn-string">&#34;idle&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Idle&#34;</span><span class="syn-operator">,</span> Initial<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>ID<span class="syn-operator">:</span> <span class="syn-string">&#34;running&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Running&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>ID<span class="syn-operator">:</span> <span class="syn-string">&#34;done&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Done&#34;</span><span class="syn-operator">,</span> Final<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">,</span> Outcome<span class="syn-operator">:</span> diagram<span class="syn-operator">.</span>OutcomeSuccess<span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>ID<span class="syn-operator">:</span> <span class="syn-string">&#34;failed&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Failed&#34;</span><span class="syn-operator">,</span> Final<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">,</span> Outcome<span class="syn-operator">:</span> diagram<span class="syn-operator">.</span>OutcomeError<span class="syn-operator">}</span><span class="syn-operator">,</span>
+	<span class="syn-operator">}</span><span class="syn-operator">,</span>
+	Transitions<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>diagram<span class="syn-operator">.</span>Transition<span class="syn-operator">{</span>
+		<span class="syn-operator">{</span>From<span class="syn-operator">:</span> <span class="syn-string">&#34;idle&#34;</span><span class="syn-operator">,</span> To<span class="syn-operator">:</span> <span class="syn-string">&#34;running&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;start&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>From<span class="syn-operator">:</span> <span class="syn-string">&#34;running&#34;</span><span class="syn-operator">,</span> To<span class="syn-operator">:</span> <span class="syn-string">&#34;running&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;retry&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>From<span class="syn-operator">:</span> <span class="syn-string">&#34;running&#34;</span><span class="syn-operator">,</span> To<span class="syn-operator">:</span> <span class="syn-string">&#34;done&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;finish&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>From<span class="syn-operator">:</span> <span class="syn-string">&#34;running&#34;</span><span class="syn-operator">,</span> To<span class="syn-operator">:</span> <span class="syn-string">&#34;idle&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;cancel&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>From<span class="syn-operator">:</span> <span class="syn-string">&#34;running&#34;</span><span class="syn-operator">,</span> To<span class="syn-operator">:</span> <span class="syn-string">&#34;failed&#34;</span><span class="syn-operator">,</span> Label<span class="syn-operator">:</span> <span class="syn-string">&#34;fail&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+	<span class="syn-operator">}</span><span class="syn-operator">,</span>
+	Active<span class="syn-operator">:</span> <span class="syn-string">&#34;done&#34;</span><span class="syn-operator">,</span>
+	Trace<span class="syn-operator">:</span> diagram<span class="syn-operator">.</span>TransitionTrace<span class="syn-operator">{</span>
+		Steps<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">int</span><span class="syn-operator">{</span><span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">1</span><span class="syn-operator">,</span> <span class="syn-number">3</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">2</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-comment">// start, retry, cancel, start, finish.</span>
+		Last<span class="syn-operator">:</span>  <span class="syn-number">1</span><span class="syn-operator">,</span>                    <span class="syn-comment">// Last N steps; zero defaults to one. All: true shows the whole path.</span>
+	<span class="syn-operator">}</span><span class="syn-operator">,</span>
+<span class="syn-operator">}</span>
+
+rendered<span class="syn-operator">,</span> err <span class="syn-operator">:=</span> graph<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-number">64</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+<span class="syn-keyword">if</span> err <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
+	<span class="syn-keyword">return</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">,</span> err
+<span class="syn-operator">}</span>
+<span class="syn-comment">// Update Active and Trace.Steps when application state changes, then render again.</span>
+<span class="syn-keyword">return</span> rendered<span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+</code></pre>
+</div>
+
+</section>
+</section>
+</section>
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
