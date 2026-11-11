@@ -8,7 +8,7 @@ The [design philosophy](DESIGN.md) guides the visual language and component deci
 
 ## Run it
 
-Requires Go **1.26.10+**. Native terminal sessions support Linux and macOS.
+Requires Go **1.26.11+**. Native terminal sessions support Linux and macOS.
 
 ```sh
 go run ./cmd/workbench list
