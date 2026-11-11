@@ -93,7 +93,7 @@ func TestLinkEscapesLabelsAndRejectsInvalidTargets(t *testing.T) {
 		}
 	}
 
-	for _, target := range []string{"", "/relative", "https:opaque", "https:///no-host", "https://:443/path", "https://example.test/%zz", "file:///tmp/test", "javascript:alert(1)", "terminal://session/worker", "https://example.test/with space", "https://example.test/\n", "https://example.test/\x1b\\", "https://example.test/\a", "https://example.test/\u009c", "https://example.test/\u202e", "https://example.test/\xff"} {
+	for _, target := range []string{"", "/relative", "//example.test/path", "1bad:target", "https://[::", "https://example.test/%zz", "https://example.test/?q=%zz", "mailto:dev@example.test?subject=%zz", "custom:%zz", "custom:incomplete%", "https://example.test/with space", "https://example.test/\n", "https://example.test/\x1b\\", "https://example.test/\a", "https://example.test/\u009c", "https://example.test/\u202e", "https://example.test/\xff"} {
 		invalid := text.Link{Label: "Logs", URL: target}
 		if got, err := invalid.View(palette); err == nil || got != "" {
 			t.Fatalf("invalid target emitted output: %q => %q, %v", target, got, err)
@@ -101,6 +101,10 @@ func TestLinkEscapesLabelsAndRejectsInvalidTargets(t *testing.T) {
 
 		if got, err := invalid.Plain(); err == nil || got != "" {
 			t.Fatalf("plain accepted invalid target: %q", target)
+		}
+
+		if got, err := text.NewWebLink("Logs", target); err == nil || got != (text.Link{}) {
+			t.Fatalf("web helper accepted invalid target: %q", target)
 		}
 	}
 
@@ -141,5 +145,59 @@ func TestLinkCompositionSurvivesCellClipping(t *testing.T) {
 				}
 			}
 		}
+	}
+}
+
+func TestLinkSupportsHierarchicalAndOpaqueURIs(t *testing.T) {
+	palette := theme.New(theme.Dark)
+
+	for _, target := range []string{
+		"file:///tmp/build%20output.log",
+		"ssh://dev@example.test:2222/work",
+		"mailto:dev@example.test?subject=Build%2042",
+		"urn:example:build:42",
+		"terminal://session/build/pane/tests",
+		"custom:opaque-destination",
+	} {
+		link := text.Link{Label: "Destination", URL: target}
+
+		view, err := link.View(palette)
+		if err != nil {
+			t.Fatalf("%s: %v", target, err)
+		}
+
+		for _, cell := range uv.NewStyledString(view).Lines(ansi.GraphemeWidth)[0] {
+			if cell.Width > 0 && cell.Link.URL != target {
+				t.Fatalf("general link changed target %q to %q", target, cell.Link.URL)
+			}
+		}
+
+		plain, err := link.Plain()
+		if err != nil || plain != "Destination ("+target+")" {
+			t.Fatalf("general link lost plain destination: %q, %v", plain, err)
+		}
+	}
+}
+
+func TestWebLinkLayersValidationOverGeneralLink(t *testing.T) {
+	for _, target := range []string{"https://example.test/a%2Fb?b=2&a=1#output", "http://localhost:8080/logs", "HTTPS://EXAMPLE.test/logs"} {
+		link, err := text.NewWebLink("Logs", target)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if link != (text.Link{Label: "Logs", URL: target}) {
+			t.Fatalf("web helper changed the general link value: %#v", link)
+		}
+	}
+
+	for _, target := range []string{"https:opaque", "https:///no-host", "https://:443/path", "file:///tmp/test", "mailto:dev@example.test", "urn:example:42", "terminal://session/worker", "javascript:alert(1)"} {
+		if got, err := text.NewWebLink("Logs", target); err == nil || got != (text.Link{}) {
+			t.Fatalf("web helper accepted %q: %#v, %v", target, got, err)
+		}
+	}
+
+	if got, err := text.NewWebLink("", "https://example.test"); err == nil || got != (text.Link{}) {
+		t.Fatal("web helper skipped shared label validation")
 	}
 }
