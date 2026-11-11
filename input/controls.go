@@ -1,8 +1,11 @@
 package input
 
 import (
+	"strings"
+
 	"charm.land/bubbles/v2/key"
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 )
@@ -31,18 +34,36 @@ func (c *Control) activates(msg tea.Msg) bool {
 	return ok && c.Focused() && key.Matches(press, c.Keys)
 }
 
-func (c *Control) view(mark string, busy bool) string {
+func (c *Control) view(mark string, active, busy bool) string {
 	label := text.Inline(c.Label)
 	if mark != "" {
+		if !c.focused && !c.unavailable() {
+			style := c.Theme.Subtle()
+			if active {
+				style = c.Theme.Heading()
+			}
+
+			mark = style.Render(mark)
+		}
+
 		label = mark + " " + label
 	}
 
 	if busy {
-		label += " [BUSY]"
+		if c.Theme.ASCII {
+			label += " [BUSY]"
+		} else {
+			label += " " + c.Theme.Glyph(theme.GlyphBusy) + " BUSY"
+		}
 	}
 
 	if c.unavailable() {
-		label += " [DISABLED]"
+		if c.Theme.ASCII {
+			label += " [DISABLED]"
+		} else {
+			label += " " + c.Theme.Glyph(theme.GlyphDisabled) + " disabled"
+		}
+
 		if c.DisabledReason != "" {
 			label += " " + text.Inline(c.DisabledReason)
 		}
@@ -110,18 +131,26 @@ func (m Checkbox) Update(msg tea.Msg) (Checkbox, tea.Cmd) {
 
 func (m Checkbox) View() string {
 	mark := "[?]"
+	glyph := theme.GlyphUnknown
 
 	switch m.State {
 	case Unchecked:
 		mark = "[ ]"
+		glyph = theme.GlyphUnchecked
 	case Checked:
 		mark = "[x]"
+		glyph = theme.GlyphChecked
 	case Mixed:
 		mark = "[-]"
+		glyph = theme.GlyphMixed
 	default:
 	}
 
-	return m.view(mark, false)
+	if !m.Theme.ASCII {
+		mark = " " + m.Theme.Glyph(glyph) + " "
+	}
+
+	return m.view(mark, m.State == Checked || m.State == Mixed, false)
 }
 
 // Radio owns only its selection. The parent deselects other radios in the group.
@@ -146,11 +175,18 @@ func (m Radio) Update(msg tea.Msg) (Radio, tea.Cmd) {
 
 func (m Radio) View() string {
 	mark := "( )"
+	glyph := theme.GlyphUnselected
+
 	if m.Selected {
 		mark = "(*)"
+		glyph = theme.GlyphSelected
 	}
 
-	return m.view(mark, false)
+	if !m.Theme.ASCII {
+		mark = " " + m.Theme.Glyph(glyph) + " "
+	}
+
+	return m.view(mark, m.Selected, false)
 }
 
 type Toggle struct {
@@ -178,7 +214,14 @@ func (m Toggle) View() string {
 		mark = "[ON ]"
 	}
 
-	return m.view(mark, false)
+	if !m.Theme.ASCII {
+		mark = m.Theme.Glyph(theme.GlyphUnselected) + strings.Repeat(lipgloss.NormalBorder().Top, 2) + " OFF"
+		if m.On {
+			mark = strings.Repeat(lipgloss.ThickBorder().Top, 2) + m.Theme.Glyph(theme.GlyphConnected) + " ON "
+		}
+	}
+
+	return m.view(mark, m.On, false)
 }
 
 // Button emits intent without running the action or changing Busy automatically.
@@ -186,6 +229,7 @@ func (m Toggle) View() string {
 type Button struct {
 	Control
 	Busy bool
+	Icon theme.Glyph // Optional action icon; the default is GlyphAction.
 }
 
 func NewButton(id, label string, t theme.Theme) Button {
@@ -202,7 +246,16 @@ func (m Button) Update(msg tea.Msg) (Button, tea.Cmd) {
 
 func (m Button) View() string {
 	c := m.Control
-	c.Label = "[ " + c.Label + " ]"
 
-	return c.view("", m.Busy)
+	c.Label = "[ " + c.Label + " ]"
+	if !c.Theme.ASCII {
+		icon := m.Icon
+		if icon == "" {
+			icon = theme.GlyphAction
+		}
+
+		c.Label = "⟨ " + c.Theme.Glyph(icon) + " " + m.Label + " ⟩"
+	}
+
+	return c.view("", false, m.Busy)
 }

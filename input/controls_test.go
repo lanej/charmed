@@ -118,7 +118,7 @@ func TestRadioToggleAndButtonEmitTypedMessages(t *testing.T) {
 	}
 
 	button.Busy = true
-	if _, cmd = button.Update(enter); cmd != nil || !strings.Contains(ansi.Strip(button.View()), "[BUSY]") {
+	if _, cmd = button.Update(enter); cmd != nil || !strings.Contains(ansi.Strip(button.View()), "BUSY") {
 		t.Fatal("busy button activated or lost state")
 	}
 
@@ -155,5 +155,47 @@ func TestControlMarksKeepGeometryAndEscapeLabels(t *testing.T) {
 		if !strings.Contains(ansi.Strip(button.View()), `Retry\u001b[2J`) {
 			t.Fatal("untrusted label was interpreted")
 		}
+	}
+}
+
+func TestControlsUseUnicodeIndicatorsWithExplicitASCIIFallbacks(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	for _, tc := range []struct {
+		state input.CheckState
+		glyph string
+	}{{input.Unchecked, "☐"}, {input.Checked, "☑"}, {input.Mixed, "▣"}} {
+		control := input.NewCheckbox("id", "Services", tc.state, palette)
+		if !strings.Contains(ansi.Strip(control.View()), tc.glyph) {
+			t.Fatal("checkbox lost its Unicode state")
+		}
+	}
+
+	radio := input.NewRadio("id", "Production", true, palette)
+	if !strings.Contains(ansi.Strip(radio.View()), "◉") {
+		t.Fatal("radio selection lost its distinct circle")
+	}
+
+	off := input.NewToggle("id", "Live", false, palette)
+
+	on := input.NewToggle("id", "Live", true, palette)
+	if !strings.Contains(ansi.Strip(off.View()), "○── OFF") || !strings.Contains(ansi.Strip(on.View()), "━━● ON") {
+		t.Fatal("switch track lost its thumb position")
+	}
+
+	button := input.NewButton("id", "Retry", palette)
+
+	button.Icon = theme.GlyphRefresh
+	if !strings.Contains(ansi.Strip(button.View()), "⟨ ↻ Retry ⟩") {
+		t.Fatal("action icon was lost")
+	}
+
+	button.DisabledReason = "Read-only"
+	if !strings.Contains(ansi.Strip(button.View()), "⊘ disabled Read-only") {
+		t.Fatal("disabled state lost its icon or explanation")
+	}
+
+	button.Theme.ASCII = true
+	if !strings.Contains(ansi.Strip(button.View()), "[ Retry ] [DISABLED] Read-only") {
+		t.Fatal("explicit ASCII policy lost its readable fallback")
 	}
 }

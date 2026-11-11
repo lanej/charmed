@@ -38,14 +38,25 @@ func (s ValueState) Label(value string) string {
 
 func (s ValueState) View(value string, emphasis Emphasis, t theme.Theme) string {
 	tone := Neutral
+	glyph := theme.GlyphUnknown
 
 	switch s {
-	case ValuePresent, ValueMissing, ValueRedacted:
+	case ValuePresent:
+	case ValueMissing:
+		glyph = theme.GlyphMissing
+	case ValueRedacted:
+		glyph = theme.GlyphRedacted
 	case ValueInvalid:
 		tone = Warning
+		glyph = theme.GlyphWarning
 	default:
 		tone = Warning
 	}
 
-	return ToneStyle(tone, emphasis, t).Render(s.Label(value))
+	label := s.Label(value)
+	if s != ValuePresent && !t.ASCII {
+		label = t.Glyph(glyph) + " " + label
+	}
+
+	return ToneStyle(tone, emphasis, t).Render(label)
 }

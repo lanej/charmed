@@ -18,21 +18,21 @@ const (
 )
 
 func (o Outcome) View(emphasis text.Emphasis, t theme.Theme) string {
-	label, tone := "? UNKNOWN", text.Neutral
+	label, tone, glyph := "UNKNOWN", text.Neutral, theme.GlyphUnknown
 
 	switch o {
 	case OutcomeUnknown:
 	case Succeeded:
-		label, tone = "+ SUCCEEDED", text.Success
+		label, tone, glyph = "SUCCEEDED", text.Success, theme.GlyphOK
 	case Failed:
-		label, tone = "x FAILED", text.Danger
+		label, tone, glyph = "FAILED", text.Danger, theme.GlyphError
 	case Canceled:
-		label = "- CANCELED"
+		label, glyph = "CANCELED", theme.GlyphDisabled
 	case TimedOut:
-		label, tone = "! TIMED OUT", text.Warning
+		label, tone, glyph = "TIMED OUT", text.Warning, theme.GlyphClock
 	default:
-		label = "? UNKNOWN OUTCOME"
+		label = "UNKNOWN OUTCOME"
 	}
 
-	return text.Pill(label, tone, t, emphasis)
+	return text.Pill(t.Glyph(glyph)+" "+label, tone, t, emphasis)
 }

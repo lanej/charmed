@@ -39,11 +39,25 @@ const (
 	GlyphDownstream   Glyph = "downstream"
 	GlyphScrollTrack  Glyph = "scroll-track"
 	GlyphScrollThumb  Glyph = "scroll-thumb"
+	GlyphChecked      Glyph = "checked"
+	GlyphUnchecked    Glyph = "unchecked"
+	GlyphMixed        Glyph = "mixed"
+	GlyphAction       Glyph = "action"
+	GlyphBusy         Glyph = "busy"
+	GlyphDelete       Glyph = "delete"
+	GlyphInactive     Glyph = "inactive"
+	GlyphAdded        Glyph = "added"
+	GlyphModified     Glyph = "modified"
+	GlyphRemoved      Glyph = "removed"
+	GlyphUnchanged    Glyph = "unchanged"
+	GlyphMissing      Glyph = "missing"
+	GlyphRedacted     Glyph = "redacted"
+	GlyphClock        Glyph = "clock"
 )
 
 // Glyphs returns the semantic catalog in display order.
 func Glyphs() []Glyph {
-	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphConnected, GlyphDisconnected, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable, GlyphLog, GlyphTrace, GlyphSpan, GlyphUpstream, GlyphDownstream, GlyphScrollTrack, GlyphScrollThumb}
+	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphConnected, GlyphDisconnected, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable, GlyphLog, GlyphTrace, GlyphSpan, GlyphUpstream, GlyphDownstream, GlyphScrollTrack, GlyphScrollThumb, GlyphChecked, GlyphUnchecked, GlyphMixed, GlyphAction, GlyphBusy, GlyphDelete, GlyphInactive, GlyphAdded, GlyphModified, GlyphRemoved, GlyphUnchanged, GlyphMissing, GlyphRedacted, GlyphClock}
 }
 
 // Glyph returns a compact mark. Callers keep a text label for semantic states.
@@ -60,7 +74,7 @@ func (t Theme) Glyph(glyph Glyph) string {
 	case GlyphUnknown:
 		unicode, ascii = "?", "?"
 	case GlyphOff:
-		unicode, ascii = "○", "-"
+		unicode, ascii = "⏻", "-"
 	case GlyphPending:
 		unicode, ascii = "◷", "p"
 	case GlyphRunning:
@@ -88,7 +102,7 @@ func (t Theme) Glyph(glyph Glyph) string {
 	case GlyphInfo:
 		unicode, ascii = "i", "i"
 	case GlyphSelected:
-		unicode, ascii = "●", "*"
+		unicode, ascii = "◉", "*"
 	case GlyphUnselected:
 		unicode, ascii = "○", "o"
 	case GlyphExpanded:
@@ -121,6 +135,34 @@ func (t Theme) Glyph(glyph Glyph) string {
 		unicode, ascii = "↓", "v"
 	case GlyphUnavailable:
 		unicode, ascii = "—", "-"
+	case GlyphChecked:
+		unicode, ascii = "☑", "x"
+	case GlyphUnchecked:
+		unicode, ascii = "☐", " "
+	case GlyphMixed:
+		unicode, ascii = "▣", "-"
+	case GlyphAction:
+		unicode, ascii = "↵", ">"
+	case GlyphBusy:
+		unicode, ascii = "⟳", "~"
+	case GlyphDelete:
+		unicode, ascii = "⌫", "x"
+	case GlyphInactive:
+		unicode, ascii = "◌", "-"
+	case GlyphAdded:
+		unicode, ascii = "⊕", "+"
+	case GlyphModified:
+		unicode, ascii = "↺", "~"
+	case GlyphRemoved:
+		unicode, ascii = "⊖", "-"
+	case GlyphUnchanged:
+		unicode, ascii = "≡", "="
+	case GlyphMissing:
+		unicode, ascii = "∅", "-"
+	case GlyphRedacted:
+		unicode, ascii = "▧", "#"
+	case GlyphClock:
+		unicode, ascii = "◷", "t"
 	default:
 		unicode, ascii = "?", "?"
 	}

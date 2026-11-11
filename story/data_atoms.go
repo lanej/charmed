@@ -10,6 +10,7 @@ import (
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/runtime"
 	"github.com/lanej/charmed/text"
+	"github.com/lanej/charmed/theme"
 )
 
 func dataAtomDefinitions() []Definition {
@@ -123,6 +124,7 @@ func controlAtomStory(id string, e Environment) (runtime.Scene, error) {
 	radio := input.NewRadio("production", "Production", false, palette)
 	toggle := input.NewToggle("live", "Live updates", false, palette)
 	button := input.NewButton("retry", "Retry", palette)
+	button.Icon = theme.GlyphRefresh
 
 	checkbox.Focus()
 	radio.Focus()
@@ -188,9 +190,11 @@ func controlAtomStory(id string, e Environment) (runtime.Scene, error) {
 		case "input/button":
 			rows = append(rows, button.View())
 			busy := input.NewButton("busy", "Refreshing", palette)
+			busy.Icon = theme.GlyphRefresh
 			busy.Busy = true
 			rows = append(rows, busy.View())
 			locked := input.NewButton("locked", "Delete", palette)
+			locked.Icon = theme.GlyphDelete
 			locked.DisabledReason = "Read-only"
 			rows = append(rows, locked.View())
 		}

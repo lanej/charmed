@@ -52,21 +52,21 @@ const (
 )
 
 func (c ChangeKind) View(emphasis Emphasis, t theme.Theme) string {
-	label, tone := "= unchanged", Neutral
+	label, tone, glyph := "unchanged", Neutral, theme.GlyphUnchanged
 
 	switch c {
 	case Unchanged:
 	case Added:
-		label, tone = "+ added", Success
+		label, tone, glyph = "added", Success, theme.GlyphAdded
 	case Modified:
-		label, tone = "~ modified", Warning
+		label, tone, glyph = "modified", Warning, theme.GlyphModified
 	case Removed:
-		label, tone = "- removed", Danger
+		label, tone, glyph = "removed", Danger, theme.GlyphRemoved
 	default:
-		label = "? unknown change"
+		label, glyph = "unknown change", theme.GlyphUnknown
 	}
 
-	return ToneStyle(tone, emphasis, t).Render(label)
+	return ToneStyle(tone, emphasis, t).Render(t.Glyph(glyph) + " " + label)
 }
 
 type OmissionKind string
@@ -113,5 +113,15 @@ func (o Omission) Label() string {
 }
 
 func (o Omission) View(t theme.Theme) string {
-	return ToneStyle(Neutral, o.Emphasis, t).Render(o.Label())
+	label := o.Label()
+	if label != "" && !t.ASCII {
+		glyph := theme.GlyphLoading
+		if o.Kind == SourceTruncated {
+			glyph = theme.GlyphWarning
+		}
+
+		label = t.Glyph(glyph) + " " + label
+	}
+
+	return ToneStyle(Neutral, o.Emphasis, t).Render(label)
 }

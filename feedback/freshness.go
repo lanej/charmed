@@ -44,5 +44,16 @@ func (f Freshness) View(now time.Time, t theme.Theme) string {
 		tone = text.Warning
 	}
 
-	return text.ToneStyle(tone, f.Emphasis, t).Render(f.Label(now))
+	label := f.Label(now)
+
+	if !t.ASCII {
+		glyph := theme.GlyphClock
+		if f.ObservedAt.IsZero() || now.IsZero() {
+			glyph = theme.GlyphUnavailable
+		}
+
+		label = t.Glyph(glyph) + " " + label
+	}
+
+	return text.ToneStyle(tone, f.Emphasis, t).Render(label)
 }
