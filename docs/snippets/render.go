@@ -156,6 +156,8 @@ func Render(id string) (string, error) {
 		return ExampleScreenDeployment()
 	case "text/presentation":
 		return ExampleTextPresentation(), nil
+	case "text/link":
+		return ExampleTextLink()
 	case "text/url":
 		return ExampleTextUrl(), nil
 	case "feedback/follow":

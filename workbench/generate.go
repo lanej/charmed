@@ -179,7 +179,7 @@ func Generate(out string) error {
 			)
 		}
 
-		if d.ID == "foundations/permissions" || d.Family == "commands" || d.Family == "logs" || d.Family == "http" || d.ID == "text/syntax" {
+		if d.ID == "foundations/permissions" || d.Family == "commands" || d.Family == "logs" || d.Family == "http" || d.ID == "text/syntax" || d.ID == "text/link" {
 			for _, mode := range []theme.Mode{theme.Light, theme.Contrast} {
 				variants = append(variants, struct {
 					name   string
