@@ -22,6 +22,7 @@ import (
 
 func atomsDefinitions() []Definition {
 	d := []Definition{
+		{ID: "text/link", Title: "Atoms/Text/Link", Level: "Atoms", Family: "text", Description: "Compact underlined labels carry exact absolute URIs through OSC 8; NewWebLink adds HTTP/HTTPS validation. The terminal owns hover and opening; Plain retains destinations without terminal controls. Saved previews show styling only.", Source: "text/link.go", Symbol: "Link", Defaults: func() Config { c := atomConfig(); c.Rows = 18; return c }(), Factory: linkStory},
 		widget("text/primitives", "Atoms/Text/Primitives", "Atoms", "text", "Labels, badges and keyboard hints share semantic roles.", "textStory", []string{"value"}, textStory),
 		widget("input/text", "Atoms/Input/Text", "Atoms", "input", "A focused input with a native virtual cursor and shared theme.", "inputStory", []string{"value", "state"}, inputStory),
 		widget("input/textarea", "Atoms/Input/Textarea", "Atoms", "input", "Multiline input with native editing and bounded dimensions.", "areaStory", []string{"value"}, areaStory),

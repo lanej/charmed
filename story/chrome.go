@@ -11,6 +11,7 @@ import (
 
 func chromeDefinitions() []Definition {
 	definitions := []Definition{
+		{ID: "layout/link-group", Title: "Molecules/Layout/Link group", Level: "Molecules", Family: "layout", Description: "Related destinations flow in order with shared spacing, wrap between items, and retain exact targets through long-label wrapping. Each link keeps its own presentation and emphasis.", Source: "layout/links.go", Symbol: "LinkGroup", Composes: []string{"text/link", "foundations/layout"}, Defaults: DefaultConfig(), Factory: linkGroupStory},
 		{ID: "feedback/connection", Title: "Atoms/Feedback/Connection", Level: "Atoms", Family: "feedback", Description: "Connected and disconnected describe connectivity independently of health, severity or unknown state. Labels and glyphs remain visible in every profile.", Source: "story/chrome.go", Symbol: "connectionStory", Controls: []string{"emphasis"}, Composes: []string{"feedback/status"}, Defaults: DefaultConfig(), Factory: connectionStory},
 		{ID: "navigation/tabs", Title: "Molecules/Navigation/Tabs", Level: "Molecules", Family: "navigation", Description: "Focused arrow-key navigation with stable selection, visible overflow and shared selection styling.", Source: "story/chrome.go", Symbol: "tabsStory", Composes: []string{"foundations/layout"}, Defaults: DefaultConfig(), Factory: tabsStory},
 		{ID: "layout/header", Title: "Molecules/Layout/Header", Level: "Molecules", Family: "layout", Description: "Title and trailing actions with an optional context row. Narrow widths preserve the title before actions.", Source: "story/chrome.go", Symbol: "headerStory", Composes: []string{"foundations/layout"}, Defaults: DefaultConfig(), Factory: headerStory},
@@ -22,6 +23,10 @@ func chromeDefinitions() []Definition {
 	for i := range definitions {
 		definitions[i].Defaults.Columns = 64
 		definitions[i].Defaults.Rows = 8
+
+		if definitions[i].ID == "layout/link-group" {
+			definitions[i].Defaults.Rows = 16
+		}
 
 		if definitions[i].Level == "Templates" {
 			definitions[i].Defaults.Rows = 12

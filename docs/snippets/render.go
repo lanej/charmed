@@ -124,6 +124,8 @@ func Render(id string) (string, error) {
 		return ExampleFeedbackConnection(), nil
 	case "navigation/tabs":
 		return ExampleNavigationTabs(), nil
+	case "layout/link-group":
+		return ExampleLayoutLinkGroup()
 	case "layout/header":
 		return ExampleLayoutHeader(), nil
 	case "layout/identity-header":
@@ -156,6 +158,8 @@ func Render(id string) (string, error) {
 		return ExampleScreenDeployment()
 	case "text/presentation":
 		return ExampleTextPresentation(), nil
+	case "text/link":
+		return ExampleTextLink()
 	case "text/url":
 		return ExampleTextUrl(), nil
 	case "feedback/follow":
