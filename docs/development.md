@@ -18,6 +18,8 @@ Explore the [input components](atoms-input.html#input/text), [charts](atoms-char
 
 ## Inspect a native fixture
 
+The workbench uses Charmed's [CLI help formatter](molecules-commands.html#cli/help). Compare `go run ./cmd/workbench --help` with `go run ./cmd/workbench help capture` to see the root's commands and a subcommand's flags.
+
 The documentation snapshots are deterministic captures of real Go components, not browser recreations. Use the terminal runner when you need to inspect keyboard behavior, animation, focus, or resizing.
 
 ```sh

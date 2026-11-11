@@ -25,6 +25,7 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 
 | Package | Includes |
 | --- | --- |
+| `cli` | Responsive command-line help from native Cobra commands, groups, flags and examples |
 | `theme` | Dark, light, high-contrast and monochrome themes; semantic and dim colors; independent series colors; named glyphs, spacing, ASCII and motion policies |
 | `layout` | ANSI-aware fitting, cell rectangles, responsive splits, stacks, panels, headers and footers |
 | `navigation` | Keyboard-driven tabs with stable selection and overflow indicators |
@@ -59,6 +60,17 @@ cmd := field.Focus()
 ```
 
 The core uses upstream Charm v2 modules. It has no JavaScript runtime requirement and no Bubble Tea fork.
+
+## Command-line help
+
+Install the formatter once on your Cobra root. Subcommands inherit it for `-h`, `--help` and `help <command>`.
+
+```go
+cli.HelpFormatter{}.Install(root)
+return root.ExecuteContext(ctx)
+```
+
+Use `formatter.Format(cmd)` to render the same page in a terminal view or documentation. Set `Width` for a fixed cell budget and `Theme` for a custom palette. Applications using Fang should call Cobra's `ExecuteContext` as shown above because `fang.Execute` installs its own help function. [See the rendered example](https://lanej.io/charmed/molecules-commands.html#cli/help).
 
 ## Static guide
 
