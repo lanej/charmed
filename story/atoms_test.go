@@ -90,3 +90,18 @@ func TestNarrowPermissionsKeepUnknownAndSpecialBitsVisible(t *testing.T) {
 		}
 	}
 }
+
+func TestNarrowLinkStoryRetainsPlainDestination(t *testing.T) {
+	config := story.DefaultConfig()
+	config.Columns, config.Rows = 40, 16
+
+	frame, err := story.Frame("text/link", config)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	content := strings.Join(strings.Fields(ansi.Strip(frame)), "")
+	if !strings.Contains(content, "https://github.com/lanej/charmed/pull/42") {
+		t.Fatal("narrow link fixture clipped its explicit plain destination")
+	}
+}

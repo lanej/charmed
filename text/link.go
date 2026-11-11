@@ -15,20 +15,27 @@ import (
 // View for hyperlink-capable output and Plain for logs or unsupported terminals.
 // Scheme handling and permission to open a target belong to the application.
 type Link struct {
-	Label string
-	URL   string
+	Label        string
+	URL          string
+	Presentation Presentation
+	Emphasis     Emphasis
 }
 
 // View renders an underlined label with the named link glyph and an OSC 8 target.
 // The target covers only this atom; labels are escaped rather than interpreted
-// as ANSI. Invalid links return an error and no terminal output.
+// as ANSI. Presentation and emphasis change only the label, never its target.
+// Invalid links return an error and no terminal output.
 func (l Link) View(t theme.Theme) (string, error) {
 	if _, err := l.validate(); err != nil {
 		return "", err
 	}
 
-	return t.Text().Foreground(t.Accent).Underline(true).Hyperlink(l.URL).
-		Render(t.Glyph(theme.GlyphLink) + " " + Inline(l.Label)), nil
+	style := t.LinkStyle().Bold(l.Emphasis == Bright)
+	if l.Emphasis == Dim && t.DimLink != nil {
+		style = style.Foreground(t.DimLink)
+	}
+
+	return style.Hyperlink(l.URL).Render(l.Presentation.Format(t.Glyph(theme.GlyphLink), l.Label)), nil
 }
 
 // Plain includes the full destination without emitting any terminal controls.

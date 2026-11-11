@@ -199,3 +199,34 @@ func TestPermissionColorsRemainReadableOnContentAndSelection(t *testing.T) {
 		}
 	}
 }
+
+func TestLinkTokensRemainReadableAndCustomThemesHaveFallbacks(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast} {
+		palette := theme.New(mode)
+		for _, foreground := range []color.Color{palette.Link, palette.DimLink} {
+			for _, background := range []color.Color{palette.Background, palette.Surface, palette.SelectionBackground} {
+				fg, bg := luminance(foreground), luminance(background)
+				if (max(fg, bg)+.05)/(min(fg, bg)+.05) < 4.5 {
+					t.Fatalf("%s link foreground %v background %v contrast %.2f", mode, foreground, background, (max(fg, bg)+.05)/(min(fg, bg)+.05))
+				}
+			}
+		}
+	}
+
+	custom := theme.New(theme.Dark)
+	custom.Link = lipgloss.Color("#ff00ff")
+
+	if custom.LinkStyle().GetForeground() != custom.Link || !custom.LinkStyle().GetUnderline() {
+		t.Fatal("custom link role was ignored")
+	}
+
+	custom.Link = nil
+	if custom.LinkStyle().GetForeground() != custom.Accent {
+		t.Fatal("partial custom theme lost the accent fallback")
+	}
+
+	custom.Accent = nil
+	if custom.LinkStyle().GetForeground() != custom.Foreground {
+		t.Fatal("partial custom theme lost its text foreground fallback")
+	}
+}

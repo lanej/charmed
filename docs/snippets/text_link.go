@@ -21,7 +21,7 @@ func ExampleTextLink() (string, error) {
 		return "", err
 	}
 
-	session := text.Link{Label: "Worker session", URL: "terminal://session/build/pane/tests"}
+	session := text.Link{Label: "Worker session", URL: "terminal://session/build/pane/tests", Presentation: text.LabelOnly, Emphasis: text.Dim}
 
 	sessionView, err := session.View(theme.New(theme.Dark))
 	if err != nil {

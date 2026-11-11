@@ -55,7 +55,8 @@ func themeStory(e Environment) (runtime.Scene, error) {
 
 		rows = append(rows,
 			t.Text().Foreground(t.Unknown).Render("unknown  ")+"  "+t.Text().Foreground(t.DimUnknown).Render("dim unknown"),
-			t.Text().Foreground(t.Inactive).Render("off      ")+"  "+t.Text().Foreground(t.DimInactive).Render("dim off"))
+			t.Text().Foreground(t.Inactive).Render("off      ")+"  "+t.Text().Foreground(t.DimInactive).Render("dim off"),
+			t.LinkStyle().Render("link     ")+"  "+t.LinkStyle().Foreground(t.DimLink).Render("dim link"))
 
 		rows = append(rows, "", "Categorical data / independent palette")
 

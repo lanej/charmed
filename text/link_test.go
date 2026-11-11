@@ -1,6 +1,7 @@
 package text_test
 
 import (
+	"image/color"
 	"strings"
 	"testing"
 
@@ -199,5 +200,65 @@ func TestWebLinkLayersValidationOverGeneralLink(t *testing.T) {
 
 	if got, err := text.NewWebLink("", "https://example.test"); err == nil || got != (text.Link{}) {
 		t.Fatal("web helper skipped shared label validation")
+	}
+}
+
+func TestLinkPresentationAndEmphasisKeepTargetAndGeometry(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast, theme.Mono} {
+		palette := theme.New(mode)
+		for _, presentation := range []text.Presentation{text.DefaultPresentation, text.GlyphAndLabel, text.GlyphOnly, text.LabelOnly} {
+			expected := palette.Glyph(theme.GlyphLink) + " Logs"
+
+			switch presentation {
+			case text.DefaultPresentation, text.GlyphAndLabel:
+			case text.GlyphOnly:
+				expected = palette.Glyph(theme.GlyphLink)
+			case text.LabelOnly:
+				expected = "Logs"
+			default:
+				t.Fatal("unknown test presentation")
+			}
+
+			for _, emphasis := range []text.Emphasis{text.Normal, text.Dim, text.Bright} {
+				link := text.Link{Label: "Logs", URL: "https://example.test/logs", Presentation: presentation, Emphasis: emphasis}
+
+				view, err := link.View(palette)
+				if err != nil {
+					t.Fatal(err)
+				}
+
+				if ansi.Strip(view) != expected || ansi.StringWidth(view) != ansi.StringWidth(expected) {
+					t.Fatalf("presentation/emphasis changed label geometry: %q", view)
+				}
+
+				foreground := palette.Link
+				if emphasis == text.Dim {
+					foreground = palette.DimLink
+				}
+
+				for _, cell := range uv.NewStyledString(view).Lines(ansi.GraphemeWidth)[0] {
+					if cell.Width == 0 {
+						continue
+					}
+
+					if cell.Link.URL != link.URL || cell.Style.Underline == uv.UnderlineNone {
+						t.Fatal("presentation or emphasis removed the target or underline")
+					}
+
+					if cell.Content != " " && (cell.Style.Attrs&uv.AttrBold != 0) != (emphasis == text.Bright) {
+						t.Fatalf("%s/%s/%s cell %q attributes %v lost distinct weight", mode, presentation, emphasis, cell.Content, cell.Style.Attrs)
+					}
+
+					if color.NRGBAModel.Convert(cell.Style.Fg) != color.NRGBAModel.Convert(foreground) {
+						t.Fatalf("%s/%s ignored the semantic link color", mode, emphasis)
+					}
+				}
+
+				plain, err := link.Plain()
+				if err != nil || plain != "Logs (https://example.test/logs)" {
+					t.Fatal("visual options hid the plain label or destination")
+				}
+			}
+		}
 	}
 }
