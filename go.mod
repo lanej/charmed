@@ -1,6 +1,6 @@
 module github.com/lanej/charmed
 
-go 1.26.10
+go 1.26.11
 
 require (
 	charm.land/bubbles/v2 v2.2.1
@@ -18,6 +18,7 @@ require (
 	github.com/charmbracelet/x/ansi v0.11.9
 	github.com/coder/websocket v1.8.15
 	github.com/creack/pty v1.1.24
+	github.com/rivo/uniseg v0.4.7
 	github.com/spf13/cobra v1.10.2
 	github.com/yuin/goldmark v1.7.17
 	golang.org/x/net v0.60.0
@@ -51,7 +52,6 @@ require (
 	github.com/muesli/mango-cobra v1.2.0 // indirect
 	github.com/muesli/mango-pflag v0.1.0 // indirect
 	github.com/muesli/roff v0.1.0 // indirect
-	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/sahilm/fuzzy v0.1.3 // indirect
 	github.com/spf13/pflag v1.0.9 // indirect
 	github.com/xo/terminfo v1.2.0 // indirect

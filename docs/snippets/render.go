@@ -6,6 +6,32 @@ import "fmt"
 // Render runs only bounded rendering and construction, never a terminal program or initialization command.
 func Render(id string) (string, error) {
 	switch id {
+	case "input/checkbox":
+		return ExampleInputCheckbox(), nil
+	case "input/radio":
+		return ExampleInputRadio(), nil
+	case "input/toggle":
+		return ExampleInputToggle(), nil
+	case "input/button":
+		return ExampleInputButton(), nil
+	case "feedback/freshness":
+		return ExampleFeedbackFreshness(), nil
+	case "feedback/outcome":
+		return ExampleFeedbackOutcome(), nil
+	case "text/value-state":
+		return ExampleTextValueState(), nil
+	case "text/quantity":
+		return ExampleTextQuantity(), nil
+	case "text/identifier":
+		return ExampleTextIdentifier(), nil
+	case "text/match":
+		return ExampleTextMatch(), nil
+	case "text/sort":
+		return ExampleTextSort(), nil
+	case "text/change":
+		return ExampleTextChange(), nil
+	case "text/omission":
+		return ExampleTextOmission(), nil
 	case "foundations/theme":
 		return ExampleFoundationsTheme(), nil
 	case "foundations/layout":

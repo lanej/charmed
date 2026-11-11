@@ -2,13 +2,13 @@
 
 A Go design system for Charm and ntcharts, with a static reference guide and native terminal fixtures.
 
-Components share semantic themes, terminal-cell geometry, focus conventions and state handling. The guide groups related components, saved Go output, source and composition examples by capability.
+The [design philosophy](DESIGN.md) guides the visual language and component decisions. Components share semantic themes, terminal-cell geometry, focus conventions and state handling. The guide groups related components, saved Go output, source and composition examples by capability.
 
 ![Charmed static guide in night mode](.github/pr-assets/static-guide.png)
 
 ## Run it
 
-Requires Go **1.26.10+**. Native terminal sessions support Linux and macOS.
+Requires Go **1.26.11+**. Native terminal sessions support Linux and macOS.
 
 ```sh
 go run ./cmd/workbench list

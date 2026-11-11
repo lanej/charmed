@@ -9,7 +9,8 @@
   "sourceChecks": [],
   "accessibility": true,
   "projectDocuments": [
-    "DESIGN.md"
+    "DESIGN.md",
+    "docs/guide-design.md"
   ],
   "pages": [
     {
