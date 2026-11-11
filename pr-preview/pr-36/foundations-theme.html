@@ -245,21 +245,21 @@ Categorical data / independent palette</pre></figure>
 <figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">⌕ Search   
 ▾ Expanded 
 ▸ Collapsed
-● Selected</pre></figure>
+◉ Selected</pre></figure>
 </div>
 <div id="panel-foundations/glyphs-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/glyphs-0" tabindex="0">
 <figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Meaning     U A     Meaning     U A                                                                 
                                                                                                     
 ok           ✓ +    warning      ! !                                                                
 error        × x    unknown      ? ?                                                                
-off          ○ -    pending      ◷ p                                                                
+off          ⏻ -    pending      ◷ p                                                                
 running      ▶ &gt;    paused       ‖ =                                                                
 disabled     ⊘ /    connected    ● +                                                                
 disconnected ○ -    info         i i                                                                
 search       ⌕ /    filter       ▽ f                                                                
 sort         ↕ s    refresh      ↻ r                                                                
 link         ↗ @    expand       ⤢ +                                                                
-selected     ● *    unselected   ○ o                                                                
+selected     ◉ *    unselected   ○ o                                                                
 expanded     ▾ v    collapsed    ▸ &gt;                                                                
 up           ↑ ^    down         ↓ v                                                                
 left         ← &lt;    right        → &gt;                                                                
@@ -267,20 +267,27 @@ loading      … .    unavailable  — -
 log          ≡ L    trace        ⋈ T                                                                
 span         ─ S    upstream     ↑ ^                                                                
 downstream   ↓ v    scroll-track │ |                                                                
-scroll-thumb ┃ #</pre></figure>
+scroll-thumb ┃ #    checked      ☑ x                                                                
+unchecked    ☐      mixed        ▣ -                                                                
+action       ↵ &gt;    busy         ⟳ ~                                                                
+delete       ⌫ x    inactive     ◌ -                                                                
+added        ⊕ +    modified     ↺ ~                                                                
+removed      ⊖ -    unchanged    ≡ =                                                                
+missing      ∅ -    redacted     ▧ #                                                                
+clock        ◷ t</pre></figure>
 </div><div id="panel-foundations/glyphs-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/glyphs-1" tabindex="0">
-<figure><figcaption>Narrow · truecolor · 40 × 20 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Meaning     U A     Meaning     U A     
+<figure><figcaption>Narrow · truecolor · 40 × 27 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Meaning     U A     Meaning     U A     
                                         
 ok           ✓ +    warning      ! !    
 error        × x    unknown      ? ?    
-off          ○ -    pending      ◷ p    
+off          ⏻ -    pending      ◷ p    
 running      ▶ &gt;    paused       ‖ =    
 disabled     ⊘ /    connected    ● +    
 disconnected ○ -    info         i i    
 search       ⌕ /    filter       ▽ f    
 sort         ↕ s    refresh      ↻ r    
 link         ↗ @    expand       ⤢ +    
-selected     ● *    unselected   ○ o    
+selected     ◉ *    unselected   ○ o    
 expanded     ▾ v    collapsed    ▸ &gt;    
 up           ↑ ^    down         ↓ v    
 left         ← &lt;    right        → &gt;    
@@ -288,20 +295,27 @@ loading      … .    unavailable  — -
 log          ≡ L    trace        ⋈ T    
 span         ─ S    upstream     ↑ ^    
 downstream   ↓ v    scroll-track │ |    
-scroll-thumb ┃ #</pre></figure>
+scroll-thumb ┃ #    checked      ☑ x    
+unchecked    ☐      mixed        ▣ -    
+action       ↵ &gt;    busy         ⟳ ~    
+delete       ⌫ x    inactive     ◌ -    
+added        ⊕ +    modified     ↺ ~    
+removed      ⊖ -    unchanged    ≡ =    
+missing      ∅ -    redacted     ▧ #    
+clock        ◷ t</pre></figure>
 </div><div id="panel-foundations/glyphs-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/glyphs-2" tabindex="0">
 <figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Meaning     U A     Meaning     U A                                                                 
                                                                                                     
 ok           ✓ +    warning      ! !                                                                
 error        × x    unknown      ? ?                                                                
-off          ○ -    pending      ◷ p                                                                
+off          ⏻ -    pending      ◷ p                                                                
 running      ▶ &gt;    paused       ‖ =                                                                
 disabled     ⊘ /    connected    ● +                                                                
 disconnected ○ -    info         i i                                                                
 search       ⌕ /    filter       ▽ f                                                                
 sort         ↕ s    refresh      ↻ r                                                                
 link         ↗ @    expand       ⤢ +                                                                
-selected     ● *    unselected   ○ o                                                                
+selected     ◉ *    unselected   ○ o                                                                
 expanded     ▾ v    collapsed    ▸ &gt;                                                                
 up           ↑ ^    down         ↓ v                                                                
 left         ← &lt;    right        → &gt;                                                                
@@ -309,20 +323,27 @@ loading      … .    unavailable  — -
 log          ≡ L    trace        ⋈ T                                                                
 span         ─ S    upstream     ↑ ^                                                                
 downstream   ↓ v    scroll-track │ |                                                                
-scroll-thumb ┃ #</pre></figure>
+scroll-thumb ┃ #    checked      ☑ x                                                                
+unchecked    ☐      mixed        ▣ -                                                                
+action       ↵ &gt;    busy         ⟳ ~                                                                
+delete       ⌫ x    inactive     ◌ -                                                                
+added        ⊕ +    modified     ↺ ~                                                                
+removed      ⊖ -    unchanged    ≡ =                                                                
+missing      ∅ -    redacted     ▧ #                                                                
+clock        ◷ t</pre></figure>
 </div><div id="panel-foundations/glyphs-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/glyphs-3" tabindex="0">
 <figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Meaning     U A     Meaning     U A                                                                 
                                                                                                     
 ok           ✓ +    warning      ! !                                                                
 error        × x    unknown      ? ?                                                                
-off          ○ -    pending      ◷ p                                                                
+off          ⏻ -    pending      ◷ p                                                                
 running      ▶ &gt;    paused       ‖ =                                                                
 disabled     ⊘ /    connected    ● +                                                                
 disconnected ○ -    info         i i                                                                
 search       ⌕ /    filter       ▽ f                                                                
 sort         ↕ s    refresh      ↻ r                                                                
 link         ↗ @    expand       ⤢ +                                                                
-selected     ● *    unselected   ○ o                                                                
+selected     ◉ *    unselected   ○ o                                                                
 expanded     ▾ v    collapsed    ▸ &gt;                                                                
 up           ↑ ^    down         ↓ v                                                                
 left         ← &lt;    right        → &gt;                                                                
@@ -330,7 +351,14 @@ loading      … .    unavailable  — -
 log          ≡ L    trace        ⋈ T                                                                
 span         ─ S    upstream     ↑ ^                                                                
 downstream   ↓ v    scroll-track │ |                                                                
-scroll-thumb ┃ #</pre></figure>
+scroll-thumb ┃ #    checked      ☑ x                                                                
+unchecked    ☐      mixed        ▣ -                                                                
+action       ↵ &gt;    busy         ⟳ ~                                                                
+delete       ⌫ x    inactive     ◌ -                                                                
+added        ⊕ +    modified     ↺ ~                                                                
+removed      ⊖ -    unchanged    ≡ =                                                                
+missing      ∅ -    redacted     ▧ #                                                                
+clock        ◷ t</pre></figure>
 </div><div id="panel-foundations/glyphs-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/glyphs-4" tabindex="0">
 <figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Meaning     U A     Meaning     U A                                                                 
                                                                                                     
@@ -351,7 +379,14 @@ loading      . .    unavailable  - -
 log          L L    trace        T T                                                                
 span         S S    upstream     ^ ^                                                                
 downstream   v v    scroll-track | |                                                                
-scroll-thumb # #</pre></figure>
+scroll-thumb # #    checked      x x                                                                
+unchecked           mixed        - -                                                                
+action       &gt; &gt;    busy         ~ ~                                                                
+delete       x x    inactive     - -                                                                
+added        + +    modified     ~ ~                                                                
+removed      - -    unchanged    = =                                                                
+missing      - -    redacted     # #                                                                
+clock        t t</pre></figure>
 </div>
 </div>
 </div>
