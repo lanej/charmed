@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Compare a deployment · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Compare a deployment</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<p class="nav-title">Atomic design</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">53</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" aria-current="page">Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<p class="nav-title">Atomic design</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">53</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+
+</div>
+<p class="nav-title">Guides</p>
+<a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" aria-current="page">Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+</aside>
+<main id="main">
+
+
+
+<h1 id="compare-a-deployment-across-a-fleet">Compare a deployment across a fleet</h1>
+<p>Four linked panels compare <strong>2xx, 3xx, 4xx and 5xx response percentages</strong> between version identifiers <code class="inline-code">a13c9f2</code> and <code class="inline-code">f4d7e81</code> during a <strong>blue/green deployment</strong>. Reference and candidate are comparison roles; blue/green describes the deployment method. The counts are synthetic: 64 hosts serving the reference version, 32 serving the candidate, and twelve five-minute windows.</p>
+<h2 id="presentation-variants"><a class="heading-permalink" href="#presentation-variants"><span>Presentation variants</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p><strong>Stacked is the default.</strong> Press <strong>b</strong> in the native terminal to switch to <strong>Disconnected bands</strong>. Changing it keeps the current host, metric, window, sigma, focus and attention policy. <strong>b</strong> toggles presentation natively; <code class="inline-code"><span class="syn-function">SetVariant</span><span class="syn-operator">(</span>pattern<span class="syn-operator">.</span>Stacked<span class="syn-operator">)</span></code> and <code class="inline-code"><span class="syn-function">SetVariant</span><span class="syn-operator">(</span>pattern<span class="syn-operator">.</span>Bands<span class="syn-operator">)</span></code> select it explicitly.</p>
+<p>The band variant composes the same distributions and title-delta properties into a rectangle, with the active class's history below it. Each class retains a percentage axis shared by both versions. Static exports save <strong>Disconnected bands</strong> alongside the default stacked fixture, rather than publishing a replacement screen. Native: <code class="inline-code">go run ./cmd/workbench run screen/deployment --comparison-variant bands</code>.</p>
+<h2 id="read-the-comparison"><a class="heading-permalink" href="#read-the-comparison"><span>Read the comparison</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>The <strong>fleet rate</strong> is total class responses divided by total responses in the selected window. A host serving 100,000 responses contributes more than one serving 100. Each panel title merges the version comparison into one <strong>delta bar</strong>: shared reference/candidate response share cancels, leaving the signed candidate-minus-reference difference in <strong>percentage points</strong>. Negative changes extend left of zero; positive changes extend right, with an exact signed value alongside.</p>
+<p>All four title bars share one symmetric domain, rounded to a readable extent and shown once in the window metadata. The domain includes all supplied windows and configured fleet limits, so selecting a window or host does not rescale a deviation. Repeated fleet-percentage rows are removed. The title delta is request weighted; the mean values in the body describe the eligible-host distribution.</p>
+<p>Status classes use compact code pills: <strong>2xx</strong> success in green, <strong>3xx</strong> redirects in blue, <strong>4xx</strong> client errors in amber and <strong>5xx</strong> server errors in red. The same category pill appears in its panel, the active host-list heading and the inspector. Labels preserve meaning in monochrome and ASCII output. These colors describe response categories, rather than declaring every redirect or client error a release regression.</p>
+<p>The <strong>host mean</strong> gives each eligible host equal weight. The nested bands are the host mean ±1, ±2 and ±3 <strong>sample standard deviations</strong>, using the <code class="inline-code">n − 1</code> denominator. The brightest inner band is 1σ; the lighter surrounding bands are 2σ and 3σ. The mean is <code class="inline-code"><span class="syn-operator">|</span></code>; <code class="inline-code">X</code> marks the selected host on its version's band. Both versions share the same axis within a response class. Different classes have their own axes so a small 5xx shift stays visible. The axis includes both versions' full 3σ extent and the selected host; changing the visible band limit keeps that axis stable. Displayed bands stop at 0% and 100%.</p>
+<p>Histories show each version's request-weighted rate and the selected host's rate over all supplied windows. Version IDs appear directly in fleet values, distribution labels and the host table. The screen has no legends or explanatory key footers. Status-category pills keep their separate meanings.</p>
+<p>The host list ranks configured attention first, then absolute distance from the <strong>reference version's host distribution</strong> for the active response class. Its <code class="inline-code"><span class="syn-function">z</span><span class="syn-operator">(</span>ref<span class="syn-operator">)</span></code> is <code class="inline-code">(host rate − reference host mean) / reference host standard deviation</code>. This is a descriptive distance, including for candidate hosts, rather than a confidence score. The candidate's widening spread does not redefine its reference. The descriptive tail count includes eligible hosts from both cohorts beyond the selected sigma distance; this is separate from boundary attention.</p>
+<p>Version identifiers are opaque strings: a commit, release tag or build ID can identify either role. The <code class="inline-code"><span class="syn-operator">--</span>reference<span class="syn-operator">-</span>version</code> and <code class="inline-code"><span class="syn-operator">--</span>candidate<span class="syn-operator">-</span>version</code> CLI flags accept distinct identifiers without parsing their format. Host identifiers are independent of version, role and deployment environment.</p>
+<h2 id="try-distinct-failure-shapes"><a class="heading-permalink" href="#try-distinct-failure-shapes"><span>Try distinct failure shapes</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Pass <code class="inline-code"><span class="syn-operator">--</span>scenario</code> to the native runner. Saved monochrome snapshots of these scenarios appear on the examples page.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Scenario</th>
+<th>What changes</th>
+<th>What to inspect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="inline-code">isolated<span class="syn-operator">-</span>hosts</code></td>
+<td>Five candidate hosts develop elevated 5xx rates after the fourth window</td>
+<td>The candidate's wider spread, the ranked hosts and their histories</td>
+</tr>
+<tr>
+<td><code class="inline-code">uniform<span class="syn-operator">-</span>regression</code></td>
+<td>Every candidate host develops a higher 5xx rate</td>
+<td>The shifted candidate mean with relatively narrow spread</td>
+</tr>
+<tr>
+<td><code class="inline-code">unequal<span class="syn-operator">-</span>traffic</code></td>
+<td>Host error propensities are similar, while the versions receive different volumes on the higher-error hosts</td>
+<td>A weighted fleet delta without a comparable host-mean shift; this is workload confounding</td>
+</tr>
+<tr>
+<td><code class="inline-code">insufficient<span class="syn-operator">-</span>samples</code></td>
+<td>Most hosts serve fewer than 1,000 requests; some serve none</td>
+<td>Excluded host counts, <code class="inline-code">n/a</code> spread and the absence of finite z-scores</td>
+</tr>
+</tbody>
+</table>
+<p>Use <strong>↑/↓</strong> in the host table to choose a host, <strong>←/→</strong> to choose a time window, <strong>[ / ]</strong> to change the active response class, and <strong>1 / 2 / 3</strong> to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. CLI flags set the initial scenario and band limit. <strong>Tab</strong> moves between the host list, metric panels and inspector. The member inspector is a dense native table with code, percentage-bar rate, reference deviation and optional attention columns. Each percentage cell composes a native progress bar on a fixed 0–100% scale with its precise numeric value; small percentages can fall below terminal bar resolution. Its arrow keys select the active metric while retaining the selected host. Arrow keys scroll the metric region; <strong>Ctrl+N</strong> advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.</p>
+<h2 id="optional-warning-and-error-boundaries"><a class="heading-permalink" href="#optional-warning-and-error-boundaries"><span>Optional warning and error boundaries</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>The <code class="inline-code"><span class="syn-operator">--</span>boundaries</code> flag enables illustrative policies; <code class="inline-code"><span class="syn-operator">--</span>boundaries<span class="syn-operator">=</span><span class="syn-builtin">false</span></code> removes them. The library has no default alert thresholds. With no configured rule, deviation remains descriptive: there is no warning, error or implied healthy state. Saved snapshots include a <strong>No boundaries</strong> variant.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Scope</th>
+<th>Measurement</th>
+<th>Example warning</th>
+<th>Example error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2xx host</td>
+<td>Host <code class="inline-code"><span class="syn-function">z</span><span class="syn-operator">(</span>ref<span class="syn-operator">)</span></code></td>
+<td>≤ −2σ</td>
+<td>≤ −3σ</td>
+</tr>
+<tr>
+<td>5xx host</td>
+<td>Host <code class="inline-code"><span class="syn-function">z</span><span class="syn-operator">(</span>ref<span class="syn-operator">)</span></code></td>
+<td>≥ +2σ</td>
+<td>≥ +3σ</td>
+</tr>
+<tr>
+<td>2xx fleet</td>
+<td>Candidate minus reference weighted rate</td>
+<td>≤ −0.1 percentage points</td>
+<td>≤ −0.3 percentage points</td>
+</tr>
+<tr>
+<td>5xx fleet</td>
+<td>Candidate minus reference weighted rate</td>
+<td>≥ +0.1 percentage points</td>
+<td>≥ +0.3 percentage points</td>
+</tr>
+</tbody>
+</table>
+<p>Each metric, scope, severity and side is optional. Host policies apply to eligible hosts in either version. Fleet policies compare the two request-weighted rates and require at least the configured minimum request count in each version. Equality triggers a boundary; error takes precedence over warning. Missing or insufficient measurements produce <strong>UNKNOWN</strong>, rather than a normal result. Host sigma rules remain unknown when reference spread is zero or unavailable; fleet percentage-point rules can still evaluate when their counts are available.</p>
+<p>The attention indicator composes the shared pill component. It appears on the screen and metric heading, affected host rows and inspector values. The delta property uses the fleet attention tone; its metric badge shows the strongest fleet or host state. A metric's indicator shows the strongest fleet or host attention; the inspector preserves the individual results. HTTP status-category pills keep their separate meanings: a red <strong>5xx</strong> category does not itself raise an <strong>ERROR</strong> attention state.</p>
+<p><code class="inline-code">W</code> and <code class="inline-code">E</code> mark configured host warning and error boundaries on the distributions. The shared axis includes valid boundary positions. At terminal resolution, coincident markers show the stronger error marker; <code class="inline-code">X</code> takes priority for the selected host. Fleet limits appear directly on metric cards with full warning/error labels. Host limits are supplied by the application policy and marked on the bands. <strong>The 1/2/3σ controls change the displayed bands and descriptive tail counts, independently of attention policies.</strong></p>
+<p>Applications supply policies explicitly:</p>
+<pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-comment">// Host limits are in z(ref) units; fleet limits are in percentage points.</span>
+rules <span class="syn-operator">:=</span> <span class="syn-keyword">map</span><span class="syn-operator">[</span><span class="syn-builtin">string</span><span class="syn-operator">]</span>cohort<span class="syn-operator">.</span>ComparisonPolicy<span class="syn-operator">{</span>
+    <span class="syn-string">&#34;5xx&#34;</span><span class="syn-operator">:</span> <span class="syn-operator">{</span>
+        Hosts<span class="syn-operator">:</span> attention<span class="syn-operator">.</span>Rule<span class="syn-operator">{</span>
+            Warn<span class="syn-operator">:</span>  <span class="syn-operator">&amp;</span>attention<span class="syn-operator">.</span>Bounds<span class="syn-operator">{</span>Upper<span class="syn-operator">:</span> attention<span class="syn-operator">.</span><span class="syn-function">Limit</span><span class="syn-operator">(</span><span class="syn-number">2</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+            Error<span class="syn-operator">:</span> <span class="syn-operator">&amp;</span>attention<span class="syn-operator">.</span>Bounds<span class="syn-operator">{</span>Upper<span class="syn-operator">:</span> attention<span class="syn-operator">.</span><span class="syn-function">Limit</span><span class="syn-operator">(</span><span class="syn-number">3</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+        <span class="syn-operator">}</span><span class="syn-operator">,</span>
+        Fleet<span class="syn-operator">:</span> attention<span class="syn-operator">.</span>Rule<span class="syn-operator">{</span>
+            Warn<span class="syn-operator">:</span>  <span class="syn-operator">&amp;</span>attention<span class="syn-operator">.</span>Bounds<span class="syn-operator">{</span>Upper<span class="syn-operator">:</span> attention<span class="syn-operator">.</span><span class="syn-function">Limit</span><span class="syn-operator">(</span><span class="syn-number">0.1</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+            Error<span class="syn-operator">:</span> <span class="syn-operator">&amp;</span>attention<span class="syn-operator">.</span>Bounds<span class="syn-operator">{</span>Upper<span class="syn-operator">:</span> attention<span class="syn-operator">.</span><span class="syn-function">Limit</span><span class="syn-operator">(</span><span class="syn-number">0.3</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+        <span class="syn-operator">}</span><span class="syn-operator">,</span>
+    <span class="syn-operator">}</span><span class="syn-operator">,</span>
+<span class="syn-operator">}</span>
+err <span class="syn-operator">:=</span> screen<span class="syn-operator">.</span><span class="syn-function">SetBoundaries</span><span class="syn-operator">(</span>rules<span class="syn-operator">)</span>
+</code></pre>
+<p><code class="inline-code">SetBoundaries</code> validates and copies rules before changing the screen. Set a lower limit to watch decreases, set both sides for two-sided attention, or omit a severity or scope. Pass <code class="inline-code"><span class="syn-builtin">nil</span></code> to remove all policies. Invalid or inverted limits leave the existing screen intact. These policies express application attention, rather than statistical confidence or an automatic deployment action.</p>
+<p>The optional callback emits typed <code class="inline-code">attention<span class="syn-operator">.</span>Changed</code> events when a metric's <strong>hosts</strong> or <strong>fleet</strong> attention level changes, including recovery and removal of a policy. It seeds the initial state without emitting a burst of events. Rendering, resizing and changing the displayed sigma do not emit attention transitions.</p>
+<h2 id="sampling-and-interpretation"><a class="heading-permalink" href="#sampling-and-interpretation"><span>Sampling and interpretation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>At least <strong>1,000 requests per host per window</strong> are required for the example's host mean and spread. Low-volume hosts still contribute their actual counts to the fleet rate. A zero-request host has an unavailable rate, rather than a 0% rate. Missing metric counts are rejected; explicit zero counts are accepted. At least two eligible hosts are needed for a standard deviation. A zero or unavailable reference standard deviation yields <code class="inline-code">z(ref) = n/a</code>.</p>
+<p>These bands describe host variation. They are <strong>not confidence intervals</strong>, do not imply 68/95/99.7% coverage for skewed host distributions, and do not determine whether a release is safe. Rare 5xx counts and unequal traffic need count-aware inference and a model of host and traffic heterogeneity. Repeated comparisons across hosts, classes and windows also need a decision policy that accounts for false positives. No automatic promote or rollback action is attached to these plots.</p>
+<p>Compare both versions over overlapping, equal-duration intervals and comparable route, region, instance and request populations. The example treats the versions as independent host cohorts; it does not invent host pairing. A blue/green cutover with no overlapping traffic provides a before/after comparison, with time and workload as potential confounders. The four response classes partition responses in this fixture, so their changes are related; a 3xx or 4xx increase is not automatically a regression.</p>
+<p>References: <a href="https://www.itl.nist.gov/div898/handbook/pmc/section3/pmc332.htm">NIST proportion control charts</a>, <a href="https://www.itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbici.htm">NIST exact binomial confidence limits</a>, and <a href="https://sre.google/workbook/canarying-releases/">Google SRE: Canarying Releases</a>.</p>
+<h2 id="compose-the-reusable-pieces"><a class="heading-permalink" href="#compose-the-reusable-pieces"><span>Compose the reusable pieces</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Signed values use <code class="inline-code">text<span class="syn-operator">.</span>SignedNumber</code>. Its <code class="inline-code">SignTones</code> configure positive, negative and zero independently of warning/error boundaries. In this example, rising 2xx is green and falling 2xx is red; 5xx reverses those colors. Redirect and client-error changes use a direction-only tone because their benefit requires application context. Missing and non-finite observations render <code class="inline-code">n/a</code>; tiny nonzero values retain their sign rather than rounding to zero. Numeric color describes direction policy, while attention labels and the delta bar describe configured severity.</p>
+<p><code class="inline-code">text<span class="syn-operator">.</span>Pill</code> separates semantic tone from <code class="inline-code">text<span class="syn-operator">.</span>Bright</code>, <code class="inline-code">text<span class="syn-operator">.</span>Normal</code> and <code class="inline-code">text<span class="syn-operator">.</span>Dim</code> emphasis. <code class="inline-code">feedback<span class="syn-operator">.</span>Status</code> supplies reusable <code class="inline-code">OK</code>, <code class="inline-code">WARN</code>, <code class="inline-code">ERROR</code>, <code class="inline-code">UNKNOWN</code>, <code class="inline-code">OFF</code>, <code class="inline-code">PENDING</code>, <code class="inline-code">RUNNING</code>, <code class="inline-code">PAUSED</code> and <code class="inline-code">DISABLED</code> states. <code class="inline-code">feedback<span class="syn-operator">.</span>Attention</code> composes these display atoms after rule evaluation; it keeps unconfigured attention absent rather than implying an OK state. The component reference groups signed numbers, pills and statuses under their capabilities, with saved emphasis variants.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Layer</th>
+<th>Component</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atom</td>
+<td><code class="inline-code">chart<span class="syn-operator">.</span>IntervalBand</code></td>
+<td>Draw caller-supplied nested intervals and observation markers with ntcharts canvas</td>
+</tr>
+<tr>
+<td>Atom</td>
+<td><code class="inline-code">text<span class="syn-operator">.</span>Pill</code></td>
+<td>Render a labeled semantic tone, with theme-aware contrast and a text fallback</td>
+</tr>
+<tr>
+<td>Atom</td>
+<td><code class="inline-code">text<span class="syn-operator">.</span>SignedNumber</code></td>
+<td>Preserve exact sign and units with configurable sign tones, neutral missing values and emphasis</td>
+</tr>
+<tr>
+<td>Atom</td>
+<td><code class="inline-code">feedback<span class="syn-operator">.</span>Status</code></td>
+<td>Render labeled health and lifecycle states with shared tone and emphasis</td>
+</tr>
+<tr>
+<td>Molecule</td>
+<td><code class="inline-code">feedback<span class="syn-operator">.</span>Attention</code></td>
+<td>Compose a labeled warning/error/unknown/normal state from the shared pill</td>
+</tr>
+<tr>
+<td>Molecule</td>
+<td><code class="inline-code">chart<span class="syn-operator">.</span>DeltaProperty</code></td>
+<td>Compose a merged, signed title-bar comparison from the interval atom</td>
+</tr>
+<tr>
+<td>Molecule</td>
+<td><code class="inline-code">feedback<span class="syn-operator">.</span>PercentBar</code></td>
+<td>Compose native progress and an exact percentage as a dense table cell</td>
+</tr>
+<tr>
+<td>Molecule</td>
+<td><code class="inline-code">chart<span class="syn-operator">.</span>DistributionComparison</code></td>
+<td>Compose mean/spread labels, interval bands, boundary markers and a shared axis</td>
+</tr>
+<tr>
+<td>Molecule</td>
+<td><code class="inline-code">chart<span class="syn-operator">.</span>BandMatrix</code></td>
+<td>Compose disconnected distribution rows as a presentation variant</td>
+</tr>
+<tr>
+<td>Organism</td>
+<td><code class="inline-code">chart<span class="syn-operator">.</span>ComparisonPanel</code></td>
+<td>Compose the summary, distribution comparison and native time-series history</td>
+</tr>
+<tr>
+<td>Analysis</td>
+<td><code class="inline-code">cohort<span class="syn-operator">.</span>Analyze</code></td>
+<td>Calculate weighted rates and unweighted sample spread from interval counts</td>
+</tr>
+<tr>
+<td>Policy</td>
+<td><code class="inline-code">attention<span class="syn-operator">.</span>Rule</code> and <code class="inline-code">cohort<span class="syn-operator">.</span>Assess</code></td>
+<td>Evaluate optional numeric boundaries separately from rendering and count aggregation</td>
+</tr>
+<tr>
+<td>Organism</td>
+<td><code class="inline-code">pattern<span class="syn-operator">.</span>CohortComparison</code></td>
+<td>Coordinate distributions, time series, host selection, focus, windows and responsive layout</td>
+</tr>
+<tr>
+<td>Screen</td>
+<td><code class="inline-code">examples/deployment</code></td>
+<td>Supply version IDs, the deployment method, HTTP status tones, synthetic counts and the sample threshold</td>
+</tr>
+</tbody>
+</table>
+<p>Run the example with <code class="inline-code">go run ./examples/deployment</code>, or use <code class="inline-code">go run ./cmd/workbench run screen/deployment --scenario uniform-regression --sigma 2 --reference-version release-42 --candidate-version build-43</code>.</p>
+<h2 id="supply-real-telemetry"><a class="heading-permalink" href="#supply-real-telemetry"><span>Supply real telemetry</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Replace <code class="inline-code">fixture<span class="syn-operator">.</span>Data</code> with <code class="inline-code">cohort<span class="syn-operator">.</span>Data</code> from your application's telemetry adapter. For this screen, each <code class="inline-code">Cohort<span class="syn-operator">.</span>ID</code> is the actual <strong>version identifier</strong>, and each <code class="inline-code">Sample<span class="syn-operator">.</span>CohortID</code> points to that version. The first cohort is the reference; the second is the candidate. Group by version and host, independently of the deployment method or pool names. A version served in both environments remains one version cohort; aggregate its host counts accordingly. Deployment method and environment assignments are application metadata, rather than version identifiers.</p>
+<p>Each <code class="inline-code">Window</code> has an inclusive start and exclusive end, and each <code class="inline-code">Sample</code> supplies a version/cohort ID, member ID, request count, and an explicit count for every configured metric. Supply <strong>interval counts</strong>, handling cumulative-counter resets and rate-to-count conversion in that adapter. Windows must be ordered, nonoverlapping and equal in duration; gaps and absent hosts are allowed. The UI never queries a telemetry service. The application supplies a <code class="inline-code">MetricTones</code> map; the generic comparison component has no built-in HTTP status policy.</p>
+<p>Call <code class="inline-code">SetData</code> on the Bubble Tea update thread when new data arrives. Invalid updates return an error and preserve the existing screen. Valid updates copy the data and retain the selected host where it still exists. Appending windows follows the latest window only when it was already selected; inspecting an older window keeps that window selected. For comparisons scoped to a route or region, supply that matched population and label it in <code class="inline-code">Scope</code>.</p>
+<p>The optional <code class="inline-code">Emit</code> callback reports member selection, time window, active metric, band-limit changes, presentation variants and attention transitions. Applications own statistical inference, notification delivery and deployment decisions. Supply <code class="inline-code">MetricSigns</code> independently of <code class="inline-code">MetricTones</code> and <code class="inline-code">Boundaries</code> when composing your own domain.</p>
+
+
+
+
+
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
