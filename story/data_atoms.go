@@ -29,6 +29,7 @@ func dataAtomDefinitions() []Definition {
 		{"text/sort", "Sort indicator", "Explicit unsorted, ascending and descending order with optional sort-key precedence.", "text/markers.go", "SortIndicator"},
 		{"text/change", "Change marker", "Added, modified, removed and unchanged categories preserve meaning without color.", "text/markers.go", "ChangeKind"},
 		{"text/omission", "Omission marker", "Display-hidden and source-truncated evidence retain known, unknown and zero omitted counts.", "text/markers.go", "Omission"},
+		{"feedback/evidence", "Evidence state", "Healthy, degraded, down, unknown, stale, insufficient, truncated and attribution-gap evidence; only healthy reads as OK.", "feedback/evidence.go", "Evidence"},
 		{"feedback/outcome", "Operation outcome", "Succeeded, failed, canceled, timed out and unknown results never infer the outcome of pending work.", "feedback/outcome.go", "Outcome"},
 	} {
 		config := atomConfig()
@@ -42,6 +43,10 @@ func dataAtomDefinitions() []Definition {
 			definition.Factory = func(e Environment) (runtime.Scene, error) { return controlAtomStory(id, e) }
 			definition.Controls = []string{"state"}
 			definition.States = []string{"ready", "disabled"}
+		}
+
+		if id == "feedback/evidence" {
+			definition.Composes = []string{"text/pill", "feedback/status"}
 		}
 
 		if id == "feedback/outcome" {
@@ -107,6 +112,10 @@ func dataAtomStory(id string, e Environment) (runtime.Scene, error) {
 			for _, o := range []text.Omission{{Count: 24, KnownCount: true}, {}, {Kind: text.SourceTruncated}, {Kind: text.SourceTruncated, Count: 42, KnownCount: true}} {
 				o.Emphasis = emphasis
 				rows = append(rows, o.View(palette))
+			}
+		case "feedback/evidence":
+			for _, evidence := range feedback.Evidences() {
+				rows = append(rows, evidence.View(emphasis, palette)+" "+text.ToneStyle(text.Neutral, text.Dim, palette).Render("status "+string(evidence.Status())))
 			}
 		case "feedback/outcome":
 			for _, outcome := range []feedback.Outcome{feedback.OutcomeUnknown, feedback.Succeeded, feedback.Failed, feedback.Canceled, feedback.TimedOut} {

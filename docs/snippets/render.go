@@ -16,6 +16,14 @@ func Render(id string) (string, error) {
 		return ExampleInputButton(), nil
 	case "feedback/freshness":
 		return ExampleFeedbackFreshness(), nil
+	case "feedback/evidence":
+		return ExampleFeedbackEvidence(), nil
+	case "feedback/evidence-summary":
+		return ExampleFeedbackEvidenceSummary(), nil
+	case "feedback/evidence-footer":
+		return ExampleFeedbackEvidenceFooter(), nil
+	case "layout/key-value":
+		return ExampleLayoutKeyValue(), nil
 	case "feedback/outcome":
 		return ExampleFeedbackOutcome(), nil
 	case "text/value-state":
