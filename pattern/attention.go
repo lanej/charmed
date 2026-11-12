@@ -2,6 +2,7 @@ package pattern
 
 import (
 	"fmt"
+	"maps"
 
 	"charm.land/bubbles/v2/table"
 	"github.com/lanej/charmed/attention"
@@ -57,26 +58,95 @@ func (m *CohortComparison) Attention(id string) (cohort.ComparisonAttention, boo
 	return cohort.ComparisonAttention{}, false
 }
 
+// Comparisons returns independent per-cohort assessments against the selected
+// reference. The reference itself is excluded; without a reference the map is empty.
+func (m *CohortComparison) Comparisons(id string) map[string]cohort.ComparisonAttention {
+	result := map[string]cohort.ComparisonAttention{}
+
+	for i, metric := range m.data.Metrics {
+		if metric.ID != id {
+			continue
+		}
+
+		for id, value := range m.comparisons[i] {
+			value.Members = maps.Clone(value.Members)
+			result[id] = value
+		}
+	}
+
+	return result
+}
+
 func (m *CohortComparison) assessAttention() []attention.Changed {
 	m.assessments = make([]cohort.ComparisonAttention, len(m.data.Metrics))
+	m.comparisons = make([]map[string]cohort.ComparisonAttention, len(m.data.Metrics))
 	var changes []attention.Changed
 	next := map[string]attention.Level{}
 	for i, metric := range m.data.Metrics {
-		a := cohort.Assess(m.boundaries[metric.ID], m.summaries[i][0], m.summaries[i][1], m.minRequests)
-		m.assessments[i] = a
-		for _, state := range []struct {
-			scope string
-			level attention.Level
-		}{{"hosts", a.Hosts}, {"fleet", a.Fleet.Level}} {
-			key := m.data.Cohorts[0].ID + "\x00" + m.data.Cohorts[1].ID + "\x00" + metric.ID + "\x00" + state.scope
-			if previous, ok := m.attentionLevels[key]; ok && m.initialized && previous != state.level && m.emit != nil {
-				changes = append(changes, attention.Changed{Type: "attention", Metric: metric.ID, Scope: state.scope, Reference: m.data.Cohorts[0].ID, Candidate: m.data.Cohorts[1].ID, Previous: previous, Level: state.level})
-			}
-			next[key] = state.level
+		policy := m.boundaries[metric.ID]
+		reference := m.reference(i)
+		// Evaluate member attention once, so reference members are not counted once
+		// for every peer cohort. Fleet attention is the worst peer comparison.
+		all := cohort.Summary{}
+
+		for c := range m.data.Cohorts {
+			summary := m.memberSummary(i, c)
+			all.Points = append(all.Points, summary.Points...)
 		}
+
+		reference.Points = nil
+		for _, point := range all.Points {
+			if point.CohortID == m.referenceID {
+				reference.Points = append(reference.Points, point)
+			}
+		}
+		// The member pass includes every cohort against the chosen reference.
+		memberPolicy := policy
+		memberPolicy.Fleet = attention.Rule{}
+		a := cohort.AssessMetric(memberPolicy, referenceWithoutPoints(reference), all, metric, m.minRequests)
+		a.Fleet = policy.Fleet.Evaluate(0, false)
+
+		m.comparisons[i] = map[string]cohort.ComparisonAttention{}
+		if m.referenceID != "" {
+			first := true
+
+			for c, group := range m.data.Cohorts {
+				if group.ID == m.referenceID {
+					continue
+				}
+
+				pair := cohort.AssessMetric(policy, reference, m.memberSummary(i, c), metric, m.minRequests)
+
+				m.comparisons[i][group.ID] = pair
+				if first || attention.Priority(pair.Fleet.Level) > attention.Priority(a.Fleet.Level) {
+					a.Fleet = pair.Fleet
+				}
+
+				first = false
+
+				for _, state := range []struct {
+					scope string
+					level attention.Level
+				}{{"hosts", pair.Hosts}, {"fleet", pair.Fleet.Level}} {
+					key := m.referenceID + "\x00" + group.ID + "\x00" + metric.ID + "\x00" + state.scope
+					if previous, ok := m.attentionLevels[key]; ok && m.initialized && previous != state.level && m.emit != nil {
+						changes = append(changes, attention.Changed{Type: "attention", Metric: metric.ID, Scope: state.scope, Reference: m.referenceID, Candidate: group.ID, Previous: previous, Level: state.level})
+					}
+					next[key] = state.level
+				}
+			}
+		}
+
+		a.Level = attention.Worst(a.Hosts, a.Fleet.Level)
+		m.assessments[i] = a
 	}
 	m.attentionLevels = next
 	return changes
+}
+
+func referenceWithoutPoints(summary cohort.Summary) cohort.Summary {
+	summary.Points = nil
+	return summary
 }
 
 func (m *CohortComparison) tableColumns() {
@@ -89,7 +159,7 @@ func (m *CohortComparison) tableColumns() {
 
 	const versionWidth, distanceWidth = 7, 6
 
-	columns := []table.Column{{Title: "MEMBER", Width: 1}, {Title: "VERSION", Width: versionWidth}, {Title: "z(ref)", Width: distanceWidth}}
+	columns := []table.Column{{Title: "MEMBER", Width: 1}, {Title: "COHORT", Width: versionWidth}, {Title: "z(ref)", Width: distanceWidth}}
 	if m.boundaries[m.MetricID()].Hosts.Configured() {
 		columns = append(columns, table.Column{Title: "ATTN", Width: feedback.MaxAttentionWidth(m.theme)})
 	}
@@ -105,7 +175,7 @@ func (m *CohortComparison) tableColumns() {
 }
 
 func (m *CohortComparison) boundaryMarkers(index int) []chart.BandMarker {
-	reference := m.summaries[index][0]
+	reference := m.reference(index)
 	if !reference.HasSpread || reference.StdDev <= 0 {
 		return nil
 	}
@@ -115,7 +185,8 @@ func (m *CohortComparison) boundaryMarkers(index int) []chart.BandMarker {
 		if t.Level == attention.Error {
 			glyph = 'E'
 		}
-		markers = append(markers, chart.BandMarker{Value: (reference.Mean + t.Value*reference.StdDev) * 100, Glyph: glyph, Style: feedback.AttentionStyle(t.Level, m.theme)})
+
+		markers = append(markers, chart.BandMarker{Value: (reference.Mean + t.Value*reference.StdDev) * m.data.Metrics[index].Scale(), Glyph: glyph, Style: feedback.AttentionStyle(t.Level, m.theme)})
 	}
 	return markers
 }

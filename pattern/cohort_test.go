@@ -22,7 +22,8 @@ func comparison(t *testing.T) (*pattern.CohortComparison, cohort.Data) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Dark), MinRequests: 1000, Title: "Comparison"})
+
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, ReferenceID: d.Cohorts[0].ID, Theme: theme.New(theme.Dark), MinRequests: 1000, Title: "Comparison"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,7 +35,8 @@ func TestAttentionIsComposedOptionalAndIndependentOfDisplaySigma(t *testing.T) {
 	d, _ := fixture.Data("isolated-hosts")
 	var transitions []attention.Changed
 	var current *pattern.CohortComparison
-	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Mono), MinRequests: 1000, Emit: func(value any) {
+
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, ReferenceID: d.Cohorts[0].ID, Theme: theme.New(theme.Mono), MinRequests: 1000, Emit: func(value any) {
 		if change, ok := value.(attention.Changed); ok {
 			if current != nil {
 				if a, ok := current.Attention("5xx"); !ok || a.Level == "" {
@@ -101,6 +103,7 @@ func TestAttentionIsComposedOptionalAndIndependentOfDisplaySigma(t *testing.T) {
 		t.Fatal("disabled boundaries retained attention")
 	}
 }
+
 func TestComparisonLinksSelectionAndRetainsStateAcrossResize(t *testing.T) {
 	m, _ := comparison(t)
 	if m.Selected().MemberID != "host-096" || m.Selected().CohortID != fixture.CandidateVersionID || m.WindowIndex() != 11 || m.MetricID() != "5xx" {
@@ -108,7 +111,8 @@ func TestComparisonLinksSelectionAndRetainsStateAcrossResize(t *testing.T) {
 	}
 	before := m.Panels.View()
 	m.Update(tea.KeyPressMsg{Code: tea.KeyDown})
-	if m.Selected().MemberID != "host-095" || !strings.Contains(ansi.Strip(m.View()), "Version "+fixture.CandidateVersionID) || before == m.Panels.View() {
+
+	if m.Selected().MemberID != "host-095" || !strings.Contains(ansi.Strip(m.View()), "Cohort "+fixture.CandidateVersionID) || before == m.Panels.View() {
 		t.Fatal("selection did not coordinate plots and inspector")
 	}
 	m.Update(tea.KeyPressMsg{Code: tea.KeyLeft})
@@ -158,7 +162,8 @@ func TestMemberInspectorTableSelectsMetricsAndHasNoLegends(t *testing.T) {
 	if strings.Contains(frame, "Fleet ") || strings.Contains(frame, "Delta ") {
 		t.Fatal("repeated percentage-summary labels remain")
 	}
-	if !strings.Contains(frame, "CODE") || !strings.Contains(frame, "RATE") || !strings.Contains(frame, "VERSION") {
+
+	if !strings.Contains(frame, "METRIC") || !strings.Contains(frame, "VALUE") || !strings.Contains(frame, "COHORT") {
 		t.Fatal("table data headers are missing")
 	}
 }
@@ -175,6 +180,7 @@ func TestDeltaTitleScaleDoesNotFollowTheSelectedWindow(t *testing.T) {
 		t.Fatal("window selection rescaled the comparison")
 	}
 }
+
 func TestUpdatesAreAtomicAndFollowLatestOnlyWhenSelected(t *testing.T) {
 	m, d := comparison(t)
 	before := m.View()
@@ -211,9 +217,11 @@ func TestUpdatesAreAtomicAndFollowLatestOnlyWhenSelected(t *testing.T) {
 		t.Fatal("caller mutation affected owned data")
 	}
 }
+
 func TestSparseComparisonDoesNotInventSpread(t *testing.T) {
 	d, _ := fixture.Data("insufficient-samples")
-	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Mono), MinRequests: 1000})
+
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, ReferenceID: d.Cohorts[0].ID, Theme: theme.New(theme.Mono), MinRequests: 1000})
 	if err != nil {
 		t.Fatal(err)
 	}

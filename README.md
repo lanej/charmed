@@ -13,6 +13,7 @@ Requires Go **1.26.11+**. Native terminal sessions support Linux and macOS.
 ```sh
 go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
+go run ./cmd/workbench run screen/cohorts
 go run ./cmd/workbench run screen/deployment --scenario isolated-hosts --sigma 3
 go run ./cmd/workbench run screen/deployment --comparison-variant bands
 go run ./cmd/workbench run chart/timeseries --theme light --series 3
@@ -38,8 +39,8 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 | `text` | Labels, badges, semantic pills, key hints and Glamour Markdown rendering |
 | `chart` | Sparklines, time series, line/scatter, bars, heatmaps, streamline/waveline, OHLC, canvas, interval bands, cohort distributions, comparison panels and portable pictures |
 | `diagram` | State transition diagrams with labeled directed edges, cycles, self-loops and initial/final/active markers |
-| `cohort` | Validated interval counts, request-weighted rates and unweighted member sample spread |
-| `pattern` | Service workbench and cohort comparison with linked plots, member selection and inspection |
+| `cohort` | Scalar and ratio measurements, metric aggregation and unweighted member sample spread |
+| `pattern` | Service workbench and one-to-N cohort comparison with linked plots, member selection and inspection |
 | `runtime` | One root Bubble Tea terminal session |
 | `story` | Deterministic Go fixtures shared by terminal execution, browser previews and snapshots |
 

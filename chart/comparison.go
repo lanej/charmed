@@ -93,7 +93,7 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 			if d.Compact {
 				lines = append(lines, style.Render(ansi.Wrap(s.Label+" n/a", width, "")))
 			} else {
-				lines = append(lines, style.Render(ansi.Wrap(s.Label+" host mean n/a", width, "")), t.Subtle().Render(ansi.Wrap("Insufficient member samples", width, "")))
+				lines = append(lines, style.Render(ansi.Wrap(s.Label+" member mean n/a", width, "")), t.Subtle().Render(ansi.Wrap("Insufficient member samples", width, "")))
 			}
 			continue
 		}
@@ -129,7 +129,7 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 		}
 	}
 	if math.IsInf(low, 0) {
-		lines = append(lines, t.Subtle().Render(ansi.Wrap("No eligible host spread", width, "")))
+		lines = append(lines, t.Subtle().Render(ansi.Wrap("No eligible member spread", width, "")))
 	} else {
 		left, right := fmt.Sprintf("%.3f%s", low, d.Unit), fmt.Sprintf("%.3f%s", high, d.Unit)
 		axisWidth := width - prefixWidth

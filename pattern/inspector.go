@@ -18,15 +18,8 @@ func (m *CohortComparison) inspectorContext() string {
 	if m.selected.MemberID == "" {
 		return "No member observations"
 	}
-	var requests uint64
-	for _, p := range m.visible {
-		if p.MemberKey == m.selected {
-			requests = p.Requests
-			break
-		}
-	}
 
-	return ansi.Hardwrap("Version "+m.selected.CohortID, max(1, layout.PanelContentSize(m.sideSize).Width), true) + fmt.Sprintf("\n%d requests", requests)
+	return ansi.Hardwrap("Cohort "+m.selected.CohortID, max(1, layout.PanelContentSize(m.sideSize).Width), true)
 }
 
 func (m *CohortComparison) updateInspector() {
@@ -37,11 +30,11 @@ func (m *CohortComparison) updateInspector() {
 
 	width := max(1, layout.PanelContentSize(m.sideSize).Width)
 
-	const codeWidth, minRateWidth, defaultRateWidth, distanceWidth = 5, 5, 16, 6
+	const codeWidth, minRateWidth, defaultRateWidth, distanceWidth = 8, 5, 16, 6
 
 	const rateColumn = 1
 
-	columns := []table.Column{{Title: "CODE", Width: codeWidth}, {Title: "RATE", Width: defaultRateWidth}, {Title: "z(ref)", Width: distanceWidth}}
+	columns := []table.Column{{Title: "METRIC", Width: codeWidth}, {Title: "VALUE", Width: defaultRateWidth}, {Title: "z(ref)", Width: distanceWidth}}
 	if showAttention {
 		columns = append(columns, table.Column{Title: "ATTN", Width: feedback.MaxAttentionWidth(m.theme)})
 		occupied := collection.DenseTablePaddingWidth(len(columns))
@@ -64,13 +57,15 @@ func (m *CohortComparison) updateInspector() {
 
 	if m.selected.MemberID != "" {
 		for i := range m.data.Metrics {
+			found := false
+
 			for _, summary := range m.summaries[i] {
 				for _, p := range summary.Points {
 					if p.MemberKey != m.selected {
 						continue
 					}
 					z := "n/a"
-					if value, ok := cohort.Distance(p, m.summaries[i][0]); ok {
+					if value, ok := cohort.Distance(p, m.reference(i)); ok {
 						z = m.signedNumber(i, value, 2, "", true).View(m.theme)
 					}
 					palette := m.theme
@@ -85,13 +80,30 @@ func (m *CohortComparison) updateInspector() {
 						palette.Accent = palette.Danger
 					}
 
-					row := table.Row{m.metricLabel(i, true), feedback.PercentBar(p.Rate*100, p.HasRate, columns[rateColumn].Width, palette), z}
+					metric := m.data.Metrics[i]
+
+					value := "n/a"
+					if p.HasValue {
+						value = fmt.Sprintf("%.3f%s", p.Value*metric.Scale(), metric.DisplayUnit())
+					}
+
+					row := table.Row{m.metricLabel(i, true), palette.Text().Render(value), z}
 					if showAttention {
 						row = append(row, feedback.Attention(m.assessments[i].Members[p.MemberKey].Level, m.theme))
 					}
 
 					rows = append(rows, row)
+					found = true
 				}
+			}
+
+			if !found {
+				row := table.Row{m.metricLabel(i, true), "n/a", "n/a"}
+				if showAttention {
+					row = append(row, "")
+				}
+
+				rows = append(rows, row)
 			}
 		}
 	}

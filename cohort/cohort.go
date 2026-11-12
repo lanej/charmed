@@ -1,24 +1,82 @@
-// Package cohort describes count-based cohort measurements without I/O or UI.
+// Package cohort describes cohort measurements without I/O or UI.
 package cohort
 
 import (
 	"fmt"
-	"math"
 	"slices"
 	"time"
 )
 
-type Cohort struct{ ID, Label, Short string }
-type Metric struct{ ID, Label string }
+type (
+	Cohort     struct{ ID, Label, Short string }
+	MetricKind string
+)
+
+const (
+	Ratio  MetricKind = ""
+	Scalar MetricKind = "scalar"
+)
+
+type Aggregation string
+
+const (
+	Mean Aggregation = ""
+	Sum  Aggregation = "sum"
+)
+
+// Metric defines comparable measurements. Ratios aggregate as a ratio of sums
+// and display as percentages; scalars aggregate as an unweighted mean or sum.
+// Member spread always uses unweighted member values, independently of aggregation.
+type Metric struct {
+	ID, Label   string
+	Kind        MetricKind
+	Unit        string
+	Aggregation Aggregation
+}
+
+func (m Metric) Scale() float64 {
+	if m.Kind == Scalar {
+		return 1
+	}
+
+	return 100
+}
+
+func (m Metric) DisplayUnit() string {
+	if m.Kind == Scalar {
+		return m.Unit
+	}
+
+	return "%"
+}
+
+func (m Metric) DeltaUnit() string {
+	if m.Kind == Scalar {
+		return m.Unit
+	}
+
+	return "pp"
+}
+
+// Measurement is either a scalar Value or a ratio Numerator/Denominator,
+// according to its metric. A zero denominator is an unavailable ratio, not zero.
+// Omit a metric from Measurements when no observation exists.
+type Measurement struct {
+	Value                  float64
+	Numerator, Denominator uint64
+}
 type MemberKey struct{ CohortID, MemberID string }
 
-// Sample contains interval counts, not cumulative counters or precomputed rates.
-// Every configured metric must be present, including explicit zero counts.
-// Metrics may overlap; the application decides whether they partition requests.
+// Sample contains member observations for one window. Measurements supports
+// sparse scalar and ratio values; legacy Counts/Requests requires an explicit
+// interval count for every metric. Cumulative counters must be converted by callers.
 type Sample struct {
 	MemberKey
 	Requests uint64
 	Counts   map[string]uint64
+	// Measurements replaces Counts/Requests for generic inputs. Do not mix the
+	// two representations in one sample. An empty non-nil map means all missing.
+	Measurements map[string]Measurement
 }
 type Window struct {
 	Start, End time.Time
@@ -46,6 +104,10 @@ func (d Data) Clone() (Data, error) {
 		if m.ID == "" || m.Label == "" || metrics[m.ID] {
 			return Data{}, fmt.Errorf("metrics need unique IDs and labels")
 		}
+
+		if err := m.validate(); err != nil {
+			return Data{}, err
+		}
 		metrics[m.ID] = true
 	}
 	if len(cohorts) == 0 || len(metrics) == 0 {
@@ -68,16 +130,10 @@ func (d Data) Clone() (Data, error) {
 				return Data{}, fmt.Errorf("window %d: unknown cohort, empty member or duplicate member", i)
 			}
 			seen[s.MemberKey] = true
-			if len(s.Counts) != len(metrics) {
-				return Data{}, fmt.Errorf("window %d member %s: every metric needs an explicit count", i, s.MemberID)
-			}
-			sc := Sample{MemberKey: s.MemberKey, Requests: s.Requests, Counts: map[string]uint64{}}
-			for id := range metrics {
-				n, ok := s.Counts[id]
-				if !ok || n > s.Requests {
-					return Data{}, fmt.Errorf("window %d member %s: invalid or missing count for %s", i, s.MemberID, id)
-				}
-				sc.Counts[id] = n
+
+			sc, err := cloneSample(s, d.Metrics)
+			if err != nil {
+				return Data{}, fmt.Errorf("window %d member %s: %w", i, s.MemberID, err)
 			}
 			wc.Samples = append(wc.Samples, sc)
 		}
@@ -90,12 +146,16 @@ type MemberRate struct {
 	MemberKey
 	Requests, Events  uint64
 	Rate              float64
+	Value             float64
+	HasValue          bool
 	HasRate, Eligible bool
 }
 type Summary struct {
 	// Requests and Events are floating sums to avoid overflowing integer counters.
 	Requests, Events            float64
 	Rate, Mean, StdDev          float64
+	Value                       float64
+	HasValue                    bool
 	HasRate, HasSpread          bool
 	Members, Eligible, Excluded int
 	Points                      []MemberRate
@@ -107,49 +167,80 @@ type Summary struct {
 // to fleet Rate, but not Mean or StdDev. Two eligible members are needed for s.
 // Use validated Data; an unknown/missing metric is omitted rather than read as 0.
 func Analyze(samples []Sample, cohortID, metricID string, minRequests uint64) Summary {
+	return AnalyzeMetric(samples, cohortID, Metric{ID: metricID}, minRequests)
+}
+
+// AnalyzeMetric retains missingness, aggregate value and unweighted sample
+// spread separately. minSupport applies to ratio denominators only; every
+// available scalar is eligible. Legacy Rate/HasRate mirror Value/HasValue.
+func AnalyzeMetric(samples []Sample, cohortID string, metric Metric, minSupport uint64) Summary {
 	var result Summary
-	var m2 float64
-	minRequests = max(1, minRequests)
+
 	for _, s := range samples {
-		n, ok := s.Counts[metricID]
-		if s.CohortID != cohortID || !ok || n > s.Requests {
+		if s.CohortID != cohortID {
 			continue
 		}
-		p := MemberRate{MemberKey: s.MemberKey, Requests: s.Requests, Events: n}
-		result.Members++
-		result.Requests += float64(s.Requests)
-		result.Events += float64(n)
-		if s.Requests > 0 {
-			p.HasRate = true
-			p.Rate = float64(n) / float64(s.Requests)
+
+		measurement, exists := measurementFor(s, metric)
+		if !exists {
+			continue
 		}
-		p.Eligible = s.Requests >= minRequests
-		if p.Eligible {
+
+		point := MemberRate{MemberKey: s.MemberKey, Requests: measurement.Denominator, Events: measurement.Numerator}
+		result.Members++
+		result.Requests += float64(measurement.Denominator)
+
+		result.Events += float64(measurement.Numerator)
+		if metric.Kind == Scalar {
+			point.Value, point.HasValue, point.Eligible = measurement.Value, true, true
+		} else if measurement.Denominator > 0 {
+			point.Value = float64(measurement.Numerator) / float64(measurement.Denominator)
+			point.HasValue = true
+			point.Eligible = measurement.Denominator >= max(1, minSupport)
+		}
+
+		point.Rate, point.HasRate = point.Value, point.HasValue
+		if point.Eligible {
 			result.Eligible++
-			delta := p.Rate - result.Mean
-			result.Mean += delta / float64(result.Eligible)
-			m2 += delta * (p.Rate - result.Mean)
 		} else {
 			result.Excluded++
 		}
-		result.Points = append(result.Points, p)
+
+		result.Points = append(result.Points, point)
 	}
-	if result.Requests > 0 {
-		result.HasRate = true
-		result.Rate = result.Events / result.Requests
+
+	total := result.memberMoments()
+	if metric.Kind == Scalar {
+		result.HasValue = result.Eligible > 0
+
+		result.Value = result.Mean
+		if metric.Aggregation == Sum {
+			result.Value = total
+		}
+	} else if result.Requests > 0 {
+		result.HasValue = true
+		result.Value = result.Events / result.Requests
 	}
-	if result.Eligible >= 2 {
-		result.HasSpread = true
-		result.StdDev = math.Sqrt(max(0, m2/float64(result.Eligible-1)))
+
+	if !finite(result.Value) {
+		result.Value, result.HasValue = 0, false
 	}
+
+	result.Rate, result.HasRate = result.Value, result.HasValue
 	return result
 }
 
 // Distance is a descriptive distance from a reference member distribution, not
 // a hypothesis test. Zero or unavailable spread cannot produce a finite score.
 func Distance(p MemberRate, reference Summary) (float64, bool) {
-	if !p.Eligible || !p.HasRate || !reference.HasSpread || reference.StdDev <= 0 {
+	if !p.Eligible || !p.HasRate || !reference.HasSpread || reference.StdDev <= 0 || !finite(p.Rate) || !finite(reference.Mean) || !finite(reference.StdDev) {
 		return 0, false
 	}
-	return (p.Rate - reference.Mean) / reference.StdDev, true
+
+	distance := (p.Rate - reference.Mean) / reference.StdDev
+	if !finite(distance) {
+		return 0, false
+	}
+
+	return distance, true
 }

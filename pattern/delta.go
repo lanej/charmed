@@ -7,25 +7,36 @@ import (
 	"github.com/lanej/charmed/cohort"
 )
 
-func (m *CohortComparison) delta(index int) (float64, bool) {
-	s := m.summaries[index]
-	return (s[1].Rate - s[0].Rate) * 100, s[0].HasRate && s[1].HasRate
+func (m *CohortComparison) cohortDelta(index, candidate int) (float64, bool) {
+	r, c := m.reference(index), m.summaries[index][candidate]
+	return (c.Value - r.Value) * m.data.Metrics[index].Scale(), m.referenceID != "" && r.HasValue && c.HasValue
 }
-func (m *CohortComparison) updateDeltaExtent() {
+
+// Each metric keeps a stable domain across windows and cohorts, in its own unit.
+func (m *CohortComparison) metricDeltaExtent(index int) float64 {
+	metric := m.data.Metrics[index]
 	magnitude := 0.0
 	for _, window := range m.data.Windows {
-		for _, metric := range m.data.Metrics {
-			r := cohort.Analyze(window.Samples, m.data.Cohorts[0].ID, metric.ID, m.minRequests)
-			c := cohort.Analyze(window.Samples, m.data.Cohorts[1].ID, metric.ID, m.minRequests)
-			if r.HasRate && c.HasRate {
-				magnitude = max(magnitude, math.Abs((c.Rate-r.Rate)*100))
+		r := cohort.AnalyzeMetric(window.Samples, m.referenceID, metric, m.minRequests)
+		for _, group := range m.data.Cohorts {
+			if group.ID == m.referenceID {
+				continue
+			}
+
+			c := cohort.AnalyzeMetric(window.Samples, group.ID, metric, m.minRequests)
+			if r.HasValue && c.HasValue {
+				magnitude = max(magnitude, math.Abs((c.Value-r.Value)*metric.Scale()))
 			}
 		}
 	}
-	for _, p := range m.boundaries {
-		for _, limit := range p.Fleet.Thresholds() {
-			magnitude = max(magnitude, math.Abs(limit.Value))
-		}
+
+	for _, limit := range m.boundaries[metric.ID].Fleet.Thresholds() {
+		magnitude = max(magnitude, math.Abs(limit.Value))
 	}
-	m.deltaExtent = chart.SymmetricExtent(min(100, magnitude))
+
+	return chart.SymmetricExtent(magnitude)
+}
+
+func (m *CohortComparison) updateDeltaExtent() {
+	m.deltaExtent = m.metricDeltaExtent(m.metric)
 }

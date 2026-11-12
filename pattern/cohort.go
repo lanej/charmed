@@ -13,6 +13,7 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 	"github.com/NimbleMarkets/ntcharts/v2/linechart/timeserieslinechart"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/attention"
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/cohort"
@@ -34,10 +35,14 @@ const (
 
 type CohortComparisonOptions struct {
 	Title, Scope string
-	// Data orders the reference cohort first and candidate second. IDs retain
-	// their application identity; display aliases and roles do not replace them.
+	// ReferenceID optionally selects a baseline by identity. Empty disables
+	// reference-relative comparisons; Data accepts one or more cohorts.
 	Data        cohort.Data
-	Theme       theme.Theme
+	ReferenceID string
+	// MinSupport limits ratio member eligibility by denominator. Scalars remain eligible.
+	MinSupport uint64
+	Theme      theme.Theme
+	// MinRequests is a compatibility alias; the larger of both thresholds applies.
 	MinRequests uint64
 	Sigma       int
 	Emit        func(any)
@@ -47,8 +52,8 @@ type CohortComparisonOptions struct {
 	MetricSigns map[string]text.SignTones
 }
 
-// CohortComparison links per-metric distributions, request-weighted histories,
-// and a member inspector. It owns UI state; callers supply interval counts.
+// CohortComparison links per-metric distributions, aggregate histories,
+// and a member inspector. It owns UI state; callers supply measurements.
 // Sigma is descriptive member spread, never a significance or rollout decision.
 type CohortComparison struct {
 	Table                        table.Model
@@ -61,7 +66,9 @@ type CohortComparison struct {
 	sigma, window, metric        int
 	selected                     cohort.MemberKey
 	visible                      []cohort.MemberRate
-	summaries                    [][2]cohort.Summary
+	summaries                    [][]cohort.Summary
+	referenceID                  string
+	comparisons                  []map[string]cohort.ComparisonAttention
 	plots                        []chart.TimeSeries
 	focus                        interaction.Focus
 	size                         layout.Size
@@ -94,7 +101,7 @@ func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
 	}
 
 	m := &CohortComparison{
-		title: o.Title, scope: o.Scope, theme: o.Theme, minRequests: max(1, o.MinRequests), sigma: o.Sigma, emit: o.Emit,
+		title: o.Title, scope: o.Scope, theme: o.Theme, minRequests: max(1, o.MinRequests, o.MinSupport), referenceID: o.ReferenceID, sigma: o.Sigma, emit: o.Emit,
 		focus: interaction.NewFocus("hosts", "metrics", "inspector"), window: -1, metricTones: maps.Clone(o.MetricTones), variant: o.Variant, metricSigns: maps.Clone(o.MetricSigns),
 	}
 	m.Table = collection.NewTable([]table.Column{{Title: "MEMBER", Width: 22}, {Title: "ROLE", Width: 4}, {Title: "z(ref)", Width: 6}}, nil, 38, 14, o.Theme)
@@ -140,8 +147,9 @@ func (m *CohortComparison) SetData(data cohort.Data) error {
 	if err != nil {
 		return err
 	}
-	if len(copy.Cohorts) != 2 {
-		return fmt.Errorf("comparison needs exactly two cohorts")
+
+	if err := validateReference(copy, m.referenceID); err != nil {
+		return err
 	}
 	if _, err := copyPolicies(m.boundaries, copy.Metrics); err != nil {
 		return err
@@ -290,7 +298,7 @@ func (m *CohortComparison) event(kind string) {
 	if m.emit != nil {
 		m.emit(map[string]any{
 			"type": kind, "cohort": m.selected.CohortID, "member": m.selected.MemberID,
-			"reference": m.data.Cohorts[0].ID, "candidate": m.data.Cohorts[1].ID,
+			"reference": m.referenceID, "cohorts": m.cohortIDs(),
 			"window": m.window, "metric": m.MetricID(), "sigma": m.sigma, "variant": m.variant,
 		})
 	}
@@ -321,21 +329,27 @@ func (m *CohortComparison) Resize(size layout.Size) {
 }
 
 func (m *CohortComparison) refresh() {
-	m.summaries = make([][2]cohort.Summary, len(m.data.Metrics))
+	m.summaries = make([][]cohort.Summary, len(m.data.Metrics))
+	for i := range m.summaries {
+		m.summaries[i] = make([]cohort.Summary, len(m.data.Cohorts))
+	}
+
 	m.visible = nil
 	if m.window >= 0 && m.window < len(m.data.Windows) {
 		for i, metric := range m.data.Metrics {
 			for c, group := range m.data.Cohorts {
-				m.summaries[i][c] = cohort.Analyze(m.data.Windows[m.window].Samples, group.ID, metric.ID, m.minRequests)
+				m.summaries[i][c] = cohort.AnalyzeMetric(m.data.Windows[m.window].Samples, group.ID, metric, m.minRequests)
 			}
 		}
-		for _, summary := range m.summaries[m.metric] {
+
+		for c := range m.data.Cohorts {
+			summary := m.memberSummary(m.metric, c)
 			m.visible = append(m.visible, summary.Points...)
 		}
 	}
 	changes := m.assessAttention()
 	m.updateDeltaExtent()
-	baseline := m.summaries[m.metric][0]
+	baseline := m.reference(m.metric)
 	sort.SliceStable(m.visible, func(i, j int) bool {
 		a, b := m.visible[i], m.visible[j]
 		pa, pb := attention.Priority(m.assessments[m.metric].Members[a.MemberKey].Level), attention.Priority(m.assessments[m.metric].Members[b.MemberKey].Level)
@@ -346,7 +360,7 @@ func (m *CohortComparison) refresh() {
 			return a.Eligible
 		}
 		da, db := math.Abs(a.Rate-baseline.Mean), math.Abs(b.Rate-baseline.Mean)
-		if da != db {
+		if m.referenceID != "" && da != db {
 			return da > db
 		}
 		if a.CohortID != b.CohortID {
@@ -405,26 +419,37 @@ func (m *CohortComparison) rebuildPlots() {
 
 	m.plots = make([]chart.TimeSeries, len(m.data.Metrics))
 	for i, metric := range m.data.Metrics {
-		series := []chart.TimeSeriesData{{ID: "cohort:0"}, {ID: "cohort:1"}, {ID: "selected"}}
+		series := make([]chart.TimeSeriesData, len(m.data.Cohorts)+1)
+		for c := range m.data.Cohorts {
+			series[c].ID = fmt.Sprintf("cohort:%d", c)
+		}
+
+		selectedIndex := len(m.data.Cohorts)
+		series[selectedIndex].ID = "selected"
 
 		for _, w := range m.data.Windows {
 			for c, group := range m.data.Cohorts {
-				s := cohort.Analyze(w.Samples, group.ID, metric.ID, m.minRequests)
+				s := cohort.AnalyzeMetric(w.Samples, group.ID, metric, m.minRequests)
 				if s.HasRate {
-					series[c].Points = append(series[c].Points, timeserieslinechart.TimePoint{Time: w.End, Value: s.Rate * 100})
+					series[c].Points = append(series[c].Points, timeserieslinechart.TimePoint{Time: w.End, Value: s.Value * metric.Scale()})
 				}
 			}
-			for _, s := range w.Samples {
-				if s.MemberKey == m.selected && s.Requests > 0 {
-					series[2].Points = append(series[2].Points, timeserieslinechart.TimePoint{Time: w.End, Value: float64(s.Counts[metric.ID]) / float64(s.Requests) * 100})
+
+			for _, group := range m.data.Cohorts {
+				summary := cohort.AnalyzeMetric(w.Samples, group.ID, metric, m.minRequests)
+				for _, point := range summary.Points {
+					if point.MemberKey == m.selected && point.HasValue {
+						series[selectedIndex].Points = append(series[selectedIndex].Points, timeserieslinechart.TimePoint{Time: w.End, Value: point.Value * metric.Scale()})
+					}
 				}
 			}
 		}
+
 		for c, group := range m.data.Cohorts {
-			series[c].Label = group.ID
-			series[c].Unit = "%"
+			series[c].Label, series[c].Unit = group.Label, metric.DisplayUnit()
 		}
-		series[2].Label, series[2].Unit = "member", "%"
+
+		series[selectedIndex].Label, series[selectedIndex].Unit = "member", metric.DisplayUnit()
 		low, high := math.Inf(1), math.Inf(-1)
 		for _, s := range series {
 			for _, p := range s.Points {
@@ -436,13 +461,9 @@ func (m *CohortComparison) rebuildPlots() {
 			low, high = 0, 1
 		}
 		padding := max((high-low)*0.15, 0.001)
-		height := 9
-		if m.variant == Bands {
-			height = max(6, m.gridSize.Height-23)
-		}
-		m.plots[i] = chart.NewTimeSeries(series, layout.Size{Width: width, Height: height}, m.theme,
-			timeserieslinechart.WithYRange(max(0, low-padding), min(100, high+padding)),
-			timeserieslinechart.WithYLabelFormatter(func(_ int, value float64) string { return fmt.Sprintf("%.2f%%", value) }),
+		m.plots[i] = chart.NewTimeSeries(series, layout.Size{Width: width, Height: m.historyHeight()}, m.theme,
+			timeserieslinechart.WithYRange(low-padding, high+padding),
+			timeserieslinechart.WithYLabelFormatter(func(_ int, value float64) string { return fmt.Sprintf("%.2f%s", value, metric.DisplayUnit()) }),
 			timeserieslinechart.WithXLabelFormatter(func(_ int, value float64) string {
 				return time.UnixMilli(int64(math.Round(value * 1000))).UTC().Format("15:04")
 			}))
@@ -463,12 +484,15 @@ func (m *CohortComparison) metricLabel(index int, compact bool) string {
 
 func (m *CohortComparison) distribution(index int) chart.DistributionComparison {
 	summaries := m.summaries[index]
-	distribution := chart.DistributionComparison{Sigma: m.sigma, Min: 0, Max: 100, Unit: "%", SpreadUnit: "pp", Markers: m.boundaryMarkers(index)}
+	metric := m.data.Metrics[index]
+	low, high := m.distributionRange(index)
+
+	distribution := chart.DistributionComparison{Sigma: m.sigma, Min: low, Max: high, Unit: metric.DisplayUnit(), SpreadUnit: metric.DeltaUnit(), Markers: m.boundaryMarkers(index)}
 	for c, s := range summaries {
-		series := chart.DistributionSeries{Label: m.data.Cohorts[c].ID, Mean: s.Mean * 100, StdDev: s.StdDev * 100, Members: s.Eligible, HasSpread: s.HasSpread}
+		series := chart.DistributionSeries{Label: m.data.Cohorts[c].Label, Mean: s.Mean * metric.Scale(), StdDev: s.StdDev * metric.Scale(), Members: s.Eligible, HasSpread: s.HasSpread}
 		for _, point := range s.Points {
 			if point.MemberKey == m.selected && point.HasRate {
-				value := point.Rate * 100
+				value := point.Value * metric.Scale()
 				series.Selected = &value
 			}
 		}
@@ -478,28 +502,46 @@ func (m *CohortComparison) distribution(index int) chart.DistributionComparison 
 }
 
 func (m *CohortComparison) comparisonTitle(index, width int) string {
-	state := m.assessments[index]
-	delta, available := m.delta(index)
-	style := feedback.AttentionStyle(state.Fleet.Level, m.theme)
-	titleLabel := m.metricLabel(index, true)
-	status := feedback.Attention(state.Level, m.theme)
-	gap := strings.Repeat(" ", theme.SpaceSmall)
-	propertyWidth := max(0, width-2*lipgloss.Width(gap)-lipgloss.Width(titleLabel)-lipgloss.Width(status))
-	property := chart.DeltaProperty{Value: delta, Extent: m.deltaExtent, Available: available, Style: style, Tones: m.metricSigns[m.data.Metrics[index].ID]}
-	title := titleLabel + gap + property.View(propertyWidth, m.theme) + gap + status
+	return layout.Fit(m.metricLabel(index, true)+" "+feedback.Attention(m.assessments[index].Level, m.theme), layout.Size{Width: width, Height: 1})
+}
 
-	return title
+func (m *CohortComparison) comparisonRows(index, width int) []string {
+	metric := m.data.Metrics[index]
+
+	var rows []string
+	if m.referenceID == "" {
+		return rows
+	}
+	for c, group := range m.data.Cohorts {
+		if group.ID == m.referenceID {
+			continue
+		}
+
+		delta, available := m.cohortDelta(index, c)
+		state := m.comparisons[index][group.ID]
+		property := chart.DeltaProperty{Value: delta, Extent: m.metricDeltaExtent(index), Available: available, Unit: metric.DeltaUnit(), Unitless: metric.DeltaUnit() == "", Style: feedback.AttentionStyle(state.Fleet.Level, m.theme), Tones: m.metricSigns[metric.ID]}
+		labelWidth := max(0, width-15)
+
+		label := ansi.Truncate(group.Label+" vs "+m.referenceLabel(), labelWidth, "~")
+		if label != "" {
+			label += " "
+		}
+
+		rows = append(rows, label+property.View(max(1, width-lipgloss.Width(label)), m.theme))
+	}
+
+	return rows
 }
 
 func (m *CohortComparison) panel(index, width int) string {
-	rows := []string{""}
+	rows := m.comparisonRows(index, layout.PanelContentSize(layout.Size{Width: width}).Width)
 	if policy := m.boundaries[m.data.Metrics[index].ID]; policy.Fleet.Configured() {
-		rows[0] = policy.Fleet.Summary("pp")
+		rows = append(rows, policy.Fleet.Summary(m.data.Metrics[index].DeltaUnit()))
 	}
 
 	card := chart.ComparisonPanel{Title: m.comparisonTitle(index, layout.PanelContentSize(layout.Size{Width: width}).Width), Summary: rows, Distribution: m.distribution(index), History: m.plots[index]}
 
-	return card.View(layout.Size{Width: width, Height: 17}, m.theme, m.metric == index)
+	return card.View(layout.Size{Width: width, Height: 4 + m.historyHeight() + 2*len(m.data.Cohorts) + len(rows)}, m.theme, m.metric == index)
 }
 
 func (m *CohortComparison) grid() string {
@@ -533,19 +575,22 @@ func (m *CohortComparison) View() string {
 	header := m.theme.Heading().Render(m.title) + " " + feedback.Attention(overall, m.theme) + " / " + m.scope
 	var groups []string
 	for c, group := range m.data.Cohorts {
-		s := m.summaries[m.metric][c]
-		role := "Reference"
-		if c == 1 {
-			role = "Candidate"
+		members := len(m.memberSummary(m.metric, c).Points)
+
+		role := ""
+		if group.ID == m.referenceID {
+			role = "Reference "
 		}
-		groups = append(groups, m.theme.Text().Foreground(m.theme.SeriesColor(c)).Render(fmt.Sprintf("%s %s / %.0f req / %d hosts", role, group.ID, s.Requests, s.Members)))
+
+		groups = append(groups, m.theme.Text().Foreground(m.theme.SeriesColor(c)).Render(fmt.Sprintf("%s%s / %d members", role, group.Label, members)))
 	}
 	window := "No windows"
 	if m.window >= 0 {
 		w := m.data.Windows[m.window]
 		window = fmt.Sprintf("%s-%s UTC [%d/%d]", w.Start.UTC().Format("15:04"), w.End.UTC().Format("15:04"), m.window+1, len(m.data.Windows))
 	}
-	baseline, outliers, eligible, excluded := m.summaries[m.metric][0], 0, 0, 0
+
+	baseline, outliers, eligible, excluded := m.reference(m.metric), 0, 0, 0
 	for _, s := range m.summaries[m.metric] {
 		eligible += s.Eligible
 		excluded += s.Excluded
@@ -556,8 +601,15 @@ func (m *CohortComparison) View() string {
 		}
 	}
 	count := fmt.Sprintf("%d beyond %ds", outliers, m.sigma)
-	info := fmt.Sprintf("%s | +/- %ds host spread | min %d req/host | %d eligible / %d excluded | delta +/-%.3gpp", window, m.sigma, m.minRequests, eligible, excluded, m.deltaExtent)
-	if !baseline.HasSpread || baseline.StdDev == 0 {
+
+	info := fmt.Sprintf("%s | +/- %ds member spread | min ratio support %d | %d eligible / %d excluded", window, m.sigma, m.minRequests, eligible, excluded)
+	if m.referenceID != "" && len(m.data.Cohorts) > 1 {
+		info += fmt.Sprintf(" | delta +/-%.3g%s", m.deltaExtent, m.data.Metrics[m.metric].DeltaUnit())
+	}
+
+	if m.referenceID == "" {
+		count = "No reference"
+	} else if !baseline.HasSpread || baseline.StdDev == 0 {
 		count = "baseline s unavailable"
 	}
 	tableTitle := fmt.Sprintf("%s / %s %s", m.metricLabel(m.metric, true), count, feedback.Attention(m.assessments[m.metric].Level, m.theme))
@@ -569,4 +621,17 @@ func (m *CohortComparison) View() string {
 		content = layout.Row(m.Panels.View(), " ", side)
 	}
 	return layout.Fit(strings.Join([]string{header, strings.Join(groups, " | "), info, content}, "\n"), m.size)
+}
+
+func (m *CohortComparison) historyHeight() int {
+	height := 9
+	if m.variant == Bands {
+		height = max(6, m.gridSize.Height-23)
+	}
+
+	if m.theme.ASCII {
+		height = max(height, len(m.data.Cohorts)+1)
+	}
+
+	return height
 }
