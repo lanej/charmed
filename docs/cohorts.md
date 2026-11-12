@@ -31,9 +31,10 @@ Metric semantics separate aggregate behavior from member spread. Histories use t
 | Scalar | Member mean by default; explicit `Sum` adds values | Configured unit; negative values allowed; present scalars are eligible |
 | Ratio | Sum of numerators divided by sum of denominators | Percentages, possibly above 100%; deltas use percentage points |
 | Ratio support | Low-volume members still contribute to aggregate | `MinSupport` limits denominator eligibility for spread |
-| Overflow | Unrepresentable aggregate or spread becomes unavailable | Finite observations remain preserved |
+| Overflow | Unrepresentable aggregate or spread becomes unavailable | Finite observations remain preserved; unrepresentable plot spans are labeled unavailable |
+| Numeric labels | Magnitude-aware formatting | Tiny nonzero values and large values retain their magnitude |
 
-Missing observations are omitted from `Measurements`; explicit zero remains observed zero. A zero numerator and denominator represents an observed unavailable ratio, while a nonzero numerator without a denominator is invalid. Members remain selectable when the active metric is absent, and their inspector shows `n/a`.
+History annotations identify missing time intervals for each affected cohort or selected member; connecting lines interpolate across those gaps. Missing observations are omitted from `Measurements`; explicit zero remains observed zero. A zero numerator and denominator represents an observed unavailable ratio, while a nonzero numerator without a denominator is invalid. Members remain selectable when the active metric is absent, and their inspector shows `n/a`.
 
 ## Select a reference
 

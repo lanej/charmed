@@ -8,6 +8,7 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/layout"
+	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -37,6 +38,10 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 		return ""
 	}
 
+	if !finite(d.Min) || !finite(d.Max) || !finite(d.Max-d.Min) || d.Min >= d.Max {
+		return t.Subtle().Render(ansi.Wrap("Distribution range unavailable", width, ""))
+	}
+
 	if len(d.Series) == 0 {
 		return t.Subtle().Render(ansi.Wrap("No observations", width, ""))
 	}
@@ -48,8 +53,9 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 			if s.HasSpread {
 				spread = 3 * s.StdDev
 			}
-			low = min(low, s.Mean-spread)
-			high = max(high, s.Mean+spread)
+
+			low = min(low, max(d.Min, s.Mean-spread))
+			high = max(high, min(d.Max, s.Mean+spread))
 		}
 		if s.Selected != nil && finite(*s.Selected) {
 			low = min(low, *s.Selected)
@@ -79,7 +85,7 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 		prefixWidth = min(29, max(8, width/3))
 
 		for _, series := range d.Series {
-			value := fmt.Sprintf("%.3f%s", series.Mean, d.Unit)
+			value := text.NumberLabel(series.Mean, 3, d.Unit, true)
 			if prefixWidth >= width || prefixWidth < lipgloss.Width(value)+2 {
 				prefixWidth = 0
 				break
@@ -99,21 +105,21 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 		}
 		spread := "n/a"
 		if s.HasSpread {
-			spread = fmt.Sprintf("%.3f%s", s.StdDev, d.SpreadUnit)
+			spread = text.NumberLabel(s.StdDev, 3, d.SpreadUnit, true)
 		}
 		if !d.Compact {
-			label := fmt.Sprintf("%s mean %.3f%s s=%s n=%d", s.Label, s.Mean, d.Unit, spread, s.Members)
+			label := fmt.Sprintf("%s mean %s s=%s n=%d", s.Label, text.NumberLabel(s.Mean, 3, d.Unit, true), spread, s.Members)
 			lines = append(lines, style.Render(ansi.Wrap(label, width, "")))
 		}
 		opts := BandOptions{Min: low, Max: high, Center: s.Mean, Selected: s.Selected, Series: i, Markers: d.Markers}
 		if s.HasSpread {
 			for k := max(1, min(3, d.Sigma)); k >= 1; k-- {
-				opts.Intervals = append(opts.Intervals, Interval{Low: s.Mean - float64(k)*s.StdDev, High: s.Mean + float64(k)*s.StdDev})
+				opts.Intervals = append(opts.Intervals, Interval{Low: max(low, s.Mean-float64(k)*s.StdDev), High: min(high, s.Mean+float64(k)*s.StdDev)})
 			}
 		}
 		prefix := ""
 		if d.Compact {
-			value := fmt.Sprintf("%.3f%s", s.Mean, d.Unit)
+			value := text.NumberLabel(s.Mean, 3, d.Unit, true)
 			if prefixWidth == 0 {
 				lines = append(lines, style.Render(ansi.Wrap(s.Label+" "+value, width, "")))
 			} else {
@@ -131,7 +137,7 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 	if math.IsInf(low, 0) {
 		lines = append(lines, t.Subtle().Render(ansi.Wrap("No eligible member spread", width, "")))
 	} else {
-		left, right := fmt.Sprintf("%.3f%s", low, d.Unit), fmt.Sprintf("%.3f%s", high, d.Unit)
+		left, right := text.NumberLabel(low, 3, d.Unit, true), text.NumberLabel(high, 3, d.Unit, true)
 		axisWidth := width - prefixWidth
 		labelWidth := lipgloss.Width(left) + lipgloss.Width(right)
 

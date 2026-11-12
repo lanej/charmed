@@ -70,6 +70,7 @@ type CohortComparison struct {
 	referenceID                  string
 	comparisons                  []map[string]cohort.ComparisonAttention
 	plots                        []chart.TimeSeries
+	historyNotes                 [][]string
 	focus                        interaction.Focus
 	size                         layout.Size
 	gridSize, sideSize           layout.Size
@@ -418,38 +419,11 @@ func (m *CohortComparison) rebuildPlots() {
 	width := max(1, layout.PanelContentSize(layout.Size{Width: panelWidth}).Width)
 
 	m.plots = make([]chart.TimeSeries, len(m.data.Metrics))
+
+	m.historyNotes = make([][]string, len(m.data.Metrics))
 	for i, metric := range m.data.Metrics {
-		series := make([]chart.TimeSeriesData, len(m.data.Cohorts)+1)
-		for c := range m.data.Cohorts {
-			series[c].ID = fmt.Sprintf("cohort:%d", c)
-		}
-
-		selectedIndex := len(m.data.Cohorts)
-		series[selectedIndex].ID = "selected"
-
-		for _, w := range m.data.Windows {
-			for c, group := range m.data.Cohorts {
-				s := cohort.AnalyzeMetric(w.Samples, group.ID, metric, m.minRequests)
-				if s.HasRate {
-					series[c].Points = append(series[c].Points, timeserieslinechart.TimePoint{Time: w.End, Value: s.Value * metric.Scale()})
-				}
-			}
-
-			for _, group := range m.data.Cohorts {
-				summary := cohort.AnalyzeMetric(w.Samples, group.ID, metric, m.minRequests)
-				for _, point := range summary.Points {
-					if point.MemberKey == m.selected && point.HasValue {
-						series[selectedIndex].Points = append(series[selectedIndex].Points, timeserieslinechart.TimePoint{Time: w.End, Value: point.Value * metric.Scale()})
-					}
-				}
-			}
-		}
-
-		for c, group := range m.data.Cohorts {
-			series[c].Label, series[c].Unit = group.Label, metric.DisplayUnit()
-		}
-
-		series[selectedIndex].Label, series[selectedIndex].Unit = "member", metric.DisplayUnit()
+		series, notes := m.historySeries(metric)
+		m.historyNotes[i] = notes
 		low, high := math.Inf(1), math.Inf(-1)
 		for _, s := range series {
 			for _, p := range s.Points {
@@ -460,10 +434,11 @@ func (m *CohortComparison) rebuildPlots() {
 		if math.IsInf(low, 0) {
 			low, high = 0, 1
 		}
-		padding := max((high-low)*0.15, 0.001)
+
+		low, high, _ = chart.PaddedRange(low, high, 0.15)
 		m.plots[i] = chart.NewTimeSeries(series, layout.Size{Width: width, Height: m.historyHeight()}, m.theme,
-			timeserieslinechart.WithYRange(low-padding, high+padding),
-			timeserieslinechart.WithYLabelFormatter(func(_ int, value float64) string { return fmt.Sprintf("%.2f%s", value, metric.DisplayUnit()) }),
+			timeserieslinechart.WithYRange(low, high),
+			timeserieslinechart.WithYLabelFormatter(func(_ int, value float64) string { return text.NumberLabel(value, 2, metric.DisplayUnit(), true) }),
 			timeserieslinechart.WithXLabelFormatter(func(_ int, value float64) string {
 				return time.UnixMilli(int64(math.Round(value * 1000))).UTC().Format("15:04")
 			}))
@@ -533,8 +508,10 @@ func (m *CohortComparison) comparisonRows(index, width int) []string {
 	return rows
 }
 
-func (m *CohortComparison) panel(index, width int) string {
+func (m *CohortComparison) panel(index, width, minHeight int) string {
 	rows := m.comparisonRows(index, layout.PanelContentSize(layout.Size{Width: width}).Width)
+
+	rows = append(rows, m.historyRows(index, layout.PanelContentSize(layout.Size{Width: width}).Width)...)
 	if policy := m.boundaries[m.data.Metrics[index].ID]; policy.Fleet.Configured() {
 		rows = append(rows, policy.Fleet.Summary(m.data.Metrics[index].DeltaUnit()))
 	}
@@ -547,7 +524,7 @@ func (m *CohortComparison) panel(index, width int) string {
 	lines = append(lines, card.Distribution.View(contentWidth, m.theme), card.History.View())
 	height := lipgloss.Height(strings.Join(lines, "\n")) + 2*theme.BorderCells
 
-	return card.View(layout.Size{Width: width, Height: height}, m.theme, m.metric == index)
+	return card.View(layout.Size{Width: width, Height: max(height, minHeight)}, m.theme, m.metric == index)
 }
 
 func (m *CohortComparison) grid() string {
@@ -564,9 +541,19 @@ func (m *CohortComparison) grid() string {
 	width := max(1, (m.gridSize.Width-(columns-1))/columns)
 	var rows []string
 	for i := 0; i < len(m.data.Metrics); i += columns {
-		row := m.panel(i, width)
+		row := m.panel(i, width, 0)
 		if columns == 2 && i+1 < len(m.data.Metrics) {
-			row = layout.Row(row, " ", m.panel(i+1, m.gridSize.Width-width-1))
+			otherWidth := m.gridSize.Width - width - 1
+			other := m.panel(i+1, otherWidth, 0)
+
+			rowHeight, otherHeight := lipgloss.Height(row), lipgloss.Height(other)
+			if rowHeight < otherHeight {
+				row = m.panel(i, width, otherHeight)
+			} else if otherHeight < rowHeight {
+				other = m.panel(i+1, otherWidth, rowHeight)
+			}
+
+			row = layout.Row(row, " ", other)
 		}
 		rows = append(rows, row)
 	}

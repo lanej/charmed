@@ -45,7 +45,13 @@ func (m *CohortComparison) bandVariantView() string {
 	}
 
 	height := m.historyHeight() + 2
-	detail := chart.ComparisonPanel{Title: m.comparisonTitle(m.metric, layout.PanelContentSize(m.gridSize).Width), History: m.plots[m.metric]}
+
+	notes := m.historyRows(m.metric, layout.PanelContentSize(m.gridSize).Width)
+	if len(notes) > 0 {
+		height += lipgloss.Height(strings.Join(notes, "\n")) + 1
+	}
+
+	detail := chart.ComparisonPanel{Summary: notes, Title: m.comparisonTitle(m.metric, layout.PanelContentSize(m.gridSize).Width), History: m.plots[m.metric]}
 
 	return layout.Column(
 		matrix.View(layout.Size{Width: m.gridSize.Width, Height: matrixHeight}, m.theme, m.focus.Current() == "metrics"),

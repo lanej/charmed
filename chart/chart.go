@@ -12,6 +12,7 @@ import (
 	"github.com/NimbleMarkets/ntcharts/v2/linechart/timeserieslinechart"
 	"github.com/NimbleMarkets/ntcharts/v2/sparkline"
 	"github.com/lanej/charmed/layout"
+	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -59,12 +60,13 @@ type TimeSeriesData struct {
 }
 
 type TimeSeries struct {
-	Bubble  timeserieslinechart.Model
-	series  []TimeSeriesData
-	size    layout.Size
-	theme   theme.Theme
-	focused bool
-	options []timeserieslinechart.Option
+	Bubble         timeserieslinechart.Model
+	series         []TimeSeriesData
+	size           layout.Size
+	theme          theme.Theme
+	focused        bool
+	rangeAvailable bool
+	options        []timeserieslinechart.Option
 }
 
 func NewTimeSeries(series []TimeSeriesData, size layout.Size, t theme.Theme, options ...timeserieslinechart.Option) TimeSeries {
@@ -120,20 +122,24 @@ func (m *TimeSeries) rebuild() {
 	if !last.After(first) {
 		last = first.Add(time.Hour)
 	}
-	if low == high {
-		low -= 1
-		high += 1
-	} else {
-		margin := (high - low) * 0.15
-		low -= margin
-		high += margin
+
+	low, high, m.rangeAvailable = PaddedRange(low, high, 0.15)
+	if !m.rangeAvailable {
+		low, high = 0, 1
 	}
 	defaults := []timeserieslinechart.Option{
 		timeserieslinechart.WithTimeRange(first, last), timeserieslinechart.WithYRange(low, high),
 		timeserieslinechart.WithXLabelFormatter(timeserieslinechart.HourTimeLabelFormatter()),
+		timeserieslinechart.WithYLabelFormatter(func(_ int, value float64) string { return text.NumberLabel(value, 0, "", true) }),
 		timeserieslinechart.WithXYSteps(3, 2), timeserieslinechart.WithAxesStyles(m.theme.Subtle(), m.theme.Subtle()),
 	}
-	m.Bubble = timeserieslinechart.New(max(20, m.size.Width), max(6, m.size.Height), append(defaults, m.options...)...)
+
+	height := m.size.Height
+	if !m.rangeAvailable {
+		height--
+	}
+
+	m.Bubble = timeserieslinechart.New(max(20, m.size.Width), max(6, height), append(defaults, m.options...)...)
 	for i, s := range m.series {
 		m.Bubble.SetDataSetStyle(s.ID, lipgloss.NewStyle().Foreground(m.theme.SeriesColor(i)))
 		for _, p := range s.Points {
@@ -160,6 +166,7 @@ func (m TimeSeries) View() string {
 	for _, s := range m.series {
 		count += len(s.Points)
 	}
+
 	if count == 0 {
 		return layout.Fit("No data for this selection", m.size)
 	}
@@ -170,12 +177,18 @@ func (m TimeSeries) View() string {
 		var lines []string
 		for _, s := range m.series {
 			if len(s.Points) > 0 {
-				lines = append(lines, fmt.Sprintf("%s: %.1f %s", s.Label, s.Points[len(s.Points)-1].Value, s.Unit))
+				lines = append(lines, fmt.Sprintf("%s: %s %s", s.Label, text.NumberLabel(s.Points[len(s.Points)-1].Value, 1, "", true), s.Unit))
 			}
 		}
 		return layout.Fit(strings.Join(lines, "\n"), m.size)
 	}
-	return layout.Fit(m.Bubble.View(), m.size)
+
+	content := m.Bubble.View()
+	if !m.rangeAvailable {
+		content = "History range unavailable (full span)\n" + content
+	}
+
+	return layout.Fit(content, m.size)
 }
 
 // Legend renders a single-row key using each series color.

@@ -1,7 +1,6 @@
 package pattern
 
 import (
-	"fmt"
 	"strings"
 
 	"charm.land/bubbles/v2/table"
@@ -82,10 +81,7 @@ func (m *CohortComparison) updateInspector() {
 
 					metric := m.data.Metrics[i]
 
-					value := "n/a"
-					if p.HasValue {
-						value = fmt.Sprintf("%.3f%s", p.Value*metric.Scale(), metric.DisplayUnit())
-					}
+					value := text.NumberLabel(p.Value*metric.Scale(), 3, metric.DisplayUnit(), p.HasValue)
 
 					row := table.Row{m.metricLabel(i, true), palette.Text().Render(value), z}
 					if showAttention {
@@ -100,7 +96,7 @@ func (m *CohortComparison) updateInspector() {
 			if !found {
 				row := table.Row{m.metricLabel(i, true), "n/a", "n/a"}
 				if showAttention {
-					row = append(row, "")
+					row = append(row, feedback.Attention(m.assessments[i].Members[m.selected].Level, m.theme))
 				}
 
 				rows = append(rows, row)

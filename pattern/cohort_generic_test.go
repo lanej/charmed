@@ -2,6 +2,7 @@ package pattern_test
 
 import (
 	"fmt"
+	"math"
 	"strings"
 	"testing"
 
@@ -271,6 +272,22 @@ func TestMissingMeasurementRetainsUnknownMemberAttention(t *testing.T) {
 	if m.Comparisons("temp")["west"].Members[missing].Level != attention.Unknown {
 		t.Fatal("peer assessment lost missing member")
 	}
+
+	if err := m.SetMetric("yield"); err != nil {
+		t.Fatal(err)
+	}
+
+	for range len(m.Table.Rows()) {
+		if m.Selected() == missing {
+			break
+		}
+
+		m.Update(tea.KeyPressMsg{Code: tea.KeyDown})
+	}
+
+	if m.Selected() != missing || !strings.Contains(ansi.Strip(m.Inspector.Rows()[0][3]), "UNKNOWN") {
+		t.Fatal("missing inspector measurement did not retain Unknown attention")
+	}
 }
 
 func TestWrappedCohortLabelsDoNotClipHistory(t *testing.T) {
@@ -305,6 +322,98 @@ func TestWrappedCohortLabelsDoNotClipHistory(t *testing.T) {
 			if !strings.Contains(ansi.Strip(m.Panels.View()), "01:00") {
 				t.Fatalf("wrapped labels hid time axis in %s at %+v", variant, size)
 			}
+		}
+	}
+}
+
+func TestInspectorPreservesTinyNonzeroMeasurements(t *testing.T) {
+	d := fixture.Data()
+	d.Metrics = []cohort.Metric{{ID: "ratio", Label: "Ratio"}, {ID: "tiny", Label: "Tiny", Kind: cohort.Scalar, Unit: "C"}, {ID: "negative", Label: "Negative", Kind: cohort.Scalar, Unit: "C"}, {ID: "zero", Label: "Zero", Kind: cohort.Scalar, Unit: "C"}}
+	d.Cohorts = d.Cohorts[:1]
+	d.Windows = d.Windows[:1]
+	d.Windows[0].Samples = []cohort.Sample{{MemberKey: cohort.MemberKey{CohortID: "north", MemberID: "sensor"}, Measurements: map[string]cohort.Measurement{"ratio": {Numerator: 1, Denominator: 1000000}, "tiny": {Value: 0.000001}, "negative": {Value: -0.000001}, "zero": {Value: 0}}}}
+
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Mono)})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for i, want := range []string{"0.0001%", "1e-06C", "-1e-06C", "0.000C"} {
+		if got := ansi.Strip(m.Inspector.Rows()[i][1]); got != want {
+			t.Fatalf("metric %s: got %q, want %q", d.Metrics[i].ID, got, want)
+		}
+	}
+}
+
+func TestHistoryExposesMissingIntervals(t *testing.T) {
+	d := fixture.Data()
+	d.Cohorts = d.Cohorts[:1]
+	d.Metrics = []cohort.Metric{{ID: "value", Label: "Value", Kind: cohort.Scalar}}
+
+	d.Windows = d.Windows[:3]
+	for i := range d.Windows {
+		d.Windows[i].Samples = []cohort.Sample{{MemberKey: cohort.MemberKey{CohortID: "north", MemberID: "sensor"}, Measurements: map[string]cohort.Measurement{"value": {Value: 42}}}}
+	}
+
+	complete, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Dark)})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	delete(d.Windows[1].Samples[0].Measurements, "value")
+
+	missing, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Dark)})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, variant := range []pattern.ComparisonVariant{pattern.Stacked, pattern.Bands} {
+		if err := complete.SetVariant(variant); err != nil {
+			t.Fatal(err)
+		}
+
+		if err := missing.SetVariant(variant); err != nil {
+			t.Fatal(err)
+		}
+
+		complete.Resize(layout.Size{Width: 150, Height: 100})
+		missing.Resize(layout.Size{Width: 150, Height: 100})
+
+		frame := ansi.Strip(missing.Panels.View())
+		if frame == ansi.Strip(complete.Panels.View()) || !strings.Contains(strings.Join(strings.Fields(frame), " "), "bridge missing intervals") || !strings.Contains(strings.ReplaceAll(strings.Join(strings.Fields(frame), ""), "│", ""), "2026-01-01T01:00:00Z–2026-01-01T02:00:00Z") {
+			t.Fatalf("unavailable window was indistinguishable from a measured value in %s: %s", variant, frame)
+		}
+	}
+}
+
+func TestExtremeScalarHistoryRetainsFiniteObservationRange(t *testing.T) {
+	for _, value := range []float64{1e-200, 1e200, math.MaxFloat64} {
+		d := fixture.Data()
+		d.Cohorts = d.Cohorts[:1]
+		d.Metrics = []cohort.Metric{{ID: "value", Label: "Value", Kind: cohort.Scalar, Unit: "C"}}
+		d.Windows = d.Windows[:1]
+		d.Windows[0].Samples = []cohort.Sample{{MemberKey: cohort.MemberKey{CohortID: "north", MemberID: "sensor"}, Measurements: map[string]cohort.Measurement{"value": {Value: value}}}}
+
+		m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Dark)})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		m.Resize(layout.Size{Width: 132, Height: 80})
+
+		frame := ansi.Strip(m.Panels.View())
+		for _, invalid := range []string{"Invalid interval", "+Inf", "-Inf", "NaN", "0.00C"} {
+			if strings.Contains(frame, invalid) {
+				t.Fatalf("value %g rendered %q", value, invalid)
+			}
+		}
+
+		if !strings.Contains(frame, "e+") && value > 1 {
+			t.Fatal("large value lost its magnitude")
+		}
+
+		if !strings.Contains(ansi.Strip(m.Inspector.Rows()[0][1]), "e") {
+			t.Fatal("extreme inspector value lost its magnitude")
 		}
 	}
 }

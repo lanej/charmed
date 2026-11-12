@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 
+	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/cohort"
 )
 
@@ -69,12 +70,12 @@ func (m *CohortComparison) cohortIDs() []string {
 
 func (m *CohortComparison) distributionRange(index int) (float64, float64) {
 	metric := m.data.Metrics[index]
-	low, high := 0.0, 1.0
+	low, high := math.Inf(1), math.Inf(-1)
 
 	for _, s := range m.summaries[index] {
 		if s.Eligible > 0 {
-			low = min(low, s.Mean-3*s.StdDev)
-			high = max(high, s.Mean+3*s.StdDev)
+			low = min(low, max(-math.MaxFloat64, s.Mean-3*s.StdDev))
+			high = max(high, min(math.MaxFloat64, s.Mean+3*s.StdDev))
 		}
 
 		for _, p := range s.Points {
@@ -90,9 +91,16 @@ func (m *CohortComparison) distributionRange(index int) (float64, float64) {
 		high = max(high, marker.Value/metric.Scale())
 	}
 
-	padding := math.Max((high-low)*0.1, 0.001)
+	if math.IsInf(low, 1) {
+		return 0, 1
+	}
 
-	return (low - padding) * metric.Scale(), (high + padding) * metric.Scale()
+	low, high, ok := chart.PaddedRange(low*metric.Scale(), high*metric.Scale(), 0.1)
+	if !ok {
+		return 0, 0
+	}
+
+	return low, high
 }
 
 // memberSummary supplements observations with unavailable member identities for
