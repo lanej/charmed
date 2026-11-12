@@ -24,15 +24,15 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">53</span></a>
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">65</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">23</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">37</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">14</span></a>
 
 </div>
 <div class="nav-category ">
@@ -40,7 +40,7 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">3</span></a>
 
 </div>
 <p class="nav-title">Guides</p>
@@ -61,15 +61,15 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">53</span></a>
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">65</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">23</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">37</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">14</span></a>
 
 </div>
 <div class="nav-category ">
@@ -77,7 +77,7 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">3</span></a>
 
 </div>
 <p class="nav-title">Guides</p>
@@ -118,7 +118,7 @@ cmd <span class="syn-operator">:=</span> field<span class="syn-operator">.</span
 <pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench list
 <span class="syn-command">go</span> run ./cmd/workbench run screen/services
 </code></pre>
-<p>Run from the repository root with <strong>Go 1.26.10+</strong>. Use Ctrl+C to exit. You can pass fixture-specific options such as <code class="inline-code">--theme light</code>, <code class="inline-code"><span class="syn-operator">--</span>legend</code>, or <code class="inline-code">--columns 40</code>; see the <a href="https://github.com/lanej/charmed/blob/main/story/catalog.go">component registry</a> for available fixtures.</p>
+<p>Run from the repository root with <strong>Go 1.26.11+</strong>. Use Ctrl+C to exit. You can pass fixture-specific options such as <code class="inline-code">--theme light</code>, <code class="inline-code"><span class="syn-operator">--</span>legend</code>, or <code class="inline-code">--columns 40</code>; see the <a href="https://github.com/lanej/charmed/blob/main/story/catalog.go">component registry</a> for available fixtures.</p>
 <h2 id="add-a-component"><a class="heading-permalink" href="#add-a-component"><span>Add a component</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Organize Go packages by capability rather than atomic level. Use atoms, molecules, and organisms to describe <strong>composition depth in the catalog</strong>, not to create extra package layers.</p>
 <ol>
@@ -139,6 +139,9 @@ cmd <span class="syn-operator">:=</span> field<span class="syn-operator">.</span
 <p>Merging to <code class="inline-code">main</code> publishes the tested static bundle through GitHub Pages. No separate documentation server or JavaScript build tool is required; the small client script enhances variant tabs and mobile navigation, and forwards published bookmarks to their current pages.</p>
 <h2 id="coverage"><a class="heading-permalink" href="#coverage"><span>Coverage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>The inventory below is generated from the registry and distinguishes implemented components from optional integrations. The bundled JuliaMono font preserves braille and box-drawing glyph geometry; see its <a href="assets/JuliaMono-LICENSE.txt">license</a>.</p>
+<h2 id="git-fixtures"><a class="heading-permalink" href="#git-fixtures"><span>Git fixtures</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Run <code class="inline-code">go run ./cmd/workbench run git/browser</code> for the composed repository browser, or use <code class="inline-code">git/history</code>, <code class="inline-code">git/changes</code> and <code class="inline-code">git/worktrees</code> for individual organisms. All data is synthetic and supplied in memory; no Git executable or repository access is needed. Ctrl+Left/Right switches browser sections, Tab switches panes, Enter inspects a selected worktree, and Ctrl+E/Ctrl+Y scrolls history continuation rows independently of commit selection.</p>
+<p>Saved native previews: <a href="assets/git-history.png">branching history</a>, <a href="assets/git-changes.png">status and diff inspector</a>, <a href="assets/git-worktrees.png">worktree list</a>, and <a href="assets/git-browser.png">repository browser</a>.</p>
 
 
 
