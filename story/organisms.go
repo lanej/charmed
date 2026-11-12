@@ -137,7 +137,7 @@ func fileStory(e Environment) (runtime.Scene, error) {
 }
 
 func markdownStory(e Environment) (runtime.Scene, error) {
-	content := "# Terminal documentation\n\nGlamour renders **Markdown** inside a Bubbles viewport.\n\n- Theme follows the terminal palette\n- Content wraps to its allocated width\n- Navigation belongs to this region\n\n```go\nfield := input.NewText(options)\ncmd := field.Focus()\n```\n\n## Composition\n\nKeep content, focus and layout independent.\n"
+	content := "# Terminal documentation\n\nUse `field.Focus()` with **Markdown**, *emphasis*, and [Glamour](https://github.com/charmbracelet/glamour).\n\n- Theme follows the terminal palette\n- Prose wraps to its allocated width\n\n```go\n// Focus a native input\nfield := input.NewText(options)\ncmd := field.Focus()\n```\n\n> Keep content, focus and layout independent.\n\n| Content | Rendering |\n| --- | --- |\n| Inline code | Literal spans |\n| Fenced source | Syntax highlighting |\n"
 
 	rendered, err := text.Markdown(content, e.Config.Columns, e.Config.Palette())
 	if err != nil {

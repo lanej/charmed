@@ -215,6 +215,8 @@ func Render(id string) (string, error) {
 		return ExampleCollectionTree(), nil
 	case "collection/files":
 		return ExampleCollectionFiles(), nil
+	case "text/code":
+		return ExampleTextCode()
 	case "text/markdown":
 		return ExampleTextMarkdown()
 	case "form/settings":
