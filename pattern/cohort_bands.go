@@ -7,6 +7,7 @@ import (
 
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/layout"
+	"github.com/lanej/charmed/theme"
 )
 
 // bandVariantView presents the same comparison with disconnected bands. It
@@ -15,6 +16,7 @@ func (m *CohortComparison) bandVariantView() string {
 	const selectionPrefix = "> "
 
 	matrix := chart.BandMatrix{Title: "Disconnected bands"}
+	matrixHeight := 2 * theme.BorderCells
 
 	for i := range m.data.Metrics {
 		width := layout.PanelContentSize(m.gridSize).Width
@@ -31,14 +33,22 @@ func (m *CohortComparison) bandVariantView() string {
 			title = selectionPrefix + title
 		}
 
-		matrix.Rows = append(matrix.Rows, chart.BandRow{Title: title, Distribution: m.distribution(i)})
+		distribution := m.distribution(i)
+		matrix.Rows = append(matrix.Rows, chart.BandRow{Title: title, Distribution: distribution})
+		distribution.Compact = true
+
+		if i > 0 {
+			matrixHeight += 2
+		}
+
+		matrixHeight += lipgloss.Height(title + "\n" + distribution.View(max(1, layout.PanelContentSize(m.gridSize).Width), m.theme))
 	}
 
 	height := m.historyHeight() + 2
 	detail := chart.ComparisonPanel{Title: m.comparisonTitle(m.metric, layout.PanelContentSize(m.gridSize).Width), History: m.plots[m.metric]}
 
 	return layout.Column(
-		matrix.View(layout.Size{Width: m.gridSize.Width, Height: max(21, len(m.data.Metrics)*(2*len(m.data.Cohorts)+4))}, m.theme, m.focus.Current() == "metrics"),
+		matrix.View(layout.Size{Width: m.gridSize.Width, Height: matrixHeight}, m.theme, m.focus.Current() == "metrics"),
 		detail.View(layout.Size{Width: m.gridSize.Width, Height: height}, m.theme, false),
 	)
 }

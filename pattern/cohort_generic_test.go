@@ -272,3 +272,38 @@ func TestMissingMeasurementRetainsUnknownMemberAttention(t *testing.T) {
 		t.Fatal("peer assessment lost missing member")
 	}
 }
+
+func TestWrappedCohortLabelsDoNotClipHistory(t *testing.T) {
+	d := fixture.Data()
+	d.Metrics = d.Metrics[:1]
+	d.Cohorts[0].Label = "Reference temperature sensor population"
+	d.Cohorts[1].Label = "Southern industrial temperature sensors"
+
+	d.Cohorts[2].Label = "Western industrial temperature sensors"
+	for w := range d.Windows {
+		for s := range d.Windows[w].Samples {
+			delete(d.Windows[w].Samples[s].Measurements, "energy")
+			delete(d.Windows[w].Samples[s].Measurements, "yield")
+		}
+	}
+
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, ReferenceID: "north", Theme: theme.New(theme.Dark)})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, variant := range []pattern.ComparisonVariant{pattern.Stacked, pattern.Bands} {
+		if err := m.SetVariant(variant); err != nil {
+			t.Fatal(err)
+		}
+
+		for _, size := range []layout.Size{{Width: 132, Height: 80}, {Width: 40, Height: 80}} {
+			m.Resize(size)
+			m.Panels.GotoBottom()
+
+			if !strings.Contains(ansi.Strip(m.Panels.View()), "01:00") {
+				t.Fatalf("wrapped labels hid time axis in %s at %+v", variant, size)
+			}
+		}
+	}
+}

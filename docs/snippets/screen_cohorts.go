@@ -20,10 +20,13 @@ func ExampleScreenCohorts() (string, error) {
 			{MemberKey: cohort.MemberKey{CohortID: "west", MemberID: "sensor-3"}, Measurements: map[string]cohort.Measurement{"temp": {Value: 18}}},
 		}}},
 	}
+
 	comparison, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Regional measurements", Data: data, ReferenceID: "north", Theme: theme.New(theme.Dark)})
 	if err != nil {
 		return "", err
 	}
+
 	comparison.Resize(layout.Size{Width: 100, Height: 30})
+
 	return comparison.View(), nil
 }

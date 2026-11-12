@@ -541,7 +541,13 @@ func (m *CohortComparison) panel(index, width int) string {
 
 	card := chart.ComparisonPanel{Title: m.comparisonTitle(index, layout.PanelContentSize(layout.Size{Width: width}).Width), Summary: rows, Distribution: m.distribution(index), History: m.plots[index]}
 
-	return card.View(layout.Size{Width: width, Height: 4 + m.historyHeight() + 2*len(m.data.Cohorts) + len(rows)}, m.theme, m.metric == index)
+	contentWidth := max(1, layout.PanelContentSize(layout.Size{Width: width}).Width)
+
+	lines := append([]string(nil), rows...)
+	lines = append(lines, card.Distribution.View(contentWidth, m.theme), card.History.View())
+	height := lipgloss.Height(strings.Join(lines, "\n")) + 2*theme.BorderCells
+
+	return card.View(layout.Size{Width: width, Height: height}, m.theme, m.metric == index)
 }
 
 func (m *CohortComparison) grid() string {
