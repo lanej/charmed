@@ -4,6 +4,7 @@ import (
 	"math"
 	"strings"
 	"testing"
+	"time"
 
 	"charm.land/lipgloss/v2"
 	uv "github.com/charmbracelet/ultraviolet"
@@ -125,6 +126,24 @@ func TestMarkersPreserveSemanticDistinctionsInEveryTheme(t *testing.T) {
 	} {
 		if got := tc.omission.Label(); got != tc.want {
 			t.Fatalf("omission %q want %q", got, tc.want)
+		}
+	}
+}
+
+func TestAgeUsesOneUnitAndNeverReadsFresher(t *testing.T) {
+	for _, tc := range []struct {
+		age  time.Duration
+		want string
+	}{
+		{-time.Second, "0s"},
+		{999 * time.Millisecond, "0s"},
+		{14 * time.Second, "14s"},
+		{119 * time.Second, "1m"},
+		{3*time.Hour + 59*time.Minute, "3h"},
+		{49 * time.Hour, "2d"},
+	} {
+		if got := text.Age(tc.age); got != tc.want {
+			t.Fatalf("%v: got %q want %q", tc.age, got, tc.want)
 		}
 	}
 }
