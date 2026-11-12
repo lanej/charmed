@@ -10,7 +10,7 @@ Four linked panels compare **2xx, 3xx, 4xx and 5xx response percentages** betwee
 **Stacked is the default.** Press **b** in the native terminal to switch to **Disconnected bands**. Changing it keeps the current host, metric, window, sigma, focus and attention policy. **b** toggles presentation natively; `SetVariant(pattern.Stacked)` and `SetVariant(pattern.Bands)` select it explicitly.
 
 
-The band variant composes the same distributions and title-delta properties into a rectangle, with the active class's history below it. Each class retains a percentage axis shared by both versions. Static exports save **Disconnected bands** alongside the default stacked fixture, rather than publishing a replacement screen. Native: `go run ./cmd/workbench run screen/deployment --comparison-variant bands`.
+The band variant composes the same distributions and labeled peer-delta rows into a rectangle, with the active class's history below it. Each class retains a percentage axis shared by both versions. Static exports save **Disconnected bands** alongside the default stacked fixture, rather than publishing a replacement screen. Native: `go run ./cmd/workbench run screen/deployment --comparison-variant bands`.
 
 ## Read the comparison
 
@@ -19,12 +19,12 @@ The comparison separates request-weighted fleet behavior from equally weighted h
 | Measurement | Interpretation |
 | --- | --- |
 | Fleet rate | Total class responses divided by all responses; high-volume hosts contribute proportionally more |
-| Title delta | Candidate minus reference in percentage points; negative extends left, positive right |
+| Peer delta | Candidate minus reference in percentage points; negative extends left, positive right |
 | Delta domain | One symmetric domain across all windows and fleet limits; selection does not rescale it |
 | Host mean | Equal weight for every eligible host |
 | Distribution bands | Mean plus/minus one, two and three sample standard deviations, using n minus one |
 | Marks | Brightest inner band is one sigma, vertical bar is mean, X is selected host |
-| Distribution domain | Shared by both versions within a class; includes full three-sigma extents and selected host; display stops at zero and one hundred percent |
+| Distribution domain | Shared by both versions within a class; includes full three-sigma extents and selected host; ratios can extend beyond zero and one hundred percent |
 | History | Request-weighted version rates and selected host rate across supplied windows |
 | Host ranking | Configured attention first, then absolute distance from the reference host distribution |
 | z(ref) | Host rate minus reference mean, divided by reference spread; descriptive distance, never confidence |
@@ -148,10 +148,19 @@ go run ./cmd/workbench run screen/deployment \
 
 ## Supply real telemetry
 
-Replace `fixture.Data` with `cohort.Data` from your application's telemetry adapter. For this screen, each `Cohort.ID` is the actual **version identifier**, and each `Sample.CohortID` points to that version. The first cohort is the reference; the second is the candidate. Group by version and host, independently of the deployment method or pool names. A version served in both environments remains one version cohort; aggregate its host counts accordingly. Deployment method and environment assignments are application metadata, rather than version identifiers.
+Replace `fixture.Data` with validated `cohort.Data` from the application's telemetry adapter. Version identity, interval counts and matched populations must remain explicit before the UI can support a meaningful comparison.
 
-Each `Window` has an inclusive start and exclusive end, and each `Sample` supplies a version/cohort ID, member ID, request count, and an explicit count for every configured metric. Supply **interval counts**, handling cumulative-counter resets and rate-to-count conversion in that adapter. Windows must be ordered, nonoverlapping and equal in duration; gaps and absent hosts are allowed. The UI never queries a telemetry service. The application supplies a `MetricTones` map; the generic comparison component has no built-in HTTP status policy.
+| Input | Contract |
+| --- | --- |
+| Cohort | Actual version ID, independent of deployment method or pool; aggregate hosts serving that version across environments |
+| Reference | Set `ReferenceID` explicitly; cohort order does not select comparison roles |
+| Member | Version/cohort ID and host ID, with interval request and response-class counts |
+| Windows | Inclusive start, exclusive end; ordered, nonoverlapping equal durations; gaps and absent hosts allowed |
+| Adapter | Convert cumulative counters and handle resets; supply matched route, region and request populations |
+| Presentation | Application supplies `MetricTones`; the organism has no built-in HTTP status policy or telemetry queries |
 
 Call `SetData` on the Bubble Tea update thread when new data arrives. Invalid updates return an error and preserve the existing screen. Valid updates copy the data and retain the selected host where it still exists. Appending windows follows the latest window only when it was already selected; inspecting an older window keeps that window selected. For comparisons scoped to a route or region, supply that matched population and label it in `Scope`.
 
-The optional `Emit` callback reports member selection, time window, active metric, band-limit changes, presentation variants and attention transitions. Applications own statistical inference, notification delivery and deployment decisions. Supply `MetricSigns` independently of `MetricTones` and `Boundaries` when composing your own domain.
+The optional `Emit` callback reports member selection, time window, active metric, band-limit changes, presentation variants and attention transitions. Selection events include all cohort IDs and the optional reference; typed attention transitions identify the particular peer in `Candidate`. Applications own statistical inference, notification delivery and deployment decisions. Supply `MetricSigns` independently of `MetricTones` and `Boundaries` when composing your own domain.
+
+For scalar measurements, additional cohorts, optional references and API migration details, see [Compare cohort measurements](cohorts.html).

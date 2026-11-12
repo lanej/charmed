@@ -237,6 +237,8 @@ func Render(id string) (string, error) {
 		return ExampleChartComparisonPanel(), nil
 	case "screen/services":
 		return ExampleScreenServices(), nil
+	case "screen/cohorts":
+		return ExampleScreenCohorts()
 	case "screen/deployment":
 		return ExampleScreenDeployment()
 	case "text/presentation":

@@ -18,13 +18,22 @@ type DeltaProperty struct {
 	Available     bool
 	Style         lipgloss.Style
 	Tones         text.SignTones
+	// Unit defaults to percentage points for existing callers.
+	Unit     string
+	Unitless bool
 }
 
 func (d DeltaProperty) View(width int, t theme.Theme) string {
 	if !d.Available || !finite(d.Value) || !finite(d.Extent) || d.Extent <= 0 {
 		return layout.Fit("n/a", layout.Size{Width: width, Height: 1})
 	}
-	number := text.SignedNumber{Value: d.Value, Available: true, Precision: 3, Unit: "pp", Tones: d.Tones}
+
+	unit := d.Unit
+	if unit == "" && !d.Unitless {
+		unit = "pp"
+	}
+
+	number := text.SignedNumber{Value: d.Value, Available: true, Precision: 3, Unit: unit, Tones: d.Tones}
 	label := number.Label()
 	labelWidth := max(10, len(label))
 	barWidth := width - labelWidth - 1

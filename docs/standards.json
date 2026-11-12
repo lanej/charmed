@@ -172,6 +172,9 @@
     },
     "guide-design.md": {
       "profile": "contributor"
+    },
+    "cohorts.md": {
+      "profile": "reference"
     }
   },
   "component": {

@@ -59,6 +59,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		{File: "command-palette.html", Title: "Command palette", Source: "command-palette.md", Resource: true},
 		{File: "components.html", Title: "Component reference", Source: "components.md", Resource: true},
 		{File: "examples.html", Title: "Composition guide", Source: "examples.md", Resource: true},
+		{File: "cohorts.html", Title: "Cohort measurements", Source: "cohorts.md", Resource: true},
 		{File: "deployment.html", Title: "Compare a deployment", Source: "deployment.md", Resource: true},
 		{File: "json-viewer.html", Title: "JSON viewer", Source: "json-viewer.md", Resource: true},
 		{File: "development.html", Title: "Develop & publish", Source: "development.md", Resource: true},

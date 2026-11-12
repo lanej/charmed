@@ -25,7 +25,7 @@ func ExampleScreenDeployment() (string, error) {
 	}
 
 	comparison, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{
-		Title: "Deployment comparison", Data: data, Theme: theme.New(theme.Dark),
+		Title: "Deployment comparison", Data: data, ReferenceID: "blue", Theme: theme.New(theme.Dark),
 		MinRequests: 1000, Sigma: 3, Variant: pattern.Bands,
 	})
 	if err != nil {

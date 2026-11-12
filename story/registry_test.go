@@ -161,3 +161,28 @@ func TestNarrowFoundationCatalogKeepsAllGlyphsAndSelection(t *testing.T) {
 		}
 	}
 }
+
+func TestCohortPreviewShowsFourPanelsAndThreeDistributions(t *testing.T) {
+	definition, err := story.Find("screen/cohorts")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	frame, err := story.Frame(definition.ID, definition.Defaults)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	plain := ansi.Strip(frame)
+	for _, metric := range []string{"temp", "energy", "yield", "humidity"} {
+		if !strings.Contains(plain, metric) {
+			t.Fatalf("four-panel preview is missing %s", metric)
+		}
+	}
+
+	for _, group := range []string{"North", "South", "West"} {
+		if count := strings.Count(plain, group+" mean"); count != 4 {
+			t.Fatalf("%s appears in %d metric distributions, want 4", group, count)
+		}
+	}
+}

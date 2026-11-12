@@ -14,7 +14,8 @@ import (
 
 func TestComparisonVariantsPreserveSelectionAndOptionalAttention(t *testing.T) {
 	d, _ := fixture.Data("isolated-hosts")
-	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Dark), MinRequests: 1000, Variant: pattern.Bands, Boundaries: fixture.Boundaries()})
+
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, ReferenceID: d.Cohorts[0].ID, Theme: theme.New(theme.Dark), MinRequests: 1000, Variant: pattern.Bands, Boundaries: fixture.Boundaries()})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -64,7 +65,8 @@ func TestComparisonVariantsPreserveSelectionAndOptionalAttention(t *testing.T) {
 
 func TestDefaultComparisonRetainsStackedPresentation(t *testing.T) {
 	d, _ := fixture.Data("isolated-hosts")
-	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, Theme: theme.New(theme.Dark), MinRequests: 1000})
+
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, ReferenceID: d.Cohorts[0].ID, Theme: theme.New(theme.Dark), MinRequests: 1000})
 	if err != nil {
 		t.Fatal(err)
 	}
