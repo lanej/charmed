@@ -33,4 +33,4 @@ Switch between the [deployment fixture](screens-pattern.html#screen/deployment)'
 
 The application shell fixture composes `layout.Header`, `navigation.Tabs`, `layout.Panel` and `layout.Footer`. The header reserves two rows, the tab bar and footer one each, and the panel receives the remaining height. Left/Right or Home/End changes the active section and its content; resize keeps the selected tab. The fixture contains synthetic display data. In an application with focusable content, use the parent focus scope to focus or blur the tab bar before forwarding keys.
 
-The [regional measurement screen](screens-pattern.html#screen/cohorts) compares three cohorts using scalar temperature, summed energy and ratio yield. Read the [measurement contract](cohorts.html) before supplying application observations or comparison boundaries.
+The [regional measurement screen](screens-pattern.html#screen/cohorts) compares three cohorts using scalar temperature, summed energy, ratio yield and humidity. Read the [measurement contract](cohorts.html) before supplying application observations or comparison boundaries.

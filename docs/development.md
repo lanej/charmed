@@ -91,4 +91,4 @@ go run ./examples/cohorts
 go run ./examples/catalog screen/cohorts
 ```
 
-The regional example supplies temperature, energy and yield for three cohorts. Read the [cohort contract](cohorts.html) for scalar aggregation, missing observations, optional references and migration from two-cohort comparisons.
+The regional example supplies temperature, energy, yield and humidity for three cohorts. Read the [cohort contract](cohorts.html) for scalar aggregation, missing observations, optional references and migration from two-cohort comparisons.

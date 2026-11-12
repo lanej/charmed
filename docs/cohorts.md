@@ -1,8 +1,8 @@
 # Compare cohort measurements
 
-`pattern.CohortComparison` accepts one or more cohorts with shared metrics and independent members. It links distributions, aggregate histories, selection and inspection. The regional example compares temperature, energy and yield; HTTP deployment comparisons remain a configured use case.
+`pattern.CohortComparison` accepts one or more cohorts with shared metrics and independent members. It links distributions, aggregate histories, selection and inspection. The regional example compares temperature, energy, yield and humidity; HTTP deployment comparisons remain a configured use case.
 
-![Three regional cohorts with scalar temperature, energy and ratio yield](assets/cohorts.png)
+![Three regional cohorts with scalar temperature, energy, ratio yield and humidity](assets/cohorts.png)
 
 ## Supply observations
 

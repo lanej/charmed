@@ -150,7 +150,7 @@ func TestReferenceIdentityMissingMetricAndAtomicUpdates(t *testing.T) {
 	}
 
 	rows := m.Inspector.Rows()
-	if len(rows) != 3 || ansi.Strip(rows[0][1]) != "n/a" || !strings.Contains(rows[2][1], "%") {
+	if len(rows) != len(d.Metrics) || ansi.Strip(rows[0][1]) != "n/a" || !strings.Contains(rows[2][1], "%") {
 		t.Fatal("missing metric shifted inspector rows or lost units")
 	}
 
@@ -284,6 +284,7 @@ func TestWrappedCohortLabelsDoNotClipHistory(t *testing.T) {
 		for s := range d.Windows[w].Samples {
 			delete(d.Windows[w].Samples[s].Measurements, "energy")
 			delete(d.Windows[w].Samples[s].Measurements, "yield")
+			delete(d.Windows[w].Samples[s].Measurements, "humidity")
 		}
 	}
 
