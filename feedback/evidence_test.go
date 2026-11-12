@@ -162,3 +162,28 @@ func TestEvidenceFooterStatesAgeAndOmission(t *testing.T) {
 		t.Fatal("future observation was not labeled")
 	}
 }
+
+func TestEvidenceFooterNeverExceedsTheAllocation(t *testing.T) {
+	for name, palette := range themes() {
+		for _, width := range []int{20, 40, 55, 80} {
+			for _, footer := range []feedback.EvidenceFooter{
+				{Source: strings.Repeat("s", 60), Scope: "dc1", State: feedback.EvidenceStale},
+				{Source: "connect", Scope: strings.Repeat("scope,", 12), State: feedback.EvidenceTruncated},
+				{Source: strings.Repeat("s", 60), Scope: strings.Repeat("c", 60), State: feedback.EvidenceHealthy},
+			} {
+				view := footer.View(width, palette)
+
+				for _, line := range strings.Split(view, "\n") {
+					if ansi.StringWidth(line) > width {
+						t.Fatalf("%s/%d: %d cells: %q", name, width, ansi.StringWidth(line), ansi.Strip(line))
+					}
+				}
+
+				plain := strings.ReplaceAll(ansi.Strip(view), "\n", "")
+				if !strings.Contains(plain, strings.Repeat("s", 10)) && footer.Source != "connect" {
+					t.Fatalf("%s/%d lost the source: %q", name, width, plain)
+				}
+			}
+		}
+	}
+}

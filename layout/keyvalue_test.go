@@ -50,3 +50,31 @@ func TestKeyValueAlignsStacksAndKeepsMissingDistinct(t *testing.T) {
 		}
 	}
 }
+
+func TestKeyValueNeverExceedsTheAllocation(t *testing.T) {
+	ascii := theme.New(theme.Dark)
+	ascii.ASCII = true
+
+	themes := map[string]theme.Theme{"dark": theme.New(theme.Dark), "mono": theme.New(theme.Mono), "ascii": ascii}
+	pairs := []layout.Pair{
+		{Label: strings.Repeat("l", 20), Value: "x"},
+		{Label: strings.Repeat("label ", 8), Value: strings.Repeat("v", 70)},
+		{Label: "short", State: text.ValueMissing},
+	}
+
+	for name, palette := range themes {
+		for _, width := range []int{20, 40, 55, 80, 120} {
+			view := layout.KeyValue(pairs, width, palette)
+
+			for _, line := range strings.Split(view, "\n") {
+				if ansi.StringWidth(line) > width {
+					t.Fatalf("%s/%d: %d cells: %q", name, width, ansi.StringWidth(line), ansi.Strip(line))
+				}
+			}
+
+			if plain := ansi.Strip(view); !strings.Contains(plain, "x") || !strings.Contains(plain, "missing") {
+				t.Fatalf("%s/%d lost a value: %q", name, width, plain)
+			}
+		}
+	}
+}

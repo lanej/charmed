@@ -234,6 +234,19 @@ func joinParts(parts []string, width int, t theme.Theme) string {
 	lines, line, used := []string{}, "", 0
 
 	for _, part := range parts {
+		// A part wider than the allocation wraps at the cell boundary, so no source or scope text is lost or cut.
+		if width > 0 && ansi.StringWidth(part) > width {
+			wrapped := strings.Split(ansi.Hardwrap(part, width, true), "\n")
+
+			if line != "" {
+				lines = append(lines, line)
+			}
+
+			lines = append(lines, wrapped[:len(wrapped)-1]...)
+			part = wrapped[len(wrapped)-1]
+			line, used = "", 0
+		}
+
 		w := ansi.StringWidth(part)
 
 		switch {

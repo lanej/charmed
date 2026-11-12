@@ -20,24 +20,29 @@ type Pair struct {
 func KeyValue(pairs []Pair, width int, t theme.Theme) string {
 	class, labelWidth := WidthClassOf(width), 0
 
-	for _, p := range pairs {
-		labelWidth = max(labelWidth, ansi.StringWidth(text.Inline(p.Label)))
+	// The label column takes at most half the allocation, so the value always keeps room.
+	labelMax := max(1, (width-2)/2)
+	labels := make([]string, len(pairs))
+
+	for i, p := range pairs {
+		labels[i] = fitLabel(text.Inline(p.Label), labelMax, t)
+		labelWidth = max(labelWidth, ansi.StringWidth(labels[i]))
 	}
 
 	rows := make([]string, 0, len(pairs))
 
-	for _, p := range pairs {
-		label, value := text.Inline(p.Label), p.State.View(p.Value, text.Normal, t)
+	for i, p := range pairs {
+		label, value := labels[i], p.State.View(p.Value, text.Normal, t)
 
 		if class.Stacked() {
 			head := label + ": "
-			rows = append(rows, t.Subtle().Render(head)+ansi.Wrap(value, max(width-ansi.StringWidth(head), 1), ""))
+			rows = append(rows, t.Subtle().Render(head)+ansi.Hardwrap(value, max(width-ansi.StringWidth(head), 1), true))
 
 			continue
 		}
 
 		gap := strings.Repeat(" ", labelWidth-ansi.StringWidth(label)+2)
-		rows = append(rows, Row(t.Subtle().Render(label+gap), ansi.Wrap(value, max(width-labelWidth-2, 1), "")))
+		rows = append(rows, Row(t.Subtle().Render(label+gap), ansi.Hardwrap(value, max(width-labelWidth-2, 1), true)))
 	}
 
 	return trimColumn(rows)
@@ -51,4 +56,13 @@ func trimColumn(blocks []string) string {
 	}
 
 	return strings.Join(lines, "\n")
+}
+
+// fitLabel shortens a label to width cells with an ellipsis, so a cut label is never mistaken for a full one.
+func fitLabel(label string, width int, t theme.Theme) string {
+	if ansi.StringWidth(label) <= width {
+		return label
+	}
+
+	return ansi.Truncate(label, width, t.Glyph(theme.GlyphTruncated))
 }
