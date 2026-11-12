@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Atoms / HTTP · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Atoms / HTTP</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+<div class="nav-groups"><a class="nav-group" href="atoms-chart.html" >Charts</a><a class="nav-group" href="atoms-collection.html" >Collections</a><a class="nav-group" href="atoms-feedback.html" >Feedback</a><a class="nav-group" href="atoms-git.html" >git</a><a class="nav-group" href="atoms-graphics.html" >Graphics</a><a class="nav-group" href="atoms-http.html" aria-current="page">HTTP</a><a class="nav-group" href="atoms-input.html" >Input</a><a class="nav-group" href="atoms-logs.html" >Logs</a><a class="nav-group" href="atoms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">16</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">2</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">3</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#text%2furl">URL</a><a class="nav-component" href="#text%2fhttp-method">Method</a><a class="nav-component" href="#text%2fhttp-status">Status code</a></div>
+
+</div>
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+<div class="nav-groups"><a class="nav-group" href="atoms-chart.html" >Charts</a><a class="nav-group" href="atoms-collection.html" >Collections</a><a class="nav-group" href="atoms-feedback.html" >Feedback</a><a class="nav-group" href="atoms-git.html" >git</a><a class="nav-group" href="atoms-graphics.html" >Graphics</a><a class="nav-group" href="atoms-http.html" aria-current="page">HTTP</a><a class="nav-group" href="atoms-input.html" >Input</a><a class="nav-group" href="atoms-logs.html" >Logs</a><a class="nav-group" href="atoms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">16</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">2</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">3</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#text%2furl">URL</a><a class="nav-component" href="#text%2fhttp-method">Method</a><a class="nav-component" href="#text%2fhttp-status">Status code</a></div>
+
+</div>
+</nav>
+</aside>
+<main id="main">
+
+
+
+
+
+
+
+
+<section class="atomic-level" id="level-atoms">
+<p class="catalog-breadcrumb"><a href="atoms.html">Atoms</a><span aria-hidden="true"> / </span>HTTP</p>
+
+<section class="component-family" id="level-atoms-http"><h1><a class="heading-permalink" href="#level-atoms-http"><span>HTTP</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">3 components · <a href="atoms.html">All atoms</a></p>
+<ul class="group-jump-links" aria-label="Components in HTTP"><li><a href="#text%2furl">URL</a></li><li><a href="#text%2fhttp-method">Method</a></li><li><a href="#text%2fhttp-status">Status code</a></li></ul>
+
+
+<section class="component" id="text/url">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / HTTP</p><h2><a class="heading-permalink" href="#text%2furl" aria-label="Link to URL component"><span>URL</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Path, path with query, host with path, or exact captured URL display; no network requests or mutation.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="text/url-preview"><a class="heading-permalink" href="#text%2furl-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="URL variants">
+<a id="tab-text/url-example" href="#panel-text%2furl-example" role="tab" aria-controls="panel-text/url-example" aria-selected="true">Example</a>
+<a id="tab-text/url-0" href="#panel-text%2furl-0" role="tab" aria-controls="panel-text/url-0" aria-selected="false">Demo</a><a id="tab-text/url-1" href="#panel-text%2furl-1" role="tab" aria-controls="panel-text/url-1" aria-selected="false">Narrow</a><a id="tab-text/url-2" href="#panel-text%2furl-2" role="tab" aria-controls="panel-text/url-2" aria-selected="false">256 colors</a><a id="tab-text/url-3" href="#panel-text%2furl-3" role="tab" aria-controls="panel-text/url-3" aria-selected="false">16 colors</a><a id="tab-text/url-4" href="#panel-text%2furl-4" role="tab" aria-controls="panel-text/url-4" aria-selected="false">Monochrome</a><a id="tab-text/url-5" href="#panel-text%2furl-5" role="tab" aria-controls="panel-text/url-5" aria-selected="false">light</a><a id="tab-text/url-6" href="#panel-text%2furl-6" role="tab" aria-controls="panel-text/url-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/url-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/url-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">/v1/labels                                                 
+/v1/labels?expand=rate&amp;locale=en_US                        
+https://api.example.test/v1/labels?expand=rate&amp;locale=en_US</pre></figure>
+</div>
+<div id="panel-text/url-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/url-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">URL display / captured source unchanged                                                             
+                                                                                                    
+path                                                                                                
+/v1/labels/p_42                                                                                     
+                                                                                                    
+path-query                                                                                          
+/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                                                  
+                                                                                                    
+host-path                                                                                           
+api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                             
+                                                                                                    
+full                                                                                                
+https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre></figure>
+</div><div id="panel-text/url-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/url-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">URL display / captured source unchanged 
+                                        
+path                                    
+/v1/labels/p_42                         
+                                        
+path-query                              
+/v1/labels/p_42?limit=25&amp;tag=a%2Fb      
+                                        
+host-path                               
+api.example.test:8443/v1/labels/p_42?lim
+it=25&amp;tag=a%2Fb                         
+                                        
+full                                    
+https://api.example.test:8443/v1/labels/
+p_42?limit=25&amp;tag=a%2Fb#detail</pre></figure>
+</div><div id="panel-text/url-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/url-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">URL display / captured source unchanged                                                             
+                                                                                                    
+path                                                                                                
+/v1/labels/p_42                                                                                     
+                                                                                                    
+path-query                                                                                          
+/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                                                  
+                                                                                                    
+host-path                                                                                           
+api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                             
+                                                                                                    
+full                                                                                                
+https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre></figure>
+</div><div id="panel-text/url-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/url-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">URL display / captured source unchanged                                                             
+                                                                                                    
+path                                                                                                
+/v1/labels/p_42                                                                                     
+                                                                                                    
+path-query                                                                                          
+/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                                                  
+                                                                                                    
+host-path                                                                                           
+api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                             
+                                                                                                    
+full                                                                                                
+https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre></figure>
+</div><div id="panel-text/url-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/url-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">URL display / captured source unchanged                                                             
+                                                                                                    
+path                                                                                                
+/v1/labels/p_42                                                                                     
+                                                                                                    
+path-query                                                                                          
+/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                                                  
+                                                                                                    
+host-path                                                                                           
+api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                             
+                                                                                                    
+full                                                                                                
+https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre></figure>
+</div><div id="panel-text/url-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/url-5" tabindex="0">
+<figure><figcaption>light · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="light" style="color:#172033;background-color:#f8fafc">URL display / captured source unchanged                                                             
+                                                                                                    
+path                                                                                                
+/v1/labels/p_42                                                                                     
+                                                                                                    
+path-query                                                                                          
+/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                                                  
+                                                                                                    
+host-path                                                                                           
+api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                             
+                                                                                                    
+full                                                                                                
+https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre></figure>
+</div><div id="panel-text/url-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/url-6" tabindex="0">
+<figure><figcaption>contrast · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="contrast" style="color:#ffffff;background-color:#000000">URL display / captured source unchanged                                                             
+                                                                                                    
+path                                                                                                
+/v1/labels/p_42                                                                                     
+                                                                                                    
+path-query                                                                                          
+/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                                                  
+                                                                                                    
+host-path                                                                                           
+api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb                                             
+                                                                                                    
+full                                                                                                
+https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="text/url-code"><a class="heading-permalink" href="#text%2furl-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">url <span class="syn-operator">:=</span> <span class="syn-string">&#34;https://api.example.test/v1/labels?expand=rate&amp;locale=en_US&#34;</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">FormatURL</span><span class="syn-operator">(</span>url<span class="syn-operator">,</span> text<span class="syn-operator">.</span>PathOnly<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">FormatURL</span><span class="syn-operator">(</span>url<span class="syn-operator">,</span> text<span class="syn-operator">.</span>PathAndQuery<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">FormatURL</span><span class="syn-operator">(</span>url<span class="syn-operator">,</span> text<span class="syn-operator">.</span>FullURL<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="text/url-integration"><h3 id="text/url-integration"><a class="heading-permalink" href="#text%2furl-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="text/url-run"><a class="heading-permalink" href="#text%2furl-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/url</code></pre><p><a href="https://github.com/lanej/charmed/blob/5588b57262b628e98fd201f0d7cd95b1f041261f/docs/snippets/text_url.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/5588b57262b628e98fd201f0d7cd95b1f041261f/text/url.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+
+</section>
+
+<section class="component" id="text/http-method">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / HTTP</p><h2><a class="heading-permalink" href="#text%2fhttp-method" aria-label="Link to Method component"><span>Method</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Categorical HTTP verbs with explicit extension-method fallback.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="text/http-method-preview"><a class="heading-permalink" href="#text%2fhttp-method-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Method variants">
+<a id="tab-text/http-method-example" href="#panel-text%2fhttp-method-example" role="tab" aria-controls="panel-text/http-method-example" aria-selected="true">Example</a>
+<a id="tab-text/http-method-0" href="#panel-text%2fhttp-method-0" role="tab" aria-controls="panel-text/http-method-0" aria-selected="false">Demo</a><a id="tab-text/http-method-1" href="#panel-text%2fhttp-method-1" role="tab" aria-controls="panel-text/http-method-1" aria-selected="false">Narrow</a><a id="tab-text/http-method-2" href="#panel-text%2fhttp-method-2" role="tab" aria-controls="panel-text/http-method-2" aria-selected="false">256 colors</a><a id="tab-text/http-method-3" href="#panel-text%2fhttp-method-3" role="tab" aria-controls="panel-text/http-method-3" aria-selected="false">16 colors</a><a id="tab-text/http-method-4" href="#panel-text%2fhttp-method-4" role="tab" aria-controls="panel-text/http-method-4" aria-selected="false">Monochrome</a><a id="tab-text/http-method-5" href="#panel-text%2fhttp-method-5" role="tab" aria-controls="panel-text/http-method-5" aria-selected="false">light</a><a id="tab-text/http-method-6" href="#panel-text%2fhttp-method-6" role="tab" aria-controls="panel-text/http-method-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/http-method-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-method-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"> <span style="color:#99c8d4;font-weight:bold;">GET</span>    
+ <span style="color:#e1cd91;font-weight:bold;">POST</span>   
+ <span style="color:#c3b2df;font-weight:bold;">PATCH</span>  
+ <span style="color:#e6b6bf;font-weight:bold;">DELETE</span></pre></figure>
+</div>
+<div id="panel-text/http-method-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-method-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP methods / categorical colors                                                                   
+                                                                                                    
+ <span style="color:#99c8d4;font-weight:bold;">GET</span>                                                                                                
+ <span style="color:#a1acbd;font-weight:bold;">HEAD</span>                                                                                               
+ <span style="color:#e1cd91;font-weight:bold;">POST</span>                                                                                               
+ <span style="color:#c3b2df;font-weight:bold;">PUT</span>                                                                                                
+ <span style="color:#c3b2df;font-weight:bold;">PATCH</span>                                                                                              
+ <span style="color:#e6b6bf;font-weight:bold;">DELETE</span>                                                                                             
+ <span style="color:#a1acbd;font-weight:bold;">OPTIONS</span>                                                                                            
+ <span style="color:#a9c4e5;font-weight:bold;">CONNECT</span>                                                                                            
+ <span style="color:#a9c4e5;font-weight:bold;">TRACE</span>                                                                                              
+ <span style="color:#a9c4e5;font-weight:bold;">PROPFIND</span>                                                                                           
+ <span style="color:#a9c4e5;font-weight:bold;">QUERY</span>                                                                                              
+ <span style="color:#a9c4e5;font-weight:bold;">?</span></pre></figure>
+</div><div id="panel-text/http-method-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-method-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP methods / categorical colors       
+                                        
+ <span style="color:#99c8d4;font-weight:bold;">GET</span>                                    
+ <span style="color:#a1acbd;font-weight:bold;">HEAD</span>                                   
+ <span style="color:#e1cd91;font-weight:bold;">POST</span>                                   
+ <span style="color:#c3b2df;font-weight:bold;">PUT</span>                                    
+ <span style="color:#c3b2df;font-weight:bold;">PATCH</span>                                  
+ <span style="color:#e6b6bf;font-weight:bold;">DELETE</span>                                 
+ <span style="color:#a1acbd;font-weight:bold;">OPTIONS</span>                                
+ <span style="color:#a9c4e5;font-weight:bold;">CONNECT</span>                                
+ <span style="color:#a9c4e5;font-weight:bold;">TRACE</span>                                  
+ <span style="color:#a9c4e5;font-weight:bold;">PROPFIND</span>                               
+ <span style="color:#a9c4e5;font-weight:bold;">QUERY</span>                                  
+ <span style="color:#a9c4e5;font-weight:bold;">?</span></pre></figure>
+</div><div id="panel-text/http-method-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-method-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP methods / categorical colors                                                                   
+                                                                                                    
+ <span style="color:#87d7d7;font-weight:bold;">GET</span>                                                                                                
+ <span style="color:#afafaf;font-weight:bold;">HEAD</span>                                                                                               
+ <span style="color:#d7d787;font-weight:bold;">POST</span>                                                                                               
+ <span style="color:#d7afd7;font-weight:bold;">PUT</span>                                                                                                
+ <span style="color:#d7afd7;font-weight:bold;">PATCH</span>                                                                                              
+ <span style="color:#d7afaf;font-weight:bold;">DELETE</span>                                                                                             
+ <span style="color:#afafaf;font-weight:bold;">OPTIONS</span>                                                                                            
+ <span style="color:#afd7d7;font-weight:bold;">CONNECT</span>                                                                                            
+ <span style="color:#afd7d7;font-weight:bold;">TRACE</span>                                                                                              
+ <span style="color:#afd7d7;font-weight:bold;">PROPFIND</span>                                                                                           
+ <span style="color:#afd7d7;font-weight:bold;">QUERY</span>                                                                                              
+ <span style="color:#afd7d7;font-weight:bold;">?</span></pre></figure>
+</div><div id="panel-text/http-method-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-method-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP methods / categorical colors                                                                   
+                                                                                                    
+ <span style="color:#00ffff;font-weight:bold;">GET</span>                                                                                                
+ <span style="color:#c0c0c0;font-weight:bold;">HEAD</span>                                                                                               
+ <span style="color:#ffff00;font-weight:bold;">POST</span>                                                                                               
+ <span style="color:#ff00ff;font-weight:bold;">PUT</span>                                                                                                
+ <span style="color:#ff00ff;font-weight:bold;">PATCH</span>                                                                                              
+ <span style="color:#ff0000;font-weight:bold;">DELETE</span>                                                                                             
+ <span style="color:#c0c0c0;font-weight:bold;">OPTIONS</span>                                                                                            
+ <span style="color:#00ffff;font-weight:bold;">CONNECT</span>                                                                                            
+ <span style="color:#00ffff;font-weight:bold;">TRACE</span>                                                                                              
+ <span style="color:#00ffff;font-weight:bold;">PROPFIND</span>                                                                                           
+ <span style="color:#00ffff;font-weight:bold;">QUERY</span>                                                                                              
+ <span style="color:#00ffff;font-weight:bold;">?</span></pre></figure>
+</div><div id="panel-text/http-method-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-method-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">HTTP methods / categorical colors                                                                   
+                                                                                                    
+ <span style="font-weight:bold;">GET</span>                                                                                                
+ <span style="font-weight:bold;">HEAD</span>                                                                                               
+ <span style="font-weight:bold;">POST</span>                                                                                               
+ <span style="font-weight:bold;">PUT</span>                                                                                                
+ <span style="font-weight:bold;">PATCH</span>                                                                                              
+ <span style="font-weight:bold;">DELETE</span>                                                                                             
+ <span style="font-weight:bold;">OPTIONS</span>                                                                                            
+ <span style="font-weight:bold;">CONNECT</span>                                                                                            
+ <span style="font-weight:bold;">TRACE</span>                                                                                              
+ <span style="font-weight:bold;">PROPFIND</span>                                                                                           
+ <span style="font-weight:bold;">QUERY</span>                                                                                              
+ <span style="font-weight:bold;">?</span></pre></figure>
+</div><div id="panel-text/http-method-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-method-5" tabindex="0">
+<figure><figcaption>light · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="light" style="color:#172033;background-color:#f8fafc">HTTP methods / categorical colors                                                                   
+                                                                                                    
+ <span style="color:#365e70;font-weight:bold;">GET</span>                                                                                                
+ <span style="color:#526176;font-weight:bold;">HEAD</span>                                                                                               
+ <span style="color:#725a20;font-weight:bold;">POST</span>                                                                                               
+ <span style="color:#65517f;font-weight:bold;">PUT</span>                                                                                                
+ <span style="color:#65517f;font-weight:bold;">PATCH</span>                                                                                              
+ <span style="color:#7b4252;font-weight:bold;">DELETE</span>                                                                                             
+ <span style="color:#526176;font-weight:bold;">OPTIONS</span>                                                                                            
+ <span style="color:#365b78;font-weight:bold;">CONNECT</span>                                                                                            
+ <span style="color:#365b78;font-weight:bold;">TRACE</span>                                                                                              
+ <span style="color:#365b78;font-weight:bold;">PROPFIND</span>                                                                                           
+ <span style="color:#365b78;font-weight:bold;">QUERY</span>                                                                                              
+ <span style="color:#365b78;font-weight:bold;">?</span></pre></figure>
+</div><div id="panel-text/http-method-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-method-6" tabindex="0">
+<figure><figcaption>contrast · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="contrast" style="color:#ffffff;background-color:#000000">HTTP methods / categorical colors                                                                   
+                                                                                                    
+ <span style="color:#b7dfea;font-weight:bold;">GET</span>                                                                                                
+ <span style="color:#b0bdcf;font-weight:bold;">HEAD</span>                                                                                               
+ <span style="color:#f4dfa6;font-weight:bold;">POST</span>                                                                                               
+ <span style="color:#d9c8f0;font-weight:bold;">PUT</span>                                                                                                
+ <span style="color:#d9c8f0;font-weight:bold;">PATCH</span>                                                                                              
+ <span style="color:#f3c6d0;font-weight:bold;">DELETE</span>                                                                                             
+ <span style="color:#b0bdcf;font-weight:bold;">OPTIONS</span>                                                                                            
+ <span style="color:#c1d9f5;font-weight:bold;">CONNECT</span>                                                                                            
+ <span style="color:#c1d9f5;font-weight:bold;">TRACE</span>                                                                                              
+ <span style="color:#c1d9f5;font-weight:bold;">PROPFIND</span>                                                                                           
+ <span style="color:#c1d9f5;font-weight:bold;">QUERY</span>                                                                                              
+ <span style="color:#c1d9f5;font-weight:bold;">?</span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="text/http-method-code"><a class="heading-permalink" href="#text%2fhttp-method-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;GET&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;POST&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;PATCH&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;DELETE&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="text/http-method-integration"><h3 id="text/http-method-integration"><a class="heading-permalink" href="#text%2fhttp-method-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="text/http-method-run"><a class="heading-permalink" href="#text%2fhttp-method-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/http-method</code></pre><p><a href="https://github.com/lanej/charmed/blob/5588b57262b628e98fd201f0d7cd95b1f041261f/docs/snippets/text_http_method.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/5588b57262b628e98fd201f0d7cd95b1f041261f/text/http.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+
+</section>
+
+<section class="component" id="text/http-status">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / HTTP</p><h2><a class="heading-permalink" href="#text%2fhttp-status" aria-label="Link to Status code component"><span>Status code</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Response classes retain exact codes, including unknown and invalid observations.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="text/http-status-preview"><a class="heading-permalink" href="#text%2fhttp-status-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Status code variants">
+<a id="tab-text/http-status-example" href="#panel-text%2fhttp-status-example" role="tab" aria-controls="panel-text/http-status-example" aria-selected="true">Example</a>
+<a id="tab-text/http-status-0" href="#panel-text%2fhttp-status-0" role="tab" aria-controls="panel-text/http-status-0" aria-selected="false">Demo</a><a id="tab-text/http-status-1" href="#panel-text%2fhttp-status-1" role="tab" aria-controls="panel-text/http-status-1" aria-selected="false">Narrow</a><a id="tab-text/http-status-2" href="#panel-text%2fhttp-status-2" role="tab" aria-controls="panel-text/http-status-2" aria-selected="false">256 colors</a><a id="tab-text/http-status-3" href="#panel-text%2fhttp-status-3" role="tab" aria-controls="panel-text/http-status-3" aria-selected="false">16 colors</a><a id="tab-text/http-status-4" href="#panel-text%2fhttp-status-4" role="tab" aria-controls="panel-text/http-status-4" aria-selected="false">Monochrome</a><a id="tab-text/http-status-5" href="#panel-text%2fhttp-status-5" role="tab" aria-controls="panel-text/http-status-5" aria-selected="false">light</a><a id="tab-text/http-status-6" href="#panel-text%2fhttp-status-6" role="tab" aria-controls="panel-text/http-status-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/http-status-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"> <span style="color:#86cf9a;font-weight:bold;">200</span>  OK         
+ <span style="color:#f2c879;font-weight:bold;">404</span>  Not Found  
+ <span style="color:#f28b82;font-weight:bold;">502</span>  Bad Gateway</pre></figure>
+</div>
+<div id="panel-text/http-status-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP response codes / exact observations                                                            
+                                                                                                    
+ <span style="color:#78b8ed;font-weight:bold;">100</span>  Continue                                                                                      
+ <span style="color:#86cf9a;font-weight:bold;">200</span>  OK                                                                                            
+ <span style="color:#86cf9a;font-weight:bold;">201</span>  Created                                                                                       
+ <span style="color:#86cf9a;font-weight:bold;">204</span>  No Content                                                                                    
+ <span style="color:#78b8ed;font-weight:bold;">301</span>  Moved Permanently                                                                             
+ <span style="color:#78b8ed;font-weight:bold;">304</span>  Not Modified                                                                                  
+ <span style="color:#f2c879;font-weight:bold;">400</span>  Bad Request                                                                                   
+ <span style="color:#f2c879;font-weight:bold;">401</span>  Unauthorized                                                                                  
+ <span style="color:#f2c879;font-weight:bold;">404</span>  Not Found                                                                                     
+ <span style="color:#f2c879;font-weight:bold;">429</span>  Too Many Requests                                                                             
+ <span style="color:#f28b82;font-weight:bold;">500</span>  Internal Server Error                                                                         
+ <span style="color:#f28b82;font-weight:bold;">502</span>  Bad Gateway                                                                                   
+ <span style="color:#f28b82;font-weight:bold;">503</span>  Service Unavailable                                                                           
+ <span style="color:#a7bce0;font-weight:bold;">?</span>                                                                                                  
+ <span style="color:#a7bce0;font-weight:bold;">799?</span></pre></figure>
+</div><div id="panel-text/http-status-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP response codes / exact observations
+                                        
+ <span style="color:#78b8ed;font-weight:bold;">100</span>  Continue                          
+ <span style="color:#86cf9a;font-weight:bold;">200</span>  OK                                
+ <span style="color:#86cf9a;font-weight:bold;">201</span>  Created                           
+ <span style="color:#86cf9a;font-weight:bold;">204</span>  No Content                        
+ <span style="color:#78b8ed;font-weight:bold;">301</span>  Moved Permanently                 
+ <span style="color:#78b8ed;font-weight:bold;">304</span>  Not Modified                      
+ <span style="color:#f2c879;font-weight:bold;">400</span>  Bad Request                       
+ <span style="color:#f2c879;font-weight:bold;">401</span>  Unauthorized                      
+ <span style="color:#f2c879;font-weight:bold;">404</span>  Not Found                         
+ <span style="color:#f2c879;font-weight:bold;">429</span>  Too Many Requests                 
+ <span style="color:#f28b82;font-weight:bold;">500</span>  Internal Server Error             
+ <span style="color:#f28b82;font-weight:bold;">502</span>  Bad Gateway                       
+ <span style="color:#f28b82;font-weight:bold;">503</span>  Service Unavailable               
+ <span style="color:#a7bce0;font-weight:bold;">?</span></pre></figure>
+</div><div id="panel-text/http-status-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP response codes / exact observations                                                            
+                                                                                                    
+ <span style="color:#87afff;font-weight:bold;">100</span>  Continue                                                                                      
+ <span style="color:#87d787;font-weight:bold;">200</span>  OK                                                                                            
+ <span style="color:#87d787;font-weight:bold;">201</span>  Created                                                                                       
+ <span style="color:#87d787;font-weight:bold;">204</span>  No Content                                                                                    
+ <span style="color:#87afff;font-weight:bold;">301</span>  Moved Permanently                                                                             
+ <span style="color:#87afff;font-weight:bold;">304</span>  Not Modified                                                                                  
+ <span style="color:#ffd787;font-weight:bold;">400</span>  Bad Request                                                                                   
+ <span style="color:#ffd787;font-weight:bold;">401</span>  Unauthorized                                                                                  
+ <span style="color:#ffd787;font-weight:bold;">404</span>  Not Found                                                                                     
+ <span style="color:#ffd787;font-weight:bold;">429</span>  Too Many Requests                                                                             
+ <span style="color:#ff8787;font-weight:bold;">500</span>  Internal Server Error                                                                         
+ <span style="color:#ff8787;font-weight:bold;">502</span>  Bad Gateway                                                                                   
+ <span style="color:#ff8787;font-weight:bold;">503</span>  Service Unavailable                                                                           
+ <span style="color:#afafd7;font-weight:bold;">?</span>                                                                                                  
+ <span style="color:#afafd7;font-weight:bold;">799?</span></pre></figure>
+</div><div id="panel-text/http-status-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">HTTP response codes / exact observations                                                            
+                                                                                                    
+ <span style="color:#0000ff;font-weight:bold;">100</span>  Continue                                                                                      
+ <span style="color:#00ff00;font-weight:bold;">200</span>  OK                                                                                            
+ <span style="color:#00ff00;font-weight:bold;">201</span>  Created                                                                                       
+ <span style="color:#00ff00;font-weight:bold;">204</span>  No Content                                                                                    
+ <span style="color:#0000ff;font-weight:bold;">301</span>  Moved Permanently                                                                             
+ <span style="color:#0000ff;font-weight:bold;">304</span>  Not Modified                                                                                  
+ <span style="color:#ff0000;font-weight:bold;">400</span>  Bad Request                                                                                   
+ <span style="color:#ff0000;font-weight:bold;">401</span>  Unauthorized                                                                                  
+ <span style="color:#ff0000;font-weight:bold;">404</span>  Not Found                                                                                     
+ <span style="color:#ff0000;font-weight:bold;">429</span>  Too Many Requests                                                                             
+ <span style="color:#ff0000;font-weight:bold;">500</span>  Internal Server Error                                                                         
+ <span style="color:#ff0000;font-weight:bold;">502</span>  Bad Gateway                                                                                   
+ <span style="color:#ff0000;font-weight:bold;">503</span>  Service Unavailable                                                                           
+ <span style="color:#0000ff;font-weight:bold;">?</span>                                                                                                  
+ <span style="color:#0000ff;font-weight:bold;">799?</span></pre></figure>
+</div><div id="panel-text/http-status-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">HTTP response codes / exact observations                                                            
+                                                                                                    
+ <span style="font-weight:bold;">100</span>  Continue                                                                                      
+ <span style="font-weight:bold;">200</span>  OK                                                                                            
+ <span style="font-weight:bold;">201</span>  Created                                                                                       
+ <span style="font-weight:bold;">204</span>  No Content                                                                                    
+ <span style="font-weight:bold;">301</span>  Moved Permanently                                                                             
+ <span style="font-weight:bold;">304</span>  Not Modified                                                                                  
+ <span style="font-weight:bold;">400</span>  Bad Request                                                                                   
+ <span style="font-weight:bold;">401</span>  Unauthorized                                                                                  
+ <span style="font-weight:bold;">404</span>  Not Found                                                                                     
+ <span style="font-weight:bold;">429</span>  Too Many Requests                                                                             
+ <span style="font-weight:bold;">500</span>  Internal Server Error                                                                         
+ <span style="font-weight:bold;">502</span>  Bad Gateway                                                                                   
+ <span style="font-weight:bold;">503</span>  Service Unavailable                                                                           
+ <span style="font-weight:bold;">?</span>                                                                                                  
+ <span style="font-weight:bold;">799?</span></pre></figure>
+</div><div id="panel-text/http-status-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-5" tabindex="0">
+<figure><figcaption>light · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="light" style="color:#172033;background-color:#f8fafc">HTTP response codes / exact observations                                                            
+                                                                                                    
+ <span style="color:#1d4ed8;font-weight:bold;">100</span>  Continue                                                                                      
+ <span style="color:#166534;font-weight:bold;">200</span>  OK                                                                                            
+ <span style="color:#166534;font-weight:bold;">201</span>  Created                                                                                       
+ <span style="color:#166534;font-weight:bold;">204</span>  No Content                                                                                    
+ <span style="color:#1d4ed8;font-weight:bold;">301</span>  Moved Permanently                                                                             
+ <span style="color:#1d4ed8;font-weight:bold;">304</span>  Not Modified                                                                                  
+ <span style="color:#92400e;font-weight:bold;">400</span>  Bad Request                                                                                   
+ <span style="color:#92400e;font-weight:bold;">401</span>  Unauthorized                                                                                  
+ <span style="color:#92400e;font-weight:bold;">404</span>  Not Found                                                                                     
+ <span style="color:#92400e;font-weight:bold;">429</span>  Too Many Requests                                                                             
+ <span style="color:#b91c1c;font-weight:bold;">500</span>  Internal Server Error                                                                         
+ <span style="color:#b91c1c;font-weight:bold;">502</span>  Bad Gateway                                                                                   
+ <span style="color:#b91c1c;font-weight:bold;">503</span>  Service Unavailable                                                                           
+ <span style="color:#475e86;font-weight:bold;">?</span>                                                                                                  
+ <span style="color:#475e86;font-weight:bold;">799?</span></pre></figure>
+</div><div id="panel-text/http-status-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-6" tabindex="0">
+<figure><figcaption>contrast · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="contrast" style="color:#ffffff;background-color:#000000">HTTP response codes / exact observations                                                            
+                                                                                                    
+ <span style="color:#93c5fd;font-weight:bold;">100</span>  Continue                                                                                      
+ <span style="color:#86efac;font-weight:bold;">200</span>  OK                                                                                            
+ <span style="color:#86efac;font-weight:bold;">201</span>  Created                                                                                       
+ <span style="color:#86efac;font-weight:bold;">204</span>  No Content                                                                                    
+ <span style="color:#93c5fd;font-weight:bold;">301</span>  Moved Permanently                                                                             
+ <span style="color:#93c5fd;font-weight:bold;">304</span>  Not Modified                                                                                  
+ <span style="color:#fde047;font-weight:bold;">400</span>  Bad Request                                                                                   
+ <span style="color:#fde047;font-weight:bold;">401</span>  Unauthorized                                                                                  
+ <span style="color:#fde047;font-weight:bold;">404</span>  Not Found                                                                                     
+ <span style="color:#fde047;font-weight:bold;">429</span>  Too Many Requests                                                                             
+ <span style="color:#fca5a5;font-weight:bold;">500</span>  Internal Server Error                                                                         
+ <span style="color:#fca5a5;font-weight:bold;">502</span>  Bad Gateway                                                                                   
+ <span style="color:#fca5a5;font-weight:bold;">503</span>  Service Unavailable                                                                           
+ <span style="color:#b7c9ed;font-weight:bold;">?</span>                                                                                                  
+ <span style="color:#b7c9ed;font-weight:bold;">799?</span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="text/http-status-code"><a class="heading-permalink" href="#text%2fhttp-status-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">HTTPStatusCode</span><span class="syn-operator">(</span><span class="syn-number">200</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; OK&#34;</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">HTTPStatusCode</span><span class="syn-operator">(</span><span class="syn-number">404</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Not Found&#34;</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">HTTPStatusCode</span><span class="syn-operator">(</span><span class="syn-number">502</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Bad Gateway&#34;</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="text/http-status-integration"><h3 id="text/http-status-integration"><a class="heading-permalink" href="#text%2fhttp-status-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="text/http-status-run"><a class="heading-permalink" href="#text%2fhttp-status-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/http-status</code></pre><p><a href="https://github.com/lanej/charmed/blob/5588b57262b628e98fd201f0d7cd95b1f041261f/docs/snippets/text_http_status.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/5588b57262b628e98fd201f0d7cd95b1f041261f/text/http.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+
+</section>
+</section>
+</section>
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+

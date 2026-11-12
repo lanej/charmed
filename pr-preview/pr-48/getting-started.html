@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Getting started · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Getting started</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" aria-current="page">Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">16</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">2</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">3</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" aria-current="page">Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">39</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">16</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">2</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">3</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+</aside>
+<main id="main">
+
+
+
+<h1 id="build-your-first-terminal-app">Build your first terminal app</h1>
+<p>Charmed supplies themed Go components for native terminal interfaces. Start with an editable environment field, then compose charts, collections and inspectors around the same application model and theme.</p>
+<h2 id="install"><a class="heading-permalink" href="#install"><span>Install</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Use Go 1.26.11 or newer. Create a module for your application, then add Charmed as a dependency. Bubble Tea owns the terminal session and delivers messages to your model.</p>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">mkdir</span> environment-app
+<span class="syn-command">cd</span> environment-app
+<span class="syn-command">go</span> mod init example.com/environment-app
+<span class="syn-command">go</span> get github.com/lanej/charmed
+</code></pre>
+<h2 id="build-your-first-app"><a class="heading-permalink" href="#build-your-first-app"><span>Build your first app</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Create the field with a shared palette and an explicit width. The catalog pairs every minimal usage example with its actual terminal output, required imports and a command that renders it.</p>
+<pre tabindex="0" class="code-block"><code class="language-go">field <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewText</span><span class="syn-operator">(</span>input<span class="syn-operator">.</span>TextOptions<span class="syn-operator">{</span>
+    Value<span class="syn-operator">:</span> <span class="syn-string">&#34;production&#34;</span><span class="syn-operator">,</span> Width<span class="syn-operator">:</span> <span class="syn-number">36</span><span class="syn-operator">,</span>
+    Theme<span class="syn-operator">:</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">}</span><span class="syn-operator">)</span>
+</code></pre>
+<p>The complete <a href="https://github.com/lanej/charmed/blob/5588b57262b628e98fd201f0d7cd95b1f041261f/examples/quickstart/main.go">quickstart program</a> includes imports, the outer model and terminal startup. Its event loop has three responsibilities: return the focus command, retain input updates, and resize the existing field when the terminal changes.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Lifecycle</th>
+<th>Application responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Init</td>
+<td>Return <code class="inline-code">field<span class="syn-operator">.</span><span class="syn-function">Focus</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code> so Bubble Tea starts the cursor command</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>Retain both values from <code class="inline-code">field<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span></code> and return its command</td>
+</tr>
+<tr>
+<td>Resize</td>
+<td>Call <code class="inline-code">field<span class="syn-operator">.</span><span class="syn-function">Resize</span><span class="syn-operator">(</span>columns<span class="syn-operator">)</span></code> with the available terminal cells</td>
+</tr>
+<tr>
+<td>View</td>
+<td>Return <code class="inline-code">tea<span class="syn-operator">.</span><span class="syn-function">NewView</span><span class="syn-operator">(</span>field<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span></code>; rendering performs no input or network work</td>
+</tr>
+<tr>
+<td>Exit</td>
+<td>Handle Ctrl+C in the root model and return <code class="inline-code">tea<span class="syn-operator">.</span>Quit</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="run-and-change-it"><a class="heading-permalink" href="#run-and-change-it"><span>Run and change it</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>To try the complete program immediately, clone Charmed and run the quickstart from its root. Edit the field, resize the terminal, and exit with Ctrl+C. Copy the linked program into your own module when ready.</p>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">git</span> clone https://github.com/lanej/charmed.git
+<span class="syn-command">cd</span> charmed
+<span class="syn-command">go</span> run ./examples/quickstart
+</code></pre>
+<p>For a saved example without an interactive terminal, run the catalog renderer. It calls the same consumer function used by the documentation build, including the supplied sample data and final View call.</p>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/text
+<span class="syn-command">go</span> run ./examples/catalog chart/timeseries
+<span class="syn-command">go</span> run ./examples/catalog pattern/log-inspector
+</code></pre>
+<p>Choose <a href="atoms.html">components</a> when assembling individual widgets, or <a href="recipes.html">recipes</a> when coordinating a complete view. The <a href="examples.html">composition guide</a> explains ownership of focus, terminal geometry and application observations.</p>
+
+
+
+
+
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
