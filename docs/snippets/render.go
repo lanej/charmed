@@ -91,6 +91,8 @@ func Render(id string) (string, error) {
 		return ExampleFeedbackEvidenceSummary(), nil
 	case "feedback/evidence-footer":
 		return ExampleFeedbackEvidenceFooter(), nil
+	case "template/report-page":
+		return ExampleTemplateReportPage(), nil
 	case "collection/static-table":
 		return ExampleCollectionStaticTable(), nil
 	case "layout/key-value":

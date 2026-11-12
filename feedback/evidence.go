@@ -37,6 +37,20 @@ func severity() []Evidence {
 	return []Evidence{EvidenceDown, EvidenceDegraded, EvidenceUnknown, EvidenceInsufficient, EvidenceAttributionGap, EvidenceStale, EvidenceTruncated, EvidenceHealthy}
 }
 
+// Worst is the least trustworthy state among counts with a nonzero N, so a summary never reads healthier than its
+// weakest evidence. A state this package does not know counts as unknown, and no evidence at all is unknown.
+func Worst(counts []EvidenceCount) Evidence {
+	for _, s := range severity() {
+		for _, c := range counts {
+			if c.N > 0 && (c.State == s || (s == EvidenceUnknown && !known(c.State))) {
+				return s
+			}
+		}
+	}
+
+	return EvidenceUnknown
+}
+
 // ParseEvidence reads a state word once at a boundary; anything else is not a state.
 func ParseEvidence(value string) (Evidence, bool) {
 	e := Evidence(strings.ToUpper(strings.TrimSpace(value)))
