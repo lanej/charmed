@@ -1,112 +1,195 @@
 # Component reference
 
-Browse [Atoms](atoms.html), [Molecules](molecules.html) and [Organisms](organisms.html), then choose a capability group. Each group has its own page with native previews, variant tabs and Go examples. Components link to their dependencies across categories.
+Browse [Atoms](atoms.html), [Molecules](molecules.html) and [Organisms](organisms.html) by capability. Each entry explains its purpose, displays the output of its consumer example, and gives the same usage code with integration guidance and an exact run command.
 
-The [JSON viewer](molecules-data.html#collection/json-viewer) supports syntax-highlighted, foldable objects and arrays. Its [usage and lifecycle guide](json-viewer.html) covers native viewport customization, source fidelity and bounded parsing. The correlated inspector composes it into both HTTP payload panes.
+| Need | Reference |
+| --- | --- |
+| Color, geometry and shared interaction rules | [Foundation contracts](foundations.html#foundation-contracts) |
+| An editable value with validation | [Input field](molecules-input.html#input/field) |
+| Coordinated HTTP requests and logs | [Inspector lifecycle](log-inspector.html) |
+| Source-preserving structured JSON | [JSON viewer](json-viewer.html) |
 
-The contracts below describe sizing, state and native customization across the catalog.
+## Charts and labeled values
 
-Time-series traces use native braille dots for finer terminal resolution. Shared axes and series colors retain their meaning; ASCII mode keeps its numeric fallback.
+Chart allocations use terminal cells, including borders and gutters. Time-series traces use native braille dots; ASCII retains numeric fallbacks. Legends are opt-in, and callers must reserve their actual wrapped height before assigning space to the plot.
 
-Molecules keep related information together within the child's cell allocation. A labeled field wraps help or validation feedback to its native input width; resize through `field.Input.Resize(columns)`. Metric trends keep the current value and unit visible in short allocations. An empty value is unavailable, while empty history does not discard a known current value. Distribution labels and metadata wrap at the supplied width; allow room for their resulting rows.
+| Component | Sizing and state contract |
+| --- | --- |
+| `chart.Panel` | Use `options.PlotSize(size, series, palette)` to reserve borders and wrapped legend rows; `PanelPlotSize` retains the legacy single-row allocation |
+| Distribution comparisons | Wrap labels and metadata at the supplied width; `ShowLegend` adds matching series keys |
+| Labeled fields | Resize `field.Input` to the available columns; help and validation wrap to that width |
+| Metric trends | Keep a known current value when history is empty; an absent current value remains unavailable |
+| Percentage bars | Preserve tiny nonzero values in scientific notation; a truncation mark identifies an allocation that cannot show the label |
 
-Legends are opt-in. Set `DistributionComparison.ShowLegend`, compose `BandOptions.Legend` or `chart.SeriesLegend`, or use `chart.PanelOptions{ShowLegend: true}` with `chart.Panel`. Allocate its child with `options.PlotSize(size, series, palette)` so wrapped keys get their actual number of rows. `chart.PanelPlotSize` remains available for single-row legacy allocations. Legend symbols reuse their plotted styles; label custom boundary markers with `BandMarker.Label`. Native fixtures accept `--legend`, and relevant saved variants include **With legend**. Rendering a panel preserves the native child's state and custom styles; callers own its resize lifecycle.
+Rendering a panel preserves the child's native state and styles. Data and resize operations may rebuild individual chart models: the time-series entry documents when to reapply direct native customization. The parent decides focus and forwards commands from the active child.
 
-Text inputs distinguish disabled state with an inactivity shade and a slashed-circle default prompt (ASCII `/`). Disabling suppresses wrapper focus, editing and the native real cursor; re-enabling retains the underlying native model state. A custom native prompt remains caller-owned. `Text.View` applies disabled presentation to a copy, while `SetTheme` reapplies shared styles. `Resize` reserves the actual prompt width and the native cursor cell. Textarea active lines, line numbers and selection use theme surfaces and colors. Validation messages belong to `input.Field`.
+## Inputs
 
-Saved text, textarea and field fixtures explicitly prepare static focus with cursor blinking disabled. They do not call general scene initialization or execute commands; native interactive runs retain their normal focus and clock lifecycle. Percentage bars keep tiny nonzero values in scientific notation instead of labeling them as zero. When a label cannot fit, a truncation mark signals that limit.
+Text inputs reserve their actual prompt width and native cursor cell. Disabling an input suppresses wrapper focus and editing while retaining its native state; re-enabling it restores that state. Validation feedback belongs to a labeled field, rather than the primitive input.
 
-`diagram.StateDiagram` renders explicit `States`, `Transitions` and an optional `Active` state ID. `State` has an ID, an optional display label and `Initial`/`Final` flags and an optional `Outcome` (`OutcomeNone`, `OutcomeSuccess` or `OutcomeError`); `Transition` has `From`, `To` and an optional label. `View(width, palette)` prefers a horizontal layout with labeled arrows directly between adjacent boxes, and switches to a vertical layout when the horizontal graph is too wide. Self-loops sit beside their state; longer edges carry labels on their own paths. Initial states use rounded borders, ordinary states use square borders, and final states use double borders; ASCII uses parentheses and equals-sign borders for the same distinction. Possible states use dim semantic colors (`DimForeground`, `DimSuccess` and `DimDanger`). The active state uses the corresponding bright color (`Accent`, `Success` or `Danger`), bold text and a heavier border; final states retain double borders. Success and error outcomes have explicit text markers and remain independent of `Final`. Nodes and arrows retain the same meaning across themes and ASCII output, with no diagram legend. State and transition declaration order keep placement deterministic; parallel transitions, cycles and self-loops remain separate. The complete graph is returned or an error reports the minimum width across both layouts. Height depends on the selected orientation; callers must allocate enough rows or use a viewport. Labels are single-line plain text; wide and combining characters retain cell alignment. Empty graphs render an empty string. Unknown endpoints, duplicate IDs, multiple initial states, unknown active states and outgoing transitions from final states and invalid outcomes return errors. The component displays application state; applications own transition execution.
+| Change | Native customization behavior |
+| --- | --- |
+| Disabled view | Applies inactivity presentation to a copy; a caller-owned prompt remains unchanged |
+| `SetTheme` | Reapplies shared native styles; apply direct overrides afterward |
+| Textarea styling | Uses theme surfaces for active lines, selection and line numbers |
+| Saved example | Prepares static display without running cursor or clock commands |
 
-Transition tracing is opt-in through `Trace: diagram.TransitionTrace{Steps: []int{0, 1}, Last: 1}`. `Steps` contains indices into `Transitions` in chronological order, so parallel edges and repeated loops identify the exact path. `Last: 0` defaults to the most recent transition, positive `Last` shows that many recent steps, and `All: true` shows the whole path. An empty trace highlights no history. The newest edge and its label use the accent color and a heavier stroke; earlier visible edges and visited states use normal semantic colors, while possible paths stay dim. The active state keeps its bold emphasis. In monochrome, the newest route uses heavier ASCII strokes. Repeated edges are highlighted once; highlighting does not show traversal counts or chronological order. History must reference existing transitions, form a continuous path and end at `Active` when supplied; invalid history returns an error, including invalid steps outside the displayed window. Negative `Last` and combining `All` with positive `Last` are errors. Tracing does not change graph geometry or mutate caller history. In the guide, Left/Right replays a path and H cycles between the last transition, last three and whole path.
+## State diagrams
+
+`diagram.StateDiagram` displays application state and explicit transitions. It does not execute transitions. Declaration order makes placement deterministic, and a complete graph is returned or an error reports the minimum width required across its horizontal and vertical layouts.
+
+| Contract | Behavior |
+| --- | --- |
+| States | Unique IDs, optional labels, at most one initial state, optional final flags and explicit outcomes |
+| Transitions | Valid endpoints; self-loops, cycles and parallel edges remain separate; final states cannot have outgoing edges |
+| Geometry | Horizontal when it fits, vertical otherwise; height depends on orientation and belongs to the parent allocation |
+| Labels | Single-line plain text, with wide and combining characters measured in terminal cells |
+| Appearance | Initial states are rounded, ordinary states square and final states double-bordered; ASCII preserves those distinctions |
+| Meaning | Active state is bright and bold; success/error outcomes remain independent of finality and retain text markers |
+
+Transition history references exact indices into the declared transitions. The most recent edge receives stronger emphasis; prior visited states and edges retain their semantic colors. Highlighting preserves geometry and does not claim to display traversal counts or complete chronological order.
+
+| Trace option | Contract |
+| --- | --- |
+| `Steps` | A continuous chronological path through existing transitions, ending at Active when supplied |
+| `Last: 0` | Show the most recent transition |
+| Positive `Last` | Show that many recent steps |
+| `All: true` | Show the complete supplied path; incompatible with positive Last |
+| Invalid history | Reject even an invalid step outside the visible history window; negative Last is an error |
 
 ## Connection states
 
-[Connection atoms](atoms-feedback.html#feedback/connection) render `feedback.Connected` and `feedback.Disconnected` with the shared bright, normal or dim emphasis. Connection state comes from the application; disconnected is inactive rather than a warning, and unknown remains a separate state. Compose either atom into `layout.Footer.Status` or another region.
+[Connection atoms](atoms-feedback.html#feedback/connection) describe supplied connectivity without probing or managing a connection. Connected uses success styling; disconnected uses inactivity styling. Use UNKNOWN when the application cannot establish connection state, and retain the full label when colors are unavailable.
 
 ## Application chrome
 
-[Tabs](molecules-navigation.html#navigation/tabs) select an application section. Left/Right wrap around; Home/End select the first/last item. Only a focused tab bar handles these keys; Tab and Shift+Tab remain available to the parent's focus scope. Return the command from `Tabs.Update` to receive `interaction.Selected{Component: "tabs", ID: ...}` when keyboard selection changes. `Select` and `SetItems` update state without emitting commands. IDs must be unique and stable. `SetItems` copies the item slice, retains the selected ID where possible and otherwise selects the first item; resize retains selection, focus and theme. The exported `Theme` can be customized directly and is never rebuilt. Shared focus and selection styles identify the active tab, with reverse video in monochrome; narrow bars show `<` and `>` for hidden neighbors and keep the selected tab in view. Very small widths clip the active label.
+Layout parents own event routing and allocation. Actions displayed in headers are text; the application owns their bindings. Reserve wrapped identity-header height before sizing content, and use the section's reported height when returning folded space to siblings.
 
-[Header](molecules-layout.html#layout/header) places a title on the left and actions on the right, with a second context row when `Context` is nonempty. Reserve one row without context or two with context. Actions disappear if they cannot fit beside the full title; the title clips only when it exceeds the allocation. Action strings are display content: the application owns their bindings and effects.
+| Component | Contract |
+| --- | --- |
+| [Tabs](molecules-navigation.html#navigation/tabs) | Left/Right wrap; Home/End choose endpoints; only the focused bar handles keys; return Update's selection command |
+| Tab items | Stable unique IDs; SetItems copies items and retains selection when possible; resize retains selection, focus and customized theme |
+| [Header](molecules-layout.html#layout/header) | Reserve one row, or two with context; actions disappear before the title clips |
+| [Footer](molecules-layout.html#layout/footer) | One row; status disappears before help clips; styled strings use only their first line |
+| [Identity header](molecules-layout.html#layout/identity-header) | Escape Kind, ID and Context; wrap the complete identifier without abbreviation; measure rendered height |
+| [Foldable section](molecules-layout.html#layout/section) | Collapsed is one heading row; NoFolds expands without markers; the caller owns state, keys and focus |
 
-[Footer](molecules-layout.html#layout/footer) places help on the left and status on the right in one row. Status disappears when both cannot fit, then help clips to the allocation. Both fields accept styled text, including native help output. Header and footer fields use only their first line; these two components do not wrap. Widths are terminal cells, including wide Unicode labels and ANSI styling; nonpositive widths render nothing.
+The [application shell](templates-pattern.html#template/application) composes these pieces around an active content panel. Sidebar navigation, breadcrumbs and application-specific toolbars remain separate compositions, with their own focus and event ownership.
 
-[Identity header](molecules-layout.html#layout/identity-header) promotes a request UUID or another entity ID to the headline. `Kind`, `ID` and optional `Context` are escaped data; optional `Actions` accepts styled display text. The kind moves above the identifier when needed, then the identifier wraps without abbreviation. Reserve `lipgloss.Height(header.View(width, palette))` rows before allocating content. Actions appear only when they fit beside a single-line headline.
+## Evidence and key-value layouts
 
-[Foldable section](molecules-layout.html#layout/section) composes a panel and a disclosure marker. Set `Collapsed` to render only the heading, and use `Height(expandedHeight)` when returning space to siblings. `NoFolds` shows all content without disclosure markers. `Title` and `Content` accept styled text; state, keys and focus belong to the caller.
+[Evidence states](atoms-feedback.html#feedback/evidence) describe how much trust to place in an observation. Parse the state once at the boundary with `feedback.ParseEvidence`; an unrecognized input becomes UNKNOWN. Every state retains its own label and glyph in each theme.
 
-See the [application shell](templates-pattern.html#template/application) for these components composed around an active content panel. Sidebar navigation, breadcrumbs and toolbars remain separate future patterns.
-
-[Evidence states](atoms-feedback.html#feedback/evidence) name how far a measurement can be trusted: healthy, degraded, down, unknown, stale, insufficient, truncated and attribution gap. Only healthy maps to the OK status; evidence gaps map to UNKNOWN and aged or cut-short evidence to WARN, and every state keeps its own glyph and word in each theme. `ParseEvidence` reads a state once at a boundary and treats anything else as unknown. The [summary line](molecules-feedback.html#feedback/evidence-summary) counts states worst first, and an empty tally reads "no evidence", never zero healthy. The [evidence footer](molecules-feedback.html#feedback/evidence-footer) adds source, scope, the state with an observation age from explicit clocks (`text.Age` formats one compact unit) and an omission marker; missing parts read missing. [Key-value](molecules-layout.html#layout/key-value) aligns labels with values, stacks at 55 columns and narrower (`layout.WidthClassOf` snaps to 40/55/80/100/120/160), and keeps missing values distinct from empty strings.
+| Component | Contract |
+| --- | --- |
+| Evidence atom | Healthy maps to OK and down to ERROR. Degraded, stale and truncated map to WARN. Unknown, insufficient and attribution gap map to UNKNOWN. |
+| [Summary line](molecules-feedback.html#feedback/evidence-summary) | Count by state, worst first. An empty tally reads “no evidence.” |
+| [Evidence footer](molecules-feedback.html#feedback/evidence-footer) | Supply source, scope, state, observation time and current time. Missing parts stay explicit. `text.Age` formats one compact unit. |
+| [Key-value layout](molecules-layout.html#layout/key-value) | Stack at 55 columns or fewer. `layout.WidthClassOf` uses 40, 55, 80, 100, 120 and 160 columns. Missing values stay distinct from empty strings. |
 
 ## Log levels
 
-[Log level atoms](atoms-feedback.html#feedback/log-level) render `feedback.TraceLevel` and native `log.DebugLevel`, `InfoLevel`, `WarnLevel`, `ErrorLevel` and `FatalLevel` with `feedback.LogLevel(level, text.Normal, palette)`. TRACE uses subdued neutral, DEBUG cyan, INFO blue, WARN amber, ERROR red and FATAL magenta. Severity sets the semantic tone; bright, normal and dim emphasis remain independent. The six labels reserve equal cell widths, including in ASCII/monochrome output. Theme fields `Trace`, `Debug`, `Fatal` and their `Dim` counterparts allow customization. `feedback.TraceLevel` is a typed `log.Level(-8)` extension for display and `collection.LogEntry`; Charm Log’s native `String` and `ParseLevel` do not recognize it. Other unknown values display `LEVEL n` neutrally, preserving the value rather than claiming a known severity. Rendering FATAL performs no logging or exit. `collection.LogViewer` composes the atom between its timestamp and message, retaining Charm Log’s structured-field formatting, bounded history and scroll behavior.
+[Log level atoms](atoms-feedback.html#feedback/log-level) keep severity independent of emphasis. Rendering a fatal label does not log or exit. Unknown levels retain their numeric value, and equal-width labels keep columns aligned across Unicode, ASCII and monochrome output.
+
+| Level | Semantic tone |
+| --- | --- |
+| TRACE | Subdued neutral; `feedback.TraceLevel` is the display-only typed extension -8 |
+| DEBUG | Cyan |
+| INFO | Blue |
+| WARN | Amber |
+| ERROR | Red |
+| FATAL | Magenta |
+
+Customize Trace, Debug, Fatal and their Dim theme counterparts independently. Charm Log's native String and ParseLevel do not recognize the TRACE extension. The log viewer composes this atom with timestamps and messages while retaining native structured-field formatting, bounded history and scrolling.
 
 ## Selection and action atoms
 
-[Checkbox](atoms-input.html#input/checkbox), [radio](atoms-input.html#input/radio), [toggle](atoms-input.html#input/toggle) and [button](atoms-input.html#input/button) are concrete Bubble Tea models with `Update(msg) (Model, tea.Cmd)` and `View() string`. Constructors accept a stable application ID, plain-text label and theme; checkbox also accepts `input.Unchecked`, `Checked` or `Mixed`, while radio and toggle accept their initial boolean selection. The embedded `input.Control` exposes native `Keys key.Binding`, theme, disabled state and reason, plus `Focus`, `Blur` and `Focused`. Parents route messages and own traversal; controls handle Space/Enter only while focused and available. A nonempty `DisabledReason` disables activation and remains visible alongside an explicit disabled label. Labels and reasons are escaped before terminal rendering. Focus reserves the same horizontal inset, and changing selection does not change mark widths.
+Construct each control with a stable application ID, a plain-text label and a shared theme. The embedded `input.Control` exposes native key bindings, focus methods and disabled state. The parent owns traversal and forwards Space or Enter to the focused control. Retain the model returned by `Update` and return its command to Bubble Tea.
 
-Checkbox activation changes unchecked or mixed to checked, and checked to unchecked; invalid states render a question mark (`[?]` in ASCII) and cannot activate. Checkbox emits `input.CheckChanged{ID, State}`; radio emits `input.RadioSelected{ID}` only on a new selection; toggle emits `input.Toggled{ID, On}`. Retain the returned model and return its command to Bubble Tea. Radio parents own group membership and deselect siblings after receiving a selection. Button emits `input.Activated{ID}` without executing an operation or guessing its outcome. The parent sets `Busy` during outstanding work, handles success or failure and clears it. Busy buttons show a rotating-arrow glyph with `BUSY` (`[BUSY]` in ASCII) and suppress activation; disabled buttons retain their explanation. Theme and binding changes remain caller-owned across updates.
+| Control | Activation and message |
+| --- | --- |
+| [Checkbox](atoms-input.html#input/checkbox) | Unchecked and mixed become checked. Checked becomes unchecked. Invalid states display a question mark and suppress activation. Emits `input.CheckChanged{ID, State}`. |
+| [Radio](atoms-input.html#input/radio) | Emits `input.RadioSelected{ID}` on a new selection. The parent owns the group and deselects siblings. |
+| [Toggle](atoms-input.html#input/toggle) | Accepts an initial boolean, flips it on activation and emits `input.Toggled{ID, On}`. |
+| [Button](atoms-input.html#input/button) | Emits `input.Activated{ID}`. The parent executes the operation, sets `Busy` while it runs, handles its outcome and clears the flag. |
+
+A nonempty `DisabledReason` suppresses activation and appears with the disabled label. Busy buttons also suppress activation. Labels and reasons are escaped before rendering. Focus and selection preserve cell allocation, and native binding and theme changes survive updates.
 
 ## Data and evidence atoms
 
-[Value state](atoms-text.html#text/value-state) uses `text.ValueState` with a present zero value and explicit missing, redacted and invalid states. `state.View(value, emphasis, palette)` renders present text, including `""` for a present empty string, and never displays supplied content for a non-present state. Zero and false stay present. Unknown enum values render an explicit unknown state. This is presentation metadata; callers retain the original observation and decide which state applies.
+The application retains the underlying observation and supplies its meaning. A missing measurement, a known zero and an empty string carry different information. Pass the current time explicitly when rendering freshness so a saved frame can reproduce the original decision.
 
-[Freshness](atoms-feedback.html#feedback/freshness) keeps `ObservedAt`, `StaleAfter` and `Emphasis`; `View(now, palette)` receives its clock explicitly. An age equal to the positive stale threshold is stale; a nonpositive threshold disables stale classification. Missing observation/clock and future timestamps remain explicit. Freshness is independent of health and severity and never schedules ticks. The application owns refresh cadence and stale policy.
-
-[Quantity](atoms-text.html#text/quantity) keeps a numeric observation, `ValueState`, literal unit, precision, scale, emphasis and minimum right-aligned cell width. Scaling is opt-in through `text.DecimalScale` or `BinaryScale`; the zero scale is unscaled. Counts, bytes and rates share the same formatting without inferring units. Precision is clamped to 0–9 decimal places, ordinary rounding follows Go's float formatting, and tiny nonzero observations use scientific notation rather than appearing to be zero. Non-finite values are invalid. Formatting never changes the observation, and a value wider than its alignment width remains complete on one line.
-
-[Identifier](atoms-text.html#text/identifier) stores the full `Value` and returns a middle abbreviation through `Label(width)` or `View(width, palette)`. Width is in terminal cells; both ends are retained when space permits, with portable dots marking omission. Nonpositive widths render nothing. An empty identity displays unavailable when space allows. Use `Value` for identity, inspection and actions; an abbreviated label is not unique and must never become an identity key.
-
-[Match highlighting](atoms-text.html#text/match) accepts source text, half-open `text.MatchRange{Start, End}` rune offsets and native normal/matched Lip Gloss styles. Matching policy stays with the caller; rendering combines overlapping ranges, clips out-of-range portions, ignores reversed ranges and highlights an entire grapheme when any of its runes match. Source controls are escaped before rendering. The command palette uses this atom with the same escaped-text offsets as its native fuzzy matcher; selection, disabled styling and search results retain their existing behavior.
-
-[Sort indicators](atoms-text.html#text/sort) distinguish `SortNone`, `SortAscending` and `SortDescending`, optionally labeling positive one-based priority. They render ordering supplied by the caller and never sort records. [Change markers](atoms-text.html#text/change) distinguish `Unchanged`, `Added`, `Modified` and `Removed` with symbols and labels as well as semantic color. They do not infer whether a numerical change is beneficial.
-
-[Omission markers](atoms-text.html#text/omission) distinguish `DisplayHidden` from `SourceTruncated`; `KnownCount` separates an exact omitted item count from an unknown count. A known zero renders nothing, while negative known counts render an invalid-count label. Display omission means more content exists outside the current presentation; source truncation means the captured observation itself is incomplete. The marker performs no truncation or retrieval.
-
-[Operation outcomes](atoms-feedback.html#feedback/outcome) render `feedback.Succeeded`, `Failed`, `Canceled`, `TimedOut` and the zero-value `OutcomeUnknown`. These are reported results; pending and running remain lifecycle states. Cancellation and timeout do not establish rollback or absence of external effects. Applications own execution, cancellation, reconciliation and final classification; atoms only present the supplied result. All semantic labels survive monochrome output, independently of bright, normal and dim emphasis.
+| Atom | Input and behavior |
+| --- | --- |
+| [Value state](atoms-text.html#text/value-state) | Present is the zero-value state and accepts zero, false and empty text. Missing, redacted and invalid hide the supplied value. An unrecognized state displays unknown. |
+| [Freshness](atoms-feedback.html#feedback/freshness) | An age equal to or greater than a positive `StaleAfter` is stale. Nonpositive thresholds disable classification. Missing and future times stay explicit. The parent schedules refreshes. |
+| [Quantity](atoms-text.html#text/quantity) | Supply units, precision and minimum alignment width. Decimal or binary scaling is opt-in. Precision spans 0–9 decimals. Tiny nonzero values use scientific notation, nonfinite values are invalid, and wide values stay complete. |
+| [Identifier](atoms-text.html#text/identifier) | `Label(width)` abbreviates the middle in terminal cells and marks omission. An empty identity displays unavailable when space permits. Use the full `Value` for actions and identity. |
+| [Match highlighting](atoms-text.html#text/match) | Supply native styles and half-open rune offsets into the source text. Overlaps combine, out-of-range offsets clip and reversed ranges are ignored. Any matching rune highlights its grapheme. Source controls are escaped. |
+| [Sort indicator](atoms-text.html#text/sort) | Display supplied ascending, descending or unsorted order, optionally with a positive one-based priority. The caller sorts the records. |
+| [Change marker](atoms-text.html#text/change) | Display unchanged, added, modified or removed using both a symbol and a label. The caller judges the effect. |
+| [Omission marker](atoms-text.html#text/omission) | Distinguish hidden display content from truncated source. Known zero renders nothing, unknown count remains explicit and a negative known count displays invalid. |
+| [Operation outcome](atoms-feedback.html#feedback/outcome) | Display succeeded, failed, canceled, timed out or unknown. The application owns cancellation, reconciliation and final classification. A cancellation or timeout alone cannot establish whether an external effect occurred. |
 
 ## Unicode control language
 
-Unicode is the default visual language. Checkboxes use `☐ / ☑ / ▣`, radios use `○ / ◉`, and toggles use `○── OFF / ━━● ON` so thumb position, fill and text each convey the setting. Active indicators use the theme accent while inactive indicators use the muted role; focus keeps its reserved inset and inverse surface. Buttons use angle enclosures and an optional `Button.Icon` from the named glyph catalog, defaulting to the action arrow. Busy and disabled states retain visible words alongside `⟳` and `⊘`; power-off `⏻`, inactive `◌` and disconnected `○` remain distinct. `feedback.Inactive` is an explicit display status alongside `Off` and `Disconnected`. Outcome, change, value-state, omission and freshness views share named semantic glyphs; their label methods retain the underlying textual observation.
+Each control reserves equal space across states. Unicode is the default, while `Theme.ASCII` selects the text fallback independently of color depth. Measure the rendered control when sizing its parent because a Unicode switch and its ASCII equivalent have different widths.
 
-Set `Theme.ASCII` for the textual fallback; this is independent of the terminal color profile. Neither glyphs nor active color replace state labels or application data. All named glyphs occupy one terminal cell, and each control reserves equal indicator geometry across its own state variants. The Unicode switch track is wider than its ASCII fallback, so parents should measure the rendered view when allocating controls.
+| Control or state | Unicode presentation |
+| --- | --- |
+| Checkbox and radio | `☐ / ☑ / ▣` for unchecked, checked and mixed. `○ / ◉` for radio selection. |
+| Toggle | `○── OFF / ━━● ON` conveys the setting through position, fill and text. |
+| Button | Angle enclosures and a named `Button.Icon`, defaulting to the action arrow. Busy uses ⟳ and disabled uses ⊘ with visible words. |
+| Power and connection | Off ⏻, inactive ◌ and disconnected ○ remain distinct. The caller supplies each semantic state. |
+
+Active controls use the accent and inactive controls use muted text. Focus uses an inverse surface with a reserved inset. Outcome, change, value-state, omission and freshness retain their labels alongside their named glyphs, including in monochrome output.
 
 ## Compact links
 
-[Links](atoms-text.html#text/link) keep a plain-text `Label` separate from an exact `URL`. Use `text.Link{Label: "Worker session", URL: "terminal://session/build/pane/tests"}` for an arbitrary absolute URI, including custom schemes, hierarchical addresses such as `file:///tmp/output.log`, and opaque addresses such as `mailto:dev@example.test` or `urn:example:build:42`. The renderer validates URI syntax and terminal-safe encoding; it does not decide which schemes an application permits opening.
+[Links](atoms-text.html#text/link) store a plain-text label separately from an exact absolute URI. Use `text.NewWebLink` to require HTTP or HTTPS and a host. Use `text.Link` for a configured custom scheme, file path URI, email address or URN. Callers own later field changes, handler policy and actions such as opening or copying.
 
-`text.NewWebLink(label, target)` layers HTTP/HTTPS and nonempty-host validation over `Link` and returns that same general value. There is one renderer and one plain fallback for both helpers. The constructor validates at creation; callers own subsequent changes to the returned value's public fields. Destinations are never normalized or abbreviated, and existing `FormatURL` display behavior is unchanged.
+| Operation | Output and validation |
+| --- | --- |
+| `link.View(palette)` | An underlined label and an OSC 8 link with the exact target. Each link closes before adjacent content. The Unicode glyph is ↗ and the ASCII glyph is @. |
+| Presentation | `GlyphAndLabel` is the default. `LabelOnly` and `GlyphOnly` change the visible content. Normal, bright and dim emphasis leave the destination intact. |
+| Theme | `LinkStyle` draws from `Link`, then `Accent`, then ordinary text in partial palettes. A missing `DimLink` retains the normal style. |
+| `link.Plain()` | Returns the label and full URI for logs or redirected output. Removing ANSI from the styled view loses its hidden URI. |
+| Invalid input | Empty labels, relative or malformed URIs, whitespace, terminal controls, format controls or invalid UTF-8 in the target return an error and no output. Labels are escaped. |
 
-`link.View(palette)` returns an underlined label with the named link glyph and an OSC 8 hyperlink containing the exact destination. The glyph appears before the label (`↗ PR #42`, or `@ PR #42` with `Theme.ASCII`); color supplements the underline and mark. `Link.Presentation` uses the shared `GlyphAndLabel` default, `LabelOnly`, or `GlyphOnly`; `Link.Emphasis` uses `Normal` by default, `Bright` for bold text, or `Dim` for secondary destinations. These options change presentation without changing the target or the plain output. The theme owns independent `Link` and `DimLink` foreground roles; the default link color matches `Accent`, while dim colors preserve hue and contrast. `Theme.LinkStyle()` supplies the underline and normal foreground, falling back to `Accent` and then ordinary text for partial custom themes. A missing `DimLink` keeps the normal link style. Labels are escaped plain text, including newlines and caller-supplied ANSI. Rendering returns an error and no output for an empty label, a malformed or relative URI, or a target containing whitespace, terminal controls, Unicode format controls or invalid UTF-8. The zero value is invalid. Scheme-specific semantics belong to the web helper or the application's handler.
-
-Applications choose `View` for output known to preserve hyperlinks and `Plain()` for redirected output, logs or unsupported terminals. `Plain` returns `label (full URI)` without terminal controls; stripping ANSI from `View` loses the hidden destination. Each atom closes its hyperlink before adjacent content; compose links with the existing cell-aware layout functions. Retain `URL` for application inspection/copy actions and render separate labels for multiple related destinations.
-
-Charmed does not probe the terminal, open links, install handlers, copy to the clipboard or manage link selection. Custom schemes require a configured handler; emitting a `terminal:` target does not implement session navigation or launch a process. In Kitty, [hyperlink hints](https://sw.kovidgoyal.net/kitty/kittens/hints/) (`kitten hints --type=hyperlink`) select explicit links by keyboard. [Target inspection](https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.show_hyperlink_targets) can reveal destinations on hover. These interactions depend on the terminal's installed version, configuration and handler policy. Saved static previews show styling only, without active HTML links. Color/ASCII settings do not establish hyperlink capability. Actual Kitty, multiplexer and SSH behavior remain separate integration checks under [the terminal-links problem](https://github.com/lanej/charmed/issues/37).
+Kitty can select explicit links through [hyperlink hints](https://sw.kovidgoyal.net/kitty/kittens/hints/) and show targets through [target inspection](https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.show_hyperlink_targets). Opening a custom URI depends on an installed handler. Static previews show the styling. Actual Kitty, multiplexer and SSH behavior is tracked in the [terminal links issue](https://github.com/lanej/charmed/issues/37).
 
 ## Related destinations
 
-[Link groups](molecules-layout.html#layout/link-group) use `layout.LinkGroup{Links: []text.Link{...}}`. `View(width, palette)` keeps declaration order and each atom's presentation, emphasis and exact destination, using the shared two-cell spacing between items. Complete links wrap to the next row before an oversized label wraps within its own rows. Long labels retain their targets on every line; no item is dropped or abbreviated. The input slice is not mutated. Empty groups render nothing; nonempty groups require a positive width. A label containing a grapheme wider than the allocation returns an indexed error and no partial output. Errors from invalid links are also indexed from zero.
+[Link groups](molecules-layout.html#layout/link-group) take links in declaration order. They preserve each presentation and exact destination, place two cells between items, and wrap whole items before wrapping oversized labels. Every wrapped line retains its target. Measure the resulting height or use a viewport when placing the group in a header.
 
-Group height follows the resulting rows. Measure the view before allocating it, or place it in a viewport; a one-row header action slot is suitable only when the whole group fits on one line. `Plain()` lists each full label and URI on a separate line without terminal controls, regardless of visual presentation. Groups perform no selection or opening. Use label-only links in dense tables and dim emphasis for secondary destinations; glyph-only links still require a meaningful stored label for plain output and inspection.
+| Case | Result |
+| --- | --- |
+| Empty group | Returns empty output. A nonempty group requires positive width. |
+| Invalid link or oversized grapheme | Returns a zero-based item index and an error, with no partial output. |
+| Plain output | Prints each full label and URI on a separate line, including links styled as glyph-only. |
+| Selection or opening | The application handles interaction and retains the original link values. Rendering leaves the input slice intact. |
 
 ## Git presentation
 
-Git components live in `gitui` and render caller-supplied observations. Atoms describe refs, HEAD, file changes, divergence, diffs and worktree state. Molecules compose rows and repository summaries; organisms provide status sections, branch and stash lists, branching history, a unified diff viewer, a changes inspector and worktree selection. The repository browser example links these views using deterministic fixtures. Repository discovery, Git output parsing, refresh scheduling and all Git operations belong to the consuming application.
+The `gitui` components display caller-supplied observations. Applications own discovery, parsing, refresh schedules and Git operations. Compose refs, HEAD, file-change, divergence, diff and worktree atoms into rows, status groups, lists, history or the repository browser. Construct a group directly when you only need one section.
 
-Commit history accepts child-before-parent commits with full identities and ordered parents. Missing parents require `History.Truncated`; their lanes terminate with explicit continuation markers. Pending parents keep stable lanes, so gaps may remain until those parents are rendered. Crossings use `╪` (`:` in ASCII), while junctions use joined connectors. Narrow views report insufficient width instead of dropping graph edges. History search navigates matches while retaining every graph row; other lists filter their rows.
+| Component | Data and interaction contract |
+| --- | --- |
+| Commit history | Supply child-before-parent commits with full IDs and ordered parents. Set `History.Truncated` for missing parents. Pending lanes stay stable, and missing history ends in a continuation marker. |
+| Graph and search | Crossings use ╪ or ASCII colon. Junctions use joined connectors. Narrow graphs report insufficient width. Searching history moves between matches while preserving all rows. Other lists filter. |
+| File and section indicators | `FileIndicator` shows what happened to a file. `SectionIndicator` identifies staged, unstaged, untracked or conflicting observations. Files with both index and working-tree changes appear in both matching sections. |
+| Change groups | `NewStagedChanges`, `NewUnstagedChanges`, `NewUntrackedChanges` and `NewConflictChanges` expose count, rows and empty state. `View` renders a group and `Items` supplies stable rows to a parent. |
+| Selection | `interaction.Selected` carries the full commit, ref or supplied file, stash and worktree identity. Status includes the section. Shortened ref labels preserve their full event identity. |
+| Missing observations | Unknown divergence and unavailable worktree status remain explicit. `Repository.Unavailable` distinguishes unavailable evidence from zero recorded changes. |
 
-Selection events use `interaction.Selected` with full commit IDs, full ref names, or caller-supplied stable file, stash and worktree IDs. Status selections use a component such as `git/status/staged` to preserve the change section. A file with both index and working-tree changes appears in both sections; conflicts occupy their own section. Unknown divergence and unavailable worktree status stay explicit. `Repository.Unavailable` prevents missing observations from becoming zero change counts.
+Constructors copy collection inputs, and setters validate replacements. Refresh preserves identity or selects the nearest remaining item. History, branch, stash, worktree and status setters retain native viewport style and input customization. The component owns content, dimensions and offsets. Replace diffs after status refresh with `SetDiffs`: the diff viewport returns to its beginning and a missing file/section pair shows unavailable content. Rebuild styled rows after a theme change.
 
-Constructors copy collection inputs, and data setters validate before replacement. Selection follows stable identity through refresh and chooses the nearest remaining item when its identity disappears. `SetHistory`, `SetBranches`, `SetStashes`, `SetWorktrees` and `Status.SetRepository` retain native viewport styling and input customization; content, dimensions and scroll offsets remain component-managed. Theme changes require rebuilding or replacing styled rows. In a changes inspector, replace supplied diffs with `SetDiffs` after refreshing status; missing file/section pairs display unavailable content. Diff replacement resets the diff viewport to its beginning.
-
-Parent models own focus routing. Lists accept arrows or `j`/`k`, Home/End or `g`/`G`, page movement, `/` search, Escape to clear and Enter to select. The changes inspector exposes `SetFocus` for its status/diff panes. In the repository browser, Ctrl+Left/Right switches sections, Tab switches panes, and Enter on a worktree selects its supplied context. Worktree selection has no filesystem effects.
-
-History uses Ctrl+E/Ctrl+Y for independent viewport scrolling, so routing and continuation rows remain reachable even when the window contains only one selectable commit. Search accepts native terminal paste messages as well as typed keys. Ref labels shorten standard `refs/heads/`, `refs/remotes/` and `refs/tags/` prefixes for display while selection events retain full identity.
-
-Use `gitui.SectionIndicator` for the staged, unstaged, untracked and conflict state atoms. These describe where a change belongs; `FileIndicator` independently describes what happened to the file, such as added, modified or renamed. The four `ChangeGroup` molecules are available directly through `NewStagedChanges`, `NewUnstagedChanges`, `NewUntrackedChanges` and `NewConflictChanges`. Each accepts a file observation, selects matching files and composes its section atom, count, file rows and explicit empty state. They own no focus, viewport or keyboard behavior and require no organism. `View` returns the composed presentation; `Items` supplies the same rows, with unchanged file IDs, to a parent that owns selection. The optional status organism uses those same molecules.
+| Focused region | Keys |
+| --- | --- |
+| Lists | Arrows or j/k move, Home/End or g/G choose endpoints, paging moves through results, slash searches, Escape clears, and Enter selects. Search accepts pasted text. |
+| History | Ctrl+E/Ctrl+Y scroll independently of commit selection so continuation rows remain reachable. |
+| Changes inspector | The parent uses `SetFocus` to route messages to the status or diff pane. |
+| Repository browser | Ctrl+Left/Right changes sections. Tab changes panes. Enter selects the supplied worktree context without filesystem effects. |
 
 ## Markdown and source code
 

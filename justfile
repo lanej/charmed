@@ -8,11 +8,11 @@ default:
     @just --list
 
 # Run ShellCheck and the full Go quality gate used in CI.
-check: shellcheck
+check: shellcheck docs-check
     bash scripts/check-go.sh
 
 # Check shell scripts, formatting, vet, module tidiness and strict lint.
-lint: shellcheck
+lint: shellcheck docs-check
     bash scripts/check-go.sh lint
 
 # Check repository shell scripts, including portable profile assets.
@@ -44,9 +44,20 @@ tools:
     bash scripts/check-go.sh tools
 
 # Generate the static guide in docs/dist.
-docs:
-    go run ./cmd/workbench generate --out docs
+docs: docs-check
+    # Preview builds check out the PR head even when the event SHA points to main.
+    GITHUB_SHA="${GITHUB_SHA:+$(git rev-parse HEAD)}" go run ./cmd/workbench generate --out docs
+    python3 scripts/check_docs.py --rendered docs/dist
 
 # Run a native fixture, optionally followed by workbench flags.
 run story="screen/services" *args:
     go run ./cmd/workbench run "$@"
+
+# Check content bounds without compiling or opening a browser.
+docs-check:
+    python3 scripts/check_docs.py
+    python3 -m unittest discover -s scripts -p 'test_docs_standard.py'
+
+# Install the optional staged-tree source gate for this checkout.
+hooks:
+    git config core.hooksPath .githooks

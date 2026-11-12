@@ -255,3 +255,16 @@ nav .nav-group { font-size: 13px; padding-block: 5px; }
   .component-subheading h3 { font-size: 17px; }
   .component-subheading h3 .heading-permalink > span { font-size: inherit; color: inherit; }
 }
+
+/* Documentation rhythm. Bounds are verified from docs/standards.json. */
+main p { max-width: 70ch; }
+.component-use { color: var(--muted); }
+.component-integration { margin-top: 28px; max-width: 70ch; }
+.component-integration h3,.component-run h3 { margin: 0 0 12px; font-size: 17px; }
+.component-run { margin-top: 28px; }
+.component-source .source-code { max-height: none; }
+.component-preview .variant-panel .terminal { max-height: none; }
+.component-integration p { margin: 0; }
+.component-run p { font-size: 14px; color: var(--muted); }
+main > h2,main > h3 { max-width: 60ch; }
+@media(max-width:760px) { .component-source .source-code { max-height: none; } }

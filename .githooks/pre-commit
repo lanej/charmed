@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+# Check the staged tree, so unstaged fixes cannot hide a broken commit.
+staged_docs=$(mktemp -d)
+trap 'rm -rf "$staged_docs"' EXIT
+git checkout-index --all --prefix="$staged_docs/"
+python3 "$staged_docs/scripts/check_docs.py" --root "$staged_docs"

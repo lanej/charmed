@@ -6,7 +6,14 @@ Create a viewer with `collection.NewJSONViewer(width, height, palette)`, pass JS
 
 ## Interaction
 
-Up/down navigate visible fields. Enter toggles the selected container. Right expands a closed container or enters its first child; left collapses an open container or selects its parent. Page, half-page and wheel input retain native line scrolling so the middle of a long wrapped string remains readable. The next structural action reveals the selected field again. Folding an ancestor selects that ancestor; descendants keep their own folds until reopened.
+| Input | Behavior |
+| --- | --- |
+| Up / Down | Navigate visible fields |
+| Enter | Toggle the selected container |
+| Right | Expand a closed container or enter its first child |
+| Left | Collapse an open container or select its parent |
+| Page, half-page and wheel | Scroll wrapped values; the next structural action reveals the selected field |
+| Fold an ancestor | Select that ancestor while retaining descendant folds |
 
 The inspector uses this viewer inside both payload panes for complete declared JSON in supported encodings, including `+json` media types and header content-type fallback. `z` folds the entire component, `r` switches raw/formatted bodies, and the command palette exposes the selected JSON container's toggle. `?` and `NoHelp` control all footer instructions. The standalone viewer emits no keyboard footer; applications own help visibility and raw-mode bindings.
 
@@ -16,7 +23,13 @@ The inspector uses this viewer inside both payload panes for complete declared J
 
 `LogInspector.RequestJSON` and `ResponseJSON` add structure to the existing `Request` and `Response` viewports without replacing those models. Each payload has its own cursor and folds. Resize, whole-component folding and raw-mode round trips preserve structural state. Raw and formatted views have separate scroll positions, which clamp to the allocation. Changed body bytes reset only that direction. Returning to an exchange restores snapshots only for identical source bytes; discarded observations evict their snapshots. Header changes do not reset the body.
 
-`Snapshot` returns an opaque `JSONState` containing no captured bytes or native customization. `RestoreState` rejects different source. Standalone hosts own snapshot retention. `Selected`, `Select`, `Collapsed` and `SetCollapsed` use preorder node indices, stable only for identical bytes; duplicate members therefore have distinct identities. Disabling `Folding` expands everything, clears folds and routes navigation to the viewport. Re-enabling it keeps the expanded state. The inspector's `SetFolding(false)` also clears retained snapshots.
+| Structural state API | Contract |
+| --- | --- |
+| Snapshot | Return opaque JSONState without captured bytes or native customization |
+| RestoreState | Reject different source bytes; standalone applications own retention |
+| Selected / Select / Collapsed / SetCollapsed | Use preorder node indices stable only for identical bytes; duplicate members retain distinct identities |
+| Folding=false | Expand everything, clear folds and route navigation to the native viewport |
+| Re-enable folding | Retain expanded state; the inspector also clears retained snapshots when disabling folds |
 
 ## Limits and fallbacks
 

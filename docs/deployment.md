@@ -2,6 +2,8 @@
 
 Four linked panels compare **2xx, 3xx, 4xx and 5xx response percentages** between version identifiers `a13c9f2` and `f4d7e81` during a **blue/green deployment**. Reference and candidate are comparison roles; blue/green describes the deployment method. The counts are synthetic: 64 hosts serving the reference version, 32 serving the candidate, and twelve five-minute windows.
 
+![Fleet comparison showing weighted deltas beside host distributions and history](assets/deployment.png)
+
 
 ## Presentation variants
 
@@ -12,19 +14,23 @@ The band variant composes the same distributions and title-delta properties into
 
 ## Read the comparison
 
-The **fleet rate** is total class responses divided by total responses in the selected window. A host serving 100,000 responses contributes more than one serving 100. Each panel title merges the version comparison into one **delta bar**: shared reference/candidate response share cancels, leaving the signed candidate-minus-reference difference in **percentage points**. Negative changes extend left of zero; positive changes extend right, with an exact signed value alongside.
+The comparison separates request-weighted fleet behavior from equally weighted host distributions. Read both before interpreting a release difference: unequal traffic can change the fleet rate without shifting the typical host. Shared scales remain stable when selecting a different host or time window.
 
-All four title bars share one symmetric domain, rounded to a readable extent and shown once in the window metadata. The domain includes all supplied windows and configured fleet limits, so selecting a window or host does not rescale a deviation. Repeated fleet-percentage rows are removed. The title delta is request weighted; the mean values in the body describe the eligible-host distribution.
+| Measurement | Interpretation |
+| --- | --- |
+| Fleet rate | Total class responses divided by all responses; high-volume hosts contribute proportionally more |
+| Title delta | Candidate minus reference in percentage points; negative extends left, positive right |
+| Delta domain | One symmetric domain across all windows and fleet limits; selection does not rescale it |
+| Host mean | Equal weight for every eligible host |
+| Distribution bands | Mean plus/minus one, two and three sample standard deviations, using n minus one |
+| Marks | Brightest inner band is one sigma, vertical bar is mean, X is selected host |
+| Distribution domain | Shared by both versions within a class; includes full three-sigma extents and selected host; display stops at zero and one hundred percent |
+| History | Request-weighted version rates and selected host rate across supplied windows |
+| Host ranking | Configured attention first, then absolute distance from the reference host distribution |
+| z(ref) | Host rate minus reference mean, divided by reference spread; descriptive distance, never confidence |
+| HTTP tones | Green 2xx, blue 3xx, amber 4xx, red 5xx; category color does not itself declare a regression |
 
-Status classes use compact code pills: **2xx** success in green, **3xx** redirects in blue, **4xx** client errors in amber and **5xx** server errors in red. The same category pill appears in its panel, the active host-list heading and the inspector. Labels preserve meaning in monochrome and ASCII output. These colors describe response categories, rather than declaring every redirect or client error a release regression.
-
-The **host mean** gives each eligible host equal weight. The nested bands are the host mean ±1, ±2 and ±3 **sample standard deviations**, using the `n − 1` denominator. The brightest inner band is 1σ; the lighter surrounding bands are 2σ and 3σ. The mean is `|`; `X` marks the selected host on its version's band. Both versions share the same axis within a response class. Different classes have their own axes so a small 5xx shift stays visible. The axis includes both versions' full 3σ extent and the selected host; changing the visible band limit keeps that axis stable. Displayed bands stop at 0% and 100%.
-
-Histories show each version's request-weighted rate and the selected host's rate over all supplied windows. Version IDs appear directly in fleet values, distribution labels and the host table. The screen has no legends or explanatory key footers. Status-category pills keep their separate meanings.
-
-The host list ranks configured attention first, then absolute distance from the **reference version's host distribution** for the active response class. Its `z(ref)` is `(host rate − reference host mean) / reference host standard deviation`. This is a descriptive distance, including for candidate hosts, rather than a confidence score. The candidate's widening spread does not redefine its reference. The descriptive tail count includes eligible hosts from both cohorts beyond the selected sigma distance; this is separate from boundary attention.
-
-Version identifiers are opaque strings: a commit, release tag or build ID can identify either role. The `--reference-version` and `--candidate-version` CLI flags accept distinct identifiers without parsing their format. Host identifiers are independent of version, role and deployment environment.
+Version IDs are opaque commit, release or build identifiers. Reference and candidate roles remain independent of deployment method, environment and host identity. Tail counts include eligible hosts from both cohorts beyond the selected sigma distance; candidate spread never redefines the reference distribution.
 
 ## Try distinct failure shapes
 
@@ -37,7 +43,18 @@ Pass `--scenario` to the native runner. Saved monochrome snapshots of these scen
 | `unequal-traffic` | Host error propensities are similar, while the versions receive different volumes on the higher-error hosts | A weighted fleet delta without a comparable host-mean shift; this is workload confounding |
 | `insufficient-samples` | Most hosts serve fewer than 1,000 requests; some serve none | Excluded host counts, `n/a` spread and the absence of finite z-scores |
 
-Use **↑/↓** in the host table to choose a host, **←/→** to choose a time window, **[ / ]** to change the active response class, and **1 / 2 / 3** to set the outermost displayed band. These band keys also set the distance threshold shown in the host list. CLI flags set the initial scenario and band limit. **Tab** moves between the host list, metric panels and inspector. The member inspector is a dense native table with code, percentage-bar rate, reference deviation and optional attention columns. Each percentage cell composes a native progress bar on a fixed 0–100% scale with its precise numeric value; small percentages can fall below terminal bar resolution. Its arrow keys select the active metric while retaining the selected host. Arrow keys scroll the metric region; **Ctrl+N** advances the window and wraps to the first. Resize preserves the selected host, metric, window and band limit. Small terminals stack regions and scroll the metric panels; all four classes remain available.
+| Native control | Result |
+| --- | --- |
+| Up / Down in hosts | Select the host |
+| Left / Right | Select the time window |
+| Brackets | Choose the active response class |
+| 1 / 2 / 3 | Select visible spread and descriptive distance threshold, independently of attention policies |
+| Tab | Move focus among host list, metric panels and inspector |
+| Inspector arrows | Change active metric while retaining the selected host |
+| Ctrl+N | Advance the window and wrap to the first |
+| Resize | Retain host, metric, window and band limit; stack regions and scroll metrics when small |
+
+The member inspector combines exact rates with percentage bars on a fixed zero-to-one-hundred scale. Small rates may fall below bar resolution while retaining their numeric value. CLI flags select the initial scenario and sigma; all four response classes remain available in narrow terminals.
 
 ## Optional warning and error boundaries
 
@@ -54,9 +71,7 @@ Each metric, scope, severity and side is optional. Host policies apply to eligib
 
 The attention indicator composes the shared pill component. It appears on the screen and metric heading, affected host rows and inspector values. The delta property uses the fleet attention tone; its metric badge shows the strongest fleet or host state. A metric's indicator shows the strongest fleet or host attention; the inspector preserves the individual results. HTTP status-category pills keep their separate meanings: a red **5xx** category does not itself raise an **ERROR** attention state.
 
-`W` and `E` mark configured host warning and error boundaries on the distributions. The shared axis includes valid boundary positions. At terminal resolution, coincident markers show the stronger error marker; `X` takes priority for the selected host. Fleet limits appear directly on metric cards with full warning/error labels. Host limits are supplied by the application policy and marked on the bands. **The 1/2/3σ controls change the displayed bands and descriptive tail counts, independently of attention policies.**
-
-Applications supply policies explicitly:
+`W` and `E` mark configured host warning and error boundaries on the distributions. The shared axis includes valid boundary positions. At terminal resolution, coincident markers show the stronger error marker; `X` takes priority for the selected host. Fleet limits appear directly on metric cards with full warning/error labels. Host limits are supplied by the application policy and marked on the bands. The 1/2/3σ controls change displayed bands and descriptive tail counts independently of attention policies. Supply explicit policies as shown below.
 
 ```go
 // Host limits are in z(ref) units; fleet limits are in percentage points.
@@ -81,13 +96,24 @@ The optional callback emits typed `attention.Changed` events when a metric's **h
 
 ## Sampling and interpretation
 
-At least **1,000 requests per host per window** are required for the example's host mean and spread. Low-volume hosts still contribute their actual counts to the fleet rate. A zero-request host has an unavailable rate, rather than a 0% rate. Missing metric counts are rejected; explicit zero counts are accepted. At least two eligible hosts are needed for a standard deviation. A zero or unavailable reference standard deviation yields `z(ref) = n/a`.
+| Sampling condition | Interpretation |
+| --- | --- |
+| At least 1,000 requests per host/window | Eligible for the example's host mean and spread |
+| Lower-volume hosts | Excluded from host distributions but actual counts still contribute to fleet rates |
+| Zero requests | Unavailable rate, never zero percent |
+| Fewer than two eligible hosts | Sample standard deviation unavailable |
+| Zero or unavailable reference spread | z(ref) is unavailable |
+| Missing versus zero counts | Reject absent metric counts; accept explicit zero observations |
 
 These bands describe host variation. They are **not confidence intervals**, do not imply 68/95/99.7% coverage for skewed host distributions, and do not determine whether a release is safe. Rare 5xx counts and unequal traffic need count-aware inference and a model of host and traffic heterogeneity. Repeated comparisons across hosts, classes and windows also need a decision policy that accounts for false positives. No automatic promote or rollback action is attached to these plots.
 
 Compare both versions over overlapping, equal-duration intervals and comparable route, region, instance and request populations. The example treats the versions as independent host cohorts; it does not invent host pairing. A blue/green cutover with no overlapping traffic provides a before/after comparison, with time and workload as potential confounders. The four response classes partition responses in this fixture, so their changes are related; a 3xx or 4xx increase is not automatically a regression.
 
-References: [NIST proportion control charts](https://www.itl.nist.gov/div898/handbook/pmc/section3/pmc332.htm), [NIST exact binomial confidence limits](https://www.itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbici.htm), and [Google SRE: Canarying Releases](https://sre.google/workbook/canarying-releases/).
+| Interpretation reference | Use |
+| --- | --- |
+| [NIST proportion control charts](https://www.itl.nist.gov/div898/handbook/pmc/section3/pmc332.htm) | Understand count-aware monitoring of proportions |
+| [NIST exact binomial confidence limits](https://www.itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbici.htm) | Distinguish uncertainty about rates from host dispersion |
+| [Google SRE canarying](https://sre.google/workbook/canarying-releases/) | Frame release comparisons and decision policy |
 
 ## Compose the reusable pieces
 
@@ -113,7 +139,12 @@ Signed values use `text.SignedNumber`. Its `SignTones` configure positive, negat
 | Screen | `examples/deployment` | Supply version IDs, the deployment method, HTTP status tones, synthetic counts and the sample threshold |
 
 
-Run the example with `go run ./examples/deployment`, or use `go run ./cmd/workbench run screen/deployment --scenario uniform-regression --sigma 2 --reference-version release-42 --candidate-version build-43`.
+```sh
+go run ./examples/deployment
+go run ./cmd/workbench run screen/deployment \
+  --scenario uniform-regression --sigma 2 \
+  --reference-version release-42 --candidate-version build-43
+```
 
 ## Supply real telemetry
 

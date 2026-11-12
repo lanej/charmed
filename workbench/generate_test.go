@@ -31,7 +31,7 @@ func TestStaticGuide(t *testing.T) {
 		groups[strings.ToLower(d.Level)+"-"+d.Family+".html"] = true
 	}
 
-	if want := 7 + len(story.Levels()) + len(groups); len(files) != want {
+	if want := 12 + len(story.Levels()) + len(groups); len(files) != want {
 		t.Fatalf("got %d pages, want %d category, group and guide pages", len(files), want)
 	}
 
@@ -235,9 +235,14 @@ func TestStaticGuide(t *testing.T) {
 
 	for _, page := range []string{"atoms-input.html", "foundations-theme.html", "screens-pattern.html"} {
 		if bytes.Contains(pages[page], []byte("Run natively")) ||
-			bytes.Contains(pages[page], []byte("component-run")) ||
 			bytes.Contains(pages[page], []byte("go run ./cmd/workbench run ")) {
-			t.Errorf("%s should not render per-component runner commands", page)
+			t.Errorf("%s should not render fixture runner commands", page)
+		}
+	}
+
+	for _, required := range []string{"component-integration", "component-run", "./examples/catalog input/text"} {
+		if !bytes.Contains(pages["atoms-input.html"], []byte(required)) {
+			t.Errorf("input guide lacks its consumer contract: %s", required)
 		}
 	}
 

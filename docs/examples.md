@@ -13,15 +13,21 @@ A complete screen owns one Go model and coordinates its child widgets. The servi
 | Root runtime | Own the terminal session and forward commands |
 | Application | Supply data and handle typed UI events |
 
-In the native service screen, Tab changes focus, arrows select rows and Ctrl+N advances background samples. Selection updates the chart and inspector together. Resize preserves selection; hidden regions leave the focus order.
+```sh
+go run ./examples/catalog screen/services
+go run ./examples/catalog template/application
+```
 
-In the native deployment screen, arrows choose hosts and windows, brackets choose a response class, 1/2/3 change displayed spread, and b switches between stacked and disconnected bands. These are terminal controls; the saved frames on the screen pages do not execute them.
+| Native screen | Coordinated interaction |
+| --- | --- |
+| Service workbench | Tab changes focus, arrows select rows, Ctrl+N advances samples; selection updates chart and inspector together, and resize retains selection |
+| Deployment comparison | Arrows choose hosts and windows, brackets choose response class, 1/2/3 select spread and b changes presentation; saved frames do not execute keys |
 
 Switch between the [deployment fixture](screens-pattern.html#screen/deployment)'s stacked and disconnected-band snapshots using the variant tabs, then inspect the corresponding Go implementation on its group page.
 
 ## Explore the catalog
 
-Browse [Templates](templates.html) for reusable screen structure and [Screens](screens.html) for complete compositions.
+[Templates](templates.html) · [Screens](screens.html)
 
 ## Application shell
 

@@ -8,6 +8,7 @@ or external network. Run after `go run ./cmd/workbench generate --out docs`.
 import argparse
 import base64
 import json
+import mimetypes
 from pathlib import Path
 import re
 from urllib.parse import unquote, urlparse
@@ -22,6 +23,15 @@ def document(site, filename):
     font = base64.b64encode((site / "assets/JuliaMono-Regular.woff2").read_bytes()).decode()
     styles = styles.replace('url("assets/JuliaMono-Regular.woff2")',
                             f'url("data:font/woff2;base64,{font}")')
+    def inline_image(match):
+        file = site / match[1]
+        if file.is_file():
+            mime = mimetypes.guess_type(file)[0] or 'application/octet-stream'
+            data = base64.b64encode(file.read_bytes()).decode()
+            return 'src="data:' + mime + ';base64,' + data + '"'
+        return match[0]
+
+    source = re.sub(r'src="(assets/[^"<>]+)"', inline_image, source)
     source = re.sub(r"<link\b[^>]*>", "", source)
     source = re.sub(r"<script\b[^>]*src=[^>]*>\s*</script>", "", source)
     return source.replace("</head>", "<style>" + styles + "</style></head>"), (site / "tabs.js").read_text(encoding="utf-8")
@@ -150,6 +160,61 @@ def check_catalog_navigation(browser, site, output):
     context.close()
 
 
+def check_rhythm(page, filename, config):
+    measurements = page.evaluate("""() => {
+        const box = node => node.getBoundingClientRect();
+        const components = Array.from(document.querySelectorAll('.component')).map(component => {
+            const heading = component.querySelector('h2');
+            const preview = component.querySelector('[id$="-example"][role="tabpanel"] .terminal');
+            const source = component.querySelector('.source-code');
+            const integration = component.querySelector('.component-integration');
+            const run = component.querySelector('.component-run');
+            const canvas = document.createElement('canvas').getContext('2d');
+            canvas.font = getComputedStyle(preview).font;
+            const cell = canvas.measureText('0').width;
+            const columns = Math.max(...preview.textContent.split('\\n').map(line => canvas.measureText(line).width / cell));
+            return {id: component.id,
+                firstArtifact: box(preview).top - box(heading).bottom,
+                previewHeight: box(preview).height,
+                columns: Math.round(columns),
+                artifactGap: box(source).top - box(preview).bottom,
+                integrationGap: box(integration).top - box(source).bottom,
+                runGap: box(run).top - box(integration).bottom,
+                clippedCode: source.scrollHeight > source.clientHeight + 1};
+        });
+        const prose = Array.from(document.querySelectorAll('main > p, .component-use, .component-integration p, .catalog-description, .dev-lede')).filter(node =>
+            !node.matches('.eyebrow, .catalog-count, .catalog-breadcrumb, .example-imports, .composition-line')
+        ).map(node => {
+            const canvas = document.createElement('canvas').getContext('2d');
+            canvas.font = getComputedStyle(node).font;
+            const cell = canvas.measureText('0').width;
+            return {text: node.textContent.slice(0, 45), width: box(node).width / cell,
+                available: box(node.parentElement).width / cell};
+        });
+        const sectionGaps = Array.from(document.querySelectorAll('main > h2')).map(node => ({id: node.id, gap: parseFloat(getComputedStyle(node).marginTop)}));
+        return {components, prose, sectionGaps};
+    }""")
+    limits = config['rendered']
+    for item in measurements['components']:
+        checks = {'firstArtifact': 'first_artifact_px', 'previewHeight': 'preview_height_px',
+                  'artifactGap': 'artifact_gap_px', 'integrationGap': 'section_gap_px', 'runGap': 'section_gap_px'}
+        for metric, rule in checks.items():
+            low, high = limits[rule]
+            assert low - 1 <= item[metric] <= high + 1, (filename, item['id'], rule, item[metric], limits[rule])
+        assert not item['clippedCode'], (filename, item['id'], 'usage code must be fully visible vertically')
+        low, high = config['component']['preview_columns']
+        assert low <= item['columns'] <= high, (filename, item['id'], 'preview columns', item['columns'])
+    for item in measurements['sectionGaps']:
+        low, high = limits['section_gap_px']
+        assert low <= item['gap'] <= high, (filename, item['id'], 'section spacing', item)
+    for item in measurements['prose']:
+        low, high = limits['prose_width_ch']
+        assert item['width'] <= high + 1, (filename, 'prose too wide', item)
+        if item['available'] >= low:
+            assert item['width'] >= low - 1, (filename, 'prose too narrow', item)
+    return measurements
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--site", type=Path, default=Path("docs/dist"))
@@ -161,6 +226,7 @@ def main():
     assert len(pages) > 12, "build the complete guide before running browser checks"
     sources = {file.name: document(args.site, file.name) for file in pages}
     results = []
+    config = json.loads((Path(__file__).resolve().parents[1] / 'docs/standards.json').read_text())
     with sync_playwright() as playwright:
         options = {"executable_path": args.chromium_path} if args.chromium_path else {}
         browser = playwright.chromium.launch(**options)
@@ -174,6 +240,7 @@ def main():
                 page.set_content(html)
                 page.add_script_tag(content=javascript)
                 page.evaluate("document.fonts.ready")
+                page.wait_for_function("() => Array.from(document.images).every(image => image.complete && image.naturalWidth > 0)")
                 values = page.evaluate("""() => ({
                     width: innerWidth, scrollWidth: document.documentElement.scrollWidth,
                     headingTop: document.querySelector('h1').getBoundingClientRect().top,
@@ -226,7 +293,8 @@ def main():
                         assert target.startswith("#") and page.locator(f'[id="{target[1:]}"]').count() == 1, target
                 if filename == "screens-pattern.html" and width == 390:
                     check_menu(page, args.output)
-                results.append({"page": filename, **values})
+                rhythm = check_rhythm(page, filename, config)
+                results.append({"page": filename, **values, "rhythm": rhythm})
                 context.close()
             print(f"Verified {width}px layouts", flush=True)
         context = browser.new_context(viewport={"width": 390, "height": 844}, java_script_enabled=False)

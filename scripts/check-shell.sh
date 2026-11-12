@@ -7,5 +7,5 @@ command -v shellcheck >/dev/null || {
     exit 1
 }
 
-git ls-files --cached --others --exclude-standard -z -- '*.sh' |
+git ls-files --cached --others --exclude-standard -z -- '*.sh' '.githooks/pre-commit' |
     xargs -0 shellcheck --external-sources --

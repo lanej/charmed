@@ -14,9 +14,13 @@ The complete silhouette carries the idea in one color. The mark uses the website
 
 The primary lockup pairs the terminal talisman with the lowercase **charmed** wordmark. Use it for documentation, the website, and repository art. The mark can stand alone when the product name is already visible.
 
-Use the supplied SVG so the header, lockups, and small-size specimens share the same geometry. Keep the attachment loop and faceted outline intact. Leave at least one cursor-width of clear space around the mark and keep it at least 24 pixels high. Use the plain product name where vector graphics are unavailable.
-
-Do not use the mark as a generic status badge or replace a status label with brand green. Preserve legibility on both light and dark backgrounds; the default documentation identity is dark.
+| Identity constraint | Requirement |
+| --- | --- |
+| Source | Use the supplied SVG and retain the loop and faceted outline |
+| Clearance | At least one cursor-width of clear space around the mark |
+| Minimum size | At least 24 pixels high; use the plain product name where vectors are unavailable |
+| Semantic role | Product identity only; preserve explicit status labels and their own colors |
+| Surface | Check light and dark legibility; the documentation identity defaults to dark |
 
 ## Tokens and roles
 
@@ -30,4 +34,4 @@ Use system sans-serif for documentation and labels. Use bundled JuliaMono for te
 
 ## Composition
 
-Lead with the terminal output. Show alternate states in adjacent variant tabs and a short consumer-API snippet immediately afterward. Snippets need not declare a Go package, imports, or an outer function; link to complete fixture implementations separately. Keep runner commands in the development guide instead of repeating them under each component.
+Lead with the terminal output. Show alternate states in adjacent variant tabs and a short consumer-API snippet immediately afterward. Display the consumer body without its package or outer function, link required imports and complete source, and include the exact catalog-render command. The same example produces the native output; interactive workbench fixture commands belong in the contributor guide.

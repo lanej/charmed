@@ -21,6 +21,8 @@ type Snapshot struct {
 }
 type ManifestEntry struct {
 	story.Definition
+	Use            string        `json:"use"`
+	Integration    string        `json:"integration"`
 	Code           string        `json:"code"`
 	ExampleImports []usageImport `json:"exampleImports"`
 	ExampleFrame   string        `json:"exampleFrame"`
@@ -429,6 +431,10 @@ func Generate(out string) error {
 		}
 
 		entries = append(entries, entry)
+	}
+
+	if err := loadGuidance(root, entries); err != nil {
+		return err
 	}
 
 	return writeSite(out, root, entries)

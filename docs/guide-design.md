@@ -8,7 +8,13 @@ Show Go developers the actual components first, then help them understand compos
 
 ## Principles and tradeoffs
 
-Use a compact guide navigation and readable prose. Each fixture has a sidebar link. Lead with the saved native visual, put variants in keyboard-accessible tabs, and immediately follow with highlighted Go source. Keep runner commands in the development guide rather than repeating them under each component. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved terminal frames preserve exact RGB as static HTML on the guide’s night surfaces; native commands provide keyboard interaction and animation.
+Use a compact guide navigation and readable prose. Each fixture has a sidebar link. Lead with the saved native visual, put variants in keyboard-accessible tabs, and immediately follow with highlighted Go source. Link each component to its runnable consumer example. Keep fixture setup and workbench flags in the development guide. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved terminal frames preserve exact RGB as static HTML on the guide’s night surfaces; native commands provide keyboard interaction and animation.
+
+| Reader task | Guide entry |
+| --- | --- |
+| See what a component renders | Open its sidebar anchor and inspect the default Example tab. |
+| Compare states, palettes or widths | Switch between saved native frames. |
+| Try the example | Use the displayed Go source and the catalog command beneath its integration guidance. |
 
 ## Visual system and ownership
 
@@ -18,15 +24,27 @@ The Go `theme` package owns the canonical palette for native applications and th
 
 The generated guide uses HTML, CSS and local images with relative links. Navigation and source remain readable without JavaScript or a preview service. A small local script enhances semantic variant tabs with roving keyboard focus; without it, all variant snapshots stay visible. Source is never hidden behind a disclosure. A skip link reaches the main content; focused links and summaries have visible outlines. Missing inputs fail generation with an error. No loading or live connection states are needed for these static pages.
 
+| Surface | Owner and fallback |
+| --- | --- |
+| Terminal colors | The native theme supplies exact RGB. Saved variants show reduced color profiles. |
+| Page layout | Site CSS sets typography and spacing. Frames and tables can scroll within their allocation. |
+| Navigation | Ordinary links work without scripts. Keyboard-accessible tabs enhance the saved variant list. |
+
 ## Requirements and verification
 
 ### GUIDE-001
 
-Every registered fixture must appear once in foundations, components or examples, with a saved frame and code example. Go generator tests check fixture presence, local links, anchors and repeatability. The only client script is the static variant-tab enhancer; all documentation, navigation, code highlighting and snapshot rendering happen at build time.
+Every registered fixture must appear once in foundations, components or examples, with a saved frame and code example. Go generator tests check fixture presence, local links, anchors and repeatability. Client scripts enhance variant tabs, mobile navigation and legacy bookmarks; all documentation, navigation, code highlighting and snapshot rendering happen at build time.
 
 ### GUIDE-002
 
 Navigation and content must fit desktop and mobile viewports. Terminal frames and wide tables may scroll internally to preserve cell geometry. Viewrule checks main content and screenshots support manual layout review. Static snapshots use truecolor as the reference. Separate 256-color, 16-color and monochrome variants expose fallback behavior.
+
+| Verification | Evidence |
+| --- | --- |
+| Generated guide | Registered fixtures, local links, anchors and example output. |
+| Browser layout checks | Page overflow, visible code, native geometry and navigation at mobile and desktop widths. |
+| Native runner | Keyboard input, focus transitions, resizing and animation. |
 
 ## Evidence and unresolved decisions
 
@@ -40,14 +58,16 @@ Night mode is fixed across page chrome, prose, code, disclosures and saved outpu
 
 The home page leads with a composed native service screen and representative atoms/charts. Guide navigation stays in the sidebar; the coverage inventory lives on the development page. Terminal colors, pill fills and labels survive static export. Service lists use status atoms without redundant service/state headers; selection and keyboard behavior remain native.
 
-Base terminal text uses neutral off-white and gray, including after ANSI 256-color conversion. Lavender is reserved for data-series differentiation, not ordinary service names or neutral status labels.
-
-Legends are optional and absent by default. When enabled, each marker or series key reuses the style of its plotted counterpart; neutral prose does not replace the visual key. Warning and error boundaries have separate colored keys. Mean keys retain each series color, and selection retains its neutral marker.
+| Visual element | Required presentation |
+| --- | --- |
+| Base terminal text | Neutral off-white or gray, including after ANSI 256-color conversion. Reserve lavender for data series. |
+| Optional legend | Hidden by default. Each enabled series or marker uses its plotted style. |
+| Boundary and mean keys | Warning and error boundaries use separate colors, mean keys retain each series color, and selection keeps its neutral marker. |
 
 
 ### GUIDE-005
 
-Every fixture has a sidebar entry linking to its exact section anchor. A component's first visible content is its saved terminal preview, with all snapshots available as semantic tabs. Its highlighted Go source follows the preview directly, not inside a disclosure. Do not include repetitive per-component `Run natively` command panels. Tabs support arrow keys, Home and End; the original static frames remain visible if JavaScript is unavailable.
+Every fixture has a sidebar entry linking to its exact section anchor. A component's first visible content is its saved terminal preview, with all snapshots available as semantic tabs. Its highlighted Go source follows the preview directly, not inside a disclosure. Follow the code with lifecycle guidance and one command that runs that consumer example. Tabs support arrow keys, Home and End; the original static frames remain visible if JavaScript is unavailable.
 
 ### GUIDE-006
 
@@ -56,6 +76,11 @@ Charmed has a documented identity with a lowercase lockup and code typography. B
 ### GUIDE-007
 
 Documentation PRs publish an isolated Pages snapshot at `/charmed/pr-preview/pr-<number>/`. The PR description links to actual preview pages, not to itself, only after the published revision marker matches the current PR head. Reviewers should be able to inspect the rendered component catalog without merging first.
+
+| Publication | Evidence to inspect |
+| --- | --- |
+| Pull request | Preview links resolve to pages built from the PR head. |
+| Main branch | The published catalog contains the merged component and its runnable example. |
 
 ### GUIDE-008
 
