@@ -94,8 +94,8 @@
 
 
 <h1 id="compare-cohort-measurements">Compare cohort measurements</h1>
-<p><code class="inline-code">pattern<span class="syn-operator">.</span>CohortComparison</code> accepts one or more cohorts with shared metrics and independent members. It links distributions, aggregate histories, selection and inspection. The regional example compares temperature, energy and yield; HTTP deployment comparisons remain a configured use case.</p>
-<p><img src="assets/cohorts.png" alt="Three regional cohorts with scalar temperature, energy and ratio yield"></p>
+<p><code class="inline-code">pattern<span class="syn-operator">.</span>CohortComparison</code> accepts one or more cohorts with shared metrics and independent members. It links distributions, aggregate histories, selection and inspection. The regional example compares temperature, energy, yield and humidity; HTTP deployment comparisons remain a configured use case.</p>
+<p><img src="assets/cohorts.png" alt="Three regional cohorts with scalar temperature, energy, ratio yield and humidity"></p>
 <h2 id="supply-observations"><a class="heading-permalink" href="#supply-observations"><span>Supply observations</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>A member is identified by <code class="inline-code">(CohortID, MemberID)</code>; matching IDs across cohorts do not imply pairing. Each ordered, nonoverlapping, equal-duration window contains at most one sample per member and cohort. Applications own telemetry retrieval, interval construction and any pairing policy; an empty window list is valid.</p>
 <pre tabindex="0" class="code-block"><code class="language-go">metrics <span class="syn-operator">:=</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>cohort<span class="syn-operator">.</span>Metric<span class="syn-operator">{</span>
