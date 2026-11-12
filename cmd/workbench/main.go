@@ -14,21 +14,29 @@ import (
 	"time"
 
 	tea "charm.land/bubbletea/v2"
-	"charm.land/fang/v2"
 	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/cli"
 	"github.com/lanej/charmed/story"
 	"github.com/lanej/charmed/workbench"
 	"github.com/spf13/cobra"
 )
 
 func main() {
-	if err := fang.Execute(context.Background(), command(), fang.WithVersion("0.1.0")); err != nil {
+	root := command()
+	if err := root.ExecuteContext(context.Background()); err != nil {
+		printCommandError(root, err)
 		os.Exit(1)
 	}
 }
 
 func command() *cobra.Command {
-	root := &cobra.Command{Use: "workbench", Short: "A component workbench for Charm", SilenceUsage: true}
+	root := &cobra.Command{
+		Use: "workbench", Short: "A component workbench for Charm",
+		Example: "workbench run screen/services\nworkbench capture chart/timeseries --plain",
+		Version: "0.1.0", SilenceUsage: true, SilenceErrors: true,
+	}
+	cli.HelpFormatter{}.Install(root)
+	root.AddCommand(manCommand())
 	root.AddCommand(&cobra.Command{Use: "list", Short: "List registered Go stories", RunE: func(cmd *cobra.Command, args []string) error {
 		for _, d := range story.Definitions() {
 			fmt.Fprintf(cmd.OutOrStdout(), "%-26s %s\n", d.ID, d.Title)

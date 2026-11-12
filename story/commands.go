@@ -14,7 +14,10 @@ func commandDefinitions() []Definition {
 	config.Columns, config.Rows = 88, 28
 	config.Value = ""
 
-	return []Definition{{ID: "collection/command-palette", Title: "Molecules/Navigation/Command palette", Level: "Molecules", Family: "commands", Description: "Fuzzy-searchable commands with shortcuts, current settings and unavailable reasons; applications own execution.", Source: "story/commands.go", Symbol: "commandPaletteStory", Composes: []string{"input/text", "text/key-hint", "text/match", "foundations/layout"}, Controls: []string{"state", "value"}, States: []string{"ready", "empty", "disabled"}, Defaults: config, Factory: commandPaletteStory}}
+	return []Definition{
+		{ID: "collection/command-palette", Title: "Molecules/Navigation/Command palette", Level: "Molecules", Family: "commands", Description: "Fuzzy-searchable commands with shortcuts, current settings and unavailable reasons; applications own execution.", Source: "story/commands.go", Symbol: "commandPaletteStory", Composes: []string{"input/text", "text/key-hint", "text/match", "foundations/layout"}, Controls: []string{"state", "value"}, States: []string{"ready", "empty", "disabled"}, Defaults: config, Factory: commandPaletteStory},
+		{ID: "cli/help", Title: "Molecules/Commands/CLI help", Level: "Molecules", Family: "commands", Description: "Render help from a Cobra command or install the formatter on its root. Flag names are bold and value types use normal weight. Descriptions move below long flags while shorter rows stay aligned.", Source: "cli/help.go", Symbol: "HelpFormatter", Upstream: "https://github.com/spf13/cobra", Composes: []string{"foundations/theme"}, Defaults: config, Factory: cliHelpStory},
+	}
 }
 
 func commandPaletteStory(e Environment) (runtime.Scene, error) {
