@@ -3,6 +3,7 @@ package collection
 import (
 	"strings"
 
+	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
@@ -198,8 +199,12 @@ func (c TableCell) view(emphasis text.Emphasis, t theme.Theme) string {
 	return strings.Join(parts, " ")
 }
 
+// fitLines wraps a styled cell to width. Lipgloss closes and restores styles at each line break, so a background
+// that wraps never tints the neighbouring column.
 func fitLines(cell string, width int) []string {
-	return strings.Split(ansi.Hardwrap(ansi.Wrap(cell, width, ""), width, true), "\n")
+	wrapped := lipgloss.NewStyle().Width(width).Render(ansi.Wrap(cell, width, ""))
+
+	return strings.Split(ansi.Hardwrap(wrapped, width, true), "\n")
 }
 
 func (s StaticTable) columns(cells [][]string, widths []int, t theme.Theme) string {
@@ -249,6 +254,9 @@ func (s StaticTable) stack(cells [][]string, width int, t theme.Theme) string {
 
 	for _, row := range cells {
 		lines := fitLines(row[0], width)
+		for n, line := range lines {
+			lines[n] = strings.TrimRight(line, " ")
+		}
 
 		for i := 1; i < len(row); i++ {
 			title := ansi.Truncate(text.Inline(s.Columns[i].Title), labelMax, t.Glyph(theme.GlyphTruncated))
