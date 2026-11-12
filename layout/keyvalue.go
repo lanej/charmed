@@ -18,7 +18,7 @@ type Pair struct {
 // KeyValue aligns labels in a column with their values beside them. At 55 columns and narrower each pair stacks as
 // "label: value". Values wrap within the width that is left and are never truncated.
 func KeyValue(pairs []Pair, width int, t theme.Theme) string {
-	class, labelWidth := WidthClassOf(width), 0
+	stacked, labelWidth := StackedAt(width), 0
 
 	// The label column takes at most half the allocation, so the value always keeps room.
 	labelMax := max(1, (width-2)/2)
@@ -34,7 +34,7 @@ func KeyValue(pairs []Pair, width int, t theme.Theme) string {
 	for i, p := range pairs {
 		label, value := labels[i], p.State.View(p.Value, text.Normal, t)
 
-		if class.Stacked() {
+		if stacked {
 			head := label + ": "
 			rows = append(rows, t.Subtle().Render(head)+ansi.Hardwrap(value, max(width-ansi.StringWidth(head), 1), true))
 

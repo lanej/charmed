@@ -31,7 +31,7 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 | `navigation` | Keyboard-driven tabs with stable selection and overflow indicators |
 | `interaction` | Focus scopes and typed selection/submission events |
 | `input` | Bubbles text input, textarea, virtual cursor and labeled field composition |
-| `collection` | Native tables, lists, trees, file pickers, viewports and bounded structured logs |
+| `collection` | Native tables, static responsive comparison tables, lists, trees, file pickers, viewports and bounded structured logs |
 | `feedback` | Health, lifecycle and connection status atoms, attention indicators, spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
 | `attention` | Optional one-sided or two-sided warn/error boundaries, explicit unknown/off states and typed transitions |
 | `form` | Themed Huh forms with native nested focus and validation |

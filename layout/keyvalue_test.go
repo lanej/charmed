@@ -41,6 +41,13 @@ func TestKeyValueAlignsStacksAndKeepsMissingDistinct(t *testing.T) {
 		t.Fatalf("got %q want %q", got, want)
 	}
 
+	// WidthClassOf snaps 56 to 79 columns down to Width55, which is not "55 columns and narrower".
+	for width, want := range map[int]string{55: "profile: dev", 56: "profile  dev", 79: "profile  dev"} {
+		if got := ansi.Strip(layout.KeyValue(pairs[:1], width, palette)); got != want {
+			t.Fatalf("width %d: got %q want %q", width, got, want)
+		}
+	}
+
 	long := []layout.Pair{{Label: "note", Value: strings.Repeat("word ", 12)}}
 	for _, width := range []int{20, 60, 90} {
 		for _, line := range strings.Split(layout.KeyValue(long, width, palette), "\n") {

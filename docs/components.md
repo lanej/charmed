@@ -85,6 +85,7 @@ The [application shell](templates-pattern.html#template/application) composes th
 | Evidence atom | Healthy maps to OK and down to ERROR. Degraded, stale and truncated map to WARN. Unknown, insufficient and attribution gap map to UNKNOWN. |
 | [Summary line](molecules-feedback.html#feedback/evidence-summary) | Count by state, worst first. An empty tally reads “no evidence.” |
 | [Evidence footer](molecules-feedback.html#feedback/evidence-footer) | Supply source, scope, state, observation time and current time. Missing parts stay explicit. `text.Age` formats one compact unit. |
+| [Static table](molecules-collection.html#collection/static-table) | Non-interactive comparison with wrapped cells. Stacks at 55 columns or fewer when it would not fit whole, never truncating. `TableEvidence`, `TableMissing` and `Omission` keep gaps distinct from healthy, empty and complete values. |
 | [Key-value layout](molecules-layout.html#layout/key-value) | Stack at 55 columns or fewer. `layout.WidthClassOf` uses 40, 55, 80, 100, 120 and 160 columns. Missing values stay distinct from empty strings. |
 
 ## Log levels
