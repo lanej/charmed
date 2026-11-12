@@ -6,6 +6,67 @@ import "fmt"
 // Render runs only bounded rendering and construction, never a terminal program or initialization command.
 func Render(id string) (string, error) {
 	switch id {
+	case "git/branch-row":
+		return ExampleGitBranchRow(), nil
+	case "git/branches":
+		return ExampleGitBranches()
+	case "git/browser":
+		return ExampleGitBrowser()
+	case "git/changes":
+		return ExampleGitChanges()
+	case "git/commit-id":
+		return ExampleGitCommitId(), nil
+	case "git/commit-row":
+		return ExampleGitCommitRow(), nil
+	case "git/conflict-state":
+		return ExampleGitConflictState(), nil
+	case "git/conflicts":
+		return ExampleGitConflicts()
+	case "git/diff":
+		return ExampleGitDiff(), nil
+	case "git/diff-summary":
+		return ExampleGitDiffSummary(), nil
+	case "git/divergence":
+		return ExampleGitDivergence(), nil
+	case "git/file-row":
+		return ExampleGitFileRow(), nil
+	case "git/file-state":
+		return ExampleGitFileState(), nil
+	case "git/head":
+		return ExampleGitHead(), nil
+	case "git/history":
+		return ExampleGitHistory()
+	case "git/hunk":
+		return ExampleGitHunk(), nil
+	case "git/ref":
+		return ExampleGitRef(), nil
+	case "git/staged":
+		return ExampleGitStaged()
+	case "git/staged-state":
+		return ExampleGitStagedState(), nil
+	case "git/stash-row":
+		return ExampleGitStashRow(), nil
+	case "git/stashes":
+		return ExampleGitStashes()
+	case "git/status":
+		return ExampleGitStatus()
+	case "git/summary":
+		return ExampleGitSummary(), nil
+	case "git/unstaged":
+		return ExampleGitUnstaged()
+	case "git/unstaged-state":
+		return ExampleGitUnstagedState(), nil
+	case "git/untracked":
+		return ExampleGitUntracked()
+	case "git/untracked-state":
+		return ExampleGitUntrackedState(), nil
+	case "git/worktree-row":
+		return ExampleGitWorktreeRow(), nil
+	case "git/worktree-state":
+		return ExampleGitWorktreeState(), nil
+	case "git/worktrees":
+		return ExampleGitWorktrees()
+
 	case "input/checkbox":
 		return ExampleInputCheckbox(), nil
 	case "input/radio":

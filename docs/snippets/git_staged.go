@@ -13,9 +13,11 @@ func ExampleGitStaged() (string, error) {
 		{ID: "notes", Path: "notes.txt", Worktree: gitui.Untracked},
 		{ID: "merge", Path: "merge.go", Index: gitui.Conflicted, Conflict: "both modified"},
 	}
+
 	group, err := gitui.NewStagedChanges(files, palette)
 	if err != nil {
 		return "", err
 	}
+
 	return group.View(), nil
 }

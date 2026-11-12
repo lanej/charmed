@@ -12,5 +12,6 @@ func ExampleGitWorktrees() (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	return view.View(), nil
 }

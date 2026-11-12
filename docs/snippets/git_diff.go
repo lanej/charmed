@@ -10,5 +10,6 @@ func ExampleGitDiff() string {
 
 	diff := gitui.FileDiff{Path: "config.go", State: gitui.BinaryDiff}
 	view := gitui.NewDiffViewer(diff, 80, 12, palette)
+
 	return view.View()
 }

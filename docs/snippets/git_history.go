@@ -17,5 +17,6 @@ func ExampleGitHistory() (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	return view.View(), nil
 }
