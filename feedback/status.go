@@ -43,6 +43,17 @@ func MaxStatusWidth(t theme.Theme) int {
 }
 
 func (s Status) View(emphasis text.Emphasis, t theme.Theme, options ...text.Presentation) string {
+	s, glyph, tone, t := statusAppearance(s, t)
+
+	mode := text.DefaultPresentation
+	if len(options) > 0 {
+		mode = options[0]
+	}
+
+	return text.Pill(mode.Format(glyph, string(s)), tone, t, emphasis)
+}
+
+func statusAppearance(s Status, t theme.Theme) (Status, string, text.Tone, theme.Theme) {
 	tone := text.Neutral
 	glyph := theme.GlyphUnknown
 
@@ -88,12 +99,7 @@ func (s Status) View(emphasis text.Emphasis, t theme.Theme, options ...text.Pres
 		t = statusTheme(t, t.Unknown, t.DimUnknown)
 	}
 
-	mode := text.DefaultPresentation
-	if len(options) > 0 {
-		mode = options[0]
-	}
-
-	return text.Pill(mode.Format(t.Glyph(glyph), string(s)), tone, t, emphasis)
+	return s, t.Glyph(glyph), tone, t
 }
 
 func statusTheme(t theme.Theme, normal, dim color.Color) theme.Theme {

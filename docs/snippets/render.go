@@ -6,6 +6,12 @@ import "fmt"
 // Render runs only bounded rendering and construction, never a terminal program or initialization command.
 func Render(id string) (string, error) {
 	switch id {
+	case "collection/data-grid":
+		return ExampleCollectionDataGrid()
+	case "collection/status-matrix":
+		return ExampleCollectionStatusMatrix()
+	case "feedback/status-cell":
+		return ExampleFeedbackStatusCell(), nil
 	case "cli/help":
 		return ExampleCLIHelp(), nil
 	case "git/branch-row":

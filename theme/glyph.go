@@ -55,11 +55,15 @@ const (
 	GlyphClock        Glyph = "clock"
 	GlyphTruncated    Glyph = "truncated"
 	GlyphAttribution  Glyph = "attribution-gap"
+	GlyphFocusStart   Glyph = "focus-start"
+	GlyphFocusEnd     Glyph = "focus-end"
+	GlyphLoadBalancer Glyph = "load-balancer"
+	GlyphHost         Glyph = "host"
 )
 
 // Glyphs returns the semantic catalog in display order.
 func Glyphs() []Glyph {
-	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphConnected, GlyphDisconnected, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable, GlyphLog, GlyphTrace, GlyphSpan, GlyphUpstream, GlyphDownstream, GlyphScrollTrack, GlyphScrollThumb, GlyphChecked, GlyphUnchecked, GlyphMixed, GlyphAction, GlyphBusy, GlyphDelete, GlyphInactive, GlyphAdded, GlyphModified, GlyphRemoved, GlyphUnchanged, GlyphMissing, GlyphRedacted, GlyphClock, GlyphTruncated, GlyphAttribution}
+	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphConnected, GlyphDisconnected, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable, GlyphLog, GlyphTrace, GlyphSpan, GlyphUpstream, GlyphDownstream, GlyphScrollTrack, GlyphScrollThumb, GlyphChecked, GlyphUnchecked, GlyphMixed, GlyphAction, GlyphBusy, GlyphDelete, GlyphInactive, GlyphAdded, GlyphModified, GlyphRemoved, GlyphUnchanged, GlyphMissing, GlyphRedacted, GlyphClock, GlyphTruncated, GlyphAttribution, GlyphFocusStart, GlyphFocusEnd, GlyphLoadBalancer, GlyphHost}
 }
 
 // Glyph returns a compact mark. Callers keep a text label for semantic states.
@@ -169,6 +173,14 @@ func (t Theme) Glyph(glyph Glyph) string {
 		unicode, ascii = "…", "."
 	case GlyphAttribution:
 		unicode, ascii = "≠", "%"
+	case GlyphFocusStart:
+		unicode, ascii = "▏", "["
+	case GlyphFocusEnd:
+		unicode, ascii = "▕", "]"
+	case GlyphLoadBalancer:
+		unicode, ascii = "⇄", "L"
+	case GlyphHost:
+		unicode, ascii = "▤", "H"
 	default:
 		unicode, ascii = "?", "?"
 	}

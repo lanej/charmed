@@ -53,7 +53,7 @@
 </section>
 <div class="category-groups">
 {{range .Groups}}<a class="group-card" href="{{.File}}" aria-label="{{.Name}}, {{len .Entries}} component{{if ne (len .Entries) 1}}s{{end}}">
-<div class="group-specimen" data-specimen="{{.Specimen.ID}}" aria-hidden="true"><pre>{{.Specimen.Content}}</pre></div>
+<div class="group-specimen" data-specimen="{{.Specimen.ID}}" aria-hidden="true"><pre class="terminal">{{.Specimen.Content}}</pre></div>
 <div class="group-card-body"><div class="group-card-heading"><h2>{{.Name}}</h2><span class="group-card-arrow" aria-hidden="true">→</span></div>
 <p class="group-card-caption"><span>{{.Specimen.Name}}</span><span>{{len .Entries}} component{{if ne (len .Entries) 1}}s{{end}}</span></p></div>
 </a>{{else}}<p>No fixtures are published in this category yet.</p>{{end}}

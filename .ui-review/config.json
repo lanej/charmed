@@ -42,6 +42,16 @@
       "name": "development",
       "path": "/development.html",
       "ready": "main h1"
+    },
+    {
+      "name": "organisms-collection",
+      "path": "/organisms-collection.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "molecules-feedback",
+      "path": "/molecules-feedback.html",
+      "ready": "main h1"
     }
   ],
   "viewports": [

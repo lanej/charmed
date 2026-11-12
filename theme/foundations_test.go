@@ -136,6 +136,10 @@ func TestNamedGlyphFallbacksKeepStateAndWidth(t *testing.T) {
 		{theme.GlyphMissing, "∅", "-"},
 		{theme.GlyphRedacted, "▧", "#"},
 		{theme.GlyphClock, "◷", "t"},
+		{theme.GlyphFocusStart, "▏", "["},
+		{theme.GlyphFocusEnd, "▕", "]"},
+		{theme.GlyphLoadBalancer, "⇄", "L"},
+		{theme.GlyphHost, "▤", "H"},
 	} {
 		if unicode.Glyph(pair.glyph) != pair.unicode || ascii.Glyph(pair.glyph) != pair.ascii {
 			t.Fatalf("incorrect representations for %s", pair.glyph)

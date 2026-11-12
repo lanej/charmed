@@ -44,7 +44,12 @@ Pending, running and paused have independent normal and dim tokens. Disabled and
 
 ## Glyphs and spacing
 
-Theme.Glyph selects one-cell Unicode or ASCII marks from the named status, action, selection, expansion, navigation and loading catalog. Glyphs supplement labels. Expand changes the viewing area; expanded and collapsed describe disclosure. Reduced motion uses a static loading mark instead of native spinner animation.
+Theme.Glyph selects one-cell Unicode or ASCII marks from the named status, action, selection, expansion, navigation and loading catalog. Glyphs supplement labels. Expand changes the viewing area; expanded and collapsed describe disclosure. Reduced motion uses a static loading mark instead of native spinner animation. Infrastructure glyphs distinguish entity labels without changing stable IDs. Unicode is primary; fallback forms are selected only by explicit ASCII policy.
+
+| Entity | Named glyph | Unicode | ASCII |
+| --- | --- | --- | --- |
+| Load balancer | `GlyphLoadBalancer` | ⇄ routing | L |
+| Host | `GlyphHost` | ▤ host | H |
 
 ```sh
 go run ./examples/catalog foundations/glyphs
