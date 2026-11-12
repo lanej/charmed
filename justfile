@@ -45,7 +45,8 @@ tools:
 
 # Generate the static guide in docs/dist.
 docs: docs-check
-    go run ./cmd/workbench generate --out docs
+    # Preview builds check out the PR head even when the event SHA points to main.
+    GITHUB_SHA="${GITHUB_SHA:+$(git rev-parse HEAD)}" go run ./cmd/workbench generate --out docs
     python3 scripts/check_docs.py --rendered docs/dist
 
 # Run a native fixture, optionally followed by workbench flags.

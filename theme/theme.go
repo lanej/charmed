@@ -23,6 +23,7 @@ type Theme struct {
 	ReducedMotion                                               bool
 	Background, Surface, Foreground, Muted, Border, Accent      color.Color
 	FocusBorder, SelectionForeground, SelectionBackground       color.Color
+	Link, DimLink                                               color.Color
 	Success, Info, Warning, Danger                              color.Color
 	Unknown, Inactive, DimUnknown, DimInactive                  color.Color
 	Pending, Running, Paused, DimPending, DimRunning, DimPaused color.Color
@@ -43,6 +44,7 @@ func New(mode Mode) Theme {
 		t.Muted, t.Border, t.Accent = hex("#526176"), hex("#94a3b8"), hex("#075985")
 		t.Success, t.Warning, t.Danger = hex("#166534"), hex("#92400e"), hex("#b91c1c")
 		t.Info = hex("#1d4ed8")
+		t.DimLink = hex("#3d6672")
 		t.Trace, t.Debug, t.Fatal = hex("#626262"), hex("#0e667b"), hex("#a21caf")
 		t.DimTrace, t.DimDebug, t.DimFatal = hex("#666666"), hex("#477483"), hex("#96529c")
 		t.SelectionBackground = hex("#d1e8e3")
@@ -59,6 +61,7 @@ func New(mode Mode) Theme {
 		t.Muted, t.Border, t.Accent = hex("#d0d0d0"), hex("#ffffff"), hex("#67e8f9")
 		t.Success, t.Warning, t.Danger = hex("#86efac"), hex("#fde047"), hex("#fca5a5")
 		t.Info = hex("#93c5fd")
+		t.DimLink = hex("#65bac7")
 		t.Trace, t.Debug, t.Fatal = hex("#b0b0b0"), hex("#67e8f9"), hex("#f0abfc")
 		t.DimTrace, t.DimDebug, t.DimFatal = hex("#929292"), hex("#69b5c0"), hex("#c387ce")
 		t.SelectionBackground = hex("#1c4245")
@@ -73,6 +76,7 @@ func New(mode Mode) Theme {
 		t.ASCII, t.ReducedMotion = true, true
 		t.Background, t.Surface = hex("#000000"), hex("#151515")
 		t.Foreground, t.Muted, t.Border, t.Accent = hex("#ffffff"), hex("#bdbdbd"), hex("#777777"), hex("#ffffff")
+		t.DimLink = t.Muted
 		t.Sequential = colors("#202020", "#505050", "#808080", "#b0b0b0", "#eeeeee")
 	default:
 		t.Mode = Dark
@@ -81,6 +85,7 @@ func New(mode Mode) Theme {
 		t.Muted, t.Border, t.Accent = hex("#a8a8a8"), hex("#475569"), hex("#67d4c0")
 		t.Success, t.Warning, t.Danger = hex("#86cf9a"), hex("#f2c879"), hex("#f28b82")
 		t.Info = hex("#78b8ed")
+		t.DimLink = hex("#6fc1b0")
 		t.Trace, t.Debug, t.Fatal = hex("#9a9a9a"), hex("#70c6d8"), hex("#e49aef")
 		t.DimTrace, t.DimDebug, t.DimFatal = hex("#898989"), hex("#519bab"), hex("#b477bd")
 		t.SelectionBackground = hex("#24433f")
@@ -94,6 +99,7 @@ func New(mode Mode) Theme {
 	}
 
 	t.FocusBorder, t.SelectionForeground = t.Accent, t.Foreground
+	t.Link = t.Accent
 	t.Permissions = permissionColors(t.Mode)
 	t.HTTP, t.Syntax = httpColors(t.Mode)
 

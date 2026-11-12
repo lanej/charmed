@@ -22,6 +22,8 @@ import (
 
 func atomsDefinitions() []Definition {
 	d := []Definition{
+		{ID: "text/code", Title: "Atoms/Text/Code", Level: "Atoms", Family: "text", Description: "Render literal inline code and syntax-highlighted source with the same palette as Markdown.", Source: "text/code.go", Symbol: "CodeBlock", Upstream: "https://github.com/charmbracelet/glamour", Defaults: DefaultConfig(), Factory: codeStory},
+		{ID: "text/link", Title: "Atoms/Text/Link", Level: "Atoms", Family: "text", Description: "Compact underlined labels carry exact absolute URIs through OSC 8; NewWebLink adds HTTP/HTTPS validation. The terminal owns hover and opening; Plain retains destinations without terminal controls. Saved previews show styling only.", Source: "text/link.go", Symbol: "Link", Defaults: func() Config { c := atomConfig(); c.Rows = 18; return c }(), Factory: linkStory},
 		widget("text/primitives", "Atoms/Text/Primitives", "Atoms", "text", "Labels, badges and keyboard hints share semantic roles.", "textStory", []string{"value"}, textStory),
 		widget("input/text", "Atoms/Input/Text", "Atoms", "input", "A focused input with a native virtual cursor and shared theme.", "inputStory", []string{"value", "state"}, inputStory),
 		widget("input/textarea", "Atoms/Input/Textarea", "Atoms", "input", "Multiline input with native editing and bounded dimensions.", "areaStory", []string{"value"}, areaStory),
@@ -79,6 +81,19 @@ func atomsDefinitions() []Definition {
 	}
 
 	return d
+}
+
+func codeStory(e Environment) (runtime.Scene, error) {
+	return static(func(s layout.Size) string {
+		t := e.Config.Palette()
+
+		block, err := text.CodeBlock("// Shared terminal defaults\noptions := input.TextOptions{Value: \"production\", Width: 32}\nfield := input.NewText(options)\ncmd := field.Focus()", "go", s.Width, t)
+		if err != nil {
+			return err.Error()
+		}
+
+		return title("Code", e) + "Call " + text.InlineCode("field.Focus()", t) + " to focus the input.\n\n" + block
+	}), nil
 }
 
 func textStory(e Environment) (runtime.Scene, error) {

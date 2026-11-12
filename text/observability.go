@@ -2,6 +2,7 @@ package text
 
 import (
 	"image/color"
+	"strconv"
 	"strings"
 	"time"
 
@@ -92,4 +93,22 @@ func ShortDuration(value time.Duration) string {
 	}
 
 	return value.Round(resolution).String()
+}
+
+// Age is a compact elapsed time with one unit: 14s, 18m, 3h or 2d, truncated rather than rounded so an age never
+// reads fresher than it is. A negative duration is a clock disagreement; callers that can see both times label it
+// as future (as Freshness does) rather than passing it here.
+func Age(value time.Duration) string {
+	value = max(value, 0)
+
+	switch {
+	case value < time.Minute:
+		return strconv.Itoa(int(value/time.Second)) + "s"
+	case value < time.Hour:
+		return strconv.Itoa(int(value/time.Minute)) + "m"
+	case value < 24*time.Hour:
+		return strconv.Itoa(int(value/time.Hour)) + "h"
+	default:
+		return strconv.Itoa(int(value/(24*time.Hour))) + "d"
+	}
 }

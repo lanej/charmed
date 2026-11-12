@@ -6,6 +6,103 @@ import "fmt"
 // Render runs only bounded rendering and construction, never a terminal program or initialization command.
 func Render(id string) (string, error) {
 	switch id {
+	case "cli/help":
+		return ExampleCLIHelp(), nil
+	case "git/branch-row":
+		return ExampleGitBranchRow(), nil
+	case "git/branches":
+		return ExampleGitBranches()
+	case "git/browser":
+		return ExampleGitBrowser()
+	case "git/changes":
+		return ExampleGitChanges()
+	case "git/commit-id":
+		return ExampleGitCommitId(), nil
+	case "git/commit-row":
+		return ExampleGitCommitRow(), nil
+	case "git/conflict-state":
+		return ExampleGitConflictState(), nil
+	case "git/conflicts":
+		return ExampleGitConflicts()
+	case "git/diff":
+		return ExampleGitDiff(), nil
+	case "git/diff-summary":
+		return ExampleGitDiffSummary(), nil
+	case "git/divergence":
+		return ExampleGitDivergence(), nil
+	case "git/file-row":
+		return ExampleGitFileRow(), nil
+	case "git/file-state":
+		return ExampleGitFileState(), nil
+	case "git/head":
+		return ExampleGitHead(), nil
+	case "git/history":
+		return ExampleGitHistory()
+	case "git/hunk":
+		return ExampleGitHunk(), nil
+	case "git/ref":
+		return ExampleGitRef(), nil
+	case "git/staged":
+		return ExampleGitStaged()
+	case "git/staged-state":
+		return ExampleGitStagedState(), nil
+	case "git/stash-row":
+		return ExampleGitStashRow(), nil
+	case "git/stashes":
+		return ExampleGitStashes()
+	case "git/status":
+		return ExampleGitStatus()
+	case "git/summary":
+		return ExampleGitSummary(), nil
+	case "git/unstaged":
+		return ExampleGitUnstaged()
+	case "git/unstaged-state":
+		return ExampleGitUnstagedState(), nil
+	case "git/untracked":
+		return ExampleGitUntracked()
+	case "git/untracked-state":
+		return ExampleGitUntrackedState(), nil
+	case "git/worktree-row":
+		return ExampleGitWorktreeRow(), nil
+	case "git/worktree-state":
+		return ExampleGitWorktreeState(), nil
+	case "git/worktrees":
+		return ExampleGitWorktrees()
+
+	case "input/checkbox":
+		return ExampleInputCheckbox(), nil
+	case "input/radio":
+		return ExampleInputRadio(), nil
+	case "input/toggle":
+		return ExampleInputToggle(), nil
+	case "input/button":
+		return ExampleInputButton(), nil
+	case "feedback/freshness":
+		return ExampleFeedbackFreshness(), nil
+	case "feedback/evidence":
+		return ExampleFeedbackEvidence(), nil
+	case "feedback/evidence-summary":
+		return ExampleFeedbackEvidenceSummary(), nil
+	case "feedback/evidence-footer":
+		return ExampleFeedbackEvidenceFooter(), nil
+	case "layout/key-value":
+		return ExampleLayoutKeyValue(), nil
+	case "feedback/outcome":
+		return ExampleFeedbackOutcome(), nil
+	case "text/value-state":
+		return ExampleTextValueState(), nil
+	case "text/quantity":
+		return ExampleTextQuantity(), nil
+	case "text/identifier":
+		return ExampleTextIdentifier(), nil
+	case "text/match":
+		return ExampleTextMatch(), nil
+	case "text/sort":
+		return ExampleTextSort(), nil
+	case "text/change":
+		return ExampleTextChange(), nil
+	case "text/omission":
+		return ExampleTextOmission(), nil
 	case "foundations/theme":
 		return ExampleFoundationsTheme(), nil
 	case "foundations/layout":
@@ -98,6 +195,8 @@ func Render(id string) (string, error) {
 		return ExampleFeedbackConnection(), nil
 	case "navigation/tabs":
 		return ExampleNavigationTabs(), nil
+	case "layout/link-group":
+		return ExampleLayoutLinkGroup()
 	case "layout/header":
 		return ExampleLayoutHeader(), nil
 	case "layout/identity-header":
@@ -116,6 +215,8 @@ func Render(id string) (string, error) {
 		return ExampleCollectionTree(), nil
 	case "collection/files":
 		return ExampleCollectionFiles()
+	case "text/code":
+		return ExampleTextCode()
 	case "text/markdown":
 		return ExampleTextMarkdown()
 	case "form/settings":
@@ -130,6 +231,8 @@ func Render(id string) (string, error) {
 		return ExampleScreenDeployment()
 	case "text/presentation":
 		return ExampleTextPresentation(), nil
+	case "text/link":
+		return ExampleTextLink()
 	case "text/url":
 		return ExampleTextUrl(), nil
 	case "feedback/follow":

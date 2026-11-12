@@ -169,6 +169,9 @@
         "Rendered layout",
         "Review and exceptions"
       ]
+    },
+    "guide-design.md": {
+      "profile": "contributor"
     }
   },
   "component": {

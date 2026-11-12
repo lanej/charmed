@@ -66,7 +66,7 @@ func Generate(out string) error {
 			{"Demo", func(*story.Config) {}},
 			{"Narrow", func(c *story.Config) {
 				c.Columns, c.Rows = 40, 16
-				if d.ID == "foundations/permissions" || d.ID == "diagram/state-transitions" {
+				if d.ID == "foundations/permissions" || d.ID == "diagram/state-transitions" || d.ID == "cli/help" {
 					c.Rows = d.Defaults.Rows
 				}
 
@@ -181,7 +181,7 @@ func Generate(out string) error {
 			)
 		}
 
-		if d.ID == "foundations/permissions" || d.Family == "commands" || d.Family == "logs" || d.Family == "http" || d.ID == "text/syntax" {
+		if d.ID == "foundations/permissions" || d.Family == "commands" || d.Family == "logs" || d.Family == "http" || d.ID == "text/syntax" || d.ID == "text/link" || d.ID == "layout/link-group" {
 			for _, mode := range []theme.Mode{theme.Light, theme.Contrast} {
 				variants = append(variants, struct {
 					name   string

@@ -7,9 +7,12 @@ import (
 )
 
 func ExampleTextMarkdown() (string, error) {
-	content := "# Terminal documentation\n\nUse **Charmed** to compose your terminal UI.\n\n- Shared theme\n- Bounded layout"
+	palette := theme.New(theme.Dark)
+	content := "# Help\n\nCall `field.Focus()` to **focus** the input.\n\n```go\ncmd := field.Focus()\n```"
+	styles := text.MarkdownStyles(palette)
+	styles.Document.Margin = new(uint(0))
 
-	rendered, err := text.Markdown(content, 48, theme.New(theme.Dark))
+	rendered, err := text.Markdown(content, 48, palette, text.MarkdownOptions{Styles: &styles})
 	if err != nil {
 		return "", err
 	}

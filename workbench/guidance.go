@@ -29,6 +29,8 @@ func loadGuidance(root string, entries []ManifestEntry) error {
 		"chart/timeseries": "timeseries", "input/text": "input", "input/field": "input",
 		"input/textarea": "textarea", "collection/files": "files", "pattern/log-inspector": "inspector",
 		"collection/json-viewer": "json", "collection/command-palette": "palette", "navigation/tabs": "navigation",
+		"cli/help": "cli-help", "text/code": "code",
+		"input/checkbox": "control", "input/radio": "control", "input/toggle": "control", "input/button": "control",
 		"text/markdown": "markdown", "feedback/spinner": "spinner", "feedback/time": "timers", "feedback/progress": "progress", "feedback/paginator": "interactive", "foundations/focus": "layout",
 	}
 
@@ -49,6 +51,8 @@ func loadGuidance(root string, entries []ManifestEntry) error {
 			kind = "layout"
 		case entry.Family == "logs" && strings.HasPrefix(entry.ID, "collection/"):
 			kind = "logs"
+		case entry.Family == "git" && entry.Level == "Organisms":
+			kind = "git-view"
 		case entry.Level == "Organisms" || entry.Level == "Templates" || entry.Level == "Screens":
 			kind = "composed"
 		case entry.Family == "collection":

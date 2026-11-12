@@ -4,7 +4,7 @@ Charmed supplies themed Go components for native terminal interfaces. Start with
 
 ## Install
 
-Use Go 1.26.10 or newer. Create a module for your application, then add Charmed as a dependency. Bubble Tea owns the terminal session and delivers messages to your model.
+Use Go 1.26.11 or newer. Create a module for your application, then add Charmed as a dependency. Bubble Tea owns the terminal session and delivers messages to your model.
 
 ```sh
 mkdir environment-app

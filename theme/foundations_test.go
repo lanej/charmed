@@ -91,7 +91,7 @@ func TestNamedGlyphFallbacksKeepStateAndWidth(t *testing.T) {
 		{theme.GlyphWarning, "!", "!"},
 		{theme.GlyphError, "×", "x"},
 		{theme.GlyphUnknown, "?", "?"},
-		{theme.GlyphOff, "○", "-"},
+		{theme.GlyphOff, "⏻", "-"},
 		{theme.GlyphPending, "◷", "p"},
 		{theme.GlyphRunning, "▶", ">"},
 		{theme.GlyphPaused, "‖", "="},
@@ -105,7 +105,7 @@ func TestNamedGlyphFallbacksKeepStateAndWidth(t *testing.T) {
 		{theme.GlyphLink, "↗", "@"},
 		{theme.GlyphExpand, "⤢", "+"},
 		{theme.GlyphInfo, "i", "i"},
-		{theme.GlyphSelected, "●", "*"},
+		{theme.GlyphSelected, "◉", "*"},
 		{theme.GlyphUnselected, "○", "o"},
 		{theme.GlyphExpanded, "▾", "v"},
 		{theme.GlyphCollapsed, "▸", ">"},
@@ -122,6 +122,20 @@ func TestNamedGlyphFallbacksKeepStateAndWidth(t *testing.T) {
 		{theme.GlyphDownstream, "↓", "v"},
 		{theme.GlyphScrollTrack, "│", "|"},
 		{theme.GlyphScrollThumb, "┃", "#"},
+		{theme.GlyphChecked, "☑", "x"},
+		{theme.GlyphUnchecked, "☐", " "},
+		{theme.GlyphMixed, "▣", "-"},
+		{theme.GlyphAction, "↵", ">"},
+		{theme.GlyphBusy, "⟳", "~"},
+		{theme.GlyphDelete, "⌫", "x"},
+		{theme.GlyphInactive, "◌", "-"},
+		{theme.GlyphAdded, "⊕", "+"},
+		{theme.GlyphModified, "↺", "~"},
+		{theme.GlyphRemoved, "⊖", "-"},
+		{theme.GlyphUnchanged, "≡", "="},
+		{theme.GlyphMissing, "∅", "-"},
+		{theme.GlyphRedacted, "▧", "#"},
+		{theme.GlyphClock, "◷", "t"},
 	} {
 		if unicode.Glyph(pair.glyph) != pair.unicode || ascii.Glyph(pair.glyph) != pair.ascii {
 			t.Fatalf("incorrect representations for %s", pair.glyph)
@@ -183,5 +197,36 @@ func TestPermissionColorsRemainReadableOnContentAndSelection(t *testing.T) {
 				}
 			}
 		}
+	}
+}
+
+func TestLinkTokensRemainReadableAndCustomThemesHaveFallbacks(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast} {
+		palette := theme.New(mode)
+		for _, foreground := range []color.Color{palette.Link, palette.DimLink} {
+			for _, background := range []color.Color{palette.Background, palette.Surface, palette.SelectionBackground} {
+				fg, bg := luminance(foreground), luminance(background)
+				if (max(fg, bg)+.05)/(min(fg, bg)+.05) < 4.5 {
+					t.Fatalf("%s link foreground %v background %v contrast %.2f", mode, foreground, background, (max(fg, bg)+.05)/(min(fg, bg)+.05))
+				}
+			}
+		}
+	}
+
+	custom := theme.New(theme.Dark)
+	custom.Link = lipgloss.Color("#ff00ff")
+
+	if custom.LinkStyle().GetForeground() != custom.Link || !custom.LinkStyle().GetUnderline() {
+		t.Fatal("custom link role was ignored")
+	}
+
+	custom.Link = nil
+	if custom.LinkStyle().GetForeground() != custom.Accent {
+		t.Fatal("partial custom theme lost the accent fallback")
+	}
+
+	custom.Accent = nil
+	if custom.LinkStyle().GetForeground() != custom.Foreground {
+		t.Fatal("partial custom theme lost its text foreground fallback")
 	}
 }

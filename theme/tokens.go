@@ -37,3 +37,19 @@ func (t Theme) BorderStyle(focused bool) lipgloss.Style {
 
 	return style.Foreground(color).Bold(true)
 }
+
+// LinkStyle keeps links recognizable independently of color. Partial custom
+// themes fall back to Accent, then their ordinary text foreground.
+func (t Theme) LinkStyle() lipgloss.Style {
+	foreground := t.Link
+	if foreground == nil {
+		foreground = t.Accent
+	}
+
+	style := t.Text().Underline(true)
+	if foreground != nil {
+		style = style.Foreground(foreground)
+	}
+
+	return style
+}
