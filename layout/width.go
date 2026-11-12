@@ -38,7 +38,16 @@ func (c WidthClass) Columns() int {
 	}
 }
 
-// Stacked reports that label/value rows stack instead of sitting in columns: 55 columns and narrower.
+// StackWidth is the widest allocation, in columns, that stacks label/value rows and narrow tables.
+const StackWidth = 55
+
+// StackedAt reports that an allocation of width columns stacks instead of sitting in columns: StackWidth and
+// narrower. WidthClassOf snaps down, so Width55 also covers 56 to 79 columns; use StackedAt, not the class, when the
+// rule is "at or below 55".
+func StackedAt(width int) bool { return width <= StackWidth }
+
+// Stacked reports that the class is below Width80, which includes every width from 55 to 79. It is a property of the
+// class; StackedAt answers the same question for a raw width.
 func (c WidthClass) Stacked() bool {
 	switch c {
 	case Width40, Width55:
