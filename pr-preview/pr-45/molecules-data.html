@@ -30,8 +30,8 @@
 
 </div>
 <div class="nav-category is-active">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">38</span></a>
-<div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-data.html" aria-current="page">Data</a><a class="nav-group" href="molecules-diagram.html" >Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-git.html" >git</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" >Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">39</span></a>
+<div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-collection.html" >Collections</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-data.html" aria-current="page">Data</a><a class="nav-group" href="molecules-diagram.html" >Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-git.html" >git</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" >Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
 </div>
 <div class="nav-category ">
 <a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">16</span></a>
@@ -74,8 +74,8 @@
 
 </div>
 <div class="nav-category is-active">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">38</span></a>
-<div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-data.html" aria-current="page">Data</a><a class="nav-group" href="molecules-diagram.html" >Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-git.html" >git</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" >Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">39</span></a>
+<div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-collection.html" >Collections</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-data.html" aria-current="page">Data</a><a class="nav-group" href="molecules-diagram.html" >Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-git.html" >git</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" >Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
 </div>
 <div class="nav-category ">
 <a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">16</span></a>
@@ -580,7 +580,7 @@ viewer <span class="syn-operator">:=</span> collection<span class="syn-operator"
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="collection/json-viewer-integration"><h3 id="collection/json-viewer-integration"><a class="heading-permalink" href="#collection%2fjson-viewer-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>SetSource copies the bytes and reports parsing failures without retaining stale structure. Forward Update messages only while the viewer is active, and retain its native viewport for customization. Call Resize when its allocation changes. Identical source retains structural state; changed bytes reset the source-bound cursor and folds.</p></section>
-<div class="component-run"><h3 id="collection/json-viewer-run"><a class="heading-permalink" href="#collection%2fjson-viewer-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/json-viewer</code></pre><p><a href="https://github.com/lanej/charmed/blob/b28f2359a12aaf3b686e1d9f07b6255281cd1e7c/docs/snippets/collection_json_viewer.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/b28f2359a12aaf3b686e1d9f07b6255281cd1e7c/story/json.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="collection/json-viewer-run"><a class="heading-permalink" href="#collection%2fjson-viewer-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/json-viewer</code></pre><p><a href="https://github.com/lanej/charmed/blob/f5afe6bec8ebbf9a03ca4cb3a2551a66397fa171/docs/snippets/collection_json_viewer.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/f5afe6bec8ebbf9a03ca4cb3a2551a66397fa171/story/json.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Composed from: <a class="dependency" href="atoms-collection.html#collection/viewport">collection/viewport</a> <a class="dependency" href="atoms-text.html#text/disclosure">text/disclosure</a> <a class="dependency" href="atoms-text.html#text/syntax">text/syntax</a> </p>
 </section>
 </section>
