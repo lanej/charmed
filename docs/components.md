@@ -86,6 +86,7 @@ The [application shell](templates-pattern.html#template/application) composes th
 | [Summary line](molecules-feedback.html#feedback/evidence-summary) | Count by state, worst first. An empty tally reads “no evidence.” |
 | [Evidence footer](molecules-feedback.html#feedback/evidence-footer) | Supply source, scope, state, observation time and current time. Missing parts stay explicit. `text.Age` formats one compact unit. |
 | [Static table](molecules-collection.html#collection/static-table) | Non-interactive comparison with wrapped cells. Stacks at 55 columns or fewer when it would not fit whole, never truncating. `TableEvidence`, `TableMissing` and `Omission` keep gaps distinct from healthy, empty and complete values. |
+| [Report page](templates-pattern.html#template/report-page) | Header with the overall state, summary line, titled panels and evidence footer. The overall state is `feedback.Worst` of the counts, so no evidence reads unknown. Panels marked `Beside` share a row when every minimum fits and the width is above 55 columns; otherwise they stack. `ViewSize` drops trailing lines with an omission row and keeps the chrome. |
 | [Key-value layout](molecules-layout.html#layout/key-value) | Stack at 55 columns or fewer. `layout.WidthClassOf` uses 40, 55, 80, 100, 120 and 160 columns. Missing values stay distinct from empty strings. |
 
 ## Log levels
