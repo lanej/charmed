@@ -26,15 +26,15 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">37</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">14</span></a>
 
 </div>
 <div class="nav-category ">
@@ -42,8 +42,8 @@
 
 </div>
 <div class="nav-category is-active">
-<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
-<div class="nav-groups"><a class="nav-group" href="screens-pattern.html" aria-current="page">Patterns</a></div>
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">3</span></a>
+<div class="nav-groups"><a class="nav-group" href="screens-git.html" >git</a><a class="nav-group" href="screens-pattern.html" aria-current="page">Patterns</a></div>
 </div>
 <p class="nav-title">Reference &amp; contributors</p>
 <a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
@@ -70,15 +70,15 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">37</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">14</span></a>
 
 </div>
 <div class="nav-category ">
@@ -86,8 +86,8 @@
 
 </div>
 <div class="nav-category is-active">
-<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
-<div class="nav-groups"><a class="nav-group" href="screens-pattern.html" aria-current="page">Patterns</a></div>
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">3</span></a>
+<div class="nav-groups"><a class="nav-group" href="screens-git.html" >git</a><a class="nav-group" href="screens-pattern.html" aria-current="page">Patterns</a></div>
 </div>
 <p class="nav-title">Reference &amp; contributors</p>
 <a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
@@ -369,7 +369,7 @@ dashboard<span class="syn-operator">.</span><span class="syn-function">Resize</s
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="screen/services-integration"><h3 id="screen/services-integration"><a class="heading-permalink" href="#screen%2fservices-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>The parent model supplies observations, coordinates focus and owns application decisions. Forward initialization and update commands rather than executing them during rendering. Resize the existing composition from the terminal allocation so selection remains stable, and apply native customization at the exposed child models after any rebuilding lifecycle step.</p></section>
-<div class="component-run"><h3 id="screen/services-run"><a class="heading-permalink" href="#screen%2fservices-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog screen/services</code></pre><p><a href="https://github.com/lanej/charmed/blob/49a30550ad5b0541379e2f32ef8c1f564e307225/docs/snippets/screen_services.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/49a30550ad5b0541379e2f32ef8c1f564e307225/pattern/dashboard.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="screen/services-run"><a class="heading-permalink" href="#screen%2fservices-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog screen/services</code></pre><p><a href="https://github.com/lanej/charmed/blob/0052d65a62baa6690564a6854e51aecf3561fe5b/docs/snippets/screen_services.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/0052d65a62baa6690564a6854e51aecf3561fe5b/pattern/dashboard.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Composed from: <a class="dependency" href="atoms-input.html#input/text">input/text</a> <a class="dependency" href="atoms-collection.html#collection/table">collection/table</a> <a class="dependency" href="atoms-feedback.html#feedback/status">feedback/status</a> <a class="dependency" href="atoms-chart.html#chart/timeseries">chart/timeseries</a> <a class="dependency" href="atoms-collection.html#collection/viewport">collection/viewport</a> <a class="dependency" href="foundations-layout.html#foundations/layout">foundations/layout</a> </p>
 </section>
 
@@ -834,7 +834,7 @@ comparison<span class="syn-operator">.</span><span class="syn-function">Resize</
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="screen/deployment-integration"><h3 id="screen/deployment-integration"><a class="heading-permalink" href="#screen%2fdeployment-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>The parent model supplies observations, coordinates focus and owns application decisions. Forward initialization and update commands rather than executing them during rendering. Resize the existing composition from the terminal allocation so selection remains stable, and apply native customization at the exposed child models after any rebuilding lifecycle step.</p></section>
-<div class="component-run"><h3 id="screen/deployment-run"><a class="heading-permalink" href="#screen%2fdeployment-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog screen/deployment</code></pre><p><a href="https://github.com/lanej/charmed/blob/49a30550ad5b0541379e2f32ef8c1f564e307225/docs/snippets/screen_deployment.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/49a30550ad5b0541379e2f32ef8c1f564e307225/examples/deployment/main.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="screen/deployment-run"><a class="heading-permalink" href="#screen%2fdeployment-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog screen/deployment</code></pre><p><a href="https://github.com/lanej/charmed/blob/0052d65a62baa6690564a6854e51aecf3561fe5b/docs/snippets/screen_deployment.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/0052d65a62baa6690564a6854e51aecf3561fe5b/examples/deployment/main.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Composed from: <a class="dependency" href="organisms-chart.html#chart/comparison-panel">chart/comparison-panel</a> <a class="dependency" href="molecules-chart.html#chart/band-matrix">chart/band-matrix</a> <a class="dependency" href="molecules-chart.html#chart/delta">chart/delta</a> <a class="dependency" href="atoms-collection.html#collection/table">collection/table</a> <a class="dependency" href="molecules-feedback.html#feedback/percent">feedback/percent</a> <a class="dependency" href="atoms-text.html#text/pill">text/pill</a> <a class="dependency" href="molecules-feedback.html#feedback/attention">feedback/attention</a> <a class="dependency" href="atoms-collection.html#collection/viewport">collection/viewport</a> </p>
 </section>
 </section>

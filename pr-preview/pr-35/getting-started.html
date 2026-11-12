@@ -26,15 +26,15 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">37</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">14</span></a>
 
 </div>
 <div class="nav-category ">
@@ -42,7 +42,7 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">3</span></a>
 
 </div>
 <p class="nav-title">Reference &amp; contributors</p>
@@ -65,15 +65,15 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">39</span></a>
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">21</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">37</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">7</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">14</span></a>
 
 </div>
 <div class="nav-category ">
@@ -81,7 +81,7 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="screens.html" >Screens<span class="nav-count">2</span></a>
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">3</span></a>
 
 </div>
 <p class="nav-title">Reference &amp; contributors</p>
@@ -96,7 +96,7 @@
 <h1 id="build-your-first-terminal-app">Build your first terminal app</h1>
 <p>Charmed supplies themed Go components for native terminal interfaces. Start with an editable environment field, then compose charts, collections and inspectors around the same application model and theme.</p>
 <h2 id="install"><a class="heading-permalink" href="#install"><span>Install</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p>Use Go 1.26.10 or newer. Create a module for your application, then add Charmed as a dependency. Bubble Tea owns the terminal session and delivers messages to your model.</p>
+<p>Use Go 1.26.11 or newer. Create a module for your application, then add Charmed as a dependency. Bubble Tea owns the terminal session and delivers messages to your model.</p>
 <pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">mkdir</span> environment-app
 <span class="syn-command">cd</span> environment-app
 <span class="syn-command">go</span> mod init example.com/environment-app
@@ -109,7 +109,7 @@
     Theme<span class="syn-operator">:</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">,</span>
 <span class="syn-operator">}</span><span class="syn-operator">)</span>
 </code></pre>
-<p>The complete <a href="https://github.com/lanej/charmed/blob/49a30550ad5b0541379e2f32ef8c1f564e307225/examples/quickstart/main.go">quickstart program</a> includes imports, the outer model and terminal startup. Its event loop has three responsibilities: return the focus command, retain input updates, and resize the existing field when the terminal changes.</p>
+<p>The complete <a href="https://github.com/lanej/charmed/blob/0052d65a62baa6690564a6854e51aecf3561fe5b/examples/quickstart/main.go">quickstart program</a> includes imports, the outer model and terminal startup. Its event loop has three responsibilities: return the focus command, retain input updates, and resize the existing field when the terminal changes.</p>
 <table tabindex="0">
 <thead>
 <tr>
