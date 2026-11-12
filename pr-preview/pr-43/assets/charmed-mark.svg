@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
-  <circle cx="32" cy="11" r="5"/>
-  <path d="M32 16v2"/>
-  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
-  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
-  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
-</svg>
