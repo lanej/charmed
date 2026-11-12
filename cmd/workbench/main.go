@@ -14,21 +14,29 @@ import (
 	"time"
 
 	tea "charm.land/bubbletea/v2"
-	"charm.land/fang/v2"
 	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/cli"
 	"github.com/lanej/charmed/story"
 	"github.com/lanej/charmed/workbench"
 	"github.com/spf13/cobra"
 )
 
 func main() {
-	if err := fang.Execute(context.Background(), command(), fang.WithVersion("0.1.0")); err != nil {
+	root := command()
+	if err := root.ExecuteContext(context.Background()); err != nil {
+		printCommandError(root, err)
 		os.Exit(1)
 	}
 }
 
 func command() *cobra.Command {
-	root := &cobra.Command{Use: "workbench", Short: "A component workbench for Charm", SilenceUsage: true}
+	root := &cobra.Command{
+		Use: "workbench", Short: "A component workbench for Charm",
+		Example: "workbench run screen/services\nworkbench capture chart/timeseries --plain",
+		Version: "0.1.0", SilenceUsage: true, SilenceErrors: true,
+	}
+	cli.HelpFormatter{}.Install(root)
+	root.AddCommand(manCommand())
 	root.AddCommand(&cobra.Command{Use: "list", Short: "List registered Go stories", RunE: func(cmd *cobra.Command, args []string) error {
 		for _, d := range story.Definitions() {
 			fmt.Fprintf(cmd.OutOrStdout(), "%-26s %s\n", d.ID, d.Title)
@@ -54,6 +62,27 @@ func command() *cobra.Command {
 		cmd.Flags().IntVar(&c.Series, "series", c.Series, "Chart series count")
 		cmd.Flags().IntVar(&c.Sigma, "sigma", c.Sigma, "Maximum nested host-spread band: 1, 2 or 3")
 		cmd.Flags().StringVar(&c.ComparisonVariant, "comparison-variant", c.ComparisonVariant, "Comparison presentation: stacked or bands")
+		cmd.Flags().StringVar(&c.LogPane, "log-pane", c.LogPane, "Log inspector pane: requests, request, response or logs (http aliases response)")
+		cmd.Flags().StringVar(&c.SymbolStyle, "symbols", c.SymbolStyle, "Symbol presentation: both, glyph or label")
+		cmd.Flags().StringVar(&c.URLStyle, "url-format", c.URLStyle, "URL display: path-query, path, host-path or full")
+		cmd.Flags().BoolVar(&c.VerboseDetails, "verbose-details", false, "Label HTTP summary fields")
+		cmd.Flags().BoolVar(&c.ColumnLabels, "column-labels", false, "Show HTTP table column labels")
+		cmd.Flags().BoolVar(&c.NoFolds, "no-folds", false, "Keep log fields and HTTP sections expanded without fold controls")
+		cmd.Flags().BoolVar(&c.NoHelp, "no-help", false, "Hide all keyboard instructions below log fixtures")
+		cmd.Flags().BoolVar(&c.JSONFolded, "fold-json", false, "Show a nested JSON container folded")
+		cmd.Flags().BoolVar(&c.SingleRequest, "single-request", false, "Show one request with UUID headers and a detailed response")
+		cmd.Flags().StringSliceVar(&c.CollapsedPanes, "collapsed-panes", nil, "Fold inspector panes: requests, request, response, logs")
+		cmd.Flags().BoolVar(&c.TraceLogs, "trace-logs", false, "Show related logs across the selected trace")
+		cmd.Flags().BoolVar(&c.DetachedLogDetails, "detached-log-details", false, "Show selected log fields outside the hierarchy")
+		cmd.Flags().StringVar(&c.InspectorLayout, "log-layout", "", "Inspector layout: sidebar, timeline, columns or focused")
+		cmd.Flags().StringSliceVar(&c.TimelineGroups, "timeline-group-by", nil, "Group timeline by service, host, port or endpoint")
+		cmd.Flags().BoolVar(&c.Timeline, "timeline", false, "Show HTTP requests on a shared time axis")
+		cmd.Flags().StringVar((*string)(&c.KeyLayout), "key-layout", "", "Navigation preset: standard or vim")
+		cmd.Flags().StringVar((*string)(&c.PaletteBackdrop), "palette-backdrop", "", "Palette backdrop: dim, monochrome or none")
+		cmd.Flags().BoolVar(&c.HighlightMatches, "highlight-matches", false, "Underline command search matches")
+		cmd.Flags().StringVar(&c.CommandQuery, "command-query", "", "Initial command palette search")
+		cmd.Flags().BoolVar(&c.CommandPalette, "command-palette", false, "Open the floating command palette")
+		cmd.Flags().BoolVar(&c.RawBody, "raw-body", false, "Show captured HTTP body formatting")
 		cmd.Flags().StringVar(&c.Emphasis, "emphasis", c.Emphasis, "Atom emphasis: bright, normal or dim")
 		cmd.Flags().StringVar(&c.Scenario, "scenario", c.Scenario, "Deployment fixture scenario (see deployment guide)")
 		cmd.Flags().StringVar(&c.ReferenceID, "reference-version", c.ReferenceID, "Reference version identifier")
@@ -104,7 +133,7 @@ func command() *cobra.Command {
 					frame = ansi.Strip(frame)
 				}
 				if output != "" {
-					return os.WriteFile(output, []byte(frame+"\n"), 0644)
+					return os.WriteFile(output, []byte(frame+"\n"), 0o600)
 				}
 				_, err = fmt.Fprintln(cmd.OutOrStdout(), frame)
 				return err

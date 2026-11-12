@@ -35,7 +35,7 @@ func TestCatalogFramesAreDeterministicAndBounded(t *testing.T) {
 						t.Fatal(err)
 					}
 					if a != b {
-						t.Fatalf("nondeterministic %s frame at %v", mode, size)
+						t.Fatalf("nondeterministic %s frame at %v\nfirst: %q\nsecond: %q", mode, size, a, b)
 					}
 					if lipgloss.Width(a) != c.Columns || lipgloss.Height(a) != c.Rows {
 						t.Fatalf("escaped %dx%d allocation", c.Columns, c.Rows)
@@ -83,6 +83,22 @@ func TestStoriesDoNotShareState(t *testing.T) {
 	}
 }
 
+func TestFormCaptureContainsFields(t *testing.T) {
+	c := story.DefaultConfig()
+	c.Columns, c.Rows = 40, 16
+
+	frame, err := story.Frame("form/settings", c)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, field := range []string{"Environment", "Region", "Features"} {
+		if !strings.Contains(ansi.Strip(frame), field) {
+			t.Fatalf("form capture omitted %s: %s", field, ansi.Strip(frame))
+		}
+	}
+}
+
 func TestRejectsInvalidStoryConfiguration(t *testing.T) {
 	c := story.DefaultConfig()
 	c.Columns = 100000
@@ -119,7 +135,10 @@ func TestNarrowFoundationCatalogKeepsAllGlyphsAndSelection(t *testing.T) {
 	for _, mode := range []theme.Mode{theme.Dark, theme.Mono} {
 		c.Theme = mode
 
-		glyphs, err := story.Frame("foundations/glyphs", c)
+		glyphConfig := c
+		glyphConfig.Rows = (len(theme.Glyphs())+1)/2 + 2
+
+		glyphs, err := story.Frame("foundations/glyphs", glyphConfig)
 		if err != nil {
 			t.Fatal(err)
 		}

@@ -1,0 +1,33 @@
+package snippets
+
+import (
+	"github.com/lanej/charmed/chart"
+	"github.com/lanej/charmed/layout"
+	"github.com/lanej/charmed/theme"
+)
+
+func ExampleChartBandMatrix() string {
+	palette := theme.New(theme.Dark)
+	matrix := chart.BandMatrix{
+		Title: "Host distributions",
+		Rows: []chart.BandRow{
+			{Title: "Success", Distribution: chart.DistributionComparison{
+				Series: []chart.DistributionSeries{
+					{Label: "Reference", Mean: 96, StdDev: .4, Members: 64, HasSpread: true},
+					{Label: "Candidate", Mean: 97, StdDev: .6, Members: 32, HasSpread: true},
+				},
+				Sigma: 3, Min: 0, Max: 100, Unit: "%", SpreadUnit: "pp",
+			}},
+			{Title: "Server error", Distribution: chart.DistributionComparison{
+				Series: []chart.DistributionSeries{
+					{Label: "Reference", Mean: .2, StdDev: .03, Members: 64, HasSpread: true},
+					{Label: "Candidate", Mean: .23, StdDev: .045, Members: 32, HasSpread: true},
+				},
+				Sigma: 3, Min: 0, Max: 100, Unit: "%", SpreadUnit: "pp",
+			}},
+		},
+	}
+
+	return matrix.View(layout.Size{Width: 64, Height: 12}, palette, false)
+	// Add one BandRow per metric; each row owns its axis shared by both versions.
+}

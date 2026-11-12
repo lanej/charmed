@@ -9,6 +9,7 @@ import (
 
 	"charm.land/bubbles/v2/spinner"
 	tea "charm.land/bubbletea/v2"
+	"charm.land/log/v2"
 	"github.com/lanej/charmed/chart"
 	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/feedback"
@@ -21,7 +22,8 @@ import (
 
 func atomsDefinitions() []Definition {
 	d := []Definition{
-		widget("text/code", "Atoms/Text/Code", "Atoms", "text", "Literal inline code and syntax-highlighted source blocks share Markdown rendering defaults.", "codeStory", nil, codeStory),
+		{ID: "text/code", Title: "Atoms/Text/Code", Level: "Atoms", Family: "text", Description: "Render literal inline code and syntax-highlighted source with the same palette as Markdown.", Source: "text/code.go", Symbol: "CodeBlock", Upstream: "https://github.com/charmbracelet/glamour", Defaults: DefaultConfig(), Factory: codeStory},
+		{ID: "text/link", Title: "Atoms/Text/Link", Level: "Atoms", Family: "text", Description: "Compact underlined labels carry exact absolute URIs through OSC 8; NewWebLink adds HTTP/HTTPS validation. The terminal owns hover and opening; Plain retains destinations without terminal controls. Saved previews show styling only.", Source: "text/link.go", Symbol: "Link", Defaults: func() Config { c := atomConfig(); c.Rows = 18; return c }(), Factory: linkStory},
 		widget("text/primitives", "Atoms/Text/Primitives", "Atoms", "text", "Labels, badges and keyboard hints share semantic roles.", "textStory", []string{"value"}, textStory),
 		widget("input/text", "Atoms/Input/Text", "Atoms", "input", "A focused input with a native virtual cursor and shared theme.", "inputStory", []string{"value", "state"}, inputStory),
 		widget("input/textarea", "Atoms/Input/Textarea", "Atoms", "input", "Multiline input with native editing and bounded dimensions.", "areaStory", []string{"value"}, areaStory),
@@ -53,16 +55,16 @@ func atomsDefinitions() []Definition {
 	}
 
 	d = append(d,
+		Definition{ID: "chart/waffle", Title: "Atoms/Charts/Waffle", Level: "Atoms", Family: "chart", Description: "Equal-area category cells with deterministic rounding and exact labeled counts. Patterned squares and an ASCII fallback retain category identity.", Source: "chart/waffle.go", Controls: []string{"amount", "state"}, States: []string{"ready", "empty"}, Defaults: waffleConfig(), Factory: waffleStory},
 		Definition{ID: "text/signed-number", Title: "Atoms/Text/Signed number", Level: "Atoms", Family: "text", Description: "Exact signed values, configurable positive/negative tones, neutral zero, tiny-value preservation and explicit unavailable state.", Source: "text/signed.go", Controls: []string{"amount", "state", "emphasis"}, States: []string{"ready", "empty"}, Defaults: atomConfig(), Factory: signedNumberStory},
 		Definition{ID: "text/pill", Title: "Atoms/Text/Color pill", Level: "Atoms", Family: "text", Description: "Semantic tone and bright, normal or dim emphasis are independent. ASCII output retains the label.", Source: "text/text.go", Symbol: "Pill", Controls: []string{"value", "emphasis"}, Defaults: atomConfig(), Factory: pillsStory},
-		Definition{ID: "feedback/status", Title: "Atoms/Feedback/Status", Level: "Atoms", Family: "feedback", Description: "Health and lifecycle states share semantic colors, named glyphs and emphasis-independent spacing.", Source: "feedback/status.go", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: atomConfig(), Factory: statusStory},
+		Definition{ID: "feedback/log-level", Title: "Atoms/Feedback/Log level", Level: "Atoms", Family: "feedback", Description: "Six log severities from TRACE to FATAL with distinct tones, stable label widths and independent emphasis.", Source: "feedback/log_level.go", Symbol: "LogLevel", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: atomConfig(), Factory: logLevelStory},
+		Definition{ID: "feedback/status", Title: "Atoms/Feedback/Status", Level: "Atoms", Family: "feedback", Description: "Health, lifecycle and connection states share semantic colors, named glyphs and emphasis-independent spacing.", Source: "feedback/status.go", Controls: []string{"emphasis"}, Composes: []string{"text/pill"}, Defaults: func() Config { c := atomConfig(); c.Rows = 14; return c }(), Factory: statusStory},
 		Definition{ID: "chart/picture", Title: "Atoms/Graphics/Picture", Level: "Atoms", Family: "graphics", Description: "Portable glyph rendering of an embedded image; no external image service.", Source: "story/atoms.go", Symbol: "pictureStory", Upstream: "https://github.com/NimbleMarkets/ntcharts", Defaults: DefaultConfig(), Factory: pictureStory},
 		Definition{ID: "chart/interval-band", Title: "Atoms/Charts/Interval band", Level: "Atoms", Family: "chart", Description: "Nested caller-supplied intervals, a mean and selected observation rendered on an ntcharts canvas.", Source: "chart/band.go", Symbol: "IntervalBand", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "sigma", "legend"}, States: []string{"ready", "empty"}, Defaults: DefaultConfig(), Factory: bandStory},
 	)
 	for i := range d {
 		switch d[i].ID {
-		case "text/code":
-			d[i].ExampleSource = "docs/snippets/code.go.txt"
 		case "input/text":
 			d[i].States = []string{"ready", "disabled"}
 		case "feedback/spinner":
@@ -72,8 +74,6 @@ func atomsDefinitions() []Definition {
 			d[i].Clock = true
 		case "feedback/progress":
 			d[i].Step = true
-		case "chart/sparkline":
-			d[i].ExampleSource = "docs/snippets/sparkline.go.txt"
 		case "chart/timeseries":
 			d[i].Source = "examples/timeseries/main.go"
 			d[i].Symbol = ""
@@ -323,3 +323,14 @@ func statusStory(e Environment) (runtime.Scene, error) {
 }
 
 func atomConfig() Config { c := DefaultConfig(); c.Columns = 80; c.Rows = 12; return c }
+
+func logLevelStory(e Environment) (runtime.Scene, error) {
+	return static(func(layout.Size) string {
+		rows := []string{"Log level atoms / " + e.Config.Emphasis, ""}
+		for _, level := range []log.Level{feedback.TraceLevel, log.DebugLevel, log.InfoLevel, log.WarnLevel, log.ErrorLevel, log.FatalLevel} {
+			rows = append(rows, feedback.LogLevel(level, text.Emphasis(e.Config.Emphasis), e.Config.Palette()))
+		}
+
+		return strings.Join(rows, "\n")
+	}), nil
+}

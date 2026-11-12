@@ -2,13 +2,13 @@
 
 A Go design system for Charm and ntcharts, with a static reference guide and native terminal fixtures.
 
-Components share semantic themes, terminal-cell geometry, focus conventions and state handling. The guide groups related components, saved Go output, source and composition examples by capability.
+The [design philosophy](DESIGN.md) guides the visual language and component decisions. Components share semantic themes, terminal-cell geometry, focus conventions and state handling. The guide groups related components, saved Go output, source and composition examples by capability.
 
 ![Charmed static guide in night mode](.github/pr-assets/static-guide.png)
 
 ## Run it
 
-Requires Go **1.26.10+**. Native terminal sessions support Linux and macOS.
+Requires Go **1.26.11+**. Native terminal sessions support Linux and macOS.
 
 ```sh
 go run ./cmd/workbench list
@@ -25,16 +25,19 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 
 | Package | Includes |
 | --- | --- |
+| `cli` | Responsive command-line help from native Cobra commands, groups, flags and examples |
 | `theme` | Dark, light, high-contrast and monochrome themes; semantic and dim colors; independent series colors; named glyphs, spacing, ASCII and motion policies |
-| `layout` | ANSI-aware fitting, cell rectangles, responsive splits, stacks and panels |
+| `layout` | ANSI-aware fitting, cell rectangles, responsive splits, stacks, panels, headers and footers |
+| `navigation` | Keyboard-driven tabs with stable selection and overflow indicators |
 | `interaction` | Focus scopes and typed selection/submission events |
 | `input` | Bubbles text input, textarea, virtual cursor and labeled field composition |
 | `collection` | Native tables, lists, trees, file pickers, viewports and bounded structured logs |
-| `feedback` | Attention indicators, spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
+| `feedback` | Health, lifecycle and connection status atoms, attention indicators, spinner, progress, pagination, help, timers, stopwatch and Harmonica motion |
 | `attention` | Optional one-sided or two-sided warn/error boundaries, explicit unknown/off states and typed transitions |
 | `form` | Themed Huh forms with native nested focus and validation |
 | `text` | Labels, badges, semantic pills, key hints and Glamour Markdown rendering |
 | `chart` | Sparklines, time series, line/scatter, bars, heatmaps, streamline/waveline, OHLC, canvas, interval bands, cohort distributions, comparison panels and portable pictures |
+| `diagram` | State transition diagrams with labeled directed edges, cycles, self-loops and initial/final/active markers |
 | `cohort` | Validated interval counts, request-weighted rates and unweighted member sample spread |
 | `pattern` | Service workbench and cohort comparison with linked plots, member selection and inspection |
 | `runtime` | One root Bubble Tea terminal session |
@@ -58,9 +61,20 @@ cmd := field.Focus()
 
 The core uses upstream Charm v2 modules. It has no JavaScript runtime requirement and no Bubble Tea fork.
 
+## Command-line help
+
+Install the formatter once on your Cobra root. Subcommands inherit it for `-h`, `--help` and `help <command>`.
+
+```go
+cli.HelpFormatter{}.Install(root)
+return root.ExecuteContext(ctx)
+```
+
+Use `formatter.Format(cmd)` to render the same page in a terminal view or documentation. Set `Width` for a fixed cell budget and `Theme` for a custom palette. Applications using Fang should call Cobra's `ExecuteContext` as shown above because `fang.Execute` installs its own help function. [See the rendered example](https://lanej.io/charmed/molecules-commands.html#cli/help).
+
 ## Static guide
 
-[Browse the guide](https://lanej.github.io/charmed/) for foundations, components grouped by capability, composition examples and the deployment telemetry contract. Components share sections rather than individual pages, but every fixture has a sidebar link. Each fixture leads with a saved native preview and variant tabs, followed by its highlighted usage snippet or linked fixture implementation. CLI instructions remain in the development guide. See the [brand sheet](https://lanej.github.io/charmed/brand.html) for visual tokens and identity.
+[Browse the guide](https://lanej.github.io/charmed/) by atomic category and capability group. Each component starts with the output of a compiled consumer example, followed by its Go usage and import links. Examples include their data and setup; package declarations and outer functions stay out of the page. Additional fixture variants remain in tabs, and implementation source is linked separately. CLI instructions remain in the development guide. See the [brand sheet](https://lanej.github.io/charmed/brand.html) for visual tokens and identity.
 
 ```sh
 just docs
@@ -68,7 +82,7 @@ just docs
 
 The generator writes `docs/dist/` using Go alone. GitHub Actions uploads this directory to Pages; the published guide uses ordinary HTML, CSS, images and links. It needs no npm or preview service. A tiny local script enhances keyboard-accessible variant tabs; without JavaScript all snapshots remain visible. Saved terminal frames preserve truecolor as static HTML, with separate 256-color, 16-color and monochrome fallback tabs; run a native fixture for keyboard interaction and animation. See [foundations](docs/foundations.md) for glyph, spacing and panel allocation contracts.
 
-Edit the guides in `docs/*.md` and layout in `workbench/site/`. The registry supplies snapshots and source and validates declared component composition. See [development](docs/development.md) and the [deployment guide](docs/deployment.md).
+Edit the guides in `docs/*.md` and layout in `workbench/site/`. The registry supplies snapshots and source and validates declared component composition. See [development](docs/development.md), the [deployment guide](docs/deployment.md), and the [HTTP/log inspector API](docs/log-inspector.md).
 
 ## Coverage
 

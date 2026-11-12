@@ -1,3 +1,20 @@
+// Published catalog bookmarks follow their exact new page and fragment.
+(function () {
+  "use strict";
+  function followLegacyLink() {
+    var anchor;
+    try { anchor = decodeURIComponent(window.location.hash.slice(1)); }
+    catch (_) { return; }
+    if (!anchor) return;
+    var link = Array.from(document.querySelectorAll("[data-legacy-anchor]")).find(function (item) {
+      return item.dataset.legacyAnchor === anchor;
+    });
+    if (link) window.location.replace(link.href);
+  }
+  followLegacyLink();
+  window.addEventListener("hashchange", followLegacyLink);
+})();
+
 // Progressive enhancement for saved terminal variant tabs.
 // Without JavaScript, all snapshots remain visible and links scroll to them.
 (function () {
@@ -22,8 +39,8 @@
       if (shouldFocus) tabs[index].focus();
     }
 
-    var deepLinked = panels.findIndex(function (panel) {
-      return "#" + panel.id === window.location.hash;
+    var deepLinked = panels.findIndex(function (panel, index) {
+      return "#" + panel.id === window.location.hash || "#" + tabs[index].id === window.location.hash;
     });
     activate(deepLinked < 0 ? 0 : deepLinked, false);
 

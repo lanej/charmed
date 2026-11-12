@@ -44,6 +44,21 @@
 </div>
 </section>
 {{end}}
+{{with .Page.Overview}}
+<section class="catalog-intro" id="{{.Anchor}}">
+<p class="eyebrow">Atomic design</p>
+<h1><a class="heading-permalink" href="#{{.Anchor}}"><span>{{.Name}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-description">{{.Description}}</p>
+<p class="catalog-count">{{.Count}} component{{if ne .Count 1}}s{{end}} · {{len .Groups}} group{{if ne (len .Groups) 1}}s{{end}}</p>
+</section>
+<div class="category-groups">
+{{range .Groups}}<a class="group-card" href="{{.File}}" aria-label="{{.Name}}, {{len .Entries}} component{{if ne (len .Entries) 1}}s{{end}}">
+<div class="group-specimen" data-specimen="{{.Specimen.ID}}" aria-hidden="true"><pre>{{.Specimen.Content}}</pre></div>
+<div class="group-card-body"><div class="group-card-heading"><h2>{{.Name}}</h2><span class="group-card-arrow" aria-hidden="true">→</span></div>
+<p class="group-card-caption"><span>{{.Specimen.Name}}</span><span>{{len .Entries}} component{{if ne (len .Entries) 1}}s{{end}}</span></p></div>
+</a>{{else}}<p>No fixtures are published in this category yet.</p>{{end}}
+</div>
+{{end}}
 {{.Page.Content}}
 {{if eq .Page.File "brand.html"}}
 <section class="brand-specimens" aria-label="Brand tokens and typography">
@@ -73,19 +88,28 @@
 </div>
 </section>
 {{end}}
-{{with .Page.Preview}}<section class="showcase-hero" aria-label="Service workbench"><div class="showcase-heading"><h2>One model. Every piece connected.</h2><a href="examples.html#screen/services">Explore the composition ↗</a></div><p>Filter services, follow throughput, inspect a selection. A native Go screen assembled from the same components below.</p><pre tabindex="0" class="terminal hero-terminal showcase-wide">{{terminal (index .Snapshots 0).Frame}}</pre><pre tabindex="0" class="terminal hero-terminal showcase-narrow">{{terminal (index .Snapshots 1).Frame}}</pre><p class="snapshot-note">Saved native output · run locally for keyboard interaction.</p></section>{{end}}
-{{if .Page.Showcase}}<section class="showcase-atoms"><div class="showcase-heading"><h2>Small pieces. Shared meaning.</h2><a href="components.html#feedback/status">Status atoms ↗</a></div><pre tabindex="0" class="terminal atom-strip">{{range .Page.Atoms}}<span class="status-sample">{{terminal .}}</span>{{end}}</pre><p>Semantic color and an explicit label, shared by the service list and inspector.</p></section><div class="showcase-grid">{{range .Page.Showcase}}<section><div class="showcase-heading"><h2><a href="{{.Link}}">{{.Title}} ↗</a></h2></div><p>{{.Description}}</p><pre tabindex="0" class="terminal showcase-wide">{{terminal .Frame}}</pre><pre tabindex="0" class="terminal showcase-narrow">{{terminal .NarrowFrame}}</pre></section>{{end}}</div><section class="showcase-start"><h2>Bring the pieces into your terminal.</h2><pre tabindex="0" class="code-block"><code class="language-sh">{{highlight "go run ./cmd/workbench run screen/services" "sh"}}</code></pre><p><a href="components.html">Browse every component ↗</a> · <a href="deployment.html">Compare a deployment ↗</a> · <a href="development.html">Build with Charmed ↗</a></p></section>{{end}}
-{{range .Page.Groups}}
-<section class="component-family" id="family-{{.Name}}"><h2><a class="heading-permalink" href="#family-{{.Name}}" aria-label="Link to {{.Name}} section"><span>{{.Name}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+{{with .Page.Preview}}<section class="showcase-hero" aria-label="Service workbench"><div class="showcase-heading"><h2>One model. Every piece connected.</h2><a href="{{link "screen/services"}}">Explore the composition ↗</a></div><p>Filter services, follow throughput, inspect a selection. A native Go screen assembled from the same components below.</p><pre tabindex="0" class="terminal hero-terminal showcase-wide">{{terminal (index .Snapshots 0).Frame}}</pre><pre tabindex="0" class="terminal hero-terminal showcase-narrow">{{terminal (index .Snapshots 1).Frame}}</pre><p class="snapshot-note">Saved native output · run locally for keyboard interaction.</p></section>{{end}}
+{{if .Page.Showcase}}<section class="showcase-atoms"><div class="showcase-heading"><h2>Small pieces. Shared meaning.</h2><a href="{{link "feedback/status"}}">Status atoms ↗</a></div><pre tabindex="0" class="terminal atom-strip">{{range .Page.Atoms}}<span class="status-sample">{{terminal .}}</span>{{end}}</pre><p>Semantic color and an explicit label, shared by the service list and inspector.</p></section><div class="showcase-grid">{{range .Page.Showcase}}<section><div class="showcase-heading"><h2><a href="{{.Link}}">{{.Title}} ↗</a></h2></div><p>{{.Description}}</p><pre tabindex="0" class="terminal showcase-wide">{{terminal .Frame}}</pre><pre tabindex="0" class="terminal showcase-narrow">{{terminal .NarrowFrame}}</pre></section>{{end}}</div><section class="showcase-start"><h2>Bring the pieces into your terminal.</h2><pre tabindex="0" class="code-block"><code class="language-sh">{{highlight "go run ./cmd/workbench run screen/services" "sh"}}</code></pre><p><a href="atoms.html">Browse the atoms ↗</a> · <a href="deployment.html">Compare a deployment ↗</a> · <a href="development.html">Build with Charmed ↗</a></p></section>{{end}}
+{{range .Page.Levels}}
+<section class="atomic-level" id="{{.Anchor}}">
+<p class="catalog-breadcrumb"><a href="{{.File}}">{{.Name}}</a><span aria-hidden="true"> / </span>{{range .Groups}}{{.Name}}{{end}}</p>
+{{range .Groups}}
+<section class="component-family" id="{{.Anchor}}"><h1><a class="heading-permalink" href="#{{.Anchor}}"><span>{{.Name}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">{{len .Entries}} component{{if ne (len .Entries) 1}}s{{end}} · <a href="{{$.Page.Category | lower}}.html">All {{$.Page.Category | lower}}</a></p>
+<ul class="group-jump-links" aria-label="Components in {{.Name}}">{{range .Entries}}<li><a href="#{{.ID}}">{{name .Title}}</a></li>{{end}}</ul>
 {{range .Entries}}
 {{$component := .}}
 <section class="component" id="{{.ID}}">
-<p class="eyebrow">{{.Level}} / <a href="#family-{{.Family}}">{{.Family}}</a></p><h3><a class="heading-permalink" href="#{{.ID}}" aria-label="Link to {{name .Title}} component"><span>{{name .Title}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>{{.Description}}</p>
+<p class="eyebrow"><a href="{{.Level | lower}}.html">{{.Level}}</a> / {{familyName .Family}}</p><h2><a class="heading-permalink" href="#{{.ID}}" aria-label="Link to {{name .Title}} component"><span>{{name .Title}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p>{{.Description}}</p>
 <div class="component-preview">
-<div class="component-subheading"><h4 id="{{.ID}}-preview"><a class="heading-permalink" href="#{{.ID}}-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>Saved terminal output · truecolor reference</span></div>
+<div class="component-subheading"><h3 id="{{.ID}}-preview"><a class="heading-permalink" href="#{{.ID}}-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
 <div class="variant-tablist" role="tablist" aria-label="{{name .Title}} variants">
-{{range $i, $snapshot := .Snapshots}}<a id="tab-{{$component.ID}}-{{$i}}" href="#panel-{{$component.ID}}-{{$i}}" role="tab" aria-controls="panel-{{$component.ID}}-{{$i}}" aria-selected="{{if eq $i 0}}true{{else}}false{{end}}">{{.Name}}</a>{{end}}
+<a id="tab-{{.ID}}-example" href="#panel-{{.ID}}-example" role="tab" aria-controls="panel-{{.ID}}-example" aria-selected="true">Example</a>
+{{range $i, $snapshot := .Snapshots}}<a id="tab-{{$component.ID}}-{{$i}}" href="#panel-{{$component.ID}}-{{$i}}" role="tab" aria-controls="panel-{{$component.ID}}-{{$i}}" aria-selected="false">{{.Name}}</a>{{end}}
+</div>
+<div id="panel-{{.ID}}-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-{{.ID}}-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">{{terminal .ExampleFrame}}</pre></figure>
 </div>
 {{range $i, $snapshot := .Snapshots}}<div id="panel-{{$component.ID}}-{{$i}}" class="variant-panel" role="tabpanel" aria-labelledby="tab-{{$component.ID}}-{{$i}}" tabindex="0">
 <figure><figcaption>{{.Name}} · {{.Config.Profile}} · {{.Config.Columns}} × {{.Config.Rows}} terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="{{.Config.Theme}}" style="color:{{snapshotForeground .Config}};background-color:{{snapshotBackground .Config}}">{{terminal .Frame}}</pre></figure>
@@ -93,27 +117,34 @@
 </div>
 </div>
 <div class="component-source">
-<div class="component-subheading"><h4 id="{{.ID}}-code"><a class="heading-permalink" href="#{{.ID}}-code"><span>{{if .ExampleSource}}Go usage{{else}}Fixture implementation{{end}}</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h4><span>{{if .ExampleSource}}<a href="https://github.com/lanej/charmed/blob/main/{{.ExampleSource}}">Usage snippet</a> · {{end}}<a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">Fixture source</a> · <a href="{{.Upstream}}">Upstream</a></span></div>
+<div class="component-subheading"><h3 id="{{.ID}}-code"><a class="heading-permalink" href="#{{.ID}}-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span><a href="https://github.com/lanej/charmed/blob/main/{{.ExampleSource}}">Complete example</a> · <a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">Implementation</a></span></div>
+<p class="example-imports">Imports: {{range $i, $import := .ExampleImports}}{{if $i}} · {{end}}<a href="https://pkg.go.dev/{{.Path}}" title="{{.Path}}"><code>{{.Name}}</code></a>{{end}}</p>
 <pre tabindex="0" class="code-block source-code"><code class="language-go">{{highlight .Code "go"}}</code></pre>
 </div>
 {{if .Composes}}<p class="composition-line">Composed from: {{range .Composes}}<a class="dependency" href="{{link .}}">{{.}}</a> {{end}}</p>{{end}}
 </section>{{end}}
 </section>{{end}}
+</section>{{end}}
+{{if .Page.Legacy}}<details class="legacy-links"><summary>Previously shared component links</summary><ul>{{range .Page.Legacy}}<li {{if .Hidden}}hidden{{end}}><a data-legacy-anchor="{{.Anchor}}" href="{{.Href}}">{{.Name}}</a></li>{{end}}</ul></details>{{end}}
 {{if .Page.Coverage}}<div class="table-wrap" aria-label="Component coverage inventory"><table tabindex="0"><thead><tr><th>Upstream</th><th>Status</th><th>Integration</th></tr></thead><tbody>{{range .Page.Coverage}}<tr><td>{{.Upstream}}</td><td>{{.Status}}</td><td>{{.Notes}}</td></tr>{{end}}</tbody></table></div>{{end}}
 <footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
 </main></div></body></html>
 {{define "guide-nav"}}
 <nav aria-label="Guide">
-<div class="nav-pages">{{range .Pages}}<a href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Title}}</a>{{end}}</div>
-{{if .Page.Groups}}
+<div class="nav-pages"><a href="index.html" {{if eq .Page.File "index.html"}}aria-current="page"{{end}}>Showcase</a>
+<p class="nav-title">Atomic design</p>
+{{range .Page.Navigation}}
+<div class="nav-category {{if eq .Name $.Page.Category}}is-active{{end}}">
+<a class="nav-level" href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Name}}<span class="nav-count">{{.Count}}</span></a>
+{{if eq .Name $.Page.Category}}<div class="nav-groups">{{range .Groups}}<a class="nav-group" href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Name}}</a>{{end}}</div>{{end}}
+</div>{{end}}
+<p class="nav-title">Guides</p>
+{{range .Pages}}{{if .Resource}}<a href="{{.File}}" {{if eq .File $.Page.File}}aria-current="page"{{end}}>{{.Title}}</a>{{end}}{{end}}</div>
+{{if .Page.Levels}}
 <div class="nav-outline"><p class="nav-title">On this page</p>
-{{range .Page.Groups}}
-<div class="nav-family">
-<a class="nav-family-link" href="#family-{{.Name}}">{{.Name}}</a>
+{{range .Page.Levels}}{{range .Groups}}
 <div class="nav-items">{{range .Entries}}<a class="nav-component" href="#{{.ID}}">{{name .Title}}</a>{{end}}</div>
-</div>
-{{end}}
-</div>
-{{end}}
+{{end}}{{end}}
+</div>{{end}}
 </nav>
 {{end}}

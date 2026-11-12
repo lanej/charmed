@@ -9,14 +9,18 @@ import (
 
 func definitions() []Definition {
 	var d []Definition
-	for _, level := range [][]Definition{foundationsDefinitions(), atomsDefinitions(), moleculesDefinitions(), organismsDefinitions(), screensDefinitions()} {
+	for _, level := range [][]Definition{foundationsDefinitions(), atomsDefinitions(), moleculesDefinitions(), chromeDefinitions(), organismsDefinitions(), screensDefinitions(), logDefinitions(), commandDefinitions(), dataAtomDefinitions(), gitDefinitions()} {
 		d = append(d, level...)
 	}
+
 	for i := range d {
+		d[i].ExampleSource = "docs/snippets/" + strings.NewReplacer("/", "_", "-", "_").Replace(d[i].ID) + ".go"
+
 		if len(d[i].States) == 0 && slices.Contains(d[i].Controls, "state") {
 			d[i].States = []string{"ready", "empty", "loading", "error"}
 		}
 	}
+
 	return d
 }
 

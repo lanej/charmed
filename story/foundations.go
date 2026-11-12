@@ -35,10 +35,6 @@ func foundationsDefinitions() []Definition {
 			d[i].Upstream = "https://pkg.go.dev/io/fs#FileMode"
 		}
 
-		if d[i].ID == "foundations/tokens" {
-			d[i].ExampleSource = "docs/snippets/foundation-tokens.go.txt"
-		}
-
 		if d[i].ID == "feedback/motion" {
 			d[i].Upstream = "https://github.com/charmbracelet/harmonica"
 			d[i].Step = true
@@ -59,7 +55,8 @@ func themeStory(e Environment) (runtime.Scene, error) {
 
 		rows = append(rows,
 			t.Text().Foreground(t.Unknown).Render("unknown  ")+"  "+t.Text().Foreground(t.DimUnknown).Render("dim unknown"),
-			t.Text().Foreground(t.Inactive).Render("off      ")+"  "+t.Text().Foreground(t.DimInactive).Render("dim off"))
+			t.Text().Foreground(t.Inactive).Render("off      ")+"  "+t.Text().Foreground(t.DimInactive).Render("dim off"),
+			t.LinkStyle().Render("link     ")+"  "+t.LinkStyle().Foreground(t.DimLink).Render("dim link"))
 
 		rows = append(rows, "", "Categorical data / independent palette")
 
@@ -75,11 +72,15 @@ func themeStory(e Environment) (runtime.Scene, error) {
 }
 
 func glyphStory(e Environment) (runtime.Scene, error) {
-	return static(func(layout.Size) string {
+	return static(func(size layout.Size) string {
 		t := e.Config.Palette()
 		fallback := t
 		fallback.ASCII = true
-		rows := []string{"Meaning     U A     Meaning     U A", ""}
+		rows := []string{}
+		// WHY: Keep every glyph visible in the fixed-height narrow specimen.
+		if (len(theme.Glyphs())+foundationColumns-1)/foundationColumns+2 <= size.Height {
+			rows = append(rows, "Meaning     U A     Meaning     U A", "")
+		}
 
 		var cells []string
 

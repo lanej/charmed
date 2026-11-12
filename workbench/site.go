@@ -8,7 +8,6 @@ import (
 	"image/color"
 	"os"
 	"path/filepath"
-	"slices"
 	"strings"
 
 	"github.com/lanej/charmed/feedback"
@@ -24,31 +23,21 @@ import (
 var siteFiles embed.FS
 
 type guidePage struct {
-	File, Title string
-	Content     template.HTML
-	Groups      []guideGroup
-	Coverage    []Coverage
-	Preview     *ManifestEntry
-	Showcase    []showcaseItem
-	Atoms       []string
-	Brand       brandPalette
+	File, Title      string
+	Source, Category string
+	Overview         *guideLevel
+	Legacy           []guideLink
+	Resource         bool
+	Content          template.HTML
+	Levels           []guideLevel
+	Navigation       []guideLevel
+	Coverage         []Coverage
+	Preview          *ManifestEntry
+	Showcase         []showcaseItem
+	Atoms            []string
+	Brand            brandPalette
 }
 type showcaseItem struct{ Title, Description, Link, Frame, NarrowFrame string }
-type guideGroup struct {
-	Name    string
-	Entries []ManifestEntry
-}
-
-func storyPage(entry ManifestEntry) string {
-	switch entry.Level {
-	case "Foundations":
-		return "foundations.html"
-	case "Screens", "Templates":
-		return "examples.html"
-	default:
-		return "components.html"
-	}
-}
 
 func writeSite(out, root string, entries []ManifestEntry) error {
 	directory := filepath.Join(out, "dist")
@@ -57,36 +46,48 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		return err
 	}
 
-	if err := os.MkdirAll(directory, 0755); err != nil {
+	if err := os.MkdirAll(directory, 0o755); err != nil { //nolint:gosec // WHY: Static servers need traversal access to public guide directories.
 		return err
 	}
 
 	pages := []guidePage{
-		{File: "index.html", Title: "Charmed"},
-		{File: "foundations.html", Title: "Foundations"},
-		{File: "components.html", Title: "Components"},
-		{File: "examples.html", Title: "Composition & examples"},
-		{File: "deployment.html", Title: "Compare a deployment"},
-		{File: "development.html", Title: "Develop & publish"},
-		{File: "brand.html", Title: "Brand sheet"},
+		{File: "index.html", Title: "Charmed", Source: "index.md"},
+		{File: "components.html", Title: "Component reference", Source: "components.md", Resource: true},
+		{File: "examples.html", Title: "Composition guide", Source: "examples.md", Resource: true},
+		{File: "deployment.html", Title: "Compare a deployment", Source: "deployment.md", Resource: true},
+		{File: "json-viewer.html", Title: "JSON viewer", Source: "json-viewer.md", Resource: true},
+		{File: "development.html", Title: "Develop & publish", Source: "development.md", Resource: true},
+		{File: "brand.html", Title: "Brand sheet", Source: "brand.md", Resource: true},
 	}
+	navigation := atomicNavigation(entries)
+
+	if err := addSpecimens(navigation); err != nil {
+		return err
+	}
+
+	pages = append(pages, catalogPages(navigation)...)
+
 	brand := newBrandPalette(theme.New(theme.Dark))
 	markdown := goldmark.New(goldmark.WithExtensions(extension.GFM), goldmark.WithParserOptions(parser.WithAutoHeadingID()))
+
 	for i := range pages {
 		page := &pages[i]
 		page.Brand = brand
-		source, err := os.ReadFile(filepath.Join(root, "docs", strings.TrimSuffix(page.File, ".html")+".md"))
-		if err != nil {
-			return err
-		}
-		var content bytes.Buffer
-		if err := markdown.Convert(source, &content); err != nil {
-			return err
-		}
-		// WHY: Only repository-authored Markdown passes through the HTML renderer.
-		rendered := highlightMarkdown(content.String())
 
-		page.Content = template.HTML(rendered)
+		if page.Source != "" {
+			source, err := os.ReadFile(filepath.Join(root, "docs", page.Source)) //nolint:gosec // WHY: Source names come only from the compiled guide catalog, never request input.
+			if err != nil {
+				return err
+			}
+
+			var content bytes.Buffer
+			if err := markdown.Convert(source, &content); err != nil {
+				return err
+			}
+
+			page.Content = template.HTML(highlightMarkdown(content.String())) //nolint:gosec // WHY: Only repository-authored Markdown passes through the escaping Markdown and code renderers.
+		}
+
 		if page.File == "index.html" {
 			t := theme.New(theme.Dark)
 
@@ -125,7 +126,8 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 				if err != nil {
 					return err
 				}
-				page.Showcase = append(page.Showcase, showcaseItem{item.Title, item.Description, "components.html#" + item.ID, frame, narrow})
+
+				page.Showcase = append(page.Showcase, showcaseItem{item.Title, item.Description, storyPage(ManifestEntry{Definition: d}) + "#" + item.ID, frame, narrow})
 			}
 
 			for i := range entries {
@@ -143,37 +145,31 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 					preview.Snapshots = []Snapshot{{Name: "Default", Config: c, Frame: frame}}
 					c.Columns = 40
 					c.Rows = 28
+
 					narrow, err := story.Frame(preview.ID, c)
 					if err != nil {
 						return err
 					}
+
 					preview.Snapshots = append(preview.Snapshots, Snapshot{Name: "Narrow", Config: c, Frame: narrow})
 					page.Preview = &preview
+
 					break
 				}
 			}
 		}
+
 		if page.File == "development.html" {
 			page.Coverage = CoverageInventory()
 		}
-		families := []string{}
-		for _, entry := range entries {
-			if storyPage(entry) == page.File && !slices.Contains(families, entry.Family) {
-				families = append(families, entry.Family)
-			}
-		}
-		slices.Sort(families)
-		for _, family := range families {
-			group := guideGroup{Name: family}
-			for _, entry := range entries {
-				if storyPage(entry) == page.File && entry.Family == family {
-					group.Entries = append(group.Entries, entry)
-				}
-			}
-			page.Groups = append(page.Groups, group)
-		}
+
+		page.Navigation = navigation
+		page.Legacy = legacyLinks(page.File, navigation)
 	}
+
 	funcs := template.FuncMap{
+		"lower":              strings.ToLower,
+		"familyName":         familyName,
 		"terminal":           terminalHTML,
 		"snapshotForeground": snapshotForeground,
 		"snapshotBackground": snapshotBackground,
@@ -185,13 +181,16 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 					return storyPage(entry) + "#" + id, nil
 				}
 			}
+
 			return "", fmt.Errorf("unknown component link %q", id)
 		},
 	}
+
 	layout, err := template.New("page.html").Funcs(funcs).ParseFS(siteFiles, "site/page.html", "site/mark.svg")
 	if err != nil {
 		return err
 	}
+
 	for _, page := range pages {
 		var output bytes.Buffer
 		if err := layout.Execute(&output, struct {
@@ -201,7 +200,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 			return err
 		}
 
-		if writeErr := os.WriteFile(filepath.Join(directory, page.File), output.Bytes(), 0600); writeErr != nil {
+		if writeErr := writeGuideFile(directory, page.File, output.Bytes()); writeErr != nil {
 			return writeErr
 		}
 	}
@@ -211,7 +210,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		return err
 	}
 
-	if writeErr := os.WriteFile(filepath.Join(directory, "style.css"), []byte(string(css)+brand.style()), 0600); writeErr != nil {
+	if writeErr := writeGuideFile(directory, "style.css", []byte(string(css)+brand.style())); writeErr != nil {
 		return writeErr
 	}
 
@@ -220,12 +219,12 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		return err
 	}
 
-	if writeErr := os.WriteFile(filepath.Join(directory, "tabs.js"), tabs, 0600); writeErr != nil {
+	if writeErr := writeGuideFile(directory, "tabs.js", tabs); writeErr != nil {
 		return writeErr
 	}
 
-	if writeErr := os.MkdirAll(filepath.Join(directory, "assets"), 0750); writeErr != nil {
-		return writeErr
+	if mkdirErr := os.MkdirAll(filepath.Join(directory, "assets"), 0o755); mkdirErr != nil { //nolint:gosec // WHY: Static servers need traversal access to public guide directories.
+		return mkdirErr
 	}
 	// The downloadable asset and inline lockups share one vector source.
 	mark, err := siteFiles.ReadFile("site/mark.svg")
@@ -233,7 +232,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		return err
 	}
 
-	if writeErr := os.WriteFile(filepath.Join(directory, "assets", "charmed-mark.svg"), mark, 0600); writeErr != nil {
+	if writeErr := writeGuideFile(directory, "assets/charmed-mark.svg", mark); writeErr != nil {
 		return writeErr
 	}
 
@@ -248,12 +247,12 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 			return err
 		}
 
-		if err := os.WriteFile(filepath.Join(directory, "assets", filepath.Base(path)), data, 0644); err != nil {
-			return err
+		if writeErr := writeGuideFile(directory, "assets/"+filepath.Base(path), data); writeErr != nil {
+			return writeErr
 		}
 	}
 
-	return os.WriteFile(filepath.Join(directory, ".nojekyll"), nil, 0644)
+	return writeGuideFile(directory, ".nojekyll", nil)
 }
 
 // brandPalette exposes the native dark-mode color roles to the static site.

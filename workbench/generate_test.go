@@ -26,8 +26,13 @@ func TestStaticGuide(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if len(files) != 7 {
-		t.Fatalf("got %d pages, want seven grouped guides", len(files))
+	groups := make(map[string]bool)
+	for _, d := range story.Definitions() {
+		groups[strings.ToLower(d.Level)+"-"+d.Family+".html"] = true
+	}
+
+	if want := 7 + len(story.Levels()) + len(groups); len(files) != want {
+		t.Fatalf("got %d pages, want %d category, group and guide pages", len(files), want)
 	}
 
 	pages := map[string][]byte{}
@@ -43,6 +48,13 @@ func TestStaticGuide(t *testing.T) {
 		}
 
 		name := filepath.Base(path)
+
+		for _, internal := range []string{"Fixture implementation", "func Example", "package snippets", "e.Config", "return &amp;scene"} {
+			if bytes.Contains(data, []byte(internal)) {
+				t.Errorf("%s exposes example scaffolding or fixture implementation: %s", name, internal)
+			}
+		}
+
 		pages[name] = data
 		ids[name] = map[string]bool{}
 		navComponents[name] = map[string]bool{}
@@ -127,7 +139,7 @@ func TestStaticGuide(t *testing.T) {
 					}
 				}
 
-				if permalink && n.Parent != nil && (n.Parent.Data == "h2" || n.Parent.Data == "h3" || n.Parent.Data == "h4") {
+				if permalink && n.Parent != nil && (n.Parent.Data == "h1" || n.Parent.Data == "h2" || n.Parent.Data == "h3" || n.Parent.Data == "h4" || n.Parent.Data == "h5") {
 					if u, err := url.Parse(href); err == nil {
 						headingLinks[name][u.Fragment] = true
 					}
@@ -194,34 +206,34 @@ func TestStaticGuide(t *testing.T) {
 	}
 
 	for _, state := range []string{"Empty", "Disabled"} {
-		if !bytes.Contains(pages["components.html"], []byte("<figcaption>"+state+" · truecolor")) {
+		if !bytes.Contains(pages["atoms-input.html"], []byte("<figcaption>"+state+" · truecolor")) {
 			t.Errorf("input guide omitted %s state", state)
 		}
 	}
 
-	if !bytes.Contains(pages["foundations.html"], []byte(`style="color:#172033;background-color:#f8fafc"`)) {
+	if !bytes.Contains(pages["foundations-text.html"], []byte(`style="color:#172033;background-color:#f8fafc"`)) {
 		t.Error("light permission preview must retain its theme foreground and background")
 	}
 
-	if !bytes.Contains(pages["components.html"], []byte("&lt;")) {
-		t.Error("expected escaped source or snapshot content")
+	if !bytes.Contains(pages["molecules-input.html"], []byte("&lt;")) {
+		t.Error("the field validation example must escape its less-than operator")
 	}
 
-	if !bytes.Contains(pages["components.html"], []byte(`class="variant-tablist" role="tablist"`)) {
+	if !bytes.Contains(pages["atoms-input.html"], []byte(`class="variant-tablist" role="tablist"`)) {
 		t.Error("component previews must provide variant tabs")
 	}
 
-	if !bytes.Contains(pages["components.html"], []byte(`class="language-go"`)) ||
-		!bytes.Contains(pages["components.html"], []byte("syn-keyword")) {
+	if !bytes.Contains(pages["atoms-input.html"], []byte(`class="language-go"`)) ||
+		!bytes.Contains(pages["atoms-input.html"], []byte("syn-keyword")) {
 		t.Error("source listings must be highlighted")
 	}
 
-	if bytes.Contains(pages["components.html"], []byte("Saved Go output &amp; variants")) ||
-		bytes.Contains(pages["components.html"], []byte("<summary>Go example</summary>")) {
+	if bytes.Contains(pages["atoms-input.html"], []byte("Saved Go output &amp; variants")) ||
+		bytes.Contains(pages["atoms-input.html"], []byte("<summary>Go example</summary>")) {
 		t.Error("visual previews and source must be immediately visible")
 	}
 
-	for _, page := range []string{"components.html", "foundations.html", "examples.html"} {
+	for _, page := range []string{"atoms-input.html", "foundations-theme.html", "screens-pattern.html"} {
 		if bytes.Contains(pages[page], []byte("Run natively")) ||
 			bytes.Contains(pages[page], []byte("component-run")) ||
 			bytes.Contains(pages[page], []byte("go run ./cmd/workbench run ")) {
@@ -238,23 +250,27 @@ func TestStaticGuide(t *testing.T) {
 	}
 
 	for _, d := range story.Definitions() {
-		target := "components.html"
-
-		switch d.Level {
-		case "Foundations":
-			target = "foundations.html"
-		case "Screens", "Templates":
-			target = "examples.html"
-		}
+		target := strings.ToLower(d.Level) + "-" + d.Family + ".html"
 
 		if !navComponents[target][d.ID] {
 			t.Errorf("missing sidebar link for %s", d.ID)
 		}
 
-		for _, id := range []string{d.ID, d.ID + "-preview", d.ID + "-code", "family-" + d.Family} {
+		for _, id := range []string{d.ID, d.ID + "-preview", d.ID + "-code", "level-" + strings.ToLower(d.Level) + "-" + d.Family} {
 			if !headingLinks[target][id] {
 				t.Errorf("%s: missing self-link on heading %q", target, id)
 			}
+		}
+	}
+
+	for _, level := range story.Levels() {
+		page := strings.ToLower(level) + ".html"
+		if !headingLinks[page]["level-"+strings.ToLower(level)] {
+			t.Errorf("%s is missing its category heading", page)
+		}
+
+		if bytes.Contains(pages[page], []byte(`class="component"`)) {
+			t.Errorf("%s must list groups without loading every preview", page)
 		}
 	}
 
@@ -283,19 +299,11 @@ func TestStaticGuide(t *testing.T) {
 	}
 }
 
-func TestCuratedSnippetsFocusOnConsumerAPIs(t *testing.T) {
-	expected := map[string]string{
-		"chart/sparkline":        "docs/snippets/sparkline.go.txt",
-		"chart/comparison-panel": "docs/snippets/comparison-panel.go.txt",
-	}
-
+func TestEveryComponentHasAConsumerExample(t *testing.T) {
 	for _, definition := range story.Definitions() {
-		if definition.ExampleSource == "" {
+		if definition.ExampleSource == "" || !strings.HasSuffix(definition.ExampleSource, ".go") {
+			t.Errorf("%s needs a compiled consumer example", definition.ID)
 			continue
-		}
-
-		if want, ok := expected[definition.ID]; ok && definition.ExampleSource != want {
-			t.Errorf("%s: example source = %q, want %q", definition.ID, definition.ExampleSource, want)
 		}
 
 		source, err := os.ReadFile(filepath.Join("..", definition.ExampleSource))
@@ -303,14 +311,10 @@ func TestCuratedSnippetsFocusOnConsumerAPIs(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		for _, scaffolding := range []string{"package main", "func main()", "import ("} {
-			if bytes.Contains(source, []byte(scaffolding)) {
-				t.Errorf("%s: unnecessary program scaffolding %q", definition.ID, scaffolding)
+		for _, internal := range []string{"github.com/lanej/charmed/story", "/deployment/fixture", "e.Config", "sampleSeries(", "sampleValues("} {
+			if bytes.Contains(source, []byte(internal)) {
+				t.Errorf("%s: consumer example depends on %s", definition.ID, internal)
 			}
-		}
-
-		if lines := strings.Count(string(source), "\n"); lines > 30 {
-			t.Errorf("%s: usage example is %d lines; keep it focused", definition.ID, lines)
 		}
 	}
 }

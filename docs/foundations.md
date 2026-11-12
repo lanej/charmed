@@ -1,4 +1,4 @@
-# Foundations
+## Foundation contracts
 
 Themes, cell geometry, focus and motion are shared across every component. Choose semantic roles rather than embedding color decisions in application widgets. Layout parents allocate rectangles in terminal columns and rows; focus scopes route keys to the active child.
 
@@ -12,7 +12,7 @@ Bright, normal and dim emphasis preserve the label, glyph and cell allocation. D
 
 ## Display states
 
-Health and lifecycle states share one catalog through `feedback.Statuses()`. The application decides when each state applies; rendering a state never starts, pauses or disables work. Allocate fixed status columns with `feedback.MaxStatusWidth` so longer labels retain their glyphs and padding. Attention-only tables use `feedback.MaxAttentionWidth`, which measures the attention catalog separately from lifecycle states.
+Health, lifecycle and connection states share one catalog through `feedback.Statuses()`. The application decides when each state applies; rendering a state never starts, pauses or disables work. Allocate fixed status columns with `feedback.MaxStatusWidth` so longer labels retain their glyphs and padding. Attention-only tables use `feedback.MaxAttentionWidth`, which measures the attention catalog separately from lifecycle states.
 
 | State | Meaning | Color family |
 | --- | --- | --- |
@@ -25,8 +25,12 @@ Health and lifecycle states share one catalog through `feedback.Statuses()`. The
 | RUNNING | Actively executing | Cyan |
 | PAUSED | Temporarily suspended and resumable | Sand |
 | DISABLED | Unavailable to start or select | Gray, with a slashed-circle glyph |
+| CONNECTED | An established connection | Green, with a filled-circle glyph |
+| DISCONNECTED | No established connection | Gray, with a hollow-circle glyph |
 
 Pending, running and paused have independent normal/dim tokens. Disabled shares the inactivity palette with off; its label and slashed-circle glyph distinguish unavailability from being switched off. These states do not imply warning/error severity and are independent of attention-rule evaluation.
+
+Connected and disconnected describe connectivity, independently of service health or severity. Disconnected can be intentional; use UNKNOWN when connection state cannot be established. Rendering these atoms does not probe or manage a connection. They reuse success and inactivity colors, including the dim variants; ASCII uses `+` and `-` with the full labels. `MaxStatusWidth` now reserves 16 cells for DISCONNECTED; consumers with hard-coded 12-cell status columns should use the helper or increase their allocation. Attention-only allocations remain unchanged.
 
 ## Glyphs and spacing
 

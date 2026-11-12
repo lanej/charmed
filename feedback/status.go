@@ -12,20 +12,23 @@ import (
 type Status string
 
 const (
-	OK       Status = "OK"
-	Warn     Status = "WARN"
-	Error    Status = "ERROR"
-	Unknown  Status = "UNKNOWN"
-	Off      Status = "OFF"
-	Pending  Status = "PENDING"
-	Running  Status = "RUNNING"
-	Paused   Status = "PAUSED"
-	Disabled Status = "DISABLED"
+	OK           Status = "OK"
+	Warn         Status = "WARN"
+	Error        Status = "ERROR"
+	Unknown      Status = "UNKNOWN"
+	Off          Status = "OFF"
+	Inactive     Status = "INACTIVE"
+	Pending      Status = "PENDING"
+	Running      Status = "RUNNING"
+	Paused       Status = "PAUSED"
+	Disabled     Status = "DISABLED"
+	Connected    Status = "CONNECTED"
+	Disconnected Status = "DISCONNECTED"
 )
 
 // Statuses returns the display catalog in its learning order.
 func Statuses() []Status {
-	return []Status{OK, Warn, Error, Unknown, Off, Pending, Running, Paused, Disabled}
+	return []Status{OK, Warn, Error, Unknown, Off, Inactive, Pending, Running, Paused, Disabled, Connected, Disconnected}
 }
 
 // MaxStatusWidth includes the glyph, separating space and horizontal insets.
@@ -39,7 +42,7 @@ func MaxStatusWidth(t theme.Theme) int {
 	return width
 }
 
-func (s Status) View(emphasis text.Emphasis, t theme.Theme) string {
+func (s Status) View(emphasis text.Emphasis, t theme.Theme, options ...text.Presentation) string {
 	tone := text.Neutral
 	glyph := theme.GlyphUnknown
 
@@ -58,6 +61,9 @@ func (s Status) View(emphasis text.Emphasis, t theme.Theme) string {
 	case Off:
 		glyph = theme.GlyphOff
 		t = statusTheme(t, t.Inactive, t.DimInactive)
+	case Inactive:
+		glyph = theme.GlyphInactive
+		t = statusTheme(t, t.Inactive, t.DimInactive)
 	case Pending:
 		glyph = theme.GlyphPending
 		t = statusTheme(t, t.Pending, t.DimPending)
@@ -67,6 +73,13 @@ func (s Status) View(emphasis text.Emphasis, t theme.Theme) string {
 	case Paused:
 		glyph = theme.GlyphPaused
 		t = statusTheme(t, t.Paused, t.DimPaused)
+	case Connected:
+		tone = text.Success
+		glyph = theme.GlyphConnected
+	case Disconnected:
+		glyph = theme.GlyphDisconnected
+
+		t = statusTheme(t, t.Inactive, t.DimInactive)
 	case Disabled:
 		glyph = theme.GlyphDisabled
 		t = statusTheme(t, t.Inactive, t.DimInactive)
@@ -75,7 +88,12 @@ func (s Status) View(emphasis text.Emphasis, t theme.Theme) string {
 		t = statusTheme(t, t.Unknown, t.DimUnknown)
 	}
 
-	return text.Pill(t.Glyph(glyph)+" "+string(s), tone, t, emphasis)
+	mode := text.DefaultPresentation
+	if len(options) > 0 {
+		mode = options[0]
+	}
+
+	return text.Pill(mode.Format(t.Glyph(glyph), string(s)), tone, t, emphasis)
 }
 
 func statusTheme(t theme.Theme, normal, dim color.Color) theme.Theme {
