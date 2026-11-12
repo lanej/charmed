@@ -78,12 +78,48 @@ func TestHelpReflowsInTerminalCells(t *testing.T) {
 			}
 		}
 
-		if width == 32 && !strings.Contains(plain, "  --all\n    Include every region") {
-			t.Errorf("expected stacked description:\n%s", plain)
+		if width == 12 && !strings.Contains(plain, "  --all\n    Include") {
+			t.Errorf("expected even the short flag to stack:\n%s", plain)
+		}
+
+		if width == 32 && (!strings.Contains(plain, "  --all  Include every region") || !strings.Contains(plain, "  --地域 string\n    ")) {
+			t.Errorf("expected only the wider label to stack:\n%s", plain)
 		}
 
 		if width == 80 && !strings.Contains(plain, "  --all          Include every region") {
 			t.Errorf("expected aligned description:\n%s", plain)
+		}
+	}
+}
+
+func TestOneLongFlagKeepsShortDescriptionsAligned(t *testing.T) {
+	cmd := &cobra.Command{Use: "release"}
+	cmd.Flags().Bool("all", false, "All services")
+	cmd.Flags().String("comparison-release-identifier", "", "Release to compare")
+	cmd.Flags().BoolP("quiet", "q", false, "Quiet output")
+
+	page := (cli.HelpFormatter{Width: 46, Theme: theme.New(theme.Mono)}).Format(cmd)
+	want := "  --all        All services\n" +
+		"  --comparison-release-identifier string\n    Release to compare\n" +
+		"  -q, --quiet  Quiet output"
+
+	if !strings.Contains(page, want) {
+		t.Fatalf("unexpected flag layout:\n%s", page)
+	}
+}
+
+func TestFlagArgumentUsesNormalWeight(t *testing.T) {
+	cmd := &cobra.Command{Use: "release"}
+	cmd.Flags().StringP("format", "f", "", "Use a `FORMAT`")
+	cmd.Flags().Lookup("format").NoOptDefVal = "json"
+	palette := theme.New(theme.Dark)
+	names := palette.Text().Bold(true).Render("-f, --format")
+	argument := palette.Text().Render(" FORMAT[=\"json\"]")
+
+	for _, width := range []int{40, 80} {
+		page := (cli.HelpFormatter{Width: width, Theme: palette}).Format(cmd)
+		if !strings.Contains(page, names+argument) {
+			t.Errorf("expected bold flag names followed by a normal-weight argument at %d cells:\n%q", width, page)
 		}
 	}
 }

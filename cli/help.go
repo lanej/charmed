@@ -106,9 +106,9 @@ func (f HelpFormatter) Format(cmd *cobra.Command) string {
 		case child.Hidden || child.Deprecated != "":
 			continue
 		case child.IsAdditionalHelpTopicCommand():
-			topics = append(topics, helpRow{child.Name(), child.Short})
+			topics = append(topics, helpRow{label: child.Name(), description: child.Short})
 		default:
-			groups[child.GroupID] = append(groups[child.GroupID], helpRow{child.Use, child.Short})
+			groups[child.GroupID] = append(groups[child.GroupID], helpRow{label: child.Use, description: child.Short})
 		}
 	}
 
@@ -133,7 +133,11 @@ func (f HelpFormatter) hasTheme() bool {
 	return f.Theme.Mode != "" || f.Theme.Foreground != nil || f.Theme.Accent != nil || f.Theme.Muted != nil
 }
 
-type helpRow struct{ label, description string }
+type helpRow struct{ label, argument, description string }
+
+func (row helpRow) labelWidth() int {
+	return ansi.StringWidth(row.label + row.argument)
+}
 
 func flagRows(flags *pflag.FlagSet) []helpRow {
 	var rows []helpRow
@@ -149,8 +153,10 @@ func flagRows(flags *pflag.FlagSet) []helpRow {
 		}
 
 		metavar, description := pflag.UnquoteUsage(flag)
+
+		var argument string
 		if metavar != "" {
-			label += " " + metavar
+			argument = " " + metavar
 		}
 
 		kind := flag.Value.Type()
@@ -159,7 +165,7 @@ func flagRows(flags *pflag.FlagSet) []helpRow {
 
 		implicit := boolean && optional == "true" || kind == "count" && optional == "+1"
 		if optional != "" && !implicit {
-			label += "[=" + flagValue(kind, optional) + "]"
+			argument += "[=" + flagValue(kind, optional) + "]"
 		}
 
 		if slices.Contains(flag.Annotations[cobra.BashCompOneRequiredFlag], "true") {
@@ -174,7 +180,7 @@ func flagRows(flags *pflag.FlagSet) []helpRow {
 			description += " (deprecated: " + flag.Deprecated + ")"
 		}
 
-		rows = append(rows, helpRow{label, strings.TrimSpace(description)})
+		rows = append(rows, helpRow{label: label, argument: argument, description: strings.TrimSpace(description)})
 	})
 
 	return rows
@@ -206,19 +212,29 @@ func (f HelpFormatter) addRows(blocks []string, title string, rows []helpRow) []
 		return blocks
 	}
 
-	var widest int
-	for _, row := range rows {
-		widest = max(widest, ansi.StringWidth(row.label))
-	}
-
 	const indent, gap, minDescription = theme.SpaceMedium, theme.SpaceMedium, 22
+
+	labelBudget := f.Width - indent - gap - minDescription
+
+	var widest int
+
+	for _, row := range rows {
+		if width := row.labelWidth(); row.description != "" && width <= labelBudget {
+			widest = max(widest, width)
+		}
+	}
 
 	column := indent + widest + gap
 	lines := make([]string, 0, len(rows))
 
 	for _, row := range rows {
 		label := f.Theme.Text().Bold(true).Render(row.label)
-		if column+minDescription > f.Width || row.description == "" {
+		if row.argument != "" {
+			label += f.Theme.Text().Render(row.argument)
+		}
+
+		width := row.labelWidth()
+		if width > labelBudget || row.description == "" {
 			lines = append(lines, f.indented(label, indent))
 			if row.description != "" {
 				lines = append(lines, f.indented(f.Theme.Subtle().Render(row.description), indent+gap))
@@ -227,7 +243,7 @@ func (f HelpFormatter) addRows(blocks []string, title string, rows []helpRow) []
 			continue
 		}
 
-		prefix := strings.Repeat(" ", indent) + label + strings.Repeat(" ", widest-ansi.StringWidth(row.label)+gap)
+		prefix := strings.Repeat(" ", indent) + label + strings.Repeat(" ", widest-width+gap)
 		description := ansi.Wrap(f.Theme.Subtle().Render(row.description), f.Width-column, "")
 		lines = append(lines, prefix+strings.ReplaceAll(description, "\n", "\n"+strings.Repeat(" ", column)))
 	}
