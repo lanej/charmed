@@ -4,6 +4,7 @@ import (
 	"time"
 
 	tea "charm.land/bubbletea/v2"
+	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/navigation"
@@ -20,6 +21,7 @@ func chromeDefinitions() []Definition {
 		{ID: "layout/identity-header", Title: "Molecules/Layout/Identity header", Level: "Molecules", Family: "layout", Description: "A request UUID or other entity identifier is the headline. Narrow terminals move the kind above the complete identifier before wrapping.", Source: "story/chrome.go", Symbol: "identityHeaderStory", Composes: []string{"foundations/layout"}, Defaults: DefaultConfig(), Factory: identityHeaderStory},
 		{ID: "layout/section", Title: "Molecules/Layout/Foldable section", Level: "Molecules", Family: "layout", Description: "A panel folds to one heading row, returning space to sibling content. The application owns state and bindings; press Enter to toggle this specimen.", Source: "story/chrome.go", Symbol: "sectionStory", Composes: []string{"foundations/layout", "text/disclosure"}, Defaults: DefaultConfig(), Factory: sectionStory},
 		{ID: "layout/key-value", Title: "Molecules/Layout/Key-value", Level: "Molecules", Family: "layout", Description: "Aligned labels and values; 55 columns and narrower stack each pair. Missing values stay distinct from empty strings.", Source: "layout/keyvalue.go", Symbol: "KeyValue", Composes: []string{"text/value-state", "foundations/layout"}, Defaults: DefaultConfig(), Factory: keyValueStory},
+		{ID: "collection/static-table", Title: "Molecules/Collections/Static table", Level: "Molecules", Family: "collection", Description: "A non-interactive comparison table. Cells wrap in their column; 55 columns and narrower stack a table that would not fit whole, never truncating a value. Missing, unknown and truncated cells keep their word and glyph.", Source: "collection/static_table.go", Symbol: "StaticTable", Composes: []string{"feedback/evidence", "text/value-state", "text/omission", "foundations/layout"}, Defaults: DefaultConfig(), Factory: staticTableStory},
 		{ID: "feedback/evidence-summary", Title: "Molecules/Feedback/Evidence summary", Level: "Molecules", Family: "feedback", Description: "Counts per evidence state, worst first. No evidence is never zero healthy.", Source: "feedback/evidence.go", Symbol: "SummaryLine", Composes: []string{"feedback/evidence"}, Defaults: DefaultConfig(), Factory: evidenceSummaryStory},
 		{ID: "feedback/evidence-footer", Title: "Molecules/Feedback/Evidence footer", Level: "Molecules", Family: "feedback", Description: "Source, scope, state with observation age, and omission. Missing parts say so; aged evidence keeps its state word.", Source: "feedback/evidence.go", Symbol: "EvidenceFooter", Composes: []string{"feedback/evidence", "text/value-state", "text/omission"}, Defaults: DefaultConfig(), Factory: evidenceFooterStory},
 		{ID: "layout/footer", Title: "Molecules/Layout/Footer", Level: "Molecules", Family: "layout", Description: "Keyboard help and right-aligned status share one row. Narrow widths preserve help before status.", Source: "story/chrome.go", Symbol: "footerStory", Composes: []string{"foundations/layout", "text/primitives", "feedback/status"}, Defaults: DefaultConfig(), Factory: footerStory},
@@ -183,5 +185,39 @@ func evidenceFooterStory(e Environment) (runtime.Scene, error) {
 		}
 
 		return layout.Column(rows...)
+	}), nil
+}
+
+func staticTableStory(e Environment) (runtime.Scene, error) {
+	omitted := text.Omission{Kind: text.SourceTruncated, Count: 42, KnownCount: true}
+	table := collection.StaticTable{
+		Columns: []collection.TableColumn{
+			{Title: "HOST", Fixed: true}, {Title: "VERSION", Min: 10}, {Title: "STATE"}, {Title: "NOTE", Min: 12},
+		},
+		Rows: [][]collection.TableCell{
+			{
+				collection.TableText("web1west"), collection.TableText("9f2c4e1a7b3d5c60"),
+				collection.TableEvidence(feedback.EvidenceHealthy, ""), collection.TableText("serving"),
+			},
+			{
+				collection.TableText("web2west"), collection.TableMissing(),
+				collection.TableEvidence(feedback.EvidenceUnknown, ""), collection.TableText("no report received"),
+			},
+			{
+				collection.TableText("web3west"), collection.TableText("3b1d7e90a2c4f658"),
+				collection.TableEvidence(feedback.EvidenceStale, "18m"),
+				{Text: "last read", Omission: &omitted},
+			},
+			{collection.TableText("web4west"), collection.TableText("")},
+		},
+	}
+
+	return static(func(size layout.Size) string {
+		t := e.Config.Palette()
+
+		return layout.Column(
+			t.Heading().Render("At the allocation"), table.View(size.Width, t), "",
+			t.Heading().Render("At 50 columns"), table.View(50, t),
+		)
 	}), nil
 }
