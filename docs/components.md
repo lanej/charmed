@@ -197,3 +197,28 @@ Constructors copy collection inputs, and setters validate replacements. Refresh 
 Use [inline code and source blocks](atoms-text.html#text/code) for literal input. `text.InlineCode` preserves Markdown delimiters, and `text.CodeBlock` highlights a supplied language or falls back to plain text. [Rich Markdown](organisms-text.html#text/markdown) supports headings, links, quotes, lists, tables and code fences. Prose wraps to the requested width. Long source lines can extend beyond it, so place them in a viewport when readers need the whole line.
 
 `text.MarkdownStyles` returns an owned Glamour style configuration. `text.MarkdownSyntax` returns a local Chroma style derived from the same palette. Pass either through `text.MarkdownOptions` to `Markdown` or `CodeBlock`. Use the `Syntax` option for highlighting, including named Chroma palettes. Reapply the options when rendering after a resize. Monochrome output strips ANSI styling.
+
+## Data grids and status matrices
+
+`collection.DataGrid[T]` owns ordered axes, sparse typed values, pinned headers and two-axis keyboard navigation. A present zero remains distinct from an absent value. Plain values render directly; a custom renderer receives the entry, presence, selection, current theme and one-line width allocation.
+
+| Component | Responsibility |
+| --- | --- |
+| `GridAxis` | Stable ID and independent display label for each ordered row or column |
+| `GridEntry[T]` | Typed value identified by its row and column IDs |
+| `GridCell[T]` | Renderer context; the grid clips and pads output to one line |
+| `feedback.StatusCell` | Health fill and glyph with version or refined-state text |
+| `collection.StatusMatrix` | Specializes `DataGrid[feedback.StatusCell]`; absent mappings use `—`, unknown health remains explicit |
+
+Parents own focus and Tab routing. Forward messages to the focused grid and read `Selected()` for stable IDs, including absent pairs. `SetData` validates replacements atomically, copies axes and values by assignment, follows selection by ID across reordering and resets removed coordinates to the first item. References within generic values remain caller-owned.
+
+| Customization | Lifecycle contract |
+| --- | --- |
+| Theme, geometry and renderer | Retained through `SetData` and `Resize` |
+| `ShowHelp` | Instructions are opt-in; reserve their additional row |
+| Axis appearance | Neutral row labels; accented, underlined column headers |
+| Entity glyphs | Prefix supplied labels with `GlyphLoadBalancer` or `GlyphHost`; IDs remain unchanged |
+| Status selection | Unicode focus edges retain health fill; explicit ASCII mode uses brackets |
+| Data loading | Application-owned; the grid does not fetch or infer health |
+
+`StatusMatrix` retains its status-specific constructor, entries and selection methods, while its embedded `DataGrid` remains accessible for native customization. Construct it with `NewStatusMatrix`; cell meaning stays in the specialization rather than the general grid.

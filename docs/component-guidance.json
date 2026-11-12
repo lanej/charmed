@@ -47,6 +47,7 @@
     "git/browser": "Explore status, changes, history, branches, stashes and worktrees from one keyboard-driven example."
   },
   "integration": {
+    "grid": "Construct the grid with ordered axes and keyed entries, then focus it when its region becomes active. Forward Update messages and return its command; the parent owns Tab routing and Resize allocations. Replace observations through SetData and inspect Selected for stable IDs and presence. Theme, geometry, renderer and optional help survive updates.",
     "static": "Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.",
     "chart": "Keep observations and their units in the application, and pass changes through the chart's public data API. Allocate terminal columns and rows from the parent layout. Forward native model commands when enabling interaction, and check whether resizing rebuilds plotted data before applying native overrides.",
     "timeseries": "Call SetData when observations change and Resize with the new cell allocation. Both rebuild the native Bubble plot, so reapply direct Bubble customization afterward. Route keys to Update only while focused, retain its returned model and command, and use Focus or Blur when the active region changes.",

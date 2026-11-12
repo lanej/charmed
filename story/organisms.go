@@ -25,6 +25,8 @@ import (
 
 func organismsDefinitions() []Definition {
 	d := []Definition{
+		dataGridDefinition(),
+		statusMatrixDefinition(),
 		widget("collection/table", "Organisms/Collections/Table", "Organisms", "collection", "Native row navigation with themed headers, cells and selection.", "tableStory", []string{"state"}, tableStory),
 		widget("collection/list", "Organisms/Collections/List", "Organisms", "collection", "A native list with filtering, pagination and selection.", "listStory", nil, listStory),
 		widget("collection/tree", "Organisms/Collections/Tree", "Organisms", "collection", "Expand and collapse nested data without losing native tree capabilities.", "treeStory", nil, treeStory),
