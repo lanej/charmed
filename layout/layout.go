@@ -39,6 +39,8 @@ func ASCII(content string) string {
 		switch r {
 		case '─', '━', '═', '–', '—':
 			return '-'
+		case '╪':
+			return ':'
 		case '│', '┃', '║':
 			return '|'
 		case '┌', '┐', '└', '┘', '├', '┤', '┬', '┴', '┼', '╭', '╮', '╰', '╯':
