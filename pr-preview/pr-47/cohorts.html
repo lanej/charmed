@@ -38,7 +38,7 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">2</span></a>
 
 </div>
 <div class="nav-category ">
@@ -77,7 +77,7 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">2</span></a>
 
 </div>
 <div class="nav-category ">
@@ -140,11 +140,16 @@ sample <span class="syn-operator">:=</span> cohort<span class="syn-operator">.</
 <tr>
 <td>Overflow</td>
 <td>Unrepresentable aggregate or spread becomes unavailable</td>
-<td>Finite observations remain preserved</td>
+<td>Finite observations remain preserved; unrepresentable plot spans are labeled unavailable</td>
+</tr>
+<tr>
+<td>Numeric labels</td>
+<td>Magnitude-aware formatting</td>
+<td>Tiny nonzero values and large values retain their magnitude</td>
 </tr>
 </tbody>
 </table>
-<p>Missing observations are omitted from <code class="inline-code">Measurements</code>; explicit zero remains observed zero. A zero numerator and denominator represents an observed unavailable ratio, while a nonzero numerator without a denominator is invalid. Members remain selectable when the active metric is absent, and their inspector shows <code class="inline-code">n/a</code>.</p>
+<p>History annotations identify missing time intervals for each affected cohort or selected member; connecting lines interpolate across those gaps. Missing observations are omitted from <code class="inline-code">Measurements</code>; explicit zero remains observed zero. A zero numerator and denominator represents an observed unavailable ratio, while a nonzero numerator without a denominator is invalid. Members remain selectable when the active metric is absent, and their inspector shows <code class="inline-code">n/a</code>.</p>
 <h2 id="select-a-reference"><a class="heading-permalink" href="#select-a-reference"><span>Select a reference</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Set <code class="inline-code">ReferenceID</code> to compare every other cohort against that identity. Reordering never changes the baseline. Omit it, or call <code class="inline-code"><span class="syn-function">SetReference</span><span class="syn-operator">(</span><span class="syn-string">&#34;&#34;</span><span class="syn-operator">)</span></code>, to show distributions and histories without relative deltas or distances. A single cohort is valid with or without a reference and has no peer deltas.</p>
 <table tabindex="0">

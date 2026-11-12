@@ -38,7 +38,7 @@
 
 </div>
 <div class="nav-category is-active">
-<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">2</span></a>
 <div class="nav-groups"><a class="nav-group" href="templates-pattern.html" aria-current="page">Patterns</a></div>
 </div>
 <div class="nav-category ">
@@ -50,7 +50,7 @@
 
 <div class="nav-outline"><p class="nav-title">On this page</p>
 
-<div class="nav-items"><a class="nav-component" href="#template%2fapplication">Application shell</a></div>
+<div class="nav-items"><a class="nav-component" href="#template%2fapplication">Application shell</a><a class="nav-component" href="#template%2freport-page">Report page</a></div>
 
 </div>
 </nav>
@@ -82,7 +82,7 @@
 
 </div>
 <div class="nav-category is-active">
-<a class="nav-level" href="templates.html" >Templates<span class="nav-count">1</span></a>
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">2</span></a>
 <div class="nav-groups"><a class="nav-group" href="templates-pattern.html" aria-current="page">Patterns</a></div>
 </div>
 <div class="nav-category ">
@@ -94,7 +94,7 @@
 
 <div class="nav-outline"><p class="nav-title">On this page</p>
 
-<div class="nav-items"><a class="nav-component" href="#template%2fapplication">Application shell</a></div>
+<div class="nav-items"><a class="nav-component" href="#template%2fapplication">Application shell</a><a class="nav-component" href="#template%2freport-page">Report page</a></div>
 
 </div>
 </nav>
@@ -112,8 +112,8 @@
 <p class="catalog-breadcrumb"><a href="templates.html">Templates</a><span aria-hidden="true"> / </span>Patterns</p>
 
 <section class="component-family" id="level-templates-pattern"><h1><a class="heading-permalink" href="#level-templates-pattern"><span>Patterns</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
-<p class="catalog-count">1 component · <a href="templates.html">All templates</a></p>
-<ul class="group-jump-links" aria-label="Components in Patterns"><li><a href="#template%2fapplication">Application shell</a></li></ul>
+<p class="catalog-count">2 components · <a href="templates.html">All templates</a></p>
+<ul class="group-jump-links" aria-label="Components in Patterns"><li><a href="#template%2fapplication">Application shell</a></li><li><a href="#template%2freport-page">Report page</a></li></ul>
 
 
 <section class="component" id="template/application">
@@ -229,8 +229,120 @@ body <span class="syn-operator">:=</span> layout<span class="syn-operator">.</sp
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="template/application-integration"><h3 id="template/application-integration"><a class="heading-permalink" href="#template%2fapplication-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>The parent model supplies observations, coordinates focus and owns application decisions. Forward initialization and update commands rather than executing them during rendering. Resize the existing composition from the terminal allocation so selection remains stable, and apply native customization at the exposed child models after any rebuilding lifecycle step.</p></section>
-<div class="component-run"><h3 id="template/application-run"><a class="heading-permalink" href="#template%2fapplication-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog template/application</code></pre><p><a href="https://github.com/lanej/charmed/blob/5f6eb682634c7705296cd68f3606c2ee95316031/docs/snippets/template_application.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/5f6eb682634c7705296cd68f3606c2ee95316031/story/chrome.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="template/application-run"><a class="heading-permalink" href="#template%2fapplication-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog template/application</code></pre><p><a href="https://github.com/lanej/charmed/blob/f80a41efb56b8e3af080cecc1e29a41065cc3cd9/docs/snippets/template_application.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/f80a41efb56b8e3af080cecc1e29a41065cc3cd9/story/chrome.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Composed from: <a class="dependency" href="molecules-layout.html#layout/header">layout/header</a> <a class="dependency" href="molecules-navigation.html#navigation/tabs">navigation/tabs</a> <a class="dependency" href="molecules-layout.html#layout/footer">layout/footer</a> <a class="dependency" href="foundations-layout.html#foundations/layout">foundations/layout</a> <a class="dependency" href="atoms-feedback.html#feedback/status">feedback/status</a> </p>
+</section>
+
+<section class="component" id="template/report-page">
+<p class="eyebrow"><a href="templates.html">Templates</a> / Patterns</p><h2><a class="heading-permalink" href="#template%2freport-page" aria-label="Link to Report page component"><span>Report page</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">A finite report: header with the overall evidence state, a summary line, titled panels that sit side by side or stack at 55 columns and narrower, and the evidence footer. The overall state is the worst counted state; no evidence reads unknown.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="template/report-page-preview"><a class="heading-permalink" href="#template%2freport-page-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Report page variants">
+<a id="tab-template/report-page-example" href="#panel-template%2freport-page-example" role="tab" aria-controls="panel-template/report-page-example" aria-selected="true">Example</a>
+<a id="tab-template/report-page-0" href="#panel-template%2freport-page-0" role="tab" aria-controls="panel-template/report-page-0" aria-selected="false">Demo</a><a id="tab-template/report-page-1" href="#panel-template%2freport-page-1" role="tab" aria-controls="panel-template/report-page-1" aria-selected="false">Narrow</a><a id="tab-template/report-page-2" href="#panel-template%2freport-page-2" role="tab" aria-controls="panel-template/report-page-2" aria-selected="false">256 colors</a><a id="tab-template/report-page-3" href="#panel-template%2freport-page-3" role="tab" aria-controls="panel-template/report-page-3" aria-selected="false">16 colors</a><a id="tab-template/report-page-4" href="#panel-template%2freport-page-4" role="tab" aria-controls="panel-template/report-page-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-template/report-page-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/report-page-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#67d4c0;font-weight:bold;">Service processes</span>                                                      <span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">◷ STALE</span><span style="background-color:#f2c879;"> </span>
+<span style="color:#a8a8a8;">api</span>                                                                             
+<span style="color:#f2c879;">◷ 1 stale</span><span style="color:#a8a8a8;"> · </span><span style="color:#86cf9a;">✓ 2 healthy</span>
+<span style="color:#475569;">┌</span><span style="color:#a8a8a8;"> Hosts </span><span style="color:#475569;">────────────────────────────────┐</span> <span style="color:#475569;">┌</span><span style="color:#a8a8a8;"> Processes </span><span style="color:#475569;">─────────────────────────┐</span>
+<span style="color:#475569;">│</span> web1west  observed  45s               <span style="color:#475569;">│</span> <span style="color:#475569;">│</span> db:db  RUNNING                     <span style="color:#475569;">│</span>
+<span style="color:#475569;">└───────────────────────────────────────┘</span> <span style="color:#475569;">└────────────────────────────────────┘</span>
+<span style="color:#a8a8a8;">source: </span><span style="color:#eeeeee;">supervisor</span><span style="color:#a8a8a8;"> · scope: </span><span style="color:#eeeeee;">api</span><span style="color:#a8a8a8;"> · </span><span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ STALE</span><span style="background-color:#32322f;"> </span> <span style="color:#a8a8a8;">14s ago</span></pre></figure>
+</div>
+<div id="panel-template/report-page-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/report-page-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 24 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Service processes</span>                                                                        <span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">✓ HEALTHY</span><span style="background-color:#86cf9a;"> </span>
+<span style="color:#a8a8a8;">api</span>                                                                                                 
+<span style="color:#86cf9a;">✓ 2 healthy</span>                                                                                         
+<span style="color:#475569;">┌</span><span style="color:#a8a8a8;"> Hosts </span><span style="color:#475569;">────────────────────────────────────────────┐</span> <span style="color:#475569;">┌</span><span style="color:#a8a8a8;"> Processes </span><span style="color:#475569;">─────────────────────────────────┐</span>
+<span style="color:#475569;">│</span> web1west  observed  live    45s                   <span style="color:#475569;">│</span> <span style="color:#475569;">│</span> db:db       RUNNING                        <span style="color:#475569;">│</span>
+<span style="color:#475569;">│</span> web2west  observed  cached  4m                    <span style="color:#475569;">│</span> <span style="color:#475569;">│</span> http:http  RUNNING                         <span style="color:#475569;">│</span>
+<span style="color:#475569;">│</span> worker1   observed  live    30s                   <span style="color:#475569;">│</span> <span style="color:#475569;">│</span> worker     FATAL                           <span style="color:#475569;">│</span>
+<span style="color:#475569;">└───────────────────────────────────────────────────┘</span> <span style="color:#475569;">└────────────────────────────────────────────┘</span>
+<span style="color:#475569;">┌</span><span style="color:#a8a8a8;"> Limits </span><span style="color:#475569;">──────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span style="color:#475569;">│</span> 1 host not retained                                                                              <span style="color:#475569;">│</span>
+<span style="color:#475569;">└──────────────────────────────────────────────────────────────────────────────────────────────────┘</span>
+<span style="color:#a8a8a8;">source: </span><span style="color:#eeeeee;">supervisor</span><span style="color:#a8a8a8;"> · scope: </span><span style="color:#eeeeee;">api</span><span style="color:#a8a8a8;"> · </span><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ HEALTHY</span><span style="background-color:#223334;"> </span> <span style="color:#a8a8a8;">14s ago</span></pre></figure>
+</div><div id="panel-template/report-page-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/report-page-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Service processes</span>            <span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">✓ HEALTHY</span><span style="background-color:#86cf9a;"> </span>
+<span style="color:#a8a8a8;">api</span>                                     
+<span style="color:#86cf9a;">✓ 2 healthy</span>                             
+<span style="color:#475569;">┌</span><span style="color:#a8a8a8;"> Hosts </span><span style="color:#475569;">───────────────────────────────┐</span>
+<span style="color:#475569;">│</span> web1west  observed  live    45s      <span style="color:#475569;">│</span>
+<span style="color:#475569;">│</span> web2west  observed  cached  4m       <span style="color:#475569;">│</span>
+<span style="color:#475569;">│</span> worker1   observed  live    30s      <span style="color:#475569;">│</span>
+<span style="color:#475569;">└──────────────────────────────────────┘</span>
+<span style="color:#475569;">┌</span><span style="color:#a8a8a8;"> Processes </span><span style="color:#475569;">───────────────────────────┐</span>
+<span style="color:#475569;">│</span> db:db       RUNNING                  <span style="color:#475569;">│</span>
+<span style="color:#475569;">│</span> http:http  RUNNING                   <span style="color:#475569;">│</span>
+<span style="color:#475569;">│</span> worker     FATAL                     <span style="color:#475569;">│</span>
+<span style="color:#475569;">└──────────────────────────────────────┘</span>
+<span style="color:#eeeeee;">… +3 more</span>                               
+<span style="color:#a8a8a8;">source: </span><span style="color:#eeeeee;">supervisor</span><span style="color:#a8a8a8;"> · scope: </span><span style="color:#eeeeee;">api</span>         
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ HEALTHY</span><span style="background-color:#223334;"> </span> <span style="color:#a8a8a8;">14s ago</span></pre></figure>
+</div><div id="panel-template/report-page-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/report-page-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 24 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">Service processes</span>                                                                        <span style="background-color:#87d787;"> </span><span style="color:#1c1c1c;background-color:#87d787;font-weight:bold;">✓ HEALTHY</span><span style="background-color:#87d787;"> </span>
+<span style="color:#a8a8a8;">api</span>                                                                                                 
+<span style="color:#87d787;">✓ 2 healthy</span>                                                                                         
+<span style="color:#585858;">┌</span><span style="color:#a8a8a8;"> Hosts </span><span style="color:#585858;">────────────────────────────────────────────┐</span> <span style="color:#585858;">┌</span><span style="color:#a8a8a8;"> Processes </span><span style="color:#585858;">─────────────────────────────────┐</span>
+<span style="color:#585858;">│</span> web1west  observed  live    45s                   <span style="color:#585858;">│</span> <span style="color:#585858;">│</span> db:db       RUNNING                        <span style="color:#585858;">│</span>
+<span style="color:#585858;">│</span> web2west  observed  cached  4m                    <span style="color:#585858;">│</span> <span style="color:#585858;">│</span> http:http  RUNNING                         <span style="color:#585858;">│</span>
+<span style="color:#585858;">│</span> worker1   observed  live    30s                   <span style="color:#585858;">│</span> <span style="color:#585858;">│</span> worker     FATAL                           <span style="color:#585858;">│</span>
+<span style="color:#585858;">└───────────────────────────────────────────────────┘</span> <span style="color:#585858;">└────────────────────────────────────────────┘</span>
+<span style="color:#585858;">┌</span><span style="color:#a8a8a8;"> Limits </span><span style="color:#585858;">──────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span style="color:#585858;">│</span> 1 host not retained                                                                              <span style="color:#585858;">│</span>
+<span style="color:#585858;">└──────────────────────────────────────────────────────────────────────────────────────────────────┘</span>
+<span style="color:#a8a8a8;">source: </span><span style="color:#eeeeee;">supervisor</span><span style="color:#a8a8a8;"> · scope: </span><span style="color:#eeeeee;">api</span><span style="color:#a8a8a8;"> · </span><span style="background-color:#005f5f;"> </span><span style="color:#87d787;background-color:#005f5f;">✓ HEALTHY</span><span style="background-color:#005f5f;"> </span> <span style="color:#a8a8a8;">14s ago</span></pre></figure>
+</div><div id="panel-template/report-page-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/report-page-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 24 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">Service processes</span>                                                                        <span style="background-color:#00ff00;"> </span><span style="color:#000000;background-color:#00ff00;font-weight:bold;">✓ HEALTHY</span><span style="background-color:#00ff00;"> </span>
+<span style="color:#c0c0c0;">api</span>                                                                                                 
+<span style="color:#00ff00;">✓ 2 healthy</span>                                                                                         
+<span style="color:#808080;">┌</span><span style="color:#c0c0c0;"> Hosts </span><span style="color:#808080;">────────────────────────────────────────────┐</span> <span style="color:#808080;">┌</span><span style="color:#c0c0c0;"> Processes </span><span style="color:#808080;">─────────────────────────────────┐</span>
+<span style="color:#808080;">│</span> web1west  observed  live    45s                   <span style="color:#808080;">│</span> <span style="color:#808080;">│</span> db:db       RUNNING                        <span style="color:#808080;">│</span>
+<span style="color:#808080;">│</span> web2west  observed  cached  4m                    <span style="color:#808080;">│</span> <span style="color:#808080;">│</span> http:http  RUNNING                         <span style="color:#808080;">│</span>
+<span style="color:#808080;">│</span> worker1   observed  live    30s                   <span style="color:#808080;">│</span> <span style="color:#808080;">│</span> worker     FATAL                           <span style="color:#808080;">│</span>
+<span style="color:#808080;">└───────────────────────────────────────────────────┘</span> <span style="color:#808080;">└────────────────────────────────────────────┘</span>
+<span style="color:#808080;">┌</span><span style="color:#c0c0c0;"> Limits </span><span style="color:#808080;">──────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span style="color:#808080;">│</span> 1 host not retained                                                                              <span style="color:#808080;">│</span>
+<span style="color:#808080;">└──────────────────────────────────────────────────────────────────────────────────────────────────┘</span>
+<span style="color:#c0c0c0;">source: </span><span style="color:#ffffff;">supervisor</span><span style="color:#c0c0c0;"> · scope: </span><span style="color:#ffffff;">api</span><span style="color:#c0c0c0;"> · </span><span style="background-color:#008080;"> </span><span style="color:#00ff00;background-color:#008080;">✓ HEALTHY</span><span style="background-color:#008080;"> </span> <span style="color:#c0c0c0;">14s ago</span></pre></figure>
+</div><div id="panel-template/report-page-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/report-page-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 24 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">Service processes</span>                                                                        <span style="font-weight:bold;">[+ HEALTHY]</span>
+api                                                                                                 
++ 2 healthy                                                                                         
++ Hosts --------------------------------------------+ + Processes ---------------------------------+
+| web1west  observed  live    45s                   | | db:db       RUNNING                        |
+| web2west  observed  cached  4m                    | | http:http  RUNNING                         |
+| worker1   observed  live    30s                   | | worker     FATAL                           |
++---------------------------------------------------+ +--------------------------------------------+
++ Limits ------------------------------------------------------------------------------------------+
+| 1 host not retained                                                                              |
++--------------------------------------------------------------------------------------------------+
+source: supervisor * scope: api * [+ HEALTHY] 14s ago</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="template/report-page-code"><a class="heading-permalink" href="#template%2freport-page-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/time" title="time"><code>time</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/pattern" title="github.com/lanej/charmed/pattern"><code>pattern</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">now <span class="syn-operator">:=</span> time<span class="syn-operator">.</span><span class="syn-function">Date</span><span class="syn-operator">(</span><span class="syn-number">2026</span><span class="syn-operator">,</span> <span class="syn-number">11</span><span class="syn-operator">,</span> <span class="syn-number">11</span><span class="syn-operator">,</span> <span class="syn-number">12</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> time<span class="syn-operator">.</span>UTC<span class="syn-operator">)</span>
+page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</span>ReportPage<span class="syn-operator">{</span>
+	Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Service processes&#34;</span><span class="syn-operator">,</span> Context<span class="syn-operator">:</span> <span class="syn-string">&#34;api&#34;</span><span class="syn-operator">,</span>
+	Counts<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>feedback<span class="syn-operator">.</span>EvidenceCount<span class="syn-operator">{</span><span class="syn-operator">{</span>State<span class="syn-operator">:</span> feedback<span class="syn-operator">.</span>EvidenceHealthy<span class="syn-operator">,</span> N<span class="syn-operator">:</span> <span class="syn-number">2</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span>State<span class="syn-operator">:</span> feedback<span class="syn-operator">.</span>EvidenceStale<span class="syn-operator">,</span> N<span class="syn-operator">:</span> <span class="syn-number">1</span><span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+	Panels<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>pattern<span class="syn-operator">.</span>ReportPanel<span class="syn-operator">{</span>
+		<span class="syn-operator">{</span>Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Hosts&#34;</span><span class="syn-operator">,</span> Weight<span class="syn-operator">:</span> <span class="syn-number">3</span><span class="syn-operator">,</span> Body<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span><span class="syn-builtin">int</span><span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span> <span class="syn-keyword">return</span> <span class="syn-string">&#34;web1west  observed  45s&#34;</span> <span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Processes&#34;</span><span class="syn-operator">,</span> Weight<span class="syn-operator">:</span> <span class="syn-number">2</span><span class="syn-operator">,</span> Beside<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">,</span> Body<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span><span class="syn-builtin">int</span><span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span> <span class="syn-keyword">return</span> <span class="syn-string">&#34;db:db  RUNNING&#34;</span> <span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+	<span class="syn-operator">}</span><span class="syn-operator">,</span>
+	Footer<span class="syn-operator">:</span> feedback<span class="syn-operator">.</span>EvidenceFooter<span class="syn-operator">{</span>Source<span class="syn-operator">:</span> <span class="syn-string">&#34;supervisor&#34;</span><span class="syn-operator">,</span> Scope<span class="syn-operator">:</span> <span class="syn-string">&#34;api&#34;</span><span class="syn-operator">,</span> ObservedAt<span class="syn-operator">:</span> now<span class="syn-operator">.</span><span class="syn-function">Add</span><span class="syn-operator">(</span><span class="syn-operator">-</span><span class="syn-number">14</span> <span class="syn-operator">*</span> time<span class="syn-operator">.</span>Second<span class="syn-operator">)</span><span class="syn-operator">,</span> Now<span class="syn-operator">:</span> now<span class="syn-operator">}</span><span class="syn-operator">,</span>
+<span class="syn-operator">}</span>
+
+<span class="syn-keyword">return</span> page<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-number">80</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="template/report-page-integration"><h3 id="template/report-page-integration"><a class="heading-permalink" href="#template%2freport-page-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>The parent model supplies observations, coordinates focus and owns application decisions. Forward initialization and update commands rather than executing them during rendering. Resize the existing composition from the terminal allocation so selection remains stable, and apply native customization at the exposed child models after any rebuilding lifecycle step.</p></section>
+<div class="component-run"><h3 id="template/report-page-run"><a class="heading-permalink" href="#template%2freport-page-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog template/report-page</code></pre><p><a href="https://github.com/lanej/charmed/blob/f80a41efb56b8e3af080cecc1e29a41065cc3cd9/docs/snippets/template_report_page.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/f80a41efb56b8e3af080cecc1e29a41065cc3cd9/pattern/report.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Composed from: <a class="dependency" href="molecules-layout.html#layout/header">layout/header</a> <a class="dependency" href="molecules-feedback.html#feedback/evidence-summary">feedback/evidence-summary</a> <a class="dependency" href="molecules-feedback.html#feedback/evidence-footer">feedback/evidence-footer</a> <a class="dependency" href="foundations-layout.html#foundations/layout">foundations/layout</a> <a class="dependency" href="atoms-feedback.html#feedback/evidence">feedback/evidence</a> </p>
 </section>
 </section>
 </section>
