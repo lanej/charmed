@@ -331,6 +331,13 @@ func Generate(out string) error {
 			}
 		}
 
+		if d.ID == "collection/status-matrix" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Legend", change: func(c *story.Config) { c.Legend = true }})
+		}
+
 		if d.ID == "collection/json-viewer" {
 			for _, name := range []string{"Folded containers", "Narrow JSON", "Raw JSON", "Invalid JSON", "No instructions", "No folds"} {
 				variants = append(variants, struct {

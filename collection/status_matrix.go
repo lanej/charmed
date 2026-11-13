@@ -22,6 +22,9 @@ type MatrixEntry struct {
 // Its theme, geometry, help, renderer and selection survive SetData and Resize.
 type StatusMatrix struct {
 	*DataGrid[feedback.StatusCell]
+	// ShowLegend appends the Legend of present statuses below the grid, taking
+	// its rows from the allocation. It is off by default.
+	ShowLegend bool
 }
 
 func NewStatusMatrix(rows, columns []MatrixAxis, entries []MatrixEntry, size layout.Size, t theme.Theme) (*StatusMatrix, error) {

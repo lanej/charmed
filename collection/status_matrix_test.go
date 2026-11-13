@@ -11,6 +11,7 @@ import (
 	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
+	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -240,5 +241,114 @@ func TestStatusMatrixAlwaysHonorsAllocationAndEmptyState(t *testing.T) {
 
 	if !strings.Contains(m.View(), "No mappings") {
 		t.Fatal("empty matrix lacks empty state")
+	}
+}
+
+func legendMatrix(t *testing.T, mode theme.Mode, ascii bool, statuses ...feedback.Status) *collection.StatusMatrix {
+	t.Helper()
+
+	axes := []collection.MatrixAxis{{ID: "a", Label: "Alpha"}}
+	columns := make([]collection.MatrixAxis, len(statuses))
+	entries := make([]collection.MatrixEntry, len(statuses))
+
+	for i, status := range statuses {
+		columns[i] = collection.MatrixAxis{ID: string(rune('a' + i)), Label: string(status)}
+		entries[i] = collection.MatrixEntry{RowID: "a", ColumnID: columns[i].ID, Cell: feedback.StatusCell{Status: status}}
+	}
+
+	palette := theme.New(mode)
+	palette.ASCII = ascii
+
+	m, err := collection.NewStatusMatrix(axes, columns, entries, layout.Size{Width: 80, Height: 8}, palette)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	return m
+}
+
+func TestStatusMatrixLegendListsPresentStatusesInEveryTheme(t *testing.T) {
+	for name, setup := range map[string]struct {
+		mode  theme.Mode
+		ascii bool
+	}{"dark": {theme.Dark, false}, "light": {theme.Light, false}, "mono": {theme.Mono, false}, "ascii": {theme.Dark, true}, "mono ascii": {theme.Mono, true}} {
+		m := legendMatrix(t, setup.mode, setup.ascii, feedback.Error, feedback.OK, feedback.Unknown, feedback.OK)
+		legend := ansi.Strip(m.Legend(80))
+
+		want := ansi.Strip(feedback.OK.View(text.Normal, m.Theme)) + "  " + ansi.Strip(feedback.Error.View(text.Normal, m.Theme)) + "  " + ansi.Strip(feedback.Unknown.View(text.Normal, m.Theme))
+		if legend != want {
+			t.Fatalf("%s legend %q, want %q", name, legend, want)
+		}
+
+		if strings.Contains(legend, "WARN") || strings.Count(legend, "OK") != 1 {
+			t.Fatalf("%s legend lists absent or repeated statuses: %q", name, legend)
+		}
+	}
+}
+
+func TestStatusMatrixLegendKeepsUnrecognizedStatusesApartFromHealthy(t *testing.T) {
+	for _, ascii := range []bool{false, true} {
+		for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Mono} {
+			m := legendMatrix(t, mode, ascii, feedback.Status("HEALTHY"), feedback.Status(""), feedback.Status("ok"))
+			legend := ansi.Strip(m.Legend(80))
+			unknown := ansi.Strip(feedback.Unknown.View(text.Normal, m.Theme))
+
+			if strings.TrimSpace(legend) != strings.TrimSpace(unknown) {
+				t.Fatalf("unrecognized statuses must collapse to UNKNOWN, got %q", legend)
+			}
+
+			healthy := ansi.Strip(feedback.OK.View(text.Normal, m.Theme))
+			if strings.Contains(legend, strings.TrimSpace(healthy)) || strings.Contains(legend, "HEALTHY") {
+				t.Fatalf("unknown shares the healthy glyph or word: %q", legend)
+			}
+		}
+	}
+}
+
+func TestStatusMatrixLegendWrapsWholeEntriesWithinWidth(t *testing.T) {
+	m := legendMatrix(t, theme.Dark, false, feedback.OK, feedback.Warn, feedback.Error, feedback.Unknown, feedback.Disconnected)
+
+	for width := 1; width <= 90; width++ {
+		legend := m.Legend(width)
+		for _, line := range strings.Split(legend, "\n") {
+			if got := lipgloss.Width(line); got > width {
+				t.Fatalf("width %d line is %d cells: %q", width, got, ansi.Strip(line))
+			}
+		}
+	}
+
+	if lines := strings.Split(ansi.Strip(m.Legend(30)), "\n"); len(lines) < 2 || strings.Contains(lines[0], "…") {
+		t.Fatalf("narrow legend did not wrap whole entries: %q", lines)
+	}
+
+	if m.Legend(0) != "" {
+		t.Fatal("zero width legend is not empty")
+	}
+}
+
+func TestStatusMatrixLegendIsOptionalAndTakesRowsFromTheAllocation(t *testing.T) {
+	m := legendMatrix(t, theme.Dark, false, feedback.OK, feedback.Error)
+	legend := ansi.Strip(feedback.OK.View(text.Normal, m.Theme)) + "  " + ansi.Strip(feedback.Error.View(text.Normal, m.Theme))
+
+	if plain := ansi.Strip(m.View()); strings.Contains(plain, legend) || plain != ansi.Strip(m.DataGrid.View()) {
+		t.Fatalf("legend appeared by default:\n%s", plain)
+	}
+
+	m.ShowLegend = true
+	frame := ansi.Strip(m.View())
+
+	if lipgloss.Height(frame) != 8 || !strings.Contains(frame, "Rows 1-1/1") || !strings.Contains(frame, legend) {
+		t.Fatalf("legend missing or escaped allocation:\n%s", frame)
+	}
+
+	empty, err := collection.NewStatusMatrix(nil, nil, nil, layout.Size{Width: 40, Height: 4}, theme.New(theme.Dark))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	empty.ShowLegend = true
+
+	if empty.Legend(40) != "" || strings.Contains(ansi.Strip(empty.View()), "OK") {
+		t.Fatal("empty matrix has a legend")
 	}
 }

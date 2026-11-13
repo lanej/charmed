@@ -36,6 +36,7 @@ func ExampleCollectionStatusMatrix() (string, error) {
 	matrix.Focus()
 	// Forward Update(msg) while focused; the parent owns Tab and Resize(size).
 	// SetData retains selection by ID. Selected distinguishes absent mappings.
-	// Set ShowHelp to opt into instructions; the embedded DataGrid stays accessible.
+	// Set ShowHelp to opt into instructions and ShowLegend, or call Legend(width),
+	// so a printed matrix explains its cells; the embedded DataGrid stays accessible.
 	return matrix.View(), nil
 }
