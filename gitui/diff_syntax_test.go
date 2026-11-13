@@ -52,6 +52,21 @@ func tokenAt(line syntaxLine, offset int) chroma.TokenType {
 	return chroma.Text
 }
 
+func TestSyntaxRenderingIgnoresEquivalentTokenPartitions(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast, theme.Mono} {
+		palette := theme.New(mode)
+		whole := syntaxLine{text: "    value", spans: []syntaxSpan{{4, chroma.Text}, {9, chroma.Name}}}
+		partitioned := syntaxLine{text: whole.text, spans: []syntaxSpan{{1, chroma.TextWhitespace}, {4, chroma.Text}, {6, chroma.NameVariable}, {9, chroma.NameFunction}}}
+
+		for _, kind := range []LineKind{ContextLine, AddedLine, DeletedLine} {
+			edits := []editSpan{{6, 9}}
+			if a, b := renderSyntaxLine(whole, kind, edits, palette), renderSyntaxLine(partitioned, kind, edits, palette); a != b {
+				t.Fatalf("%s %s: equivalent syntax partitions changed ANSI output: %q != %q", mode, kind, a, b)
+			}
+		}
+	}
+}
+
 func TestDiffSyntaxKeepsOldAndNewLexerStateSeparate(t *testing.T) {
 	hunk := Hunk{Lines: []DiffLine{
 		{Kind: ContextLine, Text: "/* comment"},

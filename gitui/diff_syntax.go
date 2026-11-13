@@ -175,12 +175,12 @@ func renderSyntaxLine(line syntaxLine, kind LineKind, edits []editSpan, t theme.
 
 	graphemes := uniseg.NewGraphemes(line.text)
 	token, edit, start := 0, 0, 0
-	previousKind, previousEmphasis := chroma.Text, false
+	previousForeground, previousEmphasis := t.Foreground, false
 
 	flush := func(end int) {
 		style := diffLineStyle(kind, previousEmphasis, t)
-		if foreground := syntaxColor(previousKind, t); t.Mode != theme.Mono && foreground != nil {
-			style = style.Foreground(foreground)
+		if t.Mode != theme.Mono && previousForeground != nil {
+			style = style.Foreground(previousForeground)
 		}
 
 		output = append(output, style.Render(line.text[start:end]))
@@ -203,14 +203,24 @@ func renderSyntaxLine(line syntaxLine, kind LineKind, edits []editSpan, t theme.
 		}
 
 		emphasis := edit < len(edits) && edits[edit].start <= from
-		if from > start && (currentKind != previousKind || emphasis != previousEmphasis) {
+
+		foreground := syntaxColor(currentKind, t)
+		if from > start && (!sameSyntaxColor(foreground, previousForeground) || emphasis != previousEmphasis) {
 			flush(from)
 		}
 
-		previousKind, previousEmphasis = currentKind, emphasis
+		previousForeground, previousEmphasis = foreground, emphasis
 	}
 
 	flush(len(line.text))
 
 	return strings.Join(output, "")
+}
+
+func sameSyntaxColor(first, second color.Color) bool {
+	if first == nil || second == nil {
+		return first == nil && second == nil
+	}
+
+	return color.NRGBAModel.Convert(first) == color.NRGBAModel.Convert(second)
 }
