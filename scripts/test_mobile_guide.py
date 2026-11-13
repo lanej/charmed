@@ -277,6 +277,7 @@ def check_component_graph(browser, site, output):
             page.keyboard.press("Home")
             page.keyboard.press("ArrowDown")
             page.keyboard.press("Enter")
+            page.keyboard.press("Escape")
             assert page.locator("[data-component]:visible").get_attribute("data-component") == selector.input_value()
             assert page.locator(":focus").get_attribute("id") == "graph-component"
             page.goto(base + "dependencies.html#component-missing")
