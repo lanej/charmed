@@ -38,6 +38,8 @@ func Render(id string) (string, error) {
 		return ExampleTuiRegions()
 	case "tui/validation":
 		return ExampleTuiValidation()
+	case "tui/static":
+		return ExampleTuiStatic()
 
 	case "collection/data-grid":
 		return ExampleCollectionDataGrid()
