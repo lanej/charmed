@@ -27,30 +27,33 @@ func TestStateDiagramStoryUpdatesAndResizes(t *testing.T) {
 	original := model.View().Content
 
 	_, _ = model.Update(tea.KeyPressMsg{Code: tea.KeyRight})
-	if model.View().Content == original {
-		t.Fatal("Right did not change active state marker")
+	if model.View().Content != original {
+		t.Fatal("Right wrapped beyond final occurrence")
 	}
 
 	_, _ = model.Update(tea.KeyPressMsg{Code: tea.KeyLeft})
-	if model.View().Content != original {
-		t.Fatal("Left did not restore the active state marker")
+	if model.View().Content == original {
+		t.Fatal("Left did not inspect the previous occurrence")
 	}
 
-	for _, mode := range []string{"last 3", "all", "last"} {
-		_, _ = model.Update(tea.KeyPressMsg{Code: 'h', Text: "h"})
-		if !strings.Contains(ansi.Strip(model.View().Content), "H: "+mode) {
-			t.Fatalf("trace mode %s unavailable", mode)
-		}
+	_, _ = model.Update(tea.KeyPressMsg{Code: tea.KeyEnd})
+	if model.View().Content != original {
+		t.Fatal("End did not restore final occurrence")
 	}
 
-	if model.View().Content != original {
-		t.Fatal("trace mode cycle changed replay position")
+	_, _ = model.Update(tea.KeyPressMsg{Code: tea.KeyTab})
+	_, _ = model.Update(tea.KeyPressMsg{Code: tea.KeyDown})
+	_, _ = model.Update(tea.KeyPressMsg{Code: tea.KeyEnter})
+
+	_, _ = model.Update(tea.KeyPressMsg{Code: tea.KeyTab})
+	if !strings.Contains(ansi.Strip(model.View().Content), "Last three") {
+		t.Fatal("trace-window group missing")
 	}
 
 	_, _ = model.Update(tea.WindowSizeMsg{Width: 40, Height: 12})
 
 	narrow := ansi.Strip(model.View().Content)
-	if !strings.Contains(narrow, "needs more rows") || strings.Contains(narrow, "retry") {
+	if !strings.Contains(narrow, "rows; available") || strings.Contains(narrow, "retry") {
 		t.Fatal("narrow view displayed a partial graph instead of allocation guidance")
 	}
 
@@ -68,12 +71,12 @@ func TestStateDiagramStoryUpdatesAndResizes(t *testing.T) {
 	}
 
 	_, _ = model.Update(tea.WindowSizeMsg{Width: 100, Height: 8})
-	if !strings.Contains(ansi.Strip(model.View().Content), "needs more rows") {
+	if !strings.Contains(ansi.Strip(model.View().Content), "rows; available") {
 		t.Fatal("short view silently clipped graph topology")
 	}
 
 	_, _ = model.Update(tea.WindowSizeMsg{Width: 120, Height: 40})
-	if model.View().Content != original {
-		t.Fatal("resize lost the caller graph or active state")
+	if !strings.Contains(model.View().Content, "Done") {
+		t.Fatal("resize lost the caller graph")
 	}
 }

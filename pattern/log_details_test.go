@@ -169,3 +169,46 @@ func TestInspectorSymbolsRefreshSharedSummary(t *testing.T) {
 		t.Fatal("summary retained stale pending label")
 	}
 }
+
+func TestRenderingCollapsedPayloadRetainsNativeViewport(t *testing.T) {
+	for _, id := range []string{"request", "response"} {
+		t.Run(id, func(t *testing.T) {
+			requests, logs := story.LogFixture()
+			requests = requests[1:2]
+			requests[0].RequestBody = collection.HTTPBody{State: collection.Captured, ContentType: "text/plain", Bytes: []byte(strings.Repeat("Request payload\n", 100))}
+			requests[0].ResponseBody = collection.HTTPBody{State: collection.Captured, ContentType: "text/plain", Bytes: []byte(strings.Repeat("Response payload\n", 100))}
+
+			m, err := pattern.NewLogInspector(pattern.LogInspectorOptions{Requests: requests, Logs: logs, Theme: theme.New(theme.Dark), NoHelp: true})
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			m.Resize(layout.Size{Width: 160, Height: 44})
+
+			native := &m.Request
+			if id == "response" {
+				native = &m.Response
+			}
+
+			native.SetYOffset(6)
+			width, height, offset := native.Width(), native.Height(), native.YOffset()
+
+			m.SetPaneCollapsed(id, true)
+
+			for _, columns := range []int{60, 160, 40, 160} {
+				m.Resize(layout.Size{Width: columns, Height: 44})
+				_ = m.View()
+
+				if native.Width() != width || native.Height() != height || native.YOffset() != offset {
+					t.Fatalf("rendering folded %s at %d columns changed viewport from %dx%d offset %d to %dx%d offset %d", id, columns, width, height, offset, native.Width(), native.Height(), native.YOffset())
+				}
+			}
+
+			m.SetPaneCollapsed(id, false)
+
+			if native.YOffset() != offset {
+				t.Fatal("reopening payload lost its retained offset")
+			}
+		})
+	}
+}

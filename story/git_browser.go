@@ -27,6 +27,7 @@ type gitBrowserScene struct {
 	branches    *gitui.BranchList
 	stashes     *gitui.StashList
 	worktrees   *gitui.WorktreeList
+	patch       *gitui.PatchBrowser
 	detail      *gitui.DiffViewer
 	page        int
 	focusDetail bool
@@ -80,6 +81,13 @@ func gitBrowser(e Environment) (runtime.Scene, error) {
 
 	tabs := navigation.NewTabs([]navigation.Tab{{ID: "Status", Label: "Status"}, {ID: "History", Label: "History"}, {ID: "Branches", Label: "Branches"}, {ID: "Stashes", Label: "Stashes"}, {ID: "Worktrees", Label: "Worktrees"}}, t)
 	m := &gitBrowserScene{screen: screen, tabs: tabs, environment: e, status: status, history: log, branches: branchList, stashes: stashList, worktrees: worktreeList, detail: gitui.NewDiffViewer(gitui.FileDiff{State: gitui.UnavailableDiff}, 60, 24, t), context: "~/src/charmed"}
+
+	patch, err := gitui.NewPatchBrowser(gitui.PatchObservation{}, e.Config.Size(), t)
+	if err != nil {
+		return nil, err
+	}
+
+	m.patch = patch
 	m.Resize(e.Config.Size())
 	m.syncDetail()
 
@@ -129,6 +137,7 @@ func (m *gitBrowserScene) Resize(size layout.Size) {
 		child := layout.PanelContentSize(layout.Size{Width: bounds.Dx(), Height: bounds.Dy()})
 		if child != m.detailSize {
 			m.detail.Resize(child)
+			m.patch.Resize(child)
 			m.detailSize = child
 		}
 	}
@@ -190,6 +199,11 @@ func (m *gitBrowserScene) Update(msg tea.Msg) tea.Cmd {
 			m.focusDetail = false
 		case "tab", "shift+tab":
 			m.focusDetail = !m.focusDetail
+		case "ctrl+tab":
+			if m.page == 3 && m.focusDetail {
+				m.patch.FocusDetail(!m.patch.DetailFocused())
+				return nil
+			}
 		case "alt+l":
 			m.layoutMode = (m.layoutMode + 1) % 3
 		case "ctrl+l":
@@ -197,6 +211,10 @@ func (m *gitBrowserScene) Update(msg tea.Msg) tea.Cmd {
 			return nil
 		default:
 			if m.focusDetail {
+				if m.page == 3 {
+					return m.patch.Update(msg)
+				}
+
 				return m.detail.Update(msg)
 			}
 
@@ -215,8 +233,13 @@ func (m *gitBrowserScene) Update(msg tea.Msg) tea.Cmd {
 
 	if _, key := msg.(tea.KeyPressMsg); !key {
 		var cmd tea.Cmd
+
 		if m.focusDetail {
-			cmd = m.detail.Update(msg)
+			if m.page == 3 {
+				cmd = m.patch.Update(msg)
+			} else {
+				cmd = m.detail.Update(msg)
+			}
 		} else if m.page == 0 {
 			cmd = m.status.Update(msg)
 		} else {
@@ -228,6 +251,7 @@ func (m *gitBrowserScene) Update(msg tea.Msg) tea.Cmd {
 		return cmd
 	}
 
+	m.patch.FocusDetail(false)
 	m.Resize(m.size)
 
 	for _, list := range []*gitui.List{m.status.List, m.history.List, m.branches.List, m.stashes.List, m.worktrees.List} {
@@ -281,7 +305,10 @@ func (m *gitBrowserScene) syncDetail() {
 	case 3:
 		for _, stash := range gitStashes() {
 			if stash.ID == m.stashes.SelectedID() {
-				m.detail.SetDiff(stash.Diffs[0])
+				if err := m.patch.SetPatch(gitui.PatchObservation{Available: true, Files: stash.Diffs}); err != nil {
+					m.detail.Viewport.SetContent(err.Error())
+				}
+
 				return
 			}
 		}
@@ -311,7 +338,7 @@ func (m *gitBrowserScene) View() string {
 	views := map[string]string{
 		"header": layout.Header{Title: "Repository browser · " + m.context}.View(m.size.Width, t),
 		"tabs":   m.tabs.View(),
-		"footer": layout.Footer{Help: "Ctrl+Left/Right section · Tab focus · Alt+L layout · Ctrl+L map", Status: m.screen.Plan().Variant()}.View(m.size.Width, t),
+		"footer": layout.Footer{Help: "Ctrl+Left/Right section · Tab focus · Alt+L layout · Ctrl+L map · Ctrl+Tab patch focus", Status: m.screen.Plan().Variant()}.View(m.size.Width, t),
 	}
 	if bounds, visible := m.screen.Region("main"); visible {
 		content := m.active().View()
@@ -323,7 +350,12 @@ func (m *gitBrowserScene) View() string {
 	}
 
 	if bounds, visible := m.screen.Region("details"); visible {
-		views["details"] = layout.Panel("Details", m.detail.View(), layout.Size{Width: bounds.Dx(), Height: bounds.Dy()}, t, m.focusDetail)
+		detail := m.detail.View()
+		if m.page == 3 {
+			detail = m.patch.View()
+		}
+
+		views["details"] = layout.Panel("Details", detail, layout.Size{Width: bounds.Dx(), Height: bounds.Dy()}, t, m.focusDetail)
 	}
 
 	if bounds, visible := m.screen.Region("context"); visible {

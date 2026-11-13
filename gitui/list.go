@@ -27,6 +27,7 @@ type Item struct {
 // survive SetItems and Resize; content, dimensions and scroll position are managed here.
 // History search retains every graph row and navigates matching commits.
 type List struct {
+	ShowHelp      bool // NewList enables help; compositions can opt out.
 	EmptyText     string
 	Viewport      viewport.Model
 	Input         textinput.Model
@@ -43,7 +44,7 @@ type List struct {
 }
 
 func NewList(component string, items []Item, width, height int, t theme.Theme) (*List, error) {
-	m := &List{Component: component, Theme: t, EmptyText: "No items", Viewport: collection.NewViewport("", width, height), Input: textinput.New(), focused: true}
+	m := &List{ShowHelp: true, Component: component, Theme: t, EmptyText: "No items", Viewport: collection.NewViewport("", width, height), Input: textinput.New(), focused: true}
 	m.Input.Prompt = "/ "
 
 	m.Input.CharLimit = 256
@@ -123,7 +124,7 @@ func (m *List) Close() error  { return nil }
 func (m *List) Resize(size layout.Size) {
 	m.width, m.height = max(1, size.Width), max(1, size.Height)
 	m.Viewport.SetWidth(m.width)
-	m.Viewport.SetHeight(max(1, m.height-2))
+	m.Viewport.SetHeight(max(1, m.height-m.footerHeight()))
 	m.Input.SetWidth(max(1, m.width-4))
 	m.render()
 }
@@ -185,6 +186,8 @@ func (m *List) Update(msg tea.Msg) tea.Cmd {
 		switch key.String() {
 		case "/":
 			m.searching = true
+			m.render()
+
 			return m.Input.Focus()
 		case "esc":
 			m.query = ""
@@ -230,7 +233,17 @@ func (m *List) Update(msg tea.Msg) tea.Cmd {
 	return nil
 }
 
+func (m *List) footerHeight() int {
+	if m.ShowHelp || m.searching || m.query != "" {
+		return 2
+	}
+
+	return 0
+}
+
 func (m *List) render() {
+	m.Viewport.SetHeight(max(1, m.height-m.footerHeight()))
+
 	if m.width == 0 {
 		return
 	}
@@ -267,7 +280,7 @@ func (m *List) render() {
 			selectedLine = len(lines)
 
 			if m.focused {
-				marker = ">"
+				marker = m.Theme.Glyph(theme.GlyphCollapsed)
 			}
 		}
 
@@ -304,6 +317,10 @@ func (m *List) render() {
 }
 
 func (m *List) View() string {
+	if m.footerHeight() == 0 {
+		return portable(layout.Fit(m.Viewport.View(), layout.Size{Width: m.width, Height: m.height}), m.Theme)
+	}
+
 	footer := m.Theme.Subtle().Render("↑/↓ j/k · / search · Enter select")
 	if m.Theme.ASCII {
 		footer = m.Theme.Subtle().Render("up/down j/k · / search · Enter select")

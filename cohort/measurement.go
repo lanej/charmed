@@ -86,7 +86,9 @@ func cloneSample(s Sample, metrics []Metric) (Sample, error) {
 	return result, nil
 }
 
-func measurementFor(s Sample, m Metric) (Measurement, bool) {
+// MeasurementFor reads a validated sample using generic measurements or legacy counts.
+// Presence is independent of denominator availability; a supplied 0/0 is present.
+func MeasurementFor(s Sample, m Metric) (Measurement, bool) {
 	if s.Measurements != nil {
 		v, ok := s.Measurements[m.ID]
 		return v, ok

@@ -114,11 +114,14 @@ func (m *LogTree) detachedView() string {
 		return m.treeView()
 	}
 
-	details := m.Details.View()
-	if m.ShowScrollbar && m.Details.Width() > 1 {
-		bar := feedback.Scrollbar{Total: m.Details.TotalLineCount(), Visible: m.Details.Height(), Offset: m.Details.YOffset(), Height: m.Details.Height()}
-		details = lipgloss.JoinHorizontal(lipgloss.Top, details, bar.View(m.Theme))
+	width := m.Details.Width()
+	if m.ShowScrollbar && width > 1 {
+		width++
 	}
+
+	pane := &ScrollPane{Model: &m.Details, Theme: m.Theme, ShowScrollbar: m.ShowScrollbar}
+	pane.Resize(layout.Size{Width: width, Height: m.Details.Height()})
+	details := pane.View()
 
 	panelHeight := min(m.height, m.Details.Height()+2)
 	panel := layout.Panel("Log · "+text.Inline(m.detailID), details, layout.Size{Width: m.breakoutWidth(), Height: panelHeight}, m.Theme, true)
