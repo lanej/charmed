@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Develop &amp; publish · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Develop &amp; publish</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">5</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" aria-current="page">Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">5</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" aria-current="page">Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+</aside>
+<main id="main">
+
+
+<section class="dev-hero" aria-labelledby="dev-title">
+<p class="eyebrow">Developer workflow</p>
+<h1 id="dev-title">Build native terminal interfaces.</h1>
+<p class="dev-lede">Use Charmed's components, explore their real terminal behavior, and publish a verified guide without a separate browser application.</p>
+<div class="dev-paths" aria-label="Choose a development task">
+<a href="#use-charmed"><strong>Use components</strong><span>Theme and compose native Go widgets</span></a>
+<a href="#add-a-component"><strong>Extend the library</strong><span>Implement and document new capabilities</span></a>
+<a href="#publish-documentation"><strong>Publish the guide</strong><span>Review a PR preview before merge</span></a>
+</div>
+</section>
+
+
+<h2 id="use-charmed"><a class="heading-permalink" href="#use-charmed"><span>Use Charmed</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Start with <a href="getting-started.html">Getting started</a> to install Charmed and run an editable field. This contributor guide covers adding capabilities, checking their documentation and publishing the verified site. The <a href="documentation-standard.html">documentation standard</a> defines the content and rendered bounds used throughout the guide.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Work</th>
+<th>Entry point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Use a public component</td>
+<td><a href="atoms.html">Component catalog</a> and its consumer example</td>
+</tr>
+<tr>
+<td>Coordinate a complete screen</td>
+<td><a href="recipes.html">Recipes</a> and the composition guide</td>
+</tr>
+<tr>
+<td>Change library behavior</td>
+<td>Native Go packages, registry stories and retained-behavior tests</td>
+</tr>
+<tr>
+<td>Change the guide</td>
+<td>Markdown, consumer examples and the shared site template</td>
+</tr>
+</tbody>
+</table>
+<h2 id="inspect-a-native-fixture"><a class="heading-permalink" href="#inspect-a-native-fixture"><span>Inspect a native fixture</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>The workbench uses Charmed's <a href="molecules-commands.html#cli/help">CLI help formatter</a>. Compare <code class="inline-code">go run ./cmd/workbench --help</code> with <code class="inline-code">go run ./cmd/workbench help capture</code> to see the root's commands and a subcommand's flags.</p>
+<p>The documentation snapshots are deterministic captures of real Go components, not browser recreations. Use the terminal runner when you need to inspect keyboard behavior, animation, focus, or resizing.</p>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench list
+<span class="syn-command">go</span> run ./cmd/workbench run screen/services
+</code></pre>
+<p>Run from the repository root with <strong>Go 1.26.11+</strong>. Use Ctrl+C to exit. You can pass fixture-specific options such as <code class="inline-code">--theme light</code>, <code class="inline-code"><span class="syn-operator">--</span>legend</code>, or <code class="inline-code">--columns 40</code>; see the <a href="https://github.com/lanej/charmed/blob/6c0e6e05ffb9f1bea17fd751ebbc7ee04d066d53/story/catalog.go">component registry</a> for available fixtures.</p>
+<h2 id="add-a-component"><a class="heading-permalink" href="#add-a-component"><span>Add a component</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Organize Go packages by capability. Atomic categories describe composition depth rather than package layers. Implement a wrapper where useful defaults, semantics or reusable composition justify one, then document the native API and any lifecycle operation that reapplies customization.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Required piece</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Native implementation</td>
+<td>Preserve deliberate upstream capabilities described in ARCHITECTURE.md</td>
+</tr>
+<tr>
+<td>Registry story</td>
+<td>Set Level, Family and actual Composes dependencies; duplicate IDs, cycles and upward-level dependencies are rejected</td>
+</tr>
+<tr>
+<td>Consumer example</td>
+<td>Add docs/snippets/story_id.go with explicit sample data, construction and rendering through public APIs</td>
+</tr>
+<tr>
+<td>Renderer registration</td>
+<td>Add the example to docs/snippets/render.go; the displayed body produces the default Example frame</td>
+</tr>
+<tr>
+<td>Integration guidance</td>
+<td>Document data updates, focus, sizing and customization in docs/component-guidance.json</td>
+</tr>
+<tr>
+<td>Page profile</td>
+<td>Classify new Markdown in docs/standards.json and use the shared template</td>
+</tr>
+</tbody>
+</table>
+<p>Keep fixtures independent of production services and application decisions. Consumer examples are compiled and linted with the library. Missing examples fail generation, and the output must be visually useful after initialization. Fixture variants explore states beyond the minimal example; implementation source stays separately linked.</p>
+<h2 id="verify-changes"><a class="heading-permalink" href="#verify-changes"><span>Verify changes</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Install just and ShellCheck, then use the checked-in targets for local work. The fast source gate checks complete documentation sources without compiling Go; the optional staged-tree hook runs that same gate before a commit, and CI enforces it independently.</p>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">just</span> hooks
+<span class="syn-command">just</span> docs-check
+<span class="syn-command">just</span> lint
+<span class="syn-command">just</span> ratchet
+<span class="syn-command">just</span> check
+<span class="syn-command">just</span> docs
+</code></pre>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Gate</th>
+<th>What it establishes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>docs-check</td>
+<td>Paragraph and run budgets, example length, required task sections and declared profiles</td>
+</tr>
+<tr>
+<td>lint</td>
+<td>Formatting, vet, module tidiness, strict Go lint and ShellCheck</td>
+</tr>
+<tr>
+<td>ratchet</td>
+<td>Remove resolved findings; never grow the existing baseline</td>
+</tr>
+<tr>
+<td>check</td>
+<td>Full lint, uncached race tests and reachable-vulnerability checks</td>
+</tr>
+<tr>
+<td>docs</td>
+<td>Source checks, native generation, component structure and local file/anchor validation</td>
+</tr>
+<tr>
+<td>Responsive CI</td>
+<td>Browser overflow, content measure, artifact placement, visible examples, touch, keyboard and no-JavaScript navigation</td>
+</tr>
+</tbody>
+</table>
+<p>The full Go quality gate runs on Linux and macOS. Bounds and diagnostics support review, rather than proving the example is understandable. Inspect the chart, input and inspector together at desktop and mobile sizes, then retain representative screenshots when changing the shared template.</p>
+<h2 id="publish-documentation"><a class="heading-permalink" href="#publish-documentation"><span>Publish documentation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Every same-repository documentation PR receives an isolated preview under lanej.io/charmed/pr-preview/pr-number. The publisher verifies the live revision before updating direct links in the PR description. Review those pages before merge; previews refresh on push and disappear after closure.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Publication boundary</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pull request</td>
+<td>Build, validate and measure the static guide; retain browser evidence</td>
+</tr>
+<tr>
+<td>Same-repository preview</td>
+<td>Publish an isolated no-index snapshot and verify its revision</td>
+</tr>
+<tr>
+<td>Fork pull request</td>
+<td>Run checks without privileged preview publication</td>
+</tr>
+<tr>
+<td>Main branch</td>
+<td>Publish the tested bundle through GitHub Pages</td>
+</tr>
+</tbody>
+</table>
+<p>The small browser script enhances variant tabs, mobile navigation and legacy bookmarks. Ordinary document links and navigation remain usable without JavaScript. No separate documentation server or browser build tool is required to publish the generated guide.</p>
+<h2 id="coverage"><a class="heading-permalink" href="#coverage"><span>Coverage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>The inventory below distinguishes implemented native components from optional integrations. The bundled JuliaMono font preserves braille and box-drawing geometry; its <a href="assets/JuliaMono-LICENSE.txt">license</a> travels with the generated assets and remains available from the published site.</p>
+<h2 id="git-fixtures"><a class="heading-permalink" href="#git-fixtures"><span>Git fixtures</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Run <code class="inline-code">go run ./cmd/workbench run git/browser</code> for the composed repository browser, or use <code class="inline-code">git/history</code>, <code class="inline-code">git/changes</code> and <code class="inline-code">git/worktrees</code> for individual organisms. All data is synthetic and supplied in memory; no Git executable or repository access is needed. Ctrl+Left/Right switches browser sections, Tab switches panes, Enter inspects a worktree, Alt+L changes layout preference, and Ctrl+L displays declared region bounds. Ctrl+E/Ctrl+Y scrolls history independently of selection.</p>
+<p>Saved native previews: <a href="assets/git-history.png">branching history</a>, <a href="assets/git-changes.png">status and diff inspector</a>, <a href="assets/git-worktrees.png">worktree list</a>, and <a href="assets/git-browser.png">repository browser</a>.</p>
+<h2 id="cohort-measurements"><a class="heading-permalink" href="#cohort-measurements"><span>Cohort measurements</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./examples/cohorts
+<span class="syn-command">go</span> run ./examples/catalog screen/cohorts
+</code></pre>
+<p>The regional example supplies temperature, energy, yield and humidity for three cohorts. Read the <a href="cohorts.html">cohort contract</a> for scalar aggregation, missing observations, optional references and migration from two-cohort comparisons.</p>
+
+
+
+
+
+
+<div class="table-wrap" aria-label="Component coverage inventory"><table tabindex="0"><thead><tr><th>Upstream</th><th>Status</th><th>Integration</th></tr></thead><tbody><tr><td>Bubble Tea</td><td>implemented</td><td>One root runtime and isolated native PTY previews.</td></tr><tr><td>Lip Gloss</td><td>implemented</td><td>Semantic styles, text, cell sizing and responsive panels.</td></tr><tr><td>Bubbles inputs</td><td>implemented</td><td>Text input, textarea and native cursor behavior; concrete models remain accessible.</td></tr><tr><td>Bubbles collections</td><td>implemented</td><td>Table, list, tree, file picker and viewport.</td></tr><tr><td>Bubbles feedback</td><td>implemented</td><td>Spinner, progress, paginator, timer, stopwatch, help and native key bindings.</td></tr><tr><td>Huh</td><td>implemented</td><td>Themed forms, input, select, multiselect, confirm, text and note fixtures; Huh owns nested focus.</td></tr><tr><td>Glamour</td><td>implemented</td><td>Themed Markdown and syntax-highlighted code.</td></tr><tr><td>Harmonica</td><td>implemented</td><td>Explicit spring state with reduced-motion behavior.</td></tr><tr><td>ntcharts core</td><td>implemented</td><td>Canvas, bars, heatmap, line, scatter, streamline, waveline, time series, OHLC and sparklines; native models remain accessible.</td></tr><tr><td>Fang / Cobra</td><td>implemented</td><td>Themed help from Cobra command and flag definitions, native completions and Fang error presentation.</td></tr><tr><td>Ultraviolet / ANSI / colorprofile</td><td>implemented</td><td>Reuse Charm&#39;s renderer; cell-aware clipping and explicit truecolor/256/16/no-color output.</td></tr><tr><td>ntcharts pictures</td><td>partial</td><td>Portable glyph picture rendering is implemented. URL fetching, heat pictures and high-resolution graphics integrations remain optional.</td></tr><tr><td>ntcharts companion viewers</td><td>planned</td><td>PDF, SVG, maps and 3D are separate integrations, outside the core dependency graph.</td></tr><tr><td>Wish</td><td>planned</td><td>Optional SSH host adapter.</td></tr><tr><td>Log</td><td>implemented</td><td>Structured log entries rendered with Charm Log into a bounded viewport; producers remain outside the UI thread.</td></tr><tr><td>Gum / VHS / Freeze / CharmTone</td><td>reference</td><td>Shell workflows, recording/export and palette integrations; not dependencies of the Go components.</td></tr><tr><td>Booba / WASM</td><td>planned</td><td>Native live previews and static snapshots currently avoid requiring a Bubble Tea fork.</td></tr></tbody></table></div>
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+

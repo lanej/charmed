@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Command palette · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Command palette</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">5</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" aria-current="page">Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">5</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" aria-current="page">Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+</aside>
+<main id="main">
+
+
+
+<h1 id="command-palette">Command palette</h1>
+<p>Use <code class="inline-code">collection<span class="syn-operator">.</span>CommandPalette</code> to search application commands without moving execution policy into a widget. Commands carry stable IDs, labels, descriptions, keywords, shortcut hints and optional disabled reasons. Disabled commands remain searchable but cannot execute; invalid replacement data leaves existing commands intact.</p>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/command-palette
+<span class="syn-command">go</span> run ./cmd/workbench run pattern/log-inspector <span class="syn-flag">--command-palette</span>
+</code></pre>
+<h2 id="ownership-and-lifecycle"><a class="heading-permalink" href="#ownership-and-lifecycle"><span>Ownership and lifecycle</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>The palette emits a selected command ID; the application performs the action. While the palette is open, route keyboard and paste input exclusively to it. Continue processing observations normally, and retain the previously focused pane until an accepted action explicitly changes it.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Operation</th>
+<th>Application contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open</td>
+<td>Call Open and return its focus command; query resets and the search input focuses</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>Process configurable open, close and execute keys; activation closes and blurs before emitting CommandSelectedMsg</td>
+</tr>
+<tr>
+<td>Cancel</td>
+<td>Dismiss without an action and restore the prior focus region</td>
+</tr>
+<tr>
+<td>Replace</td>
+<td>Supply unique nonempty IDs and labels; caller-owned data is copied atomically</td>
+</tr>
+<tr>
+<td>Resize</td>
+<td>Retain native Search and Results customization, including prompts, styles and key maps</td>
+</tr>
+<tr>
+<td>Selection</td>
+<td>Retain a still-matching ID on command replacement; a changed query selects the best fuzzy match</td>
+</tr>
+</tbody>
+</table>
+<h2 id="search-and-presentation"><a class="heading-permalink" href="#search-and-presentation"><span>Search and presentation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Match highlighting is opt-in through SetMatchHighlighting. It underlines matching label characters without changing results or selection; keyword-only matches need not underline a label. Rendering and searching never execute application commands, regardless of whether a result is enabled.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Presentation</th>
+<th>Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Selection</td>
+<td>Directional marker without a row background; action and description remain distinct</td>
+</tr>
+<tr>
+<td>Availability</td>
+<td>Disabled actions are muted, with the selected reason retained in the status line</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>At most 72 columns and eight visible results; descriptions disappear before essential search content</td>
+</tr>
+<tr>
+<td>Backdrop</td>
+<td>Dim by default; monochrome or unchanged backdrop can be selected explicitly</td>
+</tr>
+<tr>
+<td>Dim</td>
+<td>Blend existing colors halfway toward a known background, retaining text, attributes and links</td>
+</tr>
+<tr>
+<td>Monochrome</td>
+<td>Use one semantic foreground while retaining focus and selection markers</td>
+</tr>
+<tr>
+<td>Instructions</td>
+<td>SetHelpVisible(false) reclaims the keyboard-hint row without removing counts or disabled reasons</td>
+</tr>
+</tbody>
+</table>
+<p>SetBackdropMode rejects unknown values without mutation. An explicit mode takes precedence over the legacy DimBackdrop opt-out; themes without a known background preserve existing colors when dimming. CenterOverlayWithBackdrop composes the opaque foreground within the parent's actual cell allocation.</p>
+<h2 id="keyboard-layouts"><a class="heading-permalink" href="#keyboard-layouts"><span>Keyboard layouts</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Standard navigation uses arrows, paging and endpoint keys, leaving printable characters for search. The Vim preset adds a visible SEARCH/NORMAL mode distinction. Apply presets before native key-map overrides; later resize, filtering and reopening preserve those overrides.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Mode or key</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SEARCH</td>
+<td>Printable characters, including j/k, edit the query</td>
+</tr>
+<tr>
+<td>Esc in SEARCH</td>
+<td>Blur the cursor and enter NORMAL</td>
+</tr>
+<tr>
+<td>NORMAL</td>
+<td>j/k navigate, Ctrl+B/F page, G selects the last result, Home the first</td>
+</tr>
+<tr>
+<td>i or / in NORMAL</td>
+<td>Resume search without inserting the transition key</td>
+</tr>
+<tr>
+<td>Paste in NORMAL</td>
+<td>Resume search and accept the paste</td>
+</tr>
+<tr>
+<td>Esc in NORMAL</td>
+<td>Close the palette</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>Execute an available result and close</td>
+</tr>
+</tbody>
+</table>
+<p>SetKeyLayout returns a command and error. Invalid presets change nothing; changing an open palette's preset returns it to SEARCH while preserving query and selection. Forward that command. Fine-grained movement stays on Results.KeyMap; key.WithHelp keeps displayed hints aligned with custom bindings.</p>
+<h2 id="inspector-integration"><a class="heading-permalink" href="#inspector-integration"><span>Inspector integration</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>The inspector exposes the same molecule as Palette. OpenCommands refreshes current actions and returns its focus command. Availability is checked again before accepting a selection, so an action uses current observations and state rather than trusting an earlier enabled result.</p>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Inspector control</th>
+<th>Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Layout, focus, follow and correlation</td>
+<td>Commands are rebuilt from current inspector state</td>
+</tr>
+<tr>
+<td>Raw/pretty bodies and folds</td>
+<td>Commands operate on the selected request and focused payload</td>
+</tr>
+<tr>
+<td>URL format</td>
+<td>Choosing a built-in format deliberately replaces a custom formatter</td>
+</tr>
+<tr>
+<td>Keyboard preset</td>
+<td>KeyLayout applies across palette, request table, log tree and payload viewports</td>
+</tr>
+<tr>
+<td>Backdrop</td>
+<td>BackdropMode chooses dim, monochrome or unchanged presentation independently</td>
+</tr>
+<tr>
+<td>Instructions</td>
+<td>Inspector NoHelp and SetHelpVisible synchronize the palette's keyboard-hint row</td>
+</tr>
+</tbody>
+</table>
+<p>Use workbench flags <code class="inline-code">--key-layout standard|vim</code> and <code class="inline-code">--palette-backdrop dim|monochrome|none</code> to inspect those choices. Global application exit bindings may take precedence over the palette. The <a href="log-inspector.html">inspector guide</a> covers ingestion, correlation and the lifetime of native child customization.</p>
+
+
+
+
+
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
