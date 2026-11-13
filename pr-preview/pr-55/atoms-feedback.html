@@ -1,0 +1,1128 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Atoms / Feedback · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Atoms / Feedback</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+<div class="nav-groups"><a class="nav-group" href="atoms-chart.html" >Charts</a><a class="nav-group" href="atoms-collection.html" >Collections</a><a class="nav-group" href="atoms-feedback.html" aria-current="page">Feedback</a><a class="nav-group" href="atoms-git.html" >git</a><a class="nav-group" href="atoms-graphics.html" >Graphics</a><a class="nav-group" href="atoms-http.html" >HTTP</a><a class="nav-group" href="atoms-input.html" >Input</a><a class="nav-group" href="atoms-logs.html" >Logs</a><a class="nav-group" href="atoms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#feedback%2fspinner">Spinner</a><a class="nav-component" href="#feedback%2fprogress">Progress</a><a class="nav-component" href="#feedback%2ftime">Timers</a><a class="nav-component" href="#feedback%2flog-level">Log level</a><a class="nav-component" href="#feedback%2fstatus">Status</a><a class="nav-component" href="#feedback%2fconnection">Connection</a><a class="nav-component" href="#feedback%2ffollow">Follow</a><a class="nav-component" href="#feedback%2fscrollbar">Scrollbar</a><a class="nav-component" href="#feedback%2ffreshness">Freshness</a><a class="nav-component" href="#feedback%2fevidence">Evidence state</a><a class="nav-component" href="#feedback%2foutcome">Operation outcome</a></div>
+
+</div>
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+<div class="nav-groups"><a class="nav-group" href="atoms-chart.html" >Charts</a><a class="nav-group" href="atoms-collection.html" >Collections</a><a class="nav-group" href="atoms-feedback.html" aria-current="page">Feedback</a><a class="nav-group" href="atoms-git.html" >git</a><a class="nav-group" href="atoms-graphics.html" >Graphics</a><a class="nav-group" href="atoms-http.html" >HTTP</a><a class="nav-group" href="atoms-input.html" >Input</a><a class="nav-group" href="atoms-logs.html" >Logs</a><a class="nav-group" href="atoms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#feedback%2fspinner">Spinner</a><a class="nav-component" href="#feedback%2fprogress">Progress</a><a class="nav-component" href="#feedback%2ftime">Timers</a><a class="nav-component" href="#feedback%2flog-level">Log level</a><a class="nav-component" href="#feedback%2fstatus">Status</a><a class="nav-component" href="#feedback%2fconnection">Connection</a><a class="nav-component" href="#feedback%2ffollow">Follow</a><a class="nav-component" href="#feedback%2fscrollbar">Scrollbar</a><a class="nav-component" href="#feedback%2ffreshness">Freshness</a><a class="nav-component" href="#feedback%2fevidence">Evidence state</a><a class="nav-component" href="#feedback%2foutcome">Operation outcome</a></div>
+
+</div>
+</nav>
+</aside>
+<main id="main">
+
+
+
+
+
+
+
+
+
+<section class="atomic-level" id="level-atoms">
+<p class="catalog-breadcrumb"><a href="atoms.html">Atoms</a><span aria-hidden="true"> / </span>Feedback</p>
+
+<section class="component-family" id="level-atoms-feedback"><h1><a class="heading-permalink" href="#level-atoms-feedback"><span>Feedback</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">11 components · <a href="atoms.html">All atoms</a></p>
+<ul class="group-jump-links" aria-label="Components in Feedback"><li><a href="#feedback%2fspinner">Spinner</a></li><li><a href="#feedback%2fprogress">Progress</a></li><li><a href="#feedback%2ftime">Timers</a></li><li><a href="#feedback%2flog-level">Log level</a></li><li><a href="#feedback%2fstatus">Status</a></li><li><a href="#feedback%2fconnection">Connection</a></li><li><a href="#feedback%2ffollow">Follow</a></li><li><a href="#feedback%2fscrollbar">Scrollbar</a></li><li><a href="#feedback%2ffreshness">Freshness</a></li><li><a href="#feedback%2fevidence">Evidence state</a></li><li><a href="#feedback%2foutcome">Operation outcome</a></li></ul>
+
+
+<section class="component" id="feedback/spinner">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2fspinner" aria-label="Link to Spinner component"><span>Spinner</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Native spinner; motion can run live or stay paused for evidence.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/spinner-preview"><a class="heading-permalink" href="#feedback%2fspinner-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Spinner variants">
+<a id="tab-feedback/spinner-example" href="#panel-feedback%2fspinner-example" role="tab" aria-controls="panel-feedback/spinner-example" aria-selected="true">Example</a>
+<a id="tab-feedback/spinner-0" href="#panel-feedback%2fspinner-0" role="tab" aria-controls="panel-feedback/spinner-0" aria-selected="false">Demo</a><a id="tab-feedback/spinner-1" href="#panel-feedback%2fspinner-1" role="tab" aria-controls="panel-feedback/spinner-1" aria-selected="false">Narrow</a><a id="tab-feedback/spinner-2" href="#panel-feedback%2fspinner-2" role="tab" aria-controls="panel-feedback/spinner-2" aria-selected="false">256 colors</a><a id="tab-feedback/spinner-3" href="#panel-feedback%2fspinner-3" role="tab" aria-controls="panel-feedback/spinner-3" aria-selected="false">16 colors</a><a id="tab-feedback/spinner-4" href="#panel-feedback%2fspinner-4" role="tab" aria-controls="panel-feedback/spinner-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/spinner-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/spinner-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#67d4c0;font-weight:bold;">⣾ </span>  Processing requests</pre></figure>
+</div>
+<div id="panel-feedback/spinner-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/spinner-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Loading indicator</span>                                                                                   
+                                                                                                    
+<span style="color:#67d4c0;font-weight:bold;">⣾ </span>  Processing fixture data                                                                         
+                                                                                                    
+<span style="color:#a8a8a8;">Live runs the native clock / Ctrl+N advances a frame</span></pre></figure>
+</div><div id="panel-feedback/spinner-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/spinner-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Loading indicator</span>                       
+                                        
+<span style="color:#67d4c0;font-weight:bold;">⣾ </span>  Processing fixture data             
+                                        
+<span style="color:#a8a8a8;">Live runs the native clock / Ctrl+N adva</span></pre></figure>
+</div><div id="panel-feedback/spinner-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/spinner-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">Loading indicator</span>                                                                                   
+                                                                                                    
+<span style="color:#5fd7af;font-weight:bold;">⣾ </span>  Processing fixture data                                                                         
+                                                                                                    
+<span style="color:#a8a8a8;">Live runs the native clock / Ctrl+N advances a frame</span></pre></figure>
+</div><div id="panel-feedback/spinner-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/spinner-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">Loading indicator</span>                                                                                   
+                                                                                                    
+<span style="color:#00ff00;font-weight:bold;">⣾ </span>  Processing fixture data                                                                         
+                                                                                                    
+<span style="color:#c0c0c0;">Live runs the native clock / Ctrl+N advances a frame</span></pre></figure>
+</div><div id="panel-feedback/spinner-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/spinner-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">Loading indicator</span>                                                                                   
+                                                                                                    
+<span style="font-weight:bold;">|</span>  Processing fixture data                                                                          
+                                                                                                    
+Live runs the native clock / Ctrl+N advances a frame</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/spinner-code"><a class="heading-permalink" href="#feedback%2fspinner-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">spinner <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewSpinner</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+<span class="syn-comment">// Return spinner.Tick from Init; retain the model and command from spinner.Update(msg).</span>
+<span class="syn-keyword">return</span> spinner<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  Processing requests&#34;</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/spinner-integration"><h3 id="feedback/spinner-integration"><a class="heading-permalink" href="#feedback%2fspinner-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Return the native spinner tick command from initialization, then retain the model and command returned by Update so animation continues. The parent owns placement and lifecycle; a spinner needs no keyboard focus. Use a static loading indicator when reduced motion is requested.</p></section>
+<div class="component-run"><h3 id="feedback/spinner-run"><a class="heading-permalink" href="#feedback%2fspinner-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/spinner</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_spinner.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/story/atoms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Dependency map: not audited.</p>
+</section>
+
+<section class="component" id="feedback/progress">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2fprogress" aria-label="Link to Progress component"><span>Progress</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">A themed progress meter with a textual percentage.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/progress-preview"><a class="heading-permalink" href="#feedback%2fprogress-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Progress variants">
+<a id="tab-feedback/progress-example" href="#panel-feedback%2fprogress-example" role="tab" aria-controls="panel-feedback/progress-example" aria-selected="true">Example</a>
+<a id="tab-feedback/progress-0" href="#panel-feedback%2fprogress-0" role="tab" aria-controls="panel-feedback/progress-0" aria-selected="false">Demo</a><a id="tab-feedback/progress-1" href="#panel-feedback%2fprogress-1" role="tab" aria-controls="panel-feedback/progress-1" aria-selected="false">Narrow</a><a id="tab-feedback/progress-2" href="#panel-feedback%2fprogress-2" role="tab" aria-controls="panel-feedback/progress-2" aria-selected="false">256 colors</a><a id="tab-feedback/progress-3" href="#panel-feedback%2fprogress-3" role="tab" aria-controls="panel-feedback/progress-3" aria-selected="false">16 colors</a><a id="tab-feedback/progress-4" href="#panel-feedback%2fprogress-4" role="tab" aria-controls="panel-feedback/progress-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/progress-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/progress-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#606060;">░░░░░░░░░░░░░</span>  68%</pre></figure>
+</div>
+<div id="panel-feedback/progress-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/progress-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Progress</span>                                                                                            
+                                                                                                    
+<span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#606060;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>  68%     
+                                                                                                    
+<span style="color:#a8a8a8;">Ctrl+N advances by five percent.</span></pre></figure>
+</div><div id="panel-feedback/progress-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/progress-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Progress</span>                                
+                                        
+<span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#606060;">░░░░░░░░░░</span>  68%     
+                                        
+<span style="color:#a8a8a8;">Ctrl+N advances by five percent.</span></pre></figure>
+</div><div id="panel-feedback/progress-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/progress-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">Progress</span>                                                                                            
+                                                                                                    
+<span style="color:#5fd7af;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#5f5f5f;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>  68%     
+                                                                                                    
+<span style="color:#a8a8a8;">Ctrl+N advances by five percent.</span></pre></figure>
+</div><div id="panel-feedback/progress-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/progress-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">Progress</span>                                                                                            
+                                                                                                    
+<span style="color:#00ff00;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#808080;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>  68%     
+                                                                                                    
+<span style="color:#c0c0c0;">Ctrl+N advances by five percent.</span></pre></figure>
+</div><div id="panel-feedback/progress-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/progress-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">Progress</span>                                                                                            
+                                                                                                    
+#############################################################-----------------------------  68%     
+                                                                                                    
+Ctrl+N advances by five percent.</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/progress-code"><a class="heading-permalink" href="#feedback%2fprogress-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">progress <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewProgress</span><span class="syn-operator">(</span><span class="syn-number">40</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+completed<span class="syn-operator">,</span> total <span class="syn-operator">:=</span> <span class="syn-number">68.0</span><span class="syn-operator">,</span> <span class="syn-number">100.0</span>
+
+<span class="syn-keyword">return</span> progress<span class="syn-operator">.</span><span class="syn-function">ViewAs</span><span class="syn-operator">(</span>completed<span class="syn-operator">/</span>total<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  68%&#34;</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/progress-integration"><h3 id="feedback/progress-integration"><a class="heading-permalink" href="#feedback%2fprogress-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Use ViewAs for an immediate progress fraction without starting animation. For animated transitions, forward the native percentage-update command and subsequent messages through the application loop. Progress display needs no keyboard focus; keep completion counts in the application and recalculate its width from the parent allocation.</p></section>
+<div class="component-run"><h3 id="feedback/progress-run"><a class="heading-permalink" href="#feedback%2fprogress-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/progress</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_progress.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/story/atoms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Dependency map: not audited.</p>
+</section>
+
+<section class="component" id="feedback/time">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2ftime" aria-label="Link to Timers component"><span>Timers</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Timer and stopwatch messages continue independently of keyboard focus.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/time-preview"><a class="heading-permalink" href="#feedback%2ftime-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Timers variants">
+<a id="tab-feedback/time-example" href="#panel-feedback%2ftime-example" role="tab" aria-controls="panel-feedback/time-example" aria-selected="true">Example</a>
+<a id="tab-feedback/time-0" href="#panel-feedback%2ftime-0" role="tab" aria-controls="panel-feedback/time-0" aria-selected="false">Demo</a><a id="tab-feedback/time-1" href="#panel-feedback%2ftime-1" role="tab" aria-controls="panel-feedback/time-1" aria-selected="false">Narrow</a><a id="tab-feedback/time-2" href="#panel-feedback%2ftime-2" role="tab" aria-controls="panel-feedback/time-2" aria-selected="false">256 colors</a><a id="tab-feedback/time-3" href="#panel-feedback%2ftime-3" role="tab" aria-controls="panel-feedback/time-3" aria-selected="false">16 colors</a><a id="tab-feedback/time-4" href="#panel-feedback%2ftime-4" role="tab" aria-controls="panel-feedback/time-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/time-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/time-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">Countdown  1m0s
+Stopwatch  0s</pre></figure>
+</div>
+<div id="panel-feedback/time-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/time-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Time components</span>                                                                                     
+                                                                                                    
+Countdown  1m0s                                                                                     
+Stopwatch  0s                                                                                       
+                                                                                                    
+<span style="color:#a8a8a8;">Enable Live to run the native timers.</span></pre></figure>
+</div><div id="panel-feedback/time-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/time-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">Time components</span>                         
+                                        
+Countdown  1m0s                         
+Stopwatch  0s                           
+                                        
+<span style="color:#a8a8a8;">Enable Live to run the native timers.</span></pre></figure>
+</div><div id="panel-feedback/time-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/time-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">Time components</span>                                                                                     
+                                                                                                    
+Countdown  1m0s                                                                                     
+Stopwatch  0s                                                                                       
+                                                                                                    
+<span style="color:#a8a8a8;">Enable Live to run the native timers.</span></pre></figure>
+</div><div id="panel-feedback/time-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/time-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">Time components</span>                                                                                     
+                                                                                                    
+Countdown  1m0s                                                                                     
+Stopwatch  0s                                                                                       
+                                                                                                    
+<span style="color:#c0c0c0;">Enable Live to run the native timers.</span></pre></figure>
+</div><div id="panel-feedback/time-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/time-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">Time components</span>                                                                                     
+                                                                                                    
+Countdown  1m0s                                                                                     
+Stopwatch  0s                                                                                       
+                                                                                                    
+Enable Live to run the native timers.</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/time-code"><a class="heading-permalink" href="#feedback%2ftime-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/time" title="time"><code>time</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">timer <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewTimer</span><span class="syn-operator">(</span>time<span class="syn-operator">.</span>Minute<span class="syn-operator">)</span>
+stopwatch <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">NewStopwatch</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<span class="syn-comment">// Return their Init commands with tea.Batch and forward tick messages to Update.</span>
+<span class="syn-keyword">return</span> <span class="syn-string">&#34;Countdown  &#34;</span> <span class="syn-operator">+</span> timer<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;\nStopwatch  &#34;</span> <span class="syn-operator">+</span> stopwatch<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/time-integration"><h3 id="feedback/time-integration"><a class="heading-permalink" href="#feedback%2ftime-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Return the timer and stopwatch Init commands with tea.Batch, then retain each native model and command as tick messages arrive. The owning application decides when to start, stop or reset timekeeping. These displays need no keyboard focus; the parent places their output within its allocation.</p></section>
+<div class="component-run"><h3 id="feedback/time-run"><a class="heading-permalink" href="#feedback%2ftime-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/time</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_time.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/story/atoms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Dependency map: not audited.</p>
+</section>
+
+<section class="component" id="feedback/log-level">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2flog-level" aria-label="Link to Log level component"><span>Log level</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Six log severities from TRACE to FATAL with distinct tones, stable label widths and independent emphasis.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/log-level-preview"><a class="heading-permalink" href="#feedback%2flog-level-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Log level variants">
+<a id="tab-feedback/log-level-example" href="#panel-feedback%2flog-level-example" role="tab" aria-controls="panel-feedback/log-level-example" aria-selected="true">Example</a>
+<a id="tab-feedback/log-level-0" href="#panel-feedback%2flog-level-0" role="tab" aria-controls="panel-feedback/log-level-0" aria-selected="false">Demo</a><a id="tab-feedback/log-level-1" href="#panel-feedback%2flog-level-1" role="tab" aria-controls="panel-feedback/log-level-1" aria-selected="false">Narrow</a><a id="tab-feedback/log-level-2" href="#panel-feedback%2flog-level-2" role="tab" aria-controls="panel-feedback/log-level-2" aria-selected="false">256 colors</a><a id="tab-feedback/log-level-3" href="#panel-feedback%2flog-level-3" role="tab" aria-controls="panel-feedback/log-level-3" aria-selected="false">16 colors</a><a id="tab-feedback/log-level-4" href="#panel-feedback%2flog-level-4" role="tab" aria-controls="panel-feedback/log-level-4" aria-selected="false">Monochrome</a><a id="tab-feedback/log-level-5" href="#panel-feedback%2flog-level-5" role="tab" aria-controls="panel-feedback/log-level-5" aria-selected="false">Bright</a><a id="tab-feedback/log-level-6" href="#panel-feedback%2flog-level-6" role="tab" aria-controls="panel-feedback/log-level-6" aria-selected="false">Normal</a><a id="tab-feedback/log-level-7" href="#panel-feedback%2flog-level-7" role="tab" aria-controls="panel-feedback/log-level-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-feedback/log-level-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">INFO </span><span style="background-color:#202f40;"> </span> Request complete
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">WARN </span><span style="background-color:#32322f;"> </span> Retry scheduled 
+<span style="background-color:#f28b82;"> </span><span style="color:#101722;background-color:#f28b82;font-weight:bold;">ERROR</span><span style="background-color:#f28b82;"> </span> Upstream timeout</pre></figure>
+</div>
+<div id="panel-feedback/log-level-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                                                        
+                                                                                
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">TRACE</span><span style="background-color:#252b34;"> </span>                                                                         
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">DEBUG</span><span style="background-color:#1e313d;"> </span>                                                                         
+<span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">INFO </span><span style="background-color:#202f40;"> </span>                                                                         
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">WARN </span><span style="background-color:#32322f;"> </span>                                                                         
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">ERROR</span><span style="background-color:#322830;"> </span>                                                                         
+<span style="background-color:#302b41;"> </span><span style="color:#e49aef;background-color:#302b41;">FATAL</span><span style="background-color:#302b41;"> </span></pre></figure>
+</div><div id="panel-feedback/log-level-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                
+                                        
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">TRACE</span><span style="background-color:#252b34;"> </span>                                 
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">DEBUG</span><span style="background-color:#1e313d;"> </span>                                 
+<span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">INFO </span><span style="background-color:#202f40;"> </span>                                 
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">WARN </span><span style="background-color:#32322f;"> </span>                                 
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">ERROR</span><span style="background-color:#322830;"> </span>                                 
+<span style="background-color:#302b41;"> </span><span style="color:#e49aef;background-color:#302b41;">FATAL</span><span style="background-color:#302b41;"> </span></pre></figure>
+</div><div id="panel-feedback/log-level-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                                                        
+                                                                                
+<span style="background-color:#00005f;"> </span><span style="color:#9e9e9e;background-color:#00005f;">TRACE</span><span style="background-color:#00005f;"> </span>                                                                         
+<span style="background-color:#005f5f;"> </span><span style="color:#5fd7d7;background-color:#005f5f;">DEBUG</span><span style="background-color:#005f5f;"> </span>                                                                         
+<span style="background-color:#00005f;"> </span><span style="color:#87afff;background-color:#00005f;">INFO </span><span style="background-color:#00005f;"> </span>                                                                         
+<span style="background-color:#303030;"> </span><span style="color:#ffd787;background-color:#303030;">WARN </span><span style="background-color:#303030;"> </span>                                                                         
+<span style="background-color:#5f005f;"> </span><span style="color:#ff8787;background-color:#5f005f;">ERROR</span><span style="background-color:#5f005f;"> </span>                                                                         
+<span style="background-color:#5f005f;"> </span><span style="color:#d787ff;background-color:#5f005f;">FATAL</span><span style="background-color:#5f005f;"> </span></pre></figure>
+</div><div id="panel-feedback/log-level-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                                                        
+                                                                                
+<span style="background-color:#000080;"> </span><span style="color:#c0c0c0;background-color:#000080;">TRACE</span><span style="background-color:#000080;"> </span>                                                                         
+<span style="background-color:#008080;"> </span><span style="color:#00ffff;background-color:#008080;">DEBUG</span><span style="background-color:#008080;"> </span>                                                                         
+<span style="background-color:#000080;"> </span><span style="color:#0000ff;background-color:#000080;">INFO </span><span style="background-color:#000080;"> </span>                                                                         
+<span style="background-color:#000000;"> </span><span style="color:#ff0000;background-color:#000000;">WARN </span><span style="background-color:#000000;"> </span>                                                                         
+<span style="background-color:#800080;"> </span><span style="color:#ff0000;background-color:#800080;">ERROR</span><span style="background-color:#800080;"> </span>                                                                         
+<span style="background-color:#800080;"> </span><span style="color:#0000ff;background-color:#800080;">FATAL</span><span style="background-color:#800080;"> </span></pre></figure>
+</div><div id="panel-feedback/log-level-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Log level atoms / normal                                                        
+                                                                                
+[TRACE]                                                                         
+[DEBUG]                                                                         
+[INFO ]                                                                         
+[WARN ]                                                                         
+[ERROR]                                                                         
+[FATAL]</pre></figure>
+</div><div id="panel-feedback/log-level-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-5" tabindex="0">
+<figure><figcaption>Bright · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / bright                                                        
+                                                                                
+<span style="background-color:#9a9a9a;"> </span><span style="color:#101722;background-color:#9a9a9a;font-weight:bold;">TRACE</span><span style="background-color:#9a9a9a;"> </span>                                                                         
+<span style="background-color:#70c6d8;"> </span><span style="color:#101722;background-color:#70c6d8;font-weight:bold;">DEBUG</span><span style="background-color:#70c6d8;"> </span>                                                                         
+<span style="background-color:#78b8ed;"> </span><span style="color:#101722;background-color:#78b8ed;font-weight:bold;">INFO </span><span style="background-color:#78b8ed;"> </span>                                                                         
+<span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">WARN </span><span style="background-color:#f2c879;"> </span>                                                                         
+<span style="background-color:#f28b82;"> </span><span style="color:#101722;background-color:#f28b82;font-weight:bold;">ERROR</span><span style="background-color:#f28b82;"> </span>                                                                         
+<span style="background-color:#e49aef;"> </span><span style="color:#101722;background-color:#e49aef;font-weight:bold;">FATAL</span><span style="background-color:#e49aef;"> </span></pre></figure>
+</div><div id="panel-feedback/log-level-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-6" tabindex="0">
+<figure><figcaption>Normal · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / normal                                                        
+                                                                                
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">TRACE</span><span style="background-color:#252b34;"> </span>                                                                         
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">DEBUG</span><span style="background-color:#1e313d;"> </span>                                                                         
+<span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">INFO </span><span style="background-color:#202f40;"> </span>                                                                         
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">WARN </span><span style="background-color:#32322f;"> </span>                                                                         
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">ERROR</span><span style="background-color:#322830;"> </span>                                                                         
+<span style="background-color:#302b41;"> </span><span style="color:#e49aef;background-color:#302b41;">FATAL</span><span style="background-color:#302b41;"> </span></pre></figure>
+</div><div id="panel-feedback/log-level-7" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/log-level-7" tabindex="0">
+<figure><figcaption>Dim · truecolor · 80 × 12 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Log level atoms / dim                                                           
+                                                                                
+<span style="background-color:#161c27;"> </span><span style="color:#898989;background-color:#161c27;">TRACE</span><span style="background-color:#161c27;"> </span>                                                                         
+<span style="background-color:#141e29;"> </span><span style="color:#519bab;background-color:#141e29;">DEBUG</span><span style="background-color:#141e29;"> </span>                                                                         
+<span style="background-color:#141d2a;"> </span><span style="color:#5a8fb9;background-color:#141d2a;">INFO </span><span style="background-color:#141d2a;"> </span>                                                                         
+<span style="background-color:#191e25;"> </span><span style="color:#b5945c;background-color:#191e25;">WARN </span><span style="background-color:#191e25;"> </span>                                                                         
+<span style="background-color:#191c26;"> </span><span style="color:#c17670;background-color:#191c26;">ERROR</span><span style="background-color:#191c26;"> </span>                                                                         
+<span style="background-color:#181c2a;"> </span><span style="color:#b477bd;background-color:#181c2a;">FATAL</span><span style="background-color:#181c2a;"> </span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/log-level-code"><a class="heading-permalink" href="#feedback%2flog-level-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/charm.land/log/v2" title="charm.land/log/v2"><code>log</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>log<span class="syn-operator">.</span>InfoLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Request complete&#34;</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>log<span class="syn-operator">.</span>WarnLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Retry scheduled&#34;</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span><span class="syn-function">LogLevel</span><span class="syn-operator">(</span>log<span class="syn-operator">.</span>ErrorLevel<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Bright<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Upstream timeout&#34;</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/log-level-integration"><h3 id="feedback/log-level-integration"><a class="heading-permalink" href="#feedback%2flog-level-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="feedback/log-level-run"><a class="heading-permalink" href="#feedback%2flog-level-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/log-level</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_log_level.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/feedback/log_level.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Declared example links (unaudited): <a class="dependency" href="atoms-text.html#text/pill">text/pill</a> </p>
+</section>
+
+<section class="component" id="feedback/status">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2fstatus" aria-label="Link to Status component"><span>Status</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Health, lifecycle and connection states share semantic colors, named glyphs and emphasis-independent spacing.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/status-preview"><a class="heading-permalink" href="#feedback%2fstatus-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Status variants">
+<a id="tab-feedback/status-example" href="#panel-feedback%2fstatus-example" role="tab" aria-controls="panel-feedback/status-example" aria-selected="true">Example</a>
+<a id="tab-feedback/status-0" href="#panel-feedback%2fstatus-0" role="tab" aria-controls="panel-feedback/status-0" aria-selected="false">Demo</a><a id="tab-feedback/status-1" href="#panel-feedback%2fstatus-1" role="tab" aria-controls="panel-feedback/status-1" aria-selected="false">Narrow</a><a id="tab-feedback/status-2" href="#panel-feedback%2fstatus-2" role="tab" aria-controls="panel-feedback/status-2" aria-selected="false">256 colors</a><a id="tab-feedback/status-3" href="#panel-feedback%2fstatus-3" role="tab" aria-controls="panel-feedback/status-3" aria-selected="false">16 colors</a><a id="tab-feedback/status-4" href="#panel-feedback%2fstatus-4" role="tab" aria-controls="panel-feedback/status-4" aria-selected="false">Monochrome</a><a id="tab-feedback/status-5" href="#panel-feedback%2fstatus-5" role="tab" aria-controls="panel-feedback/status-5" aria-selected="false">Bright</a><a id="tab-feedback/status-6" href="#panel-feedback%2fstatus-6" role="tab" aria-controls="panel-feedback/status-6" aria-selected="false">Normal</a><a id="tab-feedback/status-7" href="#panel-feedback%2fstatus-7" role="tab" aria-controls="panel-feedback/status-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-feedback/status-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ OK</span><span style="background-color:#223334;"> </span>     
+<span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">! WARN</span><span style="background-color:#f2c879;"> </span>   
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ RUNNING</span><span style="background-color:#1e313d;"> </span>
+<span style="background-color:#161e2a;"> </span><span style="color:#829bc3;background-color:#161e2a;">? UNKNOWN</span><span style="background-color:#161e2a;"> </span></pre></figure>
+</div>
+<div id="panel-feedback/status-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 80 × 14 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Status atoms / normal                                                           
+                                                                                
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ OK</span><span style="background-color:#223334;"> </span>                                                                          
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">! WARN</span><span style="background-color:#32322f;"> </span>                                                                        
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× ERROR</span><span style="background-color:#322830;"> </span>                                                                       
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span>                                                                     
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">⏻ OFF</span><span style="background-color:#252b34;"> </span>                                                                         
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">◌ INACTIVE</span><span style="background-color:#252b34;"> </span>                                                                    
+<span style="background-color:#232d40;"> </span><span style="color:#8ca8e8;background-color:#232d40;">◷ PENDING</span><span style="background-color:#232d40;"> </span>                                                                     
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ RUNNING</span><span style="background-color:#1e313d;"> </span>                                                                     
+<span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span>                                                                      
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">⊘ DISABLED</span><span style="background-color:#252b34;"> </span>                                                                    
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>                                                                   
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ DISCONNECTED</span><span style="background-color:#252b34;"> </span></pre></figure>
+</div><div id="panel-feedback/status-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Status atoms / normal                   
+                                        
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ OK</span><span style="background-color:#223334;"> </span>                                  
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">! WARN</span><span style="background-color:#32322f;"> </span>                                
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× ERROR</span><span style="background-color:#322830;"> </span>                               
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span>                             
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">⏻ OFF</span><span style="background-color:#252b34;"> </span>                                 
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">◌ INACTIVE</span><span style="background-color:#252b34;"> </span>                            
+<span style="background-color:#232d40;"> </span><span style="color:#8ca8e8;background-color:#232d40;">◷ PENDING</span><span style="background-color:#232d40;"> </span>                             
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ RUNNING</span><span style="background-color:#1e313d;"> </span>                             
+<span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span>                              
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">⊘ DISABLED</span><span style="background-color:#252b34;"> </span>                            
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>                           
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ DISCONNECTED</span><span style="background-color:#252b34;"> </span></pre></figure>
+</div><div id="panel-feedback/status-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 80 × 14 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Status atoms / normal                                                           
+                                                                                
+<span style="background-color:#005f5f;"> </span><span style="color:#87d787;background-color:#005f5f;">✓ OK</span><span style="background-color:#005f5f;"> </span>                                                                          
+<span style="background-color:#303030;"> </span><span style="color:#ffd787;background-color:#303030;">! WARN</span><span style="background-color:#303030;"> </span>                                                                        
+<span style="background-color:#5f005f;"> </span><span style="color:#ff8787;background-color:#5f005f;">× ERROR</span><span style="background-color:#5f005f;"> </span>                                                                       
+<span style="background-color:#005f5f;"> </span><span style="color:#afafd7;background-color:#005f5f;">? UNKNOWN</span><span style="background-color:#005f5f;"> </span>                                                                     
+<span style="background-color:#00005f;"> </span><span style="color:#9e9e9e;background-color:#00005f;">⏻ OFF</span><span style="background-color:#00005f;"> </span>                                                                         
+<span style="background-color:#00005f;"> </span><span style="color:#9e9e9e;background-color:#00005f;">◌ INACTIVE</span><span style="background-color:#00005f;"> </span>                                                                    
+<span style="background-color:#00005f;"> </span><span style="color:#87afd7;background-color:#00005f;">◷ PENDING</span><span style="background-color:#00005f;"> </span>                                                                     
+<span style="background-color:#005f5f;"> </span><span style="color:#5fd7d7;background-color:#005f5f;">▶ RUNNING</span><span style="background-color:#005f5f;"> </span>                                                                     
+<span style="background-color:#00005f;"> </span><span style="color:#d7afaf;background-color:#00005f;">‖ PAUSED</span><span style="background-color:#00005f;"> </span>                                                                      
+<span style="background-color:#00005f;"> </span><span style="color:#9e9e9e;background-color:#00005f;">⊘ DISABLED</span><span style="background-color:#00005f;"> </span>                                                                    
+<span style="background-color:#005f5f;"> </span><span style="color:#87d787;background-color:#005f5f;">● CONNECTED</span><span style="background-color:#005f5f;"> </span>                                                                   
+<span style="background-color:#00005f;"> </span><span style="color:#9e9e9e;background-color:#00005f;">○ DISCONNECTED</span><span style="background-color:#00005f;"> </span></pre></figure>
+</div><div id="panel-feedback/status-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 80 × 14 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Status atoms / normal                                                           
+                                                                                
+<span style="background-color:#008080;"> </span><span style="color:#00ff00;background-color:#008080;">✓ OK</span><span style="background-color:#008080;"> </span>                                                                          
+<span style="background-color:#000000;"> </span><span style="color:#ff0000;background-color:#000000;">! WARN</span><span style="background-color:#000000;"> </span>                                                                        
+<span style="background-color:#800080;"> </span><span style="color:#ff0000;background-color:#800080;">× ERROR</span><span style="background-color:#800080;"> </span>                                                                       
+<span style="background-color:#008080;"> </span><span style="color:#0000ff;background-color:#008080;">? UNKNOWN</span><span style="background-color:#008080;"> </span>                                                                     
+<span style="background-color:#000080;"> </span><span style="color:#c0c0c0;background-color:#000080;">⏻ OFF</span><span style="background-color:#000080;"> </span>                                                                         
+<span style="background-color:#000080;"> </span><span style="color:#c0c0c0;background-color:#000080;">◌ INACTIVE</span><span style="background-color:#000080;"> </span>                                                                    
+<span style="background-color:#000080;"> </span><span style="color:#0000ff;background-color:#000080;">◷ PENDING</span><span style="background-color:#000080;"> </span>                                                                     
+<span style="background-color:#008080;"> </span><span style="color:#00ffff;background-color:#008080;">▶ RUNNING</span><span style="background-color:#008080;"> </span>                                                                     
+<span style="background-color:#000080;"> </span><span style="color:#ff0000;background-color:#000080;">‖ PAUSED</span><span style="background-color:#000080;"> </span>                                                                      
+<span style="background-color:#000080;"> </span><span style="color:#c0c0c0;background-color:#000080;">⊘ DISABLED</span><span style="background-color:#000080;"> </span>                                                                    
+<span style="background-color:#008080;"> </span><span style="color:#00ff00;background-color:#008080;">● CONNECTED</span><span style="background-color:#008080;"> </span>                                                                   
+<span style="background-color:#000080;"> </span><span style="color:#c0c0c0;background-color:#000080;">○ DISCONNECTED</span><span style="background-color:#000080;"> </span></pre></figure>
+</div><div id="panel-feedback/status-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 80 × 14 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Status atoms / normal                                                           
+                                                                                
+[+ OK]                                                                          
+[! WARN]                                                                        
+[x ERROR]                                                                       
+[? UNKNOWN]                                                                     
+[- OFF]                                                                         
+[- INACTIVE]                                                                    
+[p PENDING]                                                                     
+[&gt; RUNNING]                                                                     
+[= PAUSED]                                                                      
+[/ DISABLED]                                                                    
+[+ CONNECTED]                                                                   
+[- DISCONNECTED]</pre></figure>
+</div><div id="panel-feedback/status-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-5" tabindex="0">
+<figure><figcaption>Bright · truecolor · 80 × 14 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Status atoms / bright                                                           
+                                                                                
+<span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">✓ OK</span><span style="background-color:#86cf9a;"> </span>                                                                          
+<span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">! WARN</span><span style="background-color:#f2c879;"> </span>                                                                        
+<span style="background-color:#f28b82;"> </span><span style="color:#101722;background-color:#f28b82;font-weight:bold;">× ERROR</span><span style="background-color:#f28b82;"> </span>                                                                       
+<span style="background-color:#a7bce0;"> </span><span style="color:#101722;background-color:#a7bce0;font-weight:bold;">? UNKNOWN</span><span style="background-color:#a7bce0;"> </span>                                                                     
+<span style="background-color:#9a9a9a;"> </span><span style="color:#101722;background-color:#9a9a9a;font-weight:bold;">⏻ OFF</span><span style="background-color:#9a9a9a;"> </span>                                                                         
+<span style="background-color:#9a9a9a;"> </span><span style="color:#101722;background-color:#9a9a9a;font-weight:bold;">◌ INACTIVE</span><span style="background-color:#9a9a9a;"> </span>                                                                    
+<span style="background-color:#8ca8e8;"> </span><span style="color:#101722;background-color:#8ca8e8;font-weight:bold;">◷ PENDING</span><span style="background-color:#8ca8e8;"> </span>                                                                     
+<span style="background-color:#70c6d8;"> </span><span style="color:#101722;background-color:#70c6d8;font-weight:bold;">▶ RUNNING</span><span style="background-color:#70c6d8;"> </span>                                                                     
+<span style="background-color:#c5b49b;"> </span><span style="color:#101722;background-color:#c5b49b;font-weight:bold;">‖ PAUSED</span><span style="background-color:#c5b49b;"> </span>                                                                      
+<span style="background-color:#9a9a9a;"> </span><span style="color:#101722;background-color:#9a9a9a;font-weight:bold;">⊘ DISABLED</span><span style="background-color:#9a9a9a;"> </span>                                                                    
+<span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">● CONNECTED</span><span style="background-color:#86cf9a;"> </span>                                                                   
+<span style="background-color:#9a9a9a;"> </span><span style="color:#101722;background-color:#9a9a9a;font-weight:bold;">○ DISCONNECTED</span><span style="background-color:#9a9a9a;"> </span></pre></figure>
+</div><div id="panel-feedback/status-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-6" tabindex="0">
+<figure><figcaption>Normal · truecolor · 80 × 14 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Status atoms / normal                                                           
+                                                                                
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ OK</span><span style="background-color:#223334;"> </span>                                                                          
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">! WARN</span><span style="background-color:#32322f;"> </span>                                                                        
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× ERROR</span><span style="background-color:#322830;"> </span>                                                                       
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span>                                                                     
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">⏻ OFF</span><span style="background-color:#252b34;"> </span>                                                                         
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">◌ INACTIVE</span><span style="background-color:#252b34;"> </span>                                                                    
+<span style="background-color:#232d40;"> </span><span style="color:#8ca8e8;background-color:#232d40;">◷ PENDING</span><span style="background-color:#232d40;"> </span>                                                                     
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ RUNNING</span><span style="background-color:#1e313d;"> </span>                                                                     
+<span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span>                                                                      
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">⊘ DISABLED</span><span style="background-color:#252b34;"> </span>                                                                    
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>                                                                   
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ DISCONNECTED</span><span style="background-color:#252b34;"> </span></pre></figure>
+</div><div id="panel-feedback/status-7" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/status-7" tabindex="0">
+<figure><figcaption>Dim · truecolor · 80 × 14 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Status atoms / dim                                                              
+                                                                                
+<span style="background-color:#151e27;"> </span><span style="color:#629c73;background-color:#151e27;">✓ OK</span><span style="background-color:#151e27;"> </span>                                                                          
+<span style="background-color:#191e25;"> </span><span style="color:#b5945c;background-color:#191e25;">! WARN</span><span style="background-color:#191e25;"> </span>                                                                        
+<span style="background-color:#191c26;"> </span><span style="color:#c17670;background-color:#191c26;">× ERROR</span><span style="background-color:#191c26;"> </span>                                                                       
+<span style="background-color:#161e2a;"> </span><span style="color:#829bc3;background-color:#161e2a;">? UNKNOWN</span><span style="background-color:#161e2a;"> </span>                                                                     
+<span style="background-color:#161c27;"> </span><span style="color:#898989;background-color:#161c27;">⏻ OFF</span><span style="background-color:#161c27;"> </span>                                                                         
+<span style="background-color:#161c27;"> </span><span style="color:#898989;background-color:#161c27;">◌ INACTIVE</span><span style="background-color:#161c27;"> </span>                                                                    
+<span style="background-color:#151d2a;"> </span><span style="color:#758fc4;background-color:#151d2a;">◷ PENDING</span><span style="background-color:#151d2a;"> </span>                                                                     
+<span style="background-color:#141e29;"> </span><span style="color:#519bab;background-color:#141e29;">▶ RUNNING</span><span style="background-color:#141e29;"> </span>                                                                     
+<span style="background-color:#171d27;"> </span><span style="color:#a59682;background-color:#171d27;">‖ PAUSED</span><span style="background-color:#171d27;"> </span>                                                                      
+<span style="background-color:#161c27;"> </span><span style="color:#898989;background-color:#161c27;">⊘ DISABLED</span><span style="background-color:#161c27;"> </span>                                                                    
+<span style="background-color:#151e27;"> </span><span style="color:#629c73;background-color:#151e27;">● CONNECTED</span><span style="background-color:#151e27;"> </span>                                                                   
+<span style="background-color:#161c27;"> </span><span style="color:#898989;background-color:#161c27;">○ DISCONNECTED</span><span style="background-color:#161c27;"> </span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/status-code"><a class="heading-permalink" href="#feedback%2fstatus-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	feedback<span class="syn-operator">.</span>OK<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span>Warn<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Bright<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span>Running<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span>Unknown<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Dim<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/status-integration"><h3 id="feedback/status-integration"><a class="heading-permalink" href="#feedback%2fstatus-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="feedback/status-run"><a class="heading-permalink" href="#feedback%2fstatus-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/status</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_status.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/feedback/status.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+
+<section class="component-relations" aria-label="Component relationships">
+<h3>Reusable component</h3>
+<p><a href="dependencies.html#component-feedback%2Fstatus">Status dependency graph</a> · Partial map · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/feedback/status.go#L12">Source declaration</a></p>
+
+<details><summary>Consumer usage uses</summary><ul><li><a href="dependencies.html#component-feedback%2Fstatus">Status</a> · primary demonstration</li></ul><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_status.go#L10">Example source</a></details>
+</section>
+
+</section>
+
+<section class="component" id="feedback/connection">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2fconnection" aria-label="Link to Connection component"><span>Connection</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Connected and disconnected describe connectivity independently of health, severity or unknown state. Labels and glyphs remain visible in every profile.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/connection-preview"><a class="heading-permalink" href="#feedback%2fconnection-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Connection variants">
+<a id="tab-feedback/connection-example" href="#panel-feedback%2fconnection-example" role="tab" aria-controls="panel-feedback/connection-example" aria-selected="true">Example</a>
+<a id="tab-feedback/connection-0" href="#panel-feedback%2fconnection-0" role="tab" aria-controls="panel-feedback/connection-0" aria-selected="false">Demo</a><a id="tab-feedback/connection-1" href="#panel-feedback%2fconnection-1" role="tab" aria-controls="panel-feedback/connection-1" aria-selected="false">Narrow</a><a id="tab-feedback/connection-2" href="#panel-feedback%2fconnection-2" role="tab" aria-controls="panel-feedback/connection-2" aria-selected="false">256 colors</a><a id="tab-feedback/connection-3" href="#panel-feedback%2fconnection-3" role="tab" aria-controls="panel-feedback/connection-3" aria-selected="false">16 colors</a><a id="tab-feedback/connection-4" href="#panel-feedback%2fconnection-4" role="tab" aria-controls="panel-feedback/connection-4" aria-selected="false">Monochrome</a><a id="tab-feedback/connection-5" href="#panel-feedback%2fconnection-5" role="tab" aria-controls="panel-feedback/connection-5" aria-selected="false">Bright</a><a id="tab-feedback/connection-6" href="#panel-feedback%2fconnection-6" role="tab" aria-controls="panel-feedback/connection-6" aria-selected="false">Normal</a><a id="tab-feedback/connection-7" href="#panel-feedback%2fconnection-7" role="tab" aria-controls="panel-feedback/connection-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-feedback/connection-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>   
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ DISCONNECTED</span><span style="background-color:#252b34;"> </span></pre></figure>
+</div>
+<div id="panel-feedback/connection-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>                                                   
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ DISCONNECTED</span><span style="background-color:#252b34;"> </span></pre></figure>
+</div><div id="panel-feedback/connection-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>                           
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ DISCONNECTED</span><span style="background-color:#252b34;"> </span></pre></figure>
+</div><div id="panel-feedback/connection-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="background-color:#005f5f;"> </span><span style="color:#87d787;background-color:#005f5f;">● CONNECTED</span><span style="background-color:#005f5f;"> </span>                                                   
+<span style="background-color:#00005f;"> </span><span style="color:#9e9e9e;background-color:#00005f;">○ DISCONNECTED</span><span style="background-color:#00005f;"> </span></pre></figure>
+</div><div id="panel-feedback/connection-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="background-color:#008080;"> </span><span style="color:#00ff00;background-color:#008080;">● CONNECTED</span><span style="background-color:#008080;"> </span>                                                   
+<span style="background-color:#000080;"> </span><span style="color:#c0c0c0;background-color:#000080;">○ DISCONNECTED</span><span style="background-color:#000080;"> </span></pre></figure>
+</div><div id="panel-feedback/connection-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">[+ CONNECTED]                                                   
+[- DISCONNECTED]</pre></figure>
+</div><div id="panel-feedback/connection-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-5" tabindex="0">
+<figure><figcaption>Bright · truecolor · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">● CONNECTED</span><span style="background-color:#86cf9a;"> </span>                                                   
+<span style="background-color:#9a9a9a;"> </span><span style="color:#101722;background-color:#9a9a9a;font-weight:bold;">○ DISCONNECTED</span><span style="background-color:#9a9a9a;"> </span></pre></figure>
+</div><div id="panel-feedback/connection-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-6" tabindex="0">
+<figure><figcaption>Normal · truecolor · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">● CONNECTED</span><span style="background-color:#223334;"> </span>                                                   
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;">○ DISCONNECTED</span><span style="background-color:#252b34;"> </span></pre></figure>
+</div><div id="panel-feedback/connection-7" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/connection-7" tabindex="0">
+<figure><figcaption>Dim · truecolor · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="background-color:#151e27;"> </span><span style="color:#629c73;background-color:#151e27;">● CONNECTED</span><span style="background-color:#151e27;"> </span>                                                   
+<span style="background-color:#161c27;"> </span><span style="color:#898989;background-color:#161c27;">○ DISCONNECTED</span><span style="background-color:#161c27;"> </span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/connection-code"><a class="heading-permalink" href="#feedback%2fconnection-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	feedback<span class="syn-operator">.</span>Connected<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span>Disconnected<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/connection-integration"><h3 id="feedback/connection-integration"><a class="heading-permalink" href="#feedback%2fconnection-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="feedback/connection-run"><a class="heading-permalink" href="#feedback%2fconnection-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/connection</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_connection.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/story/chrome.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Declared example links (unaudited): <a class="dependency" href="atoms-feedback.html#feedback/status">feedback/status</a> </p>
+</section>
+
+<section class="component" id="feedback/follow">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2ffollow" aria-label="Link to Follow component"><span>Follow</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Follow mode and paused browsing reuse lifecycle status colors, glyphs and insets.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/follow-preview"><a class="heading-permalink" href="#feedback%2ffollow-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Follow variants">
+<a id="tab-feedback/follow-example" href="#panel-feedback%2ffollow-example" role="tab" aria-controls="panel-feedback/follow-example" aria-selected="true">Example</a>
+<a id="tab-feedback/follow-0" href="#panel-feedback%2ffollow-0" role="tab" aria-controls="panel-feedback/follow-0" aria-selected="false">Demo</a><a id="tab-feedback/follow-1" href="#panel-feedback%2ffollow-1" role="tab" aria-controls="panel-feedback/follow-1" aria-selected="false">Narrow</a><a id="tab-feedback/follow-2" href="#panel-feedback%2ffollow-2" role="tab" aria-controls="panel-feedback/follow-2" aria-selected="false">256 colors</a><a id="tab-feedback/follow-3" href="#panel-feedback%2ffollow-3" role="tab" aria-controls="panel-feedback/follow-3" aria-selected="false">16 colors</a><a id="tab-feedback/follow-4" href="#panel-feedback%2ffollow-4" role="tab" aria-controls="panel-feedback/follow-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/follow-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/follow-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ FOLLOW</span><span style="background-color:#1e313d;"> </span>
+<span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span></pre></figure>
+</div>
+<div id="panel-feedback/follow-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/follow-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Browsing mode / shared status atoms                                                                 
+                                                                                                    
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ FOLLOW</span><span style="background-color:#1e313d;"> </span>                                                                                          
+<span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span>                                                                                          
+                                                                                                    
+<span style="color:#67d4c0;font-weight:bold;">F</span> <span style="color:#a8a8a8;">resume follow</span></pre></figure>
+</div><div id="panel-feedback/follow-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/follow-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Browsing mode / shared status atoms     
+                                        
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ FOLLOW</span><span style="background-color:#1e313d;"> </span>                              
+<span style="background-color:#2b2f34;"> </span><span style="color:#c5b49b;background-color:#2b2f34;">‖ PAUSED</span><span style="background-color:#2b2f34;"> </span>                              
+                                        
+<span style="color:#67d4c0;font-weight:bold;">F</span> <span style="color:#a8a8a8;">resume follow</span></pre></figure>
+</div><div id="panel-feedback/follow-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/follow-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Browsing mode / shared status atoms                                                                 
+                                                                                                    
+<span style="background-color:#005f5f;"> </span><span style="color:#5fd7d7;background-color:#005f5f;">▶ FOLLOW</span><span style="background-color:#005f5f;"> </span>                                                                                          
+<span style="background-color:#00005f;"> </span><span style="color:#d7afaf;background-color:#00005f;">‖ PAUSED</span><span style="background-color:#00005f;"> </span>                                                                                          
+                                                                                                    
+<span style="color:#5fd7af;font-weight:bold;">F</span> <span style="color:#a8a8a8;">resume follow</span></pre></figure>
+</div><div id="panel-feedback/follow-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/follow-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Browsing mode / shared status atoms                                                                 
+                                                                                                    
+<span style="background-color:#008080;"> </span><span style="color:#00ffff;background-color:#008080;">▶ FOLLOW</span><span style="background-color:#008080;"> </span>                                                                                          
+<span style="background-color:#000080;"> </span><span style="color:#ff0000;background-color:#000080;">‖ PAUSED</span><span style="background-color:#000080;"> </span>                                                                                          
+                                                                                                    
+<span style="color:#00ff00;font-weight:bold;">F</span> <span style="color:#c0c0c0;">resume follow</span></pre></figure>
+</div><div id="panel-feedback/follow-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/follow-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Browsing mode / shared status atoms                                                                 
+                                                                                                    
+[&gt; FOLLOW]                                                                                          
+[= PAUSED]                                                                                          
+                                                                                                    
+<span style="font-weight:bold;">F</span> resume follow</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/follow-code"><a class="heading-permalink" href="#feedback%2ffollow-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	feedback<span class="syn-operator">.</span><span class="syn-function">Follow</span><span class="syn-operator">(</span><span class="syn-builtin">true</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	feedback<span class="syn-operator">.</span><span class="syn-function">Follow</span><span class="syn-operator">(</span><span class="syn-builtin">false</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/follow-integration"><h3 id="feedback/follow-integration"><a class="heading-permalink" href="#feedback%2ffollow-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="feedback/follow-run"><a class="heading-permalink" href="#feedback%2ffollow-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/follow</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_follow.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/feedback/controls.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Declared example links (unaudited): <a class="dependency" href="atoms-feedback.html#feedback/status">feedback/status</a> </p>
+</section>
+
+<section class="component" id="feedback/scrollbar">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2fscrollbar" aria-label="Link to Scrollbar component"><span>Scrollbar</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Proportional vertical line scrollbar with bounded offsets, ASCII fallback and a stable empty gutter.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/scrollbar-preview"><a class="heading-permalink" href="#feedback%2fscrollbar-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Scrollbar variants">
+<a id="tab-feedback/scrollbar-example" href="#panel-feedback%2fscrollbar-example" role="tab" aria-controls="panel-feedback/scrollbar-example" aria-selected="true">Example</a>
+<a id="tab-feedback/scrollbar-0" href="#panel-feedback%2fscrollbar-0" role="tab" aria-controls="panel-feedback/scrollbar-0" aria-selected="false">Demo</a><a id="tab-feedback/scrollbar-1" href="#panel-feedback%2fscrollbar-1" role="tab" aria-controls="panel-feedback/scrollbar-1" aria-selected="false">Narrow</a><a id="tab-feedback/scrollbar-2" href="#panel-feedback%2fscrollbar-2" role="tab" aria-controls="panel-feedback/scrollbar-2" aria-selected="false">256 colors</a><a id="tab-feedback/scrollbar-3" href="#panel-feedback%2fscrollbar-3" role="tab" aria-controls="panel-feedback/scrollbar-3" aria-selected="false">16 colors</a><a id="tab-feedback/scrollbar-4" href="#panel-feedback%2fscrollbar-4" role="tab" aria-controls="panel-feedback/scrollbar-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-feedback/scrollbar-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/scrollbar-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#67d4c0;font-weight:bold;">┃</span>
+<span style="color:#67d4c0;font-weight:bold;">┃</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span></pre></figure>
+</div>
+<div id="panel-feedback/scrollbar-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/scrollbar-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Scrollbar / top · middle · bottom                                                                   
+                                                                                                    
+<span style="color:#67d4c0;font-weight:bold;">┃</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#67d4c0;font-weight:bold;">┃</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#67d4c0;font-weight:bold;">┃</span>                                                                                       
+                                                                                                    
+Thumb = visible lines / total lines                                                                 
+No overflow = reserved blank gutter</pre></figure>
+</div><div id="panel-feedback/scrollbar-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/scrollbar-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Scrollbar / top · middle · bottom       
+                                        
+<span style="color:#67d4c0;font-weight:bold;">┃</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#a8a8a8;">│</span>     <span style="color:#67d4c0;font-weight:bold;">┃</span>     <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#67d4c0;font-weight:bold;">┃</span>                           
+                                        
+Thumb = visible lines / total lines     
+No overflow = reserved blank gutter</pre></figure>
+</div><div id="panel-feedback/scrollbar-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/scrollbar-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Scrollbar / top · middle · bottom                                                                   
+                                                                                                    
+<span style="color:#5fd7af;font-weight:bold;">┃</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#5fd7af;font-weight:bold;">┃</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>                                                                                       
+<span style="color:#a8a8a8;">│</span>     <span style="color:#a8a8a8;">│</span>     <span style="color:#5fd7af;font-weight:bold;">┃</span>                                                                                       
+                                                                                                    
+Thumb = visible lines / total lines                                                                 
+No overflow = reserved blank gutter</pre></figure>
+</div><div id="panel-feedback/scrollbar-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/scrollbar-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Scrollbar / top · middle · bottom                                                                   
+                                                                                                    
+<span style="color:#00ff00;font-weight:bold;">┃</span>     <span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>                                                                                       
+<span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>                                                                                       
+<span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>                                                                                       
+<span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>                                                                                       
+<span style="color:#c0c0c0;">│</span>     <span style="color:#00ff00;font-weight:bold;">┃</span>     <span style="color:#c0c0c0;">│</span>                                                                                       
+<span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>                                                                                       
+<span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>                                                                                       
+<span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>                                                                                       
+<span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>                                                                                       
+<span style="color:#c0c0c0;">│</span>     <span style="color:#c0c0c0;">│</span>     <span style="color:#00ff00;font-weight:bold;">┃</span>                                                                                       
+                                                                                                    
+Thumb = visible lines / total lines                                                                 
+No overflow = reserved blank gutter</pre></figure>
+</div><div id="panel-feedback/scrollbar-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/scrollbar-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Scrollbar / top * middle * bottom                                                                   
+                                                                                                    
+<span style="font-weight:bold;">#</span>     |     |                                                                                       
+|     |     |                                                                                       
+|     |     |                                                                                       
+|     |     |                                                                                       
+|     <span style="font-weight:bold;">#</span>     |                                                                                       
+|     |     |                                                                                       
+|     |     |                                                                                       
+|     |     |                                                                                       
+|     |     |                                                                                       
+|     |     <span style="font-weight:bold;">#</span>                                                                                       
+                                                                                                    
+Thumb = visible lines / total lines                                                                 
+No overflow = reserved blank gutter</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/scrollbar-code"><a class="heading-permalink" href="#feedback%2fscrollbar-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">scrollbar <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span>Scrollbar<span class="syn-operator">{</span>Total<span class="syn-operator">:</span> <span class="syn-number">100</span><span class="syn-operator">,</span> Visible<span class="syn-operator">:</span> <span class="syn-number">20</span><span class="syn-operator">,</span> Offset<span class="syn-operator">:</span> <span class="syn-number">35</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">8</span><span class="syn-operator">}</span>
+<span class="syn-keyword">return</span> scrollbar<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/scrollbar-integration"><h3 id="feedback/scrollbar-integration"><a class="heading-permalink" href="#feedback%2fscrollbar-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="feedback/scrollbar-run"><a class="heading-permalink" href="#feedback%2fscrollbar-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/scrollbar</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_scrollbar.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/feedback/controls.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+
+<section class="component-relations" aria-label="Component relationships">
+<h3>Reusable component</h3>
+<p><a href="dependencies.html#component-feedback%2Fscrollbar">Scrollbar dependency graph</a> · Partial map · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/feedback/controls.go#L27">Source declaration</a></p>
+
+<details><summary>Consumer usage uses</summary><ul><li><a href="dependencies.html#component-feedback%2Fscrollbar">Scrollbar</a> · primary demonstration</li></ul><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_scrollbar.go#L8">Example source</a></details>
+</section>
+
+</section>
+
+<section class="component" id="feedback/freshness">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2ffreshness" aria-label="Link to Freshness component"><span>Freshness</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Explicit observation and current times with a caller-owned stale threshold; future timestamps stay visible.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/freshness-preview"><a class="heading-permalink" href="#feedback%2ffreshness-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Freshness variants">
+<a id="tab-feedback/freshness-example" href="#panel-feedback%2ffreshness-example" role="tab" aria-controls="panel-feedback/freshness-example" aria-selected="true">Example</a>
+<a id="tab-feedback/freshness-0" href="#panel-feedback%2ffreshness-0" role="tab" aria-controls="panel-feedback/freshness-0" aria-selected="false">Demo</a><a id="tab-feedback/freshness-1" href="#panel-feedback%2ffreshness-1" role="tab" aria-controls="panel-feedback/freshness-1" aria-selected="false">Narrow</a><a id="tab-feedback/freshness-2" href="#panel-feedback%2ffreshness-2" role="tab" aria-controls="panel-feedback/freshness-2" aria-selected="false">256 colors</a><a id="tab-feedback/freshness-3" href="#panel-feedback%2ffreshness-3" role="tab" aria-controls="panel-feedback/freshness-3" aria-selected="false">16 colors</a><a id="tab-feedback/freshness-4" href="#panel-feedback%2ffreshness-4" role="tab" aria-controls="panel-feedback/freshness-4" aria-selected="false">Monochrome</a><a id="tab-feedback/freshness-5" href="#panel-feedback%2ffreshness-5" role="tab" aria-controls="panel-feedback/freshness-5" aria-selected="false">Bright</a><a id="tab-feedback/freshness-6" href="#panel-feedback%2ffreshness-6" role="tab" aria-controls="panel-feedback/freshness-6" aria-selected="false">Normal</a><a id="tab-feedback/freshness-7" href="#panel-feedback%2ffreshness-7" role="tab" aria-controls="panel-feedback/freshness-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-feedback/freshness-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/freshness-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#f2c879;">◷ STALE 8m0s ago</span></pre></figure>
+</div>
+<div id="panel-feedback/freshness-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/freshness-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/freshness / normal</span>                                                     
+                                                                                
+<span style="color:#eeeeee;">◷ 0s ago</span>                                                                        
+<span style="color:#eeeeee;">◷ 12s ago</span>                                                                       
+<span style="color:#f2c879;">◷ STALE 8m0s ago</span>                                                                
+<span style="color:#f2c879;">◷ in 1s (future)</span>                                                                
+<span style="color:#eeeeee;">— age unavailable</span></pre></figure>
+</div><div id="panel-feedback/freshness-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/freshness-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/freshness / normal</span>             
+                                        
+<span style="color:#eeeeee;">◷ 0s ago</span>                                
+<span style="color:#eeeeee;">◷ 12s ago</span>                               
+<span style="color:#f2c879;">◷ STALE 8m0s ago</span>                        
+<span style="color:#f2c879;">◷ in 1s (future)</span>                        
+<span style="color:#eeeeee;">— age unavailable</span></pre></figure>
+</div><div id="panel-feedback/freshness-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/freshness-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">feedback/freshness / normal</span>                                                     
+                                                                                
+<span style="color:#eeeeee;">◷ 0s ago</span>                                                                        
+<span style="color:#eeeeee;">◷ 12s ago</span>                                                                       
+<span style="color:#ffd787;">◷ STALE 8m0s ago</span>                                                                
+<span style="color:#ffd787;">◷ in 1s (future)</span>                                                                
+<span style="color:#eeeeee;">— age unavailable</span></pre></figure>
+</div><div id="panel-feedback/freshness-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/freshness-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">feedback/freshness / normal</span>                                                     
+                                                                                
+<span style="color:#ffffff;">◷ 0s ago</span>                                                                        
+<span style="color:#ffffff;">◷ 12s ago</span>                                                                       
+<span style="color:#ff0000;">◷ STALE 8m0s ago</span>                                                                
+<span style="color:#ff0000;">◷ in 1s (future)</span>                                                                
+<span style="color:#ffffff;">— age unavailable</span></pre></figure>
+</div><div id="panel-feedback/freshness-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/freshness-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">feedback/freshness / normal</span>                                                     
+                                                                                
+0s ago                                                                          
+12s ago                                                                         
+STALE 8m0s ago                                                                  
+in 1s (future)                                                                  
+age unavailable</pre></figure>
+</div><div id="panel-feedback/freshness-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/freshness-5" tabindex="0">
+<figure><figcaption>Bright · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/freshness / bright</span>                                                     
+                                                                                
+<span style="color:#eeeeee;font-weight:bold;">◷ 0s ago</span>                                                                        
+<span style="color:#eeeeee;font-weight:bold;">◷ 12s ago</span>                                                                       
+<span style="color:#f2c879;font-weight:bold;">◷ STALE 8m0s ago</span>                                                                
+<span style="color:#f2c879;font-weight:bold;">◷ in 1s (future)</span>                                                                
+<span style="color:#eeeeee;font-weight:bold;">— age unavailable</span></pre></figure>
+</div><div id="panel-feedback/freshness-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/freshness-6" tabindex="0">
+<figure><figcaption>Normal · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/freshness / normal</span>                                                     
+                                                                                
+<span style="color:#eeeeee;">◷ 0s ago</span>                                                                        
+<span style="color:#eeeeee;">◷ 12s ago</span>                                                                       
+<span style="color:#f2c879;">◷ STALE 8m0s ago</span>                                                                
+<span style="color:#f2c879;">◷ in 1s (future)</span>                                                                
+<span style="color:#eeeeee;">— age unavailable</span></pre></figure>
+</div><div id="panel-feedback/freshness-7" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/freshness-7" tabindex="0">
+<figure><figcaption>Dim · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/freshness / dim</span>                                                        
+                                                                                
+<span style="color:#a8a8a8;">◷ 0s ago</span>                                                                        
+<span style="color:#a8a8a8;">◷ 12s ago</span>                                                                       
+<span style="color:#b5945c;">◷ STALE 8m0s ago</span>                                                                
+<span style="color:#b5945c;">◷ in 1s (future)</span>                                                                
+<span style="color:#a8a8a8;">— age unavailable</span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/freshness-code"><a class="heading-permalink" href="#feedback%2ffreshness-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/time" title="time"><code>time</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">now <span class="syn-operator">:=</span> time<span class="syn-operator">.</span><span class="syn-function">Date</span><span class="syn-operator">(</span><span class="syn-number">2026</span><span class="syn-operator">,</span> <span class="syn-number">11</span><span class="syn-operator">,</span> <span class="syn-number">10</span><span class="syn-operator">,</span> <span class="syn-number">12</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> time<span class="syn-operator">.</span>UTC<span class="syn-operator">)</span>
+freshness <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span>Freshness<span class="syn-operator">{</span>
+	ObservedAt<span class="syn-operator">:</span> now<span class="syn-operator">.</span><span class="syn-function">Add</span><span class="syn-operator">(</span><span class="syn-operator">-</span><span class="syn-number">8</span> <span class="syn-operator">*</span> time<span class="syn-operator">.</span>Minute<span class="syn-operator">)</span><span class="syn-operator">,</span> StaleAfter<span class="syn-operator">:</span> time<span class="syn-operator">.</span>Minute<span class="syn-operator">,</span>
+	Emphasis<span class="syn-operator">:</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span>
+<span class="syn-operator">}</span>
+
+<span class="syn-keyword">return</span> freshness<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>now<span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/freshness-integration"><h3 id="feedback/freshness-integration"><a class="heading-permalink" href="#feedback%2ffreshness-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="feedback/freshness-run"><a class="heading-permalink" href="#feedback%2ffreshness-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/freshness</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_freshness.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/feedback/freshness.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Dependency map: not audited.</p>
+</section>
+
+<section class="component" id="feedback/evidence">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2fevidence" aria-label="Link to Evidence state component"><span>Evidence state</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Healthy, degraded, down, unknown, stale, insufficient, truncated and attribution-gap evidence; only healthy reads as OK.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/evidence-preview"><a class="heading-permalink" href="#feedback%2fevidence-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Evidence state variants">
+<a id="tab-feedback/evidence-example" href="#panel-feedback%2fevidence-example" role="tab" aria-controls="panel-feedback/evidence-example" aria-selected="true">Example</a>
+<a id="tab-feedback/evidence-0" href="#panel-feedback%2fevidence-0" role="tab" aria-controls="panel-feedback/evidence-0" aria-selected="false">Demo</a><a id="tab-feedback/evidence-1" href="#panel-feedback%2fevidence-1" role="tab" aria-controls="panel-feedback/evidence-1" aria-selected="false">Narrow</a><a id="tab-feedback/evidence-2" href="#panel-feedback%2fevidence-2" role="tab" aria-controls="panel-feedback/evidence-2" aria-selected="false">256 colors</a><a id="tab-feedback/evidence-3" href="#panel-feedback%2fevidence-3" role="tab" aria-controls="panel-feedback/evidence-3" aria-selected="false">16 colors</a><a id="tab-feedback/evidence-4" href="#panel-feedback%2fevidence-4" role="tab" aria-controls="panel-feedback/evidence-4" aria-selected="false">Monochrome</a><a id="tab-feedback/evidence-5" href="#panel-feedback%2fevidence-5" role="tab" aria-controls="panel-feedback/evidence-5" aria-selected="false">Bright</a><a id="tab-feedback/evidence-6" href="#panel-feedback%2fevidence-6" role="tab" aria-controls="panel-feedback/evidence-6" aria-selected="false">Normal</a><a id="tab-feedback/evidence-7" href="#panel-feedback%2fevidence-7" role="tab" aria-controls="panel-feedback/evidence-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-feedback/evidence-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/evidence-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ STALE</span><span style="background-color:#32322f;"> </span></pre></figure>
+</div>
+<div id="panel-feedback/evidence-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/evidence-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/evidence / normal</span>                                                      
+                                                                                
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ HEALTHY</span><span style="background-color:#223334;"> </span> <span style="color:#a8a8a8;">status OK</span>                                                           
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">! DEGRADED</span><span style="background-color:#32322f;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                        
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× DOWN</span><span style="background-color:#322830;"> </span> <span style="color:#a8a8a8;">status ERROR</span>                                                           
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>                                                      
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ STALE</span><span style="background-color:#32322f;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                           
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">∅ INSUFFICIENT</span><span style="background-color:#27303f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>                                                 
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">… TRUNCATED</span><span style="background-color:#32322f;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                       
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">≠ ATTRIBUTION GAP</span><span style="background-color:#27303f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span></pre></figure>
+</div><div id="panel-feedback/evidence-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/evidence-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/evidence / normal</span>              
+                                        
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ HEALTHY</span><span style="background-color:#223334;"> </span> <span style="color:#a8a8a8;">status OK</span>                   
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">! DEGRADED</span><span style="background-color:#32322f;"> </span> <span style="color:#a8a8a8;">status WARN</span>                
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× DOWN</span><span style="background-color:#322830;"> </span> <span style="color:#a8a8a8;">status ERROR</span>                   
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>              
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ STALE</span><span style="background-color:#32322f;"> </span> <span style="color:#a8a8a8;">status WARN</span>                   
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">∅ INSUFFICIENT</span><span style="background-color:#27303f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>         
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">… TRUNCATED</span><span style="background-color:#32322f;"> </span> <span style="color:#a8a8a8;">status WARN</span>               
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">≠ ATTRIBUTION GAP</span><span style="background-color:#27303f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span></pre></figure>
+</div><div id="panel-feedback/evidence-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/evidence-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">feedback/evidence / normal</span>                                                      
+                                                                                
+<span style="background-color:#005f5f;"> </span><span style="color:#87d787;background-color:#005f5f;">✓ HEALTHY</span><span style="background-color:#005f5f;"> </span> <span style="color:#a8a8a8;">status OK</span>                                                           
+<span style="background-color:#303030;"> </span><span style="color:#ffd787;background-color:#303030;">! DEGRADED</span><span style="background-color:#303030;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                        
+<span style="background-color:#5f005f;"> </span><span style="color:#ff8787;background-color:#5f005f;">× DOWN</span><span style="background-color:#5f005f;"> </span> <span style="color:#a8a8a8;">status ERROR</span>                                                           
+<span style="background-color:#005f5f;"> </span><span style="color:#afafd7;background-color:#005f5f;">? UNKNOWN</span><span style="background-color:#005f5f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>                                                      
+<span style="background-color:#303030;"> </span><span style="color:#ffd787;background-color:#303030;">◷ STALE</span><span style="background-color:#303030;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                           
+<span style="background-color:#005f5f;"> </span><span style="color:#afafd7;background-color:#005f5f;">∅ INSUFFICIENT</span><span style="background-color:#005f5f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>                                                 
+<span style="background-color:#303030;"> </span><span style="color:#ffd787;background-color:#303030;">… TRUNCATED</span><span style="background-color:#303030;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                       
+<span style="background-color:#005f5f;"> </span><span style="color:#afafd7;background-color:#005f5f;">≠ ATTRIBUTION GAP</span><span style="background-color:#005f5f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span></pre></figure>
+</div><div id="panel-feedback/evidence-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/evidence-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">feedback/evidence / normal</span>                                                      
+                                                                                
+<span style="background-color:#008080;"> </span><span style="color:#00ff00;background-color:#008080;">✓ HEALTHY</span><span style="background-color:#008080;"> </span> <span style="color:#c0c0c0;">status OK</span>                                                           
+<span style="background-color:#000000;"> </span><span style="color:#ff0000;background-color:#000000;">! DEGRADED</span><span style="background-color:#000000;"> </span> <span style="color:#c0c0c0;">status WARN</span>                                                        
+<span style="background-color:#800080;"> </span><span style="color:#ff0000;background-color:#800080;">× DOWN</span><span style="background-color:#800080;"> </span> <span style="color:#c0c0c0;">status ERROR</span>                                                           
+<span style="background-color:#008080;"> </span><span style="color:#0000ff;background-color:#008080;">? UNKNOWN</span><span style="background-color:#008080;"> </span> <span style="color:#c0c0c0;">status UNKNOWN</span>                                                      
+<span style="background-color:#000000;"> </span><span style="color:#ff0000;background-color:#000000;">◷ STALE</span><span style="background-color:#000000;"> </span> <span style="color:#c0c0c0;">status WARN</span>                                                           
+<span style="background-color:#008080;"> </span><span style="color:#0000ff;background-color:#008080;">∅ INSUFFICIENT</span><span style="background-color:#008080;"> </span> <span style="color:#c0c0c0;">status UNKNOWN</span>                                                 
+<span style="background-color:#000000;"> </span><span style="color:#ff0000;background-color:#000000;">… TRUNCATED</span><span style="background-color:#000000;"> </span> <span style="color:#c0c0c0;">status WARN</span>                                                       
+<span style="background-color:#008080;"> </span><span style="color:#0000ff;background-color:#008080;">≠ ATTRIBUTION GAP</span><span style="background-color:#008080;"> </span> <span style="color:#c0c0c0;">status UNKNOWN</span></pre></figure>
+</div><div id="panel-feedback/evidence-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/evidence-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">feedback/evidence / normal</span>                                                      
+                                                                                
+[+ HEALTHY] status OK                                                           
+[! DEGRADED] status WARN                                                        
+[x DOWN] status ERROR                                                           
+[? UNKNOWN] status UNKNOWN                                                      
+[t STALE] status WARN                                                           
+[- INSUFFICIENT] status UNKNOWN                                                 
+[. TRUNCATED] status WARN                                                       
+[% ATTRIBUTION GAP] status UNKNOWN</pre></figure>
+</div><div id="panel-feedback/evidence-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/evidence-5" tabindex="0">
+<figure><figcaption>Bright · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/evidence / bright</span>                                                      
+                                                                                
+<span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">✓ HEALTHY</span><span style="background-color:#86cf9a;"> </span> <span style="color:#a8a8a8;">status OK</span>                                                           
+<span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">! DEGRADED</span><span style="background-color:#f2c879;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                        
+<span style="background-color:#f28b82;"> </span><span style="color:#101722;background-color:#f28b82;font-weight:bold;">× DOWN</span><span style="background-color:#f28b82;"> </span> <span style="color:#a8a8a8;">status ERROR</span>                                                           
+<span style="background-color:#a7bce0;"> </span><span style="color:#101722;background-color:#a7bce0;font-weight:bold;">? UNKNOWN</span><span style="background-color:#a7bce0;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>                                                      
+<span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">◷ STALE</span><span style="background-color:#f2c879;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                           
+<span style="background-color:#a7bce0;"> </span><span style="color:#101722;background-color:#a7bce0;font-weight:bold;">∅ INSUFFICIENT</span><span style="background-color:#a7bce0;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>                                                 
+<span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">… TRUNCATED</span><span style="background-color:#f2c879;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                       
+<span style="background-color:#a7bce0;"> </span><span style="color:#101722;background-color:#a7bce0;font-weight:bold;">≠ ATTRIBUTION GAP</span><span style="background-color:#a7bce0;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span></pre></figure>
+</div><div id="panel-feedback/evidence-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/evidence-6" tabindex="0">
+<figure><figcaption>Normal · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/evidence / normal</span>                                                      
+                                                                                
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ HEALTHY</span><span style="background-color:#223334;"> </span> <span style="color:#a8a8a8;">status OK</span>                                                           
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">! DEGRADED</span><span style="background-color:#32322f;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                        
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× DOWN</span><span style="background-color:#322830;"> </span> <span style="color:#a8a8a8;">status ERROR</span>                                                           
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>                                                      
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ STALE</span><span style="background-color:#32322f;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                           
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">∅ INSUFFICIENT</span><span style="background-color:#27303f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>                                                 
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">… TRUNCATED</span><span style="background-color:#32322f;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                       
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">≠ ATTRIBUTION GAP</span><span style="background-color:#27303f;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span></pre></figure>
+</div><div id="panel-feedback/evidence-7" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/evidence-7" tabindex="0">
+<figure><figcaption>Dim · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/evidence / dim</span>                                                         
+                                                                                
+<span style="background-color:#151e27;"> </span><span style="color:#629c73;background-color:#151e27;">✓ HEALTHY</span><span style="background-color:#151e27;"> </span> <span style="color:#a8a8a8;">status OK</span>                                                           
+<span style="background-color:#191e25;"> </span><span style="color:#b5945c;background-color:#191e25;">! DEGRADED</span><span style="background-color:#191e25;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                        
+<span style="background-color:#191c26;"> </span><span style="color:#c17670;background-color:#191c26;">× DOWN</span><span style="background-color:#191c26;"> </span> <span style="color:#a8a8a8;">status ERROR</span>                                                           
+<span style="background-color:#161e2a;"> </span><span style="color:#829bc3;background-color:#161e2a;">? UNKNOWN</span><span style="background-color:#161e2a;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>                                                      
+<span style="background-color:#191e25;"> </span><span style="color:#b5945c;background-color:#191e25;">◷ STALE</span><span style="background-color:#191e25;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                           
+<span style="background-color:#161e2a;"> </span><span style="color:#829bc3;background-color:#161e2a;">∅ INSUFFICIENT</span><span style="background-color:#161e2a;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span>                                                 
+<span style="background-color:#191e25;"> </span><span style="color:#b5945c;background-color:#191e25;">… TRUNCATED</span><span style="background-color:#191e25;"> </span> <span style="color:#a8a8a8;">status WARN</span>                                                       
+<span style="background-color:#161e2a;"> </span><span style="color:#829bc3;background-color:#161e2a;">≠ ATTRIBUTION GAP</span><span style="background-color:#161e2a;"> </span> <span style="color:#a8a8a8;">status UNKNOWN</span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/evidence-code"><a class="heading-permalink" href="#feedback%2fevidence-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-comment">// Parse the state word once at the boundary; anything unrecognized is unknown, never healthy.</span>
+state<span class="syn-operator">,</span> _ <span class="syn-operator">:=</span> feedback<span class="syn-operator">.</span><span class="syn-function">ParseEvidence</span><span class="syn-operator">(</span><span class="syn-string">&#34;stale&#34;</span><span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> state<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/evidence-integration"><h3 id="feedback/evidence-integration"><a class="heading-permalink" href="#feedback%2fevidence-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="feedback/evidence-run"><a class="heading-permalink" href="#feedback%2fevidence-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/evidence</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_evidence.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/feedback/evidence.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Declared example links (unaudited): <a class="dependency" href="atoms-text.html#text/pill">text/pill</a> <a class="dependency" href="atoms-feedback.html#feedback/status">feedback/status</a> </p>
+</section>
+
+<section class="component" id="feedback/outcome">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Feedback</p><h2><a class="heading-permalink" href="#feedback%2foutcome" aria-label="Link to Operation outcome component"><span>Operation outcome</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Succeeded, failed, canceled, timed out and unknown results never infer the outcome of pending work.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="feedback/outcome-preview"><a class="heading-permalink" href="#feedback%2foutcome-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Operation outcome variants">
+<a id="tab-feedback/outcome-example" href="#panel-feedback%2foutcome-example" role="tab" aria-controls="panel-feedback/outcome-example" aria-selected="true">Example</a>
+<a id="tab-feedback/outcome-0" href="#panel-feedback%2foutcome-0" role="tab" aria-controls="panel-feedback/outcome-0" aria-selected="false">Demo</a><a id="tab-feedback/outcome-1" href="#panel-feedback%2foutcome-1" role="tab" aria-controls="panel-feedback/outcome-1" aria-selected="false">Narrow</a><a id="tab-feedback/outcome-2" href="#panel-feedback%2foutcome-2" role="tab" aria-controls="panel-feedback/outcome-2" aria-selected="false">256 colors</a><a id="tab-feedback/outcome-3" href="#panel-feedback%2foutcome-3" role="tab" aria-controls="panel-feedback/outcome-3" aria-selected="false">16 colors</a><a id="tab-feedback/outcome-4" href="#panel-feedback%2foutcome-4" role="tab" aria-controls="panel-feedback/outcome-4" aria-selected="false">Monochrome</a><a id="tab-feedback/outcome-5" href="#panel-feedback%2foutcome-5" role="tab" aria-controls="panel-feedback/outcome-5" aria-selected="false">Bright</a><a id="tab-feedback/outcome-6" href="#panel-feedback%2foutcome-6" role="tab" aria-controls="panel-feedback/outcome-6" aria-selected="false">Normal</a><a id="tab-feedback/outcome-7" href="#panel-feedback%2foutcome-7" role="tab" aria-controls="panel-feedback/outcome-7" aria-selected="false">Dim</a>
+</div>
+<div id="panel-feedback/outcome-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/outcome-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ TIMED OUT</span><span style="background-color:#32322f;"> </span>  <span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">⊘ CANCELED</span><span style="background-color:#313741;"> </span></pre></figure>
+</div>
+<div id="panel-feedback/outcome-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/outcome-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/outcome / normal</span>                                                       
+                                                                                
+<span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">? UNKNOWN</span><span style="background-color:#313741;"> </span>                                                                     
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ SUCCEEDED</span><span style="background-color:#223334;"> </span>                                                                   
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× FAILED</span><span style="background-color:#322830;"> </span>                                                                      
+<span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">⊘ CANCELED</span><span style="background-color:#313741;"> </span>                                                                    
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ TIMED OUT</span><span style="background-color:#32322f;"> </span></pre></figure>
+</div><div id="panel-feedback/outcome-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/outcome-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/outcome / normal</span>               
+                                        
+<span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">? UNKNOWN</span><span style="background-color:#313741;"> </span>                             
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ SUCCEEDED</span><span style="background-color:#223334;"> </span>                           
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× FAILED</span><span style="background-color:#322830;"> </span>                              
+<span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">⊘ CANCELED</span><span style="background-color:#313741;"> </span>                            
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ TIMED OUT</span><span style="background-color:#32322f;"> </span></pre></figure>
+</div><div id="panel-feedback/outcome-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/outcome-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">feedback/outcome / normal</span>                                                       
+                                                                                
+<span style="background-color:#3a3a3a;"> </span><span style="color:#eeeeee;background-color:#3a3a3a;">? UNKNOWN</span><span style="background-color:#3a3a3a;"> </span>                                                                     
+<span style="background-color:#005f5f;"> </span><span style="color:#87d787;background-color:#005f5f;">✓ SUCCEEDED</span><span style="background-color:#005f5f;"> </span>                                                                   
+<span style="background-color:#5f005f;"> </span><span style="color:#ff8787;background-color:#5f005f;">× FAILED</span><span style="background-color:#5f005f;"> </span>                                                                      
+<span style="background-color:#3a3a3a;"> </span><span style="color:#eeeeee;background-color:#3a3a3a;">⊘ CANCELED</span><span style="background-color:#3a3a3a;"> </span>                                                                    
+<span style="background-color:#303030;"> </span><span style="color:#ffd787;background-color:#303030;">◷ TIMED OUT</span><span style="background-color:#303030;"> </span></pre></figure>
+</div><div id="panel-feedback/outcome-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/outcome-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">feedback/outcome / normal</span>                                                       
+                                                                                
+<span style="background-color:#000000;"> </span><span style="color:#ffffff;background-color:#000000;">? UNKNOWN</span><span style="background-color:#000000;"> </span>                                                                     
+<span style="background-color:#008080;"> </span><span style="color:#00ff00;background-color:#008080;">✓ SUCCEEDED</span><span style="background-color:#008080;"> </span>                                                                   
+<span style="background-color:#800080;"> </span><span style="color:#ff0000;background-color:#800080;">× FAILED</span><span style="background-color:#800080;"> </span>                                                                      
+<span style="background-color:#000000;"> </span><span style="color:#ffffff;background-color:#000000;">⊘ CANCELED</span><span style="background-color:#000000;"> </span>                                                                    
+<span style="background-color:#000000;"> </span><span style="color:#ff0000;background-color:#000000;">◷ TIMED OUT</span><span style="background-color:#000000;"> </span></pre></figure>
+</div><div id="panel-feedback/outcome-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/outcome-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">feedback/outcome / normal</span>                                                       
+                                                                                
+[? UNKNOWN]                                                                     
+[+ SUCCEEDED]                                                                   
+[x FAILED]                                                                      
+[/ CANCELED]                                                                    
+[t TIMED OUT]</pre></figure>
+</div><div id="panel-feedback/outcome-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/outcome-5" tabindex="0">
+<figure><figcaption>Bright · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/outcome / bright</span>                                                       
+                                                                                
+<span style="background-color:#eeeeee;"> </span><span style="color:#101722;background-color:#eeeeee;font-weight:bold;">? UNKNOWN</span><span style="background-color:#eeeeee;"> </span>                                                                     
+<span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">✓ SUCCEEDED</span><span style="background-color:#86cf9a;"> </span>                                                                   
+<span style="background-color:#f28b82;"> </span><span style="color:#101722;background-color:#f28b82;font-weight:bold;">× FAILED</span><span style="background-color:#f28b82;"> </span>                                                                      
+<span style="background-color:#eeeeee;"> </span><span style="color:#101722;background-color:#eeeeee;font-weight:bold;">⊘ CANCELED</span><span style="background-color:#eeeeee;"> </span>                                                                    
+<span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">◷ TIMED OUT</span><span style="background-color:#f2c879;"> </span></pre></figure>
+</div><div id="panel-feedback/outcome-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/outcome-6" tabindex="0">
+<figure><figcaption>Normal · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/outcome / normal</span>                                                       
+                                                                                
+<span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">? UNKNOWN</span><span style="background-color:#313741;"> </span>                                                                     
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ SUCCEEDED</span><span style="background-color:#223334;"> </span>                                                                   
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× FAILED</span><span style="background-color:#322830;"> </span>                                                                      
+<span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">⊘ CANCELED</span><span style="background-color:#313741;"> </span>                                                                    
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ TIMED OUT</span><span style="background-color:#32322f;"> </span></pre></figure>
+</div><div id="panel-feedback/outcome-7" class="variant-panel" role="tabpanel" aria-labelledby="tab-feedback/outcome-7" tabindex="0">
+<figure><figcaption>Dim · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">feedback/outcome / dim</span>                                                          
+                                                                                
+<span style="background-color:#19202a;"> </span><span style="color:#a8a8a8;background-color:#19202a;">? UNKNOWN</span><span style="background-color:#19202a;"> </span>                                                                     
+<span style="background-color:#151e27;"> </span><span style="color:#629c73;background-color:#151e27;">✓ SUCCEEDED</span><span style="background-color:#151e27;"> </span>                                                                   
+<span style="background-color:#191c26;"> </span><span style="color:#c17670;background-color:#191c26;">× FAILED</span><span style="background-color:#191c26;"> </span>                                                                      
+<span style="background-color:#19202a;"> </span><span style="color:#a8a8a8;background-color:#19202a;">⊘ CANCELED</span><span style="background-color:#19202a;"> </span>                                                                    
+<span style="background-color:#191e25;"> </span><span style="color:#b5945c;background-color:#191e25;">◷ TIMED OUT</span><span style="background-color:#191e25;"> </span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="feedback/outcome-code"><a class="heading-permalink" href="#feedback%2foutcome-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+<span class="syn-comment">// Timeout describes a reported result; it does not establish rollback or absence of effects.</span>
+<span class="syn-keyword">return</span> feedback<span class="syn-operator">.</span>TimedOut<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  &#34;</span> <span class="syn-operator">+</span>
+	feedback<span class="syn-operator">.</span>Canceled<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>Normal<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="feedback/outcome-integration"><h3 id="feedback/outcome-integration"><a class="heading-permalink" href="#feedback%2foutcome-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="feedback/outcome-run"><a class="heading-permalink" href="#feedback%2foutcome-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog feedback/outcome</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/feedback_outcome.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/feedback/outcome.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Declared example links (unaudited): <a class="dependency" href="atoms-text.html#text/pill">text/pill</a> </p>
+</section>
+</section>
+</section>
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+

@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Atoms / Logs · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Atoms / Logs</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+<div class="nav-groups"><a class="nav-group" href="atoms-chart.html" >Charts</a><a class="nav-group" href="atoms-collection.html" >Collections</a><a class="nav-group" href="atoms-feedback.html" >Feedback</a><a class="nav-group" href="atoms-git.html" >git</a><a class="nav-group" href="atoms-graphics.html" >Graphics</a><a class="nav-group" href="atoms-http.html" >HTTP</a><a class="nav-group" href="atoms-input.html" >Input</a><a class="nav-group" href="atoms-logs.html" aria-current="page">Logs</a><a class="nav-group" href="atoms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#text%2fpending">Pending</a><a class="nav-component" href="#text%2fobservation">Observation</a><a class="nav-component" href="#text%2ftime">Time</a></div>
+
+</div>
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+<div class="nav-groups"><a class="nav-group" href="atoms-chart.html" >Charts</a><a class="nav-group" href="atoms-collection.html" >Collections</a><a class="nav-group" href="atoms-feedback.html" >Feedback</a><a class="nav-group" href="atoms-git.html" >git</a><a class="nav-group" href="atoms-graphics.html" >Graphics</a><a class="nav-group" href="atoms-http.html" >HTTP</a><a class="nav-group" href="atoms-input.html" >Input</a><a class="nav-group" href="atoms-logs.html" aria-current="page">Logs</a><a class="nav-group" href="atoms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#text%2fpending">Pending</a><a class="nav-component" href="#text%2fobservation">Observation</a><a class="nav-component" href="#text%2ftime">Time</a></div>
+
+</div>
+</nav>
+</aside>
+<main id="main">
+
+
+
+
+
+
+
+
+
+<section class="atomic-level" id="level-atoms">
+<p class="catalog-breadcrumb"><a href="atoms.html">Atoms</a><span aria-hidden="true"> / </span>Logs</p>
+
+<section class="component-family" id="level-atoms-logs"><h1><a class="heading-permalink" href="#level-atoms-logs"><span>Logs</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">3 components · <a href="atoms.html">All atoms</a></p>
+<ul class="group-jump-links" aria-label="Components in Logs"><li><a href="#text%2fpending">Pending</a></li><li><a href="#text%2fobservation">Observation</a></li><li><a href="#text%2ftime">Time</a></li></ul>
+
+
+<section class="component" id="text/pending">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Logs</p><h2><a class="heading-permalink" href="#text%2fpending" aria-label="Link to Pending component"><span>Pending</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Compact pending glyph and fixed-width caller-driven ellipsis frames.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="text/pending-preview"><a class="heading-permalink" href="#text%2fpending-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Pending variants">
+<a id="tab-text/pending-example" href="#panel-text%2fpending-example" role="tab" aria-controls="panel-text/pending-example" aria-selected="true">Example</a>
+<a id="tab-text/pending-0" href="#panel-text%2fpending-0" role="tab" aria-controls="panel-text/pending-0" aria-selected="false">Demo</a><a id="tab-text/pending-1" href="#panel-text%2fpending-1" role="tab" aria-controls="panel-text/pending-1" aria-selected="false">Narrow</a><a id="tab-text/pending-2" href="#panel-text%2fpending-2" role="tab" aria-controls="panel-text/pending-2" aria-selected="false">256 colors</a><a id="tab-text/pending-3" href="#panel-text%2fpending-3" role="tab" aria-controls="panel-text/pending-3" aria-selected="false">16 colors</a><a id="tab-text/pending-4" href="#panel-text%2fpending-4" role="tab" aria-controls="panel-text/pending-4" aria-selected="false">Monochrome</a><a id="tab-text/pending-5" href="#panel-text%2fpending-5" role="tab" aria-controls="panel-text/pending-5" aria-selected="false">light</a><a id="tab-text/pending-6" href="#panel-text%2fpending-6" role="tab" aria-controls="panel-text/pending-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/pending-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pending-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">  <span style="color:#8ca8e8;">◷</span>        
+ <span style="color:#8ca8e8;">◷ PENDING</span> 
+ <span style="color:#8ca8e8;">...</span></pre></figure>
+</div>
+<div id="panel-text/pending-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pending-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Pending / stable default                                                                            
+                                                                                                    
+  <span style="color:#8ca8e8;">◷</span>   Pending                                                                                       
+                                                                                                    
+Caller-driven ellipsis / Ctrl+N advances                                                            
+                                                                                                    
+  <span style="color:#8ca8e8;">.</span>   Pending                                                                                       
+                                                                                                    
+Three equal-width frames                                                                            
+                                                                                                    
+  <span style="color:#8ca8e8;">.</span>   |  <span style="color:#8ca8e8;">..</span>   |  <span style="color:#8ca8e8;">...</span></pre></figure>
+</div><div id="panel-text/pending-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pending-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Pending / stable default                
+                                        
+  <span style="color:#8ca8e8;">◷</span>   Pending                           
+                                        
+Caller-driven ellipsis / Ctrl+N advances
+                                        
+  <span style="color:#8ca8e8;">.</span>   Pending                           
+                                        
+Three equal-width frames                
+                                        
+  <span style="color:#8ca8e8;">.</span>   |  <span style="color:#8ca8e8;">..</span>   |  <span style="color:#8ca8e8;">...</span></pre></figure>
+</div><div id="panel-text/pending-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pending-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Pending / stable default                                                                            
+                                                                                                    
+  <span style="color:#87afd7;">◷</span>   Pending                                                                                       
+                                                                                                    
+Caller-driven ellipsis / Ctrl+N advances                                                            
+                                                                                                    
+  <span style="color:#87afd7;">.</span>   Pending                                                                                       
+                                                                                                    
+Three equal-width frames                                                                            
+                                                                                                    
+  <span style="color:#87afd7;">.</span>   |  <span style="color:#87afd7;">..</span>   |  <span style="color:#87afd7;">...</span></pre></figure>
+</div><div id="panel-text/pending-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pending-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Pending / stable default                                                                            
+                                                                                                    
+  <span style="color:#0000ff;">◷</span>   Pending                                                                                       
+                                                                                                    
+Caller-driven ellipsis / Ctrl+N advances                                                            
+                                                                                                    
+  <span style="color:#0000ff;">.</span>   Pending                                                                                       
+                                                                                                    
+Three equal-width frames                                                                            
+                                                                                                    
+  <span style="color:#0000ff;">.</span>   |  <span style="color:#0000ff;">..</span>   |  <span style="color:#0000ff;">...</span></pre></figure>
+</div><div id="panel-text/pending-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pending-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Pending / stable default                                                                            
+                                                                                                    
+  p   Pending                                                                                       
+                                                                                                    
+Caller-driven ellipsis / Ctrl+N advances                                                            
+                                                                                                    
+  p   Pending                                                                                       
+                                                                                                    
+Three equal-width frames                                                                            
+                                                                                                    
+  p   |   p   |   p</pre></figure>
+</div><div id="panel-text/pending-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pending-5" tabindex="0">
+<figure><figcaption>light · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="light" style="color:#172033;background-color:#f8fafc">Pending / stable default                                                                            
+                                                                                                    
+  <span style="color:#345a9c;">◷</span>   Pending                                                                                       
+                                                                                                    
+Caller-driven ellipsis / Ctrl+N advances                                                            
+                                                                                                    
+  <span style="color:#345a9c;">.</span>   Pending                                                                                       
+                                                                                                    
+Three equal-width frames                                                                            
+                                                                                                    
+  <span style="color:#345a9c;">.</span>   |  <span style="color:#345a9c;">..</span>   |  <span style="color:#345a9c;">...</span></pre></figure>
+</div><div id="panel-text/pending-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/pending-6" tabindex="0">
+<figure><figcaption>contrast · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="contrast" style="color:#ffffff;background-color:#000000">Pending / stable default                                                                            
+                                                                                                    
+  <span style="color:#abc1ff;">◷</span>   Pending                                                                                       
+                                                                                                    
+Caller-driven ellipsis / Ctrl+N advances                                                            
+                                                                                                    
+  <span style="color:#abc1ff;">.</span>   Pending                                                                                       
+                                                                                                    
+Three equal-width frames                                                                            
+                                                                                                    
+  <span style="color:#abc1ff;">.</span>   |  <span style="color:#abc1ff;">..</span>   |  <span style="color:#abc1ff;">...</span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="text/pending-code"><a class="heading-permalink" href="#text%2fpending-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Pending</span><span class="syn-operator">(</span>palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">PendingWithPresentation</span><span class="syn-operator">(</span>text<span class="syn-operator">.</span>GlyphAndLabel<span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Pending</span><span class="syn-operator">(</span>palette<span class="syn-operator">,</span> <span class="syn-number">2</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-comment">// Optional animation frame supplied by your clock.</span>
+<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="text/pending-integration"><h3 id="text/pending-integration"><a class="heading-permalink" href="#text%2fpending-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="text/pending-run"><a class="heading-permalink" href="#text%2fpending-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/pending</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/text_pending.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/text/observability.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Dependency map: not audited.</p>
+</section>
+
+<section class="component" id="text/observation">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Logs</p><h2><a class="heading-permalink" href="#text%2fobservation" aria-label="Link to Observation component"><span>Observation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Shared glyphs and labels for logs, traces, spans, and service-relative direction.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="text/observation-preview"><a class="heading-permalink" href="#text%2fobservation-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Observation variants">
+<a id="tab-text/observation-example" href="#panel-text%2fobservation-example" role="tab" aria-controls="panel-text/observation-example" aria-selected="true">Example</a>
+<a id="tab-text/observation-0" href="#panel-text%2fobservation-0" role="tab" aria-controls="panel-text/observation-0" aria-selected="false">Demo</a><a id="tab-text/observation-1" href="#panel-text%2fobservation-1" role="tab" aria-controls="panel-text/observation-1" aria-selected="false">Narrow</a><a id="tab-text/observation-2" href="#panel-text%2fobservation-2" role="tab" aria-controls="panel-text/observation-2" aria-selected="false">256 colors</a><a id="tab-text/observation-3" href="#panel-text%2fobservation-3" role="tab" aria-controls="panel-text/observation-3" aria-selected="false">16 colors</a><a id="tab-text/observation-4" href="#panel-text%2fobservation-4" role="tab" aria-controls="panel-text/observation-4" aria-selected="false">Monochrome</a><a id="tab-text/observation-5" href="#panel-text%2fobservation-5" role="tab" aria-controls="panel-text/observation-5" aria-selected="false">light</a><a id="tab-text/observation-6" href="#panel-text%2fobservation-6" role="tab" aria-controls="panel-text/observation-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/observation-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/observation-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#99c8d4;">≡ Log entry</span>      
+<span style="color:#c3b2df;">⋈ trace-c7</span>       
+<span style="color:#e1cd91;">─ carrier</span>        
+<span style="color:#78b8ed;">↑ carrier.example</span>
+<span style="color:#78b8ed;">↓ API consumer</span></pre></figure>
+</div>
+<div id="panel-text/observation-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/observation-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Observation identities                                                                              
+                                                                                                    
+<span style="color:#99c8d4;">≡ Log entry</span>                                                                                         
+<span style="color:#c3b2df;">⋈ Trace trace-c7</span>                                                                                    
+<span style="color:#e1cd91;">─ Span carrier</span>                                                                                      
+                                                                                                    
+Service-relative direction                                                                          
+                                                                                                    
+<span style="color:#78b8ed;">↑ Upstream carrier.example</span>                                                                          
+<span style="color:#78b8ed;">↓ Downstream API consumer</span>                                                                           
+                                                                                                    
+ASCII fallbacks: L / T / S / ^ / v</pre></figure>
+</div><div id="panel-text/observation-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/observation-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Observation identities                  
+                                        
+<span style="color:#99c8d4;">≡ Log entry</span>                             
+<span style="color:#c3b2df;">⋈ Trace trace-c7</span>                        
+<span style="color:#e1cd91;">─ Span carrier</span>                          
+                                        
+Service-relative direction              
+                                        
+<span style="color:#78b8ed;">↑ Upstream carrier.example</span>              
+<span style="color:#78b8ed;">↓ Downstream API consumer</span>               
+                                        
+ASCII fallbacks: L / T / S / ^ / v</pre></figure>
+</div><div id="panel-text/observation-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/observation-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Observation identities                                                                              
+                                                                                                    
+<span style="color:#87d7d7;">≡ Log entry</span>                                                                                         
+<span style="color:#d7afd7;">⋈ Trace trace-c7</span>                                                                                    
+<span style="color:#d7d787;">─ Span carrier</span>                                                                                      
+                                                                                                    
+Service-relative direction                                                                          
+                                                                                                    
+<span style="color:#87afff;">↑ Upstream carrier.example</span>                                                                          
+<span style="color:#87afff;">↓ Downstream API consumer</span>                                                                           
+                                                                                                    
+ASCII fallbacks: L / T / S / ^ / v</pre></figure>
+</div><div id="panel-text/observation-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/observation-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Observation identities                                                                              
+                                                                                                    
+<span style="color:#00ffff;">≡ Log entry</span>                                                                                         
+<span style="color:#ff00ff;">⋈ Trace trace-c7</span>                                                                                    
+<span style="color:#ffff00;">─ Span carrier</span>                                                                                      
+                                                                                                    
+Service-relative direction                                                                          
+                                                                                                    
+<span style="color:#0000ff;">↑ Upstream carrier.example</span>                                                                          
+<span style="color:#0000ff;">↓ Downstream API consumer</span>                                                                           
+                                                                                                    
+ASCII fallbacks: L / T / S / ^ / v</pre></figure>
+</div><div id="panel-text/observation-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/observation-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Observation identities                                                                              
+                                                                                                    
+L Log entry                                                                                         
+T Trace trace-c7                                                                                    
+S Span carrier                                                                                      
+                                                                                                    
+Service-relative direction                                                                          
+                                                                                                    
+^ Upstream carrier.example                                                                          
+v Downstream API consumer                                                                           
+                                                                                                    
+ASCII fallbacks: L / T / S / ^ / v</pre></figure>
+</div><div id="panel-text/observation-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/observation-5" tabindex="0">
+<figure><figcaption>light · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="light" style="color:#172033;background-color:#f8fafc">Observation identities                                                                              
+                                                                                                    
+<span style="color:#365e70;">≡ Log entry</span>                                                                                         
+<span style="color:#65517f;">⋈ Trace trace-c7</span>                                                                                    
+<span style="color:#725a20;">─ Span carrier</span>                                                                                      
+                                                                                                    
+Service-relative direction                                                                          
+                                                                                                    
+<span style="color:#1d4ed8;">↑ Upstream carrier.example</span>                                                                          
+<span style="color:#1d4ed8;">↓ Downstream API consumer</span>                                                                           
+                                                                                                    
+ASCII fallbacks: L / T / S / ^ / v</pre></figure>
+</div><div id="panel-text/observation-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/observation-6" tabindex="0">
+<figure><figcaption>contrast · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="contrast" style="color:#ffffff;background-color:#000000">Observation identities                                                                              
+                                                                                                    
+<span style="color:#b7dfea;">≡ Log entry</span>                                                                                         
+<span style="color:#d9c8f0;">⋈ Trace trace-c7</span>                                                                                    
+<span style="color:#f4dfa6;">─ Span carrier</span>                                                                                      
+                                                                                                    
+Service-relative direction                                                                          
+                                                                                                    
+<span style="color:#93c5fd;">↑ Upstream carrier.example</span>                                                                          
+<span style="color:#93c5fd;">↓ Downstream API consumer</span>                                                                           
+                                                                                                    
+ASCII fallbacks: L / T / S / ^ / v</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="text/observation-code"><a class="heading-permalink" href="#text%2fobservation-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+
+<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Log</span><span class="syn-operator">(</span><span class="syn-string">&#34;Log entry&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Trace</span><span class="syn-operator">(</span><span class="syn-string">&#34;trace-c7&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Span</span><span class="syn-operator">(</span><span class="syn-string">&#34;carrier&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Upstream</span><span class="syn-operator">(</span><span class="syn-string">&#34;carrier.example&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+	text<span class="syn-operator">.</span><span class="syn-function">Downstream</span><span class="syn-operator">(</span><span class="syn-string">&#34;API consumer&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
+<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="text/observation-integration"><h3 id="text/observation-integration"><a class="heading-permalink" href="#text%2fobservation-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="text/observation-run"><a class="heading-permalink" href="#text%2fobservation-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/observation</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/text_observation.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/text/observability.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Dependency map: not audited.</p>
+</section>
+
+<section class="component" id="text/time">
+<p class="eyebrow"><a href="atoms.html">Atoms</a> / Logs</p><h2><a class="heading-permalink" href="#text%2ftime" aria-label="Link to Time component"><span>Time</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Millisecond clock labels and rounded duration abbreviations with exact observations retained by callers.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="text/time-preview"><a class="heading-permalink" href="#text%2ftime-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Time variants">
+<a id="tab-text/time-example" href="#panel-text%2ftime-example" role="tab" aria-controls="panel-text/time-example" aria-selected="true">Example</a>
+<a id="tab-text/time-0" href="#panel-text%2ftime-0" role="tab" aria-controls="panel-text/time-0" aria-selected="false">Demo</a><a id="tab-text/time-1" href="#panel-text%2ftime-1" role="tab" aria-controls="panel-text/time-1" aria-selected="false">Narrow</a><a id="tab-text/time-2" href="#panel-text%2ftime-2" role="tab" aria-controls="panel-text/time-2" aria-selected="false">256 colors</a><a id="tab-text/time-3" href="#panel-text%2ftime-3" role="tab" aria-controls="panel-text/time-3" aria-selected="false">16 colors</a><a id="tab-text/time-4" href="#panel-text%2ftime-4" role="tab" aria-controls="panel-text/time-4" aria-selected="false">Monochrome</a><a id="tab-text/time-5" href="#panel-text%2ftime-5" role="tab" aria-controls="panel-text/time-5" aria-selected="false">light</a><a id="tab-text/time-6" href="#panel-text%2ftime-6" role="tab" aria-controls="panel-text/time-6" aria-selected="false">contrast</a>
+</div>
+<div id="panel-text/time-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/time-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">12:04:00.123  842ms</pre></figure>
+</div>
+<div id="panel-text/time-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/time-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Abbreviated time / exact source retained                                                            
+                                                                                                    
+12:04:01.234  from 2026-11-08T12:04:01.234567Z                                                      
+--:--:--.---  unavailable                                                                           
+                                                                                                    
+Latency / compact rounded display                                                                   
+                                                                                                    
+<span style="color:#eeeeee;">   420ns  from 420ns</span>                                                                                
+<span style="color:#eeeeee;">   842µs  from 842µs</span>                                                                                
+<span style="color:#eeeeee;">   842ms  from 842ms</span>                                                                                
+<span style="color:#eeeeee;">   1.23s  from 1.23456789s</span>                                                                          
+<span style="color:#eeeeee;">    1m2s  from 1m2s</span>                                                                                 
+<span style="color:#eeeeee;">  -1.23s  from -1.23456789s</span></pre></figure>
+</div><div id="panel-text/time-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/time-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Abbreviated time / exact source retained
+                                        
+12:04:01.234  from 2026-11-08T12:04:01.2
+--:--:--.---  unavailable               
+                                        
+Latency / compact rounded display       
+                                        
+<span style="color:#eeeeee;">   420ns  from 420ns</span>                    
+<span style="color:#eeeeee;">   842µs  from 842µs</span>                    
+<span style="color:#eeeeee;">   842ms  from 842ms</span>                    
+<span style="color:#eeeeee;">   1.23s  from 1.23456789s</span>              
+<span style="color:#eeeeee;">    1m2s  from 1m2s</span>                     
+<span style="color:#eeeeee;">  -1.23s  from -1.23456789s</span></pre></figure>
+</div><div id="panel-text/time-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/time-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Abbreviated time / exact source retained                                                            
+                                                                                                    
+12:04:01.234  from 2026-11-08T12:04:01.234567Z                                                      
+--:--:--.---  unavailable                                                                           
+                                                                                                    
+Latency / compact rounded display                                                                   
+                                                                                                    
+<span style="color:#eeeeee;">   420ns  from 420ns</span>                                                                                
+<span style="color:#eeeeee;">   842µs  from 842µs</span>                                                                                
+<span style="color:#eeeeee;">   842ms  from 842ms</span>                                                                                
+<span style="color:#eeeeee;">   1.23s  from 1.23456789s</span>                                                                          
+<span style="color:#eeeeee;">    1m2s  from 1m2s</span>                                                                                 
+<span style="color:#eeeeee;">  -1.23s  from -1.23456789s</span></pre></figure>
+</div><div id="panel-text/time-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/time-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Abbreviated time / exact source retained                                                            
+                                                                                                    
+12:04:01.234  from 2026-11-08T12:04:01.234567Z                                                      
+--:--:--.---  unavailable                                                                           
+                                                                                                    
+Latency / compact rounded display                                                                   
+                                                                                                    
+<span style="color:#ffffff;">   420ns  from 420ns</span>                                                                                
+<span style="color:#ffffff;">   842µs  from 842µs</span>                                                                                
+<span style="color:#ffffff;">   842ms  from 842ms</span>                                                                                
+<span style="color:#ffffff;">   1.23s  from 1.23456789s</span>                                                                          
+<span style="color:#ffffff;">    1m2s  from 1m2s</span>                                                                                 
+<span style="color:#ffffff;">  -1.23s  from -1.23456789s</span></pre></figure>
+</div><div id="panel-text/time-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/time-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Abbreviated time / exact source retained                                                            
+                                                                                                    
+12:04:01.234  from 2026-11-08T12:04:01.234567Z                                                      
+--:--:--.---  unavailable                                                                           
+                                                                                                    
+Latency / compact rounded display                                                                   
+                                                                                                    
+   420ns  from 420ns                                                                                
+   842?s  from 842?s                                                                                
+   842ms  from 842ms                                                                                
+   1.23s  from 1.23456789s                                                                          
+    1m2s  from 1m2s                                                                                 
+  -1.23s  from -1.23456789s</pre></figure>
+</div><div id="panel-text/time-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/time-5" tabindex="0">
+<figure><figcaption>light · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="light" style="color:#172033;background-color:#f8fafc">Abbreviated time / exact source retained                                                            
+                                                                                                    
+12:04:01.234  from 2026-11-08T12:04:01.234567Z                                                      
+--:--:--.---  unavailable                                                                           
+                                                                                                    
+Latency / compact rounded display                                                                   
+                                                                                                    
+<span style="color:#172033;">   420ns  from 420ns</span>                                                                                
+<span style="color:#172033;">   842µs  from 842µs</span>                                                                                
+<span style="color:#172033;">   842ms  from 842ms</span>                                                                                
+<span style="color:#172033;">   1.23s  from 1.23456789s</span>                                                                          
+<span style="color:#172033;">    1m2s  from 1m2s</span>                                                                                 
+<span style="color:#172033;">  -1.23s  from -1.23456789s</span></pre></figure>
+</div><div id="panel-text/time-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/time-6" tabindex="0">
+<figure><figcaption>contrast · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="contrast" style="color:#ffffff;background-color:#000000">Abbreviated time / exact source retained                                                            
+                                                                                                    
+12:04:01.234  from 2026-11-08T12:04:01.234567Z                                                      
+--:--:--.---  unavailable                                                                           
+                                                                                                    
+Latency / compact rounded display                                                                   
+                                                                                                    
+<span style="color:#ffffff;">   420ns  from 420ns</span>                                                                                
+<span style="color:#ffffff;">   842µs  from 842µs</span>                                                                                
+<span style="color:#ffffff;">   842ms  from 842ms</span>                                                                                
+<span style="color:#ffffff;">   1.23s  from 1.23456789s</span>                                                                          
+<span style="color:#ffffff;">    1m2s  from 1m2s</span>                                                                                 
+<span style="color:#ffffff;">  -1.23s  from -1.23456789s</span></pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="text/time-code"><a class="heading-permalink" href="#text%2ftime-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/time" title="time"><code>time</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">at <span class="syn-operator">:=</span> time<span class="syn-operator">.</span><span class="syn-function">Date</span><span class="syn-operator">(</span><span class="syn-number">2026</span><span class="syn-operator">,</span> <span class="syn-number">11</span><span class="syn-operator">,</span> <span class="syn-number">8</span><span class="syn-operator">,</span> <span class="syn-number">12</span><span class="syn-operator">,</span> <span class="syn-number">4</span><span class="syn-operator">,</span> <span class="syn-number">0</span><span class="syn-operator">,</span> <span class="syn-number">123000000</span><span class="syn-operator">,</span> time<span class="syn-operator">.</span>UTC<span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> text<span class="syn-operator">.</span><span class="syn-function">TimeOfDay</span><span class="syn-operator">(</span>at<span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  &#34;</span> <span class="syn-operator">+</span> text<span class="syn-operator">.</span><span class="syn-function">ShortDuration</span><span class="syn-operator">(</span><span class="syn-number">842</span><span class="syn-operator">*</span>time<span class="syn-operator">.</span>Millisecond<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="text/time-integration"><h3 id="text/time-integration"><a class="heading-permalink" href="#text%2ftime-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
+<div class="component-run"><h3 id="text/time-run"><a class="heading-permalink" href="#text%2ftime-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/time</code></pre><p><a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/docs/snippets/text_time.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/text/observability.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Dependency map: not audited.</p>
+</section>
+</section>
+</section>
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
