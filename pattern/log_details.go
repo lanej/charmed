@@ -76,8 +76,8 @@ func inspectorScrollbarWidth(width int, enabled bool) int {
 
 func (m *LogInspector) detailPanesView(size layout.Size) string {
 	m.syncJSONFocus()
-	request := m.section(requestDataPane, "Request", m.payloadViewport(&m.Request, m.detailRegions.request), m.detailRegions.request)
-	response := m.section(httpPane, "Response", m.payloadViewport(&m.Response, m.detailRegions.response), m.detailRegions.response)
+	request := m.section(requestDataPane, "Request", m.payloadViewport(requestDataPane, &m.Request, m.detailRegions.request), m.detailRegions.request)
+	response := m.section(httpPane, "Response", m.payloadViewport(httpPane, &m.Response, m.detailRegions.response), m.detailRegions.response)
 
 	content := layout.Column(request, response)
 	if m.detailRegions.columns {
@@ -91,7 +91,11 @@ func (m *LogInspector) detailPanesView(size layout.Size) string {
 	return layout.Fit(content, size)
 }
 
-func (m *LogInspector) payloadViewport(model *viewport.Model, size layout.Size) string {
+func (m *LogInspector) payloadViewport(id string, model *viewport.Model, size layout.Size) string {
+	if m.PaneCollapsed(id) {
+		return ""
+	}
+
 	content := layout.PanelContentSize(size)
 	pane := &collection.ScrollPane{Model: model, Theme: m.palette, ShowScrollbar: m.HTTP.ShowScrollbar}
 	pane.Resize(content)
