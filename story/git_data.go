@@ -32,14 +32,22 @@ func gitHistory() gitui.History {
 
 func gitDiffs() []gitui.FileDiff {
 	return []gitui.FileDiff{
-		{FileID: "status", Section: gitui.Staged, Path: "gitui/status.go", State: gitui.TextDiff, Hunks: []gitui.Hunk{{Header: "@@ -0,0 +1,2 @@", Lines: []gitui.DiffLine{
+		{FileID: "status", Section: gitui.Staged, Path: "gitui/status.go", State: gitui.TextDiff, Hunks: []gitui.Hunk{{Header: "@@ -0,0 +1,6 @@", Lines: []gitui.DiffLine{
 			{Kind: gitui.AddedLine, NewLine: 1, Text: "package gitui"},
-			{Kind: gitui.AddedLine, NewLine: 2, Text: "// Repository status presentation."},
+			{Kind: gitui.AddedLine, NewLine: 2, Text: ""},
+			{Kind: gitui.AddedLine, NewLine: 3, Text: "// Status belongs to the supplied worktree."},
+			{Kind: gitui.AddedLine, NewLine: 4, Text: "func label() string {"},
+			{Kind: gitui.AddedLine, NewLine: 5, Text: `    return "ready"`},
+			{Kind: gitui.AddedLine, NewLine: 6, Text: "}"},
 		}}}},
-		{FileID: "status", Section: gitui.Unstaged, Path: "gitui/status.go", State: gitui.TextDiff, Hunks: []gitui.Hunk{{Header: "@@ -1,2 +1,2 @@", Lines: []gitui.DiffLine{
-			{Kind: gitui.ContextLine, OldLine: 1, NewLine: 1, Text: "package gitui"},
-			{Kind: gitui.DeletedLine, OldLine: 2, Text: "// Repository status presentation."},
-			{Kind: gitui.AddedLine, NewLine: 2, Text: "// Status and worktree presentation.", NoNewline: true},
+		{FileID: "status", Section: gitui.Unstaged, Path: "gitui/status.go", State: gitui.TextDiff, Hunks: []gitui.Hunk{{Header: "@@ -3,5 +3,5 @@", Lines: []gitui.DiffLine{
+			{Kind: gitui.ContextLine, OldLine: 3, NewLine: 3, Text: "// Status belongs to the supplied worktree."},
+			{Kind: gitui.ContextLine, OldLine: 4, NewLine: 4, Text: "func label() string {"},
+			{Kind: gitui.DeletedLine, OldLine: 5, Text: `    return "ready"`},
+			{Kind: gitui.AddedLine, NewLine: 5, Text: `    return "changed"`},
+			{Kind: gitui.ContextLine, OldLine: 6, NewLine: 6, Text: "}"},
+			{Kind: gitui.DeletedLine, OldLine: 7, Text: "const limit = 10"},
+			{Kind: gitui.AddedLine, NewLine: 7, Text: "const limit = 25", NoNewline: true},
 		}}}},
 		{FileID: "guide", Section: gitui.Staged, OriginalPath: "docs/git.md", Path: "docs/git-components.md", State: gitui.TextDiff},
 		{FileID: "notes", Section: gitui.UntrackedFiles, Path: "notes.txt", State: gitui.UnavailableDiff, Reason: "untracked content not supplied"},

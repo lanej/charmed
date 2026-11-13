@@ -657,7 +657,6 @@
     {"path": "text/signed.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return fmt.Sprintf(\"%+.*f%s\", precision, value, n.Unit)", "count": 1},
     {"path": "text/text.go", "linter": "exhaustive", "text": "missing cases in switch of type text.Emphasis: text.Normal", "source": "switch level {", "count": 1},
     {"path": "theme/theme.go", "linter": "exhaustive", "text": "missing cases in switch of type theme.Mode: theme.Dark", "source": "switch mode {", "count": 1},
-    {"path": "theme/theme.go", "linter": "wsl_v5", "text": "missing whitespace above this line (too many lines above return)", "source": "return t.Series[index%len(t.Series)]", "count": 1},
     {"path": "workbench/generate.go", "linter": "gosec", "text": "G304: Potential file inclusion via variable", "source": "data, err := os.ReadFile(filepath.Join(dir, \"go.mod\"))", "count": 1},
     {"path": "workbench/generate_test.go", "linter": "gosec", "text": "G304: Potential file inclusion via variable", "source": "after, err := os.ReadFile(filepath.Join(directory, name))", "count": 1},
     {"path": "workbench/generate_test.go", "linter": "gosec", "text": "G304: Potential file inclusion via variable", "source": "data, err := os.ReadFile(path)", "count": 1},

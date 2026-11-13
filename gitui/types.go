@@ -139,9 +139,11 @@ type FileDiff struct {
 	Section      ChangeSection
 	Path         string
 	OriginalPath string
-	State        DiffState
-	Reason       string
-	Hunks        []Hunk
+	// Language overrides path-based syntax detection; "text" selects plain text.
+	Language string
+	State    DiffState
+	Reason   string
+	Hunks    []Hunk
 }
 
 type DiffStat struct {

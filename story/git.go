@@ -176,7 +176,7 @@ func gitStory(id string, e Environment) (runtime.Scene, error) {
 		case "worktree-row":
 			return gitui.WorktreeRow(gitWorktrees()[1], t)
 		case "hunk":
-			return gitui.DiffHunk(gitDiffs()[1].Hunks[0], t)
+			return gitui.DiffHunk(gitDiffs()[1].Hunks[0], t, gitui.DiffOptions{Language: "go"})
 		}
 
 		return ""

@@ -10,5 +10,5 @@ func ExampleGitHunk() string {
 
 	hunk := gitui.Hunk{Header: "@@ -0,0 +1 @@", Lines: []gitui.DiffLine{{Kind: gitui.AddedLine, NewLine: 1, Text: "package gitui"}}}
 
-	return gitui.DiffHunk(hunk, palette)
+	return gitui.DiffHunk(hunk, palette, gitui.DiffOptions{Language: "go"})
 }

@@ -34,6 +34,8 @@ func loadGuidance(root string, entries []ManifestEntry) error {
 		"diagram/trace-replay":        "trace-replay",
 		"pattern/measurement-history": "measurement-history",
 		"git/patch-browser":           "patch-browser",
+		"git/diff":                    "git-diff",
+		"git/hunk":                    "git-hunk",
 
 		"layout/flex": "declared-layout", "layout/grid": "declared-layout", "layout/flow": "declared-layout", "layout/dock": "declared-layout", "layout/split-pane": "declared-layout", "layout/responsive": "declared-layout",
 		"tui/screen": "declared-screen", "tui/regions": "declared-screen", "tui/validation": "declared-screen", "tui/static": "static-screen",
