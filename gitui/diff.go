@@ -6,25 +6,63 @@ import (
 
 	"charm.land/bubbles/v2/viewport"
 	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/theme"
 )
 
-func DiffHunk(hunk Hunk, t theme.Theme) string {
-	lines := []string{t.Heading().Render(clean(hunk.Header))}
-	for _, line := range hunk.Lines {
+// DiffOptions selects the language of a standalone hunk; unknown names use plain text.
+type DiffOptions struct{ Language string }
+
+func diffHeading(t theme.Theme) lipgloss.Style {
+	if t.Mode == theme.Mono {
+		return lipgloss.NewStyle().Bold(true)
+	}
+
+	return t.Heading()
+}
+
+func DiffHunk(hunk Hunk, t theme.Theme, options ...DiffOptions) string {
+	language := "text"
+	for _, option := range options {
+		language = option.Language
+	}
+
+	return renderDiffHunk(hunk, language, language, t)
+}
+
+func renderDiffHunk(hunk Hunk, oldLanguage, newLanguage string, t theme.Theme) string {
+	if t.Mode == theme.Mono {
+		oldLanguage, newLanguage = "text", "text"
+	}
+
+	oldLines, newLines := hunkSyntax(hunk, oldLanguage, true), hunkSyntax(hunk, newLanguage, false)
+	edits := hunkEdits(hunk, newLines)
+	dualNumbers := shiftedLineNumbers(hunk)
+
+	lines := []string{diffHeading(t).Render(clean(hunk.Header))}
+	for i, line := range hunk.Lines {
 		prefix := " "
-		style := t.Text()
+		style := diffLineStyle(line.Kind, false, t)
+		syntax := newLines[i]
 
 		switch line.Kind {
 		case ContextLine:
 		case AddedLine:
 			prefix = "+"
-			style = style.Foreground(t.Success)
+
+			if t.Mode != theme.Mono {
+				style = style.Foreground(t.Success)
+			}
 		case DeletedLine:
 			prefix = "-"
-			style = style.Foreground(t.Danger)
+
+			if t.Mode != theme.Mono {
+				style = style.Foreground(t.Danger)
+			}
+
+			syntax = oldLines[i]
 		default:
 			prefix = "?"
 		}
@@ -38,9 +76,26 @@ func DiffHunk(hunk Hunk, t theme.Theme) string {
 			newLine = fmt.Sprint(line.NewLine)
 		}
 
-		lines = append(lines, style.Render(fmt.Sprintf("%5s %5s %s%s", oldLine, newLine, prefix, clean(line.Text))))
+		gutter := fmt.Sprintf("%5s %5s %s", oldLine, newLine, prefix)
+		if !dualNumbers {
+			number := newLine
+			if line.Kind == DeletedLine || number == "" {
+				number = oldLine
+			}
+
+			gutter = fmt.Sprintf("%5s %s", number, prefix)
+		}
+
+		gutter = style.Render(gutter)
+
+		lines = append(lines, gutter+renderSyntaxLine(syntax, line.Kind, edits[i], t))
 		if line.NoNewline {
-			lines = append(lines, t.Subtle().Render("\\ No newline at end of file"))
+			marker := t.Subtle()
+			if t.Mode == theme.Mono {
+				marker = lipgloss.NewStyle().Faint(true)
+			}
+
+			lines = append(lines, marker.Render("\\ No newline at end of file"))
 		}
 	}
 
@@ -53,7 +108,7 @@ func diffContent(diff FileDiff, t theme.Theme) string {
 		header = clean(diff.OriginalPath) + " → " + header
 	}
 
-	header = t.Heading().Render(header) + "\n"
+	header = diffHeading(t).Render(header) + "\n"
 
 	switch diff.State {
 	case BinaryDiff:
@@ -69,8 +124,15 @@ func diffContent(diff FileDiff, t theme.Theme) string {
 	}
 
 	var hunks []string
+
+	oldPath := diff.OriginalPath
+	if oldPath == "" {
+		oldPath = diff.Path
+	}
+
+	oldLanguage, newLanguage := diffLanguage(oldPath, diff.Language), diffLanguage(diff.Path, diff.Language)
 	for _, hunk := range diff.Hunks {
-		hunks = append(hunks, DiffHunk(hunk, t))
+		hunks = append(hunks, renderDiffHunk(hunk, oldLanguage, newLanguage, t))
 	}
 
 	return header + strings.Join(hunks, "\n")

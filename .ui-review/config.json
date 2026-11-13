@@ -9,6 +9,8 @@
     "tui/*.go",
     "story/layouts.go",
     "story/git_browser*.go",
+    "gitui/diff*.go",
+    "theme/diff.go",
     "collection/scroll_pane.go",
     "collection/grid_inspector.go",
     "collection/keyed_table.go",
@@ -36,6 +38,11 @@
     "docs/guide-design.md"
   ],
   "pages": [
+    {
+      "name": "molecules-git",
+      "path": "/molecules-git.html",
+      "ready": "main h1"
+    },
     {
       "name": "index",
       "path": "/index.html",

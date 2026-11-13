@@ -24,6 +24,20 @@ func luminance(c color.Color) float64 {
 	return .2126*linear(r) + .7152*linear(g) + .0722*linear(b)
 }
 
+func TestDiffSurfacesKeepSyntaxReadable(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast} {
+		palette := theme.New(mode)
+		for _, foreground := range []color.Color{palette.Foreground, palette.Syntax.Keyword, palette.Syntax.String, palette.Syntax.Number, palette.Syntax.Name, palette.Syntax.Comment} {
+			for _, background := range []color.Color{palette.Diff.Added, palette.Diff.Deleted, palette.Diff.AddedEmphasis, palette.Diff.DeletedEmphasis} {
+				fg, bg := luminance(foreground), luminance(background)
+				if ratio := (max(fg, bg) + .05) / (min(fg, bg) + .05); ratio < 4.5 {
+					t.Fatalf("%s syntax on diff surface contrast %.2f is below 4.5:1", mode, ratio)
+				}
+			}
+		}
+	}
+}
+
 func TestDimTokensRemainReadableAndSeriesDoNotAliasSemanticRoles(t *testing.T) {
 	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast} {
 		palette := theme.New(mode)

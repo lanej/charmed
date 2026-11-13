@@ -186,6 +186,10 @@ The `gitui` components display caller-supplied observations. Applications own di
 
 Constructors copy collection inputs, and setters validate replacements. Refresh preserves identity or selects the nearest remaining item. History, branch, stash, worktree and status setters retain native viewport style and input customization. The component owns content, dimensions and offsets. Replace diffs after status refresh with `SetDiffs`: the diff viewport returns to its beginning and a missing file/section pair shows unavailable content. Rebuild styled rows after a theme change.
 
+File diffs detect syntax from `Path`, using `OriginalPath` for deleted lines in renamed files. Set `FileDiff.Language` to override detection, or use `"text"` to disable syntax colors. Unknown languages render plain source. Standalone `DiffHunk` accepts `DiffOptions{Language: "go"}`. Lexing restarts for each hunk and processes old and new sides separately; omitted source context cannot be reconstructed. Tabs, terminal controls and invalid bytes appear as visible escapes. Hunks use one number gutter unless aligned old/new positions differ; shifted hunks show both.
+
+Added and deleted lines use distinct `Theme.Diff` backgrounds while retaining `Theme.Syntax` foregrounds. Replacement lines pair by position inside each contiguous change block; changed graphemes receive stronger backgrounds. Large replacements use a bounded comparison with a single changed middle. Monochrome retains plus/minus signs and uses bold underlining for inline edits. `SetDiff` rebuilds content and resets scrolling while preserving native key bindings and styles; `Resize` changes only the viewport allocation.
+
 | Focused region | Keys |
 | --- | --- |
 | Lists | Arrows or j/k move, Home/End or g/G choose endpoints, paging moves through results, slash searches, Escape clears, and Enter selects. Search accepts pasted text. |

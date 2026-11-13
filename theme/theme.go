@@ -33,6 +33,7 @@ type Theme struct {
 	Permissions                                                 PermissionColors
 	HTTP                                                        HTTPColors
 	Syntax                                                      SyntaxColors
+	Diff                                                        DiffColors
 }
 
 func New(mode Mode) Theme {
@@ -102,6 +103,7 @@ func New(mode Mode) Theme {
 	t.Link = t.Accent
 	t.Permissions = permissionColors(t.Mode)
 	t.HTTP, t.Syntax = httpColors(t.Mode)
+	t.Diff = diffColors(t.Mode)
 
 	return t
 }
@@ -160,6 +162,7 @@ func (t Theme) SeriesColor(index int) color.Color {
 	if len(t.Series) == 0 {
 		return nil
 	}
+
 	return t.Series[index%len(t.Series)]
 }
 
