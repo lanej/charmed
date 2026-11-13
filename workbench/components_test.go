@@ -17,7 +17,7 @@ func TestComponentGuideVerifiesEvidenceAndRetainsCatalogLinks(t *testing.T) {
 
 	entries := []ManifestEntry{}
 	for _, d := range story.Definitions() {
-		entries = append(entries, ManifestEntry{Definition: d})
+		entries = append(entries, ManifestEntry{Definition: d, ExampleFrame: "consumer output for " + d.ID})
 	}
 
 	guide, err := buildComponentGuide(root, entries)
@@ -28,6 +28,10 @@ func TestComponentGuideVerifiesEvidenceAndRetainsCatalogLinks(t *testing.T) {
 	replay := guide.find("diagram/trace-replay")
 	if replay == nil || len(replay.Dependencies) != 1 || replay.Dependencies[0].Name != "State diagram" {
 		t.Fatal("replay graph includes fixture controls")
+	}
+
+	if replay.ExampleFrame != "consumer output for diagram/trace-replay" || !strings.HasSuffix(replay.ExampleHref, "#diagram%2Ftrace-replay") {
+		t.Fatal("preview must use the component's own consumer example")
 	}
 
 	state := guide.find("diagram/state-diagram")

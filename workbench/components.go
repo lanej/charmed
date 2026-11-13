@@ -24,6 +24,7 @@ type (
 	componentCard struct {
 		catalog.Component
 		API, Href, SourceHref, CoverageLabel, EmptyLabel string
+		ExampleFrame, ExampleHref                        string
 		Dependencies, Dependents                         []relationLink
 		Examples                                         []exampleLink
 	}
@@ -116,6 +117,9 @@ func projectComponentGuide(root string, entries []ManifestEntry, graph *catalog.
 
 		switch e.Kind {
 		case catalog.ConsumerExample:
+			primary := guide.find(e.Primary)
+			primary.ExampleFrame = entry.ExampleFrame
+			primary.ExampleHref = href
 		case catalog.InteractiveExample:
 			kind = "Interactive fixture"
 			href = storyPage(entry) + "#panel-" + url.PathEscape(e.EntryID) + "-0"

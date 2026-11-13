@@ -243,6 +243,12 @@ def check_component_graph(browser, site, output):
             assert selector.locator("option").count() == len(document["components"])
             assert page.locator("[data-component]:visible").count() == 1
             assert page.locator('[data-component="collection/status-matrix"]').is_visible()
+            for option in selector.locator("option").all():
+                selector.select_option(option.get_attribute("value"))
+                preview = page.locator("[data-component]:visible").get_by_role("region", name="Native example", exact=True)
+                assert preview.locator("pre.terminal").inner_text().strip(), "Missing compiled consumer output"
+                assert preview.get_by_role("link", name="Go usage").get_attribute("href")
+            selector.select_option("collection/status-matrix")
             selected = page.locator("[data-component]:visible")
             selected.get_by_role("region", name="Built from", exact=True).get_by_role("link", name="Data grid", exact=True).click()
             assert page.locator('[data-component="collection/data-grid"]').is_visible()
