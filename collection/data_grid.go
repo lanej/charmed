@@ -50,7 +50,12 @@ type DataGrid[T any] struct {
 	// RenderCell defaults to plain text values and blank absent cells.
 	RenderCell func(GridCell[T]) string
 	// ShowHelp adds keyboard instructions below the range footer; off by default.
-	ShowHelp      bool
+	ShowHelp bool
+	// HidePosition omits the "Rows x-y/n" line when every row and column is
+	// visible, as in a static render that shows all rows. When anything is
+	// scrolled out of view the line remains so the omission stays visible.
+	// The default keeps the line.
+	HidePosition  bool
 	rows, columns []GridAxis
 	cells         map[gridPair]T
 	row, column   int
@@ -182,7 +187,12 @@ func (m *DataGrid[T]) View() string {
 		helpHeight = 1
 	}
 
-	rowCount := min(len(m.rows), m.size.Height-2-helpHeight)
+	positionHeight := 1
+	if m.HidePosition && len(m.columns) <= columnCount && len(m.rows) <= m.size.Height-1-helpHeight {
+		positionHeight = 0
+	}
+
+	rowCount := min(len(m.rows), m.size.Height-1-positionHeight-helpHeight)
 	if columnCount < 1 || rowCount < 1 {
 		return layout.Fit("More space needed", m.size)
 	}
@@ -215,7 +225,9 @@ func (m *DataGrid[T]) View() string {
 		lines = append(lines, line)
 	}
 
-	lines = append(lines, m.Theme.Subtle().Render(fmt.Sprintf("Rows %d-%d/%d  Columns %d-%d/%d", firstRow+1, firstRow+rowCount, len(m.rows), firstColumn+1, firstColumn+columnCount, len(m.columns))))
+	if positionHeight > 0 {
+		lines = append(lines, m.Theme.Subtle().Render(fmt.Sprintf("Rows %d-%d/%d  Columns %d-%d/%d", firstRow+1, firstRow+rowCount, len(m.rows), firstColumn+1, firstColumn+columnCount, len(m.columns))))
+	}
 
 	if m.ShowHelp {
 		keys := m.Theme.Glyph(theme.GlyphUp) + " " + m.Theme.Glyph(theme.GlyphDown) + " " + m.Theme.Glyph(theme.GlyphLeft) + " " + m.Theme.Glyph(theme.GlyphRight)

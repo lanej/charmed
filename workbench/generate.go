@@ -324,6 +324,13 @@ func Generate(out string) error {
 			}
 		}
 
+		if d.ID == "collection/data-grid" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Static", change: func(c *story.Config) { c.Static = true }})
+		}
+
 		if d.ID == "collection/json-viewer" {
 			for _, name := range []string{"Folded containers", "Narrow JSON", "Raw JSON", "Invalid JSON", "No instructions", "No folds"} {
 				variants = append(variants, struct {

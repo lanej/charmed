@@ -169,3 +169,47 @@ func TestDataGridUsesUnicodeWithExplicitASCIIFallback(t *testing.T) {
 		t.Fatalf("explicit ASCII mode retained Unicode decoration:\n%s", frame)
 	}
 }
+
+func TestDataGridPositionLineIsDefaultAndOptionallyOmittedWhenComplete(t *testing.T) {
+	grid, _ := plainGrid(t)
+
+	if frame := ansi.Strip(grid.View()); !strings.Contains(frame, "Rows 1-3/3  Columns 1-3/3") {
+		t.Fatalf("default view lost its position line:\n%s", frame)
+	}
+
+	grid.HidePosition = true
+	grid.Resize(layout.Size{Width: 70, Height: 4})
+
+	frame := ansi.Strip(grid.View())
+	if strings.Contains(frame, "Rows") || strings.Contains(frame, "Columns") || !strings.Contains(frame, "Gamma") {
+		t.Fatalf("complete grid kept its position line or lost rows:\n%s", frame)
+	}
+
+	if lines := strings.Split(strings.TrimRight(frame, " \n"), "\n"); len(lines) != 4 {
+		t.Fatalf("expected a header and three rows, got %d lines:\n%s", len(lines), frame)
+	}
+
+	grid.ShowHelp = true
+	grid.Resize(layout.Size{Width: 70, Height: 5})
+
+	if frame = ansi.Strip(grid.View()); strings.Contains(frame, "Rows") || !strings.Contains(frame, "h j k l") {
+		t.Fatalf("help must stay when the position line is omitted:\n%s", frame)
+	}
+}
+
+func TestDataGridKeepsPositionLineWhenRowsOrColumnsAreScrolledOut(t *testing.T) {
+	grid, _ := plainGrid(t)
+	grid.HidePosition = true
+
+	grid.Resize(layout.Size{Width: 70, Height: 3})
+
+	if frame := ansi.Strip(grid.View()); !strings.Contains(frame, "Rows 1-1/3") {
+		t.Fatalf("hidden rows were not signalled:\n%s", frame)
+	}
+
+	grid.Resize(layout.Size{Width: 40, Height: 6})
+
+	if frame := ansi.Strip(grid.View()); !strings.Contains(frame, "Columns 1-1/3") {
+		t.Fatalf("hidden columns were not signalled:\n%s", frame)
+	}
+}
