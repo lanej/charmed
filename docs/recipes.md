@@ -13,3 +13,4 @@ Recipes connect individual components into a working view. Choose the outcome yo
 | Browse structured JSON | [JSON viewer](json-viewer.html) | Exact source bytes, container navigation and viewport state |
 | Add application commands | [Command palette](command-palette.html) | Search, availability, typed actions and focus restoration |
 | Compose an application shell | [Composition guide](examples.html) | Header, tabs, active region and optional instructions |
+| Structure sections inside columns | [Nested layouts](templates-layout.html) | Recursive Flex and Grid nodes, leaf allocations and explicit responsive recipes |

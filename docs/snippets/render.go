@@ -6,6 +6,10 @@ import "fmt"
 // Render runs only bounded rendering and construction, never a terminal program or initialization command.
 func Render(id string) (string, error) {
 	switch id {
+	case "template/nested-columns":
+		return ExampleTemplateNestedColumns()
+	case "template/nested-grid":
+		return ExampleTemplateNestedGrid()
 	case "collection/scroll-pane":
 		return ExampleCollectionScrollPane()
 	case "collection/grid-inspector":

@@ -21,7 +21,9 @@
     "gitui/patch_browser.go",
     "gitui/list.go",
     "story/composed_inspectors.go",
-    "story/diagrams.go"
+    "story/diagrams.go",
+    "story/nested_layouts.go",
+    "docs/snippets/template_nested_*.go"
   ],
   "sourceChecks": [],
   "accessibility": true,
@@ -108,6 +110,11 @@
     {
       "name": "organisms-git",
       "path": "/organisms-git.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "templates-layout",
+      "path": "/templates-layout.html",
       "ready": "main h1"
     }
   ],

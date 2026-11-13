@@ -83,6 +83,13 @@ func Generate(out string) error {
 				c.ReducedMotion = true
 			}},
 		}
+		if d.ID == "template/nested-columns" || d.ID == "template/nested-grid" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{"Stacked", func(c *story.Config) { c.Columns, c.Rows = 40, 24 }})
+		}
+
 		if d.ID == "diagram/state-transitions" {
 			for _, trace := range []struct{ name, state string }{{"Last 3 transitions", "last-3"}, {"Whole path", "all"}} {
 				variants = append(variants, struct {
