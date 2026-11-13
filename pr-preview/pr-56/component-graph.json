@@ -1,0 +1,605 @@
+{
+  "version": 1,
+  "components": [
+    {
+      "id": "collection/data-grid",
+      "name": "Data grid",
+      "package": "collection",
+      "symbol": "DataGrid",
+      "level": "Organisms",
+      "coverage": "partial",
+      "source": {
+        "path": "collection/data_grid.go",
+        "symbol": "DataGrid"
+      }
+    },
+    {
+      "id": "collection/status-matrix",
+      "name": "Status matrix",
+      "package": "collection",
+      "symbol": "StatusMatrix",
+      "level": "Organisms",
+      "coverage": "partial",
+      "source": {
+        "path": "collection/status_matrix.go",
+        "symbol": "StatusMatrix"
+      }
+    },
+    {
+      "id": "feedback/status-cell",
+      "name": "Status cell",
+      "package": "feedback",
+      "symbol": "StatusCell",
+      "level": "Molecules",
+      "coverage": "partial",
+      "source": {
+        "path": "feedback/status_cell.go",
+        "symbol": "StatusCell"
+      }
+    },
+    {
+      "id": "feedback/status",
+      "name": "Status",
+      "package": "feedback",
+      "symbol": "Status",
+      "level": "Atoms",
+      "coverage": "partial",
+      "source": {
+        "path": "feedback/status.go",
+        "symbol": "Status"
+      }
+    },
+    {
+      "id": "collection/grid-inspector",
+      "name": "Grid inspector",
+      "package": "collection",
+      "symbol": "GridInspector",
+      "level": "Organisms",
+      "coverage": "partial",
+      "source": {
+        "path": "collection/grid_inspector.go",
+        "symbol": "GridInspector"
+      }
+    },
+    {
+      "id": "collection/scroll-pane",
+      "name": "Scroll pane",
+      "package": "collection",
+      "symbol": "ScrollPane",
+      "level": "Molecules",
+      "coverage": "partial",
+      "source": {
+        "path": "collection/scroll_pane.go",
+        "symbol": "ScrollPane"
+      }
+    },
+    {
+      "id": "collection/viewport",
+      "name": "Viewport",
+      "package": "collection",
+      "symbol": "NewViewport",
+      "level": "Atoms",
+      "coverage": "partial",
+      "source": {
+        "path": "collection/collection.go",
+        "symbol": "NewViewport"
+      }
+    },
+    {
+      "id": "feedback/scrollbar",
+      "name": "Scrollbar",
+      "package": "feedback",
+      "symbol": "Scrollbar",
+      "level": "Atoms",
+      "coverage": "partial",
+      "source": {
+        "path": "feedback/controls.go",
+        "symbol": "Scrollbar"
+      }
+    },
+    {
+      "id": "pattern/measurement-history",
+      "name": "Measurement history",
+      "package": "pattern",
+      "symbol": "MeasurementHistory",
+      "level": "Organisms",
+      "coverage": "partial",
+      "source": {
+        "path": "pattern/measurement_history.go",
+        "symbol": "MeasurementHistory"
+      }
+    },
+    {
+      "id": "diagram/state-diagram",
+      "name": "State diagram",
+      "package": "diagram",
+      "symbol": "StateDiagram",
+      "level": "Molecules",
+      "coverage": "partial",
+      "source": {
+        "path": "diagram/state.go",
+        "symbol": "StateDiagram"
+      }
+    },
+    {
+      "id": "diagram/trace-replay",
+      "name": "Trace replay",
+      "package": "diagram",
+      "symbol": "TraceReplay",
+      "level": "Organisms",
+      "coverage": "partial",
+      "source": {
+        "path": "diagram/trace_replay.go",
+        "symbol": "TraceReplay"
+      }
+    },
+    {
+      "id": "input/radio-group",
+      "name": "Radio group",
+      "package": "input",
+      "symbol": "RadioGroup",
+      "level": "Molecules",
+      "coverage": "partial",
+      "source": {
+        "path": "input/radio_group.go",
+        "symbol": "RadioGroup"
+      }
+    },
+    {
+      "id": "input/radio",
+      "name": "Radio",
+      "package": "input",
+      "symbol": "Radio",
+      "level": "Atoms",
+      "coverage": "partial",
+      "source": {
+        "path": "input/controls.go",
+        "symbol": "Radio"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "from": "collection/status-matrix",
+      "to": "collection/data-grid",
+      "kind": "specializes",
+      "role": "grid base",
+      "source": {
+        "path": "collection/status_matrix.go",
+        "symbol": "StatusMatrix"
+      }
+    },
+    {
+      "from": "collection/status-matrix",
+      "to": "feedback/status-cell",
+      "kind": "composes",
+      "role": "cell presentation",
+      "source": {
+        "path": "collection/status_matrix.go",
+        "symbol": "statusGridCell"
+      }
+    },
+    {
+      "from": "feedback/status-cell",
+      "to": "feedback/status",
+      "kind": "composes",
+      "role": "health presentation",
+      "source": {
+        "path": "feedback/status_cell.go",
+        "symbol": "StatusCell.View"
+      }
+    },
+    {
+      "from": "collection/grid-inspector",
+      "to": "collection/data-grid",
+      "kind": "composes",
+      "role": "grid",
+      "source": {
+        "path": "collection/grid_inspector.go",
+        "symbol": "GridInspector.Grid"
+      }
+    },
+    {
+      "from": "collection/grid-inspector",
+      "to": "collection/scroll-pane",
+      "kind": "composes",
+      "role": "details",
+      "source": {
+        "path": "collection/grid_inspector.go",
+        "symbol": "GridInspector.Details"
+      }
+    },
+    {
+      "from": "collection/scroll-pane",
+      "to": "collection/viewport",
+      "kind": "composes",
+      "role": "content viewport",
+      "source": {
+        "path": "collection/scroll_pane.go",
+        "symbol": "ScrollPane.Model"
+      }
+    },
+    {
+      "from": "collection/scroll-pane",
+      "to": "feedback/scrollbar",
+      "kind": "composes",
+      "role": "scroll position",
+      "source": {
+        "path": "collection/scroll_pane.go",
+        "symbol": "ScrollPane.View"
+      }
+    },
+    {
+      "from": "pattern/measurement-history",
+      "to": "collection/grid-inspector",
+      "kind": "composes",
+      "role": "inspection",
+      "source": {
+        "path": "pattern/measurement_history.go",
+        "symbol": "MeasurementHistory.Inspector"
+      }
+    },
+    {
+      "from": "diagram/trace-replay",
+      "to": "diagram/state-diagram",
+      "kind": "composes",
+      "role": "diagram",
+      "source": {
+        "path": "diagram/trace_replay.go",
+        "symbol": "TraceReplay.graph"
+      }
+    },
+    {
+      "from": "input/radio-group",
+      "to": "input/radio",
+      "kind": "composes",
+      "role": "options",
+      "source": {
+        "path": "input/radio_group.go",
+        "symbol": "RadioGroup.radios"
+      }
+    }
+  ],
+  "examples": [
+    {
+      "id": "collection/data-grid/usage",
+      "entryId": "collection/data-grid",
+      "primary": "collection/data-grid",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/collection_data_grid.go",
+        "symbol": "ExampleCollectionDataGrid"
+      },
+      "uses": [
+        {
+          "component": "collection/data-grid",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/collection_data_grid.go",
+            "symbol": "ExampleCollectionDataGrid"
+          }
+        }
+      ]
+    },
+    {
+      "id": "collection/status-matrix/usage",
+      "entryId": "collection/status-matrix",
+      "primary": "collection/status-matrix",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/collection_status_matrix.go",
+        "symbol": "ExampleCollectionStatusMatrix"
+      },
+      "uses": [
+        {
+          "component": "collection/status-matrix",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/collection_status_matrix.go",
+            "symbol": "ExampleCollectionStatusMatrix"
+          }
+        }
+      ]
+    },
+    {
+      "id": "feedback/status-cell/usage",
+      "entryId": "feedback/status-cell",
+      "primary": "feedback/status-cell",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/feedback_status_cell.go",
+        "symbol": "ExampleFeedbackStatusCell"
+      },
+      "uses": [
+        {
+          "component": "feedback/status-cell",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/feedback_status_cell.go",
+            "symbol": "ExampleFeedbackStatusCell"
+          }
+        }
+      ]
+    },
+    {
+      "id": "feedback/status/usage",
+      "entryId": "feedback/status",
+      "primary": "feedback/status",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/feedback_status.go",
+        "symbol": "ExampleFeedbackStatus"
+      },
+      "uses": [
+        {
+          "component": "feedback/status",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/feedback_status.go",
+            "symbol": "ExampleFeedbackStatus"
+          }
+        }
+      ]
+    },
+    {
+      "id": "collection/grid-inspector/usage",
+      "entryId": "collection/grid-inspector",
+      "primary": "collection/grid-inspector",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/collection_grid_inspector.go",
+        "symbol": "ExampleCollectionGridInspector"
+      },
+      "uses": [
+        {
+          "component": "collection/grid-inspector",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/collection_grid_inspector.go",
+            "symbol": "ExampleCollectionGridInspector"
+          }
+        }
+      ]
+    },
+    {
+      "id": "collection/scroll-pane/usage",
+      "entryId": "collection/scroll-pane",
+      "primary": "collection/scroll-pane",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/collection_scroll_pane.go",
+        "symbol": "ExampleCollectionScrollPane"
+      },
+      "uses": [
+        {
+          "component": "collection/scroll-pane",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/collection_scroll_pane.go",
+            "symbol": "ExampleCollectionScrollPane"
+          }
+        }
+      ]
+    },
+    {
+      "id": "collection/viewport/usage",
+      "entryId": "collection/viewport",
+      "primary": "collection/viewport",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/collection_viewport.go",
+        "symbol": "ExampleCollectionViewport"
+      },
+      "uses": [
+        {
+          "component": "collection/viewport",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/collection_viewport.go",
+            "symbol": "ExampleCollectionViewport"
+          }
+        }
+      ]
+    },
+    {
+      "id": "feedback/scrollbar/usage",
+      "entryId": "feedback/scrollbar",
+      "primary": "feedback/scrollbar",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/feedback_scrollbar.go",
+        "symbol": "ExampleFeedbackScrollbar"
+      },
+      "uses": [
+        {
+          "component": "feedback/scrollbar",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/feedback_scrollbar.go",
+            "symbol": "ExampleFeedbackScrollbar"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pattern/measurement-history/usage",
+      "entryId": "pattern/measurement-history",
+      "primary": "pattern/measurement-history",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/pattern_measurement_history.go",
+        "symbol": "ExamplePatternMeasurementHistory"
+      },
+      "uses": [
+        {
+          "component": "pattern/measurement-history",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/pattern_measurement_history.go",
+            "symbol": "ExamplePatternMeasurementHistory"
+          }
+        }
+      ]
+    },
+    {
+      "id": "diagram/state-transitions/usage",
+      "entryId": "diagram/state-transitions",
+      "primary": "diagram/state-diagram",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/diagram_state_transitions.go",
+        "symbol": "ExampleDiagramStateTransitions"
+      },
+      "uses": [
+        {
+          "component": "diagram/state-diagram",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/diagram_state_transitions.go",
+            "symbol": "ExampleDiagramStateTransitions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "diagram/trace-replay/usage",
+      "entryId": "diagram/trace-replay",
+      "primary": "diagram/trace-replay",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/diagram_trace_replay.go",
+        "symbol": "ExampleDiagramTraceReplay"
+      },
+      "uses": [
+        {
+          "component": "diagram/trace-replay",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/diagram_trace_replay.go",
+            "symbol": "ExampleDiagramTraceReplay"
+          }
+        },
+        {
+          "component": "diagram/state-diagram",
+          "role": "graph data",
+          "source": {
+            "path": "docs/snippets/diagram_trace_replay.go",
+            "symbol": "ExampleDiagramTraceReplay"
+          }
+        }
+      ]
+    },
+    {
+      "id": "input/radio-group/usage",
+      "entryId": "input/radio-group",
+      "primary": "input/radio-group",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/input_radio_group.go",
+        "symbol": "ExampleInputRadioGroup"
+      },
+      "uses": [
+        {
+          "component": "input/radio-group",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/input_radio_group.go",
+            "symbol": "ExampleInputRadioGroup"
+          }
+        }
+      ]
+    },
+    {
+      "id": "input/radio/usage",
+      "entryId": "input/radio",
+      "primary": "input/radio",
+      "kind": "consumer",
+      "source": {
+        "path": "docs/snippets/input_radio.go",
+        "symbol": "ExampleInputRadio"
+      },
+      "uses": [
+        {
+          "component": "input/radio",
+          "role": "primary demonstration",
+          "source": {
+            "path": "docs/snippets/input_radio.go",
+            "symbol": "ExampleInputRadio"
+          }
+        }
+      ]
+    },
+    {
+      "id": "diagram/trace-replay/demo",
+      "entryId": "diagram/trace-replay",
+      "primary": "diagram/trace-replay",
+      "kind": "interactive",
+      "source": {
+        "path": "story/diagrams.go",
+        "symbol": "stateDiagramStory"
+      },
+      "uses": [
+        {
+          "component": "diagram/state-diagram",
+          "role": "graph data",
+          "source": {
+            "path": "story/diagrams.go",
+            "symbol": "stateDiagramStory"
+          }
+        },
+        {
+          "component": "diagram/trace-replay",
+          "role": "trace inspection",
+          "source": {
+            "path": "story/diagrams.go",
+            "symbol": "stateDiagramStory"
+          }
+        },
+        {
+          "component": "input/radio-group",
+          "role": "history-window controls",
+          "source": {
+            "path": "story/diagrams.go",
+            "symbol": "stateDiagramStory"
+          }
+        }
+      ]
+    },
+    {
+      "id": "diagram/state-transitions/demo",
+      "entryId": "diagram/state-transitions",
+      "primary": "diagram/state-diagram",
+      "kind": "interactive",
+      "source": {
+        "path": "story/diagrams.go",
+        "symbol": "stateDiagramStory"
+      },
+      "uses": [
+        {
+          "component": "diagram/state-diagram",
+          "role": "graph data",
+          "source": {
+            "path": "story/diagrams.go",
+            "symbol": "stateDiagramStory"
+          }
+        },
+        {
+          "component": "diagram/trace-replay",
+          "role": "trace inspection",
+          "source": {
+            "path": "story/diagrams.go",
+            "symbol": "stateDiagramStory"
+          }
+        },
+        {
+          "component": "input/radio-group",
+          "role": "history-window controls",
+          "source": {
+            "path": "story/diagrams.go",
+            "symbol": "stateDiagramStory"
+          }
+        }
+      ]
+    }
+  ]
+}

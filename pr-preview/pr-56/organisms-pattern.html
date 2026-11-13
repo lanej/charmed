@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Organisms / Patterns · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Organisms / Patterns</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+<div class="nav-groups"><a class="nav-group" href="organisms-chart.html" >Charts</a><a class="nav-group" href="organisms-collection.html" >Collections</a><a class="nav-group" href="organisms-diagram.html" >Diagrams</a><a class="nav-group" href="organisms-form.html" >Forms</a><a class="nav-group" href="organisms-git.html" >git</a><a class="nav-group" href="organisms-logs.html" >Logs</a><a class="nav-group" href="organisms-pattern.html" aria-current="page">Patterns</a><a class="nav-group" href="organisms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#pattern%2fmeasurement-history">Measurement history</a></div>
+
+</div>
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">66</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+<div class="nav-groups"><a class="nav-group" href="organisms-chart.html" >Charts</a><a class="nav-group" href="organisms-collection.html" >Collections</a><a class="nav-group" href="organisms-diagram.html" >Diagrams</a><a class="nav-group" href="organisms-form.html" >Forms</a><a class="nav-group" href="organisms-git.html" >git</a><a class="nav-group" href="organisms-logs.html" >Logs</a><a class="nav-group" href="organisms-pattern.html" aria-current="page">Patterns</a><a class="nav-group" href="organisms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#pattern%2fmeasurement-history">Measurement history</a></div>
+
+</div>
+</nav>
+</aside>
+<main id="main">
+
+
+
+
+
+
+
+
+
+<section class="atomic-level" id="level-organisms">
+<p class="catalog-breadcrumb"><a href="organisms.html">Organisms</a><span aria-hidden="true"> / </span>Patterns</p>
+
+<section class="component-family" id="level-organisms-pattern"><h1><a class="heading-permalink" href="#level-organisms-pattern"><span>Patterns</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">1 component · <a href="organisms.html">All organisms</a></p>
+<ul class="group-jump-links" aria-label="Components in Patterns"><li><a href="#pattern%2fmeasurement-history">Measurement history</a></li></ul>
+
+
+<section class="component" id="pattern/measurement-history">
+<p class="eyebrow"><a href="organisms.html">Organisms</a> / Patterns</p><h2><a class="heading-permalink" href="#pattern%2fmeasurement-history" aria-label="Link to Measurement history component"><span>Measurement history</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Inspect one member across supplied measurement windows and metric rows. Exact intervals and raw observations remain accessible independently of the compact value shown in each cell.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="pattern/measurement-history-preview"><a class="heading-permalink" href="#pattern%2fmeasurement-history-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Measurement history variants">
+<a id="tab-pattern/measurement-history-example" href="#panel-pattern%2fmeasurement-history-example" role="tab" aria-controls="panel-pattern/measurement-history-example" aria-selected="true">Example</a>
+<a id="tab-pattern/measurement-history-0" href="#panel-pattern%2fmeasurement-history-0" role="tab" aria-controls="panel-pattern/measurement-history-0" aria-selected="false">Demo</a><a id="tab-pattern/measurement-history-1" href="#panel-pattern%2fmeasurement-history-1" role="tab" aria-controls="panel-pattern/measurement-history-1" aria-selected="false">Narrow</a><a id="tab-pattern/measurement-history-2" href="#panel-pattern%2fmeasurement-history-2" role="tab" aria-controls="panel-pattern/measurement-history-2" aria-selected="false">256 colors</a><a id="tab-pattern/measurement-history-3" href="#panel-pattern%2fmeasurement-history-3" role="tab" aria-controls="panel-pattern/measurement-history-3" aria-selected="false">16 colors</a><a id="tab-pattern/measurement-history-4" href="#panel-pattern%2fmeasurement-history-4" role="tab" aria-controls="panel-pattern/measurement-history-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-pattern/measurement-history-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-pattern/measurement-history-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;"> Metric / Window    </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">02:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">03:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">04:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">05:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span>
+<span style="color:#eeeeee;"> Temperature        </span> Metric absent  Metric absent  Metric absent  <span style="background-color:#67d4c0;"> </span><span style="color:#101722;background-color:#67d4c0;font-weight:bold;">Metric absent</span>
+<span style="color:#eeeeee;"> Energy             </span> 25kWh          26kWh          27kWh          28kWh         
+<span style="color:#eeeeee;"> Yield              </span> 85%            86%            87%            88%           
+<span style="color:#eeeeee;"> Humidity           </span> 39%            40%            41%            42%           
+<span style="color:#a8a8a8;">Rows 1-4/4  Columns 3-6/6</span>                                                       
+                                                                                
+                                                                                
+west / sensor-4                                                                 
+Temperature                                                                     
+2026-01-01T05:00:00Z – 2026-01-01T06:00:00Z                                     
+Metric absent</pre></figure>
+</div>
+<div id="panel-pattern/measurement-history-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-pattern/measurement-history-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#a8a8a8;"> Metric / Window    </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">04:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">05:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span>          west / sensor-4                         
+<span style="color:#eeeeee;"> Temperature        </span> Metric absent  <span style="background-color:#67d4c0;"> </span><span style="color:#101722;background-color:#67d4c0;font-weight:bold;">Metric absent</span>          Temperature                             
+<span style="color:#eeeeee;"> Energy             </span> 27kWh          28kWh                   2026-01-01T05:00:00Z – 2026-01-01T06:00 
+<span style="color:#eeeeee;"> Yield              </span> 87%            88%                     :00Z                                    
+<span style="color:#eeeeee;"> Humidity           </span> 41%            42%                     Metric absent                           
+<span style="color:#a8a8a8;">Rows 1-4/4  Columns 5-6/6</span></pre></figure>
+</div><div id="panel-pattern/measurement-history-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-pattern/measurement-history-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#a8a8a8;"> Metric / Window    </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">05:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span>     
+<span style="color:#eeeeee;"> Temperature        </span> <span style="background-color:#67d4c0;"> </span><span style="color:#101722;background-color:#67d4c0;font-weight:bold;">Metric absent</span>     
+<span style="color:#eeeeee;"> Energy             </span> 28kWh              
+<span style="color:#eeeeee;"> Yield              </span> 88%                
+<span style="color:#eeeeee;"> Humidity           </span> 42%                
+<span style="color:#a8a8a8;">Rows 1-4/4  Columns 6-6/6</span>               
+                                        
+                                        
+west / sensor-4                         
+Temperature                             
+2026-01-01T05:00:00Z – 2026-01-01T06:00 
+:00Z                                    
+Metric absent</pre></figure>
+</div><div id="panel-pattern/measurement-history-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-pattern/measurement-history-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#a8a8a8;"> Metric / Window    </span> <span style="color:#5fd7af;text-decoration:underline;"> </span><span style="color:#5fd7af;font-weight:bold;text-decoration:underline;">04:00:00</span><span style="color:#5fd7af;text-decoration:underline;">     </span> <span style="color:#5fd7af;text-decoration:underline;"> </span><span style="color:#5fd7af;font-weight:bold;text-decoration:underline;">05:00:00</span><span style="color:#5fd7af;text-decoration:underline;">     </span>          west / sensor-4                         
+<span style="color:#eeeeee;"> Temperature        </span> Metric absent  <span style="background-color:#5fd7af;"> </span><span style="color:#1c1c1c;background-color:#5fd7af;font-weight:bold;">Metric absent</span>          Temperature                             
+<span style="color:#eeeeee;"> Energy             </span> 27kWh          28kWh                   2026-01-01T05:00:00Z – 2026-01-01T06:00 
+<span style="color:#eeeeee;"> Yield              </span> 87%            88%                     :00Z                                    
+<span style="color:#eeeeee;"> Humidity           </span> 41%            42%                     Metric absent                           
+<span style="color:#a8a8a8;">Rows 1-4/4  Columns 5-6/6</span></pre></figure>
+</div><div id="panel-pattern/measurement-history-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-pattern/measurement-history-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#c0c0c0;"> Metric / Window    </span> <span style="color:#00ff00;text-decoration:underline;"> </span><span style="color:#00ff00;font-weight:bold;text-decoration:underline;">04:00:00</span><span style="color:#00ff00;text-decoration:underline;">     </span> <span style="color:#00ff00;text-decoration:underline;"> </span><span style="color:#00ff00;font-weight:bold;text-decoration:underline;">05:00:00</span><span style="color:#00ff00;text-decoration:underline;">     </span>          west / sensor-4                         
+<span style="color:#ffffff;"> Temperature        </span> Metric absent  <span style="background-color:#00ff00;"> </span><span style="color:#000000;background-color:#00ff00;font-weight:bold;">Metric absent</span>          Temperature                             
+<span style="color:#ffffff;"> Energy             </span> 27kWh          28kWh                   2026-01-01T05:00:00Z – 2026-01-01T06:00 
+<span style="color:#ffffff;"> Yield              </span> 87%            88%                     :00Z                                    
+<span style="color:#ffffff;"> Humidity           </span> 41%            42%                     Metric absent                           
+<span style="color:#c0c0c0;">Rows 1-4/4  Columns 5-6/6</span></pre></figure>
+</div><div id="panel-pattern/measurement-history-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-pattern/measurement-history-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"> Metric / Window     <span style="text-decoration:underline;"> </span><span style="font-weight:bold;text-decoration:underline;">04:00:00</span><span style="text-decoration:underline;">     </span> <span style="text-decoration:underline;"> </span><span style="font-weight:bold;text-decoration:underline;">05:00:00</span><span style="text-decoration:underline;">     </span>          west / sensor-4                         
+ Temperature         Metric absent  <span style="color:#101722;background-color:#eeeeee;"> </span><span style="color:#101722;background-color:#eeeeee;font-weight:bold;">Metric absent</span>          Temperature                             
+ Energy              27kWh          28kWh                   2026-01-01T05:00:00Z - 2026-01-01T06:00 
+ Yield               87%            88%                     :00Z                                    
+ Humidity            41%            42%                     Metric absent                           
+Rows 1-4/4  Columns 5-6/6</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="pattern/measurement-history-code"><a class="heading-permalink" href="#pattern%2fmeasurement-history-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/cohort" title="github.com/lanej/charmed/cohort"><code>cohort</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/examples/cohorts/fixture" title="github.com/lanej/charmed/examples/cohorts/fixture"><code>fixture</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/pattern" title="github.com/lanej/charmed/pattern"><code>pattern</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">history<span class="syn-operator">,</span> err <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</span><span class="syn-function">NewMeasurementHistory</span><span class="syn-operator">(</span>fixture<span class="syn-operator">.</span><span class="syn-function">Data</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> cohort<span class="syn-operator">.</span>MemberKey<span class="syn-operator">{</span>CohortID<span class="syn-operator">:</span> <span class="syn-string">&#34;west&#34;</span><span class="syn-operator">,</span> MemberID<span class="syn-operator">:</span> <span class="syn-string">&#34;sensor-4&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> <span class="syn-number">80</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">16</span><span class="syn-operator">}</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+<span class="syn-keyword">if</span> err <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
+	<span class="syn-keyword">return</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">,</span> err
+<span class="syn-operator">}</span>
+<span class="syn-comment">// Temperature is missing for this sensor; other measurements remain observable.</span>
+<span class="syn-comment">// SetData copies and validates. SetMember resets detail scroll, preserving the coordinate.</span>
+<span class="syn-comment">// Parent owns Tab through history.Inspector.FocusDetail and forwards Update commands.</span>
+<span class="syn-keyword">return</span> history<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="pattern/measurement-history-integration"><h3 id="pattern/measurement-history-integration"><a class="heading-permalink" href="#pattern%2fmeasurement-history-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Supply cohort data and a member key; construction and SetData validate and copy the observations. Surviving metric and window identities retain selection; removing a selected window chooses the latest supplied window. SetMember resets detail scrolling. Route focus through Inspector.FocusDetail and forward Update commands. Native grid customization survives refreshes; missing members, missing metrics and unavailable ratios remain distinct from scalar zero.</p></section>
+<div class="component-run"><h3 id="pattern/measurement-history-run"><a class="heading-permalink" href="#pattern%2fmeasurement-history-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog pattern/measurement-history</code></pre><p><a href="https://github.com/lanej/charmed/blob/70a009568235a25f4c46d142fccf47668999255e/docs/snippets/pattern_measurement_history.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/70a009568235a25f4c46d142fccf47668999255e/pattern/measurement_history.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+
+<section class="component-relations" aria-label="Component relationships">
+<h3>Reusable component</h3>
+<p><a href="dependencies.html#component-pattern%2Fmeasurement-history">Measurement history dependency graph</a> · Partial map · <a href="https://github.com/lanej/charmed/blob/70a009568235a25f4c46d142fccf47668999255e/pattern/measurement_history.go#L36">Source declaration</a></p>
+<ul><li><a href="dependencies.html#component-collection%2Fgrid-inspector">Grid inspector</a> · composes · inspection</li></ul>
+<details><summary>Consumer usage uses</summary><ul><li><a href="dependencies.html#component-pattern%2Fmeasurement-history">Measurement history</a> · primary demonstration</li></ul><a href="https://github.com/lanej/charmed/blob/70a009568235a25f4c46d142fccf47668999255e/docs/snippets/pattern_measurement_history.go#L11">Example source</a></details>
+</section>
+
+</section>
+</section>
+</section>
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
