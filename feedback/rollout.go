@@ -5,7 +5,8 @@ import (
 	"github.com/lanej/charmed/theme"
 )
 
-// Rollout describes production traffic exposure, independent of health and log-follow mode.
+// Rollout identifies the production traffic role, independent of health and log-follow mode.
+// Canary identifies the limited-rollout cohort; CanaryMembership describes its pool membership.
 type Rollout string
 
 const (

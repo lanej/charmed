@@ -6,6 +6,8 @@ import "fmt"
 // Render runs only bounded rendering and construction, never a terminal program or initialization command.
 func Render(id string) (string, error) {
 	switch id {
+	case "feedback/canary-membership":
+		return ExampleFeedbackCanaryMembership(), nil
 	case "text/indicator":
 		return ExampleTextIndicator(), nil
 	case "feedback/availability":
