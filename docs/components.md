@@ -217,6 +217,7 @@ Parents own focus and Tab routing. Forward messages to the focused grid and read
 | --- | --- |
 | Theme, geometry and renderer | Retained through `SetData` and `Resize` |
 | `ShowHelp` | Instructions are opt-in; reserve their additional row |
+| `StatusMatrix.ShowLegend` | Appends `Legend`, the glyph and word of each status present, below the grid and takes its rows from the allocation; unrecognized statuses are listed as UNKNOWN, never as healthy |
 | Axis appearance | Neutral row labels; accented, underlined column headers |
 | Entity glyphs | Prefix supplied labels with `GlyphLoadBalancer` or `GlyphHost`; IDs remain unchanged |
 | Status selection | Unicode focus edges retain health fill; explicit ASCII mode uses brackets |

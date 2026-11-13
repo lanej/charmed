@@ -76,10 +76,16 @@ func statusMatrixStory(e Environment) (runtime.Scene, error) {
 	}
 
 	m.Corner = "Balancer / Host"
+	m.ShowLegend = e.Config.Legend
 	m.Focus()
 
 	return &scene{resize: func(size layout.Size) {
-		m.Resize(layout.Size{Width: size.Width, Height: min(len(rows)+2, max(0, size.Height-4))})
+		height := len(rows) + 2
+		if m.ShowLegend {
+			height += strings.Count(m.Legend(size.Width), "\n") + 1
+		}
+
+		m.Resize(layout.Size{Width: size.Width, Height: min(height, max(0, size.Height-4))})
 	}, update: func(msg tea.Msg) tea.Cmd {
 		var cmd tea.Cmd
 
