@@ -80,7 +80,7 @@ The inventory below distinguishes implemented native components from optional in
 
 ## Git fixtures
 
-Run `go run ./cmd/workbench run git/browser` for the composed repository browser, or use `git/history`, `git/changes` and `git/worktrees` for individual organisms. All data is synthetic and supplied in memory; no Git executable or repository access is needed. Ctrl+Left/Right switches browser sections, Tab switches panes, Enter inspects a selected worktree, and Ctrl+E/Ctrl+Y scrolls history continuation rows independently of commit selection.
+Run `go run ./cmd/workbench run git/browser` for the composed repository browser, or use `git/history`, `git/changes` and `git/worktrees` for individual organisms. All data is synthetic and supplied in memory; no Git executable or repository access is needed. Ctrl+Left/Right switches browser sections, Tab switches panes, Enter inspects a worktree, Alt+L changes layout preference, and Ctrl+L displays declared region bounds. Ctrl+E/Ctrl+Y scrolls history independently of selection.
 
 Saved native previews: [branching history](assets/git-history.png), [status and diff inspector](assets/git-changes.png), [worktree list](assets/git-worktrees.png), and [repository browser](assets/git-browser.png).
 

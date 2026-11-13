@@ -1,6 +1,7 @@
 package gitui
 
 import (
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
@@ -384,5 +385,33 @@ func TestPasteAndDirectOrganismASCII(t *testing.T) {
 				t.Fatalf("organism leaked Unicode: %q", view)
 			}
 		}
+	}
+}
+
+func TestFocusPresentationPreservesIndependentScroll(t *testing.T) {
+	var items []Item
+	for i := range 20 {
+		items = append(items, Item{ID: fmt.Sprint(i), Text: fmt.Sprint(i)})
+	}
+
+	list, err := NewList("focus", items, 30, 8, theme.New(theme.Dark))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	list.Viewport.SetYOffset(8)
+
+	for _, focused := range []bool{false, false, true, true} {
+		list.SetFocused(focused)
+
+		if list.Viewport.YOffset() != 8 {
+			t.Fatal("focus followed selection and moved scroll")
+		}
+	}
+
+	list.Update(press("j"))
+
+	if list.Viewport.YOffset() >= 8 {
+		t.Fatal("actual navigation failed to reveal selected item")
 	}
 }

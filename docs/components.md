@@ -223,3 +223,22 @@ Parents own focus and Tab routing. Forward messages to the focused grid and read
 | Data loading | Application-owned; the grid does not fetch or infer health |
 
 `StatusMatrix` retains its status-specific constructor, entries and selection methods, while its embedded `DataGrid` remains accessible for native customization. Construct it with `NewStatusMatrix`; cell meaning stays in the specialization rather than the general grid.
+
+## Declared screen layouts
+
+Use the [layout recipes](molecules-layout.html#layout/responsive) to allocate cells before resizing native components, and [tui.Screen](templates-tui.html#tui/screen) to require every registered region to be placed or explicitly hidden with a reason. The screen returns cell rectangles and composes exactly the visible views; applications retain Bubble Tea models, commands, focus policy and hidden-pane state. Existing string composition helpers remain available for atoms and compact molecules.
+
+| Layout | Allocation behavior |
+| --- | --- |
+| Flex | Fixed or weighted tracks with minima, maxima, gaps and alignment |
+| Grid | Shared tracks and spanning cells, reserving child minima |
+| Flow | Whole boxes wrap into rows before their required height is allocated |
+| Dock | Header, footer and side regions reserve space around the body |
+| SplitPane | A ratio divides two panes while retaining their minima |
+| Responsive | The first matching width-and-height recipe declares visible and hidden regions |
+
+Geometry errors always block allocation. Design violations also block by default: unexplained single-surface screens, vertically stacked content groups whose effective minima fit a row, allocations below a declared preferred size, and rendered content exceeding its region. An exception names its rule and rationale on that region or container; it cannot waive minimum sizes or overlap. Accepted exceptions remain visible in diagnostics for review.
+
+Call `Arrange` on resize, resize only visible native children from `Region` bounds, and supply those views to `Render`. A failed arrangement invalidates rendering until the next success. `CheckLayouts` validates supplied terminal sizes and requires every responsive branch to be exercised; applications should include boundary widths, short heights and focus-dependent recipes. `RegionMap` and `Inspect` expose actual geometry and hidden-region reasons without changing component state.
+
+The Git browser demonstrates three-column, sidebar and narrow focused-pane arrangements. Alt+L cycles automatic, sidebar and focused preferences; Tab selects the primary or detail pane, and Ctrl+L shows the region map. Narrow screens select a pane instead of stacking two cramped inspectors. These checks enforce declared geometry and specific composition rules; callers still own the meaning of content rendered inside each region.
