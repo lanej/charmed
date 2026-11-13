@@ -257,3 +257,34 @@ func TestGitStatusScrollSurvivesUnchangedGeometry(t *testing.T) {
 		t.Fatal("unchanged geometry reset status scroll")
 	}
 }
+
+func TestGitRetainedChromeFollowsLayout(t *testing.T) {
+	scene, err := gitBrowser(Environment{Config: DefaultConfig()})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	m, ok := scene.(*gitBrowserScene)
+	if !ok {
+		t.Fatal("expected browser")
+	}
+
+	for _, size := range []layout.Size{{Width: 120, Height: 40}, {Width: 120, Height: 16}, {Width: 120, Height: 40}} {
+		m.Resize(size)
+
+		if m.layoutErr != nil {
+			t.Fatal(m.layoutErr)
+		}
+
+		frame := m.View()
+		if !strings.Contains(frame, m.screen.Plan().Variant()) {
+			t.Fatal("stale variant after resize")
+		}
+
+		m.Update(tea.KeyPressMsg{Code: 'l', Mod: tea.ModAlt})
+
+		if !strings.Contains(m.View(), m.screen.Plan().Variant()) {
+			t.Fatal("stale variant after layout switch")
+		}
+	}
+}

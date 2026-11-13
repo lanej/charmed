@@ -149,6 +149,20 @@ func (m *JSONViewer) Resize(width, height int) {
 	m.Refresh()
 }
 
+// ResizeViewport updates geometry without refreshing presentation on height-only
+// changes. Use Refresh after changing exposed presentation fields.
+func (m *JSONViewer) ResizeViewport(width, height int) {
+	changed := m.Model.Width() != max(1, width)
+	m.Model.SetWidth(max(1, width))
+	m.Model.SetHeight(max(1, height))
+
+	if changed {
+		m.Refresh()
+	} else {
+		m.Model.SetYOffset(m.Model.YOffset())
+	}
+}
+
 func (m *JSONViewer) View() string { return m.Model.View() }
 
 func (m *JSONViewer) Snapshot() JSONState {

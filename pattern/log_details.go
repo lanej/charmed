@@ -41,7 +41,12 @@ func (m *LogInspector) resizeDetailPanes() {
 		regions.response.Width = size.Width - 1 - regions.request.Width
 	default:
 		contentWidth := max(1, layout.PanelContentSize(size).Width-1)
-		natural := lipgloss.Height(m.HTTP.RequestContent(contentWidth)) + 2
+		if !m.geometryOnly || m.naturalWidth != contentWidth {
+			m.naturalHeight = lipgloss.Height(m.HTTP.RequestContent(contentWidth)) + 2
+			m.naturalWidth = contentWidth
+		}
+
+		natural := m.naturalHeight
 		regions.request.Height = min(natural, max(3, size.Height/3))
 		regions.response.Height = max(0, size.Height-regions.request.Height)
 	}
@@ -56,10 +61,16 @@ func (m *LogInspector) resizeDetailPanes() {
 		viewer    *collection.JSONViewer
 		state     collection.JSONState
 	}{{&m.Request, regions.request, requestClosed, m.HTTP.RequestContent, m.HTTP.RequestPayload, m.RequestJSON, m.jsonStates[m.detailID].request}, {&m.Response, regions.response, responseClosed, m.HTTP.ResponseContent, m.HTTP.ResponsePayload, m.ResponseJSON, m.jsonStates[m.detailID].response}} {
+		oldWidth := pane.model.Width()
 		if !pane.collapsed {
 			content := layout.PanelContentSize(pane.size)
 			pane.model.SetWidth(max(1, content.Width-inspectorScrollbarWidth(content.Width, m.HTTP.ShowScrollbar)))
 			pane.model.SetHeight(max(1, content.Height))
+		}
+
+		if m.geometryOnly && !reset && (pane.collapsed || oldWidth == pane.model.Width()) {
+			pane.model.SetYOffset(pane.model.YOffset())
+			continue
 		}
 
 		m.refreshJSONPayload(pane.viewer, pane.model, pane.payload, pane.content, reset, pane.state)

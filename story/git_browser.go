@@ -14,26 +14,32 @@ import (
 )
 
 type gitBrowserScene struct {
-	primarySize layout.Size
-	detailSize  layout.Size
-	screen      *tui.Screen
-	tabs        navigation.Tabs
-	layoutMode  int
-	showRegions bool
-	layoutErr   error
-	environment Environment
-	status      *gitui.Status
-	history     *gitui.CommitHistory
-	branches    *gitui.BranchList
-	stashes     *gitui.StashList
-	worktrees   *gitui.WorktreeList
-	patch       *gitui.PatchBrowser
-	detail      *gitui.DiffViewer
-	page        int
-	focusDetail bool
-	size        layout.Size
-	context     string
-	detailKey   string
+	primarySizes   [5]layout.Size
+	compiled       *layout.Compiled
+	compiledMode   int
+	compiledFocus  bool
+	revision       uint64
+	mainRevision   uint64
+	detailRevision uint64
+	detailSize     layout.Size
+	screen         *tui.Screen
+	tabs           navigation.Tabs
+	layoutMode     int
+	showRegions    bool
+	layoutErr      error
+	environment    Environment
+	status         *gitui.Status
+	history        *gitui.CommitHistory
+	branches       *gitui.BranchList
+	stashes        *gitui.StashList
+	worktrees      *gitui.WorktreeList
+	patch          *gitui.PatchBrowser
+	detail         *gitui.DiffViewer
+	page           int
+	focusDetail    bool
+	size           layout.Size
+	context        string
+	detailKey      string
 }
 
 func gitBrowser(e Environment) (runtime.Scene, error) {
@@ -111,25 +117,39 @@ func (m *gitBrowserScene) active() *gitui.List {
 func (m *gitBrowserScene) Init() tea.Cmd { return nil }
 func (m *gitBrowserScene) Close() error  { return nil }
 func (m *gitBrowserScene) Resize(size layout.Size) {
+	previousVariant := m.screen.Plan().Variant()
 	m.size = size
 
-	m.layoutErr = m.screen.Arrange(gitBrowserLayout(m.focusDetail, m.layoutMode), size)
+	if m.compiled == nil || m.compiledMode != m.layoutMode || m.compiledFocus != m.focusDetail {
+		m.compiled, m.layoutErr = layout.Compile(gitBrowserLayout(m.focusDetail, m.layoutMode))
+
+		m.compiledMode, m.compiledFocus = m.layoutMode, m.focusDetail
+		if m.layoutErr != nil {
+			return
+		}
+	}
+
+	m.layoutErr = m.screen.ArrangeCompiled(m.compiled, size)
 	if m.layoutErr != nil {
 		return
+	}
+
+	if previousVariant != m.screen.Plan().Variant() {
+		m.revision++
 	}
 
 	m.tabs.SetWidth(size.Width)
 
 	if bounds, visible := m.screen.Region("main"); visible {
 		child := layout.PanelContentSize(layout.Size{Width: bounds.Dx(), Height: bounds.Dy()})
-		if child != m.primarySize {
-			m.status.Resize(child)
-
-			for _, list := range []*gitui.List{m.history.List, m.branches.List, m.stashes.List, m.worktrees.List} {
-				list.Resize(child)
+		if child != m.primarySizes[m.page] {
+			if m.page == 0 {
+				m.status.ResizeViewport(child)
+			} else {
+				m.active().ResizeViewport(child)
 			}
 
-			m.primarySize = child
+			m.primarySizes[m.page] = child
 		}
 	}
 
@@ -144,6 +164,23 @@ func (m *gitBrowserScene) Resize(size layout.Size) {
 }
 
 func (m *gitBrowserScene) Update(msg tea.Msg) tea.Cmd {
+	beforePage, beforeFocus, beforeContext, beforeKey := m.page, m.focusDetail, m.context, m.detailKey
+	defer func() {
+		if beforePage != m.page || beforeFocus != m.focusDetail || beforeContext != m.context {
+			m.revision++
+			m.mainRevision++
+			m.detailRevision++
+		} else if beforeFocus {
+			m.detailRevision++
+		} else {
+			m.mainRevision++
+		}
+
+		if beforeKey != m.detailKey {
+			m.detailRevision++
+		}
+	}()
+
 	if selected, ok := msg.(interaction.Selected); ok {
 		emit(m.environment, selected)
 
@@ -335,36 +372,50 @@ func (m *gitBrowserScene) View() string {
 	names := []string{"Status", "History", "Branches", "Stashes", "Worktrees"}
 	m.tabs.Select(names[m.page])
 
-	views := map[string]string{
+	fixed := map[string]string{
 		"header": layout.Header{Title: "Repository browser · " + m.context}.View(m.size.Width, t),
 		"tabs":   m.tabs.View(),
 		"footer": layout.Footer{Help: "Ctrl+Left/Right section · Tab focus · Alt+L layout · Ctrl+L map · Ctrl+Tab patch focus", Status: m.screen.Plan().Variant()}.View(m.size.Width, t),
 	}
-	if bounds, visible := m.screen.Region("main"); visible {
-		content := m.active().View()
-		if m.page == 0 {
-			content = m.status.View()
-		}
 
-		views["main"] = layout.Panel(names[m.page], content, layout.Size{Width: bounds.Dx(), Height: bounds.Dy()}, t, !m.focusDetail)
+	views := map[string]tui.RegionView{}
+	for id, value := range fixed {
+		views[id] = tui.RegionView{Revision: m.revision, Render: func(layout.Size) string { return value }}
+	}
+
+	if bounds, visible := m.screen.Region("main"); visible {
+		views["main"] = tui.RegionView{Revision: m.mainRevision, Render: func(layout.Size) string {
+			var content string
+			if m.page == 0 {
+				content = m.status.View()
+			} else {
+				content = m.active().View()
+			}
+
+			return layout.Panel(names[m.page], content, layout.Size{Width: bounds.Dx(), Height: bounds.Dy()}, t, !m.focusDetail)
+		}}
 	}
 
 	if bounds, visible := m.screen.Region("details"); visible {
-		detail := m.detail.View()
-		if m.page == 3 {
-			detail = m.patch.View()
-		}
+		views["details"] = tui.RegionView{Revision: m.detailRevision, Render: func(layout.Size) string {
+			var detail string
+			if m.page == 3 {
+				detail = m.patch.View()
+			} else {
+				detail = m.detail.View()
+			}
 
-		views["details"] = layout.Panel("Details", detail, layout.Size{Width: bounds.Dx(), Height: bounds.Dy()}, t, m.focusDetail)
+			return layout.Panel("Details", detail, layout.Size{Width: bounds.Dx(), Height: bounds.Dy()}, t, m.focusDetail)
+		}}
 	}
 
 	if bounds, visible := m.screen.Region("context"); visible {
 		size := layout.Size{Width: bounds.Dx(), Height: bounds.Dy()}
 		content := layout.KeyValue([]layout.Pair{{Label: "Repository", Value: "charmed"}, {Label: "Worktree", Value: m.context}, {Label: "Section", Value: names[m.page]}, {Label: "Layout", Value: m.screen.Plan().Variant()}}, layout.PanelContentSize(size).Width, t)
-		views["context"] = layout.Panel("Context", content, size, t, false)
+		views["context"] = tui.RegionView{Revision: m.revision, Render: func(layout.Size) string { return layout.Panel("Context", content, size, t, false) }}
 	}
 
-	frame, err := m.screen.Render(views)
+	frame, err := m.screen.RenderRetained(views)
 	if err != nil {
 		return layout.Fit(t.Text().Foreground(t.Danger).Render(err.Error()), m.size)
 	}
