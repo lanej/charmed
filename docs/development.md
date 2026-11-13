@@ -92,3 +92,14 @@ go run ./examples/catalog screen/cohorts
 ```
 
 The regional example supplies temperature, energy, yield and humidity for three cohorts. Read the [cohort contract](cohorts.html) for scalar aggregation, missing observations, optional references and migration from two-cohort comparisons.
+
+## Nested layouts
+
+Run these examples to inspect columns containing independently allocated sections and a grid nested inside an inspection column. Tab and Shift+Tab move focus; Ctrl+L toggles the region map so each leaf rectangle can be inspected.
+
+```sh
+go run ./cmd/workbench run template/nested-columns
+go run ./cmd/workbench run template/nested-grid
+```
+
+Both examples reflow into stacked panes when narrow and tall. Shorter allocations retain the selected host inspection and explicitly omit the host list. The [nested layout examples](templates-layout.html) show complete consumer declarations and saved wide, stacked and compact frames.
