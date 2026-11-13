@@ -26,6 +26,7 @@ type Sparkline struct {
 func NewSparkline(values []float64, size layout.Size, t theme.Theme) Sparkline {
 	m := Sparkline{values: append([]float64(nil), values...), size: size, theme: t}
 	m.rebuild()
+
 	return m
 }
 
@@ -36,9 +37,32 @@ func (m *Sparkline) rebuild() {
 			m.Bubble.Push(v)
 		}
 	}
+
 	m.Bubble.Draw()
 }
-func (m *Sparkline) Resize(size layout.Size) { m.size = size; m.rebuild() }
+
+func (m *Sparkline) Resize(size layout.Size) {
+	if m.size == size {
+		return
+	}
+
+	widthChanged := m.size.Width != size.Width
+	m.size = size
+	m.Bubble.Resize(max(1, size.Width), max(1, size.Height))
+
+	if widthChanged {
+		m.Bubble.Clear()
+
+		for _, value := range m.values {
+			if finite(value) {
+				m.Bubble.Push(value)
+			}
+		}
+	}
+
+	m.Bubble.Draw()
+}
+
 func (m *Sparkline) SetData(values []float64) {
 	m.values = append([]float64(nil), values...)
 	m.rebuild()
@@ -48,9 +72,11 @@ func (m Sparkline) View() string {
 	if len(m.values) == 0 {
 		return layout.Fit("No data", m.size)
 	}
+
 	if m.theme.ASCII {
 		return layout.Fit(fmt.Sprintf("latest %.1f", m.values[len(m.values)-1]), m.size)
 	}
+
 	return layout.Fit(m.Bubble.View(), m.size)
 }
 
@@ -72,6 +98,7 @@ type TimeSeries struct {
 func NewTimeSeries(series []TimeSeriesData, size layout.Size, t theme.Theme, options ...timeserieslinechart.Option) TimeSeries {
 	m := TimeSeries{size: size, theme: t, options: append([]timeserieslinechart.Option(nil), options...)}
 	m.SetData(series)
+
 	return m
 }
 
@@ -81,6 +108,7 @@ func (m *TimeSeries) SetData(series []TimeSeriesData) {
 		m.series[i] = s
 		m.series[i].Points = append([]timeserieslinechart.TimePoint(nil), s.Points...)
 	}
+
 	m.rebuild()
 }
 
@@ -88,37 +116,49 @@ func (m *TimeSeries) Resize(size layout.Size) {
 	if m.size == size {
 		return
 	}
-	minX, maxX, minY, maxY := m.Bubble.ViewMinX(), m.Bubble.ViewMaxX(), m.Bubble.ViewMinY(), m.Bubble.ViewMaxY()
+
 	m.size = size
-	m.rebuild()
-	m.Bubble.SetViewXYRange(minX, maxX, minY, maxY)
+
+	height := size.Height
+	if !m.rangeAvailable {
+		height--
+	}
+
+	m.Bubble.Resize(max(20, size.Width), max(6, height))
 	m.Bubble.DrawBrailleAll()
 }
 func (m *TimeSeries) Focus() { m.focused = true; m.Bubble.Focus() }
 func (m *TimeSeries) Blur()  { m.focused = false; m.Bubble.Blur() }
 func (m *TimeSeries) rebuild() {
 	var first, last time.Time
+
 	low, high := math.Inf(1), math.Inf(-1)
+
 	for _, s := range m.series {
 		for _, p := range s.Points {
 			if !finite(p.Value) {
 				continue
 			}
+
 			if first.IsZero() || p.Time.Before(first) {
 				first = p.Time
 			}
+
 			if last.IsZero() || p.Time.After(last) {
 				last = p.Time
 			}
+
 			low = math.Min(low, p.Value)
 			high = math.Max(high, p.Value)
 		}
 	}
+
 	if first.IsZero() {
 		first = time.Unix(0, 0).UTC()
 		last = first.Add(time.Hour)
 		low, high = 0, 1
 	}
+
 	if !last.After(first) {
 		last = first.Add(time.Hour)
 	}
@@ -127,6 +167,7 @@ func (m *TimeSeries) rebuild() {
 	if !m.rangeAvailable {
 		low, high = 0, 1
 	}
+
 	defaults := []timeserieslinechart.Option{
 		timeserieslinechart.WithTimeRange(first, last), timeserieslinechart.WithYRange(low, high),
 		timeserieslinechart.WithXLabelFormatter(timeserieslinechart.HourTimeLabelFormatter()),
@@ -142,22 +183,27 @@ func (m *TimeSeries) rebuild() {
 	m.Bubble = timeserieslinechart.New(max(20, m.size.Width), max(6, height), append(defaults, m.options...)...)
 	for i, s := range m.series {
 		m.Bubble.SetDataSetStyle(s.ID, lipgloss.NewStyle().Foreground(m.theme.SeriesColor(i)))
+
 		for _, p := range s.Points {
 			if finite(p.Value) {
 				m.Bubble.PushDataSet(s.ID, p)
 			}
 		}
 	}
+
 	if m.focused {
 		m.Bubble.Focus()
 	}
+
 	m.Bubble.DrawBrailleAll()
 }
 
 func (m TimeSeries) Update(msg tea.Msg) (TimeSeries, tea.Cmd) {
 	var cmd tea.Cmd
+
 	m.Bubble, cmd = m.Bubble.Update(msg)
 	m.Bubble.DrawBrailleAll()
+
 	return m, cmd
 }
 
@@ -170,16 +216,20 @@ func (m TimeSeries) View() string {
 	if count == 0 {
 		return layout.Fit("No data for this selection", m.size)
 	}
+
 	if m.size.Width < 20 || m.size.Height < 6 {
 		return layout.Fit("Chart needs 20 columns / 6 rows", m.size)
 	}
+
 	if m.theme.ASCII {
 		var lines []string
+
 		for _, s := range m.series {
 			if len(s.Points) > 0 {
 				lines = append(lines, fmt.Sprintf("%s: %s %s", s.Label, text.NumberLabel(s.Points[len(s.Points)-1].Value, 1, "", true), s.Unit))
 			}
 		}
+
 		return layout.Fit(strings.Join(lines, "\n"), m.size)
 	}
 

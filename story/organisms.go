@@ -141,7 +141,12 @@ func fileStory(e Environment) (runtime.Scene, error) {
 func markdownStory(e Environment) (runtime.Scene, error) {
 	content := "# Terminal documentation\n\nUse `field.Focus()` with **Markdown**, *emphasis*, and [Glamour](https://github.com/charmbracelet/glamour).\n\n- Theme follows the terminal palette\n- Prose wraps to its allocated width\n\n```go\n// Focus a native input\nfield := input.NewText(options)\ncmd := field.Focus()\n```\n\n> Keep content, focus and layout independent.\n\n| Content | Rendering |\n| --- | --- |\n| Inline code | Literal spans |\n| Fenced source | Syntax highlighting |\n"
 
-	rendered, err := text.Markdown(content, e.Config.Columns, e.Config.Palette())
+	document, err := text.PrepareMarkdown(content, e.Config.Palette())
+	if err != nil {
+		return nil, err
+	}
+
+	rendered, err := document.Render(e.Config.Columns)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +157,7 @@ func markdownStory(e Environment) (runtime.Scene, error) {
 		m.SetWidth(s.Width)
 		m.SetHeight(s.Height)
 
-		if out, err := text.Markdown(content, s.Width, e.Config.Palette()); err == nil {
+		if out, err := document.Render(s.Width); err == nil && out != m.GetContent() {
 			m.SetContent(out)
 		}
 	}, update: func(msg tea.Msg) tea.Cmd { var cmd tea.Cmd; m, cmd = m.Update(msg); return cmd }, view: func(layout.Size) string { return m.View() }}, nil

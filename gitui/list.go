@@ -35,6 +35,7 @@ type List struct {
 	Component     string
 	items         []Item
 	cursor        int
+	selectedLine  int
 	width, height int
 	focused       bool
 	searching     bool
@@ -122,11 +123,25 @@ func (m *List) SetFocused(focused bool) {
 func (m *List) Init() tea.Cmd { return nil }
 func (m *List) Close() error  { return nil }
 func (m *List) Resize(size layout.Size) {
+	m.resize(size, true)
+}
+
+// ResizeViewport changes geometry without refreshing externally mutated row
+// presentation. Use Resize to reapply native theme or presentation changes.
+func (m *List) ResizeViewport(size layout.Size) { m.resize(size, false) }
+
+func (m *List) resize(size layout.Size, refresh bool) {
+	widthChanged := m.width != max(1, size.Width)
 	m.width, m.height = max(1, size.Width), max(1, size.Height)
 	m.Viewport.SetWidth(m.width)
 	m.Viewport.SetHeight(max(1, m.height-m.footerHeight()))
 	m.Input.SetWidth(max(1, m.width-4))
-	m.render()
+
+	if refresh || widthChanged {
+		m.render()
+	} else {
+		m.followSelection()
+	}
 }
 
 func (m *List) matches(item Item) bool {
@@ -225,6 +240,8 @@ func (m *List) Update(msg tea.Msg) tea.Cmd {
 			if id != "" && m.matches(m.items[m.cursor]) {
 				return func() tea.Msg { return interaction.Selected{Component: component, ID: id} }
 			}
+		default:
+			return nil
 		}
 	}
 
@@ -307,6 +324,12 @@ func (m *List) render() {
 
 	m.Viewport.SetContent(strings.Join(lines, "\n"))
 
+	m.selectedLine = selectedLine
+	m.followSelection()
+}
+
+func (m *List) followSelection() {
+	selectedLine := m.selectedLine
 	if selectedLine < m.Viewport.YOffset() {
 		m.Viewport.SetYOffset(selectedLine)
 	}
@@ -339,6 +362,10 @@ func (m *List) updateInput(msg tea.Msg) tea.Cmd {
 	var cmd tea.Cmd
 
 	m.Input, cmd = m.Input.Update(msg)
+	if m.query == m.Input.Value() {
+		return cmd
+	}
+
 	m.query = m.Input.Value()
 	m.reconcile()
 

@@ -61,6 +61,52 @@ just docs
 
 The full Go quality gate runs on Linux and macOS. Bounds and diagnostics support review, rather than proving the example is understandable. Inspect the chart, input and inspector together at desktop and mobile sizes, then retain representative screenshots when changing the shared template.
 
+## Measure rendering
+
+Measure repeated views separately from startup and idle behavior. The retained benchmarks construct models before timing, exercise native output and report allocations. Run comparisons sequentially on the same machine, toolchain, terminal color profile and allocation; concurrent builds and tests distort timing. Include `./layout`, `./gitui` and `./collection` to measure clipping, ignored keys and visible grid windows.
+
+```sh
+go test -c -o /tmp/charmed-render.test ./story
+env -u NO_COLOR TERM=xterm-256color COLORTERM=truecolor /tmp/charmed-render.test \
+  -test.run '^$' -test.bench '^BenchmarkRender$' \
+  -test.benchmem -test.benchtime=200ms -test.count=3
+```
+
+Native runtime updates remain event driven. Screens reuse one cleared canvas at their current allocation, and only fixed workbench fixtures retain their source rendering. Interactive views read current model state on every render. Resizing replaces retained buffers rather than accumulating allocations for previous sizes; folded inspector bodies and unchanged Git searches avoid rebuilding content.
+
+The November 2026 resize audit compared merged main at `eb2dc615` with these changes on an Apple M6, darwin/arm64, Go 1.27.4, truecolor. These are medians of five sequential 200 ms runs measuring resize plus output construction. Screen height changes alternate 120×40 and 120×30 cells; the 1,000-item Git pane alternates 80×20 and 80×35. Timing varies with the host; these measurements do not establish terminal-emulator painting latency.
+
+| Resize workload | Time before → after | Allocated bytes before → after |
+| --- | --- | --- |
+| Git screen, repeated size | 1.32 → 0.12 ms | 949,342 → 82,544 |
+| Git screen, height | 1.22 → 0.78 ms | 872,993 → 812,473 |
+| Log inspector, height | 2.55 → 1.12 ms | 1,996,249 → 716,489 |
+| Markdown viewport, height | 1.65 → 0.68 ms | 1,363,236 → 779,176 |
+| Git pane, height | 0.89 → 0.05 ms | 409,435 → 33,359 |
+
+The Git pane benchmark compares the existing full-refresh resize with the new geometry-only path. Its width-resize time remains approximately 0.84 → 0.82 ms because width changes still rebuild row presentation. The screen benchmark also covers width drags and breakpoint crossings; component-level gains do not imply that every screen resize avoids reflow.
+
+An ignored key in a 1,000-item Git list now allocates nothing. The grid benchmark renders essentially the same work for 100 and 10,000 rows with 100 columns: about 0.33 ms per view at the same allocation. Its regression test checks cell-renderer calls at the first and last selection in both wide and narrow windows; rendering must stay bounded by the visible allocation.
+
+Separate native PTY probes warmed each screen for 1.5 seconds, then sampled process CPU and terminal output for five seconds. Static Git and Markdown screens emitted no additional bytes and consumed roughly 0.2–0.4% of one core; the focused service screen emitted 250 bytes for cursor blinking and consumed about 2.6%. CPU counters have 0.01-second resolution, so these short samples cannot establish zero CPU. Bubble Tea's native flush ticker and default frame rate remain unchanged.
+
+## Reuse prepared content
+
+Use `layout.Compile` for a stable declaration and `Screen.ArrangeCompiled` for successive allocations. Compilation copies caller-owned nodes and validates their branches; resolving each new size still checks geometry and design rules. Recompile after changing the declaration. The existing `Arrange` remains suitable for mutable declarations.
+
+`Screen.RenderRetained` accepts a map of region IDs to `tui.RegionView{Revision, Render}`. Each callback receives its allocated size. Advance the region revision after changing anything visible, including native styles, scroll, focus, data, theme or symbols. Zero is a valid revision; replacing a callback alone does not invalidate its result. Same-size moves reuse content, hidden regions release output, and switching to immediate `Render` clears retained state. Calls remain serialized by the owning model.
+
+| Work | API and responsibility |
+| --- | --- |
+| Markdown preparation | `text.PrepareMarkdown(source, palette, options...)` owns source and presentation; `document.Render(width)` reflows without parsing or highlighting again |
+| Git list geometry | `ResizeViewport(size)` follows selection and updates visibility; `Resize(size)` also reapplies presentation |
+| JSON viewport geometry | `ResizeViewport(width, height)` avoids reprojection on height changes; call `Refresh` after direct presentation changes |
+| Inspector geometry | `ResizeViewport(size)` reuses unchanged-width payloads and request rows; `Resize(size)` refreshes native presentation |
+| Inspector pane caching | `ViewRetained(pattern.InspectorRevisions{Requests, Details, Logs})` retains panes independently; advance the affected revisions after mutations |
+| Native access | Immediate rendering and existing refresh methods remain available; caching cannot discover direct native mutations |
+
+Run `BenchmarkResizeRender` alongside `BenchmarkRender` to measure the complete resize-to-output path. It covers repeated allocations, height changes, width changes and responsive breakpoint crossings. Compare against the same benchmark source on the base revision, running each executable sequentially after other tests and builds finish. These benchmarks measure generated frames; terminal emulator painting and interactive latency need separate native measurements.
+
 ## Publish documentation
 
 Every same-repository documentation PR receives an isolated preview under lanej.io/charmed/pr-preview/pr-number. The publisher verifies the live revision before updating direct links in the PR description. Review those pages before merge; previews refresh on push and disappear after closure.

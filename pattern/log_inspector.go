@@ -59,6 +59,12 @@ type LogInspectorOptions struct {
 // view and is not rendered by this inspector. Resizing and data updates own
 // payload content, preserve same-selection offsets and reset both on selection changes.
 type LogInspector struct {
+	geometryOnly                    bool
+	naturalWidth, naturalHeight     int
+	retainedUsed                    map[string]bool
+	retainedOwner                   *LogInspector
+	retainedPanes                   map[string]inspectorFrame
+	retainedRevisions               *InspectorRevisions
 	Symbols                         text.Presentation
 	HTTP                            *collection.HTTPLog
 	Palette                         *collection.CommandPalette
@@ -294,7 +300,20 @@ func (m *LogInspector) correlate() {
 	m.Resize(m.size)
 }
 
+// ResizeViewport changes geometry using existing prepared payloads where width
+// is unchanged. Use Resize after direct native presentation changes.
+func (m *LogInspector) ResizeViewport(size layout.Size) {
+	m.geometryOnly = true
+	defer func() { m.geometryOnly = false }()
+
+	m.Resize(size)
+}
+
 func (m *LogInspector) Resize(size layout.Size) {
+	if !m.geometryOnly {
+		m.naturalWidth, m.naturalHeight = 0, 0
+	}
+
 	m.size = size
 	if m.Palette != nil {
 		m.Palette.Resize(size)
@@ -316,10 +335,15 @@ func (m *LogInspector) Resize(size layout.Size) {
 	m.HTTP.Timeline = m.active == InspectorTimeline || (!m.wide && m.preferred == InspectorTimeline)
 	requests := layout.PanelContentSize(m.regions.requests)
 	details := layout.PanelContentSize(m.regions.details)
-	logs := layout.PanelContentSize(m.regions.logs)
-	m.HTTP.ResizeList(requests.Width, requests.Height)
 
-	if !m.PaneCollapsed(httpPane) {
+	logs := layout.PanelContentSize(m.regions.logs)
+	if m.geometryOnly {
+		m.HTTP.ResizeListViewport(requests.Width, requests.Height)
+	} else {
+		m.HTTP.ResizeList(requests.Width, requests.Height)
+	}
+
+	if !m.PaneCollapsed(httpPane) && !m.geometryOnly {
 		m.HTTP.ResizeDetails(details.Width, details.Height)
 	}
 
@@ -407,6 +431,10 @@ func (m *LogInspector) updateContent(msg tea.Msg) tea.Cmd {
 }
 
 func (m *LogInspector) contentView() string {
+	if m.retainedRevisions == nil {
+		m.retainedPanes = nil
+	}
+
 	focused := m.focus.Current()
 
 	requests := func(size layout.Size) string {
@@ -415,27 +443,44 @@ func (m *LogInspector) contentView() string {
 			title = "Request timeline"
 		}
 
-		return m.section(requestPane, title+" · "+feedback.Follow(m.HTTP.Follow, text.Normal, m.palette, m.Symbols), m.HTTP.ListView(), size)
+		content := ""
+		if !m.PaneCollapsed(requestPane) {
+			content = m.HTTP.ListView()
+		}
+
+		return m.section(requestPane, title+" · "+feedback.Follow(m.HTTP.Follow, text.Normal, m.palette, m.Symbols), content, size)
 	}
 	details := func(size layout.Size) string {
 		return m.detailPanesView(size)
 	}
 	logs := func(size layout.Size) string {
-		return m.section(logPane, "Related logs · "+feedback.Follow(m.Logs.Follow, text.Normal, m.palette, m.Symbols), m.palette.Subtle().Render(m.correlationMessage)+"\n"+m.Logs.View(), size)
+		content := ""
+		if !m.PaneCollapsed(logPane) {
+			content = m.palette.Subtle().Render(m.correlationMessage) + "\n" + m.Logs.View()
+		}
+
+		return m.section(logPane, "Related logs · "+feedback.Follow(m.Logs.Follow, text.Normal, m.palette, m.Symbols), content, size)
 	}
+
+	requestView, detailView, logView := requests, details, logs
+	requests = func(size layout.Size) string { return m.paneView(requestPane, size, requestView) }
+	details = func(size layout.Size) string { return m.paneView(httpPane, size, detailView) }
+	logs = func(size layout.Size) string { return m.paneView(logPane, size, logView) }
 
 	var content string
 
 	switch m.active {
 	case InspectorAuto, InspectorSidebar:
-		content = layout.Row(requests(m.regions.requests), " ", layout.Column(details(m.regions.details), logs(m.regions.logs)))
 		if m.regions.requestsAbove {
 			content = layout.Column(requests(m.regions.requests), details(m.regions.details), logs(m.regions.logs))
+		} else {
+			content = layout.Row(requests(m.regions.requests), " ", layout.Column(details(m.regions.details), logs(m.regions.logs)))
 		}
 	case InspectorTimeline:
-		content = layout.Column(requests(m.regions.requests), layout.Row(details(m.regions.details), " ", logs(m.regions.logs)))
 		if m.regions.bottomStacked {
 			content = layout.Column(requests(m.regions.requests), details(m.regions.details), logs(m.regions.logs))
+		} else {
+			content = layout.Column(requests(m.regions.requests), layout.Row(details(m.regions.details), " ", logs(m.regions.logs)))
 		}
 	case InspectorColumns:
 		var headings, columns []string

@@ -262,6 +262,14 @@ func Resolve(root Node, size Size) (Plan, error) {
 		return Plan{}, err
 	}
 
+	return resolveValidated(root, size)
+}
+
+func resolveValidated(root Node, size Size) (Plan, error) {
+	if size.Width <= 0 || size.Height <= 0 {
+		return Plan{}, fmt.Errorf("layout requires a positive terminal size")
+	}
+
 	builder := planner{Plan: Plan{size: size}}
 	if err := builder.place(root, image.Rect(0, 0, size.Width, size.Height)); err != nil {
 		return Plan{}, err

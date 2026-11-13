@@ -222,6 +222,12 @@ func (m *Status) Resize(size layout.Size) {
 	m.List.Resize(layout.Size{Width: size.Width, Height: max(1, size.Height-4)})
 }
 
+// ResizeViewport updates allocation without refreshing row presentation.
+func (m *Status) ResizeViewport(size layout.Size) {
+	m.size = size
+	m.List.ResizeViewport(layout.Size{Width: size.Width, Height: max(1, size.Height-4)})
+}
+
 func (m *Status) View() string {
 	return layout.Fit(RepositorySummary(m.repo, m.List.Theme)+"\n\n"+m.List.View(), m.size)
 }

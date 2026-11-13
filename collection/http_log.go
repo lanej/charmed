@@ -184,7 +184,6 @@ func (m *HTTPLog) ResumeFollow() {
 
 func (m *HTTPLog) Resize(width, height int) {
 	m.height = max(1, height)
-	m.listWidth = max(1, width)
 	m.detailsWidth = max(1, width)
 
 	listHeight := max(1, height/3)
@@ -195,15 +194,23 @@ func (m *HTTPLog) Resize(width, height int) {
 	m.ResizeList(width, listHeight)
 	m.Details.SetWidth(max(1, width-m.scrollbarWidth()))
 	m.Details.SetHeight(max(1, height-listHeight-2))
-	m.rebuildRows()
 	m.refreshDetails(false)
 }
 
-func (m *HTTPLog) ResizeList(width, height int) {
+func (m *HTTPLog) ResizeList(width, height int) { m.resizeList(width, height, true) }
+
+// ResizeListViewport updates geometry; ResizeList also refreshes presentation.
+func (m *HTTPLog) ResizeListViewport(width, height int) { m.resizeList(width, height, false) }
+
+func (m *HTTPLog) resizeList(width, height int, refresh bool) {
+	widthChanged := m.listWidth != max(1, width)
 	m.listWidth = max(1, width)
 	m.listHeight = max(1, height)
 	m.Table.SetWidth(m.listWidth)
-	m.rebuildRows()
+
+	if refresh || widthChanged {
+		m.rebuildRows()
+	}
 
 	headerHeight := m.headerHeight()
 	if !m.ShowColumnLabels {

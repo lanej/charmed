@@ -415,3 +415,58 @@ func TestFocusPresentationPreservesIndependentScroll(t *testing.T) {
 		t.Fatal("actual navigation failed to reveal selected item")
 	}
 }
+
+func TestUnchangedListInputPreservesIndependentScroll(t *testing.T) {
+	var items []Item
+	for i := range 20 {
+		items = append(items, Item{ID: fmt.Sprint(i), Text: fmt.Sprintf("alpha-%d", i)})
+	}
+
+	list, err := NewList("unchanged-input", items, 30, 8, theme.New(theme.Dark))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	list.Viewport.SetYOffset(8)
+	list.Update(press("x"))
+
+	if list.Viewport.YOffset() != 8 {
+		t.Fatal("ignored key followed selection and moved the viewport")
+	}
+
+	list.Update(press("/"))
+	list.Viewport.SetYOffset(8)
+	list.Update(press("left"))
+
+	if list.Viewport.YOffset() != 8 {
+		t.Fatal("unchanged search value rebuilt the list and moved the viewport")
+	}
+
+	list.Update(tea.PasteMsg{Content: "no match"})
+
+	if list.SelectedID() != "" || !strings.Contains(list.View(), "No matching items") {
+		t.Fatal("changed search did not update the displayed rows")
+	}
+}
+
+func TestListGeometryResizeKeepsSelectionVisible(t *testing.T) {
+	items := make([]Item, 100)
+	for i := range items {
+		items[i] = Item{ID: fmt.Sprint(i), Text: fmt.Sprint(i)}
+	}
+
+	m, err := NewList("test", items, 80, 110, theme.New(theme.Dark))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !m.Select("90") {
+		t.Fatal("selection missing")
+	}
+
+	m.ResizeViewport(layout.Size{Width: 80, Height: 10})
+
+	if m.Viewport.YOffset() > 90 || m.Viewport.YOffset()+m.Viewport.Height() <= 90 {
+		t.Fatal("selection hidden after shrink")
+	}
+}
