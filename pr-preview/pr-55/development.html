@@ -138,7 +138,7 @@
 <pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./cmd/workbench list
 <span class="syn-command">go</span> run ./cmd/workbench run screen/services
 </code></pre>
-<p>Run from the repository root with <strong>Go 1.26.11+</strong>. Use Ctrl+C to exit. You can pass fixture-specific options such as <code class="inline-code">--theme light</code>, <code class="inline-code"><span class="syn-operator">--</span>legend</code>, or <code class="inline-code">--columns 40</code>; see the <a href="https://github.com/lanej/charmed/blob/2e76dd197523f414dca20f73b833bf6be566ef26/story/catalog.go">component registry</a> for available fixtures.</p>
+<p>Run from the repository root with <strong>Go 1.26.11+</strong>. Use Ctrl+C to exit. You can pass fixture-specific options such as <code class="inline-code">--theme light</code>, <code class="inline-code"><span class="syn-operator">--</span>legend</code>, or <code class="inline-code">--columns 40</code>; see the <a href="https://github.com/lanej/charmed/blob/55a31ba3ae79dc11702729f9bb3fbcd5b7d92ecd/story/catalog.go">component registry</a> for available fixtures.</p>
 <h2 id="add-a-component"><a class="heading-permalink" href="#add-a-component"><span>Add a component</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Organize Go packages by capability. Atomic categories describe composition depth rather than package layers. Implement a wrapper where useful defaults, semantics or reusable composition justify one, then document the native API and any lifecycle operation that reapplies customization.</p>
 <table tabindex="0">
