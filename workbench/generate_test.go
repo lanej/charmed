@@ -31,7 +31,7 @@ func TestStaticGuide(t *testing.T) {
 		groups[strings.ToLower(d.Level)+"-"+d.Family+".html"] = true
 	}
 
-	if want := 13 + len(story.Levels()) + len(groups); len(files) != want {
+	if want := 14 + len(story.Levels()) + len(groups); len(files) != want {
 		t.Fatalf("got %d pages, want %d category, group and guide pages", len(files), want)
 	}
 
@@ -86,7 +86,11 @@ func TestStaticGuide(t *testing.T) {
 					if !allowed {
 						t.Errorf("%s contains unexpected script", name)
 					}
-				case "input", "button", "select", "iframe":
+				case "select":
+					if name != "dependencies.html" {
+						t.Errorf("%s contains unsupported select", name)
+					}
+				case "input", "button", "iframe":
 					t.Errorf("%s contains unsupported interactive element %s", name, n.Data)
 				}
 

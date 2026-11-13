@@ -111,3 +111,63 @@
   });
   window.addEventListener("pageshow", function () { closeMenu(false); });
 })();
+
+// Component identities are shared across the static dependency neighborhoods.
+// Without JavaScript every audited component and its source links remain visible.
+(function () {
+  "use strict";
+  var browser = document.querySelector("[data-component-browser]");
+  if (!browser) return;
+  var cards = Array.from(browser.querySelectorAll("[data-component]"));
+  var picker = browser.querySelector(".graph-picker");
+  var select = picker.querySelector("select");
+  var status = picker.querySelector("[data-graph-status]");
+  var focusedCard = null;
+  document.addEventListener("focusin", function (event) {
+    focusedCard = event.target.closest("[data-component]");
+  });
+  function hashID() {
+    try { return decodeURIComponent(window.location.hash.slice(1)).replace(/^component-/, ""); }
+    catch (_) { return ""; }
+  }
+  function show(id, focus) {
+    var card = cards.find(function (item) { return item.dataset.component === id; });
+    if (!card) return false;
+    cards.forEach(function (item) { item.hidden = item !== card; });
+    select.value = id;
+    if (focus) {
+      card.querySelector("h2").focus({ preventScroll: true });
+      card.scrollIntoView({ block: "start" });
+    }
+    return true;
+  }
+  function followHash() {
+    var id = hashID() || browser.dataset.default;
+    var active = document.activeElement;
+    var restoreFocus = (browser.contains(active) && active.closest("[data-component]") !== null) ||
+      (active === document.body && focusedCard !== null);
+    if (!show(id, restoreFocus)) {
+      show(browser.dataset.default, restoreFocus);
+      status.textContent = "Unknown component; showing Status matrix.";
+    } else { status.textContent = ""; }
+  }
+  picker.hidden = false;
+  followHash();
+  select.addEventListener("change", function () {
+    show(select.value, false);
+    status.textContent = "";
+    history.replaceState(null, "", "#component-" + encodeURIComponent(select.value));
+  });
+  browser.addEventListener("click", function (event) {
+    var link = event.target.closest("[data-component-link]");
+    if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    var id = decodeURIComponent(new URL(link.href).hash.slice(1)).replace(/^component-/, "");
+    if (show(id, true)) {
+      event.preventDefault();
+      status.textContent = "";
+      history.pushState(null, "", "#component-" + encodeURIComponent(id));
+    }
+  });
+  window.addEventListener("hashchange", followHash);
+  window.addEventListener("popstate", followHash);
+})();

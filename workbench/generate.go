@@ -21,12 +21,14 @@ type Snapshot struct {
 }
 type ManifestEntry struct {
 	story.Definition
-	Use            string        `json:"use"`
-	Integration    string        `json:"integration"`
-	Code           string        `json:"code"`
-	ExampleImports []usageImport `json:"exampleImports"`
-	ExampleFrame   string        `json:"exampleFrame"`
-	Snapshots      []Snapshot    `json:"snapshots"`
+	Use               string         `json:"use"`
+	Integration       string         `json:"integration"`
+	Code              string         `json:"code"`
+	ExampleImports    []usageImport  `json:"exampleImports"`
+	ExampleFrame      string         `json:"exampleFrame"`
+	Snapshots         []Snapshot     `json:"snapshots"`
+	Component         *componentCard `json:"component,omitempty"`
+	ComponentExamples []exampleLink  `json:"componentExamples,omitempty"`
 }
 
 // Generate writes reproducible documentation inputs from the compiled Go registry.

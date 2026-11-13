@@ -1,0 +1,17 @@
+{{define "component-browser"}}
+<section class="component-browser" data-component-browser data-default="collection/status-matrix" aria-label="Reusable component dependencies">
+<div class="graph-scope"><strong>{{len .Cards}} reusable components</strong><span>{{.Mapped}} of {{.Total}} catalog entries mapped · partial audited slice</span><a href="component-graph.json" download>Download graph JSON ↗</a></div>
+<div class="graph-picker" hidden><label for="graph-component">Inspect a component</label><select id="graph-component">{{range .Cards}}<option value="{{.ID}}">{{.Name}}</option>{{end}}</select><span role="status" data-graph-status></span></div>
+{{range .Cards}}
+<section class="graph-card" id="component-{{.ID}}" data-component="{{.ID}}" aria-labelledby="graph-title-{{.ID}}">
+<div class="graph-card-header"><h2 id="graph-title-{{.ID}}" tabindex="-1">{{.Name}}</h2><span class="graph-coverage">{{.CoverageLabel}}</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>{{.API}}</code></dd></div><div><dt>Classification</dt><dd>{{.Level}}</dd></div><div><dt>Evidence</dt><dd><a href="{{.SourceHref}}">{{.Source.Path}} · {{.Source.Symbol}}</a></dd></div></dl>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul>{{range .Dependencies}}<li><a data-component-link href="{{.Href}}">{{.Name}}</a><span>{{.Kind}} · {{.Role}}</span><a class="graph-evidence" href="{{.SourceHref}}">Source ↗</a></li>{{else}}<li class="graph-empty">{{.EmptyLabel}}</li>{{end}}</ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul>{{range .Dependents}}<li><a data-component-link href="{{.Href}}">{{.Name}}</a><span>{{.Kind}} · {{.Role}}</span><a class="graph-evidence" href="{{.SourceHref}}">Source ↗</a></li>{{else}}<li class="graph-empty">No incoming component relationships recorded in this slice.</li>{{end}}</ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul>{{range .Examples}}<li><a href="{{.Href}}">{{.Name}} · {{.Kind}}</a><a class="graph-evidence" href="{{.SourceHref}}">Source ↗</a><ul>{{range .Uses}}<li><a data-component-link href="{{.Href}}">{{.Name}}</a><span>{{.Role}}</span></li>{{end}}</ul></li>{{else}}<li>No examples mapped yet.</li>{{end}}</ul></section>
+</section>
+{{end}}
+</section>
+{{end}}

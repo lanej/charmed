@@ -215,6 +215,84 @@ def check_rhythm(page, filename, config):
     return measurements
 
 
+def check_component_graph(browser, site, output):
+    base = "https://guide.test/charmed/pr-preview/pr-123/"
+    document = json.loads((site / "component-graph.json").read_text())
+    assert document["version"] == 1
+    assert not any(edge["from"] == "diagram/trace-replay" and edge["to"] == "input/radio-group" for edge in document["relations"])
+    assert any(example["kind"] == "interactive" and any(use["component"] == "input/radio-group" for use in example["uses"]) for example in document["examples"])
+
+    def serve(route):
+        path = unquote(urlparse(route.request.url).path).removeprefix("/charmed/pr-preview/pr-123/")
+        file = site / path
+        if file.is_file():
+            route.fulfill(path=str(file))
+        else:
+            route.abort()
+
+    for width in (1440, 390):
+        context = browser.new_context(viewport={"width": width, "height": 1000})
+        try:
+            context.route("https://guide.test/**", serve)
+            page = context.new_page()
+            errors = []
+            page.on("pageerror", lambda error: errors.append(str(error)))
+            page.goto(base + "dependencies.html#component-collection%2Fstatus-matrix")
+            cards = page.locator("[data-component]")
+            selector = page.locator("#graph-component")
+            assert selector.locator("option").count() == len(document["components"])
+            assert page.locator("[data-component]:visible").count() == 1
+            assert page.locator('[data-component="collection/status-matrix"]').is_visible()
+            selected = page.locator("[data-component]:visible")
+            selected.get_by_role("region", name="Built from", exact=True).get_by_role("link", name="Data grid", exact=True).click()
+            assert page.locator('[data-component="collection/data-grid"]').is_visible()
+            selected = page.locator("[data-component]:visible")
+            selected.get_by_role("region", name="Used by", exact=True).get_by_role("link", name="Grid inspector", exact=True).click()
+            assert page.locator('[data-component="collection/grid-inspector"]').is_visible()
+            page.go_back()
+            page.locator('[data-component="collection/data-grid"]').wait_for(state="visible")
+            assert page.locator(":focus").inner_text() == "Data grid"
+            assert page.locator(":focus").evaluate("el => el.getBoundingClientRect().top >= 0 && el.getBoundingClientRect().bottom <= innerHeight")
+            selector.select_option("input/radio-group")
+            usage = page.locator("[data-component]:visible").get_by_role("region", name="Example usage", exact=True)
+            usage.get_by_role("link", name="Trace replay", exact=True).last.click()
+            assert page.locator(":focus").inner_text() == "Trace replay"
+            assert page.locator(":focus").evaluate("el => el.getBoundingClientRect().top >= 0 && el.getBoundingClientRect().bottom <= innerHeight")
+            page.go_back()
+            page.locator('[data-component="input/radio-group"]').wait_for(state="visible")
+            assert page.locator(":focus").inner_text() == "Radio group"
+            selector.select_option("diagram/trace-replay")
+            selected = page.locator("[data-component]:visible")
+            built = selected.get_by_role("region", name="Built from", exact=True)
+            assert built.get_by_role("link", name="State diagram", exact=True).count() == 1
+            assert built.get_by_role("link", name="Radio group", exact=True).count() == 0
+            assert selected.get_by_role("region", name="Example usage", exact=True).get_by_role("link", name="Radio group", exact=True).count() == 2
+            selector.focus()
+            page.keyboard.press("Home")
+            page.keyboard.press("ArrowDown")
+            page.keyboard.press("Enter")
+            assert page.locator("[data-component]:visible").get_attribute("data-component") == selector.input_value()
+            assert page.locator(":focus").get_attribute("id") == "graph-component"
+            page.goto(base + "dependencies.html#component-missing")
+            assert "Unknown component" in page.locator("[data-graph-status]").inner_text()
+            assert page.locator('[data-component="collection/status-matrix"]').is_visible()
+            assert not errors, errors
+            page.screenshot(path=str(output / f"dependencies-{width}.png"), full_page=True)
+        finally:
+            context.close()
+
+    context = browser.new_context(java_script_enabled=False)
+    try:
+        context.route("https://guide.test/**", serve)
+        page = context.new_page()
+        page.goto(base + "dependencies.html#component-collection%2Fdata-grid")
+        assert page.locator("[data-component]:visible").count() == len(document["components"])
+        assert page.locator(".graph-picker").is_hidden()
+        assert page.locator('[id="component-collection/data-grid"]').is_visible()
+    finally:
+        context.close()
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--site", type=Path, default=Path("docs/dist"))
@@ -306,6 +384,7 @@ def main():
         assert menu.get_attribute("open") is not None, "native menu must work without JavaScript"
         context.close()
         check_catalog_navigation(browser, args.site, args.output)
+        check_component_graph(browser, args.site, args.output)
         browser.close()
     (args.output / "results.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
     print(f"Verified {len(results)} page/width layouts, touch, keyboard, fragments, resize, and no-JS menu.")

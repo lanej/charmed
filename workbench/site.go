@@ -35,6 +35,7 @@ type guidePage struct {
 	Preview          *ManifestEntry
 	Showcase         []showcaseItem
 	Atoms            []string
+	Components       *componentGuide
 	Brand            brandPalette
 }
 type showcaseItem struct{ Title, Description, Link, Frame, NarrowFrame string }
@@ -50,7 +51,17 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		return err
 	}
 
+	components, componentErr := buildComponentGuide(root, entries)
+	if componentErr != nil {
+		return componentErr
+	}
+
+	if graphErr := writeComponentGraph(directory); graphErr != nil {
+		return graphErr
+	}
+
 	pages := []guidePage{
+		{File: "dependencies.html", Title: "Component dependencies", Source: "dependencies.md", Resource: true, Components: components},
 		{File: "index.html", Title: "Charmed", Source: "index.md"},
 		{File: "getting-started.html", Title: "Getting started", Source: "getting-started.md"},
 		{File: "recipes.html", Title: "Recipes", Source: "recipes.md"},
@@ -192,7 +203,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		},
 	}
 
-	layout, err := template.New("page.html").Funcs(funcs).ParseFS(siteFiles, "site/page.html", "site/mark.svg")
+	layout, err := template.New("page.html").Funcs(funcs).ParseFS(siteFiles, "site/page.html", "site/mark.svg", "site/components.html")
 	if err != nil {
 		return err
 	}

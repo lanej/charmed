@@ -60,6 +60,7 @@
 </div>
 {{end}}
 {{.Page.Content}}
+{{with .Page.Components}}{{template "component-browser" .}}{{end}}
 {{if eq .Page.File "brand.html"}}
 <section class="brand-specimens" aria-label="Brand tokens and typography">
 <h2>Web palette</h2>
@@ -123,7 +124,14 @@
 </div>
 <section class="component-integration" aria-labelledby="{{.ID}}-integration"><h3 id="{{.ID}}-integration"><a class="heading-permalink" href="#{{.ID}}-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>{{.Integration}}</p></section>
 <div class="component-run"><h3 id="{{.ID}}-run"><a class="heading-permalink" href="#{{.ID}}-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh">{{highlight (printf "go run ./examples/catalog %s" .ID) "sh"}}</code></pre><p><a href="https://github.com/lanej/charmed/blob/main/{{.ExampleSource}}">Example source</a> · <a href="https://github.com/lanej/charmed/blob/main/{{.Source}}">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
-{{if .Composes}}<p class="composition-line">Composed from: {{range .Composes}}<a class="dependency" href="{{link .}}">{{.}}</a> {{end}}</p>{{end}}
+{{if .Component}}
+<section class="component-relations" aria-label="Component relationships">
+<h3>Reusable component</h3>
+<p><a href="{{.Component.Href}}">{{.Component.Name}} dependency graph</a> · {{.Component.CoverageLabel}} · <a href="{{.Component.SourceHref}}">Source declaration</a></p>
+{{if .Component.Dependencies}}<ul>{{range .Component.Dependencies}}<li><a href="{{.Href}}">{{.Name}}</a> · {{.Kind}} · {{.Role}}</li>{{end}}</ul>{{end}}
+{{range .ComponentExamples}}<details><summary>{{.Kind}} uses</summary><ul>{{range .Uses}}<li><a href="{{.Href}}">{{.Name}}</a> · {{.Role}}</li>{{end}}</ul><a href="{{.SourceHref}}">Example source</a></details>{{end}}
+</section>
+{{else if .Composes}}<p class="composition-line">Declared example links (unaudited): {{range .Composes}}<a class="dependency" href="{{link .}}">{{.}}</a> {{end}}</p>{{else}}<p class="composition-line">Dependency map: not audited.</p>{{end}}
 </section>{{end}}
 </section>{{end}}
 </section>{{end}}
