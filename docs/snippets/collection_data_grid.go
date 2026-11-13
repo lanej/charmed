@@ -24,6 +24,7 @@ func ExampleCollectionDataGrid() (string, error) {
 	grid.Focus()
 	// The parent forwards Update(msg), returns its command and calls Resize(size).
 	// Read Selected() for stable IDs and presence; zero is a present value.
-	// Set ShowHelp to opt into instructions, or RenderCell for custom styling.
+	// Set ShowHelp to opt into instructions, HidePosition for a complete static render,
+	// or RenderCell for custom styling.
 	return grid.View(), nil
 }

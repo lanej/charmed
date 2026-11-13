@@ -217,6 +217,7 @@ Parents own focus and Tab routing. Forward messages to the focused grid and read
 | --- | --- |
 | Theme, geometry and renderer | Retained through `SetData` and `Resize` |
 | `ShowHelp` | Instructions are opt-in; reserve their additional row |
+| `HidePosition` | Omits the `Rows x-y/n` line for a static render that shows every row and column; the line stays whenever anything is scrolled out of view |
 | Axis appearance | Neutral row labels; accented, underlined column headers |
 | Entity glyphs | Prefix supplied labels with `GlyphLoadBalancer` or `GlyphHost`; IDs remain unchanged |
 | Status selection | Unicode focus edges retain health fill; explicit ASCII mode uses brackets |

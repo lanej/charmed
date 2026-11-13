@@ -69,6 +69,7 @@ func command() *cobra.Command {
 		cmd.Flags().BoolVar(&c.ColumnLabels, "column-labels", false, "Show HTTP table column labels")
 		cmd.Flags().BoolVar(&c.NoFolds, "no-folds", false, "Keep log fields and HTTP sections expanded without fold controls")
 		cmd.Flags().BoolVar(&c.NoHelp, "no-help", false, "Hide all keyboard instructions below log fixtures")
+		cmd.Flags().BoolVar(&c.Static, "static", false, "Show a finite grid without its position line")
 		cmd.Flags().BoolVar(&c.JSONFolded, "fold-json", false, "Show a nested JSON container folded")
 		cmd.Flags().BoolVar(&c.SingleRequest, "single-request", false, "Show one request with UUID headers and a detailed response")
 		cmd.Flags().StringSliceVar(&c.CollapsedPanes, "collapsed-panes", nil, "Fold inspector panes: requests, request, response, logs")

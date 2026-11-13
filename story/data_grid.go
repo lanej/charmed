@@ -39,10 +39,11 @@ func dataGridStory(e Environment) (runtime.Scene, error) {
 	}
 
 	grid.Corner = "Service / Region"
+	grid.HidePosition = e.Config.Static
 	grid.Focus()
 
 	return &scene{resize: func(size layout.Size) {
-		grid.Resize(layout.Size{Width: size.Width, Height: min(len(rows)+2, max(0, size.Height-4))})
+		grid.Resize(layout.Size{Width: size.Width, Height: min(len(rows)+2-boolInt(e.Config.Static), max(0, size.Height-4))})
 	}, update: func(msg tea.Msg) tea.Cmd {
 		_, cmd := grid.Update(msg)
 
@@ -64,4 +65,12 @@ func dataGridStory(e Environment) (runtime.Scene, error) {
 
 		return title("Replica counts by region", e) + grid.View() + "\n" + layout.Fit(detail, layout.Size{Width: size.Width, Height: 1})
 	}}, nil
+}
+
+func boolInt(b bool) int {
+	if b {
+		return 1
+	}
+
+	return 0
 }

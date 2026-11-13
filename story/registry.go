@@ -44,6 +44,7 @@ type Config struct {
 	ColumnLabels       bool                  `json:"columnLabels"`
 	NoFolds            bool                  `json:"noFolds"`
 	NoHelp             bool                  `json:"noHelp"`
+	Static             bool                  `json:"static"`
 	SingleRequest      bool                  `json:"singleRequest"`
 	CollapsedPanes     []string              `json:"collapsedPanes"`
 	LogPane            string                `json:"logPane"`
