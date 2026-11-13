@@ -86,8 +86,6 @@ The November 2026 resize audit compared merged main at `eb2dc615` with these cha
 
 The Git pane benchmark compares the existing full-refresh resize with the new geometry-only path. Its width-resize time remains approximately 0.84 → 0.82 ms because width changes still rebuild row presentation. The screen benchmark also covers width drags and breakpoint crossings; component-level gains do not imply that every screen resize avoids reflow.
 
-An ignored key in a 1,000-item Git list now allocates nothing. The grid benchmark renders essentially the same work for 100 and 10,000 rows with 100 columns: about 0.33 ms per view at the same allocation. Its regression test checks cell-renderer calls at the first and last selection in both wide and narrow windows; rendering must stay bounded by the visible allocation.
-
 Separate native PTY probes warmed each screen for 1.5 seconds, then sampled process CPU and terminal output for five seconds. Static Git and Markdown screens emitted no additional bytes and consumed roughly 0.2–0.4% of one core; the focused service screen emitted 250 bytes for cursor blinking and consumed about 2.6%. CPU counters have 0.01-second resolution, so these short samples cannot establish zero CPU. Bubble Tea's native flush ticker and default frame rate remain unchanged.
 
 ## Reuse prepared content
