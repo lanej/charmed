@@ -23,7 +23,11 @@
     "story/composed_inspectors.go",
     "story/diagrams.go",
     "story/nested_layouts.go",
-    "docs/snippets/template_nested_*.go"
+    "docs/snippets/template_nested_*.go",
+    "catalog/*.go",
+    "story/components.go",
+    "workbench/components.go",
+    "workbench/site/components.html"
   ],
   "sourceChecks": [],
   "accessibility": true,
@@ -116,6 +120,11 @@
       "name": "templates-layout",
       "path": "/templates-layout.html",
       "ready": "main h1"
+    },
+    {
+      "name": "dependencies",
+      "path": "/dependencies.html",
+      "ready": "[data-component-browser]"
     }
   ],
   "viewports": [

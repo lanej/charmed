@@ -175,6 +175,9 @@
     },
     "cohorts.md": {
       "profile": "reference"
+    },
+    "dependencies.md": {
+      "profile": "reference"
     }
   },
   "component": {

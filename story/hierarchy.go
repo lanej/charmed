@@ -4,16 +4,48 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+
+	"github.com/lanej/charmed/catalog"
 )
 
 // Levels returns the catalog's learning order, independent of Go import paths.
 func Levels() []string {
-	return []string{"Foundations", "Atoms", "Molecules", "Organisms", "Templates", "Screens"}
+	levels := catalog.Levels()
+
+	result := make([]string, len(levels))
+	for i, l := range levels {
+		result[i] = string(l)
+	}
+
+	return result
 }
 
 // Validate checks the catalog's declared composition graph before publication.
 // Peers can compose peers, but a lower level cannot depend on a higher one.
-func Validate() error { return validateDefinitions(Definitions()) }
+func Validate() error {
+	definitions := Definitions()
+	if err := validateDefinitions(definitions); err != nil {
+		return err
+	}
+
+	graph, err := ComponentGraph()
+	if err != nil {
+		return err
+	}
+
+	entries := make(map[string]bool, len(definitions))
+	for _, d := range definitions {
+		entries[d.ID] = true
+	}
+
+	for _, e := range graph.Data().Examples {
+		if !entries[e.EntryID] {
+			return fmt.Errorf("example %s references unknown catalog entry %s", e.ID, e.EntryID)
+		}
+	}
+
+	return nil
+}
 
 func validateDefinitions(definitions []Definition) error {
 	byID := make(map[string]Definition, len(definitions))
