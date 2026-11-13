@@ -108,3 +108,152 @@ func TestGitBrowserForwardsSearchPaste(t *testing.T) {
 		t.Fatal("browser retained hidden details")
 	}
 }
+
+func TestGitBrowserDeclaredLayoutsAndHiddenState(t *testing.T) {
+	fixture, err := gitBrowser(Environment{Config: DefaultConfig()})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	m, ok := fixture.(*gitBrowserScene)
+	if !ok {
+		t.Fatal("unexpected browser scene")
+	}
+
+	sizes := []layout.Size{{Width: 40, Height: 12}, {Width: 100, Height: 24}, {Width: 120, Height: 32}, {Width: 160, Height: 40}}
+	for _, focus := range []bool{false, true} {
+		if _, err := m.screen.CheckLayouts(gitBrowserLayout(focus, 0), sizes...); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	for _, tc := range []struct {
+		size    layout.Size
+		variant string
+	}{{sizes[0], "focused"}, {sizes[1], "sidebar"}, {sizes[2], "three-column"}, {sizes[3], "three-column"}} {
+		m.Resize(tc.size)
+
+		if m.layoutErr != nil {
+			t.Fatal(m.layoutErr)
+		}
+
+		if m.screen.Plan().Variant() != tc.variant {
+			t.Fatalf("at %v: %s", tc.size, m.screen.Plan().Variant())
+		}
+
+		if view := m.View(); strings.Contains(view, "layout rule") || !strings.Contains(view, "Repository browser") {
+			t.Fatalf("invalid frame at %v: %s", tc.size, view)
+		}
+	}
+
+	m.Resize(sizes[0])
+	oldWidth, oldHeight := m.status.List.Viewport.Width(), m.status.List.Viewport.Height()
+	m.Update(tea.KeyPressMsg{Code: tea.KeyTab})
+
+	if _, visible := m.screen.Region("main"); visible {
+		t.Fatal("narrow details view retained main allocation")
+	}
+
+	if _, visible := m.screen.Region("details"); !visible {
+		t.Fatal("narrow focus did not reveal details")
+	}
+
+	if m.status.List.Viewport.Width() != oldWidth || m.status.List.Viewport.Height() != oldHeight {
+		t.Fatal("hiding a pane resized its native state")
+	}
+
+	m.Update(tea.KeyPressMsg{Code: tea.KeyTab})
+	m.Resize(sizes[2])
+	m.Update(tea.KeyPressMsg{Code: 'l', Mod: tea.ModAlt})
+
+	if m.screen.Plan().Variant() != "sidebar" {
+		t.Fatal("layout choice did not select sidebar")
+	}
+
+	m.Update(tea.KeyPressMsg{Code: 'l', Mod: tea.ModCtrl})
+
+	if !m.showRegions || !strings.Contains(m.View(), "main") {
+		t.Fatal("region map did not show allocation identities")
+	}
+}
+
+func TestGitRegionInspectionPreservesIndependentHistoryScroll(t *testing.T) {
+	fixture, err := gitBrowser(Environment{Config: DefaultConfig()})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	m, ok := fixture.(*gitBrowserScene)
+	if !ok {
+		t.Fatal("unexpected browser scene")
+	}
+
+	m.Resize(layout.Size{Width: 40, Height: 12})
+	m.Update(tea.KeyPressMsg{Code: tea.KeyRight, Mod: tea.ModCtrl})
+
+	for range 4 {
+		m.Update(tea.KeyPressMsg{Code: 'e', Mod: tea.ModCtrl})
+	}
+
+	before := m.history.Viewport.YOffset()
+	if before == 0 {
+		t.Fatal("history did not scroll")
+	}
+
+	for range 2 {
+		m.Update(tea.KeyPressMsg{Code: 'l', Mod: tea.ModCtrl})
+	}
+
+	if after := m.history.Viewport.YOffset(); after != before {
+		t.Fatalf("inspection moved scroll: %d to %d", before, after)
+	}
+
+	m.Resize(layout.Size{Width: 120, Height: 32})
+
+	for range 4 {
+		m.Update(tea.KeyPressMsg{Code: 'e', Mod: tea.ModCtrl})
+	}
+
+	before = m.history.Viewport.YOffset()
+	m.Update(tea.KeyPressMsg{Code: tea.KeyTab})
+
+	if m.history.Viewport.YOffset() != before {
+		t.Fatal("unchanged wide geometry reset hidden input focus state")
+	}
+}
+
+func TestGitStatusScrollSurvivesUnchangedGeometry(t *testing.T) {
+	fixture, err := gitBrowser(Environment{Config: DefaultConfig()})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	m, ok := fixture.(*gitBrowserScene)
+	if !ok {
+		t.Fatal("unexpected browser scene")
+	}
+
+	m.Resize(layout.Size{Width: 120, Height: 16})
+
+	if m.layoutErr != nil {
+		t.Fatal(m.layoutErr)
+	}
+
+	for range 4 {
+		m.Update(tea.KeyPressMsg{Code: 'e', Mod: tea.ModCtrl})
+	}
+
+	before := m.status.List.Viewport.YOffset()
+	if before == 0 {
+		t.Fatal("status did not scroll")
+	}
+
+	m.Update(tea.KeyPressMsg{Code: tea.KeyTab})
+	m.Update(tea.KeyPressMsg{Code: tea.KeyTab})
+	m.Update(tea.KeyPressMsg{Code: tea.KeyRight, Mod: tea.ModCtrl})
+	m.Update(tea.KeyPressMsg{Code: tea.KeyLeft, Mod: tea.ModCtrl})
+
+	if m.status.List.Viewport.YOffset() != before {
+		t.Fatal("unchanged geometry reset status scroll")
+	}
+}

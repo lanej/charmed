@@ -107,9 +107,19 @@ func (m *List) Select(id string) bool {
 	return false
 }
 
-func (m *List) SetFocused(focused bool) { m.focused = focused; m.render() }
-func (m *List) Init() tea.Cmd           { return nil }
-func (m *List) Close() error            { return nil }
+// SetFocused changes presentation without following selection or moving the viewport.
+func (m *List) SetFocused(focused bool) {
+	if m.focused == focused {
+		return
+	}
+
+	offset := m.Viewport.YOffset()
+	m.focused = focused
+	m.render()
+	m.Viewport.SetYOffset(offset)
+}
+func (m *List) Init() tea.Cmd { return nil }
+func (m *List) Close() error  { return nil }
 func (m *List) Resize(size layout.Size) {
 	m.width, m.height = max(1, size.Width), max(1, size.Height)
 	m.Viewport.SetWidth(m.width)

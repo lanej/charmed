@@ -5,14 +5,22 @@ import (
 	"strings"
 
 	tea "charm.land/bubbletea/v2"
-	"charm.land/lipgloss/v2"
 	"github.com/lanej/charmed/gitui"
 	"github.com/lanej/charmed/interaction"
 	"github.com/lanej/charmed/layout"
+	"github.com/lanej/charmed/navigation"
 	"github.com/lanej/charmed/runtime"
+	"github.com/lanej/charmed/tui"
 )
 
 type gitBrowserScene struct {
+	primarySize layout.Size
+	detailSize  layout.Size
+	screen      *tui.Screen
+	tabs        navigation.Tabs
+	layoutMode  int
+	showRegions bool
+	layoutErr   error
 	environment Environment
 	status      *gitui.Status
 	history     *gitui.CommitHistory
@@ -65,7 +73,13 @@ func gitBrowser(e Environment) (runtime.Scene, error) {
 		return nil, err
 	}
 
-	m := &gitBrowserScene{environment: e, status: status, history: log, branches: branchList, stashes: stashList, worktrees: worktreeList, detail: gitui.NewDiffViewer(gitui.FileDiff{State: gitui.UnavailableDiff}, 60, 24, t), context: "~/src/charmed"}
+	screen, err := tui.NewScreen("header", "tabs", "context", "main", "details", "footer")
+	if err != nil {
+		return nil, err
+	}
+
+	tabs := navigation.NewTabs([]navigation.Tab{{ID: "Status", Label: "Status"}, {ID: "History", Label: "History"}, {ID: "Branches", Label: "Branches"}, {ID: "Stashes", Label: "Stashes"}, {ID: "Worktrees", Label: "Worktrees"}}, t)
+	m := &gitBrowserScene{screen: screen, tabs: tabs, environment: e, status: status, history: log, branches: branchList, stashes: stashList, worktrees: worktreeList, detail: gitui.NewDiffViewer(gitui.FileDiff{State: gitui.UnavailableDiff}, 60, 24, t), context: "~/src/charmed"}
 	m.Resize(e.Config.Size())
 	m.syncDetail()
 
@@ -90,24 +104,34 @@ func (m *gitBrowserScene) Init() tea.Cmd { return nil }
 func (m *gitBrowserScene) Close() error  { return nil }
 func (m *gitBrowserScene) Resize(size layout.Size) {
 	m.size = size
-	left, right := m.paneSizes()
-	content := layout.PanelContentSize(left)
-	m.status.Resize(content)
 
-	for _, list := range []*gitui.List{m.history.List, m.branches.List, m.stashes.List, m.worktrees.List} {
-		list.Resize(content)
+	m.layoutErr = m.screen.Arrange(gitBrowserLayout(m.focusDetail, m.layoutMode), size)
+	if m.layoutErr != nil {
+		return
 	}
 
-	m.detail.Resize(layout.PanelContentSize(right))
-}
+	m.tabs.SetWidth(size.Width)
 
-func (m *gitBrowserScene) paneSizes() (layout.Size, layout.Size) {
-	height := max(1, m.size.Height-4)
-	if m.size.Width < 100 {
-		return layout.Size{Width: m.size.Width, Height: height / 2}, layout.Size{Width: m.size.Width, Height: height - height/2}
+	if bounds, visible := m.screen.Region("main"); visible {
+		child := layout.PanelContentSize(layout.Size{Width: bounds.Dx(), Height: bounds.Dy()})
+		if child != m.primarySize {
+			m.status.Resize(child)
+
+			for _, list := range []*gitui.List{m.history.List, m.branches.List, m.stashes.List, m.worktrees.List} {
+				list.Resize(child)
+			}
+
+			m.primarySize = child
+		}
 	}
 
-	return layout.Size{Width: m.size.Width * 3 / 5, Height: height}, layout.Size{Width: m.size.Width - m.size.Width*3/5, Height: height}
+	if bounds, visible := m.screen.Region("details"); visible {
+		child := layout.PanelContentSize(layout.Size{Width: bounds.Dx(), Height: bounds.Dy()})
+		if child != m.detailSize {
+			m.detail.Resize(child)
+			m.detailSize = child
+		}
+	}
 }
 
 func (m *gitBrowserScene) Update(msg tea.Msg) tea.Cmd {
@@ -166,6 +190,11 @@ func (m *gitBrowserScene) Update(msg tea.Msg) tea.Cmd {
 			m.focusDetail = false
 		case "tab", "shift+tab":
 			m.focusDetail = !m.focusDetail
+		case "alt+l":
+			m.layoutMode = (m.layoutMode + 1) % 3
+		case "ctrl+l":
+			m.showRegions = !m.showRegions
+			return nil
 		default:
 			if m.focusDetail {
 				return m.detail.Update(msg)
@@ -198,6 +227,8 @@ func (m *gitBrowserScene) Update(msg tea.Msg) tea.Cmd {
 
 		return cmd
 	}
+
+	m.Resize(m.size)
 
 	for _, list := range []*gitui.List{m.status.List, m.history.List, m.branches.List, m.stashes.List, m.worktrees.List} {
 		list.SetFocused(list == m.active() && !m.focusDetail)
@@ -266,31 +297,45 @@ func (m *gitBrowserScene) syncDetail() {
 
 func (m *gitBrowserScene) View() string {
 	t := m.environment.Config.Palette()
+	if m.layoutErr != nil {
+		return layout.Fit(t.Text().Foreground(t.Danger).Render(m.layoutErr.Error()), m.size)
+	}
+
+	if m.showRegions {
+		return m.screen.RegionMap(t)
+	}
+
 	names := []string{"Status", "History", "Branches", "Stashes", "Worktrees"}
+	m.tabs.Select(names[m.page])
 
-	tabs := make([]string, len(names))
-	for i, name := range names {
-		if i == m.page {
-			tabs[i] = t.Focus().Render(name)
-		} else {
-			tabs[i] = t.Control().Render(name)
+	views := map[string]string{
+		"header": layout.Header{Title: "Repository browser · " + m.context}.View(m.size.Width, t),
+		"tabs":   m.tabs.View(),
+		"footer": layout.Footer{Help: "Ctrl+Left/Right section · Tab focus · Alt+L layout · Ctrl+L map", Status: m.screen.Plan().Variant()}.View(m.size.Width, t),
+	}
+	if bounds, visible := m.screen.Region("main"); visible {
+		content := m.active().View()
+		if m.page == 0 {
+			content = m.status.View()
 		}
+
+		views["main"] = layout.Panel(names[m.page], content, layout.Size{Width: bounds.Dx(), Height: bounds.Dy()}, t, !m.focusDetail)
 	}
 
-	left, right := m.paneSizes()
-
-	content := m.active().View()
-	if m.page == 0 {
-		content = m.status.View()
+	if bounds, visible := m.screen.Region("details"); visible {
+		views["details"] = layout.Panel("Details", m.detail.View(), layout.Size{Width: bounds.Dx(), Height: bounds.Dy()}, t, m.focusDetail)
 	}
 
-	a := layout.Panel(names[m.page], content, left, t, !m.focusDetail)
-	b := layout.Panel("Details", m.detail.View(), right, t, m.focusDetail)
-
-	panes := lipgloss.JoinHorizontal(lipgloss.Top, a, b)
-	if m.size.Width < 100 {
-		panes = a + "\n" + b
+	if bounds, visible := m.screen.Region("context"); visible {
+		size := layout.Size{Width: bounds.Dx(), Height: bounds.Dy()}
+		content := layout.KeyValue([]layout.Pair{{Label: "Repository", Value: "charmed"}, {Label: "Worktree", Value: m.context}, {Label: "Section", Value: names[m.page]}, {Label: "Layout", Value: m.screen.Plan().Variant()}}, layout.PanelContentSize(size).Width, t)
+		views["context"] = layout.Panel("Context", content, size, t, false)
 	}
 
-	return layout.Fit(t.Heading().Render("Repository browser · "+m.context)+"\n"+strings.Join(tabs, " ")+"\n"+panes+"\nCtrl+Left/Right section · Tab focus · Enter inspect", m.size)
+	frame, err := m.screen.Render(views)
+	if err != nil {
+		return layout.Fit(t.Text().Foreground(t.Danger).Render(err.Error()), m.size)
+	}
+
+	return frame.Content
 }

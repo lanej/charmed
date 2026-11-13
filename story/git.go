@@ -43,7 +43,7 @@ func gitDefinitions() []Definition {
 		{"changes", "Changes inspector", "Organisms", []string{"git/status", "git/diff"}},
 		{"stashes", "Stash list", "Organisms", []string{"git/stash-row"}},
 		{"worktrees", "Worktree list", "Organisms", []string{"git/worktree-row"}},
-		{"browser", "Repository browser", "Screens", []string{"git/changes", "git/branches", "git/history", "git/stashes", "git/worktrees"}},
+		{"browser", "Repository browser", "Screens", []string{"git/changes", "git/branches", "git/history", "git/stashes", "git/worktrees", "tui/screen"}},
 	}
 
 	definitions := make([]Definition, 0, len(catalog))

@@ -44,7 +44,16 @@
     "git/changes": "Coordinate file selection with the associated diff through separately focused status and diff panes.",
     "git/stashes": "Browse supplied stash entries and return the stable identity of the selected stash.",
     "git/worktrees": "Compare checked-out worktrees and select one by its stable identity.",
-    "git/browser": "Explore status, changes, history, branches, stashes and worktrees from one keyboard-driven example."
+    "git/browser": "Explore status, changes, history, branches, stashes and worktrees from one keyboard-driven example.",
+    "layout/flex": "Share terminal cells between weighted regions while preserving minimums, maximums, gaps and alignment.",
+    "layout/grid": "Align regions across shared tracks and span cells without overlapping neighbors.",
+    "layout/flow": "Wrap complete action or summary regions onto new rows when horizontal space runs out.",
+    "layout/dock": "Reserve header, footer and side regions around an expanding primary workspace.",
+    "layout/split-pane": "Divide primary and detail panes with a stable ratio and hard minimum sizes.",
+    "layout/responsive": "Select an explicit width-and-height recipe, recording why secondary regions are hidden.",
+    "tui/screen": "Compose a registered set of terminal regions with strict allocation and content validation.",
+    "tui/regions": "Inspect the exact cell rectangles used to resize and compose native views.",
+    "tui/validation": "See strict layout rejection and a scoped exception with a reviewable rationale."
   },
   "integration": {
     "grid": "Construct the grid with ordered axes and keyed entries, then focus it when its region becomes active. Forward Update messages and return its command; the parent owns Tab routing and Resize allocations. Replace observations through SetData and inspect Selected for stable IDs and presence. Theme, geometry, renderer and optional help survive updates.",
@@ -70,6 +79,8 @@
     "control": "The parent routes keys to the focused control and retains the model and command returned by Update. Use the stable control ID when handling its activation or change message. The control measures its own glyph and label; reserve that space in the layout.",
     "git-view": "Supply observations from the application and resize the model to its allocated terminal cells. Route keyboard input to the focused view and return its command. Refresh through the public data setter and use stable identities when acting on a selection.",
     "cli-help": "Install HelpFormatter on the Cobra root for inherited help, or call Format to render a command directly. The formatter reads the current command tree and flags on each request. Set Width for reproducible examples or let installed help detect its terminal.",
-    "code": "Pass literal source, a language and the available width to CodeBlock. Re-render when the palette or width changes, and preserve long lines in a viewport when needed. InlineCode can be composed directly with surrounding terminal text."
+    "code": "Pass literal source, a language and the available width to CodeBlock. Re-render when the palette or width changes, and preserve long lines in a viewport when needed. InlineCode can be composed directly with surrounding terminal text.",
+    "declared-layout": "Declare region identities and hard minimum sizes, then arrange a registered tui.Screen at each terminal resize. Resize native child models from the resulting rectangles and render exactly the visible region views. Geometry and design rules block by default; exceptions name a specific rule and reason on its region or container. Hidden components retain caller-owned state, and CheckLayouts exercises every responsive variant.",
+    "declared-screen": "The screen owns allocation validation and composition, while the application owns Bubble Tea messages, commands, focus and component state. Arrange must succeed before rendering; a failed resize invalidates the current arrangement. Pass only visible views and inspect accepted exceptions through diagnostics. Validate representative terminal sizes with CheckLayouts, which requires every declared responsive branch to be exercised."
   }
 }

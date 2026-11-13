@@ -6,6 +6,25 @@ import "fmt"
 // Render runs only bounded rendering and construction, never a terminal program or initialization command.
 func Render(id string) (string, error) {
 	switch id {
+	case "layout/flex":
+		return ExampleLayoutFlex()
+	case "layout/grid":
+		return ExampleLayoutGrid()
+	case "layout/flow":
+		return ExampleLayoutFlow()
+	case "layout/dock":
+		return ExampleLayoutDock()
+	case "layout/split-pane":
+		return ExampleLayoutSplitPane()
+	case "layout/responsive":
+		return ExampleLayoutResponsive()
+	case "tui/screen":
+		return ExampleTuiScreen()
+	case "tui/regions":
+		return ExampleTuiRegions()
+	case "tui/validation":
+		return ExampleTuiValidation()
+
 	case "collection/data-grid":
 		return ExampleCollectionDataGrid()
 	case "collection/status-matrix":

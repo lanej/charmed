@@ -4,7 +4,11 @@
   "sourcePaths": [
     "docs/*.md",
     "workbench/site/*",
-    "workbench/site.go"
+    "workbench/site.go",
+    "layout/plan*.go",
+    "tui/*.go",
+    "story/layouts.go",
+    "story/git_browser*.go"
   ],
   "sourceChecks": [],
   "accessibility": true,
@@ -51,6 +55,21 @@
     {
       "name": "molecules-feedback",
       "path": "/molecules-feedback.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "molecules-layout",
+      "path": "/molecules-layout.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "templates-tui",
+      "path": "/templates-tui.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "screens-git",
+      "path": "/screens-git.html",
       "ready": "main h1"
     }
   ],
