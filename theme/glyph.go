@@ -59,11 +59,16 @@ const (
 	GlyphFocusEnd     Glyph = "focus-end"
 	GlyphLoadBalancer Glyph = "load-balancer"
 	GlyphHost         Glyph = "host"
+	GlyphHealthy      Glyph = "healthy"
+	GlyphReady        Glyph = "ready"
+	GlyphNotReady     Glyph = "not-ready"
+	GlyphCanary       Glyph = "canary"
+	GlyphLive         Glyph = "live"
 )
 
 // Glyphs returns the semantic catalog in display order.
 func Glyphs() []Glyph {
-	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphConnected, GlyphDisconnected, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable, GlyphLog, GlyphTrace, GlyphSpan, GlyphUpstream, GlyphDownstream, GlyphScrollTrack, GlyphScrollThumb, GlyphChecked, GlyphUnchecked, GlyphMixed, GlyphAction, GlyphBusy, GlyphDelete, GlyphInactive, GlyphAdded, GlyphModified, GlyphRemoved, GlyphUnchanged, GlyphMissing, GlyphRedacted, GlyphClock, GlyphTruncated, GlyphAttribution, GlyphFocusStart, GlyphFocusEnd, GlyphLoadBalancer, GlyphHost}
+	return []Glyph{GlyphOK, GlyphWarning, GlyphError, GlyphUnknown, GlyphOff, GlyphPending, GlyphRunning, GlyphPaused, GlyphDisabled, GlyphConnected, GlyphDisconnected, GlyphInfo, GlyphSearch, GlyphFilter, GlyphSort, GlyphRefresh, GlyphLink, GlyphExpand, GlyphSelected, GlyphUnselected, GlyphExpanded, GlyphCollapsed, GlyphUp, GlyphDown, GlyphLeft, GlyphRight, GlyphLoading, GlyphUnavailable, GlyphLog, GlyphTrace, GlyphSpan, GlyphUpstream, GlyphDownstream, GlyphScrollTrack, GlyphScrollThumb, GlyphChecked, GlyphUnchecked, GlyphMixed, GlyphAction, GlyphBusy, GlyphDelete, GlyphInactive, GlyphAdded, GlyphModified, GlyphRemoved, GlyphUnchanged, GlyphMissing, GlyphRedacted, GlyphClock, GlyphTruncated, GlyphAttribution, GlyphFocusStart, GlyphFocusEnd, GlyphLoadBalancer, GlyphHost, GlyphHealthy, GlyphReady, GlyphNotReady, GlyphCanary, GlyphLive}
 }
 
 // Glyph returns a compact mark. Callers keep a text label for semantic states.
@@ -71,6 +76,16 @@ func (t Theme) Glyph(glyph Glyph) string {
 	var unicode, ascii string
 
 	switch glyph {
+	case GlyphHealthy:
+		unicode, ascii = "♥", "H"
+	case GlyphReady:
+		unicode, ascii = "✓", "r"
+	case GlyphNotReady:
+		unicode, ascii = "◇", "-"
+	case GlyphCanary:
+		unicode, ascii = "◔", "c"
+	case GlyphLive:
+		unicode, ascii = "●", "l"
 	case GlyphOK:
 		unicode, ascii = "✓", "+"
 	case GlyphWarning:

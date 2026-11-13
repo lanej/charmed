@@ -7,7 +7,9 @@ const (
 	DefaultPresentation Presentation = ""
 	GlyphAndLabel       Presentation = "both"
 	GlyphOnly           Presentation = "glyph"
-	LabelOnly           Presentation = "label"
+	// Compact requests a bare glyph from Indicator, without pill fill or padding.
+	Compact   Presentation = "compact"
+	LabelOnly Presentation = "label"
 )
 
 // Format escapes caller labels and keeps absent parts from adding stray spaces.
@@ -15,7 +17,7 @@ func (p Presentation) Format(glyph, label string) string {
 	glyph, label = Inline(glyph), Inline(label)
 
 	switch p {
-	case GlyphOnly:
+	case GlyphOnly, Compact:
 		return glyph
 	case LabelOnly:
 		return label

@@ -26,6 +26,11 @@ func loadGuidance(root string, entries []ManifestEntry) error {
 	}
 
 	kinds := map[string]string{
+		"feedback/availability":   "availability",
+		"feedback/health":         "health",
+		"feedback/readiness":      "readiness",
+		"feedback/rollout":        "rollout",
+		"text/indicator":          "indicator",
 		"template/nested-columns": "nested-layout", "template/nested-grid": "nested-layout",
 		"collection/scroll-pane":      "scroll-pane",
 		"collection/grid-inspector":   "grid-inspector",

@@ -13,6 +13,12 @@ func ComponentGraph() (*catalog.Graph, error) {
 		return catalog.Component{ID: id, Name: name, Package: pkg, Symbol: symbol, Level: level, Coverage: catalog.Partial, Source: catalog.Source{Path: file, Symbol: symbol}}
 	}
 	components := []catalog.Component{
+		component("text/indicator", "Indicator", "text", "Indicator", "text/text.go", catalog.Atoms),
+		component("text/pill", "Color pill", "text", "Pill", "text/text.go", catalog.Atoms),
+		component("feedback/availability", "Availability", "feedback", "Availability", "feedback/availability.go", catalog.Atoms),
+		component("feedback/health", "Health", "feedback", "Health", "feedback/health.go", catalog.Atoms),
+		component("feedback/readiness", "Readiness", "feedback", "Readiness", "feedback/readiness.go", catalog.Atoms),
+		component("feedback/rollout", "Rollout", "feedback", "Rollout", "feedback/rollout.go", catalog.Atoms),
 		component("collection/data-grid", "Data grid", "collection", "DataGrid", "collection/data_grid.go", catalog.Organisms),
 		component("collection/status-matrix", "Status matrix", "collection", "StatusMatrix", "collection/status_matrix.go", catalog.Organisms),
 		component("feedback/status-cell", "Status cell", "feedback", "StatusCell", "feedback/status_cell.go", catalog.Molecules),
@@ -31,6 +37,12 @@ func ComponentGraph() (*catalog.Graph, error) {
 		return catalog.Relation{From: from, To: to, Role: role, Kind: kind, Source: catalog.Source{Path: file, Symbol: symbol}}
 	}
 	relations := []catalog.Relation{
+		relation("text/indicator", "text/pill", "labeled pill presentation", "text/text.go", "Indicator", catalog.Composes),
+		relation("feedback/status", "text/indicator", "state presentation", "feedback/status.go", "Status.View", catalog.Composes),
+		relation("feedback/availability", "text/indicator", "state presentation", "feedback/availability.go", "Availability.View", catalog.Composes),
+		relation("feedback/health", "text/indicator", "state presentation", "feedback/health.go", "Health.View", catalog.Composes),
+		relation("feedback/readiness", "text/indicator", "state presentation", "feedback/readiness.go", "Readiness.View", catalog.Composes),
+		relation("feedback/rollout", "text/indicator", "state presentation", "feedback/rollout.go", "Rollout.View", catalog.Composes),
 		relation("collection/status-matrix", "collection/data-grid", "grid base", "collection/status_matrix.go", "StatusMatrix", catalog.Specializes),
 		relation("collection/status-matrix", "feedback/status-cell", "cell presentation", "collection/status_matrix.go", "statusGridCell", catalog.Composes),
 		relation("feedback/status-cell", "feedback/status", "health presentation", "feedback/status_cell.go", "StatusCell.View", catalog.Composes),
@@ -43,7 +55,12 @@ func ComponentGraph() (*catalog.Graph, error) {
 		relation("input/radio-group", "input/radio", "options", "input/radio_group.go", "RadioGroup.radios", catalog.Composes),
 	}
 	functions := map[string]string{
-		"collection/data-grid": "ExampleCollectionDataGrid", "collection/status-matrix": "ExampleCollectionStatusMatrix",
+		"text/indicator": "ExampleTextIndicator", "text/pill": "ExampleTextPill",
+		"feedback/availability": "ExampleFeedbackAvailability",
+		"feedback/health":       "ExampleFeedbackHealth",
+		"feedback/readiness":    "ExampleFeedbackReadiness",
+		"feedback/rollout":      "ExampleFeedbackRollout",
+		"collection/data-grid":  "ExampleCollectionDataGrid", "collection/status-matrix": "ExampleCollectionStatusMatrix",
 		"feedback/status-cell": "ExampleFeedbackStatusCell", "feedback/status": "ExampleFeedbackStatus",
 		"collection/grid-inspector": "ExampleCollectionGridInspector", "collection/scroll-pane": "ExampleCollectionScrollPane",
 		"collection/viewport": "ExampleCollectionViewport", "feedback/scrollbar": "ExampleFeedbackScrollbar",

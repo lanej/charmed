@@ -13,7 +13,7 @@ func TestSymbolPresentationKeepsIndependentGlyphAndLabelChoices(t *testing.T) {
 		mode text.Presentation
 		want string
 	}{
-		{text.DefaultPresentation, "! WARN"}, {text.GlyphAndLabel, "! WARN"}, {text.GlyphOnly, "!"}, {text.LabelOnly, "WARN"}, {text.Presentation("invalid"), "! WARN"},
+		{text.DefaultPresentation, "! WARN"}, {text.GlyphAndLabel, "! WARN"}, {text.GlyphOnly, "!"}, {text.Compact, "!"}, {text.LabelOnly, "WARN"}, {text.Presentation("invalid"), "! WARN"},
 	} {
 		if got := example.mode.Format("!", "WARN"); got != example.want {
 			t.Fatalf("%s: %q != %q", example.mode, got, example.want)

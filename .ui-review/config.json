@@ -29,7 +29,13 @@
     "catalog/*.go",
     "story/components.go",
     "workbench/components.go",
-    "workbench/site/components.html"
+    "workbench/site/components.html",
+    "feedback/*.go",
+    "text/*.go",
+    "theme/glyph.go",
+    "story/semantic_states.go",
+    "docs/snippets/feedback_*.go",
+    "docs/snippets/text_indicator.go"
   ],
   "sourceChecks": [],
   "accessibility": true,
@@ -132,6 +138,16 @@
       "name": "dependencies",
       "path": "/dependencies.html",
       "ready": "[data-component-browser]"
+    },
+    {
+      "name": "atoms-feedback",
+      "path": "/atoms-feedback.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "atoms-text",
+      "path": "/atoms-text.html",
+      "ready": "main h1"
     }
   ],
   "viewports": [

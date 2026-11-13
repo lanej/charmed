@@ -67,9 +67,13 @@ func TestComponentProjectionKeepsRepeatedRolesInOneExample(t *testing.T) {
 	}
 
 	data := graph.Data()
-	repeated := data.Examples[0].Uses[0]
-	repeated.Role = "second grid"
-	data.Examples[0].Uses = append(data.Examples[0].Uses, repeated)
+	for i := range data.Examples {
+		if data.Examples[i].Primary == "collection/data-grid" {
+			repeated := data.Examples[i].Uses[0]
+			repeated.Role = "second grid"
+			data.Examples[i].Uses = append(data.Examples[i].Uses, repeated)
+		}
+	}
 
 	graph, err = catalog.New(data)
 	if err != nil {

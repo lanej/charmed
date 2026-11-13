@@ -14,5 +14,6 @@ func ExampleTextPresentation() string {
 		feedback.Connected.View(text.Normal, palette, text.GlyphAndLabel),
 		feedback.Connected.View(text.Normal, palette, text.GlyphOnly),
 		feedback.Connected.View(text.Normal, palette, text.LabelOnly),
+		feedback.Connected.View(text.Normal, palette, text.Compact),
 	)
 }
