@@ -2,6 +2,7 @@ package story
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/charmbracelet/x/ansi"
 
@@ -21,6 +22,7 @@ func layoutDefinitions() []Definition {
 		{"tui/screen", "Declared screen", "Templates", "tui"},
 		{"tui/regions", "Region inspector", "Templates", "tui"},
 		{"tui/validation", "Strict layout validation", "Templates", "tui"},
+		{"tui/static", "Static declared render", "Templates", "tui"},
 	}
 
 	var definitions []Definition
@@ -42,6 +44,8 @@ func layoutDefinitions() []Definition {
 			composes = []string{"tui/screen"}
 		case "tui/validation":
 			composes = []string{"layout/flex", "tui/screen"}
+		case "tui/static":
+			composes = []string{"layout/responsive", "tui/screen"}
 		}
 
 		definitions = append(definitions, Definition{Composes: composes, ID: id, Title: entry.level + "/" + entry.family + "/" + entry.title, Level: entry.level, Family: entry.family, Description: "Allocate named terminal regions with explicit sizing, responsive intent and strict design validation.", Source: "story/layouts.go", Symbol: "declaredLayoutStory", Defaults: config, Factory: func(e Environment) (runtime.Scene, error) { return declaredLayoutStory(id, e) }})
@@ -88,6 +92,10 @@ func declaredLayoutStory(id string, e Environment) (runtime.Scene, error) {
 	return static(func(size layout.Size) string {
 		if id == "tui/validation" {
 			return validationSpecimen(size, e)
+		}
+
+		if id == "tui/static" {
+			return staticSpecimen(size, e)
 		}
 
 		root, ids := layoutSpecimen(id, size)
@@ -142,4 +150,38 @@ func validationSpecimen(size layout.Size, e Environment) string {
 	t := e.Config.Palette()
 
 	return ansi.Wrap(t.Text().Foreground(t.Danger).Render("BLOCKED: "+blocked.Error())+"\n\n"+t.Heading().Render("Accepted local exception")+"\n"+column.Exceptions[0].Reason, size.Width, "")
+}
+
+// staticSpecimen prints a finite report: the canvas height is measured, not supplied.
+func staticSpecimen(size layout.Size, e Environment) string {
+	t := e.Config.Palette()
+	ids := []string{"summary", "detail"}
+	text := map[string]string{
+		"summary": "Totals for the period, grouped by outcome. The summary keeps its place beside the detail when the page is wide enough.",
+		"detail":  "Each finding names its evidence and its owner. When the page narrows the detail is stacked below the summary instead of being cut off.",
+	}
+
+	declare := func(_ layout.Size, heights tui.StaticHeights) layout.Node {
+		summary := &layout.Region{ID: "summary", Min: layout.Size{Width: 24, Height: heights.Height("summary")}}
+		detail := &layout.Region{ID: "detail", Min: layout.Size{Width: 24, Height: heights.Height("detail")}}
+
+		return &layout.Responsive{Name: "report", Variants: []layout.Variant{
+			{Name: "side-by-side", Min: layout.Size{Width: 70, Height: 1}, Root: &layout.SplitPane{First: summary, Second: detail, Gap: 2}},
+			{Name: "stacked", Root: &layout.Flex{Name: "stack", Axis: layout.Vertical, Exceptions: []layout.Exception{{Rule: layout.StackOpportunity, Reason: "Printed reports read top to bottom."}}, Children: []layout.Slot{
+				{Node: summary, Track: layout.Fixed(heights.Height("summary"))},
+				{Node: detail, Track: layout.Fixed(heights.Height("detail"))},
+			}}},
+		}}
+	}
+
+	render := func(id string, width int) string {
+		return t.Heading().Render(strings.ToUpper(id[:1])+id[1:]) + "\n" + ansi.Wrap(text[id], width, "")
+	}
+
+	frame, err := tui.RenderStatic(ids, size.Width, declare, render)
+	if err != nil {
+		return t.Text().Foreground(t.Danger).Render(err.Error())
+	}
+
+	return frame.Content
 }
