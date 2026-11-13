@@ -1,11 +1,10 @@
 package story
 
 import (
-	"strings"
-
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/diagram"
+	"github.com/lanej/charmed/input"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/runtime"
 )
@@ -15,60 +14,63 @@ func stateDiagramStory(e Environment) (runtime.Scene, error) {
 		States:      []diagram.State{{ID: "idle", Label: "Idle", Initial: true}, {ID: "running", Label: "Running"}, {ID: "done", Label: "Done", Final: true, Outcome: diagram.OutcomeSuccess}, {ID: "failed", Label: "Failed", Final: true, Outcome: diagram.OutcomeError}},
 		Transitions: []diagram.Transition{{From: "idle", To: "running", Label: "start"}, {From: "running", To: "running", Label: "retry"}, {From: "running", To: "done", Label: "finish"}, {From: "running", To: "idle", Label: "cancel"}, {From: "running", To: "failed", Label: "fail"}},
 	}
-	path := []int{0, 1, 3, 0, 2}
-	position, traceMode := len(path), 0
+	graph.Trace = diagram.TransitionTrace{Steps: []int{0, 1, 3, 0, 2}}
 
-	switch e.Config.TraceWindow {
-	case "last-3":
-		traceMode = 1
-	case "all":
-		traceMode = 2
+	replay, err := diagram.NewTraceReplay(graph, e.Config.Size(), e.Config.Palette())
+	if err != nil {
+		return nil, err
 	}
+
+	mode := e.Config.TraceWindow
+	if mode == "" {
+		mode = "last"
+	}
+
+	group, err := input.NewRadioGroup([]input.RadioOption{{ID: "last", Label: "Last transition"}, {ID: "last-3", Label: "Last three"}, {ID: "all", Label: "Complete trace"}}, mode, e.Config.Palette())
+	if err != nil {
+		return nil, err
+	}
+
+	toolbar := false
 
 	return &scene{
 		update: func(msg tea.Msg) tea.Cmd {
-			if key, ok := msg.(tea.KeyPressMsg); ok {
-				switch key.String() {
-				case "right":
-					position = (position + 1) % (len(path) + 1)
-				case "left":
-					position = (position + len(path)) % (len(path) + 1)
-				case "h":
-					traceMode = (traceMode + 1) % 3
+			if key, ok := msg.(tea.KeyPressMsg); ok && key.String() == "tab" {
+				toolbar = !toolbar
+				if toolbar {
+					group.Focus()
+				} else {
+					group.Blur()
 				}
+
+				return nil
 			}
 
-			return nil
+			if toolbar {
+				return group.Update(msg)
+			}
+
+			return replay.Update(msg)
 		},
 		view: func(size layout.Size) string {
-			graph.Active = "idle"
-			if position > 0 {
-				graph.Active = graph.Transitions[path[position-1]].To
+			mode, _ := group.Selected()
+			replay.Last, replay.All = 0, false
+
+			switch mode {
+			case "last-3":
+				replay.Last = 3
+			case "all":
+				replay.All = true
 			}
 
-			graph.Trace = diagram.TransitionTrace{Steps: path[:position]}
-			mode := "last"
+			replay.Resize(layout.Size{Width: size.Width, Height: max(0, size.Height-8)})
 
-			switch traceMode {
-			case 0:
-			case 1:
-				graph.Trace.Last = 3
-				mode = "last 3"
-			case 2:
-				graph.Trace.All = true
-				mode = "all"
-			}
-
-			out, err := graph.View(size.Width, e.Config.Palette())
+			out, err := replay.View()
 			if err != nil {
-				return title("State transitions", e) + e.Config.Palette().Subtle().Render(ansi.Wrap(err.Error(), size.Width, ""))
+				return e.Config.Palette().Subtle().Render(ansi.Wrap(err.Error(), size.Width, ""))
 			}
 
-			if strings.Count(out, "\n")+5 > size.Height {
-				return "State diagram needs more rows; enlarge this region."
-			}
-
-			return title("State transitions", e) + out + footer("Left/Right replay; H: "+mode, e)
+			return title("State transitions", e) + out + "\n" + group.View() + footer("Left/Right · Home/End · Tab trace window", e)
 		},
 	}, nil
 }

@@ -26,6 +26,14 @@ func loadGuidance(root string, entries []ManifestEntry) error {
 	}
 
 	kinds := map[string]string{
+		"collection/scroll-pane":      "scroll-pane",
+		"collection/grid-inspector":   "grid-inspector",
+		"collection/keyed-table":      "keyed-table",
+		"input/radio-group":           "radio-group",
+		"diagram/trace-replay":        "trace-replay",
+		"pattern/measurement-history": "measurement-history",
+		"git/patch-browser":           "patch-browser",
+
 		"layout/flex": "declared-layout", "layout/grid": "declared-layout", "layout/flow": "declared-layout", "layout/dock": "declared-layout", "layout/split-pane": "declared-layout", "layout/responsive": "declared-layout",
 		"tui/screen": "declared-screen", "tui/regions": "declared-screen", "tui/validation": "declared-screen",
 		"collection/data-grid": "grid", "collection/status-matrix": "grid",

@@ -5,7 +5,6 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 	"github.com/lanej/charmed/collection"
-	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
 )
 
@@ -77,8 +76,8 @@ func inspectorScrollbarWidth(width int, enabled bool) int {
 
 func (m *LogInspector) detailPanesView(size layout.Size) string {
 	m.syncJSONFocus()
-	request := m.section(requestDataPane, "Request", m.payloadViewport(m.Request, m.detailRegions.request), m.detailRegions.request)
-	response := m.section(httpPane, "Response", m.payloadViewport(m.Response, m.detailRegions.response), m.detailRegions.response)
+	request := m.section(requestDataPane, "Request", m.payloadViewport(&m.Request, m.detailRegions.request), m.detailRegions.request)
+	response := m.section(httpPane, "Response", m.payloadViewport(&m.Response, m.detailRegions.response), m.detailRegions.response)
 
 	content := layout.Column(request, response)
 	if m.detailRegions.columns {
@@ -92,14 +91,12 @@ func (m *LogInspector) detailPanesView(size layout.Size) string {
 	return layout.Fit(content, size)
 }
 
-func (m *LogInspector) payloadViewport(model viewport.Model, size layout.Size) string {
-	if inspectorScrollbarWidth(layout.PanelContentSize(size).Width, m.HTTP.ShowScrollbar) == 0 {
-		return model.View()
-	}
+func (m *LogInspector) payloadViewport(model *viewport.Model, size layout.Size) string {
+	content := layout.PanelContentSize(size)
+	pane := &collection.ScrollPane{Model: model, Theme: m.palette, ShowScrollbar: m.HTTP.ShowScrollbar}
+	pane.Resize(content)
 
-	bar := feedback.Scrollbar{Total: model.TotalLineCount(), Visible: model.Height(), Offset: model.YOffset(), Height: model.Height()}
-
-	return layout.Row(model.View(), bar.View(m.palette))
+	return pane.View()
 }
 
 func (m *LogInspector) updateDetailPane(msg tea.Msg) tea.Cmd {

@@ -8,7 +8,20 @@
     "layout/plan*.go",
     "tui/*.go",
     "story/layouts.go",
-    "story/git_browser*.go"
+    "story/git_browser*.go",
+    "collection/scroll_pane.go",
+    "collection/grid_inspector.go",
+    "collection/keyed_table.go",
+    "collection/http_log.go",
+    "collection/log_details.go",
+    "input/radio_group.go",
+    "diagram/trace_replay.go",
+    "pattern/measurement_history.go",
+    "pattern/log_details.go",
+    "gitui/patch_browser.go",
+    "gitui/list.go",
+    "story/composed_inspectors.go",
+    "story/diagrams.go"
   ],
   "sourceChecks": [],
   "accessibility": true,
@@ -70,6 +83,31 @@
     {
       "name": "screens-git",
       "path": "/screens-git.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "molecules-collection",
+      "path": "/molecules-collection.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "molecules-input",
+      "path": "/molecules-input.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "organisms-diagram",
+      "path": "/organisms-diagram.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "organisms-pattern",
+      "path": "/organisms-pattern.html",
+      "ready": "main h1"
+    },
+    {
+      "name": "organisms-git",
+      "path": "/organisms-git.html",
       "ready": "main h1"
     }
   ],

@@ -6,6 +6,20 @@ import "fmt"
 // Render runs only bounded rendering and construction, never a terminal program or initialization command.
 func Render(id string) (string, error) {
 	switch id {
+	case "collection/scroll-pane":
+		return ExampleCollectionScrollPane()
+	case "collection/grid-inspector":
+		return ExampleCollectionGridInspector()
+	case "collection/keyed-table":
+		return ExampleCollectionKeyedTable()
+	case "input/radio-group":
+		return ExampleInputRadioGroup()
+	case "diagram/trace-replay":
+		return ExampleDiagramTraceReplay()
+	case "pattern/measurement-history":
+		return ExamplePatternMeasurementHistory()
+	case "git/patch-browser":
+		return ExampleGitPatchBrowser()
 	case "layout/flex":
 		return ExampleLayoutFlex()
 	case "layout/grid":

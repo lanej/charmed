@@ -12,7 +12,6 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/x/ansi"
-	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
@@ -292,13 +291,10 @@ func (m *HTTPLog) ListView() string {
 }
 
 func (m *HTTPLog) DetailView() string {
-	if m.scrollbarWidth() == 0 {
-		return m.Details.View()
-	}
+	pane := &ScrollPane{Model: &m.Details, Theme: m.Theme, ShowScrollbar: m.ShowScrollbar}
+	pane.Resize(layout.Size{Width: m.detailsWidth, Height: m.Details.Height()})
 
-	bar := feedback.Scrollbar{Total: m.Details.TotalLineCount(), Visible: m.Details.Height(), Offset: m.Details.YOffset(), Height: m.Details.Height()}
-
-	return lipgloss.JoinHorizontal(lipgloss.Top, m.Details.View(), bar.View(m.Theme))
+	return pane.View()
 }
 
 func (m *HTTPLog) scrollbarWidth() int {

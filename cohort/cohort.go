@@ -181,7 +181,7 @@ func AnalyzeMetric(samples []Sample, cohortID string, metric Metric, minSupport 
 			continue
 		}
 
-		measurement, exists := measurementFor(s, metric)
+		measurement, exists := MeasurementFor(s, metric)
 		if !exists {
 			continue
 		}
