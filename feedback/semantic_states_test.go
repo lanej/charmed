@@ -39,8 +39,13 @@ func TestSemanticStateAtomsKeepMeaningAndCompactGeometry(t *testing.T) {
 						glyph = state.ascii
 					}
 
+					fullGlyph := glyph
+					if state.label == "Canary" && !ascii {
+						fullGlyph = "🐤"
+					}
+
 					full := ansi.Strip(state.view(emphasis, palette))
-					if !strings.Contains(full, glyph+" "+state.label) {
+					if !strings.Contains(full, fullGlyph+" "+state.label) {
 						t.Fatalf("%s lost its label or glyph: %q", state.label, full)
 					}
 
@@ -50,7 +55,7 @@ func TestSemanticStateAtomsKeepMeaningAndCompactGeometry(t *testing.T) {
 					}
 
 					glyphPill := ansi.Strip(state.view(emphasis, palette, text.GlyphOnly))
-					if ansi.StringWidth(glyphPill) != 3 {
+					if ansi.StringWidth(glyphPill) != ansi.StringWidth(fullGlyph)+2 {
 						t.Fatalf("glyph-only pill lost its shell: %q", glyphPill)
 					}
 

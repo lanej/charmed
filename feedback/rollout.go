@@ -19,7 +19,7 @@ const (
 func (s Rollout) View(emphasis text.Emphasis, t theme.Theme, options ...text.Presentation) string {
 	switch s {
 	case Canary:
-		return text.Indicator(t.Glyph(theme.GlyphCanary), "Canary", text.Info, t, emphasis, options...)
+		return text.Indicator(canaryMark(theme.GlyphCanary, t, options...), "Canary", text.Info, t, emphasis, options...)
 	case Live:
 		return text.Indicator(t.Glyph(theme.GlyphLive), "Live", text.Info, t, emphasis, options...)
 	case RolloutUnknown:

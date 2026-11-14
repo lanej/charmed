@@ -212,3 +212,25 @@ func (t Theme) Glyph(glyph Glyph) string {
 
 	return unicode
 }
+
+// FullGlyph uses expanded identity marks where available. Canary marks occupy
+// two or four terminal cells in Unicode; Glyph retains the one-cell variants.
+func (t Theme) FullGlyph(glyph Glyph) string {
+	if t.ASCII {
+		return t.Glyph(glyph)
+	}
+
+	if glyph == GlyphCanary {
+		return "🐤"
+	}
+
+	if glyph == GlyphCanaryOn {
+		return "🐤🟢"
+	}
+
+	if glyph == GlyphCanaryOff {
+		return "🐤⚪️"
+	}
+
+	return t.Glyph(glyph)
+}

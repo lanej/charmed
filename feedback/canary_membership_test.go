@@ -20,21 +20,31 @@ func TestCanaryMembershipKeepsRoutingSeparateFromHealth(t *testing.T) {
 
 			for _, emphasis := range []text.Emphasis{text.Normal, text.Bright, text.Dim} {
 				for _, state := range []struct {
-					value               feedback.CanaryMembership
-					label, glyph, ascii string
-					color, dim          color.Color
+					value                          feedback.CanaryMembership
+					label, glyph, fullGlyph, ascii string
+					color, dim                     color.Color
 				}{
-					{feedback.CanaryOn, "Canary on", "◉", "+", palette.Info, palette.DimInfo},
-					{feedback.CanaryOff, "Canary off", "◌", "-", palette.Inactive, palette.DimInactive},
+					{feedback.CanaryOn, "Canary on", "◉", "🐤🟢", "+", palette.Info, palette.DimInfo},
+					{feedback.CanaryOff, "Canary off", "◌", "🐤⚪️", "-", palette.Inactive, palette.DimInactive},
 				} {
 					glyph := state.glyph
 					if ascii {
 						glyph = state.ascii
 					}
 
+					fullGlyph := state.fullGlyph
+					if ascii {
+						fullGlyph = state.ascii
+					}
+
 					full := ansi.Strip(state.value.View(emphasis, palette))
-					if !strings.Contains(full, glyph+" "+state.label) {
+					if !strings.Contains(full, fullGlyph+" "+state.label) {
 						t.Fatalf("membership label lost: %q", full)
+					}
+
+					glyphPill := state.value.View(emphasis, palette, text.GlyphOnly)
+					if ansi.StringWidth(glyphPill) != ansi.StringWidth(fullGlyph)+2 {
+						t.Fatal("glyph-only pill lost full mark or shell", glyphPill)
 					}
 
 					compact := state.value.View(emphasis, palette, text.Compact)

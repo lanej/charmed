@@ -248,3 +248,32 @@ func TestLinkTokensRemainReadableAndCustomThemesHaveFallbacks(t *testing.T) {
 		t.Fatal("partial custom theme lost its text foreground fallback")
 	}
 }
+
+func TestFullCanaryGlyphsRetainCompactAndASCIIMarks(t *testing.T) {
+	unicode, ascii := theme.New(theme.Dark), theme.New(theme.Mono)
+	for _, example := range []struct {
+		glyph                   theme.Glyph
+		full, compact, fallback string
+		width                   int
+	}{
+		{theme.GlyphCanary, "🐤", "◔", "c", 2},
+		{theme.GlyphCanaryOn, "🐤🟢", "◉", "+", 4},
+		{theme.GlyphCanaryOff, "🐤⚪️", "◌", "-", 4},
+	} {
+		if got := unicode.FullGlyph(example.glyph); got != example.full || ansi.StringWidth(got) != example.width {
+			t.Fatalf("full %s glyph or cell width changed: %q", example.glyph, got)
+		}
+
+		if unicode.Glyph(example.glyph) != example.compact {
+			t.Fatal("full marks changed compact glyphs", example.glyph)
+		}
+
+		if ascii.FullGlyph(example.glyph) != example.fallback {
+			t.Fatal("full mark lost explicit ASCII fallback", example.glyph)
+		}
+	}
+
+	if unicode.FullGlyph(theme.GlyphUp) != unicode.Glyph(theme.GlyphUp) || unicode.FullGlyph(theme.Glyph("bad")) != unicode.Glyph(theme.GlyphUnknown) {
+		t.Fatal("full glyph fallback changed unrelated or unknown marks")
+	}
+}

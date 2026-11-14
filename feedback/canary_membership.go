@@ -21,12 +21,20 @@ const (
 func (s CanaryMembership) View(emphasis text.Emphasis, t theme.Theme, options ...text.Presentation) string {
 	switch s {
 	case CanaryOn:
-		return text.Indicator(t.Glyph(theme.GlyphCanaryOn), "Canary on", text.Info, t, emphasis, options...)
+		return text.Indicator(canaryMark(theme.GlyphCanaryOn, t, options...), "Canary on", text.Info, t, emphasis, options...)
 	case CanaryOff:
-		return text.Indicator(t.Glyph(theme.GlyphCanaryOff), "Canary off", text.Neutral, statusTheme(t, t.Inactive, t.DimInactive), emphasis, options...)
+		return text.Indicator(canaryMark(theme.GlyphCanaryOff, t, options...), "Canary off", text.Neutral, statusTheme(t, t.Inactive, t.DimInactive), emphasis, options...)
 	case CanaryMembershipUnknown:
 	default:
 	}
 
 	return text.Indicator(t.Glyph(theme.GlyphUnknown), "Unknown", text.Neutral, statusTheme(t, t.Unknown, t.DimUnknown), emphasis, options...)
+}
+
+func canaryMark(glyph theme.Glyph, t theme.Theme, options ...text.Presentation) string {
+	if len(options) > 0 && options[0] == text.Compact {
+		return t.Glyph(glyph)
+	}
+
+	return t.FullGlyph(glyph)
 }
