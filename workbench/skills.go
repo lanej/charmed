@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-var guideSkills = []string{"charmed", "builder", "go"}
+var guideSkills = []string{"charmed", "charmed-contributing"}
 
 func writeGuideSkills(directory, root string) error {
 	for _, name := range guideSkills {
