@@ -1,0 +1,21 @@
+{
+  "revision": "c52a30296feb5c5737e3d8d3c0d7dba0cc3be908",
+  "dirty": false,
+  "source_sha256": "3ee3d87a7028290f087bd99638b482b78aa26065f1ffbc22a5c7d2bb38b2a80a",
+  "go": "go version go1.26.11 darwin/arm64",
+  "go_env": "go1.26.11\ndarwin\narm64",
+  "system": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "cpu": "Apple M6",
+  "cpu_count": 12,
+  "timestamp": "2026-11-14T06:19:37.767902+00:00",
+  "binary_sha256": "60945c4573c11d3cab41e15b614414773a3b7d482f986ed107cac2d62e890c8f",
+  "embedded_vcs_revision": "5aff0dafe8878e86f68ea098ddee3c665bdc8337",
+  "package_directory_verified": "cmd/perf-periodic in measured worktree",
+  "microbenchmark": "same source; five runs per case, 200ms target, no race instrumentation",
+  "limitations": [
+    "Serial single-host samples; not universal latency or CPU bounds",
+    "PTY read timestamps are collector observations, not terminal painting",
+    "Go embedded enclosing repository VCS revision; source manifest identifies measured worktree",
+    "Post-run reporting refinements add CPU availability and explicit source/build distinction without changing measured Go code"
+  ]
+}

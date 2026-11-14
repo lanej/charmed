@@ -30,7 +30,7 @@ Use the result to advance the owning scene's presentation revision only when nee
 
 ## Interpret results
 
-Reports separate unchanged decisions, completed frames and cancelled pending updates. `processing_ns` is update acceptance to decision/frame completion, not terminal painting. The external collector adds first-output latency only when bytes were observed before the next update or measurement end. A completed frame may produce no bytes when its cells are unchanged; missing output has a null latency, not zero and not an assumed dropped observation. Percentiles include sample counts and use nearest rank; approximately 24 observations cannot establish universal tail-latency bounds.
+Reports separate unchanged decisions, completed frames and cancelled pending updates. `processing_ns` is update acceptance to decision/frame completion, not terminal painting. The external collector timestamps PTY reads and adds first-output latency only when bytes were observed before the next update or measurement end. Attribution assumes the unattended collector workload; interactive output could otherwise be associated with a preceding update. A completed frame may produce no bytes when its cells are unchanged; missing output has a null latency, not zero and not an assumed dropped observation. Percentiles include sample counts and use nearest rank; approximately 24 observations cannot establish universal tail-latency bounds.
 
 Process CPU includes the native runtime, garbage collection and probe overhead, expressed as percent of one core over the measured window. Per-update counters include source snapshot generation and preparation through frame completion. Warmup, forced boundary GC and terminal shutdown are excluded from summary CPU/bytes. Start/end heaps are sampled after GC and include retained fixture data, current buffers and report samples. Compare equivalent geometry, history mode, retained sizes, toolchain and host. Interactive controls or resize alter work; actual initial/final and per-update sizes are recorded.
 
@@ -47,3 +47,18 @@ go test -c -o /tmp/periodic.test ./internal/periodic
 ```
 
 The microbenchmarks alternate two prepared observations so changed workloads remain changed on every iteration. They include synchronous frame generation without waiting for an artificial FPS interval; native probes exercise real scheduling and idle time. Output-equivalence tests compare application with full replacement, including hidden-pane reopening. Regression checks cover native customization, copied bytes, empty initialization, every HTTP observation field, invalid input, no-op frame suppression, missing health states, error recovery, command forwarding and completed measurement windows.
+
+## Measured five-second updates
+
+On Apple M6 (12 logical CPUs), macOS 27.0.1 arm64 and Go 1.26.11, serial native 120×40 PTY runs retained 1,000 requests/logs and four 300-point charts. Each mode accepted 24 updates during two minutes after six seconds of warmup. Forced replacement and snapshot application used the same binary and source observations. These single-host timings are informational; allocation and no-op work checks provide regression protection.
+
+| Workload | Mode | CPU, % of one core | Allocated bytes | Frames | Median decision/frame, ms | Median PTY first read, ms |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Unchanged | Replace | 1.27 | 604,178,032 | 24 | 34.88 | No output |
+| Unchanged | Apply | 0.40 | 1,090,448 | 0 | 0.94 | No output |
+| Mixed changes | Replace | 1.41 | 647,975,448 | 24 | 39.38 | 50.13 |
+| Mixed changes | Apply | 1.21 | 542,534,904 | 24 | 31.46 | 41.72 |
+
+Both mixed runs wrote 65,048 bytes within their measurement windows. The unchanged decision does not include a scheduled frame; mixed rows include real frame scheduling. Native idle activity remains, and the mixed workload still rebuilds changed inspector content. These results support avoiding unnecessary preparation, not a claim that every native component or terminal has been optimized.
+
+[Native reports](results/native.json), [microbenchmark output](results/bench.txt) and [source/host identity](results/provenance.json) retain the observations. The measured worktree was clean at `c52a30296feb5c5737e3d8d3c0d7dba0cc3be908`. Go embedded the enclosing checkout's `5aff0da` VCS revision for this nested worktree; it differs from the measured source and is preserved explicitly. The collector now verifies package/module directories and records source revision/hash separately from embedded build metadata. Reporting-only refinements after the run preserve CPU availability and this distinction; the measured Go implementation is unchanged.

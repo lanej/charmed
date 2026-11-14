@@ -40,7 +40,7 @@ def distribution(values):
             'percentile_method': 'nearest_rank'}
 
 
-def collect(binary, destination, mode, scenario, args):
+def collect(binary, destination, mode, scenario, args, metadata):
     name = f'{scenario}-{mode}'
     report_path = destination / f'{name}.json'
     master, slave = pty.openpty()
@@ -98,6 +98,9 @@ def collect(binary, destination, mode, scenario, args):
         (destination / f'{name}.ansi').write_bytes(b''.join(chunks))
         (destination / f'{name}-output-events.json').write_text(json.dumps(events, indent=2))
     report = json.loads(report_path.read_text())
+    report['source_revision'] = metadata['revision']
+    report['source_sha256'] = metadata['source_sha256']
+    report['build_vcs_matches_source'] = report['revision'] == metadata['revision']
     started, ended = report['measurement_started_unix_ns'], report['measurement_ended_unix_ns']
     if report['measured_elapsed_ns'] < seconds(args.duration) * 1e9 * .9:
         raise RuntimeError(f'{name} ended before its requested measurement window')
@@ -142,17 +145,24 @@ def main():
     if destination.exists() and any(destination.iterdir()):
         parser.error('out must be a new or empty directory')
     metadata = perf_common.metadata(destination)
+    package = json.loads(subprocess.check_output(['go', 'list', '-json', './cmd/perf-periodic'], text=True))
+    if Path(package['Dir']).resolve() != ROOT / 'cmd/perf-periodic' or Path(package['Module']['Dir']).resolve() != ROOT:
+        raise RuntimeError('Go package source does not match the measured worktree')
+    metadata['build_source_directory'] = package['Dir']
+    metadata['build_module_directory'] = package['Module']['Dir']
     binary = destination / 'perf-periodic'
     subprocess.run(['go', 'build', '-o', str(binary), './cmd/perf-periodic'], check=True)
+    perf_common.verify_sources(metadata)
+    metadata['binary_build_info'] = perf_common.output(['go', 'version', '-m', str(binary)])
     metadata['binary_sha256'] = hashlib.sha256(binary.read_bytes()).hexdigest()
     (destination / 'metadata.json').write_text(json.dumps(metadata, indent=2))
     reports = []
     for scenario in args.scenario or ['unchanged', 'mixed']:
         for mode in args.mode or ['replace', 'apply']:
             print(f'Measuring {scenario}/{mode}', flush=True)
-            reports.append(collect(binary, destination, mode, scenario, args))
+            reports.append(collect(binary, destination, mode, scenario, args, metadata))
     perf_common.verify_sources(metadata)
-    summary = [{key: report.get(key) for key in ['config', 'headless', 'initial_size', 'final_size',
+    summary = [{key: report.get(key) for key in ['config', 'headless', 'source_revision', 'source_sha256', 'revision', 'build_vcs_matches_source', 'cpu_available', 'initial_size', 'final_size',
                'measured_elapsed_ns', 'process_cpu_seconds', 'one_core_percent', 'allocated_bytes',
                'allocations', 'gc_count', 'presented_frames_in_window', 'terminal_bytes_in_window',
                'heap_start_after_gc_bytes', 'heap_end_after_gc_bytes', 'frame_processing_ms',
