@@ -470,3 +470,63 @@ func TestListGeometryResizeKeepsSelectionVisible(t *testing.T) {
 		t.Fatal("selection hidden after shrink")
 	}
 }
+
+func TestPreparedListPreservesFullNativeContent(t *testing.T) {
+	items := make([]Item, 100)
+	for i := range items {
+		items[i] = Item{ID: fmt.Sprint(i), Text: fmt.Sprintf("entry-%03d", i)}
+	}
+
+	items[1] = Item{ID: "1", Text: "\x1b[31mΩMEGA 日本語\x1b[0m", After: []string{"continuation 界"}}
+
+	m, err := NewList("cache", items, 40, 6, theme.New(theme.Dark))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !strings.Contains(m.Viewport.GetContent(), "entry-099") {
+		t.Fatal("native viewport lost offscreen contents")
+	}
+
+	for range 3 {
+		m.Update(press("j"))
+		m.Update(press("k"))
+	}
+
+	m.Update(press("/"))
+	m.Input.SetValue("ωmega")
+	m.Update(tea.KeyPressMsg{Code: tea.KeyLeft})
+
+	if m.SelectedID() != "1" || !strings.Contains(m.Viewport.GetContent(), "continuation 界") {
+		t.Fatal("prepared Unicode search or continuation lost")
+	}
+
+	m.Update(press("esc"))
+	m.ResizeViewport(layout.Size{Width: 8, Height: 6})
+	m.ResizeViewport(layout.Size{Width: 40, Height: 6})
+
+	if !strings.Contains(m.Viewport.GetContent(), "日本語") {
+		t.Fatal("old width projection reused")
+	}
+
+	if err = m.SetItems([]Item{{ID: "new", Text: "replacement"}}); err != nil {
+		t.Fatal(err)
+	}
+
+	if strings.Contains(m.Viewport.GetContent(), "entry-") || len(m.searchText) != 1 || len(m.preparedRows) != 1 {
+		t.Fatal("old collection retained")
+	}
+}
+
+func TestIgnoredListKeyAllocationBudget(t *testing.T) {
+	m, err := NewList("alloc", []Item{{ID: "a", Text: "value"}}, 40, 8, theme.New(theme.Dark))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	message := press("x")
+
+	if allocations := testing.AllocsPerRun(100, func() { m.Update(message) }); allocations != 0 {
+		t.Fatalf("ignored key allocated %v times", allocations)
+	}
+}

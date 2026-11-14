@@ -56,6 +56,7 @@ type CohortComparisonOptions struct {
 // and a member inspector. It owns UI state; callers supply measurements.
 // Sigma is descriptive member spread, never a significance or rollout decision.
 type CohortComparison struct {
+	geometryOnly                 bool
 	Table                        table.Model
 	Panels                       viewport.Model
 	Inspector                    table.Model
@@ -91,12 +92,15 @@ func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
 	if o.Variant == "" {
 		o.Variant = Stacked
 	}
+
 	if o.Variant != Stacked && o.Variant != Bands {
 		return nil, fmt.Errorf("unknown comparison variant %q", o.Variant)
 	}
+
 	if o.Sigma == 0 {
 		o.Sigma = 3
 	}
+
 	if o.Sigma < 1 || o.Sigma > 3 {
 		return nil, fmt.Errorf("sigma must be 1, 2 or 3")
 	}
@@ -108,14 +112,18 @@ func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
 	m.Table = collection.NewTable([]table.Column{{Title: "MEMBER", Width: 22}, {Title: "ROLE", Width: 4}, {Title: "z(ref)", Width: 6}}, nil, 38, 14, o.Theme)
 	m.Panels = collection.NewViewport("", 100, 36)
 	m.Inspector = collection.NewDenseTable(nil, nil, 38, 4, o.Theme)
+
 	m.size = layout.Size{Width: 132, Height: 40}
 	if err := m.SetData(o.Data); err != nil {
 		return nil, err
 	}
+
 	if err := m.SetBoundaries(o.Boundaries); err != nil {
 		return nil, err
 	}
+
 	m.Resize(m.size)
+
 	return m, nil
 }
 
@@ -131,13 +139,16 @@ func (m *CohortComparison) SetVariant(variant ComparisonVariant) error {
 	if variant != Stacked && variant != Bands {
 		return fmt.Errorf("unknown comparison variant %q", variant)
 	}
+
 	if variant == m.variant {
 		return nil
 	}
+
 	m.variant = variant
 	m.Panels.GotoTop()
 	m.updateDetails()
 	m.event("variant")
+
 	return nil
 }
 
@@ -152,9 +163,11 @@ func (m *CohortComparison) SetData(data cohort.Data) error {
 	if err := validateReference(copy, m.referenceID); err != nil {
 		return err
 	}
+
 	if _, err := copyPolicies(m.boundaries, copy.Metrics); err != nil {
 		return err
 	}
+
 	index := len(copy.Windows) - 1
 	if m.window >= 0 && m.window < len(m.data.Windows)-1 {
 		start := m.data.Windows[m.window].Start
@@ -165,17 +178,21 @@ func (m *CohortComparison) SetData(data cohort.Data) error {
 			}
 		}
 	}
+
 	metricID := ""
 	if len(m.data.Metrics) > 0 {
 		metricID = m.data.Metrics[m.metric].ID
 	}
+
 	m.data, m.window, m.metric = copy, index, len(copy.Metrics)-1
 	for i, metric := range copy.Metrics {
 		if metric.ID == metricID {
 			m.metric = i
 		}
 	}
+
 	m.refresh()
+
 	return nil
 }
 
@@ -183,9 +200,11 @@ func (m *CohortComparison) SetWindow(index int) error {
 	if index < 0 || index >= len(m.data.Windows) {
 		return fmt.Errorf("window index out of range")
 	}
+
 	m.window = index
 	m.refresh()
 	m.event("window")
+
 	return nil
 }
 
@@ -193,9 +212,11 @@ func (m *CohortComparison) SetSigma(sigma int) error {
 	if sigma < 1 || sigma > 3 {
 		return fmt.Errorf("sigma must be 1, 2 or 3")
 	}
+
 	m.sigma = sigma
 	m.refresh()
 	m.event("sigma")
+
 	return nil
 }
 
@@ -205,21 +226,26 @@ func (m *CohortComparison) SetMetric(id string) error {
 			m.metric = i
 			m.refresh()
 			m.event("metric")
+
 			return nil
 		}
 	}
+
 	return fmt.Errorf("unknown metric %q", id)
 }
 func (m *CohortComparison) Init() tea.Cmd { m.initialized = true; return m.syncFocus() }
 func (m *CohortComparison) syncFocus() tea.Cmd {
 	m.Table.Blur()
 	m.Inspector.Blur()
+
 	if m.focus.Current() == "hosts" {
 		m.Table.Focus()
 	}
+
 	if m.focus.Current() == "inspector" {
 		m.Inspector.Focus()
 	}
+
 	return nil
 }
 
@@ -227,12 +253,15 @@ func (m *CohortComparison) Update(msg tea.Msg) tea.Cmd {
 	if m.focus.Handle(msg) {
 		return m.syncFocus()
 	}
+
 	if _, ok := msg.(runtime.StepMsg); ok {
 		if len(m.data.Windows) > 0 {
 			_ = m.SetWindow((m.window + 1) % len(m.data.Windows))
 		}
+
 		return nil
 	}
+
 	if key, ok := msg.(tea.KeyPressMsg); ok {
 		switch key.String() {
 		case "b":
@@ -240,7 +269,9 @@ func (m *CohortComparison) Update(msg tea.Msg) tea.Cmd {
 			if m.variant == Bands {
 				variant = Stacked
 			}
+
 			_ = m.SetVariant(variant)
+
 			return nil
 		case "f6":
 			_ = m.SetVariant(Stacked)
@@ -255,25 +286,31 @@ func (m *CohortComparison) Update(msg tea.Msg) tea.Cmd {
 			if m.window > 0 {
 				_ = m.SetWindow(m.window - 1)
 			}
+
 			return nil
 		case "right":
 			if m.window < len(m.data.Windows)-1 {
 				_ = m.SetWindow(m.window + 1)
 			}
+
 			return nil
 		case "[":
 			m.metric = (m.metric + len(m.data.Metrics) - 1) % len(m.data.Metrics)
 			m.refresh()
 			m.event("metric")
+
 			return nil
 		case "]":
 			m.metric = (m.metric + 1) % len(m.data.Metrics)
 			m.refresh()
 			m.event("metric")
+
 			return nil
 		}
 	}
+
 	var cmd tea.Cmd
+
 	switch m.focus.Current() {
 	case "hosts":
 		m.Table, cmd = m.Table.Update(msg)
@@ -292,6 +329,7 @@ func (m *CohortComparison) Update(msg tea.Msg) tea.Cmd {
 			m.event("metric")
 		}
 	}
+
 	return cmd
 }
 
@@ -305,7 +343,18 @@ func (m *CohortComparison) event(kind string) {
 	}
 }
 
+// ResizeViewport changes geometry without refreshing unchanged-width stacked
+// panel contents. Resize retains its full presentation refresh behavior.
+func (m *CohortComparison) ResizeViewport(size layout.Size) {
+	m.geometryOnly = true
+	defer func() { m.geometryOnly = false }()
+
+	m.Resize(size)
+}
+
 func (m *CohortComparison) Resize(size layout.Size) {
+	previousGridWidth := m.gridSize.Width
+	previousSideWidth := m.sideSize.Width
 	m.size = size
 	height := max(1, size.Height-3)
 
@@ -326,7 +375,30 @@ func (m *CohortComparison) Resize(size layout.Size) {
 	m.tableColumns()
 	m.Panels.SetWidth(max(1, m.gridSize.Width))
 	m.Panels.SetHeight(max(1, m.gridSize.Height))
-	m.updateDetails()
+	m.Panels.SetYOffset(m.Panels.YOffset())
+	m.Inspector.SetHeight(max(1, m.inspectorHeight-3-lipgloss.Height(m.inspectorContext())))
+
+	if m.geometryOnly && m.variant == Stacked && previousGridWidth == m.gridSize.Width && previousSideWidth == m.sideSize.Width && len(m.plots) == len(m.data.Metrics) {
+		return
+	}
+
+	m.updateInspector()
+
+	columns := 1
+	if m.variant == Stacked && m.gridSize.Width >= 82 {
+		columns = 2
+	}
+
+	width := max(1, layout.PanelContentSize(layout.Size{Width: (m.gridSize.Width - (columns - 1)) / columns}).Width)
+	if len(m.plots) != len(m.data.Metrics) {
+		m.rebuildPlots()
+	} else {
+		for i := range m.plots {
+			m.plots[i].Resize(layout.Size{Width: width, Height: m.historyHeight()})
+		}
+	}
+
+	m.Panels.SetContent(m.grid())
 }
 
 func (m *CohortComparison) refresh() {
@@ -348,56 +420,73 @@ func (m *CohortComparison) refresh() {
 			m.visible = append(m.visible, summary.Points...)
 		}
 	}
+
 	changes := m.assessAttention()
 	m.updateDeltaExtent()
 	baseline := m.reference(m.metric)
 	sort.SliceStable(m.visible, func(i, j int) bool {
 		a, b := m.visible[i], m.visible[j]
+
 		pa, pb := attention.Priority(m.assessments[m.metric].Members[a.MemberKey].Level), attention.Priority(m.assessments[m.metric].Members[b.MemberKey].Level)
 		if pa != pb {
 			return pa > pb
 		}
+
 		if a.Eligible != b.Eligible {
 			return a.Eligible
 		}
+
 		da, db := math.Abs(a.Rate-baseline.Mean), math.Abs(b.Rate-baseline.Mean)
 		if m.referenceID != "" && da != db {
 			return da > db
 		}
+
 		if a.CohortID != b.CohortID {
 			return a.CohortID < b.CohortID
 		}
+
 		return a.MemberID < b.MemberID
 	})
+
 	rows, cursor := []table.Row{}, -1
+
 	for i, p := range m.visible {
 		if p.MemberKey == m.selected {
 			cursor = i
 		}
+
 		z := "n/a"
 		if distance, ok := cohort.Distance(p, baseline); ok {
 			z = m.signedNumber(m.metric, distance, 1, "", true).View(m.theme)
 		}
+
 		row := table.Row{p.MemberID, p.CohortID, z}
 		if m.boundaries[m.MetricID()].Hosts.Configured() {
 			row = append(row, feedback.Attention(m.assessments[m.metric].Members[p.MemberKey].Level, m.theme))
 		}
+
 		rows = append(rows, row)
 	}
+
 	if cursor < 0 && len(m.visible) > 0 {
 		cursor = 0
 		m.selected = m.visible[0].MemberKey
 	}
+
 	if len(m.visible) == 0 {
 		m.selected = cohort.MemberKey{}
 	}
+
 	m.Table.SetRows(nil)
 	m.tableColumns()
 	m.Table.SetRows(rows)
+
 	if cursor >= 0 {
 		m.Table.SetCursor(cursor)
 	}
+
 	m.updateDetails()
+
 	for _, change := range changes {
 		m.emit(change)
 	}
@@ -425,12 +514,14 @@ func (m *CohortComparison) rebuildPlots() {
 		series, notes := m.historySeries(metric)
 		m.historyNotes[i] = notes
 		low, high := math.Inf(1), math.Inf(-1)
+
 		for _, s := range series {
 			for _, p := range s.Points {
 				low = min(low, p.Value)
 				high = max(high, p.Value)
 			}
 		}
+
 		if math.IsInf(low, 0) {
 			low, high = 0, 1
 		}
@@ -447,13 +538,16 @@ func (m *CohortComparison) rebuildPlots() {
 
 func (m *CohortComparison) metricLabel(index int, compact bool) string {
 	metric := m.data.Metrics[index]
+
 	value := metric.Label
 	if compact {
 		value = metric.ID
 	}
+
 	if tone, ok := m.metricTones[metric.ID]; ok {
 		return text.Pill(value, tone, m.theme)
 	}
+
 	return value
 }
 
@@ -471,8 +565,10 @@ func (m *CohortComparison) distribution(index int) chart.DistributionComparison 
 				series.Selected = &value
 			}
 		}
+
 		distribution.Series = append(distribution.Series, series)
 	}
+
 	return distribution
 }
 
@@ -487,6 +583,7 @@ func (m *CohortComparison) comparisonRows(index, width int) []string {
 	if m.referenceID == "" {
 		return rows
 	}
+
 	for c, group := range m.data.Cohorts {
 		if group.ID == m.referenceID {
 			continue
@@ -508,7 +605,12 @@ func (m *CohortComparison) comparisonRows(index, width int) []string {
 	return rows
 }
 
-func (m *CohortComparison) panel(index, width, minHeight int) string {
+type metricPanel struct {
+	title, content string
+	height         int
+}
+
+func (m *CohortComparison) panelContent(index, width int) metricPanel {
 	rows := m.comparisonRows(index, layout.PanelContentSize(layout.Size{Width: width}).Width)
 
 	rows = append(rows, m.historyRows(index, layout.PanelContentSize(layout.Size{Width: width}).Width)...)
@@ -524,39 +626,54 @@ func (m *CohortComparison) panel(index, width, minHeight int) string {
 	lines = append(lines, card.Distribution.View(contentWidth, m.theme), card.History.View())
 	height := lipgloss.Height(strings.Join(lines, "\n")) + 2*theme.BorderCells
 
-	return card.View(layout.Size{Width: width, Height: max(height, minHeight)}, m.theme, m.metric == index)
+	if len(card.Distribution.Series) == 0 {
+		lines = append(rows, lines[len(lines)-1])
+	}
+
+	return metricPanel{title: card.Title, content: strings.Join(lines, "\n"), height: height}
 }
 
 func (m *CohortComparison) grid() string {
 	if len(m.plots) == 0 {
 		return ""
 	}
+
 	if m.variant == Bands {
 		return m.bandVariantView()
 	}
+
 	columns := 1
 	if m.gridSize.Width >= 82 {
 		columns = 2
 	}
+
 	width := max(1, (m.gridSize.Width-(columns-1))/columns)
+
 	var rows []string
+
 	for i := 0; i < len(m.data.Metrics); i += columns {
-		row := m.panel(i, width, 0)
-		if columns == 2 && i+1 < len(m.data.Metrics) {
-			otherWidth := m.gridSize.Width - width - 1
-			other := m.panel(i+1, otherWidth, 0)
+		left := m.panelContent(i, width)
+		height := left.height
 
-			rowHeight, otherHeight := lipgloss.Height(row), lipgloss.Height(other)
-			if rowHeight < otherHeight {
-				row = m.panel(i, width, otherHeight)
-			} else if otherHeight < rowHeight {
-				other = m.panel(i+1, otherWidth, rowHeight)
-			}
+		var right metricPanel
 
+		otherWidth := m.gridSize.Width - width - 1
+
+		paired := columns == 2 && i+1 < len(m.data.Metrics)
+		if paired {
+			right = m.panelContent(i+1, otherWidth)
+			height = max(height, right.height)
+		}
+
+		row := layout.Panel(left.title, left.content, layout.Size{Width: width, Height: height}, m.theme, m.metric == i)
+		if paired {
+			other := layout.Panel(right.title, right.content, layout.Size{Width: otherWidth, Height: height}, m.theme, m.metric == i+1)
 			row = layout.Row(row, " ", other)
 		}
+
 		rows = append(rows, row)
 	}
+
 	return layout.Column(rows...)
 }
 
@@ -565,8 +682,11 @@ func (m *CohortComparison) View() string {
 	for _, a := range m.assessments {
 		overall = attention.Worst(overall, a.Level)
 	}
+
 	header := m.theme.Heading().Render(m.title) + " " + feedback.Attention(overall, m.theme) + " / " + m.scope
+
 	var groups []string
+
 	for c, group := range m.data.Cohorts {
 		members := len(m.memberSummary(m.metric, c).Points)
 
@@ -577,6 +697,7 @@ func (m *CohortComparison) View() string {
 
 		groups = append(groups, m.theme.Text().Foreground(m.theme.SeriesColor(c)).Render(fmt.Sprintf("%s%s / %d members", role, group.Label, members)))
 	}
+
 	window := "No windows"
 	if m.window >= 0 {
 		w := m.data.Windows[m.window]
@@ -586,6 +707,7 @@ func (m *CohortComparison) View() string {
 	baseline, outliers, eligible, excluded := m.reference(m.metric), 0, 0, 0
 	for _, s := range m.summaries[m.metric] {
 		eligible += s.Eligible
+
 		excluded += s.Excluded
 		for _, p := range s.Points {
 			if z, ok := cohort.Distance(p, baseline); ok && math.Abs(z) > float64(m.sigma) {
@@ -593,6 +715,7 @@ func (m *CohortComparison) View() string {
 			}
 		}
 	}
+
 	count := fmt.Sprintf("%d beyond %ds", outliers, m.sigma)
 
 	info := fmt.Sprintf("%s | +/- %ds member spread | min ratio support %d | %d eligible / %d excluded", window, m.sigma, m.minRequests, eligible, excluded)
@@ -605,14 +728,17 @@ func (m *CohortComparison) View() string {
 	} else if !baseline.HasSpread || baseline.StdDev == 0 {
 		count = "baseline s unavailable"
 	}
+
 	tableTitle := fmt.Sprintf("%s / %s %s", m.metricLabel(m.metric, true), count, feedback.Attention(m.assessments[m.metric].Level, m.theme))
 	tablePanel := layout.Panel(tableTitle, m.Table.View(), layout.Size{Width: m.sideSize.Width, Height: m.tableHeight}, m.theme, m.focus.Current() == "hosts")
 	inspector := m.inspectorView()
 	side := layout.Column(tablePanel, inspector)
+
 	content := layout.Column(m.Panels.View(), side)
 	if m.sidebar {
 		content = layout.Row(m.Panels.View(), " ", side)
 	}
+
 	return layout.Fit(strings.Join([]string{header, strings.Join(groups, " | "), info, content}, "\n"), m.size)
 }
 

@@ -34,6 +34,10 @@ type List struct {
 	Theme         theme.Theme
 	Component     string
 	items         []Item
+	searchText    []string
+	foldedQuery   string
+	preparedRows  [][]string
+	preparedWidth int
 	cursor        int
 	selectedLine  int
 	width, height int
@@ -75,6 +79,13 @@ func (m *List) SetItems(items []Item) error {
 	selected := m.SelectedID()
 	m.items = cloned
 
+	m.searchText = make([]string, len(cloned))
+	for i, item := range cloned {
+		m.searchText[i] = strings.ToLower(ansi.Strip(item.Text))
+	}
+
+	m.preparedRows = nil
+
 	m.cursor = min(m.cursor, max(0, len(items)-1))
 	for i, item := range items {
 		if item.ID == selected {
@@ -89,7 +100,7 @@ func (m *List) SetItems(items []Item) error {
 }
 
 func (m *List) SelectedID() string {
-	if len(m.items) == 0 || !m.matches(m.items[m.cursor]) {
+	if len(m.items) == 0 || !m.matches(m.cursor) {
 		return ""
 	}
 
@@ -144,14 +155,18 @@ func (m *List) resize(size layout.Size, refresh bool) {
 	}
 }
 
-func (m *List) matches(item Item) bool {
-	return strings.Contains(strings.ToLower(ansi.Strip(item.Text)), strings.ToLower(m.query))
+func (m *List) matches(index int) bool {
+	if m.query == "" {
+		return true
+	}
+
+	return strings.Contains(m.searchText[index], m.foldedQuery)
 }
 
 func (m *List) reconcile() {
-	if len(m.items) > 0 && !m.matches(m.items[m.cursor]) {
-		for i, item := range m.items {
-			if m.matches(item) {
+	if len(m.items) > 0 && !m.matches(m.cursor) {
+		for i := range m.items {
+			if m.matches(i) {
 				m.cursor = i
 				break
 			}
@@ -163,7 +178,7 @@ func (m *List) reconcile() {
 
 func (m *List) move(delta int) {
 	for i := m.cursor + delta; i >= 0 && i < len(m.items); i += delta {
-		if m.matches(m.items[i]) {
+		if m.matches(i) {
 			m.cursor = i
 			return
 		}
@@ -222,7 +237,7 @@ func (m *List) Update(msg tea.Msg) tea.Cmd {
 			m.reconcile()
 		case "end", "G":
 			m.cursor = max(0, len(m.items)-1)
-			if len(m.items) > 0 && !m.matches(m.items[m.cursor]) {
+			if len(m.items) > 0 && !m.matches(m.cursor) {
 				m.move(-1)
 			}
 		case "pgdown", "ctrl+d":
@@ -237,7 +252,7 @@ func (m *List) Update(msg tea.Msg) tea.Cmd {
 			id := m.SelectedID()
 
 			component := m.Component
-			if id != "" && m.matches(m.items[m.cursor]) {
+			if id != "" && m.matches(m.cursor) {
 				return func() tea.Msg { return interaction.Selected{Component: component, ID: id} }
 			}
 		default:
@@ -270,6 +285,20 @@ func (m *List) render() {
 		return
 	}
 
+	if m.preparedRows == nil || m.preparedWidth != m.width {
+		m.preparedRows = make([][]string, len(m.items))
+
+		m.preparedWidth = m.width
+		for i, item := range m.items {
+			rows := []string{strings.Clone(ansi.Truncate("  "+item.Text, m.width, "…"))}
+			for _, line := range item.After {
+				rows = append(rows, strings.Clone(ansi.Truncate("  "+line, m.width, "…")))
+			}
+
+			m.preparedRows[i] = rows
+		}
+	}
+
 	var lines []string
 
 	selectedLine := 0
@@ -277,7 +306,7 @@ func (m *List) render() {
 	group := ""
 
 	for i, item := range m.items {
-		match := m.matches(item)
+		match := m.matches(i)
 		if match {
 			matches++
 		}
@@ -301,12 +330,13 @@ func (m *List) render() {
 			}
 		}
 
-		row := marker + " " + item.Text
-
-		lines = append(lines, ansi.Truncate(row, m.width, "…"))
-		for _, line := range item.After {
-			lines = append(lines, ansi.Truncate("  "+line, m.width, "…"))
+		row := m.preparedRows[i][0]
+		if marker != " " {
+			row = ansi.Truncate(marker+" "+item.Text, m.width, "…")
 		}
+
+		lines = append(lines, row)
+		lines = append(lines, m.preparedRows[i][1:]...)
 	}
 
 	if matches == 0 {
@@ -367,6 +397,7 @@ func (m *List) updateInput(msg tea.Msg) tea.Cmd {
 	}
 
 	m.query = m.Input.Value()
+	m.foldedQuery = strings.ToLower(m.query)
 	m.reconcile()
 
 	return cmd

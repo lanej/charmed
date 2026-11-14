@@ -22,6 +22,10 @@ type jsonLine struct {
 // changes. Raw/formatted scroll positions are separate. Disabling folds expands
 // every container and discards the previous collapsed state.
 func (m *JSONViewer) Refresh() {
+	if !m.geometrySyntax {
+		m.preparedSyntax, m.fallbackSyntax = nil, ""
+	}
+
 	if !m.Folding {
 		clear(m.closed)
 	}
@@ -74,7 +78,15 @@ func (m *JSONViewer) fallback() string {
 		}
 	}
 
-	content := ansi.Hardwrap(text.Syntax(source, "json", m.Theme), max(1, m.Model.Width()), true)
+	highlighted := m.fallbackSyntax
+	if highlighted == "" {
+		highlighted = text.Syntax(source, "json", m.Theme)
+		if len(highlighted) <= limit {
+			m.fallbackSyntax = highlighted
+		}
+	}
+
+	content := ansi.Hardwrap(highlighted, max(1, m.Model.Width()), true)
 	if len(content) > limit {
 		content = ansi.Hardwrap(source, max(1, m.Model.Width()), true)
 	}
@@ -103,7 +115,15 @@ func (m *JSONViewer) project() (string, error) {
 		source[i] = line.source
 	}
 
-	highlighted := strings.Split(text.Syntax(strings.Join(source, "\n"), "json", m.Theme), "\n")
+	highlighted := m.preparedSyntax
+	if highlighted == nil {
+		rendered := text.Syntax(strings.Join(source, "\n"), "json", m.Theme)
+
+		highlighted = strings.Split(rendered, "\n")
+		if len(rendered) <= m.Limits.normalized().RenderBytes {
+			m.preparedSyntax = highlighted
+		}
+	}
 
 	width, gutter := max(1, m.Model.Width()), 0
 	if m.Folding {
