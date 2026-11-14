@@ -103,7 +103,7 @@ Use `layout.Compile` for a stable declaration and `Screen.ArrangeCompiled` for s
 | Inspector pane caching | `ViewRetained(pattern.InspectorRevisions{Requests, Details, Logs})` retains panes independently; advance the affected revisions after mutations |
 | Native access | Component views and existing full-refresh methods remain available; use `Invalidate` after direct edits to cached Git/JSON native styling |
 
-Run `BenchmarkResizeRender` alongside `BenchmarkRender` to measure the complete resize-to-output path. It covers repeated allocations, height changes, width changes and responsive breakpoint crossings. Compare against the same benchmark source on the base revision, running each executable sequentially after other tests and builds finish. These benchmarks measure generated frames; terminal emulator painting and interactive latency need separate native measurements.
+Run `BenchmarkResizeRender` alongside `BenchmarkRender` to measure the complete resize-to-output path. It covers repeated allocations, height changes, width changes and responsive breakpoint crossings. Compare against the same benchmark source on the base revision, running each executable sequentially after other tests and builds finish. These benchmarks measure generated frames; terminal emulator painting and interactive latency need separate native measurements. For consumer upgrade steps, follow the [migration guide](migration.html).
 
 ## Batch native presentation
 
