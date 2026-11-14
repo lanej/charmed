@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Migrate existing UIs · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Migrate existing UIs</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">72</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="migration.html" aria-current="page">Migrate existing UIs</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">72</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="migration.html" aria-current="page">Migrate existing UIs</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+</aside>
+<main id="main">
+
+
+
+<h1 id="migrate-to-retained-presentation">Migrate to retained presentation</h1>
+<p>Use this guide when upgrading to the rendering changes in <a href="https://github.com/lanej/charmed/pull/59">PR #59</a> and <a href="https://github.com/lanej/charmed/pull/60">PR #60</a>. Native <code class="inline-code">runtime<span class="syn-operator">.</span>Scene</code> signatures remain compatible, but <code class="inline-code">Root<span class="syn-operator">.</span>View</code> now reads the completed frame, and cached Git/JSON views need explicit invalidation after direct native presentation edits. Applications using their own Bubble Tea root can keep it and apply the component invalidation changes they use.</p>
+<h2 id="update-the-dependency"><a class="heading-permalink" href="#update-the-dependency"><span>Update the dependency</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>The commit below includes both performance changes and the small-height Git cache repair. Update your application's dependency, retain its previous revision for rollback, and rebuild the binaries that embed Charmed.</p>
+<pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> get github.com/lanej/charmed@e63c5a237b8aac91fa7a6d98d910348697bd328f
+<span class="syn-command">go</span> mod tidy
+</code></pre>
+<h2 id="forward-runtime-commands"><a class="heading-permalink" href="#forward-runtime-commands"><span>Forward runtime commands</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>When passing <code class="inline-code">root</code> directly to <code class="inline-code">tea<span class="syn-operator">.</span>NewProgram</code>, Bubble Tea already runs its lifecycle. Applications wrapping a root must forward <code class="inline-code">Init</code> and all messages, return every command from <code class="inline-code">Update</code>, and let their <code class="inline-code">View</code> read the cached frame. Non-input messages include scheduled frames and native command results. Keep existing <code class="inline-code">Root<span class="syn-operator">.</span>Close</code> cleanup when the program ends.</p>
+<pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-keyword">type</span> app <span class="syn-keyword">struct</span> <span class="syn-operator">{</span> root <span class="syn-operator">*</span>runtime<span class="syn-operator">.</span>Root <span class="syn-operator">}</span>
+
+<span class="syn-keyword">func</span> <span class="syn-operator">(</span>m <span class="syn-operator">*</span>app<span class="syn-operator">)</span> <span class="syn-function">Init</span><span class="syn-operator">(</span><span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span> <span class="syn-keyword">return</span> m<span class="syn-operator">.</span>root<span class="syn-operator">.</span><span class="syn-function">Init</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">}</span>
+
+<span class="syn-keyword">func</span> <span class="syn-operator">(</span>m <span class="syn-operator">*</span>app<span class="syn-operator">)</span> <span class="syn-function">Update</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> <span class="syn-operator">(</span>tea<span class="syn-operator">.</span>Model<span class="syn-operator">,</span> tea<span class="syn-operator">.</span>Cmd<span class="syn-operator">)</span> <span class="syn-operator">{</span>
+    _<span class="syn-operator">,</span> cmd <span class="syn-operator">:=</span> m<span class="syn-operator">.</span>root<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span>
+    <span class="syn-keyword">return</span> m<span class="syn-operator">,</span> cmd
+<span class="syn-operator">}</span>
+
+<span class="syn-keyword">func</span> <span class="syn-operator">(</span>m <span class="syn-operator">*</span>app<span class="syn-operator">)</span> <span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> tea<span class="syn-operator">.</span>View <span class="syn-operator">{</span> <span class="syn-keyword">return</span> m<span class="syn-operator">.</span>root<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">}</span>
+</code></pre>
+<p>State updates remain ordered and immediate. Presentation defaults to at most 60 frames per second, with one command pending during bursts and none scheduled while idle; sparse updates do not wait an unnecessary full interval. Bubble Tea still owns terminal flushing and its native timer.</p>
+<h2 id="capture-snapshots-explicitly"><a class="heading-permalink" href="#capture-snapshots-explicitly"><span>Capture snapshots explicitly</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Replace manual <code class="inline-code">Update</code> followed by <code class="inline-code">View</code> snapshot sequences with an explicit presentation step. <code class="inline-code">PresentNow</code> returns errors to the caller and invalidates any pending frame command, so an old timer cannot overwrite the snapshot.</p>
+<pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">snapshot</span><span class="syn-operator">(</span>root <span class="syn-operator">*</span>runtime<span class="syn-operator">.</span>Root<span class="syn-operator">)</span> <span class="syn-operator">(</span>tea<span class="syn-operator">.</span>View<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
+    <span class="syn-keyword">if</span> err <span class="syn-operator">:=</span> root<span class="syn-operator">.</span><span class="syn-function">PresentNow</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">;</span> err <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
+        <span class="syn-keyword">return</span> tea<span class="syn-operator">.</span>View<span class="syn-operator">{</span><span class="syn-operator">}</span><span class="syn-operator">,</span> err
+    <span class="syn-operator">}</span>
+    <span class="syn-keyword">return</span> root<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+<span class="syn-operator">}</span>
+</code></pre>
+<p><code class="inline-code">PresentNow</code> does not execute returned application commands. Process those commands and their result messages through the live event loop when their effects are needed before capture. <code class="inline-code"><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code> is a synchronous convenience; prefer <code class="inline-code">PresentNow</code> when snapshot failures must be returned explicitly.</p>
+<h2 id="invalidate-direct-native-edits"><a class="heading-permalink" href="#invalidate-direct-native-edits"><span>Invalidate direct native edits</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
+<p>Charmed's own data and interaction methods maintain their presentation dependencies. After directly changing exposed styles or theme fields, invalidate the affected cached component and request a runtime frame from the same serialized application update.</p>
+<pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">restyleList</span><span class="syn-operator">(</span>root <span class="syn-operator">*</span>runtime<span class="syn-operator">.</span>Root<span class="syn-operator">,</span> list <span class="syn-operator">*</span>gitui<span class="syn-operator">.</span>List<span class="syn-operator">,</span> style lipgloss<span class="syn-operator">.</span>Style<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
+    list<span class="syn-operator">.</span>Viewport<span class="syn-operator">.</span>Style <span class="syn-operator">=</span> style
+    list<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+    <span class="syn-keyword">return</span> root<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<span class="syn-operator">}</span>
+</code></pre>
+<table tabindex="0">
+<thead>
+<tr>
+<th>Change</th>
+<th>Required action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git list native styling or theme</td>
+<td>Call <code class="inline-code">list<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code>, then return <code class="inline-code">root<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code></td>
+</tr>
+<tr>
+<td>JSON viewer native styling or theme</td>
+<td>Call <code class="inline-code">viewer<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code> or <code class="inline-code"><span class="syn-function">Refresh</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code>, then return <code class="inline-code">root<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code></td>
+</tr>
+<tr>
+<td>Direct native viewport scrolling</td>
+<td>Return <code class="inline-code">root<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code>; viewport offsets already participate in component cache keys</td>
+</tr>
+<tr>
+<td>Retained screen region contents</td>
+<td>Advance the affected <code class="inline-code">tui<span class="syn-operator">.</span>RegionView<span class="syn-operator">.</span>Revision</code>, then request presentation</td>
+</tr>
+</tbody>
+</table>
+<p>Native model access and complete viewport content remain available. Git source replacement still installs all rows immediately; input bursts can defer row projection until <code class="inline-code">View</code>. Existing full-refresh and geometry-only resize methods retain their documented distinctions. With retained screen or inspector panes, also advance the affected region or pane revision; <code class="inline-code">Root<span class="syn-operator">.</span>Invalidate</code> does not change application-owned counters.</p>
+<p>An optional <code class="inline-code">PresentationRevision() uint64</code> on a scene can suppress frames for unchanged updates. Omit it unless the counter advances for every visible change; a data-only counter can hide focus, cursor, scrolling or styling updates.</p>
+<p>Run the application's normal checks, confirm that offline snapshots show the latest state, and exercise small terminal sizes and independent scrolling before rebuilding and deploying. See <a href="development.html#batch-native-presentation">presentation ownership</a> for the scheduling contract and <a href="examples.html">composition</a> for existing native lifecycle patterns.</p>
+
+
+
+
+
+
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
