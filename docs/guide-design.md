@@ -6,6 +6,8 @@ This document applies the [Charmed design philosophy](../DESIGN.md) to the refer
 
 Show Go developers the actual components first, then help them understand composition and run native examples. The front page is a showcase, with full screens, shared status atoms and a curated chart gallery. Related components share capability sections so readers can compare them without opening a page for each widget.
 
+The website describes the current supported product: available APIs, ownership, lifecycle, constraints and runnable usage. Write directly for someone using it today. Keep migration narratives, implementation history, PR chronology, rollout plans and before/after audit reports in Git, PRs or developer benchmark artifacts rather than the website.
+
 ## Principles and tradeoffs
 
 Use a compact guide navigation and readable prose. Each fixture has a sidebar link. Lead with the saved native visual, put variants in keyboard-accessible tabs, and immediately follow with highlighted Go source. Link each component to its runnable consumer example. Keep fixture setup and workbench flags in the development guide. Preserve complete terminal cell geometry with horizontal scrolling inside frames; the document itself must fit mobile widths. Saved terminal frames preserve exact RGB as static HTML on the guide’s night surfaces; native commands provide keyboard interaction and animation.

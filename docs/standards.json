@@ -179,10 +179,9 @@
     "dependencies.md": {
       "profile": "reference"
     },
-    "migration.md": {
+    "rendering.md": {
       "profile": "recipe",
       "sections": [
-        "Update the dependency",
         "Forward runtime commands",
         "Capture snapshots explicitly",
         "Invalidate direct native edits"

@@ -2,6 +2,8 @@
 
 Every page should help someone decide what to use and produce a useful result. The versioned [standard configuration](https://github.com/lanej/charmed/blob/main/docs/standards.json) defines bounded variation for each page type; the shared component template supplies a consistent reading order.
 
+Document current APIs, behavior and usage directly. Keep migration narratives, implementation history, PR chronology, rollout plans and before/after audit reports outside the website; current compatibility contracts and reproducible measurement instructions belong alongside the APIs they explain.
+
 ## Content rhythm
 
 Let W be the visible words in a text run and P its prose blocks. A run crosses headings and blank lines until a meaningful artifact. Both W and P have bounds; W/P has a minimum when P exceeds one, discouraging piles of small paragraphs.
