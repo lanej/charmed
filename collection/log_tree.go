@@ -23,6 +23,7 @@ import (
 // LogTree retains the native tree API. SetEntries rebuilds nodes, preserving
 // native styles/key maps and expansion/selection for retained stable identities.
 type LogTree struct {
+	snapshotReady bool
 	// FocusedLeafGeometry returns [start,end) rendered rows in a zero-scroll native snapshot.
 	// Vertically styled/wrapped nodes require this override; invalid geometry keeps the native view.
 	FocusedLeafGeometry             func(tree.Model) (start, end int, ok bool)
@@ -148,6 +149,8 @@ func (m *LogTree) SetEntries(records []LogRecord) error {
 	if err := validateRecordIDs(records, func(r LogRecord) string { return r.ID }); err != nil {
 		return err
 	}
+
+	m.snapshotReady = true
 
 	m.records = retainRecords(records, m.Limit)
 	m.rebuild()

@@ -1,0 +1,65 @@
+goos: darwin
+goarch: arm64
+pkg: github.com/lanej/charmed/internal/periodic
+cpu: Apple M6
+BenchmarkPeriodicSnapshot/replace/unchanged-12         	      22	   9949203 ns/op	25115206 B/op	  103999 allocs/op
+BenchmarkPeriodicSnapshot/replace/unchanged-12         	      22	  11700710 ns/op	25134424 B/op	  104001 allocs/op
+BenchmarkPeriodicSnapshot/replace/unchanged-12         	      22	   9934945 ns/op	25111481 B/op	  103998 allocs/op
+BenchmarkPeriodicSnapshot/replace/unchanged-12         	      24	  10031326 ns/op	25125095 B/op	  103997 allocs/op
+BenchmarkPeriodicSnapshot/replace/unchanged-12         	      22	  10421530 ns/op	25158844 B/op	  104003 allocs/op
+BenchmarkPeriodicSnapshot/replace/metric-12            	      22	  10096458 ns/op	25103307 B/op	  103711 allocs/op
+BenchmarkPeriodicSnapshot/replace/metric-12            	      22	   9889890 ns/op	25126769 B/op	  103715 allocs/op
+BenchmarkPeriodicSnapshot/replace/metric-12            	      24	   9919656 ns/op	25116403 B/op	  103712 allocs/op
+BenchmarkPeriodicSnapshot/replace/metric-12            	      22	   9954208 ns/op	25121390 B/op	  103714 allocs/op
+BenchmarkPeriodicSnapshot/replace/metric-12            	      24	   9882677 ns/op	25100343 B/op	  103710 allocs/op
+BenchmarkPeriodicSnapshot/replace/request-12           	      22	   9977538 ns/op	25147391 B/op	  104051 allocs/op
+BenchmarkPeriodicSnapshot/replace/request-12           	      24	   9854693 ns/op	25147228 B/op	  104050 allocs/op
+BenchmarkPeriodicSnapshot/replace/request-12           	      22	   9927795 ns/op	25130126 B/op	  104049 allocs/op
+BenchmarkPeriodicSnapshot/replace/request-12           	      24	   9998123 ns/op	25153568 B/op	  104050 allocs/op
+BenchmarkPeriodicSnapshot/replace/request-12           	      24	  10338387 ns/op	25139750 B/op	  104048 allocs/op
+BenchmarkPeriodicSnapshot/replace/append-12            	      21	  11134444 ns/op	25270864 B/op	  106213 allocs/op
+BenchmarkPeriodicSnapshot/replace/append-12            	      22	  10419968 ns/op	25261400 B/op	  106245 allocs/op
+BenchmarkPeriodicSnapshot/replace/append-12            	      21	  11004194 ns/op	25258414 B/op	  106212 allocs/op
+BenchmarkPeriodicSnapshot/replace/append-12            	      22	  10278354 ns/op	25256061 B/op	  106243 allocs/op
+BenchmarkPeriodicSnapshot/replace/append-12            	      22	  10203761 ns/op	25264359 B/op	  106245 allocs/op
+BenchmarkPeriodicSnapshot/replace/mixed-12             	      22	  10201682 ns/op	25250823 B/op	  106291 allocs/op
+BenchmarkPeriodicSnapshot/replace/mixed-12             	      22	  10430759 ns/op	25235037 B/op	  106291 allocs/op
+BenchmarkPeriodicSnapshot/replace/mixed-12             	      21	  10551978 ns/op	25287951 B/op	  106267 allocs/op
+BenchmarkPeriodicSnapshot/replace/mixed-12             	      22	  10249953 ns/op	25265649 B/op	  106292 allocs/op
+BenchmarkPeriodicSnapshot/replace/mixed-12             	      22	  10257189 ns/op	25251258 B/op	  106293 allocs/op
+BenchmarkPeriodicSnapshot/replace/hidden-12            	      50	   4787068 ns/op	 6244823 B/op	   31008 allocs/op
+BenchmarkPeriodicSnapshot/replace/hidden-12            	      50	   4731854 ns/op	 6244776 B/op	   31008 allocs/op
+BenchmarkPeriodicSnapshot/replace/hidden-12            	      50	   4745899 ns/op	 6243387 B/op	   31008 allocs/op
+BenchmarkPeriodicSnapshot/replace/hidden-12            	      48	   4732945 ns/op	 6241841 B/op	   31007 allocs/op
+BenchmarkPeriodicSnapshot/replace/hidden-12            	      51	   4756202 ns/op	 6240643 B/op	   31007 allocs/op
+BenchmarkPeriodicSnapshot/apply/unchanged-12           	    2190	    109601 ns/op	     272 B/op	       5 allocs/op
+BenchmarkPeriodicSnapshot/apply/unchanged-12           	    2161	    109561 ns/op	     272 B/op	       5 allocs/op
+BenchmarkPeriodicSnapshot/apply/unchanged-12           	    2180	    110088 ns/op	     272 B/op	       5 allocs/op
+BenchmarkPeriodicSnapshot/apply/unchanged-12           	    2149	    109521 ns/op	     272 B/op	       5 allocs/op
+BenchmarkPeriodicSnapshot/apply/unchanged-12           	    2139	    110943 ns/op	     272 B/op	       5 allocs/op
+BenchmarkPeriodicSnapshot/apply/metric-12              	     126	   1895649 ns/op	 1666664 B/op	   11403 allocs/op
+BenchmarkPeriodicSnapshot/apply/metric-12              	     126	   1889100 ns/op	 1663811 B/op	   11403 allocs/op
+BenchmarkPeriodicSnapshot/apply/metric-12              	     124	   1906748 ns/op	 1667509 B/op	   11403 allocs/op
+BenchmarkPeriodicSnapshot/apply/metric-12              	     126	   1906233 ns/op	 1662699 B/op	   11403 allocs/op
+BenchmarkPeriodicSnapshot/apply/metric-12              	     121	   1977972 ns/op	 1665866 B/op	   11406 allocs/op
+BenchmarkPeriodicSnapshot/apply/request-12             	      37	   6234693 ns/op	19003588 B/op	   78029 allocs/op
+BenchmarkPeriodicSnapshot/apply/request-12             	      38	   6382103 ns/op	19001868 B/op	   78028 allocs/op
+BenchmarkPeriodicSnapshot/apply/request-12             	      38	   6200889 ns/op	19001362 B/op	   78027 allocs/op
+BenchmarkPeriodicSnapshot/apply/request-12             	      37	   6235173 ns/op	18997649 B/op	   78029 allocs/op
+BenchmarkPeriodicSnapshot/apply/request-12             	      36	   6236318 ns/op	18971030 B/op	   78025 allocs/op
+BenchmarkPeriodicSnapshot/apply/append-12              	      42	   5804953 ns/op	12629666 B/op	   59818 allocs/op
+BenchmarkPeriodicSnapshot/apply/append-12              	      42	   5863688 ns/op	12605731 B/op	   59814 allocs/op
+BenchmarkPeriodicSnapshot/apply/append-12              	      40	   5827761 ns/op	12607158 B/op	   59815 allocs/op
+BenchmarkPeriodicSnapshot/apply/append-12              	      42	   5812630 ns/op	12608725 B/op	   59815 allocs/op
+BenchmarkPeriodicSnapshot/apply/append-12              	      40	   5749052 ns/op	12612968 B/op	   59815 allocs/op
+BenchmarkPeriodicSnapshot/apply/mixed-12               	      32	   7358372 ns/op	20796911 B/op	   86775 allocs/op
+BenchmarkPeriodicSnapshot/apply/mixed-12               	      31	   7347558 ns/op	20803832 B/op	   86754 allocs/op
+BenchmarkPeriodicSnapshot/apply/mixed-12               	      31	   7383935 ns/op	20795090 B/op	   86754 allocs/op
+BenchmarkPeriodicSnapshot/apply/mixed-12               	      32	   7347719 ns/op	20801225 B/op	   86774 allocs/op
+BenchmarkPeriodicSnapshot/apply/mixed-12               	      31	   7362952 ns/op	20817128 B/op	   86756 allocs/op
+BenchmarkPeriodicSnapshot/apply/hidden-12              	    4990	     46149 ns/op	  109440 B/op	      13 allocs/op
+BenchmarkPeriodicSnapshot/apply/hidden-12              	    5061	     46434 ns/op	  109440 B/op	      13 allocs/op
+BenchmarkPeriodicSnapshot/apply/hidden-12              	    4963	     46281 ns/op	  109440 B/op	      13 allocs/op
+BenchmarkPeriodicSnapshot/apply/hidden-12              	    4873	     46325 ns/op	  109440 B/op	      13 allocs/op
+BenchmarkPeriodicSnapshot/apply/hidden-12              	    5208	     46272 ns/op	  109440 B/op	      13 allocs/op
+PASS

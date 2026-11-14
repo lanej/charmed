@@ -1,0 +1,2774 @@
+[
+  {
+    "initial_size": {
+      "Width": 120,
+      "Height": 40
+    },
+    "final_size": {
+      "Width": 120,
+      "Height": 40
+    },
+    "schema_version": 1,
+    "measurement_started_unix_ns": 1794637184834147000,
+    "measurement_ended_unix_ns": 1794637304833160000,
+    "headless": false,
+    "presented_frames_in_window": 24,
+    "config": {
+      "Records": 1000,
+      "Points": 300,
+      "Scenario": "unchanged",
+      "Legacy": true,
+      "History": false
+    },
+    "go_version": "go1.26.11",
+    "OS": "darwin",
+    "Arch": "arm64",
+    "revision": "5aff0dafe8878e86f68ea098ddee3c665bdc8337",
+    "dirty": false,
+    "TERM": "xterm-256color",
+    "ColorTERM": "truecolor",
+    "requested_interval_ns": 5000000000,
+    "warmup_ns": 6000000000,
+    "measured_elapsed_ns": 119998417250,
+    "process_cpu_seconds": 1.521,
+    "cpu_available": true,
+    "one_core_percent": 1.2675167180173785,
+    "allocated_bytes": 604178032,
+    "allocations": 2503077,
+    "gc_count": 84,
+    "heap_start_after_gc_bytes": 7445888,
+    "heap_end_after_gc_bytes": 6891784,
+    "frames": 27,
+    "samples": [
+      {
+        "accepted_unix_ns": 1794637188858987000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 2,
+        "status": "presented",
+        "frame": 4,
+        "processing_ns": 35697166,
+        "cpu_seconds": 0.047908000000000006,
+        "cpu_available": true,
+        "allocated_bytes": 25168856,
+        "allocations": 103999,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637193884086000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 3,
+        "status": "presented",
+        "frame": 5,
+        "processing_ns": 35925833,
+        "cpu_seconds": 0.05056500000000003,
+        "cpu_available": true,
+        "allocated_bytes": 25165904,
+        "allocations": 103997,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637198909929000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 4,
+        "status": "presented",
+        "frame": 6,
+        "processing_ns": 34456458,
+        "cpu_seconds": 0.04613400000000001,
+        "cpu_available": true,
+        "allocated_bytes": 25097880,
+        "allocations": 103994,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637203934307000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 5,
+        "status": "presented",
+        "frame": 7,
+        "processing_ns": 36146917,
+        "cpu_seconds": 0.051393999999999995,
+        "cpu_available": true,
+        "allocated_bytes": 25133576,
+        "allocations": 104004,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637208960360000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 6,
+        "status": "presented",
+        "frame": 8,
+        "processing_ns": 31609667,
+        "cpu_seconds": 0.04140499999999997,
+        "cpu_available": true,
+        "allocated_bytes": 25023600,
+        "allocations": 103979,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637213980092000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 7,
+        "status": "presented",
+        "frame": 9,
+        "processing_ns": 35028333,
+        "cpu_seconds": 0.047262999999999944,
+        "cpu_available": true,
+        "allocated_bytes": 25168744,
+        "allocations": 104001,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637219004688000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 8,
+        "status": "presented",
+        "frame": 10,
+        "processing_ns": 34693750,
+        "cpu_seconds": 0.04672999999999994,
+        "cpu_available": true,
+        "allocated_bytes": 25238952,
+        "allocations": 104005,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637224026991000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 9,
+        "status": "presented",
+        "frame": 11,
+        "processing_ns": 11091542,
+        "cpu_seconds": 0.01559900000000003,
+        "cpu_available": true,
+        "allocated_bytes": 25106672,
+        "allocations": 104006,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637229034745000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 10,
+        "status": "presented",
+        "frame": 12,
+        "processing_ns": 34741750,
+        "cpu_seconds": 0.04910899999999996,
+        "cpu_available": true,
+        "allocated_bytes": 25238712,
+        "allocations": 104003,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637234059181000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 11,
+        "status": "presented",
+        "frame": 13,
+        "processing_ns": 35082167,
+        "cpu_seconds": 0.04622400000000004,
+        "cpu_available": true,
+        "allocated_bytes": 25165120,
+        "allocations": 103994,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637239083609000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 12,
+        "status": "presented",
+        "frame": 14,
+        "processing_ns": 31120041,
+        "cpu_seconds": 0.04215799999999992,
+        "cpu_available": true,
+        "allocated_bytes": 25136904,
+        "allocations": 104001,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637244102516000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 13,
+        "status": "presented",
+        "frame": 15,
+        "processing_ns": 32926834,
+        "cpu_seconds": 0.04214200000000001,
+        "cpu_available": true,
+        "allocated_bytes": 25165136,
+        "allocations": 103997,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637249122996000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 14,
+        "status": "presented",
+        "frame": 16,
+        "processing_ns": 32577375,
+        "cpu_seconds": 0.04359000000000002,
+        "cpu_available": true,
+        "allocated_bytes": 25024720,
+        "allocations": 103982,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637254144570000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 15,
+        "status": "presented",
+        "frame": 17,
+        "processing_ns": 35706958,
+        "cpu_seconds": 0.051012999999999975,
+        "cpu_available": true,
+        "allocated_bytes": 25170344,
+        "allocations": 104001,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637259168953000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 16,
+        "status": "presented",
+        "frame": 18,
+        "processing_ns": 32765167,
+        "cpu_seconds": 0.04401999999999995,
+        "cpu_available": true,
+        "allocated_bytes": 25099864,
+        "allocations": 103999,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637264190758000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 17,
+        "status": "presented",
+        "frame": 19,
+        "processing_ns": 33738459,
+        "cpu_seconds": 0.044332999999999956,
+        "cpu_available": true,
+        "allocated_bytes": 24986512,
+        "allocations": 103970,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637269212517000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 18,
+        "status": "presented",
+        "frame": 20,
+        "processing_ns": 35862459,
+        "cpu_seconds": 0.05035900000000004,
+        "cpu_available": true,
+        "allocated_bytes": 25240712,
+        "allocations": 104011,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637274238320000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 19,
+        "status": "presented",
+        "frame": 21,
+        "processing_ns": 35010833,
+        "cpu_seconds": 0.046697999999999906,
+        "cpu_available": true,
+        "allocated_bytes": 25023496,
+        "allocations": 103977,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637279261386000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 20,
+        "status": "presented",
+        "frame": 22,
+        "processing_ns": 35415708,
+        "cpu_seconds": 0.04822900000000008,
+        "cpu_available": true,
+        "allocated_bytes": 25168520,
+        "allocations": 103999,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637284286056000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 21,
+        "status": "presented",
+        "frame": 23,
+        "processing_ns": 36505875,
+        "cpu_seconds": 0.0481339999999999,
+        "cpu_available": true,
+        "allocated_bytes": 25165216,
+        "allocations": 103998,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637289311403000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 22,
+        "status": "presented",
+        "frame": 24,
+        "processing_ns": 35840334,
+        "cpu_seconds": 0.05090299999999992,
+        "cpu_available": true,
+        "allocated_bytes": 25168760,
+        "allocations": 104001,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637294335810000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 23,
+        "status": "presented",
+        "frame": 25,
+        "processing_ns": 33752333,
+        "cpu_seconds": 0.04333100000000001,
+        "cpu_available": true,
+        "allocated_bytes": 25059088,
+        "allocations": 103987,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637299361303000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 24,
+        "status": "presented",
+        "frame": 26,
+        "processing_ns": 27289042,
+        "cpu_seconds": 0.03572200000000003,
+        "cpu_available": true,
+        "allocated_bytes": 25097040,
+        "allocations": 103993,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637304378148000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 25,
+        "status": "presented",
+        "frame": 27,
+        "processing_ns": 35129500,
+        "cpu_seconds": 0.049826999999999844,
+        "cpu_available": true,
+        "allocated_bytes": 25238712,
+        "allocations": 104003,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": null
+      }
+    ],
+    "terminal_bytes_in_window": 0,
+    "frame_processing_ms": {
+      "count": 24,
+      "median": 34.8762915,
+      "p95": 36.146917,
+      "p99": 36.505875,
+      "percentile_method": "nearest_rank"
+    },
+    "unchanged_processing_ms": {
+      "count": 0,
+      "median": null,
+      "p95": null,
+      "p99": null,
+      "percentile_method": "nearest_rank"
+    },
+    "first_output_ms": {
+      "count": 0,
+      "median": null,
+      "p95": null,
+      "p99": null,
+      "percentile_method": "nearest_rank"
+    },
+    "cancelled_samples": 0,
+    "source_revision": "c52a30296feb5c5737e3d8d3c0d7dba0cc3be908",
+    "source_sha256": "3ee3d87a7028290f087bd99638b482b78aa26065f1ffbc22a5c7d2bb38b2a80a",
+    "build_vcs_matches_source": false
+  },
+  {
+    "initial_size": {
+      "Width": 120,
+      "Height": 40
+    },
+    "final_size": {
+      "Width": 120,
+      "Height": 40
+    },
+    "schema_version": 1,
+    "measurement_started_unix_ns": 1794637310929317000,
+    "measurement_ended_unix_ns": 1794637430927350000,
+    "headless": false,
+    "presented_frames_in_window": 0,
+    "config": {
+      "Records": 1000,
+      "Points": 300,
+      "Scenario": "unchanged",
+      "Legacy": false,
+      "History": false
+    },
+    "go_version": "go1.26.11",
+    "OS": "darwin",
+    "Arch": "arm64",
+    "revision": "5aff0dafe8878e86f68ea098ddee3c665bdc8337",
+    "dirty": false,
+    "TERM": "xterm-256color",
+    "ColorTERM": "truecolor",
+    "requested_interval_ns": 5000000000,
+    "warmup_ns": 6000000000,
+    "measured_elapsed_ns": 119997437750,
+    "process_cpu_seconds": 0.475367,
+    "cpu_available": true,
+    "one_core_percent": 0.3961476252437731,
+    "allocated_bytes": 1090448,
+    "allocations": 7496,
+    "gc_count": 0,
+    "heap_start_after_gc_bytes": 7476544,
+    "heap_end_after_gc_bytes": 6831176,
+    "frames": 2,
+    "samples": [
+      {
+        "accepted_unix_ns": 1794637314929572000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 2,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 973166,
+        "cpu_seconds": 0.0009349999999999914,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637319932616000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 3,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 939625,
+        "cpu_seconds": 0.0009000000000000119,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637324935633000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 4,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 977500,
+        "cpu_seconds": 0.0009229999999999794,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637329936894000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 5,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 941417,
+        "cpu_seconds": 0.0008990000000000109,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637334938593000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 6,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 944750,
+        "cpu_seconds": 0.0009050000000000169,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637339939790000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 7,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 510208,
+        "cpu_seconds": 0.0004770000000000052,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637344941016000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 8,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 953417,
+        "cpu_seconds": 0.0009180000000000299,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637349942876000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 9,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 950417,
+        "cpu_seconds": 0.0009100000000000219,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637354945299000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 10,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 959125,
+        "cpu_seconds": 0.0009060000000000179,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637359948294000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 11,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 936333,
+        "cpu_seconds": 0.0008950000000000347,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637364951301000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 12,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 939875,
+        "cpu_seconds": 0.0008980000000000099,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637369954336000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 13,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 829041,
+        "cpu_seconds": 0.0007770000000000277,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637374955423000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 14,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 642584,
+        "cpu_seconds": 0.0006170000000000342,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637379956293000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 15,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 951500,
+        "cpu_seconds": 0.0009020000000000139,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637384958135000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 16,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 949209,
+        "cpu_seconds": 0.0009029999999999871,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637389960053000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 17,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 940584,
+        "cpu_seconds": 0.0009039999999999604,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637394961289000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 18,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 981000,
+        "cpu_seconds": 0.0009299999999999864,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637399964027000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 19,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 939625,
+        "cpu_seconds": 0.0008989999999999831,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637404967053000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 20,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 1024458,
+        "cpu_seconds": 0.0010189999999999921,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637409969680000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 21,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 943042,
+        "cpu_seconds": 0.0009480000000000599,
+        "cpu_available": true,
+        "allocated_bytes": 6544,
+        "allocations": 7,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637414971433000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 22,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 947666,
+        "cpu_seconds": 0.0009040000000000159,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637419972837000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 23,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 939000,
+        "cpu_seconds": 0.0008979999999999544,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637424973985000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 24,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 940417,
+        "cpu_seconds": 0.0009020000000000694,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      },
+      {
+        "accepted_unix_ns": 1794637429976066000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 25,
+        "status": "unchanged",
+        "frame": 2,
+        "processing_ns": 955584,
+        "cpu_seconds": 0.0009099999999999664,
+        "cpu_available": true,
+        "allocated_bytes": 6416,
+        "allocations": 6,
+        "changes": {
+          "Charts": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "Inspector": false,
+          "Health": false
+        },
+        "first_terminal_output_ms": null
+      }
+    ],
+    "terminal_bytes_in_window": 0,
+    "frame_processing_ms": {
+      "count": 0,
+      "median": null,
+      "p95": null,
+      "p99": null,
+      "percentile_method": "nearest_rank"
+    },
+    "unchanged_processing_ms": {
+      "count": 24,
+      "median": 0.9438960000000001,
+      "p95": 0.981,
+      "p99": 1.024458,
+      "percentile_method": "nearest_rank"
+    },
+    "first_output_ms": {
+      "count": 0,
+      "median": null,
+      "p95": null,
+      "p99": null,
+      "percentile_method": "nearest_rank"
+    },
+    "cancelled_samples": 0,
+    "source_revision": "c52a30296feb5c5737e3d8d3c0d7dba0cc3be908",
+    "source_sha256": "3ee3d87a7028290f087bd99638b482b78aa26065f1ffbc22a5c7d2bb38b2a80a",
+    "build_vcs_matches_source": false
+  },
+  {
+    "initial_size": {
+      "Width": 120,
+      "Height": 40
+    },
+    "final_size": {
+      "Width": 120,
+      "Height": 40
+    },
+    "schema_version": 1,
+    "measurement_started_unix_ns": 1794637437022284000,
+    "measurement_ended_unix_ns": 1794637557020890000,
+    "headless": false,
+    "presented_frames_in_window": 24,
+    "config": {
+      "Records": 1000,
+      "Points": 300,
+      "Scenario": "mixed",
+      "Legacy": true,
+      "History": false
+    },
+    "go_version": "go1.26.11",
+    "OS": "darwin",
+    "Arch": "arm64",
+    "revision": "5aff0dafe8878e86f68ea098ddee3c665bdc8337",
+    "dirty": false,
+    "TERM": "xterm-256color",
+    "ColorTERM": "truecolor",
+    "requested_interval_ns": 5000000000,
+    "warmup_ns": 6000000000,
+    "measured_elapsed_ns": 119998009709,
+    "process_cpu_seconds": 1.6955520000000002,
+    "cpu_available": true,
+    "one_core_percent": 1.4129834354017887,
+    "allocated_bytes": 647975448,
+    "allocations": 3021642,
+    "gc_count": 84,
+    "heap_start_after_gc_bytes": 7350408,
+    "heap_end_after_gc_bytes": 7023568,
+    "frames": 27,
+    "samples": [
+      {
+        "accepted_unix_ns": 1794637441045341000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 2,
+        "status": "presented",
+        "frame": 4,
+        "processing_ns": 36157750,
+        "cpu_seconds": 0.04771700000000004,
+        "cpu_available": true,
+        "allocated_bytes": 25764112,
+        "allocations": 106943,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 37.2
+      },
+      {
+        "accepted_unix_ns": 1794637446071170000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 3,
+        "status": "presented",
+        "frame": 5,
+        "processing_ns": 38279209,
+        "cpu_seconds": 0.051173000000000024,
+        "cpu_available": true,
+        "allocated_bytes": 25842512,
+        "allocations": 108527,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 45.555
+      },
+      {
+        "accepted_unix_ns": 1794637451098677000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 4,
+        "status": "presented",
+        "frame": 6,
+        "processing_ns": 37330042,
+        "cpu_seconds": 0.05274200000000001,
+        "cpu_available": true,
+        "allocated_bytes": 25857072,
+        "allocations": 109879,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 49.952
+      },
+      {
+        "accepted_unix_ns": 1794637456126214000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 5,
+        "status": "presented",
+        "frame": 7,
+        "processing_ns": 36860208,
+        "cpu_seconds": 0.04937999999999998,
+        "cpu_available": true,
+        "allocated_bytes": 26012600,
+        "allocations": 111480,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 40.56
+      },
+      {
+        "accepted_unix_ns": 1794637461152397000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 6,
+        "status": "presented",
+        "frame": 8,
+        "processing_ns": 37333875,
+        "cpu_seconds": 0.05305199999999993,
+        "cpu_available": true,
+        "allocated_bytes": 26117392,
+        "allocations": 112860,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 46.15
+      },
+      {
+        "accepted_unix_ns": 1794637466179700000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 7,
+        "status": "presented",
+        "frame": 9,
+        "processing_ns": 37766375,
+        "cpu_seconds": 0.050522999999999985,
+        "cpu_available": true,
+        "allocated_bytes": 26353136,
+        "allocations": 114483,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 52.146
+      },
+      {
+        "accepted_unix_ns": 1794637471207452000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 8,
+        "status": "presented",
+        "frame": 10,
+        "processing_ns": 35990417,
+        "cpu_seconds": 0.04693599999999998,
+        "cpu_available": true,
+        "allocated_bytes": 26299392,
+        "allocations": 115836,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 42.572
+      },
+      {
+        "accepted_unix_ns": 1794637476232551000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 9,
+        "status": "presented",
+        "frame": 11,
+        "processing_ns": 32515542,
+        "cpu_seconds": 0.04643200000000003,
+        "cpu_available": true,
+        "allocated_bytes": 26550528,
+        "allocations": 117417,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 51.214
+      },
+      {
+        "accepted_unix_ns": 1794637481255176000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 10,
+        "status": "presented",
+        "frame": 12,
+        "processing_ns": 33464833,
+        "cpu_seconds": 0.041224999999999956,
+        "cpu_available": true,
+        "allocated_bytes": 26535800,
+        "allocations": 118737,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 45.211
+      },
+      {
+        "accepted_unix_ns": 1794637486281292000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 11,
+        "status": "presented",
+        "frame": 13,
+        "processing_ns": 38577750,
+        "cpu_seconds": 0.050833999999999935,
+        "cpu_available": true,
+        "allocated_bytes": 26572048,
+        "allocations": 120328,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 52.418
+      },
+      {
+        "accepted_unix_ns": 1794637491310825000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 12,
+        "status": "presented",
+        "frame": 14,
+        "processing_ns": 38771208,
+        "cpu_seconds": 0.05300899999999997,
+        "cpu_available": true,
+        "allocated_bytes": 26713864,
+        "allocations": 121730,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 56.233
+      },
+      {
+        "accepted_unix_ns": 1794637496339907000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 13,
+        "status": "presented",
+        "frame": 15,
+        "processing_ns": 40641167,
+        "cpu_seconds": 0.0527169999999999,
+        "cpu_available": true,
+        "allocated_bytes": 26804368,
+        "allocations": 123270,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 42.383
+      },
+      {
+        "accepted_unix_ns": 1794637501370119000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 14,
+        "status": "presented",
+        "frame": 16,
+        "processing_ns": 39983541,
+        "cpu_seconds": 0.05519699999999994,
+        "cpu_available": true,
+        "allocated_bytes": 27042080,
+        "allocations": 124667,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 46.816
+      },
+      {
+        "accepted_unix_ns": 1794637506399390000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 15,
+        "status": "presented",
+        "frame": 17,
+        "processing_ns": 41583083,
+        "cpu_seconds": 0.053609999999999935,
+        "cpu_available": true,
+        "allocated_bytes": 27017240,
+        "allocations": 126212,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 50.93
+      },
+      {
+        "accepted_unix_ns": 1794637511429805000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 16,
+        "status": "presented",
+        "frame": 18,
+        "processing_ns": 40066000,
+        "cpu_seconds": 0.05377100000000001,
+        "cpu_available": true,
+        "allocated_bytes": 27161792,
+        "allocations": 127588,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 52.267
+      },
+      {
+        "accepted_unix_ns": 1794637516460828000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 17,
+        "status": "presented",
+        "frame": 19,
+        "processing_ns": 40116583,
+        "cpu_seconds": 0.051369,
+        "cpu_available": true,
+        "allocated_bytes": 27206360,
+        "allocations": 129123,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 55.803
+      },
+      {
+        "accepted_unix_ns": 1794637521491976000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 18,
+        "status": "presented",
+        "frame": 20,
+        "processing_ns": 41323083,
+        "cpu_seconds": 0.05695199999999989,
+        "cpu_available": true,
+        "allocated_bytes": 27352224,
+        "allocations": 130526,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 58.42
+      },
+      {
+        "accepted_unix_ns": 1794637526523456000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 19,
+        "status": "presented",
+        "frame": 21,
+        "processing_ns": 41395542,
+        "cpu_seconds": 0.05634700000000015,
+        "cpu_available": true,
+        "allocated_bytes": 27423064,
+        "allocations": 132129,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 60.317
+      },
+      {
+        "accepted_unix_ns": 1794637531555134000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 20,
+        "status": "presented",
+        "frame": 22,
+        "processing_ns": 42188500,
+        "cpu_seconds": 0.053364999999999885,
+        "cpu_available": true,
+        "allocated_bytes": 27382312,
+        "allocations": 133449,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 45.243
+      },
+      {
+        "accepted_unix_ns": 1794637536586992000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 21,
+        "status": "presented",
+        "frame": 23,
+        "processing_ns": 41017084,
+        "cpu_seconds": 0.05495399999999995,
+        "cpu_available": true,
+        "allocated_bytes": 27653472,
+        "allocations": 135044,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 46.848
+      },
+      {
+        "accepted_unix_ns": 1794637541617448000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 22,
+        "status": "presented",
+        "frame": 24,
+        "processing_ns": 43448000,
+        "cpu_seconds": 0.05454099999999995,
+        "cpu_available": true,
+        "allocated_bytes": 27662256,
+        "allocations": 136422,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 49.576
+      },
+      {
+        "accepted_unix_ns": 1794637546649787000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 23,
+        "status": "presented",
+        "frame": 25,
+        "processing_ns": 38142667,
+        "cpu_seconds": 0.04728500000000002,
+        "cpu_available": true,
+        "allocated_bytes": 27816192,
+        "allocations": 138003,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 50.314
+      },
+      {
+        "accepted_unix_ns": 1794637551680713000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 24,
+        "status": "presented",
+        "frame": 26,
+        "processing_ns": 43121209,
+        "cpu_seconds": 0.05944800000000017,
+        "cpu_available": true,
+        "allocated_bytes": 27930040,
+        "allocations": 139352,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 53.048
+      },
+      {
+        "accepted_unix_ns": 1794637556713759000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 25,
+        "status": "presented",
+        "frame": 27,
+        "processing_ns": 45074375,
+        "cpu_seconds": 0.05690200000000001,
+        "cpu_available": true,
+        "allocated_bytes": 27937080,
+        "allocations": 140926,
+        "changes": {
+          "Charts": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 53.423
+      }
+    ],
+    "terminal_bytes_in_window": 65048,
+    "frame_processing_ms": {
+      "count": 24,
+      "median": 39.3773745,
+      "p95": 43.448,
+      "p99": 45.074375,
+      "percentile_method": "nearest_rank"
+    },
+    "unchanged_processing_ms": {
+      "count": 0,
+      "median": null,
+      "p95": null,
+      "p99": null,
+      "percentile_method": "nearest_rank"
+    },
+    "first_output_ms": {
+      "count": 24,
+      "median": 50.132999999999996,
+      "p95": 58.42,
+      "p99": 60.317,
+      "percentile_method": "nearest_rank"
+    },
+    "cancelled_samples": 0,
+    "source_revision": "c52a30296feb5c5737e3d8d3c0d7dba0cc3be908",
+    "source_sha256": "3ee3d87a7028290f087bd99638b482b78aa26065f1ffbc22a5c7d2bb38b2a80a",
+    "build_vcs_matches_source": false
+  },
+  {
+    "initial_size": {
+      "Width": 120,
+      "Height": 40
+    },
+    "final_size": {
+      "Width": 120,
+      "Height": 40
+    },
+    "schema_version": 1,
+    "measurement_started_unix_ns": 1794637563119505000,
+    "measurement_ended_unix_ns": 1794637683117916000,
+    "headless": false,
+    "presented_frames_in_window": 24,
+    "config": {
+      "Records": 1000,
+      "Points": 300,
+      "Scenario": "mixed",
+      "Legacy": false,
+      "History": false
+    },
+    "go_version": "go1.26.11",
+    "OS": "darwin",
+    "Arch": "arm64",
+    "revision": "5aff0dafe8878e86f68ea098ddee3c665bdc8337",
+    "dirty": false,
+    "TERM": "xterm-256color",
+    "ColorTERM": "truecolor",
+    "requested_interval_ns": 5000000000,
+    "warmup_ns": 6000000000,
+    "measured_elapsed_ns": 119997814875,
+    "process_cpu_seconds": 1.457057,
+    "cpu_available": true,
+    "one_core_percent": 1.2142362771503759,
+    "allocated_bytes": 542534904,
+    "allocations": 2553554,
+    "gc_count": 71,
+    "heap_start_after_gc_bytes": 7352744,
+    "heap_end_after_gc_bytes": 7068296,
+    "frames": 27,
+    "samples": [
+      {
+        "accepted_unix_ns": 1794637567126014000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 2,
+        "status": "presented",
+        "frame": 4,
+        "processing_ns": 29099584,
+        "cpu_seconds": 0.04031499999999999,
+        "cpu_available": true,
+        "allocated_bytes": 21450192,
+        "allocations": 87450,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 37.097
+      },
+      {
+        "accepted_unix_ns": 1794637572150269000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 3,
+        "status": "presented",
+        "frame": 5,
+        "processing_ns": 29045417,
+        "cpu_seconds": 0.03873399999999999,
+        "cpu_available": true,
+        "allocated_bytes": 21383248,
+        "allocations": 89015,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 44.501
+      },
+      {
+        "accepted_unix_ns": 1794637577175836000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 4,
+        "status": "presented",
+        "frame": 6,
+        "processing_ns": 28772000,
+        "cpu_seconds": 0.04189399999999999,
+        "cpu_available": true,
+        "allocated_bytes": 21537304,
+        "allocations": 90378,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 35.922
+      },
+      {
+        "accepted_unix_ns": 1794637582200792000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 5,
+        "status": "presented",
+        "frame": 7,
+        "processing_ns": 30265166,
+        "cpu_seconds": 0.045309000000000044,
+        "cpu_available": true,
+        "allocated_bytes": 21699992,
+        "allocations": 91995,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 43.981
+      },
+      {
+        "accepted_unix_ns": 1794637587227417000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 6,
+        "status": "presented",
+        "frame": 8,
+        "processing_ns": 30246250,
+        "cpu_seconds": 0.04228900000000002,
+        "cpu_available": true,
+        "allocated_bytes": 21724352,
+        "allocations": 93345,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 35.72
+      },
+      {
+        "accepted_unix_ns": 1794637592252397000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 7,
+        "status": "presented",
+        "frame": 9,
+        "processing_ns": 30315000,
+        "cpu_seconds": 0.042655000000000054,
+        "cpu_available": true,
+        "allocated_bytes": 21821672,
+        "allocations": 94962,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 44.341
+      },
+      {
+        "accepted_unix_ns": 1794637597277839000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 8,
+        "status": "presented",
+        "frame": 10,
+        "processing_ns": 30720208,
+        "cpu_seconds": 0.04341600000000001,
+        "cpu_available": true,
+        "allocated_bytes": 21952816,
+        "allocations": 96341,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 33.846
+      },
+      {
+        "accepted_unix_ns": 1794637602305313000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 9,
+        "status": "presented",
+        "frame": 11,
+        "processing_ns": 31458458,
+        "cpu_seconds": 0.04304700000000006,
+        "cpu_available": true,
+        "allocated_bytes": 21901720,
+        "allocations": 97861,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 41.26
+      },
+      {
+        "accepted_unix_ns": 1794637607331837000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 10,
+        "status": "presented",
+        "frame": 12,
+        "processing_ns": 31946667,
+        "cpu_seconds": 0.043269,
+        "cpu_available": true,
+        "allocated_bytes": 22074288,
+        "allocations": 99223,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 46.06
+      },
+      {
+        "accepted_unix_ns": 1794637612360150000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 11,
+        "status": "presented",
+        "frame": 13,
+        "processing_ns": 32908291,
+        "cpu_seconds": 0.04287699999999994,
+        "cpu_available": true,
+        "allocated_bytes": 22253720,
+        "allocations": 100825,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 35.303
+      },
+      {
+        "accepted_unix_ns": 1794637617389774000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 12,
+        "status": "presented",
+        "frame": 14,
+        "processing_ns": 11889166,
+        "cpu_seconds": 0.018081000000000014,
+        "cpu_available": true,
+        "allocated_bytes": 22402312,
+        "allocations": 102243,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 22.869
+      },
+      {
+        "accepted_unix_ns": 1794637622400616000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 13,
+        "status": "presented",
+        "frame": 15,
+        "processing_ns": 34244375,
+        "cpu_seconds": 0.05137899999999995,
+        "cpu_available": true,
+        "allocated_bytes": 22489984,
+        "allocations": 103782,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 44.967
+      },
+      {
+        "accepted_unix_ns": 1794637627429376000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 14,
+        "status": "presented",
+        "frame": 16,
+        "processing_ns": 32549459,
+        "cpu_seconds": 0.04381500000000005,
+        "cpu_available": true,
+        "allocated_bytes": 22515160,
+        "allocations": 105154,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 33.52
+      },
+      {
+        "accepted_unix_ns": 1794637632458640000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 15,
+        "status": "presented",
+        "frame": 17,
+        "processing_ns": 29043875,
+        "cpu_seconds": 0.038178000000000045,
+        "cpu_available": true,
+        "allocated_bytes": 22631880,
+        "allocations": 106710,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 37.573
+      },
+      {
+        "accepted_unix_ns": 1794637637482516000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 16,
+        "status": "presented",
+        "frame": 18,
+        "processing_ns": 31459209,
+        "cpu_seconds": 0.04065699999999994,
+        "cpu_available": true,
+        "allocated_bytes": 22769944,
+        "allocations": 108071,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 47.772
+      },
+      {
+        "accepted_unix_ns": 1794637642510602000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 17,
+        "status": "presented",
+        "frame": 19,
+        "processing_ns": 31351333,
+        "cpu_seconds": 0.04059299999999988,
+        "cpu_available": true,
+        "allocated_bytes": 22751368,
+        "allocations": 109615,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 34.987
+      },
+      {
+        "accepted_unix_ns": 1794637647537630000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 18,
+        "status": "presented",
+        "frame": 20,
+        "processing_ns": 35273208,
+        "cpu_seconds": 0.046634000000000064,
+        "cpu_available": true,
+        "allocated_bytes": 22820088,
+        "allocations": 110998,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 42.378
+      },
+      {
+        "accepted_unix_ns": 1794637652570403000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 19,
+        "status": "presented",
+        "frame": 21,
+        "processing_ns": 35161834,
+        "cpu_seconds": 0.046883999999999926,
+        "cpu_available": true,
+        "allocated_bytes": 23072032,
+        "allocations": 112631,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 42.17
+      },
+      {
+        "accepted_unix_ns": 1794637657601205000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 20,
+        "status": "presented",
+        "frame": 22,
+        "processing_ns": 37086417,
+        "cpu_seconds": 0.049050999999999956,
+        "cpu_available": true,
+        "allocated_bytes": 23139376,
+        "allocations": 113969,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 45.549
+      },
+      {
+        "accepted_unix_ns": 1794637662634944000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 21,
+        "status": "presented",
+        "frame": 23,
+        "processing_ns": 14419375,
+        "cpu_seconds": 0.020380999999999982,
+        "cpu_available": true,
+        "allocated_bytes": 23166792,
+        "allocations": 115547,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 26.835
+      },
+      {
+        "accepted_unix_ns": 1794637667647120000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 22,
+        "status": "presented",
+        "frame": 24,
+        "processing_ns": 36563208,
+        "cpu_seconds": 0.04897599999999991,
+        "cpu_available": true,
+        "allocated_bytes": 23384592,
+        "allocations": 116934,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 49.893
+      },
+      {
+        "accepted_unix_ns": 1794637672679045000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 23,
+        "status": "presented",
+        "frame": 25,
+        "processing_ns": 33395208,
+        "cpu_seconds": 0.04350199999999993,
+        "cpu_available": true,
+        "allocated_bytes": 23531080,
+        "allocations": 118510,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 51.3
+      },
+      {
+        "accepted_unix_ns": 1794637677707348000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 24,
+        "status": "presented",
+        "frame": 26,
+        "processing_ns": 37214083,
+        "cpu_seconds": 0.04907400000000006,
+        "cpu_available": true,
+        "allocated_bytes": 23612320,
+        "allocations": 119859,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 38.178
+      },
+      {
+        "accepted_unix_ns": 1794637682741671000,
+        "size": {
+          "Width": 120,
+          "Height": 40
+        },
+        "sequence": 25,
+        "status": "presented",
+        "frame": 27,
+        "processing_ns": 37601125,
+        "cpu_seconds": 0.049449000000000076,
+        "cpu_available": true,
+        "allocated_bytes": 23692776,
+        "allocations": 121442,
+        "changes": {
+          "Charts": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "Inspector": true,
+          "Health": true
+        },
+        "first_terminal_output_ms": 54.826
+      }
+    ],
+    "terminal_bytes_in_window": 65048,
+    "frame_processing_ms": {
+      "count": 24,
+      "median": 31.4588335,
+      "p95": 37.214083,
+      "p99": 37.601125,
+      "percentile_method": "nearest_rank"
+    },
+    "unchanged_processing_ms": {
+      "count": 0,
+      "median": null,
+      "p95": null,
+      "p99": null,
+      "percentile_method": "nearest_rank"
+    },
+    "first_output_ms": {
+      "count": 24,
+      "median": 41.715,
+      "p95": 51.3,
+      "p99": 54.826,
+      "percentile_method": "nearest_rank"
+    },
+    "cancelled_samples": 0,
+    "source_revision": "c52a30296feb5c5737e3d8d3c0d7dba0cc3be908",
+    "source_sha256": "3ee3d87a7028290f087bd99638b482b78aa26065f1ffbc22a5c7d2bb38b2a80a",
+    "build_vcs_matches_source": false
+  }
+]

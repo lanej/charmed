@@ -35,6 +35,7 @@ type HTTPExchange struct {
 // HTTPLog exposes native table and viewport models. Resize keeps custom styles
 // and key maps; data changes rebuild rows and the selected detail content.
 type HTTPLog struct {
+	snapshotReady                    bool
 	TimelineGroupBy                  []HTTPGroup
 	Timeline                         bool
 	TimelineLegend                   bool
@@ -123,6 +124,8 @@ func (m *HTTPLog) SetEntries(records []HTTPExchange) error {
 	}
 
 	previous := m.selectedID
+
+	m.snapshotReady = true
 
 	m.records = retainRecords(records, m.Limit)
 	for i, record := range m.records {
