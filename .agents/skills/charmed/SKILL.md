@@ -5,6 +5,8 @@ description: Build Go terminal interfaces with Charmed components, declared layo
 
 # Charmed
 
+Use this skill for applications consuming Charmed. For changes to the library or its website, use [Charmed contributor guidance](https://lanej.io/charmed/skills/charmed-contributing/SKILL.md). Follow the consuming application's engineering and documentation conventions.
+
 Use the current [guide](https://lanej.io/charmed/index.md), [getting started](https://lanej.io/charmed/getting-started.md) and [component catalog](https://lanej.io/charmed/atoms.md) to choose public APIs. Every website page has a matching `.md` URL, including component-family pages with complete consumer examples and native output. [The Markdown index](https://lanej.io/charmed/llms.txt) lists them. Fetch relevant pages rather than assuming APIs from memory; check the application's installed Charmed revision when it differs from the published guide.
 
 ## Compose native components
@@ -21,7 +23,7 @@ Return initialization, focus and update commands to Bubble Tea, retain returned 
 
 ## Retain presentation
 
-Follow [retained rendering](https://lanej.io/charmed/rendering.md). `runtime.Root` processes updates in order and schedules presentation on demand; `Root.View` reads the completed frame. Forward all messages and returned commands when wrapping a root, and close owned resources. For synchronous snapshots, call `PresentNow` and handle its error before reading `View`; it does not execute application commands.
+Use `runtime.Root` when its scheduling and scene coordination fit the application; composing components in your own Bubble Tea root is also supported. Follow [retained rendering](https://lanej.io/charmed/rendering.md). `runtime.Root` processes updates in order and schedules presentation on demand; `Root.View` reads the completed frame. Forward all messages and returned commands when wrapping a root, and close owned resources. For synchronous snapshots, call `PresentNow` and handle its error before reading `View`; it does not execute application commands.
 
 After direct edits to cached Git or JSON presentation, invalidate the component and request a root frame. Advance application-owned region or inspector-pane revisions after every visible change. An optional scene `PresentationRevision` must include focus, scrolling, cursor, theme and styling as well as data; omit it when that cannot be guaranteed. Keep caches bounded to documented content and allocation.
 
@@ -29,4 +31,4 @@ After direct edits to cached Git or JSON presentation, invalidate the component 
 
 Run the consuming application's established checks. Exercise keyboard input, resizing, independent scrolling, native customization and snapshots through public APIs. Inspect native output to judge visual quality. Use [measurement instructions](https://lanej.io/charmed/development.md#measure-rendering) for resource-sensitive changes; separate generated-frame costs, terminal output and painting.
 
-Document supported behavior, ownership, lifecycle and usage in the present tense. Keep implementation history, migration narratives and before/after audit reports outside product documentation. Installing this skill supplies guidance; it does not install Go dependencies, change project policy or authorize publication.
+When describing an integration, explain the APIs and lifecycle responsibilities relevant to the consuming application and cite the matching library documentation. Installing this skill supplies guidance; it does not install Go dependencies, require contributor tooling, change project policy or authorize publication.

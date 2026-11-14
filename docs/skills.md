@@ -4,17 +4,16 @@ Charmed publishes portable agent guidance and a Markdown edition of every guide 
 
 ## Choose a skill
 
-Packages contain a `SKILL.md` entrypoint plus all bundled references, scripts and assets. The Charmed skill helps application authors use the library; Builder and Go provide contributor guidance without installing dependencies or replacing project policy.
+Choose guidance for the work you are doing: building an application with Charmed or contributing to the library itself. Each package contains its own `SKILL.md` entrypoint and references canonical documentation without installing tools or replacing project policy.
 
 | Skill | Scope | Downloads |
 | --- | --- | --- |
 | Charmed | Components, layouts, native lifecycle and retained rendering | [Entrypoint](skills/charmed/SKILL.md) · [Complete package](skills/charmed.tar.gz) |
-| Builder | Software contracts, architecture and verification | [Entrypoint](skills/builder/SKILL.md) · [Complete package](skills/builder.tar.gz) |
-| Go | Correctness checks, enums, errors and portable quality assets | [Entrypoint](skills/go/SKILL.md) · [Complete package](skills/go.tar.gz) |
+| Charmed contributing | Library architecture, native examples, repository checks and website standards | [Entrypoint](skills/charmed-contributing/SKILL.md) · [Complete package](skills/charmed-contributing.tar.gz) |
 
 ## Install a package
 
-Run from your application's root and select `charmed`, `builder` or `go`. This example installs into the repository's `.agents/skills` directory. Choose the skill directory supported by your agent when it differs. Inspect the downloaded entrypoint and package before extraction; an existing skill directory is left untouched.
+Select `charmed` for application work, or `charmed-contributing` for library contributions. Charmed source checkouts already contain both skills; use those copies. This example installs into the repository's `.agents/skills` directory. Choose the skill directory supported by your agent when it differs. Inspect the downloaded entrypoint and package before extraction; an existing skill directory is left untouched.
 
 ```sh
 (
@@ -33,7 +32,7 @@ Run from your application's root and select `charmed`, `builder` or `go`. This e
 )
 ```
 
-Load or refresh your agent's skills using its normal discovery workflow. Installing the package does not make its guidance authoritative over project instructions. Builder's example checker and Go's optional portable quality assets have their own prerequisites documented inside each package.
+Load or refresh your agent's skills using its normal discovery workflow. Installing the package does not make its guidance authoritative over project instructions. Application authors use their own project checks; contributors follow the checked-out Charmed instructions and existing repository tooling.
 
 ## Read the website as Markdown
 

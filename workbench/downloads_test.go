@@ -44,11 +44,32 @@ func assertGuideDownloads(t *testing.T, directory string, pages map[string][]byt
 		}
 	}
 
-	for _, name := range []string{"charmed", "builder", "go"} {
+	for _, name := range []string{"charmed", "charmed-contributing"} {
 		assertSkillArchive(t, directory, name)
 
 		archive := "skills/" + name + ".tar.gz"
 		downloads[archive] = readDownload(t, directory, archive)
+	}
+
+	packages, err := os.ReadDir(filepath.Join(directory, "skills"))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(packages) != 4 {
+		t.Errorf("expected only two skill directories and two archives; got %v", packages)
+	}
+
+	for _, name := range []string{"builder", "go"} {
+		for _, path := range []string{"skills/" + name, "skills/" + name + ".tar.gz"} {
+			if _, statErr := os.Stat(filepath.Join(directory, path)); !errors.Is(statErr, os.ErrNotExist) {
+				t.Errorf("internal skill published at %s: %v", path, statErr)
+			}
+		}
+
+		if bytes.Contains(index, []byte("/skills/"+name+"/")) {
+			t.Errorf("index advertises internal skill %s", name)
+		}
 	}
 
 	return downloads
@@ -124,13 +145,7 @@ func assertSkillArchive(t *testing.T, directory, name string) {
 		}
 	}
 
-	for _, path := range map[string][]string{
-		"charmed": {"SKILL.md"},
-		"builder": {"SKILL.md", "references/standard.md", "references/construction.md", "references/instructions.md", "scripts/check_examples.py", "scripts/operations.py", "scripts/decisions.py", "scripts/utility.py"},
-		"go":      {"SKILL.md", "references/correctness.md", "assets/check-go.sh", "assets/go-quality.py", "assets/go-quality.json", "assets/golangci.yml", "assets/go-quality.yml"},
-	}[name] {
-		if !entries[name+"/"+path] {
-			t.Errorf("incomplete %s archive: missing %s", name, path)
-		}
+	if !entries[name+"/SKILL.md"] || len(entries) != 1 {
+		t.Errorf("%s must contain its standalone SKILL.md only: %v", name, entries)
 	}
 }
