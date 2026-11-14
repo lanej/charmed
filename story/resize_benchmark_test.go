@@ -48,6 +48,7 @@ func BenchmarkResizeRender(b *testing.B) {
 					for b.Loop() {
 						size := scenario.sizes[i%len(scenario.sizes)]
 						_, _ = model.Update(tea.WindowSizeMsg{Width: size.Width, Height: size.Height})
+						presentCatalog(b, model)
 						renderedFrame = model.View().Content
 						i++
 					}

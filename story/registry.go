@@ -245,9 +245,12 @@ func newRoot(id string, config Config, emit func(any), capture bool) (*runtime.R
 		return nil, err
 	}
 
-	scene.Resize(config.Size())
+	root := &runtime.Root{Scene: scene, Background: config.Palette().Background, Size: config.Size(), AltScreen: true, ASCII: config.Palette().ASCII}
+	if err := root.PresentNow(); err != nil {
+		return nil, errors.Join(err, root.Close())
+	}
 
-	return &runtime.Root{Scene: scene, Background: config.Palette().Background, Size: config.Size(), AltScreen: true, ASCII: config.Palette().ASCII}, nil
+	return root, nil
 }
 
 // Frame renders a deterministic Go View without running initialization commands.

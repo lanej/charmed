@@ -410,6 +410,7 @@ func TestFocusPresentationPreservesIndependentScroll(t *testing.T) {
 	}
 
 	list.Update(press("j"))
+	list.View()
 
 	if list.Viewport.YOffset() >= 8 {
 		t.Fatal("actual navigation failed to reveal selected item")

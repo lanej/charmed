@@ -1,4 +1,4 @@
-// Command perf-probe measures native update-to-view time using the real runtime.
+// Command perf-probe measures accepted updates through completed runtime frames.
 package main
 
 import (
@@ -14,50 +14,97 @@ import (
 	"github.com/lanej/charmed/story"
 )
 
+type pendingSample struct {
+	first, last time.Time
+	count       int
+}
 type probe struct {
 	root     *runtime.Root
 	trace    *json.Encoder
-	started  time.Time
-	kind     string
+	pending  [3]pendingSample
 	traceErr error
+}
+
+type frameSample struct {
+	Kind           string `json:"kind"`
+	Count          int    `json:"count"`
+	Frame          uint64 `json:"frame"`
+	Status         string `json:"status"`
+	Duration       int64  `json:"duration_ns"`
+	LatestDuration int64  `json:"latest_duration_ns"`
 }
 
 func (m *probe) Init() tea.Cmd { return m.root.Init() }
 func (m *probe) Update(message tea.Msg) (tea.Model, tea.Cmd) {
-	switch event := message.(type) {
-	case tea.KeyPressMsg:
-		if event.String() != "ctrl+c" {
-			m.started = time.Now()
-			m.kind = "key"
-		}
-	case tea.WindowSizeMsg:
-		m.started = time.Now()
-		m.kind = "resize"
-	default:
-		m.started = time.Now()
-		m.kind = "message"
-	}
+	started := time.Now()
+	before := m.root.FrameRevision()
 
 	_, command := m.root.Update(message)
+	if m.root.FrameRevision() != before {
+		m.flush(time.Now(), "presented")
+
+		if m.traceErr != nil {
+			return m, tea.Quit
+		}
+
+		return m, command
+	}
+
+	index := 2
+
+	switch event := message.(type) {
+	case tea.KeyPressMsg:
+		if event.String() == "ctrl+c" {
+			m.flush(time.Now(), "cancelled")
+			return m, command
+		}
+
+		index = 0
+	case tea.WindowSizeMsg:
+		index = 1
+	}
+
+	sample := &m.pending[index]
+	if sample.count == 0 {
+		sample.first = started
+	}
+
+	sample.last = started
+	sample.count++
+
+	if !m.root.PresentationPending() {
+		m.flush(time.Now(), "unchanged")
+
+		if m.traceErr != nil {
+			return m, tea.Quit
+		}
+	}
 
 	return m, command
 }
 
-func (m *probe) View() tea.View {
-	view := m.root.View()
-	if !m.started.IsZero() {
-		if err := m.trace.Encode(struct {
-			Kind     string `json:"kind"`
-			Duration int64  `json:"duration_ns"`
-		}{m.kind, time.Since(m.started).Nanoseconds()}); err != nil {
-			m.traceErr = err
+func (m *probe) flush(now time.Time, status string) {
+	kinds := [3]string{"key", "resize", "message"}
+
+	for i, sample := range m.pending {
+		if sample.count == 0 {
+			continue
 		}
 
-		m.started = time.Time{}
-	}
+		record := frameSample{Kind: kinds[i], Count: sample.count, Frame: m.root.FrameRevision(), Status: status}
+		if status == "presented" {
+			record.Duration = now.Sub(sample.first).Nanoseconds()
+			record.LatestDuration = now.Sub(sample.last).Nanoseconds()
+		}
 
-	return view
+		if err := m.trace.Encode(record); err != nil {
+			m.traceErr = errors.Join(m.traceErr, err)
+		}
+
+		m.pending[i] = pendingSample{}
+	}
 }
+func (m *probe) View() tea.View { return m.root.View() }
 
 func run() (err error) {
 	id := flag.String("story", "git/browser", "Native fixture")
@@ -93,11 +140,10 @@ func run() (err error) {
 	defer func() { err = errors.Join(err, model.Close()) }()
 
 	measured := &probe{root: model, trace: json.NewEncoder(file)}
-	if _, err = tea.NewProgram(measured).Run(); err != nil {
-		return err
-	}
+	_, programErr := tea.NewProgram(measured).Run()
+	measured.flush(time.Now(), "cancelled")
 
-	return measured.traceErr
+	return errors.Join(programErr, measured.traceErr)
 }
 
 func main() {

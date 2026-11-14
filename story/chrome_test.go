@@ -29,7 +29,7 @@ func TestApplicationShellSelectionSurvivesResize(t *testing.T) {
 		t.Fatal("section change did not return a selection command")
 	}
 
-	selected, ok := cmd().(interaction.Selected)
+	selected, ok := applicationMessage(cmd).(interaction.Selected)
 	if !ok || selected.ID != "services" {
 		t.Fatalf("section event: %+v", selected)
 	}
@@ -38,7 +38,7 @@ func TestApplicationShellSelectionSurvivesResize(t *testing.T) {
 
 	for _, width := range []int{40, 100} {
 		m.Update(tea.WindowSizeMsg{Width: width, Height: 12})
-		view := ansi.Strip(m.View().Content)
+		view := ansi.Strip(m.Render().Content)
 
 		for _, want := range []string{" Services ", "api          running", "Ctrl+C quit", "Service workbench"} {
 			if !strings.Contains(view, want) {

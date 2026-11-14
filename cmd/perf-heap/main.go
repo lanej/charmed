@@ -42,7 +42,7 @@ func measure(id string, cycles, phases int) (observation, error) {
 	exercise := func() {
 		for _, size := range [][2]int{{40, 12}, {120, 40}, {200, 60}} {
 			_, _ = model.Update(tea.WindowSizeMsg{Width: size[0], Height: size[1]})
-			model.View()
+			model.Render()
 		}
 	}
 	exercise()

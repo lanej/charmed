@@ -10,12 +10,13 @@ import (
 
 // scene is only a fixture adapter: production widgets keep their concrete APIs.
 type scene struct {
-	size   layout.Size
-	init   func() tea.Cmd
-	update func(tea.Msg) tea.Cmd
-	resize func(layout.Size)
-	view   func(layout.Size) string
-	close  func() error
+	revision uint64
+	size     layout.Size
+	init     func() tea.Cmd
+	update   func(tea.Msg) tea.Cmd
+	resize   func(layout.Size)
+	view     func(layout.Size) string
+	close    func() error
 }
 
 func (s *scene) Init() tea.Cmd {
@@ -28,6 +29,7 @@ func (s *scene) Init() tea.Cmd {
 
 func (s *scene) Update(msg tea.Msg) tea.Cmd {
 	if s.update != nil {
+		s.revision++
 		return s.update(msg)
 	}
 
@@ -95,3 +97,6 @@ func footer(value string, e Environment) string {
 	return "\n\n" + e.Config.Palette().Subtle().Render(value)
 }
 func labelCounter(label string, n int) string { return fmt.Sprintf("%s %d", label, n) }
+
+// PresentationRevision lets the runtime avoid frames for static-scene messages.
+func (s *scene) PresentationRevision() uint64 { return s.revision }
