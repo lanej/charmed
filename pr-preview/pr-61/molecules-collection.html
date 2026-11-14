@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Molecules / Collections · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Molecules / Collections</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">72</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+<div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-collection.html" aria-current="page">Collections</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-data.html" >Data</a><a class="nav-group" href="molecules-diagram.html" >Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-git.html" >git</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" >Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="migration.html" >Migrate existing UIs</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#collection%2fstatic-table">Static table</a><a class="nav-component" href="#collection%2fscroll-pane">Scroll pane</a></div>
+
+</div>
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">72</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+<div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-collection.html" aria-current="page">Collections</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-data.html" >Data</a><a class="nav-group" href="molecules-diagram.html" >Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-git.html" >git</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" >Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="migration.html" >Migrate existing UIs</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#collection%2fstatic-table">Static table</a><a class="nav-component" href="#collection%2fscroll-pane">Scroll pane</a></div>
+
+</div>
+</nav>
+</aside>
+<main id="main">
+
+
+
+
+
+
+
+
+
+<section class="atomic-level" id="level-molecules">
+<p class="catalog-breadcrumb"><a href="molecules.html">Molecules</a><span aria-hidden="true"> / </span>Collections</p>
+
+<section class="component-family" id="level-molecules-collection"><h1><a class="heading-permalink" href="#level-molecules-collection"><span>Collections</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">2 components · <a href="molecules.html">All molecules</a></p>
+<ul class="group-jump-links" aria-label="Components in Collections"><li><a href="#collection%2fstatic-table">Static table</a></li><li><a href="#collection%2fscroll-pane">Scroll pane</a></li></ul>
+
+
+<section class="component" id="collection/static-table">
+<p class="eyebrow"><a href="molecules.html">Molecules</a> / Collections</p><h2><a class="heading-permalink" href="#collection%2fstatic-table" aria-label="Link to Static table component"><span>Static table</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">A non-interactive comparison table. Cells wrap in their column; 55 columns and narrower stack a table that would not fit whole, never truncating a value. Missing, unknown and truncated cells keep their word and glyph.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="collection/static-table-preview"><a class="heading-permalink" href="#collection%2fstatic-table-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Static table variants">
+<a id="tab-collection/static-table-example" href="#panel-collection%2fstatic-table-example" role="tab" aria-controls="panel-collection/static-table-example" aria-selected="true">Example</a>
+<a id="tab-collection/static-table-0" href="#panel-collection%2fstatic-table-0" role="tab" aria-controls="panel-collection/static-table-0" aria-selected="false">Demo</a><a id="tab-collection/static-table-1" href="#panel-collection%2fstatic-table-1" role="tab" aria-controls="panel-collection/static-table-1" aria-selected="false">Narrow</a><a id="tab-collection/static-table-2" href="#panel-collection%2fstatic-table-2" role="tab" aria-controls="panel-collection/static-table-2" aria-selected="false">256 colors</a><a id="tab-collection/static-table-3" href="#panel-collection%2fstatic-table-3" role="tab" aria-controls="panel-collection/static-table-3" aria-selected="false">16 colors</a><a id="tab-collection/static-table-4" href="#panel-collection%2fstatic-table-4" role="tab" aria-controls="panel-collection/static-table-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-collection/static-table-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/static-table-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#eeeeee;font-weight:bold;">HOST</span>      <span style="color:#eeeeee;font-weight:bold;">VERSION</span>       <span style="color:#eeeeee;font-weight:bold;">STATE</span>
+<span style="color:#eeeeee;font-weight:bold;">web1west</span>  <span style="color:#eeeeee;">9f2c4e1a7b3d</span>  <span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ HEALTHY</span><span style="background-color:#223334;"> </span>
+<span style="color:#eeeeee;font-weight:bold;">web2west</span>  <span style="color:#eeeeee;">∅ missing</span>     <span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span></pre></figure>
+</div>
+<div id="panel-collection/static-table-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/static-table-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">At the allocation</span>                                               
+<span style="color:#eeeeee;font-weight:bold;">HOST</span>      <span style="color:#eeeeee;font-weight:bold;">VERSION</span>           <span style="color:#eeeeee;font-weight:bold;">STATE</span>          <span style="color:#eeeeee;font-weight:bold;">NOTE</span>                 
+<span style="color:#eeeeee;font-weight:bold;">web1west</span>  <span style="color:#eeeeee;">9f2c4e1a7b3d5c60</span>  <span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ HEALTHY</span><span style="background-color:#223334;"> </span>    <span style="color:#eeeeee;">serving</span>              
+<span style="color:#eeeeee;font-weight:bold;">web2west</span>  <span style="color:#eeeeee;">∅ missing</span>         <span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span>    <span style="color:#eeeeee;">no report received</span>   
+<span style="color:#eeeeee;font-weight:bold;">web3west</span>  <span style="color:#eeeeee;">3b1d7e90a2c4f658</span>  <span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ STALE</span><span style="background-color:#32322f;"> </span> <span style="color:#eeeeee;">18m</span>  <span style="color:#eeeeee;">last read</span> <span style="color:#eeeeee;">! source</span>   
+                                           <span style="color:#eeeeee;">truncated (42</span>        
+                                           <span style="color:#eeeeee;">omitted)</span>             
+<span style="color:#eeeeee;font-weight:bold;">web4west</span>  <span style="color:#eeeeee;">&#34;&#34;</span>                <span style="color:#eeeeee;">∅ missing</span>      <span style="color:#eeeeee;">∅ missing</span></pre></figure>
+</div><div id="panel-collection/static-table-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/static-table-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#67d4c0;font-weight:bold;">At the allocation</span>                       
+<span style="color:#eeeeee;font-weight:bold;">web1west</span>                                
+<span style="color:#a8a8a8;">VERSION:</span> <span style="color:#eeeeee;">9f2c4e1a7b3d5c60</span>               
+<span style="color:#a8a8a8;">STATE:</span> <span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ HEALTHY</span><span style="background-color:#223334;"> </span>                      
+<span style="color:#a8a8a8;">NOTE:</span> <span style="color:#eeeeee;">serving</span>                           
+                                        
+<span style="color:#eeeeee;font-weight:bold;">web2west</span>                                
+<span style="color:#a8a8a8;">VERSION:</span> <span style="color:#eeeeee;">∅ missing</span>                      
+<span style="color:#a8a8a8;">STATE:</span> <span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? UNKNOWN</span><span style="background-color:#27303f;"> </span>                      
+<span style="color:#a8a8a8;">NOTE:</span> <span style="color:#eeeeee;">no report received</span>                
+                                        
+<span style="color:#eeeeee;font-weight:bold;">web3west</span>                                
+<span style="color:#a8a8a8;">VERSION:</span> <span style="color:#eeeeee;">3b1d7e90a2c4f658</span>               
+<span style="color:#a8a8a8;">STATE:</span> <span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">◷ STALE</span><span style="background-color:#32322f;"> </span> <span style="color:#eeeeee;">18m</span>                    
+<span style="color:#a8a8a8;">NOTE:</span> <span style="color:#eeeeee;">last read</span> <span style="color:#eeeeee;">! source truncated (42</span>  
+      <span style="color:#eeeeee;">omitted)</span></pre></figure>
+</div><div id="panel-collection/static-table-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/static-table-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#5fd7af;font-weight:bold;">At the allocation</span>                                               
+<span style="color:#eeeeee;font-weight:bold;">HOST</span>      <span style="color:#eeeeee;font-weight:bold;">VERSION</span>           <span style="color:#eeeeee;font-weight:bold;">STATE</span>          <span style="color:#eeeeee;font-weight:bold;">NOTE</span>                 
+<span style="color:#eeeeee;font-weight:bold;">web1west</span>  <span style="color:#eeeeee;">9f2c4e1a7b3d5c60</span>  <span style="background-color:#005f5f;"> </span><span style="color:#87d787;background-color:#005f5f;">✓ HEALTHY</span><span style="background-color:#005f5f;"> </span>    <span style="color:#eeeeee;">serving</span>              
+<span style="color:#eeeeee;font-weight:bold;">web2west</span>  <span style="color:#eeeeee;">∅ missing</span>         <span style="background-color:#005f5f;"> </span><span style="color:#afafd7;background-color:#005f5f;">? UNKNOWN</span><span style="background-color:#005f5f;"> </span>    <span style="color:#eeeeee;">no report received</span>   
+<span style="color:#eeeeee;font-weight:bold;">web3west</span>  <span style="color:#eeeeee;">3b1d7e90a2c4f658</span>  <span style="background-color:#303030;"> </span><span style="color:#ffd787;background-color:#303030;">◷ STALE</span><span style="background-color:#303030;"> </span> <span style="color:#eeeeee;">18m</span>  <span style="color:#eeeeee;">last read</span> <span style="color:#eeeeee;">! source</span>   
+                                           <span style="color:#eeeeee;">truncated (42</span>        
+                                           <span style="color:#eeeeee;">omitted)</span>             
+<span style="color:#eeeeee;font-weight:bold;">web4west</span>  <span style="color:#eeeeee;">&#34;&#34;</span>                <span style="color:#eeeeee;">∅ missing</span>      <span style="color:#eeeeee;">∅ missing</span></pre></figure>
+</div><div id="panel-collection/static-table-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/static-table-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#00ff00;font-weight:bold;">At the allocation</span>                                               
+<span style="color:#ffffff;font-weight:bold;">HOST</span>      <span style="color:#ffffff;font-weight:bold;">VERSION</span>           <span style="color:#ffffff;font-weight:bold;">STATE</span>          <span style="color:#ffffff;font-weight:bold;">NOTE</span>                 
+<span style="color:#ffffff;font-weight:bold;">web1west</span>  <span style="color:#ffffff;">9f2c4e1a7b3d5c60</span>  <span style="background-color:#008080;"> </span><span style="color:#00ff00;background-color:#008080;">✓ HEALTHY</span><span style="background-color:#008080;"> </span>    <span style="color:#ffffff;">serving</span>              
+<span style="color:#ffffff;font-weight:bold;">web2west</span>  <span style="color:#ffffff;">∅ missing</span>         <span style="background-color:#008080;"> </span><span style="color:#0000ff;background-color:#008080;">? UNKNOWN</span><span style="background-color:#008080;"> </span>    <span style="color:#ffffff;">no report received</span>   
+<span style="color:#ffffff;font-weight:bold;">web3west</span>  <span style="color:#ffffff;">3b1d7e90a2c4f658</span>  <span style="background-color:#000000;"> </span><span style="color:#ff0000;background-color:#000000;">◷ STALE</span><span style="background-color:#000000;"> </span> <span style="color:#ffffff;">18m</span>  <span style="color:#ffffff;">last read</span> <span style="color:#ffffff;">! source</span>   
+                                           <span style="color:#ffffff;">truncated (42</span>        
+                                           <span style="color:#ffffff;">omitted)</span>             
+<span style="color:#ffffff;font-weight:bold;">web4west</span>  <span style="color:#ffffff;">&#34;&#34;</span>                <span style="color:#ffffff;">∅ missing</span>      <span style="color:#ffffff;">∅ missing</span></pre></figure>
+</div><div id="panel-collection/static-table-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/static-table-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 64 × 8 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">At the allocation</span>                                               
+<span style="font-weight:bold;">HOST</span>      <span style="font-weight:bold;">VERSION</span>           <span style="font-weight:bold;">STATE</span>          <span style="font-weight:bold;">NOTE</span>                 
+<span style="font-weight:bold;">web1west</span>  9f2c4e1a7b3d5c60  [+ HEALTHY]    serving              
+<span style="font-weight:bold;">web2west</span>  missing           [? UNKNOWN]    no report received   
+<span style="font-weight:bold;">web3west</span>  3b1d7e90a2c4f658  [t STALE] 18m  last read source     
+                                           truncated (42        
+                                           omitted)             
+<span style="font-weight:bold;">web4west</span>  &#34;&#34;                missing        missing</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="collection/static-table-code"><a class="heading-permalink" href="#collection%2fstatic-table-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/collection" title="github.com/lanej/charmed/collection"><code>collection</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/feedback" title="github.com/lanej/charmed/feedback"><code>feedback</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">table <span class="syn-operator">:=</span> collection<span class="syn-operator">.</span>StaticTable<span class="syn-operator">{</span>
+	Columns<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>collection<span class="syn-operator">.</span>TableColumn<span class="syn-operator">{</span><span class="syn-operator">{</span>Title<span class="syn-operator">:</span> <span class="syn-string">&#34;HOST&#34;</span><span class="syn-operator">,</span> Fixed<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span>Title<span class="syn-operator">:</span> <span class="syn-string">&#34;VERSION&#34;</span><span class="syn-operator">,</span> Min<span class="syn-operator">:</span> <span class="syn-number">10</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span>Title<span class="syn-operator">:</span> <span class="syn-string">&#34;STATE&#34;</span><span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+	Rows<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-operator">[</span><span class="syn-operator">]</span>collection<span class="syn-operator">.</span>TableCell<span class="syn-operator">{</span>
+		<span class="syn-operator">{</span>collection<span class="syn-operator">.</span><span class="syn-function">TableText</span><span class="syn-operator">(</span><span class="syn-string">&#34;web1west&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> collection<span class="syn-operator">.</span><span class="syn-function">TableText</span><span class="syn-operator">(</span><span class="syn-string">&#34;9f2c4e1a7b3d&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> collection<span class="syn-operator">.</span><span class="syn-function">TableEvidence</span><span class="syn-operator">(</span>feedback<span class="syn-operator">.</span>EvidenceHealthy<span class="syn-operator">,</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>collection<span class="syn-operator">.</span><span class="syn-function">TableText</span><span class="syn-operator">(</span><span class="syn-string">&#34;web2west&#34;</span><span class="syn-operator">)</span><span class="syn-operator">,</span> collection<span class="syn-operator">.</span><span class="syn-function">TableMissing</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> collection<span class="syn-operator">.</span><span class="syn-function">TableEvidence</span><span class="syn-operator">(</span>feedback<span class="syn-operator">.</span>EvidenceUnknown<span class="syn-operator">,</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-comment">// Missing is not empty.</span>
+	<span class="syn-operator">}</span><span class="syn-operator">,</span>
+<span class="syn-operator">}</span>
+
+<span class="syn-keyword">return</span> table<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-number">48</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="collection/static-table-integration"><h3 id="collection/static-table-integration"><a class="heading-permalink" href="#collection%2fstatic-table-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Retain the native model and any command returned by Update, and route keyboard input through the parent&#39;s active focus region. Replace displayed content through the native API. Recalculate width and height from the available terminal cells while retaining selection where the native model supports it.</p></section>
+<div class="component-run"><h3 id="collection/static-table-run"><a class="heading-permalink" href="#collection%2fstatic-table-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/static-table</code></pre><p><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/collection_static_table.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/static_table.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Declared example links (unaudited): <a class="dependency" href="atoms-feedback.html#feedback/evidence">feedback/evidence</a> <a class="dependency" href="atoms-text.html#text/value-state">text/value-state</a> <a class="dependency" href="atoms-text.html#text/omission">text/omission</a> <a class="dependency" href="foundations-layout.html#foundations/layout">foundations/layout</a> </p>
+</section>
+
+<section class="component" id="collection/scroll-pane">
+<p class="eyebrow"><a href="molecules.html">Molecules</a> / Collections</p><h2><a class="heading-permalink" href="#collection%2fscroll-pane" aria-label="Link to Scroll pane component"><span>Scroll pane</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Bind an existing viewport to a proportional scrollbar without replacing its native model. Use this when content scrolling belongs to a focused pane inside a larger composition.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="collection/scroll-pane-preview"><a class="heading-permalink" href="#collection%2fscroll-pane-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Scroll pane variants">
+<a id="tab-collection/scroll-pane-example" href="#panel-collection%2fscroll-pane-example" role="tab" aria-controls="panel-collection/scroll-pane-example" aria-selected="true">Example</a>
+<a id="tab-collection/scroll-pane-0" href="#panel-collection%2fscroll-pane-0" role="tab" aria-controls="panel-collection/scroll-pane-0" aria-selected="false">Demo</a><a id="tab-collection/scroll-pane-1" href="#panel-collection%2fscroll-pane-1" role="tab" aria-controls="panel-collection/scroll-pane-1" aria-selected="false">Narrow</a><a id="tab-collection/scroll-pane-2" href="#panel-collection%2fscroll-pane-2" role="tab" aria-controls="panel-collection/scroll-pane-2" aria-selected="false">256 colors</a><a id="tab-collection/scroll-pane-3" href="#panel-collection%2fscroll-pane-3" role="tab" aria-controls="panel-collection/scroll-pane-3" aria-selected="false">16 colors</a><a id="tab-collection/scroll-pane-4" href="#panel-collection%2fscroll-pane-4" role="tab" aria-controls="panel-collection/scroll-pane-4" aria-selected="false">Monochrome</a>
+</div>
+<div id="panel-collection/scroll-pane-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/scroll-pane-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal">Request observations remain scrolla<span style="color:#a8a8a8;">│</span>
+ble.                               <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrolla<span style="color:#a8a8a8;">│</span>
+ble.                               <span style="color:#a8a8a8;">│</span>
+Request observations remain scrolla<span style="color:#a8a8a8;">│</span>
+ble.                               <span style="color:#a8a8a8;">│</span></pre></figure>
+</div>
+<div id="panel-collection/scroll-pane-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/scroll-pane-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span></pre></figure>
+</div><div id="panel-collection/scroll-pane-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/scroll-pane-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Request observations remain scrollable.<span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.<span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.<span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.<span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.<span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.<span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrollable.<span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.<span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.<span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.<span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.<span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.<span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.<span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.<span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.<span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.<span style="color:#a8a8a8;">│</span></pre></figure>
+</div><div id="panel-collection/scroll-pane-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/scroll-pane-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#5fd7af;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#a8a8a8;">│</span></pre></figure>
+</div><div id="panel-collection/scroll-pane-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/scroll-pane-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722">Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#00ff00;font-weight:bold;">┃</span>
+Request observations remain scrollable.                                                            <span style="color:#c0c0c0;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#c0c0c0;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#c0c0c0;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#c0c0c0;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#c0c0c0;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#c0c0c0;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#c0c0c0;">│</span>
+Request observations remain scrollable.                                                            <span style="color:#c0c0c0;">│</span></pre></figure>
+</div><div id="panel-collection/scroll-pane-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-collection/scroll-pane-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            <span style="font-weight:bold;">#</span>
+Request observations remain scrollable.                                                            |
+Request observations remain scrollable.                                                            |
+Request observations remain scrollable.                                                            |
+Request observations remain scrollable.                                                            |
+Request observations remain scrollable.                                                            |
+Request observations remain scrollable.                                                            |
+Request observations remain scrollable.                                                            |
+Request observations remain scrollable.                                                            |</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="collection/scroll-pane-code"><a class="heading-permalink" href="#collection%2fscroll-pane-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/strings" title="strings"><code>strings</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/collection" title="github.com/lanej/charmed/collection"><code>collection</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">native <span class="syn-operator">:=</span> collection<span class="syn-operator">.</span><span class="syn-function">NewViewport</span><span class="syn-operator">(</span><span class="syn-string">&#34;&#34;</span><span class="syn-operator">,</span> <span class="syn-number">36</span><span class="syn-operator">,</span> <span class="syn-number">6</span><span class="syn-operator">)</span>
+native<span class="syn-operator">.</span>SoftWrap <span class="syn-operator">=</span> <span class="syn-builtin">true</span>
+pane <span class="syn-operator">:=</span> collection<span class="syn-operator">.</span><span class="syn-function">NewScrollPane</span><span class="syn-operator">(</span><span class="syn-operator">&amp;</span>native<span class="syn-operator">,</span> layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> <span class="syn-number">36</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">6</span><span class="syn-operator">}</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
+pane<span class="syn-operator">.</span><span class="syn-function">SetContent</span><span class="syn-operator">(</span>strings<span class="syn-operator">.</span><span class="syn-function">Repeat</span><span class="syn-operator">(</span><span class="syn-string">&#34;Request observations remain scrollable.\n&#34;</span><span class="syn-operator">,</span> <span class="syn-number">12</span><span class="syn-operator">)</span><span class="syn-operator">)</span>
+native<span class="syn-operator">.</span><span class="syn-function">ScrollDown</span><span class="syn-operator">(</span><span class="syn-number">2</span><span class="syn-operator">)</span>
+<span class="syn-comment">// Route Update to the pane while active; Resize retains native customization.</span>
+<span class="syn-keyword">return</span> pane<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="collection/scroll-pane-integration"><h3 id="collection/scroll-pane-integration"><a class="heading-permalink" href="#collection%2fscroll-pane-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Pass a non-nil native viewport pointer and resize the pane from its full allocation. Configure native styles, wrapping and key bindings directly. SetContent preserves and clamps scrolling; call GotoTop explicitly for a new selection. Forward Update commands while active. Resize after changing ShowScrollbar; content and dimensions are managed by the pane.</p></section>
+<div class="component-run"><h3 id="collection/scroll-pane-run"><a class="heading-permalink" href="#collection%2fscroll-pane-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/scroll-pane</code></pre><p><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/collection_scroll_pane.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/scroll_pane.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+
+<section class="component-relations" aria-label="Component relationships">
+<h3>Reusable component</h3>
+<p><a href="dependencies.html#component-collection%2Fscroll-pane">Scroll pane dependency graph</a> · Partial map · <a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/scroll_pane.go#L14">Source declaration</a></p>
+<ul><li><a href="dependencies.html#component-collection%2Fviewport">Viewport</a> · composes · content viewport</li><li><a href="dependencies.html#component-feedback%2Fscrollbar">Scrollbar</a> · composes · scroll position</li></ul>
+<details><summary>Consumer usage uses</summary><ul><li><a href="dependencies.html#component-collection%2Fscroll-pane">Scroll pane</a> · primary demonstration</li></ul><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/collection_scroll_pane.go#L11">Example source</a></details>
+</section>
+
+</section>
+</section>
+</section>
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+

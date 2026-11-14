@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Component dependencies · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Component dependencies</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">72</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" aria-current="page">Component dependencies</a><a href="migration.html" >Migrate existing UIs</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">72</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">47</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">8</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" aria-current="page">Component dependencies</a><a href="migration.html" >Migrate existing UIs</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+</nav>
+</aside>
+<main id="main">
+
+
+
+<h1 id="component-dependencies">Component dependencies</h1>
+<p>Explore how reusable components are built and where they are reused. Component relationships remain separate from consumer examples and interactive fixtures, so demo controls do not become dependencies of the component they demonstrate.</p>
+<p>This first audited slice covers the grid, status-cell, semantic state, scroll-pane and replay families. Maps are explicitly partial: an empty relationship list does not prove that a component is a leaf. Atomic levels describe classification rather than graph depth.</p>
+
+
+<section class="component-browser" data-component-browser data-default="collection/status-matrix" aria-label="Reusable component dependencies">
+<div class="graph-scope"><strong>20 reusable components</strong><span>20 of 159 catalog entries mapped · partial audited slice</span><a href="component-graph.json" download>Download graph JSON ↗</a></div>
+<div class="graph-picker" hidden><label for="graph-component">Inspect a component</label><select id="graph-component"><option value="feedback/canary-membership">Canary membership</option><option value="text/indicator">Indicator</option><option value="text/pill">Color pill</option><option value="feedback/availability">Availability</option><option value="feedback/health">Health</option><option value="feedback/readiness">Readiness</option><option value="feedback/rollout">Rollout</option><option value="collection/data-grid">Data grid</option><option value="collection/status-matrix">Status matrix</option><option value="feedback/status-cell">Status cell</option><option value="feedback/status">Status</option><option value="collection/grid-inspector">Grid inspector</option><option value="collection/scroll-pane">Scroll pane</option><option value="collection/viewport">Viewport</option><option value="feedback/scrollbar">Scrollbar</option><option value="pattern/measurement-history">Measurement history</option><option value="diagram/state-diagram">State diagram</option><option value="diagram/trace-replay">Trace replay</option><option value="input/radio-group">Radio group</option><option value="input/radio">Radio</option></select><span role="status" data-graph-status></span></div>
+
+<section class="graph-card" id="component-feedback/canary-membership" data-component="feedback/canary-membership" aria-labelledby="graph-title-feedback/canary-membership">
+<div class="graph-card-header"><h2 id="graph-title-feedback/canary-membership" tabindex="-1">Canary membership</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>feedback.CanaryMembership</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/canary_membership.go#L11">feedback/canary_membership.go · CanaryMembership</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-feedback.html#feedback%2Fcanary-membership">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal">Pill                 Compact
+                            
+<span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;"><span style="display:inline-block;width:2ch;text-align:center;text-decoration:inherit;">🐤</span></span><span style="color:#78b8ed;background-color:#202f40;"><span style="display:inline-block;width:2ch;text-align:center;text-decoration:inherit;">🟢</span></span><span style="color:#78b8ed;background-color:#202f40;"> Canary on</span><span style="background-color:#202f40;"> </span>     <span style="color:#78b8ed;">◉</span>      
+<span style="background-color:#252b34;"> </span><span style="color:#9a9a9a;background-color:#252b34;"><span style="display:inline-block;width:2ch;text-align:center;text-decoration:inherit;">🐤</span></span><span style="color:#9a9a9a;background-color:#252b34;"><span style="display:inline-block;width:2ch;text-align:center;text-decoration:inherit;">⚪️</span></span><span style="color:#9a9a9a;background-color:#252b34;"> Canary off</span><span style="background-color:#252b34;"> </span>    <span style="color:#9a9a9a;">◌</span>      
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? Unknown</span><span style="background-color:#27303f;"> </span>          <span style="color:#a7bce0;">?</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-text%2Findicator">Indicator</a><span>composes · pool membership presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/canary_membership.go#L21">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li class="graph-empty">No incoming component relationships recorded in this slice.</li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-feedback.html#feedback%2Fcanary-membership">Atoms/Feedback/Canary membership · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/feedback_canary_membership.go#L10">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-feedback%2Fcanary-membership">Canary membership</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-text/indicator" data-component="text/indicator" aria-labelledby="graph-title-text/indicator">
+<div class="graph-card-header"><h2 id="graph-title-text/indicator" tabindex="-1">Indicator</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>text.Indicator</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/text/text.go#L60">text/text.go · Indicator</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-text.html#text%2Findicator">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">↑ Up</span><span style="background-color:#223334;"> </span>
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">↑</span><span style="background-color:#223334;"> </span>   
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">Up</span><span style="background-color:#223334;"> </span>  
+<span style="color:#86cf9a;">↑</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-text%2Fpill">Color pill</a><span>composes · labeled pill presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/text/text.go#L60">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-feedback%2Fcanary-membership">Canary membership</a><span>composes · pool membership presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/canary_membership.go#L21">Source ↗</a></li><li><a data-component-link href="dependencies.html#component-feedback%2Fstatus">Status</a><span>composes · state presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/status.go#L45">Source ↗</a></li><li><a data-component-link href="dependencies.html#component-feedback%2Favailability">Availability</a><span>composes · state presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/availability.go#L18">Source ↗</a></li><li><a data-component-link href="dependencies.html#component-feedback%2Fhealth">Health</a><span>composes · state presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/health.go#L18">Source ↗</a></li><li><a data-component-link href="dependencies.html#component-feedback%2Freadiness">Readiness</a><span>composes · state presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/readiness.go#L18">Source ↗</a></li><li><a data-component-link href="dependencies.html#component-feedback%2Frollout">Rollout</a><span>composes · state presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/rollout.go#L19">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-text.html#text%2Findicator">Atoms/Text/Indicator · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/text_indicator.go#L9">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-text%2Findicator">Indicator</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-text/pill" data-component="text/pill" aria-labelledby="graph-title-text/pill">
+<div class="graph-card-header"><h2 id="graph-title-text/pill" tabindex="-1">Color pill</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>text.Pill</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/text/text.go#L29">text/text.go · Pill</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-text.html#text%2Fpill">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#86cf9a;"> </span><span style="color:#101722;background-color:#86cf9a;font-weight:bold;">Ready</span><span style="background-color:#86cf9a;"> </span>      
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">Warning</span><span style="background-color:#32322f;"> </span>    
+<span style="background-color:#19202a;"> </span><span style="color:#a8a8a8;background-color:#19202a;">Unavailable</span><span style="background-color:#19202a;"> </span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li class="graph-empty">No relationships recorded in this partial map.</li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-text%2Findicator">Indicator</a><span>composes · labeled pill presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/text/text.go#L60">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-text.html#text%2Fpill">Atoms/Text/Color pill · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/text_pill.go#L9">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-text%2Fpill">Color pill</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-feedback/availability" data-component="feedback/availability" aria-labelledby="graph-title-feedback/availability">
+<div class="graph-card-header"><h2 id="graph-title-feedback/availability" tabindex="-1">Availability</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>feedback.Availability</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/availability.go#L9">feedback/availability.go · Availability</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-feedback.html#feedback%2Favailability">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal">Pill           Compact
+                      
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">↑ Up</span><span style="background-color:#223334;"> </span>         <span style="color:#86cf9a;">↑</span>      
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">↓ Down</span><span style="background-color:#322830;"> </span>       <span style="color:#f28b82;">↓</span>      
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? Unknown</span><span style="background-color:#27303f;"> </span>    <span style="color:#a7bce0;">?</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-text%2Findicator">Indicator</a><span>composes · state presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/availability.go#L18">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li class="graph-empty">No incoming component relationships recorded in this slice.</li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-feedback.html#feedback%2Favailability">Atoms/Feedback/Availability · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/feedback_availability.go#L10">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-feedback%2Favailability">Availability</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-feedback/health" data-component="feedback/health" aria-labelledby="graph-title-feedback/health">
+<div class="graph-card-header"><h2 id="graph-title-feedback/health" tabindex="-1">Health</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>feedback.Health</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/health.go#L9">feedback/health.go · Health</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-feedback.html#feedback%2Fhealth">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal">Pill             Compact
+                        
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">♥ Healthy</span><span style="background-color:#223334;"> </span>      <span style="color:#86cf9a;">♥</span>      
+<span style="background-color:#322830;"> </span><span style="color:#f28b82;background-color:#322830;">× Unhealthy</span><span style="background-color:#322830;"> </span>    <span style="color:#f28b82;">×</span>      
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? Unknown</span><span style="background-color:#27303f;"> </span>      <span style="color:#a7bce0;">?</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-text%2Findicator">Indicator</a><span>composes · state presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/health.go#L18">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li class="graph-empty">No incoming component relationships recorded in this slice.</li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-feedback.html#feedback%2Fhealth">Atoms/Feedback/Health · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/feedback_health.go#L10">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-feedback%2Fhealth">Health</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-feedback/readiness" data-component="feedback/readiness" aria-labelledby="graph-title-feedback/readiness">
+<div class="graph-card-header"><h2 id="graph-title-feedback/readiness" tabindex="-1">Readiness</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>feedback.Readiness</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/readiness.go#L9">feedback/readiness.go · Readiness</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-feedback.html#feedback%2Freadiness">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal">Pill             Compact
+                        
+<span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ Ready</span><span style="background-color:#223334;"> </span>        <span style="color:#86cf9a;">✓</span>      
+<span style="background-color:#313741;"> </span><span style="color:#eeeeee;background-color:#313741;">◇ Not ready</span><span style="background-color:#313741;"> </span>    <span style="color:#eeeeee;">◇</span>      
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? Unknown</span><span style="background-color:#27303f;"> </span>      <span style="color:#a7bce0;">?</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-text%2Findicator">Indicator</a><span>composes · state presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/readiness.go#L18">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li class="graph-empty">No incoming component relationships recorded in this slice.</li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-feedback.html#feedback%2Freadiness">Atoms/Feedback/Readiness · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/feedback_readiness.go#L10">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-feedback%2Freadiness">Readiness</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-feedback/rollout" data-component="feedback/rollout" aria-labelledby="graph-title-feedback/rollout">
+<div class="graph-card-header"><h2 id="graph-title-feedback/rollout" tabindex="-1">Rollout</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>feedback.Rollout</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/rollout.go#L10">feedback/rollout.go · Rollout</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-feedback.html#feedback%2Frollout">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal">Pill           Compact
+                      
+<span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;"><span style="display:inline-block;width:2ch;text-align:center;text-decoration:inherit;">🐤</span></span><span style="color:#78b8ed;background-color:#202f40;"> Canary</span><span style="background-color:#202f40;"> </span>    <span style="color:#78b8ed;">◔</span>      
+<span style="background-color:#202f40;"> </span><span style="color:#78b8ed;background-color:#202f40;">● Live</span><span style="background-color:#202f40;"> </span>       <span style="color:#78b8ed;">●</span>      
+<span style="background-color:#27303f;"> </span><span style="color:#a7bce0;background-color:#27303f;">? Unknown</span><span style="background-color:#27303f;"> </span>    <span style="color:#a7bce0;">?</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-text%2Findicator">Indicator</a><span>composes · state presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/rollout.go#L19">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li class="graph-empty">No incoming component relationships recorded in this slice.</li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-feedback.html#feedback%2Frollout">Atoms/Feedback/Rollout · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/feedback_rollout.go#L10">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-feedback%2Frollout">Rollout</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-collection/data-grid" data-component="collection/data-grid" aria-labelledby="graph-title-collection/data-grid">
+<div class="graph-card-header"><h2 id="graph-title-collection/data-grid" tabindex="-1">Data grid</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>collection.DataGrid</code></dd></div><div><dt>Classification</dt><dd>Organisms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/data_grid.go#L44">collection/data_grid.go · DataGrid</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="organisms-collection.html#collection%2Fdata-grid">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;"> Service / Region </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">US</span><span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">East</span><span style="color:#67d4c0;text-decoration:underline;">        </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">US</span><span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">West</span><span style="color:#67d4c0;text-decoration:underline;">        </span>  
+<span style="color:#eeeeee;"> API              </span> <span style="color:#eeeeee;">▏24            ▕</span> <span style="color:#eeeeee;"> 0              </span>  
+<span style="color:#eeeeee;"> Workers          </span> <span style="color:#eeeeee;"> 48             </span> <span style="color:#eeeeee;">                </span>  
+<span style="color:#a8a8a8;">Rows 1-2/2  Columns 1-2/2</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li class="graph-empty">No relationships recorded in this partial map.</li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-collection%2Fstatus-matrix">Status matrix</a><span>specializes · grid base</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/status_matrix.go#L23">Source ↗</a></li><li><a data-component-link href="dependencies.html#component-collection%2Fgrid-inspector">Grid inspector</a><span>composes · grid</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/grid_inspector.go#L51">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="organisms-collection.html#collection%2Fdata-grid">Organisms/Collections/Data grid · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/collection_data_grid.go#L9">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-collection%2Fdata-grid">Data grid</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-collection/status-matrix" data-component="collection/status-matrix" aria-labelledby="graph-title-collection/status-matrix">
+<div class="graph-card-header"><h2 id="graph-title-collection/status-matrix" tabindex="-1">Status matrix</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>collection.StatusMatrix</code></dd></div><div><dt>Classification</dt><dd>Organisms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/status_matrix.go#L23">collection/status_matrix.go · StatusMatrix</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="organisms-collection.html#collection%2Fstatus-matrix">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;"> Balancer / Host  </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">▤</span><span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">host-01</span><span style="color:#67d4c0;text-decoration:underline;">      </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">▤</span><span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">host-02</span><span style="color:#67d4c0;text-decoration:underline;">      </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">▤</span><span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">host-03</span><span style="color:#67d4c0;text-decoration:underline;">      </span> 
+<span style="color:#eeeeee;"> ⇄ lb-public      </span> <span style="color:#101722;background-color:#86cf9a;font-weight:bold;">▏✓ v2.8.1      ▕</span> <span style="color:#101722;background-color:#f2c879;font-weight:bold;"> ! draining     </span> <span style="color:#101722;background-color:#86cf9a;font-weight:bold;"> ✓ v2.8.0       </span> 
+<span style="color:#eeeeee;"> ⇄ lb-internal    </span> <span style="color:#a8a8a8;"> —              </span> <span style="color:#101722;background-color:#f28b82;font-weight:bold;"> × unhealthy    </span> <span style="color:#101722;background-color:#a7bce0;font-weight:bold;"> ? no probe     </span> 
+<span style="color:#a8a8a8;">Rows 1-2/2  Columns 1-3/3</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-collection%2Fdata-grid">Data grid</a><span>specializes · grid base</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/status_matrix.go#L23">Source ↗</a></li><li><a data-component-link href="dependencies.html#component-feedback%2Fstatus-cell">Status cell</a><span>composes · cell presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/status_matrix.go#L65">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li class="graph-empty">No incoming component relationships recorded in this slice.</li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="organisms-collection.html#collection%2Fstatus-matrix">Organisms/Collections/Status matrix · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/collection_status_matrix.go#L10">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-collection%2Fstatus-matrix">Status matrix</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-feedback/status-cell" data-component="feedback/status-cell" aria-labelledby="graph-title-feedback/status-cell">
+<div class="graph-card-header"><h2 id="graph-title-feedback/status-cell" tabindex="-1">Status cell</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>feedback.StatusCell</code></dd></div><div><dt>Classification</dt><dd>Molecules</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/status_cell.go#L11">feedback/status_cell.go · StatusCell</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="molecules-feedback.html#feedback%2Fstatus-cell">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="color:#101722;background-color:#86cf9a;font-weight:bold;"> ✓ v2.8.1         </span>
+<span style="color:#101722;background-color:#f2c879;font-weight:bold;">▏! draining      ▕</span>
+<span style="color:#101722;background-color:#f28b82;font-weight:bold;"> × unhealthy      </span>
+<span style="color:#101722;background-color:#a7bce0;font-weight:bold;"> ? no probe       </span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-feedback%2Fstatus">Status</a><span>composes · health presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/status_cell.go#L18">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-collection%2Fstatus-matrix">Status matrix</a><span>composes · cell presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/status_matrix.go#L65">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="molecules-feedback.html#feedback%2Fstatus-cell">Molecules/Feedback/Status cell · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/feedback_status_cell.go#L9">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-feedback%2Fstatus-cell">Status cell</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-feedback/status" data-component="feedback/status" aria-labelledby="graph-title-feedback/status">
+<div class="graph-card-header"><h2 id="graph-title-feedback/status" tabindex="-1">Status</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>feedback.Status</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/status.go#L12">feedback/status.go · Status</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-feedback.html#feedback%2Fstatus">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#223334;"> </span><span style="color:#86cf9a;background-color:#223334;">✓ OK</span><span style="background-color:#223334;"> </span>     
+<span style="background-color:#f2c879;"> </span><span style="color:#101722;background-color:#f2c879;font-weight:bold;">! WARN</span><span style="background-color:#f2c879;"> </span>   
+<span style="background-color:#1e313d;"> </span><span style="color:#70c6d8;background-color:#1e313d;">▶ RUNNING</span><span style="background-color:#1e313d;"> </span>
+<span style="background-color:#161e2a;"> </span><span style="color:#829bc3;background-color:#161e2a;">? UNKNOWN</span><span style="background-color:#161e2a;"> </span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-text%2Findicator">Indicator</a><span>composes · state presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/status.go#L45">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-feedback%2Fstatus-cell">Status cell</a><span>composes · health presentation</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/status_cell.go#L18">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-feedback.html#feedback%2Fstatus">Atoms/Feedback/Status · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/feedback_status.go#L10">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-feedback%2Fstatus">Status</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-collection/grid-inspector" data-component="collection/grid-inspector" aria-labelledby="graph-title-collection/grid-inspector">
+<div class="graph-card-header"><h2 id="graph-title-collection/grid-inspector" tabindex="-1">Grid inspector</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>collection.GridInspector</code></dd></div><div><dt>Classification</dt><dd>Organisms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/grid_inspector.go#L50">collection/grid_inspector.go · GridInspector</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="organisms-collection.html#collection%2Fgrid-inspector">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;"> Grid             </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">API</span><span style="color:#67d4c0;text-decoration:underline;">            </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">Workers</span><span style="color:#67d4c0;text-decoration:underline;">        </span>                  
+<span style="color:#eeeeee;"> API              </span> <span style="color:#eeeeee;">▏24            ▕</span> <span style="color:#eeeeee;">                </span>                  
+<span style="color:#eeeeee;"> Workers          </span> <span style="color:#eeeeee;">                </span> <span style="color:#eeeeee;">                </span>                  
+<span style="color:#a8a8a8;">Rows 1-2/2  Columns 1-2/2</span>                                             
+                                                                      
+                                                                      
+api / api                                                             
+Observed: true                                                        
+Replicas: 24</pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-collection%2Fdata-grid">Data grid</a><span>composes · grid</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/grid_inspector.go#L51">Source ↗</a></li><li><a data-component-link href="dependencies.html#component-collection%2Fscroll-pane">Scroll pane</a><span>composes · details</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/grid_inspector.go#L52">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-pattern%2Fmeasurement-history">Measurement history</a><span>composes · inspection</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/pattern/measurement_history.go#L37">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="organisms-collection.html#collection%2Fgrid-inspector">Organisms/Collections/Grid inspector · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/collection_grid_inspector.go#L11">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-collection%2Fgrid-inspector">Grid inspector</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-collection/scroll-pane" data-component="collection/scroll-pane" aria-labelledby="graph-title-collection/scroll-pane">
+<div class="graph-card-header"><h2 id="graph-title-collection/scroll-pane" tabindex="-1">Scroll pane</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>collection.ScrollPane</code></dd></div><div><dt>Classification</dt><dd>Molecules</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/scroll_pane.go#L14">collection/scroll_pane.go · ScrollPane</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="molecules-collection.html#collection%2Fscroll-pane">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal">Request observations remain scrolla<span style="color:#a8a8a8;">│</span>
+ble.                               <span style="color:#67d4c0;font-weight:bold;">┃</span>
+Request observations remain scrolla<span style="color:#a8a8a8;">│</span>
+ble.                               <span style="color:#a8a8a8;">│</span>
+Request observations remain scrolla<span style="color:#a8a8a8;">│</span>
+ble.                               <span style="color:#a8a8a8;">│</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-collection%2Fviewport">Viewport</a><span>composes · content viewport</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/scroll_pane.go#L15">Source ↗</a></li><li><a data-component-link href="dependencies.html#component-feedback%2Fscrollbar">Scrollbar</a><span>composes · scroll position</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/scroll_pane.go#L59">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-collection%2Fgrid-inspector">Grid inspector</a><span>composes · details</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/grid_inspector.go#L52">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="molecules-collection.html#collection%2Fscroll-pane">Molecules/Collections/Scroll pane · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/collection_scroll_pane.go#L11">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-collection%2Fscroll-pane">Scroll pane</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-collection/viewport" data-component="collection/viewport" aria-labelledby="graph-title-collection/viewport">
+<div class="graph-card-header"><h2 id="graph-title-collection/viewport" tabindex="-1">Viewport</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>collection.NewViewport</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/collection.go#L36">collection/collection.go · NewViewport</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-collection.html#collection%2Fviewport">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal">API gateway: healthy                            
+Event stream: healthy                           
+Job workers: degraded</pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li class="graph-empty">No relationships recorded in this partial map.</li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-collection%2Fscroll-pane">Scroll pane</a><span>composes · content viewport</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/scroll_pane.go#L15">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-collection.html#collection%2Fviewport">Atoms/Collections/Viewport · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/collection_viewport.go#L7">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-collection%2Fviewport">Viewport</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-feedback/scrollbar" data-component="feedback/scrollbar" aria-labelledby="graph-title-feedback/scrollbar">
+<div class="graph-card-header"><h2 id="graph-title-feedback/scrollbar" tabindex="-1">Scrollbar</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>feedback.Scrollbar</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/feedback/controls.go#L22">feedback/controls.go · Scrollbar</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-feedback.html#feedback%2Fscrollbar">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#67d4c0;font-weight:bold;">┃</span>
+<span style="color:#67d4c0;font-weight:bold;">┃</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">│</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li class="graph-empty">No relationships recorded in this partial map.</li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-collection%2Fscroll-pane">Scroll pane</a><span>composes · scroll position</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/collection/scroll_pane.go#L59">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-feedback.html#feedback%2Fscrollbar">Atoms/Feedback/Scrollbar · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/feedback_scrollbar.go#L8">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-feedback%2Fscrollbar">Scrollbar</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-pattern/measurement-history" data-component="pattern/measurement-history" aria-labelledby="graph-title-pattern/measurement-history">
+<div class="graph-card-header"><h2 id="graph-title-pattern/measurement-history" tabindex="-1">Measurement history</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>pattern.MeasurementHistory</code></dd></div><div><dt>Classification</dt><dd>Organisms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/pattern/measurement_history.go#L36">pattern/measurement_history.go · MeasurementHistory</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="organisms-pattern.html#pattern%2Fmeasurement-history">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;"> Metric / Window    </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">02:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">03:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">04:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span> <span style="color:#67d4c0;text-decoration:underline;"> </span><span style="color:#67d4c0;font-weight:bold;text-decoration:underline;">05:00:00</span><span style="color:#67d4c0;text-decoration:underline;">     </span>
+<span style="color:#eeeeee;"> Temperature        </span> Metric absent  Metric absent  Metric absent  <span style="background-color:#67d4c0;"> </span><span style="color:#101722;background-color:#67d4c0;font-weight:bold;">Metric absent</span>
+<span style="color:#eeeeee;"> Energy             </span> 25kWh          26kWh          27kWh          28kWh         
+<span style="color:#eeeeee;"> Yield              </span> 85%            86%            87%            88%           
+<span style="color:#eeeeee;"> Humidity           </span> 39%            40%            41%            42%           
+<span style="color:#a8a8a8;">Rows 1-4/4  Columns 3-6/6</span>                                                       
+                                                                                
+                                                                                
+west / sensor-4                                                                 
+Temperature                                                                     
+2026-01-01T05:00:00Z – 2026-01-01T06:00:00Z                                     
+Metric absent</pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-collection%2Fgrid-inspector">Grid inspector</a><span>composes · inspection</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/pattern/measurement_history.go#L37">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li class="graph-empty">No incoming component relationships recorded in this slice.</li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="organisms-pattern.html#pattern%2Fmeasurement-history">Organisms/Patterns/Measurement history · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/pattern_measurement_history.go#L11">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-pattern%2Fmeasurement-history">Measurement history</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-diagram/state-diagram" data-component="diagram/state-diagram" aria-labelledby="graph-title-diagram/state-diagram">
+<div class="graph-card-header"><h2 id="graph-title-diagram/state-diagram" tabindex="-1">State diagram</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>diagram.StateDiagram</code></dd></div><div><dt>Classification</dt><dd>Molecules</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/diagram/state.go#L36">diagram/state.go · StateDiagram</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="molecules-diagram.html#diagram%2Fstate-transitions">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;">╭───────────────────╮</span>                 
+<span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">Idle</span>              <span style="color:#a8a8a8;">│</span>                 
+<span style="color:#a8a8a8;">│</span> <span style="color:#a8a8a8;">initial</span>           <span style="color:#a8a8a8;">│</span>                 
+<span style="color:#a8a8a8;">╰┬────────┬─────────╯</span>                 
+ <span style="color:#a8a8a8;">│</span>        <span style="color:#a8a8a8;">▲</span>                           
+ <span style="color:#a8a8a8;">│ start </span> <span style="color:#a8a8a8;">│ cancel </span>                   
+ <span style="color:#a8a8a8;">▼</span>        <span style="color:#a8a8a8;">│</span>                           
+<span style="color:#eeeeee;">┌┴────────┴─────────┐</span>                 
+<span style="color:#eeeeee;">│</span> <span style="color:#eeeeee;">Running</span>           <span style="color:#eeeeee;">├</span><span style="color:#a8a8a8;">───────────┐</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span>           <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">├</span><span style="color:#a8a8a8;">─┐</span>         <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span> <span style="color:#a8a8a8;">│ retry </span>  <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span> <span style="color:#a8a8a8;">│</span>         <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">│</span> <span style="color:#a8a8a8;">│</span>         <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">│</span>                   <span style="color:#eeeeee;">├</span><span style="color:#a8a8a8;">◀┘</span>         <span style="color:#a8a8a8;">│</span>     
+<span style="color:#eeeeee;">└┬──────────────────┘</span>           <span style="color:#a8a8a8;">│</span>     
+ <span style="color:#67d4c0;font-weight:bold;">┃</span>                              <span style="color:#a8a8a8;">│</span>     
+ <span style="color:#67d4c0;font-weight:bold;">┃ finish </span>                      <span style="color:#a8a8a8;">│ fail</span>
+ <span style="color:#67d4c0;font-weight:bold;">▼</span>                              <span style="color:#a8a8a8;">│</span>     
+<span style="color:#86cf9a;font-weight:bold;">╔╧══════════════════╗</span>           <span style="color:#a8a8a8;">│</span>     
+<span style="color:#86cf9a;font-weight:bold;">║</span> <span style="color:#86cf9a;font-weight:bold;">Done</span>              <span style="color:#86cf9a;font-weight:bold;">║</span>           <span style="color:#a8a8a8;">│</span>     
+<span style="color:#86cf9a;font-weight:bold;">║</span> <span style="color:#86cf9a;">success, active</span>   <span style="color:#86cf9a;font-weight:bold;">║</span>           <span style="color:#a8a8a8;">│</span>     
+<span style="color:#86cf9a;font-weight:bold;">╚═══════════════════╝</span>           <span style="color:#a8a8a8;">│</span>     
+                                <span style="color:#a8a8a8;">│</span>     
+                                <span style="color:#a8a8a8;">│</span>     
+                                <span style="color:#a8a8a8;">│</span>     
+<span style="color:#c17670;">╔═══════════════════╗</span>           <span style="color:#a8a8a8;">│</span>     
+<span style="color:#c17670;">║</span> <span style="color:#c17670;">Failed</span>            <span style="color:#c17670;">╟</span><span style="color:#a8a8a8;">◀──────────┘</span>     
+<span style="color:#c17670;">║</span> <span style="color:#c17670;">error</span>             <span style="color:#c17670;">║</span>                 
+<span style="color:#c17670;">║</span>                   <span style="color:#c17670;">║</span>                 
+<span style="color:#c17670;">╚═══════════════════╝</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li class="graph-empty">No relationships recorded in this partial map.</li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-diagram%2Ftrace-replay">Trace replay</a><span>composes · diagram</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/diagram/trace_replay.go#L25">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="molecules-diagram.html#diagram%2Fstate-transitions">Molecules/Diagrams/State transitions · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/diagram_state_transitions.go#L8">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-diagram%2Fstate-diagram">State diagram</a><span>primary demonstration</span></li></ul></li><li><a href="organisms-diagram.html#diagram%2Ftrace-replay">Organisms/Diagrams/Trace replay · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/diagram_trace_replay.go#L9">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-diagram%2Ftrace-replay">Trace replay</a><span>primary demonstration</span></li><li><a data-component-link href="dependencies.html#component-diagram%2Fstate-diagram">State diagram</a><span>graph data</span></li></ul></li><li><a href="organisms-diagram.html#panel-diagram%2Ftrace-replay-0">Organisms/Diagrams/Trace replay · Interactive fixture</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/story/diagrams.go#L12">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-diagram%2Fstate-diagram">State diagram</a><span>graph data</span></li><li><a data-component-link href="dependencies.html#component-diagram%2Ftrace-replay">Trace replay</a><span>trace inspection</span></li><li><a data-component-link href="dependencies.html#component-input%2Fradio-group">Radio group</a><span>history-window controls</span></li></ul></li><li><a href="molecules-diagram.html#panel-diagram%2Fstate-transitions-0">Molecules/Diagrams/State transitions · Interactive fixture</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/story/diagrams.go#L12">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-diagram%2Fstate-diagram">State diagram</a><span>graph data</span></li><li><a data-component-link href="dependencies.html#component-diagram%2Ftrace-replay">Trace replay</a><span>trace inspection</span></li><li><a data-component-link href="dependencies.html#component-input%2Fradio-group">Radio group</a><span>history-window controls</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-diagram/trace-replay" data-component="diagram/trace-replay" aria-labelledby="graph-title-diagram/trace-replay">
+<div class="graph-card-header"><h2 id="graph-title-diagram/trace-replay" tabindex="-1">Trace replay</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>diagram.TraceReplay</code></dd></div><div><dt>Classification</dt><dd>Organisms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/diagram/trace_replay.go#L21">diagram/trace_replay.go · TraceReplay</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="organisms-diagram.html#diagram%2Ftrace-replay">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="color:#eeeeee;">╭─────────────────╮</span>            <span style="color:#67d4c0;font-weight:bold;">┏━━━━━━━━━┓</span>            <span style="color:#a8a8a8;">╔═══════════════╗</span>
+<span style="color:#eeeeee;">│</span> <span style="color:#eeeeee;">idle</span>            <span style="color:#eeeeee;">├</span><span style="color:#67d4c0;font-weight:bold;">━━ start ━━▶┫</span> <span style="color:#67d4c0;font-weight:bold;">running</span> <span style="color:#67d4c0;font-weight:bold;">┣</span><span style="color:#a8a8a8;">── finish ─▶╢</span> <span style="color:#a8a8a8;">done</span>          <span style="color:#a8a8a8;">║</span>
+<span style="color:#eeeeee;">│</span> <span style="color:#eeeeee;">initial</span>         <span style="color:#eeeeee;">├</span><span style="color:#a8a8a8;">◀─ cancel ──</span><span style="color:#67d4c0;font-weight:bold;">┫</span> <span style="color:#67d4c0;">active</span>  <span style="color:#67d4c0;font-weight:bold;">┃</span>            <span style="color:#a8a8a8;">║</span> <span style="color:#a8a8a8;">final</span>         <span style="color:#a8a8a8;">║</span>
+<span style="color:#eeeeee;">╰─────────────────╯</span>            <span style="color:#67d4c0;font-weight:bold;">┗━━━━━━━━━┛</span>            <span style="color:#a8a8a8;">╚═══════════════╝</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-diagram%2Fstate-diagram">State diagram</a><span>composes · diagram</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/diagram/trace_replay.go#L25">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li class="graph-empty">No incoming component relationships recorded in this slice.</li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="organisms-diagram.html#diagram%2Ftrace-replay">Organisms/Diagrams/Trace replay · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/diagram_trace_replay.go#L9">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-diagram%2Ftrace-replay">Trace replay</a><span>primary demonstration</span></li><li><a data-component-link href="dependencies.html#component-diagram%2Fstate-diagram">State diagram</a><span>graph data</span></li></ul></li><li><a href="organisms-diagram.html#panel-diagram%2Ftrace-replay-0">Organisms/Diagrams/Trace replay · Interactive fixture</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/story/diagrams.go#L12">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-diagram%2Fstate-diagram">State diagram</a><span>graph data</span></li><li><a data-component-link href="dependencies.html#component-diagram%2Ftrace-replay">Trace replay</a><span>trace inspection</span></li><li><a data-component-link href="dependencies.html#component-input%2Fradio-group">Radio group</a><span>history-window controls</span></li></ul></li><li><a href="molecules-diagram.html#panel-diagram%2Fstate-transitions-0">Molecules/Diagrams/State transitions · Interactive fixture</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/story/diagrams.go#L12">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-diagram%2Fstate-diagram">State diagram</a><span>graph data</span></li><li><a data-component-link href="dependencies.html#component-diagram%2Ftrace-replay">Trace replay</a><span>trace inspection</span></li><li><a data-component-link href="dependencies.html#component-input%2Fradio-group">Radio group</a><span>history-window controls</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-input/radio-group" data-component="input/radio-group" aria-labelledby="graph-title-input/radio-group">
+<div class="graph-card-header"><h2 id="graph-title-input/radio-group" tabindex="-1">Radio group</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>input.RadioGroup</code></dd></div><div><dt>Classification</dt><dd>Molecules</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/input/radio_group.go#L20">input/radio_group.go · RadioGroup</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="molecules-input.html#input%2Fradio-group">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#67d4c0;"> </span><span style="color:#101722;background-color:#67d4c0;font-weight:bold;"> ◉  Last transition</span><span style="background-color:#67d4c0;"> </span>
+ <span style="color:#a8a8a8;"> ○ </span> Last three transitions 
+ <span style="color:#a8a8a8;"> ○ </span> Complete trace 
+ <span style="color:#a8a8a8;"> ○  Live execution ⊘ disabled Replay is inspection only</span></pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li><a data-component-link href="dependencies.html#component-input%2Fradio">Radio</a><span>composes · options</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/input/radio_group.go#L21">Source ↗</a></li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li class="graph-empty">No incoming component relationships recorded in this slice.</li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="molecules-input.html#input%2Fradio-group">Molecules/Input/Radio group · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/input_radio_group.go#L8">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-input%2Fradio-group">Radio group</a><span>primary demonstration</span></li></ul></li><li><a href="organisms-diagram.html#panel-diagram%2Ftrace-replay-0">Organisms/Diagrams/Trace replay · Interactive fixture</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/story/diagrams.go#L12">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-diagram%2Fstate-diagram">State diagram</a><span>graph data</span></li><li><a data-component-link href="dependencies.html#component-diagram%2Ftrace-replay">Trace replay</a><span>trace inspection</span></li><li><a data-component-link href="dependencies.html#component-input%2Fradio-group">Radio group</a><span>history-window controls</span></li></ul></li><li><a href="molecules-diagram.html#panel-diagram%2Fstate-transitions-0">Molecules/Diagrams/State transitions · Interactive fixture</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/story/diagrams.go#L12">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-diagram%2Fstate-diagram">State diagram</a><span>graph data</span></li><li><a data-component-link href="dependencies.html#component-diagram%2Ftrace-replay">Trace replay</a><span>trace inspection</span></li><li><a data-component-link href="dependencies.html#component-input%2Fradio-group">Radio group</a><span>history-window controls</span></li></ul></li></ul></section>
+</section>
+
+<section class="graph-card" id="component-input/radio" data-component="input/radio" aria-labelledby="graph-title-input/radio">
+<div class="graph-card-header"><h2 id="graph-title-input/radio" tabindex="-1">Radio</h2><span class="graph-coverage">Partial map</span></div>
+<dl class="graph-metadata"><div><dt>API</dt><dd><code>input.Radio</code></dd></div><div><dt>Classification</dt><dd>Atoms</dd></div><div><dt>Evidence</dt><dd><a href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/input/controls.go#L157">input/controls.go · Radio</a></dd></div></dl>
+<section class="graph-preview" aria-label="Native example"><div class="component-subheading"><h3>Native example</h3><a href="atoms-input.html#input%2Fradio">Go usage ↗</a></div><figure><figcaption>Saved output of the compiled consumer example</figcaption><pre tabindex="0" class="terminal"> <span style="color:#67d4c0;font-weight:bold;"> ◉ </span> Production    <span style="color:#a8a8a8;"> ○ </span> Staging</pre></figure></section>
+<div class="graph-neighbors">
+<section aria-label="Built from"><h3>Built from <span aria-hidden="true">↘</span></h3><ul><li class="graph-empty">No relationships recorded in this partial map.</li></ul></section>
+<section aria-label="Used by"><h3>Used by <span aria-hidden="true">↖</span></h3><ul><li><a data-component-link href="dependencies.html#component-input%2Fradio-group">Radio group</a><span>composes · options</span><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/input/radio_group.go#L21">Source ↗</a></li></ul></section>
+</div>
+<section class="graph-examples" aria-label="Example usage"><h3>Direct example usage</h3><ul><li><a href="atoms-input.html#input%2Fradio">Atoms/Input/Radio · Consumer usage</a><a class="graph-evidence" href="https://github.com/lanej/charmed/blob/8400d4e3a831857cda1637f48b1dddb7258a5a42/docs/snippets/input_radio.go#L8">Source ↗</a><ul><li><a data-component-link href="dependencies.html#component-input%2Fradio">Radio</a><span>primary demonstration</span></li></ul></li></ul></section>
+</section>
+
+</section>
+
+
+
+
+
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+</main></div></body></html>
+
