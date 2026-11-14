@@ -20,6 +20,7 @@ func screensDefinitions() []Definition {
 		Definition{ID: "screen/deployment", Title: "Screens/Deployment comparison", Level: "Screens", Family: "pattern", Description: "Compare 2xx, 3xx, 4xx and 5xx by version identifier during a blue/green deployment. Reference/candidate roles, request-weighted histories, 1/2/3s host-spread bands and linked inspection use synthetic interval counts.", Source: "examples/deployment/main.go", Upstream: "https://github.com/NimbleMarkets/ntcharts", Controls: []string{"state", "scenario", "sigma", "referenceID", "candidateID", "boundaries", "comparisonVariant"}, States: []string{"ready", "empty"}, Scenarios: []string{"isolated-hosts", "uniform-regression", "unequal-traffic", "insufficient-samples"}, Composes: []string{"chart/comparison-panel", "chart/band-matrix", "chart/delta", "collection/table", "text/pill", "feedback/attention", "collection/viewport"}, Step: true, Defaults: func() Config { c := DefaultConfig(); c.Columns = 132; c.Rows = 40; c.Boundaries = true; return c }(), Factory: deploymentStory},
 		Definition{ID: "template/report-page", Title: "Templates/Report page", Level: "Templates", Family: "pattern", Description: "A finite report: header with the overall evidence state, a summary line, titled panels that sit side by side or stack at 55 columns and narrower, and the evidence footer. The overall state is the worst counted state; no evidence reads unknown.", Source: "pattern/report.go", Symbol: "ReportPage", States: []string{"ready", "error", "empty"}, Composes: []string{"layout/header", "feedback/evidence-summary", "feedback/evidence-footer", "foundations/layout", "feedback/evidence"}, Defaults: func() Config { c := DefaultConfig(); c.Columns = 100; c.Rows = 24; return c }(), Factory: reportPageStory},
 	)
+
 	return d
 }
 
@@ -54,20 +55,23 @@ func deploymentStory(e Environment) (runtime.Scene, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	if e.Config.State == "empty" {
 		data.Windows = nil
 	}
+
 	t := e.Config.Palette()
+
 	var boundaries map[string]cohort.ComparisonPolicy
 	if e.Config.Boundaries {
 		boundaries = fixture.Boundaries()
 	}
 
-	return pattern.NewCohortComparison(pattern.CohortComparisonOptions{
+	return cohortFixture(pattern.NewCohortComparison(pattern.CohortComparisonOptions{
 		Title: "Deployment comparison", Scope: "method=blue/green / SYNTHETIC / " + e.Config.Scenario,
 		Data: data, ReferenceID: data.Cohorts[0].ID, Theme: t, MinRequests: 1000, Sigma: e.Config.Sigma, Emit: e.Emit, MetricTones: fixture.StatusTones(), Boundaries: boundaries,
 		Variant: pattern.ComparisonVariant(e.Config.ComparisonVariant), MetricSigns: fixture.StatusSigns(),
-	})
+	}))
 }
 
 func servicesStory(e Environment) (runtime.Scene, error) {
@@ -75,6 +79,7 @@ func servicesStory(e Environment) (runtime.Scene, error) {
 	if e.Config.State == "empty" {
 		services = nil
 	}
+
 	return pattern.NewDashboard(pattern.DashboardOptions{Theme: e.Config.Palette(), Services: services, Live: e.Config.Live, ShowLegend: e.Config.Legend, Emit: e.Emit}), nil
 }
 
@@ -84,5 +89,16 @@ func cohortsStory(e Environment) (runtime.Scene, error) {
 		data.Windows = nil
 	}
 
-	return pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Regional measurements", Scope: "SYNTHETIC sensor observations", Data: data, ReferenceID: "north", Theme: e.Config.Palette(), MinSupport: 50, Sigma: e.Config.Sigma, Variant: pattern.ComparisonVariant(e.Config.ComparisonVariant), Emit: e.Emit})
+	return cohortFixture(pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Regional measurements", Scope: "SYNTHETIC sensor observations", Data: data, ReferenceID: "north", Theme: e.Config.Palette(), MinSupport: 50, Sigma: e.Config.Sigma, Variant: pattern.ComparisonVariant(e.Config.ComparisonVariant), Emit: e.Emit}))
+}
+
+type cohortScene struct{ *pattern.CohortComparison }
+
+func (m *cohortScene) Resize(size layout.Size) { m.ResizeViewport(size) }
+func cohortFixture(model *pattern.CohortComparison, err error) (runtime.Scene, error) {
+	if err != nil {
+		return nil, err
+	}
+
+	return &cohortScene{CohortComparison: model}, nil
 }

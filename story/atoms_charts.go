@@ -21,39 +21,78 @@ func chartStory(kind string, e Environment) (runtime.Scene, error) {
 	t := e.Config.Palette()
 	step := 0
 	currentSize := e.Config.Size()
-	var render func() string
-	var update func(tea.Msg) tea.Cmd
-	var rebuild func(layout.Size)
+
+	var (
+		render     func() string
+		update     func(tea.Msg) tea.Cmd
+		rebuild    func(layout.Size)
+		resizePlot func(layout.Size)
+	)
+
+	built := false
+	previousStep := -1
 	rebuild = func(size layout.Size) {
+		if built && currentSize == size && previousStep == step {
+			return
+		}
+
+		if built && previousStep == step && resizePlot != nil && size.Width >= 20 && size.Height >= 12 && !t.ASCII && stateMessage(e) == "" {
+			currentSize = size
+			resizePlot(size)
+
+			return
+		}
+
+		built, previousStep = true, step
+
 		currentSize = size
+		if t.ASCII || size.Width < 20 || size.Height < 12 || stateMessage(e) != "" {
+			render = func() string { return "" }
+			update = nil
+			resizePlot = nil
+
+			return
+		}
+
 		plotSize := layout.Size{Width: size.Width, Height: max(1, size.Height-6)}
 		update = nil
+		resizePlot = nil
+
 		switch kind {
 		case "sparkline":
 			values := sampleValues(48, step, e.Config.Amount)
 			plot := chart.NewSparkline(values, layout.Size{Width: size.Width, Height: max(1, min(5, plotSize.Height))}, t)
+			resizePlot = func(size layout.Size) {
+				plot.Resize(layout.Size{Width: size.Width, Height: max(1, min(5, size.Height-6))})
+			}
 			render = func() string { return plot.View() + fmt.Sprintf("\n\nLatest %.1f req/min", values[len(values)-1]) }
 		case "timeseries":
 			data := sampleSeries(e.Config.Series, step, e.Config.Amount)
 			plot := chart.NewTimeSeries(data, plotSize, t)
 			plot.Focus()
+
+			resizePlot = func(size layout.Size) { plot.Resize(layout.Size{Width: size.Width, Height: max(1, size.Height-6)}) }
 			render = func() string {
 				view := plot.View()
 				if e.Config.Legend {
 					view += "\n" + chart.Legend(data, t)
 				}
+
 				return view
 			}
 			update = func(msg tea.Msg) tea.Cmd { var cmd tea.Cmd; plot, cmd = plot.Update(msg); return cmd }
 		case "line", "scatter":
 			plot := chart.NewLine(plotSize, 0, 31, 0, 120, t)
 			plot.Focus()
+
 			draw := func() {
 				plot.Clear()
 				plot.DrawXYAxisAndLabel()
+
 				for s := range e.Config.Series {
 					values := sampleValues(32, step+s*3, e.Config.Amount-float64(s*10))
 					style := lipgloss.NewStyle().Foreground(t.SeriesColor(s))
+
 					for i, v := range values {
 						p := canvas.Float64Point{X: float64(i), Y: v}
 						if kind == "scatter" {
@@ -65,53 +104,92 @@ func chartStory(kind string, e Environment) (runtime.Scene, error) {
 				}
 			}
 			draw()
-			render = plot.View
+
+			resizePlot = func(size layout.Size) {
+				plot.Resize(max(20, size.Width), max(6, size.Height-6))
+				plot.SetXYRange(0, 31, 0, 120)
+				plot.SetViewXYRange(0, 31, 0, 120)
+				draw()
+			}
+			render = func() string { return plot.View() }
 			update = func(msg tea.Msg) tea.Cmd { var cmd tea.Cmd; plot, cmd = plot.Update(msg); draw(); return cmd }
 		case "bars":
 			opts := []barchart.Option{}
 			if e.Config.Horizontal {
 				opts = append(opts, barchart.WithHorizontalBars())
 			}
+
 			plot := chart.NewBars(plotSize, t, opts...)
+
 			for i, name := range []string{"API", "Events", "Jobs", "Storage", "Schedule"} {
 				values := []barchart.BarValue{}
 				for s := range e.Config.Series {
 					values = append(values, barchart.BarValue{Name: fmt.Sprintf("Series %d", s+1), Value: 20 + float64((i+s+step)*13%50), Style: lipgloss.NewStyle().Foreground(t.SeriesColor(s))})
 				}
+
 				plot.Push(barchart.BarData{Label: name, Values: values})
 			}
+
 			plot.Draw()
-			render = plot.View
+
+			resizePlot = func(size layout.Size) { plot.Resize(max(1, size.Width), max(1, size.Height-6)); plot.Draw() }
+			render = func() string { return plot.View() }
 		case "heatmap":
 			plot := chart.NewHeatmap(plotSize, t, heatmap.WithValueRange(0, 100), heatmap.WithCellSize(1, 1))
 			plot.SetXYRange(0, 12, 0, 8)
 			plot.SetViewXYRange(0, 12, 0, 8)
+
 			for x := range 12 {
 				for y := range 8 {
 					plot.Push(heatmap.NewHeatPoint(float64(x), float64(y), 50+45*math.Sin(float64(x+y+step)*.4)))
 				}
 			}
+
 			plot.Draw()
+
 			render = plot.View
 		case "stream":
 			plot := chart.NewStream(plotSize, t, streamlinechart.WithYRange(0, 120))
 			for _, v := range sampleValues(max(32, size.Width), step, e.Config.Amount) {
 				plot.Push(v)
 			}
+
 			plot.DrawAll()
-			render = plot.View
+
+			previousWidth := size.Width
+			resizePlot = func(size layout.Size) {
+				plot.Resize(max(20, size.Width), max(6, size.Height-6))
+
+				if previousWidth != size.Width {
+					plot.ClearAllData()
+
+					for _, value := range sampleValues(max(32, size.Width), step, e.Config.Amount) {
+						plot.Push(value)
+					}
+
+					previousWidth = size.Width
+				}
+
+				plot.DrawAll()
+			}
+			render = func() string { return plot.View() }
 		case "wave":
 			plot := chart.NewWave(plotSize, t, wavelinechart.WithXYRange(0, 31, 0, 120))
 			for i, v := range sampleValues(32, step, e.Config.Amount) {
 				plot.PlotDataSet("observed", canvas.Float64Point{X: float64(i), Y: v})
 			}
+
 			plot.DrawAll()
-			render = plot.View
+
+			resizePlot = func(size layout.Size) { plot.Resize(max(20, size.Width), max(6, size.Height-6)); plot.DrawAll() }
+			render = func() string { return plot.View() }
 		case "ohlc":
 			data := sampleSeries(4, step, e.Config.Amount)
+
 			names := []string{"open", "high", "low", "close"}
 			for i := range data {
 				data[i].ID = names[i]
+
 				data[i].Label = names[i]
 				for p := range data[i].Points {
 					base := sampleValues(32, step, e.Config.Amount)[p]
@@ -119,10 +197,17 @@ func chartStory(kind string, e Environment) (runtime.Scene, error) {
 					data[i].Points[p].Value = base + offset
 				}
 			}
+
 			plot := chart.NewTimeSeries(data, plotSize, t)
 			plot.Bubble.Clear()
 			plot.Bubble.DrawCandle("open", "high", "low", "close", t.Text().Foreground(t.Success), t.Text().Foreground(t.Danger))
-			render = plot.Bubble.View
+
+			resizePlot = func(size layout.Size) {
+				plot.Resize(layout.Size{Width: size.Width, Height: max(1, size.Height-6)})
+				plot.Bubble.Clear()
+				plot.Bubble.DrawCandle("open", "high", "low", "close", t.Text().Foreground(t.Success), t.Text().Foreground(t.Danger))
+			}
+			render = func() string { return plot.Bubble.View() }
 		case "canvas":
 			plot := chart.NewCanvas(plotSize, t)
 			for x := range max(0, size.Width) {
@@ -132,8 +217,10 @@ func chartStory(kind string, e Environment) (runtime.Scene, error) {
 					}
 				}
 			}
+
 			plot.SetStringWithStyle(canvas.Point{X: 2, Y: 2}, "CHARMED / ntcharts canvas", t.Heading())
-			render = plot.View
+
+			render = func() string { return plot.View() }
 		}
 	}
 	tick := func() tea.Cmd { return tea.Tick(time.Second, func(time.Time) tea.Msg { return chartPulse{} }) }
@@ -141,36 +228,47 @@ func chartStory(kind string, e Environment) (runtime.Scene, error) {
 		if e.Config.Live && !t.ReducedMotion {
 			return tick()
 		}
+
 		return nil
 	}, resize: rebuild, update: func(msg tea.Msg) tea.Cmd {
 		_, manual := msg.(runtime.StepMsg)
+
 		_, pulse := msg.(chartPulse)
 		if manual || pulse {
 			step++
+
 			rebuild(currentSize)
 			emit(e, map[string]any{"type": "chart-step", "step": step})
+
 			if pulse && e.Config.Live && !t.ReducedMotion {
 				return tick()
 			}
+
 			return nil
 		}
+
 		if update != nil {
 			return update(msg)
 		}
+
 		return nil
 	}, view: func(size layout.Size) string {
 		if stateMessage(e) != "" {
 			return title("Chart / "+kind, e) + stateMessage(e)
 		}
+
 		if size.Width < 20 || size.Height < 12 {
 			return title(kind, e) + "Increase terminal size to see the chart."
 		}
+
 		if t.ASCII {
 			return title(kind+" / text fallback", e) + fmt.Sprintf("%d series / latest %.1f\n\nASCII mode presents values without chart glyphs.", e.Config.Series, e.Config.Amount)
 		}
+
 		return title("Chart / "+kind, e) + render() + footer("Ctrl+N advances fixture data / arrows pan supported plots", e)
 	}}
 	rebuild(e.Config.Size())
+
 	return s, nil
 }
 

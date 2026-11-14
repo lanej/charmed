@@ -36,6 +36,9 @@ type JSONViewer struct {
 	wasRaw                     bool
 	formattedOffset, rawOffset int
 	lastWidth                  int
+	geometrySyntax             bool
+	preparedSyntax             []string
+	fallbackSyntax             string
 }
 
 // JSONState is a source-bound snapshot of folds, cursor and scroll positions.
@@ -77,6 +80,7 @@ func (m *JSONViewer) SetSource(source []byte) error {
 
 // Clear forgets a document without touching the host viewport's content.
 func (m *JSONViewer) Clear() {
+	m.preparedSyntax, m.fallbackSyntax = nil, ""
 	m.source, m.nodes, m.visible, m.rows = nil, nil, nil, nil
 	m.closed = map[int]bool{}
 	m.parseErr, m.renderErr = nil, nil
@@ -157,6 +161,9 @@ func (m *JSONViewer) ResizeViewport(width, height int) {
 	m.Model.SetHeight(max(1, height))
 
 	if changed {
+		m.geometrySyntax = true
+		defer func() { m.geometrySyntax = false }()
+
 		m.Refresh()
 	} else {
 		m.Model.SetYOffset(m.Model.YOffset())

@@ -105,6 +105,53 @@ Use `layout.Compile` for a stable declaration and `Screen.ArrangeCompiled` for s
 
 Run `BenchmarkResizeRender` alongside `BenchmarkRender` to measure the complete resize-to-output path. It covers repeated allocations, height changes, width changes and responsive breakpoint crossings. Compare against the same benchmark source on the base revision, running each executable sequentially after other tests and builds finish. These benchmarks measure generated frames; terminal emulator painting and interactive latency need separate native measurements.
 
+## Audit catalog performance
+
+The performance suite discovers every registered native fixture and inventories exported types, functions and view methods. Public view methods must link to a catalog workload or an explicit direct benchmark. Consumer-example references are source links, not proof of every implementation branch. Support functions without an example remain labeled separately, so the inventory does not silently equate a source reference with a measurement.
+
+```sh
+just perf --suite catalog --count 1 --benchtime 20ms
+just perf --suite catalog --base origin/main --count 1 --benchtime 20ms
+just perf --suite hotspots
+just perf --suite profiles --count 1 --benchtime 1s
+just perf --suite heap
+just perf-native --samples 100 --idle-seconds 5
+```
+
+Install uv and use Python 3.11+ for these developer commands. The catalog scan is a short ranking pass; the default five 500 ms repetitions are intended for focused comparisons on a consistent machine. `--match` accepts Go's slash-separated benchmark selection expressions. Reports include raw samples, source hashes, changed-source patches, new benchmark sources, toolchain and host metadata. Choose an ignored or external `--out` directory. Baseline comparisons archive the committed library and overlay identical current benchmark sources without changing another checkout.
+
+| Report | Coverage and interpretation |
+| --- | --- |
+| Catalog | Construction, first frame, warm views, height and width resizing, update dispatch, declared states, light/contrast/monochrome and ASCII variants |
+| Hotspots | Collections at 100/1,000/10,000 items, payloads at 1 KB/16 KB/application limit, chart datasets at 100/1,000/10,000 points, filtering and log update batches |
+| Profiles | CPU and allocation profiles for the selected benchmark packages; inspect them with Go's pprof tooling |
+| Heap | Process-wide live Go heap after GC across repeated resize cycles and after close; includes runtime pools and shared initialization |
+| Native PTY | Instrumented update-to-view and input-to-first-output latency, idle CPU, terminal bytes and RSS; includes static screens, cursors, spinners and timers |
+
+Native traces exclude startup and exit events. Linux CPU samples use process ticks; other supported hosts report their observed counter precision. First PTY output is not completed terminal painting, and resident memory is not retained Go heap. The harness checks that resize and key events were processed, keeps absent output samples separate, and closes owned children and descriptors on failure. Timing reports do not block shared-runner merges; deterministic preparation, allocation and cache-lifecycle tests run in the normal quality gate.
+
+The manually dispatched **Native performance reports** workflow retains measurements as artifacts on Linux or macOS. Interpret the short catalog scan as a way to locate costs, then repeat the selected workloads and compare profiles before attributing gains. Full native viewport contents and scroll-offset semantics remain intact; collection updates may still require document-sized work. The guide website and terminal-emulator painting are outside these native measurements.
+
+## Catalog audit findings
+
+The November 2026 catalog audit covered 153 fixtures, 58 public view methods and 3,008 matched workloads against `f92eac93`. The broad scan used one 20 ms sample to rank costs. The scaling figures below are medians of five 500 ms runs on an Apple M6 with Go 1.26.11 and truecolor output. Baseline libraries used identical benchmark sources. These are generated-frame and update costs, not terminal painting latency.
+
+| Repeated workload | Before → after | Allocated bytes before → after |
+| --- | --- | --- |
+| 10,000-item Git selection | 4.30 → 1.95 ms | 2,249,161 → 1,107,134 |
+| 10,000-item Git filtering | 1.94 → 0.72 ms | 1,304,351 → 325,395 |
+| 64 KB JSON width reflow | 7.78 → 2.31 ms | 13,026,641 → 6,754,482 |
+| 10,000 HTTP records replaced | 55.24 → 9.65 ms | 158,756,820 → 80,149,187 |
+| Ten HTTP updates in 10,000 records | 56.64 → 10.13 ms | 162,478,417 → 83,754,556 |
+| Cohort height resize, 200×60 | 17.89 → 5.15 ms | 14,400,562 → 4,621,124 |
+| Deployment height resize, 200×60 | 18.91 → 5.97 ms | 15,120,577 → 4,441,394 |
+
+Git preparation now retains normalized search labels and one current-width row projection, including continuation rows. Filtering and selection preserve the full native viewport. JSON geometry-only resizing reuses a bounded syntax projection; Refresh and Clear invalidate it. Cohort resizing reuses plots, prepares card content once, and exposes `ResizeViewport` to retain unchanged-width stacked content. Existing Resize still refreshes native presentation. HTTP label caches last only one rebuild and do not cache caller-supplied URL formatters.
+
+Native probes processed 100 resizes each for Git and Markdown and 100 Git navigation keys without missing output. First-output resize p95 was 20.1/19.5 ms; instrumented static idle CPU was about 0.4% of one core. Neither measures completed painting. Heap samples after GC covered every fixture across four phases of twenty resize cycles. Nonmonotonic changes include shared pools and initialization; they neither establish leaks nor prove leak freedom. Raw reports retain samples and after-close values.
+
+The large HTTP workload explicitly raises the retention limit to 10,000. It remains document-sized work and is not representative of the smaller default limit. Native chart rasterization and per-cell styling remain substantial costs, especially at large allocations; preserving native APIs does not establish a universal frame-time guarantee. Startup, width changes and data replacement remain distinct from warm or height-only rendering. Source snapshots and raw profiles accompany reports so these conclusions can be challenged and repeated.
+
 ## Publish documentation
 
 Every same-repository documentation PR receives an isolated preview under lanej.io/charmed/pr-preview/pr-number. The publisher verifies the live revision before updating direct links in the PR description. Review those pages before merge; previews refresh on push and disappear after closure.

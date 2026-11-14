@@ -1,6 +1,7 @@
 package collection_test
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 	"testing"
@@ -91,5 +92,29 @@ func TestHTTPDetailsKeepUUIDHeadersAndResponseLinesIntact(t *testing.T) {
 
 	if view := ansi.Strip(m.DetailView()); !strings.Contains(view, message) || strings.Contains(view, "rate_fixture") {
 		t.Fatalf("folded request still occupies response space:\n%s", view)
+	}
+}
+
+func TestRepeatedHTTPLabelsKeepPerRecordFormatting(t *testing.T) {
+	m := collection.NewHTTPLog(100, 30, theme.New(theme.Mono))
+	calls := 0
+
+	m.SetURLFormatter(func(string) string { calls++; return fmt.Sprintf("target-%d", calls) })
+
+	records := []collection.HTTPExchange{{ID: "one", Method: "GET", URL: "https://example.test/", StatusCode: 200, Completed: true}, {ID: "two", Method: "GET", URL: "https://example.test/", StatusCode: 200, Completed: true}, {ID: "three", Method: "GET", URL: "https://example.test/", StatusCode: 200, Completed: true}}
+	if err := m.SetEntries(records); err != nil {
+		t.Fatal(err)
+	}
+
+	rows := m.Table.Rows()
+	if len(rows) != 3 || rows[0][len(rows[0])-1] == rows[1][len(rows[1])-1] {
+		t.Fatal("record formatters were memoized")
+	}
+
+	m.Theme = theme.New(theme.Light)
+	m.ResizeList(100, 12)
+
+	if len(m.Table.Rows()) != 3 || calls < 6 {
+		t.Fatal("refresh lost formatter or row content")
 	}
 }

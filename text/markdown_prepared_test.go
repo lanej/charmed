@@ -31,3 +31,22 @@ func TestPreparedMarkdownAcrossWidths(t *testing.T) {
 		}
 	}
 }
+
+func TestPreparedMarkdownWidthHitDoesNotAllocate(t *testing.T) {
+	document, err := text.PrepareMarkdown("# Header\n\nPrepared text", theme.New(theme.Dark))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if _, err = document.Render(80); err != nil {
+		t.Fatal(err)
+	}
+
+	if allocations := testing.AllocsPerRun(20, func() { documentFrame, err = document.Render(80) }); allocations != 0 {
+		t.Fatalf("cached Markdown allocated %v times", allocations)
+	}
+
+	if err != nil {
+		t.Fatal(err)
+	}
+}

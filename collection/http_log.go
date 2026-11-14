@@ -437,11 +437,25 @@ func (m *HTTPLog) rebuildRows() {
 	m.Table.SetRows(nil)
 	m.Table.SetColumns(columns)
 
+	statuses := map[int]string{}
+	methods := map[string]string{}
+	durations := map[string]string{}
+	pending := ""
+
 	rows := make([]table.Row, 0, len(m.records))
 	for _, record := range m.records {
-		status := text.HTTPStatusCode(record.StatusCode, m.Theme)
+		status, ok := statuses[record.StatusCode]
+		if !ok {
+			status = text.HTTPStatusCode(record.StatusCode, m.Theme)
+			statuses[record.StatusCode] = status
+		}
+
 		if !record.Completed && record.StatusCode == 0 {
-			status = text.Pending(m.Theme)
+			if pending == "" {
+				pending = text.Pending(m.Theme)
+			}
+
+			status = pending
 		}
 
 		cursor := ""
@@ -449,7 +463,13 @@ func (m *HTTPLog) rebuildRows() {
 			cursor = m.Theme.Heading().Render(m.Theme.Glyph(theme.GlyphRight))
 		}
 
-		row := table.Row{cursor, text.HTTPMethod(record.Method, m.Theme), status}
+		method, ok := methods[record.Method]
+		if !ok {
+			method = text.HTTPMethod(record.Method, m.Theme)
+			methods[record.Method] = method
+		}
+
+		row := table.Row{cursor, method, status}
 
 		if showDuration {
 			duration := "n/a"
@@ -457,7 +477,13 @@ func (m *HTTPLog) rebuildRows() {
 				duration = text.ShortDuration(record.Duration)
 			}
 
-			row = append(row, lipgloss.NewStyle().Width(durationWidth).Align(lipgloss.Right).Render(ansi.Truncate(duration, durationWidth, "…")))
+			formatted, ok := durations[duration]
+			if !ok {
+				formatted = lipgloss.NewStyle().Width(durationWidth).Align(lipgloss.Right).Render(ansi.Truncate(duration, durationWidth, "…"))
+				durations[duration] = formatted
+			}
+
+			row = append(row, formatted)
 		}
 
 		if compact {

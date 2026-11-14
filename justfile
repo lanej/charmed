@@ -8,7 +8,7 @@ default:
     @just --list
 
 # Run ShellCheck and the full Go quality gate used in CI.
-check: shellcheck docs-check
+check: shellcheck docs-check perf-check
     bash scripts/check-go.sh
 
 # Check shell scripts, formatting, vet, module tidiness and strict lint.
@@ -61,3 +61,15 @@ docs-check:
 # Install the optional staged-tree source gate for this checkout.
 hooks:
     git config core.hooksPath .githooks
+
+# Record native performance reports; use --suite hotspots or profiles to focus.
+perf *args:
+    uv run --no-project scripts/perf.py {{args}}
+
+# Sample native PTY latency, idle resources and resize memory.
+perf-native *args:
+    uv run --no-project scripts/perf_native.py {{args}}
+
+# Validate performance reporting contracts; Go structural gates run in check.
+perf-check:
+    python3 -m unittest discover -s scripts -p 'test_perf*.py'
