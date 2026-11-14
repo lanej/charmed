@@ -47,13 +47,18 @@ func typeName(expression ast.Expr) string {
 // These indirect/enum views have no constructor reference in consumer snippets.
 // Links identify exercised workloads, not proof of every internal branch.
 var explicitViews = map[string][]string{
-	"feedback.Evidence.View": {"feedback/evidence"},
-	"feedback.Outcome.View":  {"feedback/outcome"},
-	"feedback.Status.View":   {"feedback/status"},
-	"gitui.ChangeGroup.View": {"git/staged", "git/unstaged", "git/untracked", "git/conflicts"},
-	"gitui.List.View":        {"gitui/BenchmarkListLifecycle"},
-	"text.ChangeKind.View":   {"text/change"},
-	"text.ValueState.View":   {"text/value-state"},
+	"feedback.Availability.View":     {"feedback/availability"},
+	"feedback.CanaryMembership.View": {"feedback/canary-membership"},
+	"feedback.Health.View":           {"feedback/health"},
+	"feedback.Readiness.View":        {"feedback/readiness"},
+	"feedback.Rollout.View":          {"feedback/rollout"},
+	"feedback.Evidence.View":         {"feedback/evidence"},
+	"feedback.Outcome.View":          {"feedback/outcome"},
+	"feedback.Status.View":           {"feedback/status"},
+	"gitui.ChangeGroup.View":         {"git/staged", "git/unstaged", "git/untracked", "git/conflicts"},
+	"gitui.List.View":                {"gitui/BenchmarkListLifecycle"},
+	"text.ChangeKind.View":           {"text/change"},
+	"text.ValueState.View":           {"text/value-state"},
 }
 
 func collect() (inventory, error) {
