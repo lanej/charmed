@@ -29,7 +29,7 @@ func TestTerminalHTMLKeepsExactRGBAndCellPadding(t *testing.T) {
 	frame := "\x1b[38;2;98;156;115;48;2;16;23;34m dim \x1b[0m\n界é"
 
 	rendered := string(terminalHTML(frame))
-	for _, wanted := range []string{"color:#629c73;", "background-color:#101722;", "> dim </span>", "界é"} {
+	for _, wanted := range []string{"color:#629c73;", "background-color:#101722;", "> dim </span>", "width:2ch;text-align:center;", "界</span>é"} {
 		if !strings.Contains(rendered, wanted) {
 			t.Fatalf("missing %q in %s", wanted, rendered)
 		}
@@ -40,6 +40,26 @@ func TestTerminalHTMLKeepsExactRGBAndCellPadding(t *testing.T) {
 		if strings.Contains(rendered, "<img") || strings.Contains(rendered, "<script") || strings.Contains(rendered, "<a ") {
 			t.Fatal("terminal content gained HTML capabilities")
 		}
+	}
+}
+
+func TestTerminalHTMLReservesWideEmojiCells(t *testing.T) {
+	rendered := string(terminalHTML("🐤🟢 Canary on\n🐤⚪️ Canary off\n? Unknown"))
+	if strings.Count(rendered, "display:inline-block;width:2ch;") != 4 {
+		t.Fatal("emoji fallback fonts lost native cell allocations", rendered)
+	}
+
+	for _, label := range []string{"Canary on", "Canary off", "? Unknown"} {
+		if !strings.Contains(rendered, label) {
+			t.Fatal("cell wrappers lost labels", label)
+		}
+	}
+}
+
+func TestTerminalHTMLWideCellsKeepTextDecorations(t *testing.T) {
+	rendered := string(terminalHTML("\x1b[4;9m界\x1b[0m"))
+	if !strings.Contains(rendered, `text-decoration:underline line-through;`) || !strings.Contains(rendered, `text-decoration:inherit;">界`) {
+		t.Fatal("wide cell lost underline or strike-through across its inline-block", rendered)
 	}
 }
 

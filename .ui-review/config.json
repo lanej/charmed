@@ -35,7 +35,8 @@
     "theme/glyph.go",
     "story/semantic_states.go",
     "docs/snippets/feedback_*.go",
-    "docs/snippets/text_indicator.go"
+    "docs/snippets/text_indicator.go",
+    "workbench/terminal.go"
   ],
   "sourceChecks": [],
   "accessibility": true,
