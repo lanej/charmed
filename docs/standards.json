@@ -179,6 +179,10 @@
     "dependencies.md": {
       "profile": "reference"
     },
+    "skills.md": {
+      "profile": "recipe",
+      "sections": ["Choose a skill", "Install a package", "Read the website as Markdown"]
+    },
     "rendering.md": {
       "profile": "recipe",
       "sections": [

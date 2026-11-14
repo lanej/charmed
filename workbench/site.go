@@ -64,6 +64,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		{File: "dependencies.html", Title: "Component dependencies", Source: "dependencies.md", Resource: true, Components: components},
 		{File: "index.html", Title: "Charmed", Source: "index.md"},
 		{File: "getting-started.html", Title: "Getting started", Source: "getting-started.md"},
+		{File: "skills.html", Title: "Agent skills & Markdown", Source: "skills.md", Resource: true},
 		{File: "rendering.html", Title: "Retained rendering", Source: "rendering.md", Resource: true},
 		{File: "recipes.html", Title: "Recipes", Source: "recipes.md"},
 		{File: "documentation-standard.html", Title: "Documentation standard", Source: "documentation-standard.md", Resource: true},
@@ -226,6 +227,23 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		if writeErr := writeGuideFile(directory, page.File, []byte(rendered)); writeErr != nil {
 			return writeErr
 		}
+
+		markdown, markdownErr := guideMarkdown(rendered, page.File)
+		if markdownErr != nil {
+			return markdownErr
+		}
+
+		if writeErr := writeGuideFile(directory, page.MarkdownFile(), markdown); writeErr != nil {
+			return writeErr
+		}
+	}
+
+	if skillErr := writeGuideSkills(directory, root); skillErr != nil {
+		return skillErr
+	}
+
+	if indexErr := writeMarkdownIndex(directory, pages); indexErr != nil {
+		return indexErr
 	}
 
 	css, err := siteFiles.ReadFile("site/style.css")

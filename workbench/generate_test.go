@@ -31,7 +31,7 @@ func TestStaticGuide(t *testing.T) {
 		groups[strings.ToLower(d.Level)+"-"+d.Family+".html"] = true
 	}
 
-	if want := 15 + len(story.Levels()) + len(groups); len(files) != want {
+	if want := 16 + len(story.Levels()) + len(groups); len(files) != want {
 		t.Fatalf("got %d pages, want %d category, group and guide pages", len(files), want)
 	}
 
@@ -281,6 +281,10 @@ func TestStaticGuide(t *testing.T) {
 		if bytes.Contains(pages[page], []byte(`class="component"`)) {
 			t.Errorf("%s must list groups without loading every preview", page)
 		}
+	}
+
+	for name, data := range assertGuideDownloads(t, directory, pages) {
+		pages[name] = data
 	}
 
 	stale := filepath.Join(directory, "obsolete.js")

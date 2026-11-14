@@ -54,4 +54,4 @@ go run ./examples/catalog pattern/log-inspector
 
 Choose [components](atoms.html) when assembling individual widgets, or [recipes](recipes.html) when coordinating a complete view. The [composition guide](examples.html) explains ownership of focus, terminal geometry and application observations.
 
-See [retained rendering](rendering.html) for runtime command forwarding, synchronous snapshots and native styling invalidation when composing Charmed components within your own Bubble Tea application model.
+For agent guidance and downloadable reference pages, see [skills and Markdown](skills.html). See [retained rendering](rendering.html) for runtime command forwarding, synchronous snapshots and native styling invalidation when composing Charmed components within your own Bubble Tea application model.
