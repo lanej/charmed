@@ -25,8 +25,9 @@ type Item struct {
 }
 
 type listViewKey struct {
-	revision            uint64
-	width, height, x, y int
+	revision                uint64
+	width, height, x, y     int
+	outerWidth, outerHeight int
 }
 
 // List owns selection and filtering. Native Viewport styles and Input customization
@@ -435,7 +436,10 @@ func (m *List) View() string {
 		m.render()
 	}
 
-	key := listViewKey{m.revision, m.Viewport.Width(), m.Viewport.Height(), m.Viewport.XOffset(), m.Viewport.YOffset()}
+	key := listViewKey{
+		revision: m.revision, width: m.Viewport.Width(), height: m.Viewport.Height(),
+		x: m.Viewport.XOffset(), y: m.Viewport.YOffset(), outerWidth: m.width, outerHeight: m.height,
+	}
 
 	return m.viewCache.Get(key, m.view)
 }

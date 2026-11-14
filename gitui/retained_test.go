@@ -5,6 +5,8 @@ import (
 	"strings"
 	"testing"
 
+	"charm.land/lipgloss/v2"
+	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -113,5 +115,32 @@ func TestReplacementRevealsSelectionAfterStyleInvalidation(t *testing.T) {
 
 	if m.SelectedID() != "0" || m.Viewport.YOffset() == 0 {
 		t.Fatal("source replacement failed to reveal the retained selected ID")
+	}
+}
+
+func TestListCacheTracksOuterHeightWhenViewportIsClamped(t *testing.T) {
+	items := []Item{{ID: "one", Text: "one"}, {ID: "two", Text: "two"}}
+
+	m, err := NewList("tiny", items, 40, 1, theme.New(theme.Dark))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, height := range []int{1, 2, 3, 2, 1} {
+		m.ResizeViewport(layout.Size{Width: 40, Height: height})
+		frame := m.View()
+
+		fresh, err := NewList("tiny", items, 40, height, theme.New(theme.Dark))
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if m.Viewport.Height() != 1 {
+			t.Fatal("test no longer exercises the clamped native viewport")
+		}
+
+		if frame != fresh.View() || lipgloss.Height(frame) != height {
+			t.Fatalf("outer height %d reused stale cached output", height)
+		}
 	}
 }
