@@ -30,6 +30,7 @@ func TestCatalogPerformanceWorkloadInputs(t *testing.T) {
 
 				for _, size := range [][2]int{{40, 12}, {120, 40}, {200, 60}, {120, 40}} {
 					_, _ = model.Update(tea.WindowSizeMsg{Width: size[0], Height: size[1]})
+					presentCatalog(t, model)
 
 					frame := model.View().Content
 					if lipgloss.Width(frame) != size[0] || lipgloss.Height(frame) != size[1] {
@@ -49,9 +50,8 @@ func TestCatalogPerformanceWorkloadInputs(t *testing.T) {
 	}
 }
 
-func TestPreparedMarkdownAllocationBudget(t *testing.T) {
-	// The observed warm frame uses about 32,000 allocations at this fixed size.
-	// Keep a small toolchain margin; timing is reported separately.
+func TestCachedMarkdownFrameAllocationBudget(t *testing.T) {
+	// Cached runtime reads must not repeat component preparation or composition.
 	definition, err := story.Find("text/markdown")
 	if err != nil {
 		t.Fatal(err)
@@ -76,7 +76,7 @@ func TestPreparedMarkdownAllocationBudget(t *testing.T) {
 	allocations := testing.AllocsPerRun(5, func() { renderedFrame = model.View().Content })
 	t.Logf("warm Markdown allocations: %.0f", allocations)
 
-	if allocations > 33600 {
+	if allocations != 0 {
 		t.Fatalf("warm Markdown allocation budget exceeded: %.0f", allocations)
 	}
 }
@@ -105,6 +105,8 @@ func TestChartResizeMatchesFreshFixture(t *testing.T) {
 			}
 
 			_, _ = model.Update(tea.WindowSizeMsg{Width: size[0], Height: size[1]})
+			presentCatalog(t, model)
+
 			if model.View().Content != fresh.View().Content {
 				gotRows, wantRows := strings.Split(model.View().Content, "\n"), strings.Split(fresh.View().Content, "\n")
 				for row := range gotRows {

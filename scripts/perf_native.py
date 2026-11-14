@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Native PTY measurements: view latency, first output, idle CPU and resident memory."""
+"""Native PTY measurements: completed-frame latency, first output, idle CPU and RSS."""
 import argparse
 import datetime
 import errno
@@ -173,13 +173,19 @@ def measure(binary, fixture, trace, count, idle, live=False):
         raise RuntimeError(f'{fixture}: native probe exited {process.returncode}')
     events = [json.loads(line) for line in trace.read_text().splitlines()][warm_events:]
     if not live and fixture != 'screen/services':
-        resize_events = sum(e['kind'] == 'resize' for e in events)
+        resize_events = sum(e.get('count', 1) for e in events if e['kind'] == 'resize')
         if resize_events < count:
             raise RuntimeError(f'{fixture}: expected {count} resize events, observed {resize_events}')
-    if fixture == 'git/browser' and sum(e['kind'] == 'key' for e in events) < count:
+    if fixture == 'git/browser' and sum(e.get('count', 1) for e in events if e['kind'] == 'key') < count:
         raise RuntimeError('Git probe did not process the expected key sequence')
-    result['update_to_view'] = {kind: distribution([e['duration_ns'] for e in events if e['kind'] == kind])
-                                for kind in ['key', 'resize', 'message']}
+    for label, field in [('frame_batch_oldest_latency', 'duration_ns'),
+                         ('frame_batch_latest_latency', 'latest_duration_ns')]:
+        result[label] = {kind: distribution([e.get(field, e['duration_ns']) for e in events
+                                            if e['kind'] == kind and e.get('status', 'presented') == 'presented'])
+                         for kind in ['key', 'resize', 'message']}
+    result['accepted_updates'] = {kind: sum(e.get('count', 1) for e in events if e['kind'] == kind)
+                                  for kind in ['key', 'resize', 'message']}
+    result['presented_frames'] = len({e['frame'] for e in events if e.get('status') == 'presented'})
     return result
 
 
@@ -211,7 +217,7 @@ def run():
     details['state'] = 'complete'
     (args.out / 'metadata.json').write_text(json.dumps(details, indent=2) + '\n')
     report = {'metadata': details, 'cpu_counter_resolution_seconds': cpu_resolution(),
-              'limits': 'Instrumented update-to-view and first PTY bytes, not completed terminal painting. RSS is not retained Go heap. Initial warmup events are excluded.',
+              'limits': 'Instrumented frame-batch oldest/latest latency and first PTY bytes, not completed terminal painting. RSS is not retained Go heap. Initial warmup events are excluded.',
               'results': results}
     (args.out / 'native.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps(report, indent=2))

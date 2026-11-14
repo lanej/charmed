@@ -8,6 +8,7 @@ import (
 
 	"charm.land/bubbles/v2/key"
 	"charm.land/bubbles/v2/viewport"
+	"github.com/lanej/charmed/internal/rendercache"
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 )
@@ -16,7 +17,16 @@ import (
 // to a caller-owned viewport. Refresh owns content but retains native geometry,
 // styles and key maps. Up/Down/Left/Right and paging use Model.KeyMap; Toggle is
 // separate. Configure fields before SetSource or Refresh. Source bytes are copied.
+type jsonViewKey struct {
+	revision            uint64
+	width, height, x, y int
+}
+
 type JSONViewer struct {
+	syntaxBuilds uint64
+	viewCache    rendercache.Cache[jsonViewKey]
+	viewRevision uint64
+
 	Model                      *viewport.Model
 	Theme                      theme.Theme
 	Limits                     JSONLimits
@@ -80,6 +90,8 @@ func (m *JSONViewer) SetSource(source []byte) error {
 
 // Clear forgets a document without touching the host viewport's content.
 func (m *JSONViewer) Clear() {
+	m.viewCache.Clear()
+	m.viewRevision++
 	m.preparedSyntax, m.fallbackSyntax = nil, ""
 	m.source, m.nodes, m.visible, m.rows = nil, nil, nil, nil
 	m.closed = map[int]bool{}
@@ -113,12 +125,16 @@ func (m *JSONViewer) Select(node int) bool {
 		return false
 	}
 
+	expanded := false
 	for parent := m.nodes[node].parent; parent >= 0; parent = m.nodes[parent].parent {
+		expanded = expanded || m.closed[parent]
 		delete(m.closed, parent)
 	}
 
 	m.selected = node
+	m.geometrySyntax = !expanded
 	m.Refresh()
+	m.geometrySyntax = false
 	m.reveal()
 
 	return true
@@ -170,7 +186,13 @@ func (m *JSONViewer) ResizeViewport(width, height int) {
 	}
 }
 
-func (m *JSONViewer) View() string { return m.Model.View() }
+// Invalidate refreshes content and styling after direct native customization.
+func (m *JSONViewer) Invalidate() { m.Refresh() }
+
+func (m *JSONViewer) View() string {
+	key := jsonViewKey{m.viewRevision, m.Model.Width(), m.Model.Height(), m.Model.XOffset(), m.Model.YOffset()}
+	return m.viewCache.Get(key, m.Model.View)
+}
 
 func (m *JSONViewer) Snapshot() JSONState {
 	state := JSONState{fingerprint: m.fingerprint, closed: maps.Clone(m.closed), selected: m.selected, formattedOffset: m.formattedOffset, rawOffset: m.rawOffset, valid: len(m.nodes) > 0}

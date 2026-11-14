@@ -61,6 +61,7 @@ func BenchmarkCatalog(b *testing.B) {
 						i := 0
 						for b.Loop() {
 							_, _ = model.Update(tea.WindowSizeMsg{Width: config.Columns, Height: config.Rows + i%2})
+							presentCatalog(b, model)
 							renderedFrame = model.View().Content
 							i++
 						}
@@ -71,6 +72,7 @@ func BenchmarkCatalog(b *testing.B) {
 						i := 0
 						for b.Loop() {
 							_, _ = model.Update(tea.WindowSizeMsg{Width: config.Columns + i%2, Height: config.Rows})
+							presentCatalog(b, model)
 							renderedFrame = model.View().Content
 							i++
 						}
@@ -87,6 +89,7 @@ func BenchmarkCatalog(b *testing.B) {
 							}
 
 							_, _ = model.Update(tea.KeyPressMsg{Code: code})
+							presentCatalog(b, model)
 							renderedFrame = model.View().Content
 							i++
 						}
@@ -165,5 +168,17 @@ func BenchmarkCatalog(b *testing.B) {
 				})
 			}
 		})
+	}
+}
+
+// The baseline runtime renders immediately; scheduled runtimes expose a snapshot
+// operation. Both paths measure a completed frame after each workload update.
+func presentCatalog(tb testing.TB, model interface{ View() tea.View }) {
+	tb.Helper()
+
+	if presenter, ok := model.(interface{ PresentNow() error }); ok {
+		if err := presenter.PresentNow(); err != nil {
+			tb.Fatal(err)
+		}
 	}
 }

@@ -101,9 +101,15 @@ Use `layout.Compile` for a stable declaration and `Screen.ArrangeCompiled` for s
 | JSON viewport geometry | `ResizeViewport(width, height)` avoids reprojection on height changes; call `Refresh` after direct presentation changes |
 | Inspector geometry | `ResizeViewport(size)` reuses unchanged-width payloads and request rows; `Resize(size)` refreshes native presentation |
 | Inspector pane caching | `ViewRetained(pattern.InspectorRevisions{Requests, Details, Logs})` retains panes independently; advance the affected revisions after mutations |
-| Native access | Immediate rendering and existing refresh methods remain available; caching cannot discover direct native mutations |
+| Native access | Component views and existing full-refresh methods remain available; use `Invalidate` after direct edits to cached Git/JSON native styling |
 
 Run `BenchmarkResizeRender` alongside `BenchmarkRender` to measure the complete resize-to-output path. It covers repeated allocations, height changes, width changes and responsive breakpoint crossings. Compare against the same benchmark source on the base revision, running each executable sequentially after other tests and builds finish. These benchmarks measure generated frames; terminal emulator painting and interactive latency need separate native measurements.
+
+## Batch native presentation
+
+`runtime.Root` processes every update in order and batches presentation at 60 fps by default. `FPS` selects another positive rate; zero selects the default. One frame command remains pending while dirty, and none runs while idle. Sparse updates enqueue immediately; bursts share the remaining frame budget. Bubble Tea retains its own terminal-flush timer. Resize bursts use their final bounds; the next input sees those bounds before handling paging or selection. Scenes may expose `PresentationRevision() uint64` to identify unchanged updates. Without it, scheduling is conservative.
+
+`Root.View` reads the completed frame; `PresentNow` and `Render` provide synchronous snapshots. Return commands from `Update` so frames run. After direct native edits, invalidate the affected component, then return `Root.Invalidate()`. Git/JSON caches retain one current output. Git input bursts defer row projection; source replacement still installs complete native content immediately. JSON selection reuses syntax until structure or presentation changes. Regression checks count preparations, bound allocations and compare fresh output, alongside ordered-burst and lifecycle tests.
 
 ## Audit catalog performance
 
@@ -126,9 +132,9 @@ Install uv and use Python 3.11+ for these developer commands. The catalog scan i
 | Hotspots | Collections at 100/1,000/10,000 items, payloads at 1 KB/16 KB/application limit, chart datasets at 100/1,000/10,000 points, filtering and log update batches |
 | Profiles | CPU and allocation profiles for the selected benchmark packages; inspect them with Go's pprof tooling |
 | Heap | Process-wide live Go heap after GC across repeated resize cycles and after close; includes runtime pools and shared initialization |
-| Native PTY | Instrumented update-to-view and input-to-first-output latency, idle CPU, terminal bytes and RSS; includes static screens, cursors, spinners and timers |
+| Native PTY | Instrumented update-to-completed-frame and input-to-first-output latency, idle CPU, terminal bytes and RSS; includes static screens, cursors, spinners and timers |
 
-Native traces exclude startup and exit events. Linux CPU samples use process ticks; other supported hosts report their observed counter precision. First PTY output is not completed terminal painting, and resident memory is not retained Go heap. The harness checks that resize and key events were processed, keeps absent output samples separate, and closes owned children and descriptors on failure. Timing reports do not block shared-runner merges; deterministic preparation, allocation and cache-lifecycle tests run in the normal quality gate.
+Native traces exclude startup and exit. Completed-frame records identify accepted-update counts, oldest/latest input latency and frame revision; cached reads and unchanged messages remain distinct. Aggregation retains three input-kind samples during bursts. Linux CPU samples use process ticks; other hosts report counter precision. First output is not terminal painting, and RSS is not retained Go heap. The harness verifies input counts, reports absent output separately and closes owned resources on failure. Timing reports are informational; deterministic regression checks run in the quality gate.
 
 The manually dispatched **Native performance reports** workflow retains measurements as artifacts on Linux or macOS. Interpret the short catalog scan as a way to locate costs, then repeat the selected workloads and compare profiles before attributing gains. Full native viewport contents and scroll-offset semantics remain intact; collection updates may still require document-sized work. The guide website and terminal-emulator painting are outside these native measurements.
 

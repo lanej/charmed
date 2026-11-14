@@ -75,10 +75,12 @@ func TestStoriesDoNotShareState(t *testing.T) {
 	defer b.Close()
 	b.Init()
 	a.Update(tea.KeyPressMsg{Code: 'x', Text: "x"})
-	if a.View().Content == b.View().Content {
+
+	if a.Render().Content == b.Render().Content {
 		t.Fatal("input did not change its own scene")
 	}
-	if strings.Contains(ansi.Strip(b.View().Content), "> x") {
+
+	if strings.Contains(ansi.Strip(b.Render().Content), "> x") {
 		t.Fatal("input state leaked between scenes")
 	}
 }

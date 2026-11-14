@@ -24,9 +24,9 @@ func TestControlStoriesHandleNativeActivationThroughTypedEvents(t *testing.T) {
 			t.Fatalf("%s did not activate", id)
 		}
 
-		scene.Update(cmd())
+		scene.Update(applicationMessage(cmd))
 
-		view := ansi.Strip(scene.View().Content)
+		view := ansi.Strip(scene.Render().Content)
 		if !strings.Contains(view, "Changed:") && !strings.Contains(view, "Selected:") && !strings.Contains(view, "Toggled:") && !strings.Contains(view, "Requested:") {
 			t.Fatalf("%s did not receive its event: %q", id, view)
 		}

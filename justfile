@@ -64,11 +64,11 @@ hooks:
 
 # Record native performance reports; use --suite hotspots or profiles to focus.
 perf *args:
-    uv run --no-project scripts/perf.py {{args}}
+    uv run --no-project scripts/perf.py "$@"
 
 # Sample native PTY latency, idle resources and resize memory.
 perf-native *args:
-    uv run --no-project scripts/perf_native.py {{args}}
+    uv run --no-project scripts/perf_native.py "$@"
 
 # Validate performance reporting contracts; Go structural gates run in check.
 perf-check:

@@ -11,6 +11,7 @@ import (
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/collection"
 	"github.com/lanej/charmed/interaction"
+	"github.com/lanej/charmed/internal/rendercache"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/theme"
 )
@@ -23,10 +24,21 @@ type Item struct {
 	After []string
 }
 
+type listViewKey struct {
+	revision                uint64
+	width, height, x, y     int
+	outerWidth, outerHeight int
+}
+
 // List owns selection and filtering. Native Viewport styles and Input customization
 // survive SetItems and Resize; content, dimensions and scroll position are managed here.
 // History search retains every graph row and navigates matching commits.
 type List struct {
+	rowBuilds                           uint64
+	viewCache                           rendercache.Cache[listViewKey]
+	revision                            uint64
+	updating, rowsDirty, preserveOffset bool
+
 	ShowHelp      bool // NewList enables help; compositions can opt out.
 	EmptyText     string
 	Viewport      viewport.Model
@@ -111,6 +123,7 @@ func (m *List) Select(id string) bool {
 	for i, item := range m.items {
 		if item.ID == id {
 			m.cursor = i
+			m.preserveOffset = false
 			m.render()
 
 			return true
@@ -128,6 +141,7 @@ func (m *List) SetFocused(focused bool) {
 
 	offset := m.Viewport.YOffset()
 	m.focused = focused
+	m.preserveOffset = m.updating
 	m.render()
 	m.Viewport.SetYOffset(offset)
 }
@@ -164,6 +178,7 @@ func (m *List) matches(index int) bool {
 }
 
 func (m *List) reconcile() {
+	m.preserveOffset = false
 	if len(m.items) > 0 && !m.matches(m.cursor) {
 		for i := range m.items {
 			if m.matches(i) {
@@ -186,6 +201,9 @@ func (m *List) move(delta int) {
 }
 
 func (m *List) Update(msg tea.Msg) tea.Cmd {
+	m.updating = true
+	defer func() { m.updating = false }()
+
 	if !m.focused {
 		return nil
 	}
@@ -223,10 +241,24 @@ func (m *List) Update(msg tea.Msg) tea.Cmd {
 			m.query = ""
 			m.Input.SetValue("")
 		case "ctrl+e":
+			m.flushRows()
+			before := m.Viewport.YOffset()
 			m.Viewport.ScrollDown(1)
+
+			if before != m.Viewport.YOffset() {
+				m.revision++
+			}
+
 			return nil
 		case "ctrl+y":
+			m.flushRows()
+			before := m.Viewport.YOffset()
 			m.Viewport.ScrollUp(1)
+
+			if before != m.Viewport.YOffset() {
+				m.revision++
+			}
+
 			return nil
 		case "down", "j":
 			m.move(1)
@@ -274,6 +306,17 @@ func (m *List) footerHeight() int {
 }
 
 func (m *List) render() {
+	m.revision++
+	if m.updating {
+		m.preserveOffset = false
+		m.rowsDirty = true
+
+		return
+	}
+
+	m.rowsDirty = false
+	m.rowBuilds++
+
 	m.Viewport.SetHeight(max(1, m.height-m.footerHeight()))
 
 	if m.width == 0 {
@@ -355,7 +398,11 @@ func (m *List) render() {
 	m.Viewport.SetContent(strings.Join(lines, "\n"))
 
 	m.selectedLine = selectedLine
-	m.followSelection()
+	if !m.preserveOffset {
+		m.followSelection()
+	}
+
+	m.preserveOffset = false
 }
 
 func (m *List) followSelection() {
@@ -369,7 +416,35 @@ func (m *List) followSelection() {
 	}
 }
 
+// Invalidate reapplies caller-supplied presentation after direct native edits.
+func (m *List) Invalidate() {
+	m.viewCache.Clear()
+
+	if !m.rowsDirty {
+		m.preserveOffset = true
+	}
+
+	m.rowsDirty = true
+	m.revision++
+}
+
+// PresentationRevision identifies changes from Charmed's own update path.
+func (m *List) PresentationRevision() uint64 { return m.revision }
+
 func (m *List) View() string {
+	if m.rowsDirty {
+		m.render()
+	}
+
+	key := listViewKey{
+		revision: m.revision, width: m.Viewport.Width(), height: m.Viewport.Height(),
+		x: m.Viewport.XOffset(), y: m.Viewport.YOffset(), outerWidth: m.width, outerHeight: m.height,
+	}
+
+	return m.viewCache.Get(key, m.view)
+}
+
+func (m *List) view() string {
 	if m.footerHeight() == 0 {
 		return portable(layout.Fit(m.Viewport.View(), layout.Size{Width: m.width, Height: m.height}), m.Theme)
 	}
@@ -389,6 +464,8 @@ func (m *List) View() string {
 }
 
 func (m *List) updateInput(msg tea.Msg) tea.Cmd {
+	m.revision++
+
 	var cmd tea.Cmd
 
 	m.Input, cmd = m.Input.Update(msg)
@@ -401,4 +478,13 @@ func (m *List) updateInput(msg tea.Msg) tea.Cmd {
 	m.reconcile()
 
 	return cmd
+}
+
+func (m *List) flushRows() {
+	if m.rowsDirty {
+		updating := m.updating
+		m.updating = false
+		m.render()
+		m.updating = updating
+	}
 }

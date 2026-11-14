@@ -22,6 +22,7 @@ type jsonLine struct {
 // changes. Raw/formatted scroll positions are separate. Disabling folds expands
 // every container and discards the previous collapsed state.
 func (m *JSONViewer) Refresh() {
+	m.viewRevision++
 	if !m.geometrySyntax {
 		m.preparedSyntax, m.fallbackSyntax = nil, ""
 	}
@@ -80,6 +81,8 @@ func (m *JSONViewer) fallback() string {
 
 	highlighted := m.fallbackSyntax
 	if highlighted == "" {
+		m.syntaxBuilds++
+
 		highlighted = text.Syntax(source, "json", m.Theme)
 		if len(highlighted) <= limit {
 			m.fallbackSyntax = highlighted
@@ -117,6 +120,7 @@ func (m *JSONViewer) project() (string, error) {
 
 	highlighted := m.preparedSyntax
 	if highlighted == nil {
+		m.syntaxBuilds++
 		rendered := text.Syntax(strings.Join(source, "\n"), "json", m.Theme)
 
 		highlighted = strings.Split(rendered, "\n")
