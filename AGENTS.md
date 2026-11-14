@@ -10,6 +10,8 @@
 
 # Documentation
 
+- Document the current supported behavior and how to use it. Keep migration narratives, implementation history, PR chronology, rollout plans and before/after audit reports out of the website; retain historical evidence in Git, PRs or developer benchmark artifacts.
+
 - Follow the page profiles and bounds in `docs/standards.json`; run `just docs-check` for fast feedback. Do not raise bounds to accommodate a content violation.
 - Combine related prose before adding headings or artifacts. Headings and decorative images do not reset text-run budgets.
 - Component entries require meaningful native output, complete consumer usage, lifecycle guidance and a runnable example. Review chart, input and inspector examples together at mobile and desktop widths when changing templates.

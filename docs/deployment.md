@@ -163,4 +163,4 @@ Call `SetData` on the Bubble Tea update thread when new data arrives. Invalid up
 
 The optional `Emit` callback reports member selection, time window, active metric, band-limit changes, presentation variants and attention transitions. Selection events include all cohort IDs and the optional reference; typed attention transitions identify the particular peer in `Candidate`. Applications own statistical inference, notification delivery and deployment decisions. Supply `MetricSigns` independently of `MetricTones` and `Boundaries` when composing your own domain.
 
-For scalar measurements, additional cohorts, optional references and API migration details, see [Compare cohort measurements](cohorts.html).
+For scalar measurements, additional cohorts, optional references and count-based observations, see [Compare cohort measurements](cohorts.html).

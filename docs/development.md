@@ -72,21 +72,7 @@ env -u NO_COLOR TERM=xterm-256color COLORTERM=truecolor /tmp/charmed-render.test
   -test.benchmem -test.benchtime=200ms -test.count=3
 ```
 
-Native runtime updates remain event driven. Screens reuse one cleared canvas at their current allocation, and only fixed workbench fixtures retain their source rendering. Interactive views read current model state on every render. Resizing replaces retained buffers rather than accumulating allocations for previous sizes; folded inspector bodies and unchanged Git searches avoid rebuilding content.
-
-The November 2026 resize audit compared merged main at `eb2dc615` with these changes on an Apple M6, darwin/arm64, Go 1.27.4, truecolor. These are medians of five sequential 200 ms runs measuring resize plus output construction. Screen height changes alternate 120×40 and 120×30 cells; the 1,000-item Git pane alternates 80×20 and 80×35. Timing varies with the host; these measurements do not establish terminal-emulator painting latency.
-
-| Resize workload | Time before → after | Allocated bytes before → after |
-| --- | --- | --- |
-| Git screen, repeated size | 1.32 → 0.12 ms | 949,342 → 82,544 |
-| Git screen, height | 1.22 → 0.78 ms | 872,993 → 812,473 |
-| Log inspector, height | 2.55 → 1.12 ms | 1,996,249 → 716,489 |
-| Markdown viewport, height | 1.65 → 0.68 ms | 1,363,236 → 779,176 |
-| Git pane, height | 0.89 → 0.05 ms | 409,435 → 33,359 |
-
-The Git pane benchmark compares the existing full-refresh resize with the new geometry-only path. Its width-resize time remains approximately 0.84 → 0.82 ms because width changes still rebuild row presentation. The screen benchmark also covers width drags and breakpoint crossings; component-level gains do not imply that every screen resize avoids reflow.
-
-Separate native PTY probes warmed each screen for 1.5 seconds, then sampled process CPU and terminal output for five seconds. Static Git and Markdown screens emitted no additional bytes and consumed roughly 0.2–0.4% of one core; the focused service screen emitted 250 bytes for cursor blinking and consumed about 2.6%. CPU counters have 0.01-second resolution, so these short samples cannot establish zero CPU. Bubble Tea's native flush ticker and default frame rate remain unchanged.
+Native runtime updates remain event driven. Screens reuse one cleared canvas at their current allocation, and only fixed workbench fixtures retain their source rendering. Interactive views present current model state using component-owned caches and explicit invalidation. Resizing replaces retained buffers rather than accumulating allocations for previous sizes; folded inspector bodies and unchanged Git searches avoid rebuilding content.
 
 ## Reuse prepared content
 
@@ -103,7 +89,7 @@ Use `layout.Compile` for a stable declaration and `Screen.ArrangeCompiled` for s
 | Inspector pane caching | `ViewRetained(pattern.InspectorRevisions{Requests, Details, Logs})` retains panes independently; advance the affected revisions after mutations |
 | Native access | Component views and existing full-refresh methods remain available; use `Invalidate` after direct edits to cached Git/JSON native styling |
 
-Run `BenchmarkResizeRender` alongside `BenchmarkRender` to measure the complete resize-to-output path. It covers repeated allocations, height changes, width changes and responsive breakpoint crossings. Compare against the same benchmark source on the base revision, running each executable sequentially after other tests and builds finish. These benchmarks measure generated frames; terminal emulator painting and interactive latency need separate native measurements. For consumer upgrade steps, follow the [migration guide](migration.html).
+Run `BenchmarkResizeRender` alongside `BenchmarkRender` to measure the complete resize-to-output path. It covers repeated allocations, height changes, width changes and responsive breakpoint crossings. Compare against the same benchmark source on the base revision, running each executable sequentially after other tests and builds finish. These benchmarks measure generated frames; terminal emulator painting and interactive latency need separate native measurements. See [retained rendering](rendering.html) for command forwarding, snapshots and invalidation.
 
 ## Batch native presentation
 
@@ -138,25 +124,7 @@ Native traces exclude startup and exit. Completed-frame records identify accepte
 
 The manually dispatched **Native performance reports** workflow retains measurements as artifacts on Linux or macOS. Interpret the short catalog scan as a way to locate costs, then repeat the selected workloads and compare profiles before attributing gains. Full native viewport contents and scroll-offset semantics remain intact; collection updates may still require document-sized work. The guide website and terminal-emulator painting are outside these native measurements.
 
-## Catalog audit findings
-
-The November 2026 catalog audit covered 153 fixtures, 58 public view methods and 3,008 matched workloads against `f92eac93`. The broad scan used one 20 ms sample to rank costs. The scaling figures below are medians of five 500 ms runs on an Apple M6 with Go 1.26.11 and truecolor output. Baseline libraries used identical benchmark sources. These are generated-frame and update costs, not terminal painting latency.
-
-| Repeated workload | Before → after | Allocated bytes before → after |
-| --- | --- | --- |
-| 10,000-item Git selection | 4.30 → 1.95 ms | 2,249,161 → 1,107,134 |
-| 10,000-item Git filtering | 1.94 → 0.72 ms | 1,304,351 → 325,395 |
-| 64 KB JSON width reflow | 7.78 → 2.31 ms | 13,026,641 → 6,754,482 |
-| 10,000 HTTP records replaced | 55.24 → 9.65 ms | 158,756,820 → 80,149,187 |
-| Ten HTTP updates in 10,000 records | 56.64 → 10.13 ms | 162,478,417 → 83,754,556 |
-| Cohort height resize, 200×60 | 17.89 → 5.15 ms | 14,400,562 → 4,621,124 |
-| Deployment height resize, 200×60 | 18.91 → 5.97 ms | 15,120,577 → 4,441,394 |
-
-Git preparation now retains normalized search labels and one current-width row projection, including continuation rows. Filtering and selection preserve the full native viewport. JSON geometry-only resizing reuses a bounded syntax projection; Refresh and Clear invalidate it. Cohort resizing reuses plots, prepares card content once, and exposes `ResizeViewport` to retain unchanged-width stacked content. Existing Resize still refreshes native presentation. HTTP label caches last only one rebuild and do not cache caller-supplied URL formatters.
-
-Native probes processed 100 resizes each for Git and Markdown and 100 Git navigation keys without missing output. First-output resize p95 was 20.1/19.5 ms; instrumented static idle CPU was about 0.4% of one core. Neither measures completed painting. Heap samples after GC covered every fixture across four phases of twenty resize cycles. Nonmonotonic changes include shared pools and initialization; they neither establish leaks nor prove leak freedom. Raw reports retain samples and after-close values.
-
-The large HTTP workload explicitly raises the retention limit to 10,000. It remains document-sized work and is not representative of the smaller default limit. Native chart rasterization and per-cell styling remain substantial costs, especially at large allocations; preserving native APIs does not establish a universal frame-time guarantee. Startup, width changes and data replacement remain distinct from warm or height-only rendering. Source snapshots and raw profiles accompany reports so these conclusions can be challenged and repeated.
+Data replacement and width changes can require document-sized work. Large HTTP workloads must explicitly raise the retention limit; native chart rasterization and per-cell styling also depend on allocation. Warm-view or height-only measurements do not establish a universal frame-time guarantee.
 
 ## Publish documentation
 
@@ -188,7 +156,7 @@ go run ./examples/cohorts
 go run ./examples/catalog screen/cohorts
 ```
 
-The regional example supplies temperature, energy, yield and humidity for three cohorts. Read the [cohort contract](cohorts.html) for scalar aggregation, missing observations, optional references and migration from two-cohort comparisons.
+The regional example supplies temperature, energy, yield and humidity for three cohorts. Read the [cohort contract](cohorts.html) for scalar aggregation, missing observations, optional references and count-based observations.
 
 ## Nested layouts
 

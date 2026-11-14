@@ -64,7 +64,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		{File: "dependencies.html", Title: "Component dependencies", Source: "dependencies.md", Resource: true, Components: components},
 		{File: "index.html", Title: "Charmed", Source: "index.md"},
 		{File: "getting-started.html", Title: "Getting started", Source: "getting-started.md"},
-		{File: "migration.html", Title: "Migrate existing UIs", Source: "migration.md", Resource: true},
+		{File: "rendering.html", Title: "Retained rendering", Source: "rendering.md", Resource: true},
 		{File: "recipes.html", Title: "Recipes", Source: "recipes.md"},
 		{File: "documentation-standard.html", Title: "Documentation standard", Source: "documentation-standard.md", Resource: true},
 		{File: "log-inspector.html", Title: "Log inspector", Source: "log-inspector.md", Resource: true},

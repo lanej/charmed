@@ -52,16 +52,16 @@ Optional boundaries remain metric-specific. Compatibility fields `Hosts` and `Fl
 
 Configured policies without sufficient observations or a reference report `Unknown`; unconfigured policies remain `Off`. Missing member measurements receive unknown configured attention. Sigma bands and distances remain descriptive, not significance tests or application decisions.
 
-## Migrate existing callers
+## Count-based observations
 
-Existing `Requests`/`Counts` samples and `cohort.Analyze` retain their count-based contract: every metric needs an explicit interval count no greater than requests. Use that representation or a non-nil `Measurements` map per sample; mixing them is rejected. `AnalyzeMetric` expects validated data and returns generic `Value`/`HasValue` alongside legacy `Rate`/`HasRate` aliases.
+`Requests`/`Counts` samples and `cohort.Analyze` use a count-based contract: every metric needs an explicit interval count no greater than requests. Supply that representation or a non-nil `Measurements` map per sample; mixing them is rejected. `AnalyzeMetric` expects validated data and returns `Value`/`HasValue` alongside the `Rate`/`HasRate` aliases.
 
-| Previous contract | Migration |
+| Contract | Behavior |
 | --- | --- |
-| First of two cohorts implicitly defines reference | Set `ReferenceID` explicitly; supply one to N cohorts |
-| `MinRequests` | Compatibility alias for `MinSupport`; larger threshold applies when both are set |
-| Selection event has singular `candidate` | Read complete `cohorts` ID list and optional `reference` |
+| Cohorts and reference | Supply one or more cohorts; set `ReferenceID` explicitly for relative comparisons |
+| Support threshold | `MinRequests` aliases `MinSupport`; the larger threshold applies when both are set |
+| Selection event | `cohorts` contains the complete ID list; `reference` is optional |
 | Typed attention transition | `Candidate` identifies the particular peer assessed |
-| HTTP-specific labels | Cohort, metric, value and member labels apply across domains |
+| Labels | Cohort, metric, value and member labels apply across domains |
 
 Native table and viewport access remain available. Data, reference, metric, window and size changes rebuild generated rows, columns, charts and inspector sizing; direct mutations to those properties reset. Apply customizations after those operations, and forward lifecycle commands on the Bubble Tea update thread.
