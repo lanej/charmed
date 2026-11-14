@@ -248,6 +248,27 @@ def check_component_graph(browser, site, output):
                 preview = page.locator("[data-component]:visible").get_by_role("region", name="Native example", exact=True)
                 assert preview.locator("pre.terminal").inner_text().strip(), "Missing compiled consumer output"
                 assert preview.get_by_role("link", name="Go usage").get_attribute("href")
+                if option.get_attribute("value") == "feedback/canary-membership":
+                    page.evaluate("document.fonts.ready")
+                    positions = preview.locator("pre.terminal").evaluate("""el => {
+                        const positions = [];
+                        const nodes = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+                        let node;
+                        while (node = nodes.nextNode()) {
+                            for (const glyph of ['◉', '◌']) {
+                                const at = node.textContent.indexOf(glyph);
+                                if (at < 0) continue;
+                                const range = document.createRange();
+                                range.setStart(node, at);
+                                range.setEnd(node, at + 1);
+                                positions.push(range.getBoundingClientRect().x);
+                            }
+                        }
+                        return positions;
+                    }""")
+                    assert len(positions) == 2 and abs(positions[0] - positions[1]) <= 1, "Emoji fallback fonts shifted the compact column"
+                    fills = preview.locator('pre.terminal span[style*="background-color"]').evaluate_all("nodes => nodes.map(el => el.getBoundingClientRect().height)")
+                    assert fills and max(fills) - min(fills) <= 1, "Emoji cell wrappers changed the pill fill height"
             selector.select_option("collection/status-matrix")
             selected = page.locator("[data-component]:visible")
             selected.get_by_role("region", name="Built from", exact=True).get_by_role("link", name="Data grid", exact=True).click()

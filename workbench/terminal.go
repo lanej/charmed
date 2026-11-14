@@ -58,6 +58,20 @@ func terminalHTML(frame string) template.HTML {
 				continue
 			}
 
+			// Fallback fonts can draw wide glyphs narrower than their native cell allocation.
+			if cell.Width > 1 {
+				flush()
+
+				content := fmt.Sprintf(`<span style="display:inline-block;width:%dch;text-align:center;text-decoration:inherit;">%s</span>`, cell.Width, html.EscapeString(cell.Content))
+				if style := terminalStyle(cell.Style); style != "" {
+					content = `<span style="` + style + `">` + content + `</span>`
+				}
+
+				result = append(result, content)
+
+				continue
+			}
+
 			if !previous.Equal(&cell.Style) {
 				flush()
 
@@ -70,7 +84,7 @@ func terminalHTML(frame string) template.HTML {
 		flush()
 	}
 
-	return template.HTML(strings.Join(result, "")) // #nosec G203 -- Text is HTML-escaped; styles contain only numeric colors and fixed literals.
+	return template.HTML(strings.Join(result, "")) // #nosec G203 -- Text is HTML-escaped; styles contain only numeric cell widths, colors and fixed literals.
 }
 
 func terminalStyle(style uv.Style) string {

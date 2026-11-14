@@ -206,12 +206,12 @@ func TestWebLinkLayersValidationOverGeneralLink(t *testing.T) {
 func TestLinkPresentationAndEmphasisKeepTargetAndGeometry(t *testing.T) {
 	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast, theme.Mono} {
 		palette := theme.New(mode)
-		for _, presentation := range []text.Presentation{text.DefaultPresentation, text.GlyphAndLabel, text.GlyphOnly, text.LabelOnly} {
+		for _, presentation := range []text.Presentation{text.DefaultPresentation, text.GlyphAndLabel, text.GlyphOnly, text.LabelOnly, text.Compact} {
 			expected := palette.Glyph(theme.GlyphLink) + " Logs"
 
 			switch presentation {
 			case text.DefaultPresentation, text.GlyphAndLabel:
-			case text.GlyphOnly:
+			case text.GlyphOnly, text.Compact:
 				expected = palette.Glyph(theme.GlyphLink)
 			case text.LabelOnly:
 				expected = "Logs"

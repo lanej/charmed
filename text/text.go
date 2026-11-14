@@ -54,3 +54,14 @@ func Pill(value string, tone Tone, t theme.Theme, emphasis ...Emphasis) string {
 func KeyHint(key, description string, t theme.Theme) string {
 	return t.Heading().Render(key) + " " + t.Subtle().Render(description)
 }
+
+// Indicator renders semantic glyphs and labels as pills, or bare glyphs in Compact mode.
+// GlyphOnly retains pill geometry; Compact removes the label, fill and padding.
+func Indicator(glyph, label string, tone Tone, t theme.Theme, emphasis Emphasis, options ...Presentation) string {
+	mode := presentation(options)
+	if mode == Compact {
+		return ToneStyle(tone, emphasis, t).Render(mode.Format(glyph, label))
+	}
+
+	return Pill(mode.Format(glyph, label), tone, t, emphasis)
+}

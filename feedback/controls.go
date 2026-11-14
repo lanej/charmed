@@ -14,12 +14,7 @@ func Follow(following bool, emphasis text.Emphasis, t theme.Theme, options ...te
 		return Paused.View(emphasis, t, options...)
 	}
 
-	mode := text.DefaultPresentation
-	if len(options) > 0 {
-		mode = options[0]
-	}
-
-	return text.Pill(mode.Format(t.Glyph(theme.GlyphRunning), "FOLLOW"), text.Neutral, statusTheme(t, t.Running, t.DimRunning), emphasis)
+	return text.Indicator(t.Glyph(theme.GlyphRunning), "FOLLOW", text.Neutral, statusTheme(t, t.Running, t.DimRunning), emphasis, options...)
 }
 
 // Scrollbar describes vertical line geometry, not selection or elapsed time.

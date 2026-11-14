@@ -114,19 +114,14 @@ func (e Evidence) mark() (text.Tone, theme.Glyph) {
 	}
 }
 
-// View is the state's pill. Gaps use the muted unknown palette, as the UNKNOWN status does.
+// View renders evidence as a pill or compact glyph. Gaps keep the unknown palette.
 func (e Evidence) View(emphasis text.Emphasis, t theme.Theme, options ...text.Presentation) string {
 	tone, glyph := e.mark()
 	if tone == text.Neutral {
 		t = statusTheme(t, t.Unknown, t.DimUnknown)
 	}
 
-	mode := text.DefaultPresentation
-	if len(options) > 0 {
-		mode = options[0]
-	}
-
-	return text.Pill(mode.Format(t.Glyph(glyph), strings.ToUpper(e.Label())), tone, t, emphasis)
+	return text.Indicator(t.Glyph(glyph), strings.ToUpper(e.Label()), tone, t, emphasis, options...)
 }
 
 // EvidenceCount is the number of items in one evidence state.
