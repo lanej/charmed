@@ -324,7 +324,7 @@ func logInspectorStory(e Environment) (runtime.Scene, error) {
 
 	step := 0
 
-	return &scene{init: m.Init, resize: m.Resize, view: func(layout.Size) string { return m.View() }, update: func(msg tea.Msg) tea.Cmd {
+	return &scene{init: m.Init, resize: m.ResizeViewport, view: func(layout.Size) string { return m.View() }, update: func(msg tea.Msg) tea.Cmd {
 		if _, ok := msg.(runtime.StepMsg); ok {
 			step++
 			if err := m.UpsertRequests(stepExchange(step)); err != nil {

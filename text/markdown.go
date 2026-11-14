@@ -120,16 +120,27 @@ func syntaxColor(c color.Color) string {
 // Markdown renders rich content without terminal queries or theme files. An
 // optional configuration replaces native styles; width still controls prose.
 func Markdown(content string, width int, t theme.Theme, options ...MarkdownOptions) (string, error) {
+	document, err := PrepareMarkdown(content, t, options...)
+	if err != nil {
+		return "", err
+	}
+
+	return document.Render(width)
+}
+
+// PrepareMarkdown parses and highlights once, independently of viewport size.
+func PrepareMarkdown(content string, t theme.Theme, options ...MarkdownOptions) (*MarkdownDocument, error) {
 	style := MarkdownStyles(t)
 
 	syntax, err := MarkdownSyntax(t)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	for _, option := range options {
 		if option.Styles != nil {
 			style = *option.Styles
+			cloneStylePointers(reflect.ValueOf(&style).Elem())
 		}
 
 		if option.Syntax != nil {
@@ -144,9 +155,6 @@ func Markdown(content string, width int, t theme.Theme, options ...MarkdownOptio
 		goldmark.WithExtensions(extension.GFM, extension.DefinitionList),
 		goldmark.WithParserOptions(parser.WithAutoHeadingID()),
 	)
-	// WHY: Install after extensions so their HTML renderers cannot override terminal tables/tasks.
-	md.SetRenderer(renderer.NewRenderer(renderer.WithNodeRenderers(util.Prioritized(
-		glamour.NewRenderer(glamour.Options{Styles: style, WordWrap: max(1, width)}), 1000))))
 
 	source := []byte(content)
 	document := md.Parser().Parse(goldtext.NewReader(source))
@@ -158,20 +166,46 @@ func Markdown(content string, width int, t theme.Theme, options ...MarkdownOptio
 
 	source, err = highlightMarkdownSource(document, source, syntax, t.Mode == theme.Mono, background)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
+	return &MarkdownDocument{source: source, document: document, style: style, mono: t.Mode == theme.Mono}, nil
+}
+
+// MarkdownDocument owns prepared source and the latest width result. Render calls
+// must be serialized. Preparing a new document replaces content or presentation.
+type MarkdownDocument struct {
+	source   []byte
+	document ast.Node
+	style    glamour.StyleConfig
+	mono     bool
+	width    int
+	rendered string
+	valid    bool
+}
+
+func (d *MarkdownDocument) Render(width int) (string, error) {
+	width = max(1, width)
+	if d.valid && d.width == width {
+		return d.rendered, nil
+	}
+
+	r := renderer.NewRenderer(renderer.WithNodeRenderers(util.Prioritized(
+		glamour.NewRenderer(glamour.Options{Styles: d.style, WordWrap: width}), 1000)))
+
 	var out bytes.Buffer
-	if err = md.Renderer().Render(&out, source, document); err != nil {
+	if err := r.Render(&out, d.source, d.document); err != nil {
 		return "", err
 	}
 
 	rendered := out.String()
-	if t.Mode == theme.Mono {
+	if d.mono {
 		rendered = ansi.Strip(rendered)
 	}
 
-	return strings.Trim(rendered, "\n"), nil
+	d.width, d.rendered, d.valid = width, strings.Trim(rendered, "\n"), true
+
+	return d.rendered, nil
 }
 
 func highlightMarkdownSource(document ast.Node, source []byte, syntax *chroma.Style, mono bool, background string) ([]byte, error) {

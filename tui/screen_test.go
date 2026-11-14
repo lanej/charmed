@@ -3,6 +3,7 @@ package tui_test
 import (
 	"image"
 	"strings"
+	"sync"
 	"testing"
 
 	"charm.land/lipgloss/v2"
@@ -131,4 +132,88 @@ func TestClippingExceptionsRemainScopedAndInspectable(t *testing.T) {
 	if _, err := s.Render(map[string]string{"label": "ok", "value": strings.Repeat("x", 30)}); err == nil {
 		t.Fatal("exception leaked into another region")
 	}
+}
+
+func TestRenderRetainsReturnedFramesAndClearsReusedCells(t *testing.T) {
+	s := screen(t, "left", "right")
+
+	root := &layout.Flex{Children: []layout.Slot{
+		{Node: &layout.Region{ID: "left"}, Track: layout.Grow(1)},
+		{Node: &layout.Region{ID: "right"}, Track: layout.Grow(1)},
+	}}
+	if err := s.Arrange(root, layout.Size{Width: 20, Height: 4}); err != nil {
+		t.Fatal(err)
+	}
+
+	first, err := s.Render(map[string]string{"left": "\x1b[44m界old\x1b[0m\nbottom", "right": "original"})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	retained := []byte(first.Content)
+
+	if _, err := s.Render(map[string]string{"left": strings.Repeat("x", 50), "right": ""}); err == nil {
+		t.Fatal("oversized content bypassed validation")
+	}
+
+	s.RegionMap(theme.New(theme.Dark))
+
+	for _, size := range []layout.Size{{Width: 20, Height: 4}, {Width: 12, Height: 2}, {Width: 30, Height: 6}} {
+		if err := s.Arrange(root, size); err != nil {
+			t.Fatal(err)
+		}
+
+		frame, err := s.Render(map[string]string{"left": "z", "right": ""})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if frame.Content != layout.Fit("z", size) {
+			t.Fatalf("old cells, colors or region-map borders survived at %v: %q", size, frame.Content)
+		}
+	}
+
+	if first.Content != string(retained) {
+		t.Fatal("subsequent rendering mutated an already-returned frame")
+	}
+}
+
+func TestCopiedScreensRenderIndependently(t *testing.T) {
+	original := screen(t, "left", "right")
+	root := &layout.Flex{Children: []layout.Slot{
+		{Node: &layout.Region{ID: "left"}, Track: layout.Grow(1)},
+		{Node: &layout.Region{ID: "right"}, Track: layout.Grow(1)},
+	}}
+
+	size := layout.Size{Width: 20, Height: 4}
+	if err := original.Arrange(root, size); err != nil {
+		t.Fatal(err)
+	}
+
+	if _, err := original.Render(map[string]string{"left": "warm", "right": ""}); err != nil {
+		t.Fatal(err)
+	}
+
+	clone := *original
+
+	var workers sync.WaitGroup
+	for index, model := range []*tui.Screen{original, &clone} {
+		workers.Go(func() {
+			content := []string{"original", "clone"}[index]
+			for range 20 {
+				frame, err := model.Render(map[string]string{"left": content, "right": ""})
+				if err != nil {
+					t.Error(err)
+					return
+				}
+
+				if frame.Content != layout.Fit(content, size) {
+					t.Error("copied screens shared mutable rendering cells")
+					return
+				}
+			}
+		})
+	}
+
+	workers.Wait()
 }

@@ -17,16 +17,47 @@ func Fit(content string, size Size) string {
 	if size.Width <= 0 || size.Height <= 0 {
 		return ""
 	}
-	lines := strings.Split(strings.ReplaceAll(content, "\r\n", "\n"), "\n")
+
+	padding := strings.Repeat(" ", size.Width)
 	out := make([]string, size.Height)
+	remaining, more := content, true
+
 	for y := range out {
 		line := ""
-		if y < len(lines) {
-			line = ansi.Truncate(lines[y], size.Width, "")
+		if more {
+			line, remaining, more = strings.Cut(remaining, "\n")
+			if more {
+				line = strings.TrimSuffix(line, "\r")
+			}
 		}
-		out[y] = line + strings.Repeat(" ", max(0, size.Width-lipgloss.Width(line)))
+
+		width := len(line)
+		if plainASCII(line) {
+			if width > size.Width {
+				line, width = line[:size.Width], size.Width
+			}
+		} else {
+			width = ansi.StringWidth(line)
+			if width > size.Width {
+				line = ansi.Truncate(line, size.Width, "")
+				width = ansi.StringWidth(line)
+			}
+		}
+
+		out[y] = line + padding[:max(0, size.Width-width)]
 	}
+
 	return strings.Join(out, "\n")
+}
+
+func plainASCII(value string) bool {
+	for i := range len(value) {
+		if value[i] < ' ' || value[i] > '~' {
+			return false
+		}
+	}
+
+	return true
 }
 
 // ASCII replaces terminal decoration when Unicode is unavailable. Application
@@ -36,6 +67,7 @@ func ASCII(content string) string {
 		if r < 128 {
 			return r
 		}
+
 		switch r {
 		case '─', '━', '═', '–', '—':
 			return '-'
@@ -125,6 +157,8 @@ func Split(width, gap, leftMin, rightMin int, ratio float64) (left, right int, s
 	if width < leftMin+rightMin+gap {
 		return width, width, false
 	}
+
 	left = max(leftMin, min(int(float64(width-gap)*ratio), width-gap-rightMin))
+
 	return left, width - gap - left, true
 }

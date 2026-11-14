@@ -16,10 +16,18 @@ import (
 
 // Screen registers the complete set of screen regions. Arrange requires each to
 // be placed exactly once or explicitly hidden with a reason. Models are not stored.
+// Arrange, Render and RegionMap are serialized by the owning model. A value copy
+// starts its own rendering buffer; returned strings survive later renders.
 type Screen struct {
-	ids      []string
-	plan     layout.Plan
-	arranged bool
+	ids           []string
+	plan          layout.Plan
+	arranged      bool
+	canvas        *lipgloss.Canvas
+	canvasOwner   *Screen
+	compiled      *layout.Compiled
+	retained      map[string]retainedRegion
+	retainedFrame *Frame
+	retainedOwner *Screen
 }
 
 type Frame struct {
@@ -48,12 +56,18 @@ func NewScreen(ids ...string) (*Screen, error) {
 // rendering until the next success; caller-owned component state remains untouched.
 func (s *Screen) Arrange(root layout.Node, size layout.Size) error {
 	s.arranged = false
+	s.compiled = nil
+	s.retainedFrame = nil
 
 	plan, err := layout.Resolve(root, size)
 	if err != nil {
 		return err
 	}
 
+	return s.acceptPlan(plan)
+}
+
+func (s *Screen) acceptPlan(plan layout.Plan) error {
 	declared := map[string]bool{}
 	for _, region := range plan.Regions() {
 		declared[region.ID] = true
@@ -102,6 +116,11 @@ func (s *Screen) Region(id string) (image.Rectangle, bool) {
 // error. Oversized content blocks rendering unless that region declares a
 // ContentClipped exception; accepted exceptions remain visible in diagnostics.
 func (s *Screen) Render(views map[string]string) (Frame, error) {
+	s.retained, s.retainedFrame = nil, nil
+	return s.render(views)
+}
+
+func (s *Screen) render(views map[string]string) (Frame, error) {
 	if !s.arranged {
 		return Frame{}, fmt.Errorf("screen has no successful arrangement")
 	}
@@ -112,8 +131,8 @@ func (s *Screen) Render(views map[string]string) (Frame, error) {
 	}
 
 	frame := Frame{Diagnostics: s.plan.Diagnostics()}
-	size := s.plan.Size()
-	layers := []*lipgloss.Layer{lipgloss.NewLayer(layout.Fit("", size))}
+
+	var layers []*lipgloss.Layer
 
 	for _, region := range visible {
 		content, exists := views[region.ID]
@@ -133,7 +152,7 @@ func (s *Screen) Render(views map[string]string) (Frame, error) {
 		return Frame{}, err
 	}
 
-	frame.Content = layout.Fit(lipgloss.NewCompositor(layers...).Render(), size)
+	frame.Content = s.compose(layers)
 
 	return frame, nil
 }
@@ -145,7 +164,8 @@ func (s *Screen) RegionMap(t theme.Theme) string {
 		return "Screen has no arrangement"
 	}
 
-	layers := []*lipgloss.Layer{lipgloss.NewLayer(layout.Fit("", s.plan.Size()))}
+	var layers []*lipgloss.Layer
+
 	for _, region := range s.plan.Regions() {
 		size := layout.Size{Width: region.Bounds.Dx(), Height: region.Bounds.Dy()}
 		label := fmt.Sprintf("%s (%d,%d) %dx%d", region.ID, region.Bounds.Min.X, region.Bounds.Min.Y, size.Width, size.Height)
@@ -153,7 +173,20 @@ func (s *Screen) RegionMap(t theme.Theme) string {
 		layers = append(layers, lipgloss.NewLayer(content).X(region.Bounds.Min.X).Y(region.Bounds.Min.Y))
 	}
 
-	return layout.Fit(lipgloss.NewCompositor(layers...).Render(), s.plan.Size())
+	return s.compose(layers)
+}
+
+// The screen retains one canvas at the current allocation, never rendered child views.
+func (s *Screen) compose(layers []*lipgloss.Layer) string {
+	size := s.plan.Size()
+	if s.canvasOwner != s || s.canvas == nil || s.canvas.Width() != size.Width || s.canvas.Height() != size.Height {
+		s.canvas = lipgloss.NewCanvas(size.Width, size.Height)
+		s.canvasOwner = s
+	} else {
+		s.canvas.Clear()
+	}
+
+	return layout.Fit(s.canvas.Compose(lipgloss.NewCompositor(layers...)).Render(), size)
 }
 
 // Inspect is a textual diagnostic report; it does not consume screen allocation.
