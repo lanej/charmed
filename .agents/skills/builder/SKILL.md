@@ -41,6 +41,10 @@ Discarded experiments do not automatically need a permanent suite. One-off manua
 
 Plan working-and-verifying increments together, without prescribed commit sequences or reports per loop. Construction feedback does not waive delivery gates, reviews, CI or explicit test-first mandates. Review protection of retained behavior, not test authorship order unless mandated. Report specific requirement violations, affected behavior, contradictory evidence, assumptions and verification gaps.
 
+## Product documentation
+
+Document current supported behavior, contracts, constraints and usage. Keep implementation history, migration narratives, PR chronology, rollout plans and before/after audit reports outside product documentation; retain historical evidence in Git, PRs or developer artifacts. Follow the target project's documentation rules and validate its rendered examples.
+
 ## Load detail when needed
 
 Read [the architecture standard](references/standard.md) for capability boundaries, models, adapters, consequential effects or architecture reviews for rationale, evidence and limits. Read the [construction policy](references/construction.md) for uncertain feasibility, retained prototypes, manual-only protection, security/performance viability or ambiguity about verification timing. Read [instruction routing](references/instructions.md) when configuring host loading.

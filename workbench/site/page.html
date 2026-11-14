@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="{{.Page.Brand.Background}}"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Page.Title}} · Charmed</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script></head>
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="{{.Page.Brand.Background}}"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{.Page.Title}} · Charmed</title><link rel="alternate" type="text/markdown" href="{{.Page.MarkdownFile}}"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script></head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">{{template "mark.svg"}}</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
@@ -137,7 +137,7 @@
 </section>{{end}}
 {{if .Page.Legacy}}<details class="legacy-links"><summary>Previously shared component links</summary><ul>{{range .Page.Legacy}}<li {{if .Hidden}}hidden{{end}}><a data-legacy-anchor="{{.Anchor}}" href="{{.Href}}">{{.Name}}</a></li>{{end}}</ul></details>{{end}}
 {{if .Page.Coverage}}<div class="table-wrap" aria-label="Component coverage inventory"><table tabindex="0"><thead><tr><th>Upstream</th><th>Status</th><th>Integration</th></tr></thead><tbody>{{range .Page.Coverage}}<tr><td>{{.Upstream}}</td><td>{{.Status}}</td><td>{{.Notes}}</td></tr>{{end}}</tbody></table></div>{{end}}
-<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution</footer>
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution · <a href="{{.Page.MarkdownFile}}" class="markdown-download">Markdown</a></footer>
 </main></div></body></html>
 {{define "guide-nav"}}
 <nav aria-label="Guide">

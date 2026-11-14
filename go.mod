@@ -10,6 +10,7 @@ require (
 	charm.land/huh/v2 v2.0.3
 	charm.land/lipgloss/v2 v2.0.6
 	charm.land/log/v2 v2.0.1
+	github.com/JohannesKaufmann/html-to-markdown/v2 v2.5.2
 	github.com/NimbleMarkets/ntcharts/v2 v2.9.0
 	github.com/alecthomas/chroma/v2 v2.14.0
 	github.com/charmbracelet/colorprofile v0.4.3
@@ -25,11 +26,12 @@ require (
 	github.com/rivo/uniseg v0.4.7
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/pflag v1.0.9
-	github.com/yuin/goldmark v1.7.17
-	golang.org/x/net v0.60.0
+	github.com/yuin/goldmark v1.8.2
+	golang.org/x/net v0.62.0
 )
 
 require (
+	github.com/JohannesKaufmann/dom v0.3.1 // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/catppuccin/go v0.2.0 // indirect
