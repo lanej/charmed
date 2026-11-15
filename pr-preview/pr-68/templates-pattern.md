@@ -153,7 +153,7 @@ The parent model supplies observations, coordinates focus and owns application d
 go run ./examples/catalog template/application
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/template_application.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/template_application.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/header](https://lanej.io/charmed/molecules-layout.html#layout/header) [navigation/tabs](https://lanej.io/charmed/molecules-navigation.html#navigation/tabs) [layout/footer](https://lanej.io/charmed/molecules-layout.html#layout/footer) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)
 
@@ -297,7 +297,7 @@ The parent model supplies observations, coordinates focus and owns application d
 go run ./examples/catalog template/report-page
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/template_report_page.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/pattern/report.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/template_report_page.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/pattern/report.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/header](https://lanej.io/charmed/molecules-layout.html#layout/header) [feedback/evidence-summary](https://lanej.io/charmed/molecules-feedback.html#feedback/evidence-summary) [feedback/evidence-footer](https://lanej.io/charmed/molecules-feedback.html#feedback/evidence-footer) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [feedback/evidence](https://lanej.io/charmed/atoms-feedback.html#feedback/evidence)
 
@@ -314,8 +314,8 @@ Saved terminal output · truecolor reference
 Output of the Go usage example below
 
 ```
- API operations                     Observed 00:16 UTC / quota resets 01:00 UTC 
- Synthetic observations / UTC                                                   
+ API operations  Synthetic observations / UTC                                   
+                                    Observed 00:16 UTC / quota resets 01:00 UTC 
                                                                                 
  REST remaining  ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░░░░░░░░  3500 / 5000 requests             
                                                                                 
@@ -544,8 +544,8 @@ Empty · truecolor · 100 × 26 terminal cells
 Error · truecolor · 100 × 26 terminal cells
 
 ```
- API operations                            Refresh failed / showing last observation from 00:16 UTC 
- Synthetic / 14-15 Nov 2026                                                                         
+ API operations  Synthetic / 14-15 Nov 2026                                                         
+                                           Refresh failed / showing last observation from 00:16 UTC 
                                                                                                     
  REST remaining     ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░░░░░░░░  3500 / 5000 requests                              
  GraphQL remaining  ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░  4800 / 5000 points                                
@@ -640,6 +640,6 @@ Forward Update only while focused and return its command. Resize and SetSnapshot
 go run ./examples/catalog template/operations
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/template_operations.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/pattern/operational.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/template_operations.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/pattern/operational.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
-Declared example links (unaudited): [layout/key-value](https://lanej.io/charmed/molecules-layout.html#layout/key-value) [collection/viewport](https://lanej.io/charmed/atoms-collection.html#collection/viewport) [text/key-hint](https://lanej.io/charmed/atoms-text.html#text/key-hint)
+Declared example links (unaudited): [layout/text-row](https://lanej.io/charmed/molecules-layout.html#layout/text-row) [layout/key-value](https://lanej.io/charmed/molecules-layout.html#layout/key-value) [collection/viewport](https://lanej.io/charmed/atoms-collection.html#collection/viewport) [text/key-hint](https://lanej.io/charmed/atoms-text.html#text/key-hint)

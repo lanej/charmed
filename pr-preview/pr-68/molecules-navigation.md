@@ -98,6 +98,6 @@ Route arrow keys only to the focused tab bar and return the command from Update 
 go run ./examples/catalog navigation/tabs
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/navigation_tabs.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/navigation_tabs.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)

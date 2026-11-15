@@ -107,7 +107,7 @@ Return the native spinner tick command from initialization, then retain the mode
 go run ./examples/catalog feedback/spinner
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_spinner.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_spinner.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -198,7 +198,7 @@ Use ViewAs for an immediate progress fraction without starting animation. For an
 go run ./examples/catalog feedback/progress
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_progress.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_progress.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -295,7 +295,7 @@ Return the timer and stopwatch Init commands with tea.Batch, then retain each na
 go run ./examples/catalog feedback/time
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_time.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_time.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -445,7 +445,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/log-level
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_log_level.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/log_level.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_log_level.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/log_level.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [text/pill](https://lanej.io/charmed/atoms-text.html#text/pill)
 
@@ -645,11 +645,11 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/status
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_status.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/status.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_status.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/status.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Status dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/status.go#L12)
+[Status dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/status.go#L12)
 
 - [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator) · composes · state presentation
 
@@ -657,7 +657,7 @@ Consumer usage uses
 
 - [Status](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_status.go#L10)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_status.go#L10)
 
 [Atoms](https://lanej.io/charmed/atoms.html) / Feedback
 
@@ -755,7 +755,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/connection
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_connection.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_connection.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)
 
@@ -854,7 +854,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/follow
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_follow.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_follow.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)
 
@@ -1000,17 +1000,17 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/scrollbar
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_scrollbar.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_scrollbar.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Scrollbar dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Fscrollbar) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/controls.go#L22)
+[Scrollbar dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Fscrollbar) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/controls.go#L22)
 
 Consumer usage uses
 
 - [Scrollbar](https://lanej.io/charmed/dependencies.html#component-feedback%2Fscrollbar) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_scrollbar.go#L8)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_scrollbar.go#L8)
 
 [Atoms](https://lanej.io/charmed/atoms.html) / Feedback
 
@@ -1148,7 +1148,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/freshness
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_freshness.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/freshness.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_freshness.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/freshness.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1311,7 +1311,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/evidence
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_evidence.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/evidence.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_evidence.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/evidence.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [text/pill](https://lanej.io/charmed/atoms-text.html#text/pill) [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)
 
@@ -1448,7 +1448,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/outcome
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_outcome.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/outcome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_outcome.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/outcome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [text/pill](https://lanej.io/charmed/atoms-text.html#text/pill)
 
@@ -1588,11 +1588,11 @@ Supply Availability values independently of the other state families. Zero and u
 go run ./examples/catalog feedback/availability
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_availability.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/availability.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_availability.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/availability.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Availability dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Favailability) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/availability.go#L9)
+[Availability dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Favailability) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/availability.go#L9)
 
 - [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator) · composes · state presentation
 
@@ -1600,7 +1600,7 @@ Consumer usage uses
 
 - [Availability](https://lanej.io/charmed/dependencies.html#component-feedback%2Favailability) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_availability.go#L10)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_availability.go#L10)
 
 [Atoms](https://lanej.io/charmed/atoms.html) / Feedback
 
@@ -1738,11 +1738,11 @@ Supply Health values independently of the other state families. Zero and unsuppo
 go run ./examples/catalog feedback/health
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_health.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/health.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_health.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/health.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Health dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Fhealth) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/health.go#L9)
+[Health dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Fhealth) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/health.go#L9)
 
 - [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator) · composes · state presentation
 
@@ -1750,7 +1750,7 @@ Consumer usage uses
 
 - [Health](https://lanej.io/charmed/dependencies.html#component-feedback%2Fhealth) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_health.go#L10)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_health.go#L10)
 
 [Atoms](https://lanej.io/charmed/atoms.html) / Feedback
 
@@ -1888,11 +1888,11 @@ Supply Readiness values independently of the other state families. Zero and unsu
 go run ./examples/catalog feedback/readiness
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_readiness.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/readiness.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_readiness.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/readiness.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Readiness dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Freadiness) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/readiness.go#L9)
+[Readiness dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Freadiness) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/readiness.go#L9)
 
 - [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator) · composes · state presentation
 
@@ -1900,7 +1900,7 @@ Consumer usage uses
 
 - [Readiness](https://lanej.io/charmed/dependencies.html#component-feedback%2Freadiness) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_readiness.go#L10)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_readiness.go#L10)
 
 [Atoms](https://lanej.io/charmed/atoms.html) / Feedback
 
@@ -2038,11 +2038,11 @@ Supply Rollout values independently of the other state families. Zero and unsupp
 go run ./examples/catalog feedback/rollout
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_rollout.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/rollout.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_rollout.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/rollout.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Rollout dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Frollout) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/rollout.go#L10)
+[Rollout dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Frollout) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/rollout.go#L10)
 
 - [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator) · composes · state presentation
 
@@ -2050,7 +2050,7 @@ Consumer usage uses
 
 - [Rollout](https://lanej.io/charmed/dependencies.html#component-feedback%2Frollout) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_rollout.go#L10)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_rollout.go#L10)
 
 [Atoms](https://lanej.io/charmed/atoms.html) / Feedback
 
@@ -2188,11 +2188,11 @@ Supply CanaryOn or CanaryOff from observed pool membership; rendering does not c
 go run ./examples/catalog feedback/canary-membership
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_canary_membership.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/canary_membership.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_canary_membership.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/canary_membership.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Canary membership dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Fcanary-membership) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/canary_membership.go#L11)
+[Canary membership dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Fcanary-membership) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/feedback/canary_membership.go#L11)
 
 - [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator) · composes · pool membership presentation
 
@@ -2200,4 +2200,4 @@ Consumer usage uses
 
 - [Canary membership](https://lanej.io/charmed/dependencies.html#component-feedback%2Fcanary-membership) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_canary_membership.go#L10)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/feedback_canary_membership.go#L10)

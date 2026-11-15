@@ -17,6 +17,7 @@ Go terminal components, composition and contributor reference. Each link contain
 - [Composition guide](https://lanej.io/charmed/examples.md)
 - [Cohort measurements](https://lanej.io/charmed/cohorts.md)
 - [Compare a deployment](https://lanej.io/charmed/deployment.md)
+- [Diff review](https://lanej.io/charmed/diff-review.md)
 - [JSON viewer](https://lanej.io/charmed/json-viewer.md)
 - [Develop & publish](https://lanej.io/charmed/development.md)
 - [Brand sheet](https://lanej.io/charmed/brand.md)

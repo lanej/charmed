@@ -143,11 +143,11 @@ Construct from a validated diagram with its complete trace, then forward navigat
 go run ./examples/catalog diagram/trace-replay
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/diagram_trace_replay.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/diagram/trace_replay.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/diagram_trace_replay.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/diagram/trace_replay.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Trace replay dependency graph](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/diagram/trace_replay.go#L21)
+[Trace replay dependency graph](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/diagram/trace_replay.go#L21)
 
 - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram) · composes · diagram
 
@@ -156,7 +156,7 @@ Consumer usage uses
 - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay) · primary demonstration
 - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram) · graph data
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/diagram_trace_replay.go#L9)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/diagram_trace_replay.go#L9)
 
 Interactive fixture uses
 
@@ -164,4 +164,4 @@ Interactive fixture uses
 - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay) · trace inspection
 - [Radio group](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group) · history-window controls
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/diagrams.go#L12)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/diagrams.go#L12)

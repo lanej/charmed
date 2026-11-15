@@ -2,7 +2,7 @@
 
 # [Collections](https://lanej.io/charmed/organisms-collection.html#level-organisms-collection)
 
-7 components · [All organisms](https://lanej.io/charmed/organisms.html)
+9 components · [All organisms](https://lanej.io/charmed/organisms.html)
 
 - [Data grid](https://lanej.io/charmed/organisms-collection.html#collection%2fdata-grid)
 - [Status matrix](https://lanej.io/charmed/organisms-collection.html#collection%2fstatus-matrix)
@@ -11,6 +11,8 @@
 - [Log viewer](https://lanej.io/charmed/organisms-collection.html#collection%2flogs)
 - [Grid inspector](https://lanej.io/charmed/organisms-collection.html#collection%2fgrid-inspector)
 - [Keyed table](https://lanej.io/charmed/organisms-collection.html#collection%2fkeyed-table)
+- [Section stack](https://lanej.io/charmed/organisms-collection.html#collection%2fsection-stack)
+- [Outline document](https://lanej.io/charmed/organisms-collection.html#pattern%2foutline-document)
 
 [Organisms](https://lanej.io/charmed/organisms.html) / Collections
 
@@ -145,17 +147,17 @@ Construct the grid with ordered axes and keyed entries, then focus it when its r
 go run ./examples/catalog collection/data-grid
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_data_grid.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/data_grid.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_data_grid.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/collection/data_grid.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Data grid dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/data_grid.go#L44)
+[Data grid dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/collection/data_grid.go#L44)
 
 Consumer usage uses
 
 - [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_data_grid.go#L9)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_data_grid.go#L9)
 
 [Organisms](https://lanej.io/charmed/organisms.html) / Collections
 
@@ -293,11 +295,11 @@ Construct the grid with ordered axes and keyed entries, then focus it when its r
 go run ./examples/catalog collection/status-matrix
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_status_matrix.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/status_matrix.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_status_matrix.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/collection/status_matrix.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Status matrix dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/status_matrix.go#L23)
+[Status matrix dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/collection/status_matrix.go#L23)
 
 - [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid) · specializes · grid base
 - [Status cell](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus-cell) · composes · cell presentation
@@ -306,7 +308,7 @@ Consumer usage uses
 
 - [Status matrix](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_status_matrix.go#L10)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_status_matrix.go#L10)
 
 [Organisms](https://lanej.io/charmed/organisms.html) / Collections
 
@@ -532,7 +534,7 @@ The parent model supplies observations, coordinates focus and owns application d
 go run ./examples/catalog collection/list
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_list.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_list.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -747,7 +749,7 @@ In a running application, return picker.Init from Init and retain picker.Update'
 go run ./examples/catalog collection/files
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_files.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_files.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -955,7 +957,7 @@ The parent model supplies observations, coordinates focus and owns application d
 go run ./examples/catalog collection/logs
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_logs.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_logs.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [collection/viewport](https://lanej.io/charmed/atoms-collection.html#collection/viewport) [feedback/log-level](https://lanej.io/charmed/atoms-feedback.html#feedback/log-level)
 
@@ -1065,11 +1067,11 @@ Supply an existing grid and a detail renderer that handles present=false. Route 
 go run ./examples/catalog collection/grid-inspector
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_grid_inspector.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/grid_inspector.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_grid_inspector.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/collection/grid_inspector.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Grid inspector dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/grid_inspector.go#L50)
+[Grid inspector dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/collection/grid_inspector.go#L50)
 
 - [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid) · composes · grid
 - [Scroll pane](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane) · composes · details
@@ -1078,7 +1080,7 @@ Consumer usage uses
 
 - [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_grid_inspector.go#L11)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_grid_inspector.go#L11)
 
 [Organisms](https://lanej.io/charmed/organisms.html) / Collections
 
@@ -1170,6 +1172,580 @@ Bind the wrapper to an existing native table pointer. Replace rows through SetRo
 go run ./examples/catalog collection/keyed-table
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_keyed_table.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/keyed_table.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_keyed_table.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/collection/keyed_table.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [collection/table](https://lanej.io/charmed/atoms-collection.html#collection/table)
+
+[Organisms](https://lanej.io/charmed/organisms.html) / Collections
+
+## [Section stack](https://lanej.io/charmed/organisms-collection.html#collection%2fsection-stack)
+
+Compose a single scrolling document from ordered sections with independent folds and stable identities. Bodies can describe any content; files are optional.
+
+### [Native preview](https://lanej.io/charmed/organisms-collection.html#collection%2fsection-stack-preview)
+
+Saved terminal output · truecolor reference
+
+Output of the Go usage example below
+
+```
+▾ Intent                                                                
+Retain the last healthy route while observations are incomplete.        
+                                                                        
+▾ Evidence  3 observations                                              
+West: 42 ms                                                             
+Central: 61 ms                                                          
+East: not captured
+```
+
+Demo · truecolor · 120 × 32 terminal cells
+
+```
+▾ Routing proposal  2 sections                                                                                          
+▾ Intent  Decision context                                                                                              
+Choose a regional route using supplied latency observations.                                                            
+Keep the last healthy route when new evidence is incomplete.                                                            
+                                                                                                                        
+▾ Evidence  3 observations                                                                                              
+Region       p95       Samples                                                                                          
+West         42 ms     12,400                                                                                           
+Central      61 ms      8,100                                                                                           
+East         unknown   not captured                                                                                     
+                                                                                                                        
+▾ Decision  Awaiting review                                                                                             
+Retain the current route until the East observation arrives.                                                            
+This document is application-supplied content, not a file tree.
+```
+
+Narrow · truecolor · 40 × 16 terminal cells
+
+```
+▾ Routing proposal  2 sections          
+▾ Intent  Decision context              
+Choose a regional route using supplied l
+atency observations.                    
+Keep the last healthy route when new evi
+dence is incomplete.                    
+                                        
+▾ Evidence  3 observations              
+Region       p95       Samples          
+West         42 ms     12,400           
+Central      61 ms      8,100           
+East         unknown   not captured     
+                                        
+▾ Decision  Awaiting review             
+Retain the current route until the East 
+observation arrives.
+```
+
+256 colors · ansi256 · 120 × 32 terminal cells
+
+```
+▾ Routing proposal  2 sections                                                                                          
+▾ Intent  Decision context                                                                                              
+Choose a regional route using supplied latency observations.                                                            
+Keep the last healthy route when new evidence is incomplete.                                                            
+                                                                                                                        
+▾ Evidence  3 observations                                                                                              
+Region       p95       Samples                                                                                          
+West         42 ms     12,400                                                                                           
+Central      61 ms      8,100                                                                                           
+East         unknown   not captured                                                                                     
+                                                                                                                        
+▾ Decision  Awaiting review                                                                                             
+Retain the current route until the East observation arrives.                                                            
+This document is application-supplied content, not a file tree.
+```
+
+16 colors · ansi16 · 120 × 32 terminal cells
+
+```
+▾ Routing proposal  2 sections                                                                                          
+▾ Intent  Decision context                                                                                              
+Choose a regional route using supplied latency observations.                                                            
+Keep the last healthy route when new evidence is incomplete.                                                            
+                                                                                                                        
+▾ Evidence  3 observations                                                                                              
+Region       p95       Samples                                                                                          
+West         42 ms     12,400                                                                                           
+Central      61 ms      8,100                                                                                           
+East         unknown   not captured                                                                                     
+                                                                                                                        
+▾ Decision  Awaiting review                                                                                             
+Retain the current route until the East observation arrives.                                                            
+This document is application-supplied content, not a file tree.
+```
+
+Monochrome · none · 120 × 32 terminal cells
+
+```
+v Routing proposal  2 sections                                                                                          
+v Intent  Decision context                                                                                              
+Choose a regional route using supplied latency observations.                                                            
+Keep the last healthy route when new evidence is incomplete.                                                            
+                                                                                                                        
+v Evidence  3 observations                                                                                              
+Region       p95       Samples                                                                                          
+West         42 ms     12,400                                                                                           
+Central      61 ms      8,100                                                                                           
+East         unknown   not captured                                                                                     
+                                                                                                                        
+v Decision  Awaiting review                                                                                             
+Retain the current route until the East observation arrives.                                                            
+This document is application-supplied content, not a file tree.
+```
+
+ASCII · truecolor · 120 × 32 terminal cells
+
+```
+v Routing proposal  2 sections                                                                                          
+v Intent  Decision context                                                                                              
+Choose a regional route using supplied latency observations.                                                            
+Keep the last healthy route when new evidence is incomplete.                                                            
+                                                                                                                        
+v Evidence  3 observations                                                                                              
+Region       p95       Samples                                                                                          
+West         42 ms     12,400                                                                                           
+Central      61 ms      8,100                                                                                           
+East         unknown   not captured                                                                                     
+                                                                                                                        
+v Decision  Awaiting review                                                                                             
+Retain the current route until the East observation arrives.                                                            
+This document is application-supplied content, not a file tree.
+```
+
+Unicode monochrome · none · 120 × 32 terminal cells
+
+```
+v Routing proposal  2 sections                                                                                          
+v Intent  Decision context                                                                                              
+Choose a regional route using supplied latency observations.                                                            
+Keep the last healthy route when new evidence is incomplete.                                                            
+                                                                                                                        
+v Evidence  3 observations                                                                                              
+Region       p95       Samples                                                                                          
+West         42 ms     12,400                                                                                           
+Central      61 ms      8,100                                                                                           
+East         unknown   not captured                                                                                     
+                                                                                                                        
+v Decision  Awaiting review                                                                                             
+Retain the current route until the East observation arrives.                                                            
+This document is application-supplied content, not a file tree.
+```
+
+### [Go usage](https://lanej.io/charmed/organisms-collection.html#collection%2fsection-stack-code)
+
+Imports: [`collection`](https://pkg.go.dev/github.com/lanej/charmed/collection "github.com/lanej/charmed/collection") · [`layout`](https://pkg.go.dev/github.com/lanej/charmed/layout "github.com/lanej/charmed/layout") · [`theme`](https://pkg.go.dev/github.com/lanej/charmed/theme "github.com/lanej/charmed/theme")
+
+```go
+stack, err := collection.NewSectionStack([]collection.DocumentSection{
+	{ID: "intent", Title: "Intent", Body: func(int) string { return "Retain the last healthy route while observations are incomplete." }},
+	{ID: "evidence", Title: "Evidence", Summary: "3 observations", Body: func(int) string { return "West: 42 ms\nCentral: 61 ms\nEast: not captured" }},
+}, layout.Size{Width: 72, Height: 12}, theme.New(theme.Dark))
+if err != nil {
+	return "", err
+}
+
+return stack.View(), nil
+```
+
+### [Updates, focus & sizing](https://lanej.io/charmed/organisms-collection.html#collection%2fsection-stack-integration)
+
+Supply ordered sections and width-aware body renderers, forward Update commands, and resize the existing stack. Native viewport styles and bindings survive; content, wrapping and scroll anchoring belong to the stack. Call Refresh when renderer-captured presentation changes. See diff-review.html for lifecycle and composition.
+
+### [Run this example](https://lanej.io/charmed/organisms-collection.html#collection%2fsection-stack-run)
+
+```sh
+go run ./examples/catalog collection/section-stack
+```
+
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_section_stack.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/collection/section_stack.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+
+Declared example links (unaudited): [collection/viewport](https://lanej.io/charmed/atoms-collection.html#collection/viewport) [text/disclosure](https://lanej.io/charmed/atoms-text.html#text/disclosure)
+
+[Organisms](https://lanej.io/charmed/organisms.html) / Collections
+
+## [Outline document](https://lanej.io/charmed/organisms-collection.html#pattern%2foutline-document)
+
+Navigate arbitrary hierarchical content with a native tree linked to stacked sections. Selection, scrolling and subtree folding stay synchronized.
+
+### [Native preview](https://lanej.io/charmed/organisms-collection.html#pattern%2foutline-document-preview)
+
+Saved terminal output · truecolor reference
+
+Output of the Go usage example below
+
+```
+┌ Outline ──────────────────────┐┌ Document ───────────────────────────────────────────────────────┐
+│    ▾  Contents                ││ ▾ Routing proposal                                              │
+│  ├ ▾  Routing proposal        ││ ▾ Intent                                                        │
+│  │├  ▾ Intent                 ││ Keep the last healthy route.                                    │
+│ →│└  ▾ Evidence               ││                                                                 │
+│  └  ▾ Decision                ││ ▾ Evidence                                                      │
+│                               ││ West: 42 ms                                                     │
+│                               ││ East: observation missing                                       │
+│                               ││                                                                 │
+│                               ││ ▾ Decision                                                      │
+│                               ││ Wait for complete evidence.                                     │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+└───────────────────────────────┘└─────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane
+```
+
+Demo · truecolor · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│    ▾  Contents                   ││ ▾ Routing proposal  2 sections                                                   │
+│ →├ ▾  Routing proposal  2 sect…  ││ ▾ Intent  Decision context                                                       │
+│  │├  ▾ Intent  Decision cont…    ││ Choose a regional route using supplied latency observations.                     │
+│  │└  ▾ Evidence  3 observati…    ││ Keep the last healthy route when new evidence is incomplete.                     │
+│  └  ▾ Decision  Awaiting rev…    ││                                                                                  │
+│                                  ││ ▾ Evidence  3 observations                                                       │
+│                                  ││ Region       p95       Samples                                                   │
+│                                  ││ West         42 ms     12,400                                                    │
+│                                  ││ Central      61 ms      8,100                                                    │
+│                                  ││ East         unknown   not captured                                              │
+│                                  ││                                                                                  │
+│                                  ││ ▾ Decision  Awaiting review                                                      │
+│                                  ││ Retain the current route until the East observation arrives.                     │
+│                                  ││ This document is application-supplied content, not a file tree.                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane
+```
+
+Narrow · truecolor · 40 × 16 terminal cells
+
+```
+┌ Outline ─────────────────────────────┐
+│    ▾  Contents                       │
+│ →├ ▾  Routing proposal  2 sections   │
+│  │├  ▾ Intent  Decision context      │
+└──────────────────────────────────────┘
+┌ Document ────────────────────────────┐
+│ ▾ Routing proposal  2 sections       │
+│ ▾ Intent  Decision context           │
+│ Choose a regional route using suppli │
+│ ed latency observations.             │
+│ Keep the last healthy route when new │
+│  evidence is incomplete.             │
+│                                      │
+│ ▾ Evidence  3 observations           │
+└──────────────────────────────────────┘
+↑/↓ · Enter fold · Tab
+```
+
+256 colors · ansi256 · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│    ▾  Contents                   ││ ▾ Routing proposal  2 sections                                                   │
+│ →├ ▾  Routing proposal  2 sect…  ││ ▾ Intent  Decision context                                                       │
+│  │├  ▾ Intent  Decision cont…    ││ Choose a regional route using supplied latency observations.                     │
+│  │└  ▾ Evidence  3 observati…    ││ Keep the last healthy route when new evidence is incomplete.                     │
+│  └  ▾ Decision  Awaiting rev…    ││                                                                                  │
+│                                  ││ ▾ Evidence  3 observations                                                       │
+│                                  ││ Region       p95       Samples                                                   │
+│                                  ││ West         42 ms     12,400                                                    │
+│                                  ││ Central      61 ms      8,100                                                    │
+│                                  ││ East         unknown   not captured                                              │
+│                                  ││                                                                                  │
+│                                  ││ ▾ Decision  Awaiting review                                                      │
+│                                  ││ Retain the current route until the East observation arrives.                     │
+│                                  ││ This document is application-supplied content, not a file tree.                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane
+```
+
+16 colors · ansi16 · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│    ▾  Contents                   ││ ▾ Routing proposal  2 sections                                                   │
+│ →├ ▾  Routing proposal  2 sect…  ││ ▾ Intent  Decision context                                                       │
+│  │├  ▾ Intent  Decision cont…    ││ Choose a regional route using supplied latency observations.                     │
+│  │└  ▾ Evidence  3 observati…    ││ Keep the last healthy route when new evidence is incomplete.                     │
+│  └  ▾ Decision  Awaiting rev…    ││                                                                                  │
+│                                  ││ ▾ Evidence  3 observations                                                       │
+│                                  ││ Region       p95       Samples                                                   │
+│                                  ││ West         42 ms     12,400                                                    │
+│                                  ││ Central      61 ms      8,100                                                    │
+│                                  ││ East         unknown   not captured                                              │
+│                                  ││                                                                                  │
+│                                  ││ ▾ Decision  Awaiting review                                                      │
+│                                  ││ Retain the current route until the East observation arrives.                     │
+│                                  ││ This document is application-supplied content, not a file tree.                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane
+```
+
+Monochrome · none · 120 × 32 terminal cells
+
+```
++ Outline -------------------------++ Document ------------------------------------------------------------------------+
+|    v  Contents                   || v Routing proposal  2 sections                                                   |
+| >+ v  Routing proposal  2 sect.  || v Intent  Decision context                                                       |
+|  |+  v Intent  Decision cont.    || Choose a regional route using supplied latency observations.                     |
+|  |+  v Evidence  3 observati.    || Keep the last healthy route when new evidence is incomplete.                     |
+|  +  v Decision  Awaiting rev.    ||                                                                                  |
+|                                  || v Evidence  3 observations                                                       |
+|                                  || Region       p95       Samples                                                   |
+|                                  || West         42 ms     12,400                                                    |
+|                                  || Central      61 ms      8,100                                                    |
+|                                  || East         unknown   not captured                                              |
+|                                  ||                                                                                  |
+|                                  || v Decision  Awaiting review                                                      |
+|                                  || Retain the current route until the East observation arrives.                     |
+|                                  || This document is application-supplied content, not a file tree.                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
++----------------------------------++----------------------------------------------------------------------------------+
+^/v navigate * Enter fold * Tab pane
+```
+
+Folded · truecolor · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│    ▾  Contents                   ││ ▸ Routing proposal  2 sections                                                   │
+│ →├ ▸  Routing proposal  2 sect…  ││ ▾ Decision  Awaiting review                                                      │
+│  └  ▾ Decision  Awaiting rev…    ││ Retain the current route until the East observation arrives.                     │
+│                                  ││ This document is application-supplied content, not a file tree.                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane
+```
+
+Empty · truecolor · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│ →  ▾  Contents                   ││ No sections                                                                      │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane
+```
+
+ASCII · truecolor · 120 × 32 terminal cells
+
+```
++ Outline -------------------------++ Document ------------------------------------------------------------------------+
+|    v  Contents                   || v Routing proposal  2 sections                                                   |
+| >+ v  Routing proposal  2 sect.  || v Intent  Decision context                                                       |
+|  |+  v Intent  Decision cont.    || Choose a regional route using supplied latency observations.                     |
+|  |+  v Evidence  3 observati.    || Keep the last healthy route when new evidence is incomplete.                     |
+|  +  v Decision  Awaiting rev.    ||                                                                                  |
+|                                  || v Evidence  3 observations                                                       |
+|                                  || Region       p95       Samples                                                   |
+|                                  || West         42 ms     12,400                                                    |
+|                                  || Central      61 ms      8,100                                                    |
+|                                  || East         unknown   not captured                                              |
+|                                  ||                                                                                  |
+|                                  || v Decision  Awaiting review                                                      |
+|                                  || Retain the current route until the East observation arrives.                     |
+|                                  || This document is application-supplied content, not a file tree.                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
++----------------------------------++----------------------------------------------------------------------------------+
+^/v navigate * Enter fold * Tab pane
+```
+
+Unicode monochrome · none · 120 × 32 terminal cells
+
+```
++ Outline -------------------------++ Document ------------------------------------------------------------------------+
+|    v  Contents                   || v Routing proposal  2 sections                                                   |
+| >+ v  Routing proposal  2 sect.  || v Intent  Decision context                                                       |
+|  |+  v Intent  Decision cont.    || Choose a regional route using supplied latency observations.                     |
+|  |+  v Evidence  3 observati.    || Keep the last healthy route when new evidence is incomplete.                     |
+|  +  v Decision  Awaiting rev.    ||                                                                                  |
+|                                  || v Evidence  3 observations                                                       |
+|                                  || Region       p95       Samples                                                   |
+|                                  || West         42 ms     12,400                                                    |
+|                                  || Central      61 ms      8,100                                                    |
+|                                  || East         unknown   not captured                                              |
+|                                  ||                                                                                  |
+|                                  || v Decision  Awaiting review                                                      |
+|                                  || Retain the current route until the East observation arrives.                     |
+|                                  || This document is application-supplied content, not a file tree.                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
+|                                  ||                                                                                  |
++----------------------------------++----------------------------------------------------------------------------------+
+^/v navigate * Enter fold * Tab pane
+```
+
+### [Go usage](https://lanej.io/charmed/organisms-collection.html#pattern%2foutline-document-code)
+
+Imports: [`layout`](https://pkg.go.dev/github.com/lanej/charmed/layout "github.com/lanej/charmed/layout") · [`pattern`](https://pkg.go.dev/github.com/lanej/charmed/pattern "github.com/lanej/charmed/pattern") · [`theme`](https://pkg.go.dev/github.com/lanej/charmed/theme "github.com/lanej/charmed/theme")
+
+```go
+document, err := pattern.NewOutlineDocument([]pattern.OutlineEntry{
+	{ID: "proposal", Title: "Routing proposal", Children: []pattern.OutlineEntry{
+		{ID: "intent", Title: "Intent", Body: func(int) string { return "Keep the last healthy route." }},
+		{ID: "evidence", Title: "Evidence", Body: func(int) string { return "West: 42 ms\nEast: observation missing" }},
+	}},
+	{ID: "decision", Title: "Decision", Body: func(int) string { return "Wait for complete evidence." }},
+}, layout.Size{Width: 100, Height: 20}, theme.New(theme.Dark))
+if err != nil {
+	return "", err
+}
+
+document.Select("evidence")
+
+return document.View(), nil
+```
+
+### [Updates, focus & sizing](https://lanej.io/charmed/organisms-collection.html#pattern%2foutline-document-integration)
+
+Supply stable unique IDs and width-aware body renderers. Return Update commands, route Tab in the parent through SetFocus, and call SetOrigin before forwarding screen-coordinate mouse events. Native tree styles and bindings survive replacement and resizing; nodes are rebuilt. The stack owns viewport content and vertical anchors. Run go run ./examples/review -document for a complete non-file consumer, and see diff-review.html for lifecycle details.
+
+### [Run this example](https://lanej.io/charmed/organisms-collection.html#pattern%2foutline-document-run)
+
+```sh
+go run ./examples/catalog pattern/outline-document
+```
+
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/pattern_outline_document.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/pattern/outline_document.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+
+Declared example links (unaudited): [collection/tree](https://lanej.io/charmed/atoms-collection.html#collection/tree) [collection/section-stack](https://lanej.io/charmed/organisms-collection.html#collection/section-stack)

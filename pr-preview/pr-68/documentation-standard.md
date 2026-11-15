@@ -1,6 +1,6 @@
 # Documentation as a designed interface
 
-Every page should help someone decide what to use and produce a useful result. The versioned [standard configuration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/standards.json) defines bounded variation for each page type; the shared component template supplies a consistent reading order.
+Every page should help someone decide what to use and produce a useful result. The versioned [standard configuration](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/standards.json) defines bounded variation for each page type; the shared component template supplies a consistent reading order.
 
 Document current APIs, behavior and usage directly. Keep migration narratives, implementation history, PR chronology, rollout plans and before/after audit reports outside the website; current compatibility contracts and reproducible measurement instructions belong alongside the APIs they explain.
 

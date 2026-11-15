@@ -7,6 +7,7 @@ Browse [Atoms](https://lanej.io/charmed/atoms.html), [Molecules](https://lanej.i
 | Color, geometry and shared interaction rules | [Foundation contracts](https://lanej.io/charmed/foundations.html#foundation-contracts) |
 | An editable value with validation            | [Input field](https://lanej.io/charmed/molecules-input.html#input/field)               |
 | Coordinated HTTP requests and logs           | [Inspector lifecycle](https://lanej.io/charmed/log-inspector.html)                     |
+| Linked outlines and stacked diffs            | [Diff review lifecycle](https://lanej.io/charmed/diff-review.html)                     |
 | Source-preserving structured JSON            | [JSON viewer](https://lanej.io/charmed/json-viewer.html)                               |
 
 ## [Charts and labeled values](https://lanej.io/charmed/components.html#charts-and-labeled-values)

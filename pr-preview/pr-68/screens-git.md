@@ -48,12 +48,12 @@ Repository browser · ~/src/charmed
 ┌ Context ─────────────────┐ ┌ Status ────────────────────────────────────────────────┐ ┌ Details ─────────────────────┐
 │ Repository: charmed      │ │ charmed  HEAD → main                                   │ │ gitui/status.go              │
 │ Worktree: ~/src/charmed  │ │ staged 2 · unstaged 1 · untracked 1 · conflicts 1      │ │ @@ -0,0 +1,6 @@              │
-│ Section: Status          │ │ upstream refs/remotes/origin/main · ahead 2 · behind 1 │ │     1 +package gitui         │
-│ Layout: three-column     │ │                                                        │ │     2 +                      │
-│                          │ │ staged (2)                                             │ │     3 +// Status belongs to  │
-│                          │ │ ▸  added  gitui/status.go                              │ │     4 +func label() string { │
-│                          │ │    renamed  docs/git.md → docs/git-components.md       │ │     5 +    return "ready"    │
-│                          │ │ unstaged (1)                                           │ │     6 +}                     │
+│ Section: Status          │ │ upstream refs/remotes/origin/main · ahead 2 · behind 1 │ │ 1 +package gitui             │
+│ Layout: three-column     │ │                                                        │ │ 2 +                          │
+│                          │ │ staged (2)                                             │ │ 3 +// Status belongs to the  │
+│                          │ │ ▸  added  gitui/status.go                              │ │ 4 +func label() string {     │
+│                          │ │    renamed  docs/git.md → docs/git-components.md       │ │ 5 +    return "ready"        │
+│                          │ │ unstaged (1)                                           │ │ 6 +}                         │
 │                          │ │    modified  gitui/status.go                           │ │                              │
 │                          │ │ untracked (1)                                          │ │                              │
 │                          │ │    untracked  notes.txt                                │ │                              │
@@ -106,12 +106,12 @@ Repository browser · ~/src/charmed
 ┌ Context ─────────────────┐ ┌ Status ────────────────────────────────────────────────┐ ┌ Details ─────────────────────┐
 │ Repository: charmed      │ │ charmed  HEAD → main                                   │ │ gitui/status.go              │
 │ Worktree: ~/src/charmed  │ │ staged 2 · unstaged 1 · untracked 1 · conflicts 1      │ │ @@ -0,0 +1,6 @@              │
-│ Section: Status          │ │ upstream refs/remotes/origin/main · ahead 2 · behind 1 │ │     1 +package gitui         │
-│ Layout: three-column     │ │                                                        │ │     2 +                      │
-│                          │ │ staged (2)                                             │ │     3 +// Status belongs to  │
-│                          │ │ ▸  added  gitui/status.go                              │ │     4 +func label() string { │
-│                          │ │    renamed  docs/git.md → docs/git-components.md       │ │     5 +    return "ready"    │
-│                          │ │ unstaged (1)                                           │ │     6 +}                     │
+│ Section: Status          │ │ upstream refs/remotes/origin/main · ahead 2 · behind 1 │ │ 1 +package gitui             │
+│ Layout: three-column     │ │                                                        │ │ 2 +                          │
+│                          │ │ staged (2)                                             │ │ 3 +// Status belongs to the  │
+│                          │ │ ▸  added  gitui/status.go                              │ │ 4 +func label() string {     │
+│                          │ │    renamed  docs/git.md → docs/git-components.md       │ │ 5 +    return "ready"        │
+│                          │ │ unstaged (1)                                           │ │ 6 +}                         │
 │                          │ │    modified  gitui/status.go                           │ │                              │
 │                          │ │ untracked (1)                                          │ │                              │
 │                          │ │    untracked  notes.txt                                │ │                              │
@@ -143,12 +143,12 @@ Repository browser · ~/src/charmed
 ┌ Context ─────────────────┐ ┌ Status ────────────────────────────────────────────────┐ ┌ Details ─────────────────────┐
 │ Repository: charmed      │ │ charmed  HEAD → main                                   │ │ gitui/status.go              │
 │ Worktree: ~/src/charmed  │ │ staged 2 · unstaged 1 · untracked 1 · conflicts 1      │ │ @@ -0,0 +1,6 @@              │
-│ Section: Status          │ │ upstream refs/remotes/origin/main · ahead 2 · behind 1 │ │     1 +package gitui         │
-│ Layout: three-column     │ │                                                        │ │     2 +                      │
-│                          │ │ staged (2)                                             │ │     3 +// Status belongs to  │
-│                          │ │ ▸  added  gitui/status.go                              │ │     4 +func label() string { │
-│                          │ │    renamed  docs/git.md → docs/git-components.md       │ │     5 +    return "ready"    │
-│                          │ │ unstaged (1)                                           │ │     6 +}                     │
+│ Section: Status          │ │ upstream refs/remotes/origin/main · ahead 2 · behind 1 │ │ 1 +package gitui             │
+│ Layout: three-column     │ │                                                        │ │ 2 +                          │
+│                          │ │ staged (2)                                             │ │ 3 +// Status belongs to the  │
+│                          │ │ ▸  added  gitui/status.go                              │ │ 4 +func label() string {     │
+│                          │ │    renamed  docs/git.md → docs/git-components.md       │ │ 5 +    return "ready"        │
+│                          │ │ unstaged (1)                                           │ │ 6 +}                         │
 │                          │ │    modified  gitui/status.go                           │ │                              │
 │                          │ │ untracked (1)                                          │ │                              │
 │                          │ │    untracked  notes.txt                                │ │                              │
@@ -180,12 +180,12 @@ Repository browser * ~/src/charmed
 + Context -----------------+ + Status ------------------------------------------------+ + Details ---------------------+
 | Repository: charmed      | | charmed [HEAD > main]                                  | | gitui/status.go              |
 | Worktree: ~/src/charmed  | | staged 2 * unstaged 1 * untracked 1 * conflicts 1      | | @@ -0,0 +1,6 @@              |
-| Section: Status          | | upstream refs/remotes/origin/main * ahead 2 * behind 1 | |     1 +package gitui         |
-| Layout: three-column     | |                                                        | |     2 +                      |
-|                          | | staged (2)                                             | |     3 +// Status belongs to  |
-|                          | | > [added] gitui/status.go                              | |     4 +func label() string { |
-|                          | |   [renamed] docs/git.md > docs/git-components.md       | |     5 +    return "ready"    |
-|                          | | unstaged (1)                                           | |     6 +}                     |
+| Section: Status          | | upstream refs/remotes/origin/main * ahead 2 * behind 1 | | 1 +package gitui             |
+| Layout: three-column     | |                                                        | | 2 +                          |
+|                          | | staged (2)                                             | | 3 +// Status belongs to the  |
+|                          | | > [added] gitui/status.go                              | | 4 +func label() string {     |
+|                          | |   [renamed] docs/git.md > docs/git-components.md       | | 5 +    return "ready"        |
+|                          | | unstaged (1)                                           | | 6 +}                         |
 |                          | |   [modified] gitui/status.go                           | |                              |
 |                          | | untracked (1)                                          | |                              |
 |                          | |   [untracked] notes.txt                                | |                              |
@@ -263,6 +263,6 @@ The parent model supplies observations, coordinates focus and owns application d
 go run ./examples/catalog git/browser
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/git_browser.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/git_browser.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/changes](https://lanej.io/charmed/organisms-git.html#git/changes) [git/branches](https://lanej.io/charmed/organisms-git.html#git/branches) [git/history](https://lanej.io/charmed/organisms-git.html#git/history) [git/stashes](https://lanej.io/charmed/organisms-git.html#git/stashes) [git/worktrees](https://lanej.io/charmed/organisms-git.html#git/worktrees) [tui/screen](https://lanej.io/charmed/templates-tui.html#tui/screen)

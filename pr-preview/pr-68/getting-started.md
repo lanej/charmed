@@ -26,7 +26,7 @@ field := input.NewText(input.TextOptions{
 })
 ```
 
-The complete [quickstart program](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/examples/quickstart/main.go) includes imports, the outer model and terminal startup. Its event loop has three responsibilities: return the focus command, retain input updates, and resize the existing field when the terminal changes.
+The complete [quickstart program](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/examples/quickstart/main.go) includes imports, the outer model and terminal startup. Its event loop has three responsibilities: return the focus command, retain input updates, and resize the existing field when the terminal changes.
 
 | Lifecycle | Application responsibility                                                      |
 |-----------|---------------------------------------------------------------------------------|

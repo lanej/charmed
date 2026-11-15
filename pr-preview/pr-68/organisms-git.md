@@ -2,7 +2,7 @@
 
 # [git](https://lanej.io/charmed/organisms-git.html#level-organisms-git)
 
-8 components · [All organisms](https://lanej.io/charmed/organisms.html)
+9 components · [All organisms](https://lanej.io/charmed/organisms.html)
 
 - [Repository status](https://lanej.io/charmed/organisms-git.html#git%2fstatus)
 - [Branch list](https://lanej.io/charmed/organisms-git.html#git%2fbranches)
@@ -12,6 +12,7 @@
 - [Stash list](https://lanej.io/charmed/organisms-git.html#git%2fstashes)
 - [Worktree list](https://lanej.io/charmed/organisms-git.html#git%2fworktrees)
 - [Patch browser](https://lanej.io/charmed/organisms-git.html#git%2fpatch-browser)
+- [Diff review](https://lanej.io/charmed/organisms-git.html#git%2freview)
 
 [Organisms](https://lanej.io/charmed/organisms.html) / git
 
@@ -232,7 +233,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/status
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/git_status.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/git_status.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/summary](https://lanej.io/charmed/molecules-git.html#git/summary) [git/staged](https://lanej.io/charmed/molecules-git.html#git/staged) [git/unstaged](https://lanej.io/charmed/molecules-git.html#git/unstaged) [git/untracked](https://lanej.io/charmed/molecules-git.html#git/untracked) [git/conflicts](https://lanej.io/charmed/molecules-git.html#git/conflicts)
 
@@ -451,7 +452,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/branches
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/git_branches.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/git_branches.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/branch-row](https://lanej.io/charmed/molecules-git.html#git/branch-row)
 
@@ -679,7 +680,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/history
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/git_history.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/git_history.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/commit-row](https://lanej.io/charmed/molecules-git.html#git/commit-row)
 
@@ -698,8 +699,8 @@ Output of the Go usage example below
 ```
 config.go                                                                       
 @@ -1 +1 @@                                                                     
-    1 -const name = "before"                                                    
-    1 +const name = "after"
+1 -const name = "before"                                                        
+1 +const name = "after"
 ```
 
 Demo · truecolor · 120 × 32 terminal cells
@@ -707,13 +708,13 @@ Demo · truecolor · 120 × 32 terminal cells
 ```
 gitui/status.go                                                                                                         
 @@ -3,5 +3,5 @@                                                                                                         
-    3  // Status belongs to the supplied worktree.                                                                      
-    4  func label() string {                                                                                            
-    5 -    return "ready"                                                                                               
-    5 +    return "changed"                                                                                             
-    6  }                                                                                                                
-    7 -const limit = 10                                                                                                 
-    7 +const limit = 25                                                                                                 
+3  // Status belongs to the supplied worktree.                                                                          
+4  func label() string {                                                                                                
+5 -    return "ready"                                                                                                   
+5 +    return "changed"                                                                                                 
+6  }                                                                                                                    
+7 -const limit = 10                                                                                                     
+7 +const limit = 25                                                                                                     
 \ No newline at end of file
 ```
 
@@ -722,13 +723,13 @@ Narrow · truecolor · 40 × 16 terminal cells
 ```
 gitui/status.go                         
 @@ -3,5 +3,5 @@                         
-    3  // Status belongs to the supplied
-    4  func label() string {            
-    5 -    return "ready"               
-    5 +    return "changed"             
-    6  }                                
-    7 -const limit = 10                 
-    7 +const limit = 25                 
+3  // Status belongs to the supplied wor
+4  func label() string {                
+5 -    return "ready"                   
+5 +    return "changed"                 
+6  }                                    
+7 -const limit = 10                     
+7 +const limit = 25                     
 \ No newline at end of file
 ```
 
@@ -737,13 +738,13 @@ gitui/status.go
 ```
 gitui/status.go                                                                                                         
 @@ -3,5 +3,5 @@                                                                                                         
-    3  // Status belongs to the supplied worktree.                                                                      
-    4  func label() string {                                                                                            
-    5 -    return "ready"                                                                                               
-    5 +    return "changed"                                                                                             
-    6  }                                                                                                                
-    7 -const limit = 10                                                                                                 
-    7 +const limit = 25                                                                                                 
+3  // Status belongs to the supplied worktree.                                                                          
+4  func label() string {                                                                                                
+5 -    return "ready"                                                                                                   
+5 +    return "changed"                                                                                                 
+6  }                                                                                                                    
+7 -const limit = 10                                                                                                     
+7 +const limit = 25                                                                                                     
 \ No newline at end of file
 ```
 
@@ -752,13 +753,13 @@ gitui/status.go
 ```
 gitui/status.go                                                                                                         
 @@ -3,5 +3,5 @@                                                                                                         
-    3  // Status belongs to the supplied worktree.                                                                      
-    4  func label() string {                                                                                            
-    5 -    return "ready"                                                                                               
-    5 +    return "changed"                                                                                             
-    6  }                                                                                                                
-    7 -const limit = 10                                                                                                 
-    7 +const limit = 25                                                                                                 
+3  // Status belongs to the supplied worktree.                                                                          
+4  func label() string {                                                                                                
+5 -    return "ready"                                                                                                   
+5 +    return "changed"                                                                                                 
+6  }                                                                                                                    
+7 -const limit = 10                                                                                                     
+7 +const limit = 25                                                                                                     
 \ No newline at end of file
 ```
 
@@ -767,13 +768,13 @@ Monochrome · none · 120 × 32 terminal cells
 ```
 gitui/status.go                                                                                                         
 @@ -3,5 +3,5 @@                                                                                                         
-    3  // Status belongs to the supplied worktree.                                                                      
-    4  func label() string {                                                                                            
-    5 -    return "ready"                                                                                               
-    5 +    return "changed"                                                                                             
-    6  }                                                                                                                
-    7 -const limit = 10                                                                                                 
-    7 +const limit = 25                                                                                                 
+3  // Status belongs to the supplied worktree.                                                                          
+4  func label() string {                                                                                                
+5 -    return "ready"                                                                                                   
+5 +    return "changed"                                                                                                 
+6  }                                                                                                                    
+7 -const limit = 10                                                                                                     
+7 +const limit = 25                                                                                                     
 \ No newline at end of file
 ```
 
@@ -806,7 +807,7 @@ Supply FileDiff with ordered hunk lines and paths. Language overrides path detec
 go run ./examples/catalog git/diff
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/git_diff.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/git_diff.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/hunk](https://lanej.io/charmed/molecules-git.html#git/hunk)
 
@@ -851,12 +852,12 @@ Demo · truecolor · 120 × 32 terminal cells
 ┌ Status ──────────────────────────────────────────────────┐┌ Diff ────────────────────────────────────────────────────┐
 │ charmed  HEAD → main                                     ││ gitui/status.go                                          │
 │ staged 2 · unstaged 1 · untracked 1 · conflicts 1        ││ @@ -0,0 +1,6 @@                                          │
-│ upstream refs/remotes/origin/main · ahead 2 · behind 1   ││     1 +package gitui                                     │
-│                                                          ││     2 +                                                  │
-│ staged (2)                                               ││     3 +// Status belongs to the supplied worktree.       │
-│ ▸  added  gitui/status.go                                ││     4 +func label() string {                             │
-│    renamed  docs/git.md → docs/git-components.md         ││     5 +    return "ready"                                │
-│ unstaged (1)                                             ││     6 +}                                                 │
+│ upstream refs/remotes/origin/main · ahead 2 · behind 1   ││ 1 +package gitui                                         │
+│                                                          ││ 2 +                                                      │
+│ staged (2)                                               ││ 3 +// Status belongs to the supplied worktree.           │
+│ ▸  added  gitui/status.go                                ││ 4 +func label() string {                                 │
+│    renamed  docs/git.md → docs/git-components.md         ││ 5 +    return "ready"                                    │
+│ unstaged (1)                                             ││ 6 +}                                                     │
 │    modified  gitui/status.go                             ││                                                          │
 │ untracked (1)                                            ││                                                          │
 │    untracked  notes.txt                                  ││                                                          │
@@ -896,10 +897,10 @@ Narrow · truecolor · 40 × 16 terminal cells
 ┌ Diff ────────────────────────────────┐
 │ gitui/status.go                      │
 │ @@ -0,0 +1,6 @@                      │
-│     1 +package gitui                 │
-│     2 +                              │
-│     3 +// Status belongs to the supp │
-│     4 +func label() string {         │
+│ 1 +package gitui                     │
+│ 2 +                                  │
+│ 3 +// Status belongs to the supplied │
+│ 4 +func label() string {             │
 └──────────────────────────────────────┘
 ```
 
@@ -909,12 +910,12 @@ Narrow · truecolor · 40 × 16 terminal cells
 ┌ Status ──────────────────────────────────────────────────┐┌ Diff ────────────────────────────────────────────────────┐
 │ charmed  HEAD → main                                     ││ gitui/status.go                                          │
 │ staged 2 · unstaged 1 · untracked 1 · conflicts 1        ││ @@ -0,0 +1,6 @@                                          │
-│ upstream refs/remotes/origin/main · ahead 2 · behind 1   ││     1 +package gitui                                     │
-│                                                          ││     2 +                                                  │
-│ staged (2)                                               ││     3 +// Status belongs to the supplied worktree.       │
-│ ▸  added  gitui/status.go                                ││     4 +func label() string {                             │
-│    renamed  docs/git.md → docs/git-components.md         ││     5 +    return "ready"                                │
-│ unstaged (1)                                             ││     6 +}                                                 │
+│ upstream refs/remotes/origin/main · ahead 2 · behind 1   ││ 1 +package gitui                                         │
+│                                                          ││ 2 +                                                      │
+│ staged (2)                                               ││ 3 +// Status belongs to the supplied worktree.           │
+│ ▸  added  gitui/status.go                                ││ 4 +func label() string {                                 │
+│    renamed  docs/git.md → docs/git-components.md         ││ 5 +    return "ready"                                    │
+│ unstaged (1)                                             ││ 6 +}                                                     │
 │    modified  gitui/status.go                             ││                                                          │
 │ untracked (1)                                            ││                                                          │
 │    untracked  notes.txt                                  ││                                                          │
@@ -946,12 +947,12 @@ Narrow · truecolor · 40 × 16 terminal cells
 ┌ Status ──────────────────────────────────────────────────┐┌ Diff ────────────────────────────────────────────────────┐
 │ charmed  HEAD → main                                     ││ gitui/status.go                                          │
 │ staged 2 · unstaged 1 · untracked 1 · conflicts 1        ││ @@ -0,0 +1,6 @@                                          │
-│ upstream refs/remotes/origin/main · ahead 2 · behind 1   ││     1 +package gitui                                     │
-│                                                          ││     2 +                                                  │
-│ staged (2)                                               ││     3 +// Status belongs to the supplied worktree.       │
-│ ▸  added  gitui/status.go                                ││     4 +func label() string {                             │
-│    renamed  docs/git.md → docs/git-components.md         ││     5 +    return "ready"                                │
-│ unstaged (1)                                             ││     6 +}                                                 │
+│ upstream refs/remotes/origin/main · ahead 2 · behind 1   ││ 1 +package gitui                                         │
+│                                                          ││ 2 +                                                      │
+│ staged (2)                                               ││ 3 +// Status belongs to the supplied worktree.           │
+│ ▸  added  gitui/status.go                                ││ 4 +func label() string {                                 │
+│    renamed  docs/git.md → docs/git-components.md         ││ 5 +    return "ready"                                    │
+│ unstaged (1)                                             ││ 6 +}                                                     │
 │    modified  gitui/status.go                             ││                                                          │
 │ untracked (1)                                            ││                                                          │
 │    untracked  notes.txt                                  ││                                                          │
@@ -983,12 +984,12 @@ Monochrome · none · 120 × 32 terminal cells
 + Status --------------------------------------------------++ Diff ----------------------------------------------------+
 | charmed [HEAD > main]                                    || gitui/status.go                                          |
 | staged 2 * unstaged 1 * untracked 1 * conflicts 1        || @@ -0,0 +1,6 @@                                          |
-| upstream refs/remotes/origin/main * ahead 2 * behind 1   ||     1 +package gitui                                     |
-|                                                          ||     2 +                                                  |
-| staged (2)                                               ||     3 +// Status belongs to the supplied worktree.       |
-| > [added] gitui/status.go                                ||     4 +func label() string {                             |
-|   [renamed] docs/git.md > docs/git-components.md         ||     5 +    return "ready"                                |
-| unstaged (1)                                             ||     6 +}                                                 |
+| upstream refs/remotes/origin/main * ahead 2 * behind 1   || 1 +package gitui                                         |
+|                                                          || 2 +                                                      |
+| staged (2)                                               || 3 +// Status belongs to the supplied worktree.           |
+| > [added] gitui/status.go                                || 4 +func label() string {                                 |
+|   [renamed] docs/git.md > docs/git-components.md         || 5 +    return "ready"                                    |
+| unstaged (1)                                             || 6 +}                                                     |
 |   [modified] gitui/status.go                             ||                                                          |
 | untracked (1)                                            ||                                                          |
 |   [untracked] notes.txt                                  ||                                                          |
@@ -1042,7 +1043,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/changes
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/git_changes.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/git_changes.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/status](https://lanej.io/charmed/organisms-git.html#git/status) [git/diff](https://lanej.io/charmed/organisms-git.html#git/diff)
 
@@ -1261,7 +1262,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/stashes
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/git_stashes.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/git_stashes.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/stash-row](https://lanej.io/charmed/molecules-git.html#git/stash-row)
 
@@ -1480,7 +1481,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/worktrees
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/git_worktrees.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/git_worktrees.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/worktree-row](https://lanej.io/charmed/molecules-git.html#git/worktree-row)
 
@@ -1506,8 +1507,8 @@ unstaged
                                                                                 
 config.yaml                                                                     
 @@ -1 +1 @@                                                                     
-    1 -replicas: 2                                                              
-    1 +replicas: 3
+1 -replicas: 2                                                                  
+1 +replicas: 3
 ```
 
 Demo · truecolor · 100 × 30 terminal cells
@@ -1515,12 +1516,12 @@ Demo · truecolor · 100 × 30 terminal cells
 ```
 staged                                                      gitui/status.go                         
 ▸ gitui/status.go                                           @@ -0,0 +1,6 @@                         
-unstaged                                                        1 +package gitui                    
-  gitui/status.go                                               2 +                                 
-staged                                                          3 +// Status belongs to the supplie 
-  docs/git-components.md                                        4 +func label() string {            
-untracked                                                       5 +    return "ready"               
-  notes.txt                                                     6 +}                                
+unstaged                                                    1 +package gitui                        
+  gitui/status.go                                           2 +                                     
+staged                                                      3 +// Status belongs to the supplied wo 
+  docs/git-components.md                                    4 +func label() string {                
+untracked                                                   5 +    return "ready"                   
+  notes.txt                                                 6 +}                                    
 conflicts                                                                                           
   theme/theme.go
 ```
@@ -1538,12 +1539,12 @@ untracked
   notes.txt                             
 gitui/status.go                         
 @@ -0,0 +1,6 @@                         
-    1 +package gitui                    
-    2 +                                 
-    3 +// Status belongs to the supplie 
-    4 +func label() string {            
-    5 +    return "ready"               
-    6 +}
+1 +package gitui                        
+2 +                                     
+3 +// Status belongs to the supplied wo 
+4 +func label() string {                
+5 +    return "ready"                   
+6 +}
 ```
 
 256 colors · ansi256 · 100 × 30 terminal cells
@@ -1551,12 +1552,12 @@ gitui/status.go
 ```
 staged                                                      gitui/status.go                         
 ▸ gitui/status.go                                           @@ -0,0 +1,6 @@                         
-unstaged                                                        1 +package gitui                    
-  gitui/status.go                                               2 +                                 
-staged                                                          3 +// Status belongs to the supplie 
-  docs/git-components.md                                        4 +func label() string {            
-untracked                                                       5 +    return "ready"               
-  notes.txt                                                     6 +}                                
+unstaged                                                    1 +package gitui                        
+  gitui/status.go                                           2 +                                     
+staged                                                      3 +// Status belongs to the supplied wo 
+  docs/git-components.md                                    4 +func label() string {                
+untracked                                                   5 +    return "ready"                   
+  notes.txt                                                 6 +}                                    
 conflicts                                                                                           
   theme/theme.go
 ```
@@ -1566,12 +1567,12 @@ conflicts
 ```
 staged                                                      gitui/status.go                         
 ▸ gitui/status.go                                           @@ -0,0 +1,6 @@                         
-unstaged                                                        1 +package gitui                    
-  gitui/status.go                                               2 +                                 
-staged                                                          3 +// Status belongs to the supplie 
-  docs/git-components.md                                        4 +func label() string {            
-untracked                                                       5 +    return "ready"               
-  notes.txt                                                     6 +}                                
+unstaged                                                    1 +package gitui                        
+  gitui/status.go                                           2 +                                     
+staged                                                      3 +// Status belongs to the supplied wo 
+  docs/git-components.md                                    4 +func label() string {                
+untracked                                                   5 +    return "ready"                   
+  notes.txt                                                 6 +}                                    
 conflicts                                                                                           
   theme/theme.go
 ```
@@ -1581,12 +1582,12 @@ Monochrome · none · 100 × 30 terminal cells
 ```
 staged                                                      gitui/status.go                         
 > gitui/status.go                                           @@ -0,0 +1,6 @@                         
-unstaged                                                        1 +package gitui                    
-  gitui/status.go                                               2 +                                 
-staged                                                          3 +// Status belongs to the supplie 
-  docs/git-components.md                                        4 +func label() string {            
-untracked                                                       5 +    return "ready"               
-  notes.txt                                                     6 +}                                
+unstaged                                                    1 +package gitui                        
+  gitui/status.go                                           2 +                                     
+staged                                                      3 +// Status belongs to the supplied wo 
+  docs/git-components.md                                    4 +func label() string {                
+untracked                                                   5 +    return "ready"                   
+  notes.txt                                                 6 +}                                    
 conflicts                                                                                           
   theme/theme.go
 ```
@@ -1622,6 +1623,433 @@ Supply a PatchObservation with explicit availability and ordered diffs; SetPatch
 go run ./examples/catalog git/patch-browser
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/git_patch_browser.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/gitui/patch_browser.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/git_patch_browser.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/gitui/patch_browser.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/diff](https://lanej.io/charmed/organisms-git.html#git/diff) [collection/scroll-pane](https://lanej.io/charmed/molecules-collection.html#collection/scroll-pane)
+
+[Organisms](https://lanej.io/charmed/organisms.html) / git
+
+## [Diff review](https://lanej.io/charmed/organisms-git.html#git%2freview)
+
+Review supplied patches in one stacked document, with optional file grouping and statistics. Mark reviewed files without losing access to their content.
+
+### [Native preview](https://lanej.io/charmed/organisms-git.html#git%2freview-preview)
+
+Saved terminal output · truecolor reference
+
+Output of the Go usage example below
+
+```
+┌ Outline ──────────────────────┐┌ Document ───────────────────────────────────────────────────────┐
+│    ▾  Contents                ││ ▾ src/  +1 -1 · 1 files · 1 reviewed                            │
+│ →├ ▾  src/  +1 -1 · 1 files…  ││ ▸ ✓ router.go  +1 -1 · reviewed                                 │
+│  │└  ▸ ✓ router.go  +1 -1…    ││ ▾ README.md                                                     │
+│  └  ▾ README.md               ││ Diff unavailable: patch not supplied                            │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+│                               ││                                                                 │
+└───────────────────────────────┘└─────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane · r reviewed
+```
+
+Demo · truecolor · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│    ▾  Contents                   ││ ▾ src/  +8 -1 · 2 files · 0 reviewed                                             │
+│ →├ ▾  src/  +8 -1 · 2 files · …  ││ ▾ router.go  +4 -1                                                               │
+│  │├  ▾ router.go  +4 -1          ││ @@ -18,4 +18,6 @@ func ChooseRoute                                               │
+│  │└  ▾ router_test.go  +4 -0     ││ 18  func ChooseRoute(observation Observation) Route {                            │
+│  ├ ▾  docs/  2 files · 0 revie…  ││ 19 -    return observation.Fastest()                                             │
+│  │├  ▾ routing.md  +1 -1         ││ 19 +    if !observation.Complete {                                               │
+│  │└  ▾ routing.png  binary       ││ 20 +        return observation.Previous                                          │
+│  └  ▾ config.yaml                ││ 21 +    }                                                                        │
+│                                  ││ 22 +    return observation.FastestHealthy()                                      │
+│                                  ││ 23  }                                                                            │
+│                                  ││                                                                                  │
+│                                  ││ ▾ router_test.go  +4 -0                                                          │
+│                                  ││ @@ -8,0 +9,4 @@                                                                  │
+│                                  ││  9 +func TestIncompleteEvidenceRetainsRoute(t *testing.T) {                      │
+│                                  ││ 10 +    got := ChooseRoute(incompleteObservation())                              │
+│                                  ││ 11 +    require.Equal(t, previousRoute, got)                                     │
+│                                  ││ 12 +}                                                                            │
+│                                  ││                                                                                  │
+│                                  ││ ▾ docs/  2 files · 0 reviewed · stats unavailable                                │
+│                                  ││ ▾ routing.md  +1 -1                                                              │
+│                                  ││ @@ -1 +1 @@                                                                      │
+│                                  ││ 1 -Always select the fastest region.                                             │
+│                                  ││ 1 +Require complete observations before changing routes.                         │
+│                                  ││                                                                                  │
+│                                  ││ ▾ routing.png  binary                                                            │
+│                                  ││ Binary content changed                                                           │
+│                                  ││                                                                                  │
+│                                  ││ ▾ config.yaml                                                                    │
+│                                  ││ Diff unavailable: patch was not supplied                                         │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane · r reviewed
+```
+
+Narrow · truecolor · 40 × 16 terminal cells
+
+```
+┌ Outline ─────────────────────────────┐
+│    ▾  Contents                       │
+│ →├ ▾  src/  +8 -1 · 2 files · 0 re…  │
+│  │├  ▾ router.go  +4 -1              │
+└──────────────────────────────────────┘
+┌ Document ────────────────────────────┐
+│ ▾ src/  +8 -1 · 2 files · 0 reviewed │
+│ ▾ router.go  +4 -1                   │
+│ @@ -18,4 +18,6 @@ func ChooseRoute   │
+│ 18  func ChooseRoute(observation Obs │
+│ ervation) Route {                    │
+│ 19 -    return observation.Fastest() │
+│ 19 +    if !observation.Complete {   │
+│ 20 +        return observation.Previ │
+└──────────────────────────────────────┘
+↑/↓ · Enter fold · Tab · r reviewed
+```
+
+256 colors · ansi256 · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│    ▾  Contents                   ││ ▾ src/  +8 -1 · 2 files · 0 reviewed                                             │
+│ →├ ▾  src/  +8 -1 · 2 files · …  ││ ▾ router.go  +4 -1                                                               │
+│  │├  ▾ router.go  +4 -1          ││ @@ -18,4 +18,6 @@ func ChooseRoute                                               │
+│  │└  ▾ router_test.go  +4 -0     ││ 18  func ChooseRoute(observation Observation) Route {                            │
+│  ├ ▾  docs/  2 files · 0 revie…  ││ 19 -    return observation.Fastest()                                             │
+│  │├  ▾ routing.md  +1 -1         ││ 19 +    if !observation.Complete {                                               │
+│  │└  ▾ routing.png  binary       ││ 20 +        return observation.Previous                                          │
+│  └  ▾ config.yaml                ││ 21 +    }                                                                        │
+│                                  ││ 22 +    return observation.FastestHealthy()                                      │
+│                                  ││ 23  }                                                                            │
+│                                  ││                                                                                  │
+│                                  ││ ▾ router_test.go  +4 -0                                                          │
+│                                  ││ @@ -8,0 +9,4 @@                                                                  │
+│                                  ││  9 +func TestIncompleteEvidenceRetainsRoute(t *testing.T) {                      │
+│                                  ││ 10 +    got := ChooseRoute(incompleteObservation())                              │
+│                                  ││ 11 +    require.Equal(t, previousRoute, got)                                     │
+│                                  ││ 12 +}                                                                            │
+│                                  ││                                                                                  │
+│                                  ││ ▾ docs/  2 files · 0 reviewed · stats unavailable                                │
+│                                  ││ ▾ routing.md  +1 -1                                                              │
+│                                  ││ @@ -1 +1 @@                                                                      │
+│                                  ││ 1 -Always select the fastest region.                                             │
+│                                  ││ 1 +Require complete observations before changing routes.                         │
+│                                  ││                                                                                  │
+│                                  ││ ▾ routing.png  binary                                                            │
+│                                  ││ Binary content changed                                                           │
+│                                  ││                                                                                  │
+│                                  ││ ▾ config.yaml                                                                    │
+│                                  ││ Diff unavailable: patch was not supplied                                         │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane · r reviewed
+```
+
+16 colors · ansi16 · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│    ▾  Contents                   ││ ▾ src/  +8 -1 · 2 files · 0 reviewed                                             │
+│ →├ ▾  src/  +8 -1 · 2 files · …  ││ ▾ router.go  +4 -1                                                               │
+│  │├  ▾ router.go  +4 -1          ││ @@ -18,4 +18,6 @@ func ChooseRoute                                               │
+│  │└  ▾ router_test.go  +4 -0     ││ 18  func ChooseRoute(observation Observation) Route {                            │
+│  ├ ▾  docs/  2 files · 0 revie…  ││ 19 -    return observation.Fastest()                                             │
+│  │├  ▾ routing.md  +1 -1         ││ 19 +    if !observation.Complete {                                               │
+│  │└  ▾ routing.png  binary       ││ 20 +        return observation.Previous                                          │
+│  └  ▾ config.yaml                ││ 21 +    }                                                                        │
+│                                  ││ 22 +    return observation.FastestHealthy()                                      │
+│                                  ││ 23  }                                                                            │
+│                                  ││                                                                                  │
+│                                  ││ ▾ router_test.go  +4 -0                                                          │
+│                                  ││ @@ -8,0 +9,4 @@                                                                  │
+│                                  ││  9 +func TestIncompleteEvidenceRetainsRoute(t *testing.T) {                      │
+│                                  ││ 10 +    got := ChooseRoute(incompleteObservation())                              │
+│                                  ││ 11 +    require.Equal(t, previousRoute, got)                                     │
+│                                  ││ 12 +}                                                                            │
+│                                  ││                                                                                  │
+│                                  ││ ▾ docs/  2 files · 0 reviewed · stats unavailable                                │
+│                                  ││ ▾ routing.md  +1 -1                                                              │
+│                                  ││ @@ -1 +1 @@                                                                      │
+│                                  ││ 1 -Always select the fastest region.                                             │
+│                                  ││ 1 +Require complete observations before changing routes.                         │
+│                                  ││                                                                                  │
+│                                  ││ ▾ routing.png  binary                                                            │
+│                                  ││ Binary content changed                                                           │
+│                                  ││                                                                                  │
+│                                  ││ ▾ config.yaml                                                                    │
+│                                  ││ Diff unavailable: patch was not supplied                                         │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane · r reviewed
+```
+
+Monochrome · none · 120 × 32 terminal cells
+
+```
++ Outline -------------------------++ Document ------------------------------------------------------------------------+
+|    v  Contents                   || v src/  +8 -1 * 2 files * 0 reviewed                                             |
+| >+ v  src/  +8 -1 * 2 files * .  || v router.go  +4 -1                                                               |
+|  |+  v router.go  +4 -1          || @@ -18,4 +18,6 @@ func ChooseRoute                                               |
+|  |+  v router_test.go  +4 -0     || 18  func ChooseRoute(observation Observation) Route {                            |
+|  + v  docs/  2 files * 0 revie.  || 19 -    return observation.Fastest()                                             |
+|  |+  v routing.md  +1 -1         || 19 +    if !observation.Complete {                                               |
+|  |+  v routing.png  binary       || 20 +        return observation.Previous                                          |
+|  +  v config.yaml                || 21 +    }                                                                        |
+|                                  || 22 +    return observation.FastestHealthy()                                      |
+|                                  || 23  }                                                                            |
+|                                  ||                                                                                  |
+|                                  || v router_test.go  +4 -0                                                          |
+|                                  || @@ -8,0 +9,4 @@                                                                  |
+|                                  ||  9 +func TestIncompleteEvidenceRetainsRoute(t *testing.T) {                      |
+|                                  || 10 +    got := ChooseRoute(incompleteObservation())                              |
+|                                  || 11 +    require.Equal(t, previousRoute, got)                                     |
+|                                  || 12 +}                                                                            |
+|                                  ||                                                                                  |
+|                                  || v docs/  2 files * 0 reviewed * stats unavailable                                |
+|                                  || v routing.md  +1 -1                                                              |
+|                                  || @@ -1 +1 @@                                                                      |
+|                                  || 1 -Always select the fastest region.                                             |
+|                                  || 1 +Require complete observations before changing routes.                         |
+|                                  ||                                                                                  |
+|                                  || v routing.png  binary                                                            |
+|                                  || Binary content changed                                                           |
+|                                  ||                                                                                  |
+|                                  || v config.yaml                                                                    |
+|                                  || Diff unavailable: patch was not supplied                                         |
++----------------------------------++----------------------------------------------------------------------------------+
+^/v navigate * Enter fold * Tab pane * r reviewed
+```
+
+Folded · truecolor · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│    ▾  Contents                   ││ ▸ src/  +8 -1 · 2 files · 0 reviewed                                             │
+│ →├ ▸  src/  +8 -1 · 2 files · …  ││ ▾ docs/  2 files · 0 reviewed · stats unavailable                                │
+│  ├ ▾  docs/  2 files · 0 revie…  ││ ▾ routing.md  +1 -1                                                              │
+│  │├  ▾ routing.md  +1 -1         ││ @@ -1 +1 @@                                                                      │
+│  │└  ▾ routing.png  binary       ││ 1 -Always select the fastest region.                                             │
+│  └  ▾ config.yaml                ││ 1 +Require complete observations before changing routes.                         │
+│                                  ││                                                                                  │
+│                                  ││ ▾ routing.png  binary                                                            │
+│                                  ││ Binary content changed                                                           │
+│                                  ││                                                                                  │
+│                                  ││ ▾ config.yaml                                                                    │
+│                                  ││ Diff unavailable: patch was not supplied                                         │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane · r reviewed
+```
+
+Reviewed · truecolor · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│    ▾  Contents                   ││ ▾ src/  +8 -1 · 2 files · 1 reviewed                                             │
+│ →├ ▾  src/  +8 -1 · 2 files · …  ││ ▸ ✓ router.go  +4 -1 · reviewed                                                  │
+│  │├  ▸ ✓ router.go  +4 -1 · …    ││ ▾ router_test.go  +4 -0                                                          │
+│  │└  ▾ router_test.go  +4 -0     ││ @@ -8,0 +9,4 @@                                                                  │
+│  ├ ▾  docs/  2 files · 0 revie…  ││  9 +func TestIncompleteEvidenceRetainsRoute(t *testing.T) {                      │
+│  │├  ▾ routing.md  +1 -1         ││ 10 +    got := ChooseRoute(incompleteObservation())                              │
+│  │└  ▾ routing.png  binary       ││ 11 +    require.Equal(t, previousRoute, got)                                     │
+│  └  ▾ config.yaml                ││ 12 +}                                                                            │
+│                                  ││                                                                                  │
+│                                  ││ ▾ docs/  2 files · 0 reviewed · stats unavailable                                │
+│                                  ││ ▾ routing.md  +1 -1                                                              │
+│                                  ││ @@ -1 +1 @@                                                                      │
+│                                  ││ 1 -Always select the fastest region.                                             │
+│                                  ││ 1 +Require complete observations before changing routes.                         │
+│                                  ││                                                                                  │
+│                                  ││ ▾ routing.png  binary                                                            │
+│                                  ││ Binary content changed                                                           │
+│                                  ││                                                                                  │
+│                                  ││ ▾ config.yaml                                                                    │
+│                                  ││ Diff unavailable: patch was not supplied                                         │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane · r reviewed
+```
+
+Empty · truecolor · 120 × 32 terminal cells
+
+```
+┌ Outline ─────────────────────────┐┌ Document ────────────────────────────────────────────────────────────────────────┐
+│ →  ▾  Contents                   ││ No sections                                                                      │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+│                                  ││                                                                                  │
+└──────────────────────────────────┘└──────────────────────────────────────────────────────────────────────────────────┘
+↑/↓ navigate · Enter fold · Tab pane · r reviewed
+```
+
+ASCII · truecolor · 120 × 32 terminal cells
+
+```
++ Outline -------------------------++ Document ------------------------------------------------------------------------+
+|    v  Contents                   || v src/  +8 -1 * 2 files * 0 reviewed                                             |
+| >+ v  src/  +8 -1 * 2 files * .  || v router.go  +4 -1                                                               |
+|  |+  v router.go  +4 -1          || @@ -18,4 +18,6 @@ func ChooseRoute                                               |
+|  |+  v router_test.go  +4 -0     || 18  func ChooseRoute(observation Observation) Route {                            |
+|  + v  docs/  2 files * 0 revie.  || 19 -    return observation.Fastest()                                             |
+|  |+  v routing.md  +1 -1         || 19 +    if !observation.Complete {                                               |
+|  |+  v routing.png  binary       || 20 +        return observation.Previous                                          |
+|  +  v config.yaml                || 21 +    }                                                                        |
+|                                  || 22 +    return observation.FastestHealthy()                                      |
+|                                  || 23  }                                                                            |
+|                                  ||                                                                                  |
+|                                  || v router_test.go  +4 -0                                                          |
+|                                  || @@ -8,0 +9,4 @@                                                                  |
+|                                  ||  9 +func TestIncompleteEvidenceRetainsRoute(t *testing.T) {                      |
+|                                  || 10 +    got := ChooseRoute(incompleteObservation())                              |
+|                                  || 11 +    require.Equal(t, previousRoute, got)                                     |
+|                                  || 12 +}                                                                            |
+|                                  ||                                                                                  |
+|                                  || v docs/  2 files * 0 reviewed * stats unavailable                                |
+|                                  || v routing.md  +1 -1                                                              |
+|                                  || @@ -1 +1 @@                                                                      |
+|                                  || 1 -Always select the fastest region.                                             |
+|                                  || 1 +Require complete observations before changing routes.                         |
+|                                  ||                                                                                  |
+|                                  || v routing.png  binary                                                            |
+|                                  || Binary content changed                                                           |
+|                                  ||                                                                                  |
+|                                  || v config.yaml                                                                    |
+|                                  || Diff unavailable: patch was not supplied                                         |
++----------------------------------++----------------------------------------------------------------------------------+
+^/v navigate * Enter fold * Tab pane * r reviewed
+```
+
+Unicode monochrome · none · 120 × 32 terminal cells
+
+```
++ Outline -------------------------++ Document ------------------------------------------------------------------------+
+|    v  Contents                   || v src/  +8 -1 * 2 files * 0 reviewed                                             |
+| >+ v  src/  +8 -1 * 2 files * .  || v router.go  +4 -1                                                               |
+|  |+  v router.go  +4 -1          || @@ -18,4 +18,6 @@ func ChooseRoute                                               |
+|  |+  v router_test.go  +4 -0     || 18  func ChooseRoute(observation Observation) Route {                            |
+|  + v  docs/  2 files * 0 revie.  || 19 -    return observation.Fastest()                                             |
+|  |+  v routing.md  +1 -1         || 19 +    if !observation.Complete {                                               |
+|  |+  v routing.png  binary       || 20 +        return observation.Previous                                          |
+|  +  v config.yaml                || 21 +    }                                                                        |
+|                                  || 22 +    return observation.FastestHealthy()                                      |
+|                                  || 23  }                                                                            |
+|                                  ||                                                                                  |
+|                                  || v router_test.go  +4 -0                                                          |
+|                                  || @@ -8,0 +9,4 @@                                                                  |
+|                                  ||  9 +func TestIncompleteEvidenceRetainsRoute(t *testing.T) {                      |
+|                                  || 10 +    got := ChooseRoute(incompleteObservation())                              |
+|                                  || 11 +    require.Equal(t, previousRoute, got)                                     |
+|                                  || 12 +}                                                                            |
+|                                  ||                                                                                  |
+|                                  || v docs/  2 files * 0 reviewed * stats unavailable                                |
+|                                  || v routing.md  +1 -1                                                              |
+|                                  || @@ -1 +1 @@                                                                      |
+|                                  || 1 -Always select the fastest region.                                             |
+|                                  || 1 +Require complete observations before changing routes.                         |
+|                                  ||                                                                                  |
+|                                  || v routing.png  binary                                                            |
+|                                  || Binary content changed                                                           |
+|                                  ||                                                                                  |
+|                                  || v config.yaml                                                                    |
+|                                  || Diff unavailable: patch was not supplied                                         |
++----------------------------------++----------------------------------------------------------------------------------+
+^/v navigate * Enter fold * Tab pane * r reviewed
+```
+
+### [Go usage](https://lanej.io/charmed/organisms-git.html#git%2freview-code)
+
+Imports: [`gitui`](https://pkg.go.dev/github.com/lanej/charmed/gitui "github.com/lanej/charmed/gitui") · [`layout`](https://pkg.go.dev/github.com/lanej/charmed/layout "github.com/lanej/charmed/layout") · [`theme`](https://pkg.go.dev/github.com/lanej/charmed/theme "github.com/lanej/charmed/theme")
+
+```go
+review, err := gitui.NewFileDiffReview([]gitui.ReviewFile{
+	{ID: "routing", Diff: gitui.FileDiff{
+		FileID: "routing", Path: "src/router.go", State: gitui.TextDiff,
+		Hunks: []gitui.Hunk{{Header: "@@ -1 +1 @@", Lines: []gitui.DiffLine{
+			{Kind: gitui.DeletedLine, OldLine: 1, Text: "return fastest"},
+			{Kind: gitui.AddedLine, NewLine: 1, Text: "return lastHealthy"},
+		}}},
+	}, Stat: &gitui.DiffStat{State: gitui.TextDiff, Added: 1, Deleted: 1}},
+	{ID: "guide", Diff: gitui.FileDiff{FileID: "guide", Path: "README.md", State: gitui.UnavailableDiff, Reason: "patch not supplied"}},
+}, layout.Size{Width: 100, Height: 20}, theme.New(theme.Dark))
+if err != nil {
+	return "", err
+}
+
+review.SetReviewed("routing", true)
+
+return review.View(), nil
+```
+
+### [Updates, focus & sizing](https://lanej.io/charmed/organisms-git.html#git%2freview-integration)
+
+Supply review identities distinct from paths and call SetEntries for replacement. ReviewedIDs exposes application-persisted marks; changed diff content clears the affected mark. Native styling follows OutlineDocument lifecycle. Route Tab through SetFocus and set the screen origin for mouse messages. Run go run ./examples/review for the complete consumer, and see diff-review.html for independent folds, optional statistics and refresh behavior.
+
+### [Run this example](https://lanej.io/charmed/organisms-git.html#git%2freview-run)
+
+```sh
+go run ./examples/catalog git/review
+```
+
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/git_review.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/gitui/review.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+
+Declared example links (unaudited): [pattern/outline-document](https://lanej.io/charmed/organisms-collection.html#pattern/outline-document) [git/hunk](https://lanej.io/charmed/molecules-git.html#git/hunk) [git/diff-summary](https://lanej.io/charmed/atoms-git.html#git/diff-summary)

@@ -30,11 +30,11 @@
 <div class="nav-groups"><a class="nav-group" href="atoms-chart.html" >Charts</a><a class="nav-group" href="atoms-collection.html" aria-current="page">Collections</a><a class="nav-group" href="atoms-feedback.html" >Feedback</a><a class="nav-group" href="atoms-git.html" >git</a><a class="nav-group" href="atoms-graphics.html" >Graphics</a><a class="nav-group" href="atoms-http.html" >HTTP</a><a class="nav-group" href="atoms-input.html" >Input</a><a class="nav-group" href="atoms-logs.html" >Logs</a><a class="nav-group" href="atoms-text.html" >Text</a></div>
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">48</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">49</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">24</span></a>
 
 </div>
 <div class="nav-category ">
@@ -46,7 +46,7 @@
 
 </div>
 <p class="nav-title">Reference &amp; contributors</p>
-<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="diff-review.html" >Diff review</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 <div class="nav-outline"><p class="nav-title">On this page</p>
 
@@ -74,11 +74,11 @@
 <div class="nav-groups"><a class="nav-group" href="atoms-chart.html" >Charts</a><a class="nav-group" href="atoms-collection.html" aria-current="page">Collections</a><a class="nav-group" href="atoms-feedback.html" >Feedback</a><a class="nav-group" href="atoms-git.html" >git</a><a class="nav-group" href="atoms-graphics.html" >Graphics</a><a class="nav-group" href="atoms-http.html" >HTTP</a><a class="nav-group" href="atoms-input.html" >Input</a><a class="nav-group" href="atoms-logs.html" >Logs</a><a class="nav-group" href="atoms-text.html" >Text</a></div>
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">48</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">49</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">24</span></a>
 
 </div>
 <div class="nav-category ">
@@ -90,7 +90,7 @@
 
 </div>
 <p class="nav-title">Reference &amp; contributors</p>
-<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="diff-review.html" >Diff review</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 <div class="nav-outline"><p class="nav-title">On this page</p>
 
@@ -275,13 +275,13 @@ viewport <span class="syn-operator">:=</span> collection<span class="syn-operato
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="collection/viewport-integration"><h3 id="collection/viewport-integration"><a class="heading-permalink" href="#collection%2fviewport-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Retain the native model and any command returned by Update, and route keyboard input through the parent&#39;s active focus region. Replace displayed content through the native API. Recalculate width and height from the available terminal cells while retaining selection where the native model supports it.</p></section>
-<div class="component-run"><h3 id="collection/viewport-run"><a class="heading-permalink" href="#collection%2fviewport-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/viewport</code></pre><p><a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_viewport.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/atoms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="collection/viewport-run"><a class="heading-permalink" href="#collection%2fviewport-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/viewport</code></pre><p><a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_viewport.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/atoms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 
 <section class="component-relations" aria-label="Component relationships">
 <h3>Reusable component</h3>
-<p><a href="dependencies.html#component-collection%2Fviewport">Viewport dependency graph</a> · Partial map · <a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/collection.go#L36">Source declaration</a></p>
+<p><a href="dependencies.html#component-collection%2Fviewport">Viewport dependency graph</a> · Partial map · <a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/collection/collection.go#L36">Source declaration</a></p>
 
-<details><summary>Consumer usage uses</summary><ul><li><a href="dependencies.html#component-collection%2Fviewport">Viewport</a> · primary demonstration</li></ul><a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_viewport.go#L7">Example source</a></details>
+<details><summary>Consumer usage uses</summary><ul><li><a href="dependencies.html#component-collection%2Fviewport">Viewport</a> · primary demonstration</li></ul><a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_viewport.go#L7">Example source</a></details>
 </section>
 
 </section>
@@ -457,7 +457,7 @@ tableView <span class="syn-operator">:=</span> collection<span class="syn-operat
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="collection/table-integration"><h3 id="collection/table-integration"><a class="heading-permalink" href="#collection%2ftable-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Retain the native model and any command returned by Update, and route keyboard input through the parent&#39;s active focus region. Replace displayed content through the native API. Recalculate width and height from the available terminal cells while retaining selection where the native model supports it.</p></section>
-<div class="component-run"><h3 id="collection/table-run"><a class="heading-permalink" href="#collection%2ftable-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/table</code></pre><p><a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_table.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/organisms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="collection/table-run"><a class="heading-permalink" href="#collection%2ftable-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/table</code></pre><p><a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_table.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/organisms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 
@@ -641,7 +641,7 @@ treeView <span class="syn-operator">:=</span> collection<span class="syn-operato
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="collection/tree-integration"><h3 id="collection/tree-integration"><a class="heading-permalink" href="#collection%2ftree-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Retain the native model and any command returned by Update, and route keyboard input through the parent&#39;s active focus region. Replace displayed content through the native API. Recalculate width and height from the available terminal cells while retaining selection where the native model supports it.</p></section>
-<div class="component-run"><h3 id="collection/tree-run"><a class="heading-permalink" href="#collection%2ftree-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/tree</code></pre><p><a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_tree.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/organisms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="collection/tree-run"><a class="heading-permalink" href="#collection%2ftree-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/tree</code></pre><p><a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_tree.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/organisms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 </section>

@@ -2,8 +2,9 @@
 
 # [Layout](https://lanej.io/charmed/molecules-layout.html#level-molecules-layout)
 
-12 components · [All molecules](https://lanej.io/charmed/molecules.html)
+13 components · [All molecules](https://lanej.io/charmed/molecules.html)
 
+- [Text row](https://lanej.io/charmed/molecules-layout.html#layout%2ftext-row)
 - [Link group](https://lanej.io/charmed/molecules-layout.html#layout%2flink-group)
 - [Header](https://lanej.io/charmed/molecules-layout.html#layout%2fheader)
 - [Identity header](https://lanej.io/charmed/molecules-layout.html#layout%2fidentity-header)
@@ -16,6 +17,85 @@
 - [Docked layout](https://lanej.io/charmed/molecules-layout.html#layout%2fdock)
 - [Constrained split panes](https://lanej.io/charmed/molecules-layout.html#layout%2fsplit-pane)
 - [Responsive layout recipes](https://lanej.io/charmed/molecules-layout.html#layout%2fresponsive)
+
+[Molecules](https://lanej.io/charmed/molecules.html) / Layout
+
+## [Text row](https://lanej.io/charmed/molecules-layout.html#layout%2ftext-row)
+
+Compose headers, operational status lines and compact summaries from styled text segments, fixed gaps and flexible space. Fields wrap in order rather than disappearing when the terminal narrows.
+
+### [Native preview](https://lanej.io/charmed/molecules-layout.html#layout%2ftext-row-preview)
+
+Saved terminal output · truecolor reference
+
+Output of the Go usage example below
+
+```
+API operations  Production / us-east-1        Observed 00:16 UTC
+```
+
+Demo · truecolor · 64 × 8 terminal cells
+
+```
+API operations  Production / us-east-1        Observed 00:16 UTC
+```
+
+Narrow · truecolor · 40 × 16 terminal cells
+
+```
+API operations  Production / us-east-1  
+                      Observed 00:16 UTC
+```
+
+256 colors · ansi256 · 64 × 8 terminal cells
+
+```
+API operations  Production / us-east-1        Observed 00:16 UTC
+```
+
+16 colors · ansi16 · 64 × 8 terminal cells
+
+```
+API operations  Production / us-east-1        Observed 00:16 UTC
+```
+
+Monochrome · none · 64 × 8 terminal cells
+
+```
+API operations  Production / us-east-1        Observed 00:16 UTC
+```
+
+### [Go usage](https://lanej.io/charmed/molecules-layout.html#layout%2ftext-row-code)
+
+Imports: [`layout`](https://pkg.go.dev/github.com/lanej/charmed/layout "github.com/lanej/charmed/layout") · [`theme`](https://pkg.go.dev/github.com/lanej/charmed/theme "github.com/lanej/charmed/theme")
+
+```go
+palette := theme.New(theme.Dark)
+row := layout.TextRow{Gap: 2, Items: []layout.TextRowItem{
+	{Text: palette.Heading().Render("API operations")},
+	{Text: palette.Subtle().Render("Production / us-east-1")},
+	{Flex: true},
+	{Text: palette.Text().Render("Observed 00:16 UTC")},
+}}
+
+return row.View(64)
+// Use row.Stack = true for an explicitly vertical presentation.
+// Measure the returned height when allocating a parent panel or viewport.
+```
+
+### [Updates, focus & sizing](https://lanej.io/charmed/molecules-layout.html#layout%2ftext-row-integration)
+
+Supply trusted native display strings, escaping application data with text.Inline before styling. Gap reserves cells between nonempty items; flexible spacers share remaining width. View wraps at item boundaries and within long items. Stack selects explicit vertical layout. Allocate the returned height or provide scrolling; Fit clips. Rendering is pure, preserves native styling and owns no focus or input handling.
+
+### [Run this example](https://lanej.io/charmed/molecules-layout.html#layout%2ftext-row-run)
+
+```sh
+go run ./examples/catalog layout/text-row
+```
+
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_text_row.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/layout/text_row.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+
+Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [text/primitives](https://lanej.io/charmed/atoms-text.html#text/primitives)
 
 [Molecules](https://lanej.io/charmed/molecules.html) / Layout
 
@@ -156,7 +236,7 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/link-group
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_link_group.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/layout/links.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_link_group.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/layout/links.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [text/link](https://lanej.io/charmed/atoms-text.html#text/link) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -238,9 +318,9 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/header
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_header.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_header.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
-Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
+Declared example links (unaudited): [layout/text-row](https://lanej.io/charmed/molecules-layout.html#layout/text-row) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
 [Molecules](https://lanej.io/charmed/molecules.html) / Layout
 
@@ -319,9 +399,9 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/identity-header
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_identity_header.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_identity_header.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
-Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
+Declared example links (unaudited): [layout/text-row](https://lanej.io/charmed/molecules-layout.html#layout/text-row) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
 [Molecules](https://lanej.io/charmed/molecules.html) / Layout
 
@@ -447,7 +527,7 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/section
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_section.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_section.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [text/disclosure](https://lanej.io/charmed/atoms-text.html#text/disclosure)
 
@@ -562,7 +642,7 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/key-value
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_key_value.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/layout/keyvalue.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_key_value.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/layout/keyvalue.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [text/value-state](https://lanej.io/charmed/atoms-text.html#text/value-state) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -637,9 +717,9 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/footer
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_footer.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_footer.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
-Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [text/primitives](https://lanej.io/charmed/atoms-text.html#text/primitives) [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)
+Declared example links (unaudited): [layout/text-row](https://lanej.io/charmed/molecules-layout.html#layout/text-row) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [text/primitives](https://lanej.io/charmed/atoms-text.html#text/primitives) [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)
 
 [Molecules](https://lanej.io/charmed/molecules.html) / Layout
 
@@ -833,7 +913,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/flex
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_flex.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_flex.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -1029,7 +1109,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/grid
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_grid.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_grid.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -1156,7 +1236,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/flow
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_flow.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_flow.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -1354,7 +1434,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/dock
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_dock.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_dock.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/flex](https://lanej.io/charmed/molecules-layout.html#layout/flex)
 
@@ -1550,7 +1630,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/split-pane
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_split_pane.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_split_pane.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/flex](https://lanej.io/charmed/molecules-layout.html#layout/flex)
 
@@ -1746,6 +1826,6 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/responsive
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/layout_responsive.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/layout_responsive.go) · [Implementation](https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/grid](https://lanej.io/charmed/molecules-layout.html#layout/grid) [layout/split-pane](https://lanej.io/charmed/molecules-layout.html#layout/split-pane)

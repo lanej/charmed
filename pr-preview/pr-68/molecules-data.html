@@ -30,11 +30,11 @@
 
 </div>
 <div class="nav-category is-active">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">48</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">49</span></a>
 <div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-collection.html" >Collections</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-data.html" aria-current="page">Data</a><a class="nav-group" href="molecules-diagram.html" >Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-git.html" >git</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" >Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">24</span></a>
 
 </div>
 <div class="nav-category ">
@@ -46,7 +46,7 @@
 
 </div>
 <p class="nav-title">Reference &amp; contributors</p>
-<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="diff-review.html" >Diff review</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 <div class="nav-outline"><p class="nav-title">On this page</p>
 
@@ -74,11 +74,11 @@
 
 </div>
 <div class="nav-category is-active">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">48</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">49</span></a>
 <div class="nav-groups"><a class="nav-group" href="molecules-chart.html" >Charts</a><a class="nav-group" href="molecules-collection.html" >Collections</a><a class="nav-group" href="molecules-commands.html" >Commands</a><a class="nav-group" href="molecules-data.html" aria-current="page">Data</a><a class="nav-group" href="molecules-diagram.html" >Diagrams</a><a class="nav-group" href="molecules-feedback.html" >Feedback</a><a class="nav-group" href="molecules-git.html" >git</a><a class="nav-group" href="molecules-input.html" >Input</a><a class="nav-group" href="molecules-layout.html" >Layout</a><a class="nav-group" href="molecules-logs.html" >Logs</a><a class="nav-group" href="molecules-navigation.html" >Navigation</a></div>
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">24</span></a>
 
 </div>
 <div class="nav-category ">
@@ -90,7 +90,7 @@
 
 </div>
 <p class="nav-title">Reference &amp; contributors</p>
-<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="diff-review.html" >Diff review</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 <div class="nav-outline"><p class="nav-title">On this page</p>
 
@@ -581,7 +581,7 @@ viewer <span class="syn-operator">:=</span> collection<span class="syn-operator"
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="collection/json-viewer-integration"><h3 id="collection/json-viewer-integration"><a class="heading-permalink" href="#collection%2fjson-viewer-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>SetSource copies the bytes and reports parsing failures without retaining stale structure. Forward Update messages only while the viewer is active, and retain its native viewport for customization. Call Resize when its allocation changes. Identical source retains structural state; changed bytes reset the source-bound cursor and folds.</p></section>
-<div class="component-run"><h3 id="collection/json-viewer-run"><a class="heading-permalink" href="#collection%2fjson-viewer-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/json-viewer</code></pre><p><a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_json_viewer.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/json.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="collection/json-viewer-run"><a class="heading-permalink" href="#collection%2fjson-viewer-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/json-viewer</code></pre><p><a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/docs/snippets/collection_json_viewer.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/story/json.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Declared example links (unaudited): <a class="dependency" href="atoms-collection.html#collection/viewport">collection/viewport</a> <a class="dependency" href="atoms-text.html#text/disclosure">text/disclosure</a> <a class="dependency" href="atoms-text.html#text/syntax">text/syntax</a> </p>
 </section>
 </section>

@@ -30,11 +30,11 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">48</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">49</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">24</span></a>
 
 </div>
 <div class="nav-category is-active">
@@ -46,7 +46,7 @@
 
 </div>
 <p class="nav-title">Reference &amp; contributors</p>
-<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="diff-review.html" >Diff review</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 </nav>
 
@@ -69,11 +69,11 @@
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">48</span></a>
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">49</span></a>
 
 </div>
 <div class="nav-category ">
-<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">21</span></a>
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">24</span></a>
 
 </div>
 <div class="nav-category is-active">
@@ -85,7 +85,7 @@
 
 </div>
 <p class="nav-title">Reference &amp; contributors</p>
-<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="diff-review.html" >Diff review</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
 
 </nav>
 </aside>
@@ -151,7 +151,7 @@
 <h2 id="giving-a-screen-its-structure"><a class="heading-permalink" href="#giving-a-screen-its-structure"><span>Giving a screen its structure</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>The application shell assigns space to a header, tabs, content and footer. Supply the content and let the parent coordinate focus and resizing. See the <a href="examples.html">composition guide</a> for ownership rules and the <a href="molecules.html">molecule catalog</a> for the individual layout pieces.</p>
 <p>For monitoring, start with the <a href="templates-pattern.html#template/operations">operational dashboard</a>. It places summary facts before primary evidence, keeps diagnostics behind inspection, and derives help from active key bindings. Resize and data replacement preserve native viewport customization and independent scroll positions, clamping offsets when content shrinks.</p>
-<p>Run <code class="inline-code">go run ./examples/operations</code> for the complete application, then use i to inspect, Escape to return, ? to expand help and Ctrl+C to quit. Its <a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/examples/operations/main_test.go">consumer acceptance test</a> exercises populated, absent, waiting and failed-refresh observations at wide, standard and narrow allocations.</p>
+<p>Run <code class="inline-code">go run ./examples/operations</code> for the complete application, then use i to inspect, Escape to return, ? to expand help and Ctrl+C to quit. Its <a href="https://github.com/lanej/charmed/blob/651bab6833695213690f9cc2258ed202ceac56c9/examples/operations/main_test.go">consumer acceptance test</a> exercises populated, absent, waiting and failed-refresh observations at wide, standard and narrow allocations.</p>
 <p>Compare the saved <a href="assets/operations.png">overview</a>, <a href="assets/operations-narrow.png">narrow</a>, <a href="assets/operations-details.png">inspection</a>, <a href="assets/operations-error.png">failed refresh</a> and <a href="assets/operations-mono.png">monochrome</a> frames when adapting the starter. They show deterministic reference observations; capture the consumer's actual output separately before treating its composition as reviewed.</p>
 
 
