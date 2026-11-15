@@ -8,7 +8,7 @@ Choose guidance for the work you are doing: building an application with Charmed
 
 | Skill | Scope | Downloads |
 | --- | --- | --- |
-| Charmed | Components, layouts, native lifecycle and retained rendering | [Entrypoint](skills/charmed/SKILL.md) · [Complete package](skills/charmed.tar.gz) |
+| Charmed | Components, operational screen starters, layouts, native lifecycle and retained rendering | [Entrypoint](skills/charmed/SKILL.md) · [Complete package](skills/charmed.tar.gz) |
 | Charmed contributing | Library architecture, native examples, repository checks and website standards | [Entrypoint](skills/charmed-contributing/SKILL.md) · [Complete package](skills/charmed-contributing.tar.gz) |
 
 ## Install a package

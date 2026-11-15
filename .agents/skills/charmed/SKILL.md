@@ -9,6 +9,8 @@ Use this skill for applications consuming Charmed. For changes to the library or
 
 Use the current [guide](https://lanej.io/charmed/index.md), [getting started](https://lanej.io/charmed/getting-started.md) and [component catalog](https://lanej.io/charmed/atoms.md) to choose public APIs. Every website page has a matching `.md` URL, including component-family pages with complete consumer examples and native output. [The Markdown index](https://lanej.io/charmed/llms.txt) lists them. Fetch relevant pages rather than assuming APIs from memory; check the application's installed Charmed revision when it differs from the published guide.
 
+For operational monitoring, start with the runnable dashboard composition and read [the screen workflow](references/operations.md). It covers summary/evidence hierarchy, secondary inspection, incomplete interval counts and consumer acceptance through actual rendering and key routing.
+
 ## Compose native components
 
 Choose the smallest existing component that fits the task. Atomic levels describe composition depth; Go packages group capabilities. Preserve Bubble Tea messages and commands, native model access, styling and chart types. Applications own service access, Git operations, telemetry retrieval and business decisions; supply observations and handle emitted actions outside the UI library.

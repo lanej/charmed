@@ -2,6 +2,8 @@
 
 Charmed supplies themed Go components for native terminal interfaces. Start with an editable environment field, then compose charts, collections and inspectors around the same application model and theme.
 
+For a complete monitoring screen, start with the [operational dashboard](templates-pattern.html#template/operations) and its [runnable application](https://github.com/lanej/charmed/tree/main/examples/operations). It supplies hierarchy, scrolling and secondary inspection before you connect observations. The text-field tutorial below remains a smaller introduction to the native event loop.
+
 ## Install
 
 Use Go 1.26.11 or newer. Create a module for your application, then add Charmed as a dependency. Bubble Tea owns the terminal session and delivers messages to your model.

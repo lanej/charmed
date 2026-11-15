@@ -145,7 +145,18 @@ func assertSkillArchive(t *testing.T, directory, name string) {
 		}
 	}
 
-	if !entries[name+"/SKILL.md"] || len(entries) != 1 {
-		t.Errorf("%s must contain its standalone SKILL.md only: %v", name, entries)
+	required := []string{name + "/SKILL.md"}
+	if name == "charmed" {
+		required = append(required, name+"/references/operations.md")
+	}
+
+	for _, path := range required {
+		if !entries[path] {
+			t.Errorf("%s package omits %s", name, path)
+		}
+	}
+
+	if len(entries) != len(required) {
+		t.Errorf("%s package contains unexpected entries: %v", name, entries)
 	}
 }

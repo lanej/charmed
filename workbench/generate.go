@@ -92,6 +92,13 @@ func Generate(out string) error {
 			}{"Stacked", func(c *story.Config) { c.Columns, c.Rows = 40, 24 }})
 		}
 
+		if d.ID == "template/operations" {
+			variants = append(variants, struct {
+				name   string
+				change func(*story.Config)
+			}{name: "Inspection", change: func(c *story.Config) { c.VerboseDetails = true }})
+		}
+
 		if d.ID == "diagram/state-transitions" {
 			for _, trace := range []struct{ name, state string }{{"Last 3 transitions", "last-3"}, {"Whole path", "all"}} {
 				variants = append(variants, struct {
@@ -199,7 +206,7 @@ func Generate(out string) error {
 			}
 		}
 
-		if d.Family == "logs" && slices.Contains(d.Controls, "state") {
+		if (d.Family == "logs" || d.ID == "template/operations") && slices.Contains(d.Controls, "state") {
 			for _, state := range []string{"empty", "error", "loading"} {
 				variants = append(variants, struct {
 					name   string
