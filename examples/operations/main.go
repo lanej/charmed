@@ -48,6 +48,7 @@ func (m *model) View() tea.View {
 	view := tea.NewView(m.dashboard.View())
 	view.AltScreen = true
 	view.BackgroundColor = m.dashboard.Theme.Background
+	view.ForegroundColor = m.dashboard.Theme.Foreground
 
 	return view
 }

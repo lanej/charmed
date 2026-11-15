@@ -13,6 +13,17 @@ import (
 // with the consumer's observation messages; an import alone proves no UI behavior.
 func TestOperationsConsumerAcceptance(t *testing.T) {
 	m := newModel()
+	initial := m.View()
+
+	if initial.ForegroundColor == nil || initial.BackgroundColor == nil {
+		t.Fatal("starter must own both default colors so unstyled content remains readable in light terminals")
+	}
+
+	red, green, blue, _ := initial.ForegroundColor.RGBA()
+	if red != 0xeeee || green != 0xeeee || blue != 0xeeee {
+		t.Fatalf("dark starter default foreground = %04x/%04x/%04x, want neutral #eeeeee", red, green, blue)
+	}
+
 	for _, size := range []tea.WindowSizeMsg{{Width: 132, Height: 40}, {Width: 80, Height: 24}, {Width: 40, Height: 18}} {
 		m.Update(size)
 
