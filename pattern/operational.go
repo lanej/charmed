@@ -10,6 +10,7 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/collection"
+	"github.com/lanej/charmed/feedback"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
@@ -23,6 +24,16 @@ type DashboardSection struct {
 	Body  func(width int) string
 }
 
+// DashboardMeter shows an exact count against a supplied capacity. Label defines
+// the quantity (for example "REST remaining"); fill means Value / Total, not health.
+// Missing/redacted/invalid observations have no bar. Zero capacity and values
+// above capacity retain their exact counts without implying a valid proportion.
+type DashboardMeter struct {
+	Label, Unit  string
+	Value, Total uint64
+	State        text.ValueState
+}
+
 // DashboardSnapshot orders a monitoring task: summary, primary evidence, then
 // optional inspection. Status is supplied text, independent of health or freshness.
 // Summary values use layout.Pair's explicit missing/invalid value states.
@@ -30,6 +41,7 @@ type DashboardSnapshot struct {
 	Title, Context, Status string
 	StatusTone             text.Tone
 	Summary                []layout.Pair
+	Meters                 []DashboardMeter
 	Sections, Details      []DashboardSection
 }
 
@@ -81,6 +93,7 @@ func NewOperationalDashboard(snapshot DashboardSnapshot, size layout.Size, t the
 // by the caller and must be updated on the same Bubble Tea loop as this model.
 func (m *OperationalDashboard) SetSnapshot(snapshot DashboardSnapshot) {
 	snapshot.Summary = append([]layout.Pair(nil), snapshot.Summary...)
+	snapshot.Meters = append([]DashboardMeter(nil), snapshot.Meters...)
 	snapshot.Sections = append([]DashboardSection(nil), snapshot.Sections...)
 	snapshot.Details = append([]DashboardSection(nil), snapshot.Details...)
 
@@ -150,6 +163,10 @@ func (m *OperationalDashboard) reflow() {
 	}
 
 	parts := []string{}
+	if len(m.snapshot.Meters) > 0 {
+		parts = append(parts, dashboardMeters(m.snapshot.Meters, width, m.Theme))
+	}
+
 	if len(m.snapshot.Summary) > 0 {
 		parts = append(parts, layout.KeyValue(m.snapshot.Summary, width, m.Theme))
 	}
@@ -178,17 +195,103 @@ func (m *OperationalDashboard) heading(width int) string {
 		style = m.Theme.Heading()
 	}
 
-	parts := []string{style.Render(dashboardWrap(label, width))}
+	title := style.Render(dashboardWrap(label, width))
+	context := m.Theme.Subtle().Render(dashboardWrap(text.Inline(m.snapshot.Context), width))
+	status := text.ToneStyle(m.snapshot.StatusTone, text.Normal, m.Theme).Render(dashboardWrap(text.Inline(m.snapshot.Status), width))
 
+	left := title
 	if m.snapshot.Context != "" {
-		parts = append(parts, m.Theme.Subtle().Render(dashboardWrap(text.Inline(m.snapshot.Context), width)))
+		left += "  " + context
+	}
+
+	if !strings.Contains(left+status, "\n") && ansi.StringWidth(left)+ansi.StringWidth(status)+2 <= width {
+		return dashboardHeaderRow(left, status, width)
+	}
+
+	if m.snapshot.Status != "" && !strings.Contains(title+status, "\n") && ansi.StringWidth(title)+ansi.StringWidth(status)+2 <= width {
+		return dashboardHeaderRow(title, status, width) + dashboardContext(context, m.snapshot.Context)
+	}
+
+	parts := []string{title}
+	if m.snapshot.Context != "" {
+		parts = append(parts, context)
 	}
 
 	if m.snapshot.Status != "" {
-		parts = append(parts, text.ToneStyle(m.snapshot.StatusTone, text.Normal, m.Theme).Render(dashboardWrap(text.Inline(m.snapshot.Status), width)))
+		parts = append(parts, lipgloss.NewStyle().Width(width).Align(lipgloss.Right).Render(status))
 	}
 
 	return strings.Join(parts, "\n")
+}
+
+func dashboardHeaderRow(left, status string, width int) string {
+	if status == "" {
+		return left
+	}
+
+	return left + strings.Repeat(" ", max(2, width-ansi.StringWidth(left)-ansi.StringWidth(status))) + status
+}
+
+func dashboardContext(rendered, raw string) string {
+	if raw == "" {
+		return ""
+	}
+
+	return "\n" + rendered
+}
+
+func dashboardMeters(meters []DashboardMeter, width int, t theme.Theme) string {
+	if width == 1 {
+		return "!"
+	}
+
+	labels, values := make([]string, len(meters)), make([]string, len(meters))
+	labelWidth, valueWidth := 0, 0
+
+	for i, meter := range meters {
+		labels[i] = text.Inline(meter.Label)
+
+		values[i] = fmt.Sprintf("%d / %d", meter.Value, meter.Total)
+		if meter.Unit != "" {
+			values[i] += " " + text.Inline(meter.Unit)
+		}
+
+		if meter.State != text.ValuePresent {
+			values[i] = meter.State.View("", text.Normal, t)
+		} else if meter.Total == 0 {
+			values[i] += " (no capacity)"
+		} else if meter.Value > meter.Total {
+			values[i] += " (invalid ratio)"
+		}
+
+		labelWidth = max(labelWidth, ansi.StringWidth(labels[i]))
+		valueWidth = max(valueWidth, ansi.StringWidth(values[i]))
+	}
+
+	barWidth := min(28, width-labelWidth-valueWidth-4)
+	rows := make([]string, 0, len(meters))
+
+	for i, meter := range meters {
+		label := labels[i] + strings.Repeat(" ", labelWidth-ansi.StringWidth(labels[i]))
+
+		valid := meter.State == text.ValuePresent && meter.Total > 0 && meter.Value <= meter.Total
+		if barWidth >= 8 && valid {
+			bar := feedback.NewProgress(barWidth, t)
+			bar.EmptyColor = t.Border
+			rows = append(rows, label+"  "+bar.ViewAs(float64(meter.Value)/float64(meter.Total))+"  "+values[i])
+
+			continue
+		}
+
+		rows = append(rows, dashboardWrap(labels[i]+"  "+values[i], width))
+		if valid && width >= 8 {
+			bar := feedback.NewProgress(min(28, width), t)
+			bar.EmptyColor = t.Border
+			rows = append(rows, bar.ViewAs(float64(meter.Value)/float64(meter.Total)))
+		}
+	}
+
+	return strings.Join(rows, "\n")
 }
 
 func dashboardSections(sections []DashboardSection, width int, t theme.Theme) []string {

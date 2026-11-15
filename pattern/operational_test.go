@@ -9,6 +9,7 @@ import (
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/pattern"
+	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -146,5 +147,84 @@ func TestOperationalDashboardViewDoesNotPrepareContent(t *testing.T) {
 
 	if prepared == 0 || calls != prepared {
 		t.Fatal("View ran content preparation")
+	}
+}
+
+func TestOperationalDashboardHeaderHierarchy(t *testing.T) {
+	snapshot := operationalFixture()
+	m := pattern.NewOperationalDashboard(snapshot, layout.Size{Width: 132, Height: 24}, theme.New(theme.Dark))
+	first := strings.Split(ansi.Strip(m.View()), "\n")[0]
+
+	for _, label := range []string{snapshot.Title, snapshot.Context, snapshot.Status} {
+		if !strings.Contains(first, label) {
+			t.Fatalf("wide header does not keep %q on the first row: %q", label, first)
+		}
+	}
+
+	if !strings.HasSuffix(first, snapshot.Status+" ") {
+		t.Fatalf("panel status is not aligned to the right gutter: %q", first)
+	}
+
+	m.Resize(layout.Size{Width: 40, Height: 24})
+	narrow := ansi.Strip(m.View())
+
+	for _, label := range []string{snapshot.Title, snapshot.Context, snapshot.Status} {
+		if !strings.Contains(narrow, label) {
+			t.Fatalf("narrow header dropped %q: %q", label, narrow)
+		}
+	}
+}
+
+func TestOperationalDashboardHeaderRetainsWrappedContext(t *testing.T) {
+	snapshot := operationalFixture()
+	snapshot.Context = "A long source description that must wrap without losing its final observation marker"
+	snapshot.Status = ""
+	m := pattern.NewOperationalDashboard(snapshot, layout.Size{Width: 40, Height: 24}, theme.New(theme.Dark))
+	view := strings.Join(strings.Fields(ansi.Strip(m.View())), " ")
+
+	if !strings.Contains(view, snapshot.Context) {
+		t.Fatalf("wrapped context disappeared: %q", view)
+	}
+}
+
+func TestOperationalDashboardMetersPreserveCountsAndPresence(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	palette.ASCII = true
+	snapshot := pattern.DashboardSnapshot{Meters: []pattern.DashboardMeter{
+		{Label: "Remaining", Value: 3500, Total: 5000, Unit: "requests"},
+		{Label: "Empty", Value: 0, Total: 5000},
+		{Label: "Missing", Value: 123, Total: 5000, State: text.ValueMissing},
+		{Label: "Unbounded", Value: 0, Total: 0},
+		{Label: "Over", Value: 18446744073709551615, Total: 5},
+	}}
+
+	for _, width := range []int{132, 80, 40, 20} {
+		m := pattern.NewOperationalDashboard(snapshot, layout.Size{Width: width, Height: 40}, palette)
+
+		view := ansi.Strip(m.View())
+		for _, label := range []string{"3500", "5000", "requests", "missing", "no capacity", "18446744073709551615", "invalid ratio"} {
+			// At short widths a long exact count may wrap across terminal rows.
+			compact := strings.Join(strings.Fields(view), "")
+			if !strings.Contains(compact, strings.ReplaceAll(label, " ", "")) {
+				t.Fatalf("width %d: lost %q: %q", width, label, view)
+			}
+		}
+
+		if strings.Contains(view, "123") || !strings.Contains(view, "#") {
+			t.Fatalf("width %d: missing count disclosed or valid meter absent: %q", width, view)
+		}
+	}
+
+	m := pattern.NewOperationalDashboard(snapshot, layout.Size{Width: 132, Height: 24}, palette)
+
+	rows := strings.Split(ansi.Strip(m.View()), "\n")
+	for _, row := range rows {
+		if strings.Contains(row, "Remaining") && strings.Count(row, "#") != 20 {
+			t.Fatalf("3500 of 5000 must round to 20 of 28 cells: %q", row)
+		}
+
+		if (strings.Contains(row, "Missing") || strings.Contains(row, "Unbounded") || strings.Contains(row, "Over")) && strings.Contains(row, "#") {
+			t.Fatalf("unavailable or invalid ratio received a meter: %q", row)
+		}
 	}
 }

@@ -77,7 +77,7 @@ Charmed has a documented identity with a lowercase lockup and code typography. B
 
 ### GUIDE-007
 
-Documentation PRs publish an isolated Pages snapshot at `/charmed/pr-preview/pr-<number>/`. The PR description links to actual preview pages, not to itself, only after the published revision marker matches the current PR head. Reviewers should be able to inspect the rendered component catalog without merging first.
+Documentation PRs publish an isolated Pages snapshot at `/charmed/pr-preview/pr-<number>/`. After the published revision marker matches the current PR head, append one compact preview link after the PR description. Keep the change description first; do not prepend catalog navigation or a repeated list of preview destinations. Reviewers should be able to inspect the rendered component catalog without merging first.
 
 | Publication | Evidence to inspect |
 | --- | --- |

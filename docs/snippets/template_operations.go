@@ -16,8 +16,8 @@ func ExampleTemplateOperations() string {
 	}}
 	snapshot := pattern.DashboardSnapshot{
 		Title: "API operations", Context: "Synthetic observations / UTC",
-		Status:  "Observed 00:16 UTC / quota resets 01:00 UTC",
-		Summary: []layout.Pair{{Label: "REST remaining", Value: "3500 / 5000 requests"}},
+		Status: "Observed 00:16 UTC / quota resets 01:00 UTC",
+		Meters: []pattern.DashboardMeter{{Label: "REST remaining", Value: 3500, Total: 5000, Unit: "requests"}},
 		Sections: []pattern.DashboardSection{{Title: "REST attempts per hour", Body: func(width int) string {
 			return bars.View(width, palette)
 		}}},

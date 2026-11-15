@@ -12,11 +12,12 @@ class PreviewDescriptionTests(unittest.TestCase):
             preview_url(8), "https://lanej.io/charmed/pr-preview/pr-8/"
         )
 
-    def test_preview_leads_before_existing_description(self):
+    def test_preview_follows_existing_description(self):
         result = description("## What changed\n\nExisting details.", 8, self.sha)
-        self.assertTrue(result.startswith(BEGIN))
-        self.assertIn("[Components](https://lanej.io/charmed/pr-preview/pr-8/components.html)", result)
-        self.assertIn("[Brand sheet](https://lanej.io/charmed/pr-preview/pr-8/brand.html)", result)
+        self.assertTrue(result.startswith("## What changed"))
+        self.assertIn("[Preview](https://lanej.io/charmed/pr-preview/pr-8/)", result)
+        self.assertEqual(result.count("]("), 1)
+        self.assertNotIn("## Live preview", result)
         self.assertIn("## What changed", result)
         self.assertNotIn("github.com/lanej/charmed/pull/8", result)
 

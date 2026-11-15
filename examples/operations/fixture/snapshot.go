@@ -19,11 +19,11 @@ func Snapshot(state string, t theme.Theme) pattern.DashboardSnapshot {
 		{Label: "19:00", Count: 121, State: chart.BucketComplete},
 	}}
 	snapshot := pattern.DashboardSnapshot{
-		Title: "API operations", Context: "Synthetic observations / 14-15 Nov 2026 / UTC",
-		Status: "Observed 00:16 UTC / quota resets 01:00 UTC",
-		Summary: []layout.Pair{
-			{Label: "REST remaining", Value: "3500 / 5000 requests"},
-			{Label: "GraphQL remaining", Value: "4800 / 5000 points"},
+		Title: "API operations", Context: "Synthetic / 14-15 Nov 2026",
+		Status: "Observed 00:16 UTC / resets 01:00",
+		Meters: []pattern.DashboardMeter{
+			{Label: "REST remaining", Value: 3500, Total: 5000, Unit: "requests"},
+			{Label: "GraphQL remaining", Value: 4800, Total: 5000, Unit: "points"},
 		},
 		Sections: []pattern.DashboardSection{
 			{Title: "REST attempts / UTC hour", Body: func(width int) string { return buckets.View(width, t) }},
@@ -52,9 +52,8 @@ func Snapshot(state string, t theme.Theme) pattern.DashboardSnapshot {
 			snapshot.Status = "Waiting for first observation"
 		}
 
-		for i := range snapshot.Summary {
-			snapshot.Summary[i].Value = ""
-			snapshot.Summary[i].State = text.ValueMissing
+		for i := range snapshot.Meters {
+			snapshot.Meters[i].State = text.ValueMissing
 		}
 
 		snapshot.Sections, snapshot.Details = nil, nil
