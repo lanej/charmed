@@ -2,6 +2,7 @@ package collection
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"charm.land/bubbles/v2/viewport"
@@ -299,8 +300,10 @@ func (m *SectionStack) anchor() stackAnchor {
 			break
 		}
 
-		anchor.candidates = append([]string{span.id}, anchor.candidates...)
+		anchor.candidates = append(anchor.candidates, span.id)
 	}
+
+	slices.Reverse(anchor.candidates)
 
 	var ancestors []string
 	for parent := m.parents[id]; parent != ""; parent = m.parents[parent] {
