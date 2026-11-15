@@ -26,6 +26,7 @@ func loadGuidance(root string, entries []ManifestEntry) error {
 	}
 
 	kinds := map[string]string{
+		"collection/section-stack": "section-stack", "pattern/outline-document": "outline", "git/review": "review",
 		"feedback/canary-membership": "canary-membership",
 		"feedback/availability":      "availability",
 		"feedback/health":            "health",

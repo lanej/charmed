@@ -7,6 +7,7 @@ Browse [Atoms](atoms.html), [Molecules](molecules.html) and [Organisms](organism
 | Color, geometry and shared interaction rules | [Foundation contracts](foundations.html#foundation-contracts) |
 | An editable value with validation | [Input field](molecules-input.html#input/field) |
 | Coordinated HTTP requests and logs | [Inspector lifecycle](log-inspector.html) |
+| Linked outlines and stacked diffs | [Diff review lifecycle](diff-review.html) |
 | Source-preserving structured JSON | [JSON viewer](json-viewer.html) |
 
 ## Charts and labeled values
