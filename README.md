@@ -4,6 +4,10 @@ A Go design system for Charm and ntcharts, with a static reference guide and nat
 
 The [design philosophy](DESIGN.md) guides the visual language and component decisions. Components share semantic themes, terminal-cell geometry, focus conventions and state handling. The guide groups related components, saved Go output, source and composition examples by capability.
 
+For agent-built interfaces, use the [Charmed TUI skill](.agents/skills/charmed/references/operations.md). Start monitoring screens from the [operational dashboard example](examples/operations/main.go), then replace its supplied observations. The template owns scrolling, inspection and contextual help; application actions stay in the parent model.
+
+Tell your agent to read that skill directly, or install the [public Charmed package](https://lanej.io/charmed/skills.html) into its supported skill directory. Run `go run ./examples/operations` to try the starter and `gotestsum ./examples/operations` for its consumer acceptance path. Adapt that test with the application instead of relying on library checks alone.
+
 ![Charmed static guide in night mode](.github/pr-assets/static-guide.png)
 
 ## Run it

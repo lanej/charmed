@@ -6,6 +6,10 @@ import "fmt"
 // Render runs only bounded rendering and construction, never a terminal program or initialization command.
 func Render(id string) (string, error) {
 	switch id {
+	case "chart/buckets":
+		return ExampleChartBuckets(), nil
+	case "template/operations":
+		return ExampleTemplateOperations(), nil
 	case "collection/section-stack":
 		return ExampleCollectionSectionStack()
 	case "pattern/outline-document":
@@ -265,6 +269,8 @@ func Render(id string) (string, error) {
 		return ExampleNavigationTabs(), nil
 	case "layout/link-group":
 		return ExampleLayoutLinkGroup()
+	case "layout/text-row":
+		return ExampleLayoutTextRow(), nil
 	case "layout/header":
 		return ExampleLayoutHeader(), nil
 	case "layout/identity-header":

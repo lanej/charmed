@@ -26,17 +26,11 @@ def description(body: str, number: int, revision: str, remove: bool = False) -> 
     block = "\n".join(
         [
             BEGIN,
-            "## Live preview",
-            "",
-            f"- [Components]({base}components.html)",
-            f"- [Brand sheet]({base}brand.html)",
-            f"- [Full catalog]({base})",
-            "",
-            f"Built from `{revision[:12]}` · updated on every PR push.",
+            f"[Preview]({base}) · `{revision[:12]}`",
             END,
         ]
     )
-    return f"{block}\n\n{body}" if body else block
+    return f"{body}\n\n{block}" if body else block
 
 
 def github_request(path: str, method: str = "GET", payload: dict | None = None) -> dict:

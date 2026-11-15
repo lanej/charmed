@@ -43,7 +43,7 @@ func chromeRow(left, right string, width int) string {
 		return Fit(left, Size{Width: width, Height: 1})
 	}
 
-	return left + strings.Repeat(" ", gap) + right
+	return (TextRow{Gap: 1, Items: []TextRowItem{{Text: left}, {Flex: true}, {Text: right}}}).View(width)
 }
 
 func singleLine(value string) string {

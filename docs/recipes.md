@@ -6,6 +6,7 @@ Recipes connect individual components into a working view. Choose the outcome yo
 
 | Task | Start here | What you will connect |
 | --- | --- | --- |
+| Monitor operational state | [Operational dashboard](templates-pattern.html#template/operations) | Summary, primary evidence, scrolling and secondary inspection |
 | Collect an environment name | [Getting started](getting-started.html) | A text input, focus command and terminal resize messages |
 | Plot measurements over time | [Time series](atoms-chart.html#chart/timeseries) | Timestamped observations, shared axes and a cell allocation |
 | Inspect an HTTP exchange | [Correlated inspector](organisms-logs.html#pattern/log-inspector) | Request timeline, independent payloads and related logs |
