@@ -12,8 +12,31 @@ import (
 	"github.com/lanej/charmed/theme"
 )
 
-// DiffOptions selects the language of a standalone hunk; unknown names use plain text.
-type DiffOptions struct{ Language string }
+// DiffGutter selects measured line-number columns.
+type DiffGutter string
+
+const (
+	SingleGutter DiffGutter = ""
+	DualGutter   DiffGutter = "dual"
+	AutoGutter   DiffGutter = "auto"
+)
+
+// DiffOptions defaults to a compact single gutter and path-aware syntax.
+// Language overrides detection; DisableSyntax keeps diff surfaces and signs.
+type DiffOptions struct {
+	Language      string
+	Gutter        DiffGutter
+	DisableSyntax bool
+}
+
+func diffOptions(options []DiffOptions) DiffOptions {
+	var config DiffOptions
+	for _, option := range options {
+		config = option
+	}
+
+	return config
+}
 
 func diffHeading(t theme.Theme) lipgloss.Style {
 	if t.Mode == theme.Mono {
@@ -24,22 +47,51 @@ func diffHeading(t theme.Theme) lipgloss.Style {
 }
 
 func DiffHunk(hunk Hunk, t theme.Theme, options ...DiffOptions) string {
-	language := "text"
-	for _, option := range options {
-		language = option.Language
+	config := diffOptions(options)
+
+	language := config.Language
+	if language == "" || config.DisableSyntax {
+		language = "text"
 	}
 
-	return renderDiffHunk(hunk, language, language, t)
+	return renderDiffHunk(hunk, language, language, t, config)
 }
 
-func renderDiffHunk(hunk Hunk, oldLanguage, newLanguage string, t theme.Theme) string {
+func renderDiffHunk(hunk Hunk, oldLanguage, newLanguage string, t theme.Theme, options ...DiffOptions) string {
+	config := diffOptions(options)
+	if config.DisableSyntax {
+		oldLanguage, newLanguage = "text", "text"
+	}
+
 	if t.Mode == theme.Mono {
 		oldLanguage, newLanguage = "text", "text"
 	}
 
 	oldLines, newLines := hunkSyntax(hunk, oldLanguage, true), hunkSyntax(hunk, newLanguage, false)
 	edits := hunkEdits(hunk, newLines)
-	dualNumbers := shiftedLineNumbers(hunk)
+	dualNumbers := false
+
+	switch config.Gutter {
+	case SingleGutter:
+	case DualGutter:
+		dualNumbers = true
+	case AutoGutter:
+		dualNumbers = shiftedLineNumbers(hunk)
+	default:
+	}
+
+	oldWidth, newWidth, singleWidth := 1, 1, 1
+	for _, line := range hunk.Lines {
+		oldWidth = max(oldWidth, len(fmt.Sprint(max(0, line.OldLine))))
+		newWidth = max(newWidth, len(fmt.Sprint(max(0, line.NewLine))))
+
+		number := line.NewLine
+		if line.Kind == DeletedLine || number == 0 {
+			number = line.OldLine
+		}
+
+		singleWidth = max(singleWidth, len(fmt.Sprint(max(0, number))))
+	}
 
 	lines := []string{diffHeading(t).Render(clean(hunk.Header))}
 	for i, line := range hunk.Lines {
@@ -76,14 +128,14 @@ func renderDiffHunk(hunk Hunk, oldLanguage, newLanguage string, t theme.Theme) s
 			newLine = fmt.Sprint(line.NewLine)
 		}
 
-		gutter := fmt.Sprintf("%5s %5s %s", oldLine, newLine, prefix)
+		gutter := fmt.Sprintf("%*s %*s %s", oldWidth, oldLine, newWidth, newLine, prefix)
 		if !dualNumbers {
 			number := newLine
 			if line.Kind == DeletedLine || number == "" {
 				number = oldLine
 			}
 
-			gutter = fmt.Sprintf("%5s %s", number, prefix)
+			gutter = fmt.Sprintf("%*s %s", singleWidth, number, prefix)
 		}
 
 		gutter = style.Render(gutter)
@@ -102,7 +154,12 @@ func renderDiffHunk(hunk Hunk, oldLanguage, newLanguage string, t theme.Theme) s
 	return portable(strings.Join(lines, "\n"), t)
 }
 
-func diffContent(diff FileDiff, t theme.Theme) string {
+func diffContent(diff FileDiff, t theme.Theme, options ...DiffOptions) string {
+	config := diffOptions(options)
+	if config.Language != "" {
+		diff.Language = config.Language
+	}
+
 	header := clean(diff.Path)
 	if diff.OriginalPath != "" {
 		header = clean(diff.OriginalPath) + " → " + header
@@ -132,7 +189,7 @@ func diffContent(diff FileDiff, t theme.Theme) string {
 
 	oldLanguage, newLanguage := diffLanguage(oldPath, diff.Language), diffLanguage(diff.Path, diff.Language)
 	for _, hunk := range diff.Hunks {
-		hunks = append(hunks, renderDiffHunk(hunk, oldLanguage, newLanguage, t))
+		hunks = append(hunks, renderDiffHunk(hunk, oldLanguage, newLanguage, t, config))
 	}
 
 	return header + strings.Join(hunks, "\n")
@@ -142,17 +199,18 @@ func diffContent(diff FileDiff, t theme.Theme) string {
 type DiffViewer struct {
 	Viewport viewport.Model
 	Theme    theme.Theme
+	Options  DiffOptions
 }
 
-func NewDiffViewer(diff FileDiff, width, height int, t theme.Theme) *DiffViewer {
-	m := &DiffViewer{Viewport: collection.NewViewport("", width, height), Theme: t}
+func NewDiffViewer(diff FileDiff, width, height int, t theme.Theme, options ...DiffOptions) *DiffViewer {
+	m := &DiffViewer{Viewport: collection.NewViewport("", width, height), Theme: t, Options: diffOptions(options)}
 	m.SetDiff(diff)
 
 	return m
 }
 
 func (m *DiffViewer) SetDiff(diff FileDiff) {
-	m.Viewport.SetContent(diffContent(diff, m.Theme))
+	m.Viewport.SetContent(diffContent(diff, m.Theme, m.Options))
 	m.Viewport.GotoTop()
 }
 

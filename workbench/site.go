@@ -74,6 +74,7 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 		{File: "examples.html", Title: "Composition guide", Source: "examples.md", Resource: true},
 		{File: "cohorts.html", Title: "Cohort measurements", Source: "cohorts.md", Resource: true},
 		{File: "deployment.html", Title: "Compare a deployment", Source: "deployment.md", Resource: true},
+		{File: "diff-review.html", Title: "Diff review", Source: "diff-review.md", Resource: true},
 		{File: "json-viewer.html", Title: "JSON viewer", Source: "json-viewer.md", Resource: true},
 		{File: "development.html", Title: "Develop & publish", Source: "development.md", Resource: true},
 		{File: "brand.html", Title: "Brand sheet", Source: "brand.md", Resource: true},

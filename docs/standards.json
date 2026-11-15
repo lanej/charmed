@@ -190,6 +190,9 @@
         "Capture snapshots explicitly",
         "Invalidate direct native edits"
       ]
+    },
+    "diff-review.md": {
+      "profile": "reference"
     }
   },
   "component": {

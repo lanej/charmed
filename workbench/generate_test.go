@@ -31,7 +31,7 @@ func TestStaticGuide(t *testing.T) {
 		groups[strings.ToLower(d.Level)+"-"+d.Family+".html"] = true
 	}
 
-	if want := 16 + len(story.Levels()) + len(groups); len(files) != want {
+	if want := 17 + len(story.Levels()) + len(groups); len(files) != want {
 		t.Fatalf("got %d pages, want %d category, group and guide pages", len(files), want)
 	}
 
