@@ -230,7 +230,7 @@ body <span class="syn-operator">:=</span> layout<span class="syn-operator">.</sp
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="template/application-integration"><h3 id="template/application-integration"><a class="heading-permalink" href="#template%2fapplication-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>The parent model supplies observations, coordinates focus and owns application decisions. Forward initialization and update commands rather than executing them during rendering. Resize the existing composition from the terminal allocation so selection remains stable, and apply native customization at the exposed child models after any rebuilding lifecycle step.</p></section>
-<div class="component-run"><h3 id="template/application-run"><a class="heading-permalink" href="#template%2fapplication-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog template/application</code></pre><p><a href="https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/template_application.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/chrome.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="template/application-run"><a class="heading-permalink" href="#template%2fapplication-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog template/application</code></pre><p><a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/template_application.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/chrome.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Declared example links (unaudited): <a class="dependency" href="molecules-layout.html#layout/header">layout/header</a> <a class="dependency" href="molecules-navigation.html#navigation/tabs">navigation/tabs</a> <a class="dependency" href="molecules-layout.html#layout/footer">layout/footer</a> <a class="dependency" href="foundations-layout.html#foundations/layout">foundations/layout</a> <a class="dependency" href="atoms-feedback.html#feedback/status">feedback/status</a> </p>
 </section>
 
@@ -342,12 +342,12 @@ page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</s
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="template/report-page-integration"><h3 id="template/report-page-integration"><a class="heading-permalink" href="#template%2freport-page-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>The parent model supplies observations, coordinates focus and owns application decisions. Forward initialization and update commands rather than executing them during rendering. Resize the existing composition from the terminal allocation so selection remains stable, and apply native customization at the exposed child models after any rebuilding lifecycle step.</p></section>
-<div class="component-run"><h3 id="template/report-page-run"><a class="heading-permalink" href="#template%2freport-page-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog template/report-page</code></pre><p><a href="https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/template_report_page.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/pattern/report.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="template/report-page-run"><a class="heading-permalink" href="#template%2freport-page-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog template/report-page</code></pre><p><a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/template_report_page.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/pattern/report.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Declared example links (unaudited): <a class="dependency" href="molecules-layout.html#layout/header">layout/header</a> <a class="dependency" href="molecules-feedback.html#feedback/evidence-summary">feedback/evidence-summary</a> <a class="dependency" href="molecules-feedback.html#feedback/evidence-footer">feedback/evidence-footer</a> <a class="dependency" href="foundations-layout.html#foundations/layout">foundations/layout</a> <a class="dependency" href="atoms-feedback.html#feedback/evidence">feedback/evidence</a> </p>
 </section>
 
 <section class="component" id="template/operations">
-<p class="eyebrow"><a href="templates.html">Templates</a> / Patterns</p><h2><a class="heading-permalink" href="#template%2foperations" aria-label="Link to Operational dashboard component"><span>Operational dashboard</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Start an operational dashboard with a summary and primary evidence, then open secondary diagnostics with i. Quiet sections, one scrolling region and contextual help keep the screen composed as its allocation narrows.</p>
+<p class="eyebrow"><a href="templates.html">Templates</a> / Patterns</p><h2><a class="heading-permalink" href="#template%2foperations" aria-label="Link to Operational dashboard component"><span>Operational dashboard</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Start an operational dashboard with a summary and primary evidence, then open secondary diagnostics with i. Exact count/capacity meters show remaining quota. The title and subtitle share a header with right-aligned observation status; narrow allocations stack fields without dropping them.</p>
 <div class="component-preview">
 <div class="component-subheading"><h3 id="template/operations-preview"><a class="heading-permalink" href="#template%2foperations-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
 <div class="variant-tabs" data-variant-tabs>
@@ -356,11 +356,10 @@ page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</s
 <a id="tab-template/operations-0" href="#panel-template%2foperations-0" role="tab" aria-controls="panel-template/operations-0" aria-selected="false">Demo</a><a id="tab-template/operations-1" href="#panel-template%2foperations-1" role="tab" aria-controls="panel-template/operations-1" aria-selected="false">Narrow</a><a id="tab-template/operations-2" href="#panel-template%2foperations-2" role="tab" aria-controls="panel-template/operations-2" aria-selected="false">256 colors</a><a id="tab-template/operations-3" href="#panel-template%2foperations-3" role="tab" aria-controls="panel-template/operations-3" aria-selected="false">16 colors</a><a id="tab-template/operations-4" href="#panel-template%2foperations-4" role="tab" aria-controls="panel-template/operations-4" aria-selected="false">Monochrome</a><a id="tab-template/operations-5" href="#panel-template%2foperations-5" role="tab" aria-controls="panel-template/operations-5" aria-selected="false">Inspection</a><a id="tab-template/operations-6" href="#panel-template%2foperations-6" role="tab" aria-controls="panel-template/operations-6" aria-selected="false">Empty</a><a id="tab-template/operations-7" href="#panel-template%2foperations-7" role="tab" aria-controls="panel-template/operations-7" aria-selected="false">Error</a><a id="tab-template/operations-8" href="#panel-template%2foperations-8" role="tab" aria-controls="panel-template/operations-8" aria-selected="false">Loading</a>
 </div>
 <div id="panel-template/operations-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/operations-example" tabindex="0">
-<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>                                                                 
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>                     <span style="color:#eeeeee;">Observed 00:16 UTC / quota resets 01:00 UTC</span> 
  <span style="color:#a8a8a8;">Synthetic observations / UTC</span>                                                   
- <span style="color:#eeeeee;">Observed 00:16 UTC / quota resets 01:00 UTC</span>                                    
                                                                                 
- <span style="color:#a8a8a8;">REST remaining  </span><span style="color:#eeeeee;">3500 / 5000 requests</span>                                           
+ REST remaining  <span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#475569;">░░░░░░░░</span>  3500 / 5000 requests             
                                                                                 
  <span style="color:#eeeeee;font-weight:bold;">REST attempts per hour</span>                                                         
  22:00 UTC  <span style="color:#b9a7f5;">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>       160 
@@ -372,16 +371,15 @@ page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</s
                                                                                 
                                                                                 
                                                                                 
+                                                                                
  <span style="color:#a8a8a8;">1-6 of 6</span>                                                                       
  <span style="color:#67d4c0;font-weight:bold;">↓/j</span> <span style="color:#a8a8a8;">down</span>  <span style="color:#67d4c0;font-weight:bold;">↑/k</span> <span style="color:#a8a8a8;">up</span>  <span style="color:#67d4c0;font-weight:bold;">i</span> <span style="color:#a8a8a8;">details</span>  <span style="color:#67d4c0;font-weight:bold;">?</span> <span style="color:#a8a8a8;">keys</span></pre></figure>
 </div>
 <div id="panel-template/operations-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/operations-0" tabindex="0">
-<figure><figcaption>Demo · truecolor · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>                                                                                     
- <span style="color:#a8a8a8;">Synthetic observations / 14-15 Nov 2026 / UTC</span>                                                      
- <span style="color:#eeeeee;">Observed 00:16 UTC / quota resets 01:00 UTC</span>                                                        
+<figure><figcaption>Demo · truecolor · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>  <span style="color:#a8a8a8;">Synthetic / 14-15 Nov 2026</span>                       <span style="color:#eeeeee;">Observed 00:16 UTC / resets 01:00</span> 
                                                                                                     
- <span style="color:#a8a8a8;">REST remaining     </span><span style="color:#eeeeee;">3500 / 5000 requests</span>                                                            
- <span style="color:#a8a8a8;">GraphQL remaining  </span><span style="color:#eeeeee;">4800 / 5000 points</span>                                                              
+ REST remaining     <span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#475569;">░░░░░░░░</span>  3500 / 5000 requests                              
+ GraphQL remaining  <span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#475569;">░</span>  4800 / 5000 points                                
                                                                                                     
  <span style="color:#eeeeee;font-weight:bold;">REST attempts / UTC hour</span>                                                                           
  00:00  0 so far (partial)                                                                          
@@ -400,32 +398,32 @@ page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</s
                                                                                                     
                                                                                                     
                                                                                                     
+                                                                                                    
+                                                                                                    
  <span style="color:#a8a8a8;">1-14 of 14</span>                                                                                         
  <span style="color:#67d4c0;font-weight:bold;">↓/j</span> <span style="color:#a8a8a8;">down</span>  <span style="color:#67d4c0;font-weight:bold;">↑/k</span> <span style="color:#a8a8a8;">up</span>  <span style="color:#67d4c0;font-weight:bold;">i</span> <span style="color:#a8a8a8;">details</span>  <span style="color:#67d4c0;font-weight:bold;">?</span> <span style="color:#a8a8a8;">keys</span></pre></figure>
 </div><div id="panel-template/operations-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/operations-1" tabindex="0">
 <figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>                         
- <span style="color:#a8a8a8;">Synthetic observations / 14-15 Nov</span>     
- <span style="color:#a8a8a8;">2026 / UTC</span>                             
- <span style="color:#eeeeee;">Observed 00:16 UTC / quota resets</span>      
- <span style="color:#eeeeee;">01:00 UTC</span>                              
+ <span style="color:#a8a8a8;">Synthetic / 14-15 Nov 2026</span>             
+      <span style="color:#eeeeee;">Observed 00:16 UTC / resets 01:00</span> 
                                         
- <span style="color:#a8a8a8;">REST remaining: </span><span style="color:#eeeeee;">3500 / 5000 requests</span>   
- <span style="color:#a8a8a8;">GraphQL remaining: </span><span style="color:#eeeeee;">4800 / 5000 points</span>  
+ REST remaining  3500 / 5000 requests   
+ <span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#475569;">░░░░░░░░</span>           
+ GraphQL remaining  4800 / 5000 points  
+ <span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#475569;">░</span>           
                                         
  <span style="color:#eeeeee;font-weight:bold;">REST attempts / UTC hour</span>               
  00:00  0 so far (partial)              
  23:00  <span style="color:#b9a7f5;">━━━━━━━━━━━━━━━━━━━━━━━━━━</span>  173 
  22:00  <span style="color:#b9a7f5;">━━━━━━━━━━━━━━━━━━━━━━━━</span>    160 
  21:00  <span style="color:#b9a7f5;">━━━━━━━━━━━━━━━━━━━━━━</span>      147 
- <span style="color:#a8a8a8;">1-8 of 16</span>                              
+ <span style="color:#a8a8a8;">1-10 of 18</span>                             
  <span style="color:#67d4c0;font-weight:bold;">↓/j</span> <span style="color:#a8a8a8;">down</span>  <span style="color:#67d4c0;font-weight:bold;">↑/k</span> <span style="color:#a8a8a8;">up</span>  <span style="color:#67d4c0;font-weight:bold;">i</span> <span style="color:#a8a8a8;">details</span>  <span style="color:#67d4c0;font-weight:bold;">?</span> <span style="color:#a8a8a8;">keys</span></pre></figure>
 </div><div id="panel-template/operations-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/operations-2" tabindex="0">
-<figure><figcaption>256 colors · ansi256 · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#5fd7af;font-weight:bold;">API operations</span>                                                                                     
- <span style="color:#a8a8a8;">Synthetic observations / 14-15 Nov 2026 / UTC</span>                                                      
- <span style="color:#eeeeee;">Observed 00:16 UTC / quota resets 01:00 UTC</span>                                                        
+<figure><figcaption>256 colors · ansi256 · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#5fd7af;font-weight:bold;">API operations</span>  <span style="color:#a8a8a8;">Synthetic / 14-15 Nov 2026</span>                       <span style="color:#eeeeee;">Observed 00:16 UTC / resets 01:00</span> 
                                                                                                     
- <span style="color:#a8a8a8;">REST remaining     </span><span style="color:#eeeeee;">3500 / 5000 requests</span>                                                            
- <span style="color:#a8a8a8;">GraphQL remaining  </span><span style="color:#eeeeee;">4800 / 5000 points</span>                                                              
+ REST remaining     <span style="color:#5fd7af;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#585858;">░░░░░░░░</span>  3500 / 5000 requests                              
+ GraphQL remaining  <span style="color:#5fd7af;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#585858;">░</span>  4800 / 5000 points                                
                                                                                                     
  <span style="color:#eeeeee;font-weight:bold;">REST attempts / UTC hour</span>                                                                           
  00:00  0 so far (partial)                                                                          
@@ -444,15 +442,15 @@ page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</s
                                                                                                     
                                                                                                     
                                                                                                     
+                                                                                                    
+                                                                                                    
  <span style="color:#a8a8a8;">1-14 of 14</span>                                                                                         
  <span style="color:#5fd7af;font-weight:bold;">↓/j</span> <span style="color:#a8a8a8;">down</span>  <span style="color:#5fd7af;font-weight:bold;">↑/k</span> <span style="color:#a8a8a8;">up</span>  <span style="color:#5fd7af;font-weight:bold;">i</span> <span style="color:#a8a8a8;">details</span>  <span style="color:#5fd7af;font-weight:bold;">?</span> <span style="color:#a8a8a8;">keys</span></pre></figure>
 </div><div id="panel-template/operations-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/operations-3" tabindex="0">
-<figure><figcaption>16 colors · ansi16 · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#00ff00;font-weight:bold;">API operations</span>                                                                                     
- <span style="color:#c0c0c0;">Synthetic observations / 14-15 Nov 2026 / UTC</span>                                                      
- <span style="color:#ffffff;">Observed 00:16 UTC / quota resets 01:00 UTC</span>                                                        
+<figure><figcaption>16 colors · ansi16 · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#00ff00;font-weight:bold;">API operations</span>  <span style="color:#c0c0c0;">Synthetic / 14-15 Nov 2026</span>                       <span style="color:#ffffff;">Observed 00:16 UTC / resets 01:00</span> 
                                                                                                     
- <span style="color:#c0c0c0;">REST remaining     </span><span style="color:#ffffff;">3500 / 5000 requests</span>                                                            
- <span style="color:#c0c0c0;">GraphQL remaining  </span><span style="color:#ffffff;">4800 / 5000 points</span>                                                              
+ REST remaining     <span style="color:#00ff00;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#808080;">░░░░░░░░</span>  3500 / 5000 requests                              
+ GraphQL remaining  <span style="color:#00ff00;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#808080;">░</span>  4800 / 5000 points                                
                                                                                                     
  <span style="color:#ffffff;font-weight:bold;">REST attempts / UTC hour</span>                                                                           
  00:00  0 so far (partial)                                                                          
@@ -471,15 +469,15 @@ page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</s
                                                                                                     
                                                                                                     
                                                                                                     
+                                                                                                    
+                                                                                                    
  <span style="color:#c0c0c0;">1-14 of 14</span>                                                                                         
  <span style="color:#00ff00;font-weight:bold;">↓/j</span> <span style="color:#c0c0c0;">down</span>  <span style="color:#00ff00;font-weight:bold;">↑/k</span> <span style="color:#c0c0c0;">up</span>  <span style="color:#00ff00;font-weight:bold;">i</span> <span style="color:#c0c0c0;">details</span>  <span style="color:#00ff00;font-weight:bold;">?</span> <span style="color:#c0c0c0;">keys</span></pre></figure>
 </div><div id="panel-template/operations-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/operations-4" tabindex="0">
-<figure><figcaption>Monochrome · none · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"> <span style="font-weight:bold;">API operations</span>                                                                                     
- Synthetic observations / 14-15 Nov 2026 / UTC                                                      
- Observed 00:16 UTC / quota resets 01:00 UTC                                                        
+<figure><figcaption>Monochrome · none · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"> <span style="font-weight:bold;">API operations</span>  Synthetic / 14-15 Nov 2026                       Observed 00:16 UTC / resets 01:00 
                                                                                                     
- REST remaining     3500 / 5000 requests                                                            
- GraphQL remaining  4800 / 5000 points                                                              
+ REST remaining     ####################--------  3500 / 5000 requests                              
+ GraphQL remaining  ###########################-  4800 / 5000 points                                
                                                                                                     
  <span style="font-weight:bold;">REST attempts / UTC hour</span>                                                                           
  00:00  0 so far (partial)                                                                          
@@ -498,12 +496,12 @@ page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</s
                                                                                                     
                                                                                                     
                                                                                                     
+                                                                                                    
+                                                                                                    
  1-14 of 14                                                                                         
  <span style="font-weight:bold;">v/j</span> down  <span style="font-weight:bold;">^/k</span> up  <span style="font-weight:bold;">i</span> details  <span style="font-weight:bold;">?</span> keys</pre></figure>
 </div><div id="panel-template/operations-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/operations-5" tabindex="0">
-<figure><figcaption>Inspection · truecolor · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations / Details</span>                                                                           
- <span style="color:#a8a8a8;">Synthetic observations / 14-15 Nov 2026 / UTC</span>                                                      
- <span style="color:#eeeeee;">Observed 00:16 UTC / quota resets 01:00 UTC</span>                                                        
+<figure><figcaption>Inspection · truecolor · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations / Details</span>  <span style="color:#a8a8a8;">Synthetic / 14-15 Nov 2026</span>             <span style="color:#eeeeee;">Observed 00:16 UTC / resets 01:00</span> 
                                                                                                     
  <span style="color:#eeeeee;font-weight:bold;">Scheduler</span>                                                                                          
  <span style="color:#a8a8a8;">Cadence   </span><span style="color:#eeeeee;">1s tick / 2s minimum request gap</span>                                                         
@@ -525,15 +523,17 @@ page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</s
                                                                                                     
                                                                                                     
                                                                                                     
+                                                                                                    
+                                                                                                    
  <span style="color:#a8a8a8;">1-9 of 9</span>                                                                                           
  <span style="color:#67d4c0;font-weight:bold;">↓/j</span> <span style="color:#a8a8a8;">down</span>  <span style="color:#67d4c0;font-weight:bold;">↑/k</span> <span style="color:#a8a8a8;">up</span>  <span style="color:#67d4c0;font-weight:bold;">esc</span> <span style="color:#a8a8a8;">overview</span>  <span style="color:#67d4c0;font-weight:bold;">?</span> <span style="color:#a8a8a8;">keys</span></pre></figure>
 </div><div id="panel-template/operations-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/operations-6" tabindex="0">
-<figure><figcaption>Empty · truecolor · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>                                                                                     
- <span style="color:#a8a8a8;">Synthetic observations / 14-15 Nov 2026 / UTC</span>                                                      
- <span style="color:#eeeeee;">No observations received</span>                                                                           
+<figure><figcaption>Empty · truecolor · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>  <span style="color:#a8a8a8;">Synthetic / 14-15 Nov 2026</span>                                <span style="color:#eeeeee;">No observations received</span> 
                                                                                                     
- <span style="color:#a8a8a8;">REST remaining     </span><span style="color:#eeeeee;">∅ missing</span>                                                                       
- <span style="color:#a8a8a8;">GraphQL remaining  </span><span style="color:#eeeeee;">∅ missing</span>                                                                       
+ REST remaining  <span style="color:#eeeeee;">∅ missing</span>                                                                          
+ GraphQL remaining  <span style="color:#eeeeee;">∅ missing</span>                                                                       
+                                                                                                    
+                                                                                                    
                                                                                                     
                                                                                                     
                                                                                                     
@@ -555,12 +555,11 @@ page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</s
  <span style="color:#a8a8a8;">1-2 of 2</span>                                                                                           
  <span style="color:#67d4c0;font-weight:bold;">↓/j</span> <span style="color:#a8a8a8;">down</span>  <span style="color:#67d4c0;font-weight:bold;">↑/k</span> <span style="color:#a8a8a8;">up</span>  <span style="color:#67d4c0;font-weight:bold;">?</span> <span style="color:#a8a8a8;">keys</span></pre></figure>
 </div><div id="panel-template/operations-7" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/operations-7" tabindex="0">
-<figure><figcaption>Error · truecolor · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>                                                                                     
- <span style="color:#a8a8a8;">Synthetic observations / 14-15 Nov 2026 / UTC</span>                                                      
- <span style="color:#f2c879;">Refresh failed / showing last observation from 00:16 UTC</span>                                           
+<figure><figcaption>Error · truecolor · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>                            <span style="color:#f2c879;">Refresh failed / showing last observation from 00:16 UTC</span> 
+ <span style="color:#a8a8a8;">Synthetic / 14-15 Nov 2026</span>                                                                         
                                                                                                     
- <span style="color:#a8a8a8;">REST remaining     </span><span style="color:#eeeeee;">3500 / 5000 requests</span>                                                            
- <span style="color:#a8a8a8;">GraphQL remaining  </span><span style="color:#eeeeee;">4800 / 5000 points</span>                                                              
+ REST remaining     <span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#475569;">░░░░░░░░</span>  3500 / 5000 requests                              
+ GraphQL remaining  <span style="color:#67d4c0;">▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌</span><span style="color:#475569;">░</span>  4800 / 5000 points                                
                                                                                                     
  <span style="color:#eeeeee;font-weight:bold;">REST attempts / UTC hour</span>                                                                           
  00:00  0 so far (partial)                                                                          
@@ -579,15 +578,16 @@ page <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</s
                                                                                                     
                                                                                                     
                                                                                                     
+                                                                                                    
  <span style="color:#a8a8a8;">1-14 of 14</span>                                                                                         
  <span style="color:#67d4c0;font-weight:bold;">↓/j</span> <span style="color:#a8a8a8;">down</span>  <span style="color:#67d4c0;font-weight:bold;">↑/k</span> <span style="color:#a8a8a8;">up</span>  <span style="color:#67d4c0;font-weight:bold;">i</span> <span style="color:#a8a8a8;">details</span>  <span style="color:#67d4c0;font-weight:bold;">?</span> <span style="color:#a8a8a8;">keys</span></pre></figure>
 </div><div id="panel-template/operations-8" class="variant-panel" role="tabpanel" aria-labelledby="tab-template/operations-8" tabindex="0">
-<figure><figcaption>Loading · truecolor · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>                                                                                     
- <span style="color:#a8a8a8;">Synthetic observations / 14-15 Nov 2026 / UTC</span>                                                      
- <span style="color:#eeeeee;">Waiting for first observation</span>                                                                      
+<figure><figcaption>Loading · truecolor · 100 × 26 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"> <span style="color:#67d4c0;font-weight:bold;">API operations</span>  <span style="color:#a8a8a8;">Synthetic / 14-15 Nov 2026</span>                           <span style="color:#eeeeee;">Waiting for first observation</span> 
                                                                                                     
- <span style="color:#a8a8a8;">REST remaining     </span><span style="color:#eeeeee;">∅ missing</span>                                                                       
- <span style="color:#a8a8a8;">GraphQL remaining  </span><span style="color:#eeeeee;">∅ missing</span>                                                                       
+ REST remaining  <span style="color:#eeeeee;">∅ missing</span>                                                                          
+ GraphQL remaining  <span style="color:#eeeeee;">∅ missing</span>                                                                       
+                                                                                                    
+                                                                                                    
                                                                                                     
                                                                                                     
                                                                                                     
@@ -622,8 +622,8 @@ bars <span class="syn-operator">:=</span> chart<span class="syn-operator">.</spa
 <span class="syn-operator">}</span><span class="syn-operator">}</span>
 snapshot <span class="syn-operator">:=</span> pattern<span class="syn-operator">.</span>DashboardSnapshot<span class="syn-operator">{</span>
 	Title<span class="syn-operator">:</span> <span class="syn-string">&#34;API operations&#34;</span><span class="syn-operator">,</span> Context<span class="syn-operator">:</span> <span class="syn-string">&#34;Synthetic observations / UTC&#34;</span><span class="syn-operator">,</span>
-	Status<span class="syn-operator">:</span>  <span class="syn-string">&#34;Observed 00:16 UTC / quota resets 01:00 UTC&#34;</span><span class="syn-operator">,</span>
-	Summary<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>layout<span class="syn-operator">.</span>Pair<span class="syn-operator">{</span><span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;REST remaining&#34;</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-string">&#34;3500 / 5000 requests&#34;</span><span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+	Status<span class="syn-operator">:</span> <span class="syn-string">&#34;Observed 00:16 UTC / quota resets 01:00 UTC&#34;</span><span class="syn-operator">,</span>
+	Meters<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>pattern<span class="syn-operator">.</span>DashboardMeter<span class="syn-operator">{</span><span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;REST remaining&#34;</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-number">3500</span><span class="syn-operator">,</span> Total<span class="syn-operator">:</span> <span class="syn-number">5000</span><span class="syn-operator">,</span> Unit<span class="syn-operator">:</span> <span class="syn-string">&#34;requests&#34;</span><span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
 	Sections<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>pattern<span class="syn-operator">.</span>DashboardSection<span class="syn-operator">{</span><span class="syn-operator">{</span>Title<span class="syn-operator">:</span> <span class="syn-string">&#34;REST attempts per hour&#34;</span><span class="syn-operator">,</span> Body<span class="syn-operator">:</span> <span class="syn-keyword">func</span><span class="syn-operator">(</span>width <span class="syn-builtin">int</span><span class="syn-operator">)</span> <span class="syn-builtin">string</span> <span class="syn-operator">{</span>
 		<span class="syn-keyword">return</span> bars<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span>width<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
 	<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
@@ -636,8 +636,8 @@ dashboard <span class="syn-operator">:=</span> pattern<span class="syn-operator"
 <span class="syn-keyword">return</span> dashboard<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
 </code></pre>
 </div>
-<section class="component-integration" aria-labelledby="template/operations-integration"><h3 id="template/operations-integration"><a class="heading-permalink" href="#template%2foperations-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Forward Update only while focused and return its command. Resize and SetSnapshot retain both native viewports, bindings and styles; offsets clamp to available content. SetSnapshot replaces render callbacks on the application loop. Overview and inspection scroll independently; i opens details, Escape returns and ? expands help. The parent owns refresh, quit and observations.</p></section>
-<div class="component-run"><h3 id="template/operations-run"><a class="heading-permalink" href="#template%2foperations-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog template/operations</code></pre><p><a href="https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/template_operations.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/pattern/operational.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<section class="component-integration" aria-labelledby="template/operations-integration"><h3 id="template/operations-integration"><a class="heading-permalink" href="#template%2foperations-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Forward Update only while focused and return its command. Resize and SetSnapshot retain both native viewports, bindings and styles; offsets clamp to available content. Meters preserve exact counts and presence states beside native proportional bars; zero capacity and invalid ratios have no bar. SetSnapshot replaces render callbacks on the application loop. Overview and inspection scroll independently; i opens details, Escape returns and ? expands help. The parent owns refresh, quit and observations.</p></section>
+<div class="component-run"><h3 id="template/operations-run"><a class="heading-permalink" href="#template%2foperations-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog template/operations</code></pre><p><a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/template_operations.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/pattern/operational.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Declared example links (unaudited): <a class="dependency" href="molecules-layout.html#layout/key-value">layout/key-value</a> <a class="dependency" href="atoms-collection.html#collection/viewport">collection/viewport</a> <a class="dependency" href="atoms-text.html#text/key-hint">text/key-hint</a> </p>
 </section>
 </section>

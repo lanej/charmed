@@ -153,7 +153,7 @@ The parent model supplies observations, coordinates focus and owns application d
 go run ./examples/catalog template/application
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/template_application.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/template_application.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/header](https://lanej.io/charmed/molecules-layout.html#layout/header) [navigation/tabs](https://lanej.io/charmed/molecules-navigation.html#navigation/tabs) [layout/footer](https://lanej.io/charmed/molecules-layout.html#layout/footer) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)
 
@@ -297,7 +297,7 @@ The parent model supplies observations, coordinates focus and owns application d
 go run ./examples/catalog template/report-page
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/template_report_page.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/pattern/report.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/template_report_page.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/pattern/report.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/header](https://lanej.io/charmed/molecules-layout.html#layout/header) [feedback/evidence-summary](https://lanej.io/charmed/molecules-feedback.html#feedback/evidence-summary) [feedback/evidence-footer](https://lanej.io/charmed/molecules-feedback.html#feedback/evidence-footer) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [feedback/evidence](https://lanej.io/charmed/atoms-feedback.html#feedback/evidence)
 
@@ -305,7 +305,7 @@ Declared example links (unaudited): [layout/header](https://lanej.io/charmed/mol
 
 ## [Operational dashboard](https://lanej.io/charmed/templates-pattern.html#template%2foperations)
 
-Start an operational dashboard with a summary and primary evidence, then open secondary diagnostics with i. Quiet sections, one scrolling region and contextual help keep the screen composed as its allocation narrows.
+Start an operational dashboard with a summary and primary evidence, then open secondary diagnostics with i. Exact count/capacity meters show remaining quota. The title and subtitle share a header with right-aligned observation status; narrow allocations stack fields without dropping them.
 
 ### [Native preview](https://lanej.io/charmed/templates-pattern.html#template%2foperations-preview)
 
@@ -314,16 +314,16 @@ Saved terminal output · truecolor reference
 Output of the Go usage example below
 
 ```
- API operations                                                                 
+ API operations                     Observed 00:16 UTC / quota resets 01:00 UTC 
  Synthetic observations / UTC                                                   
- Observed 00:16 UTC / quota resets 01:00 UTC                                    
                                                                                 
- REST remaining  3500 / 5000 requests                                           
+ REST remaining  ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░░░░░░░░  3500 / 5000 requests             
                                                                                 
  REST attempts per hour                                                         
  22:00 UTC  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       160 
  23:00 UTC  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  173 
  00:00 UTC  0 so far (partial)                                                  
+                                                                                
                                                                                 
                                                                                 
                                                                                 
@@ -337,12 +337,10 @@ Output of the Go usage example below
 Demo · truecolor · 100 × 26 terminal cells
 
 ```
- API operations                                                                                     
- Synthetic observations / 14-15 Nov 2026 / UTC                                                      
- Observed 00:16 UTC / quota resets 01:00 UTC                                                        
+ API operations  Synthetic / 14-15 Nov 2026                       Observed 00:16 UTC / resets 01:00 
                                                                                                     
- REST remaining     3500 / 5000 requests                                                            
- GraphQL remaining  4800 / 5000 points                                                              
+ REST remaining     ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░░░░░░░░  3500 / 5000 requests                              
+ GraphQL remaining  ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░  4800 / 5000 points                                
                                                                                                     
  REST attempts / UTC hour                                                                           
  00:00  0 so far (partial)                                                                          
@@ -355,6 +353,8 @@ Demo · truecolor · 100 × 26 terminal cells
  Coverage                                                                                           
  Complete hourly counts share a scale. Current hour is partial.                                     
  History begins at coordinator start; earlier hours are unavailable.                                
+                                                                                                    
+                                                                                                    
                                                                                                     
                                                                                                     
                                                                                                     
@@ -369,32 +369,30 @@ Narrow · truecolor · 40 × 16 terminal cells
 
 ```
  API operations                         
- Synthetic observations / 14-15 Nov     
- 2026 / UTC                             
- Observed 00:16 UTC / quota resets      
- 01:00 UTC                              
+ Synthetic / 14-15 Nov 2026             
+      Observed 00:16 UTC / resets 01:00 
                                         
- REST remaining: 3500 / 5000 requests   
- GraphQL remaining: 4800 / 5000 points  
+ REST remaining  3500 / 5000 requests   
+ ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░░░░░░░░           
+ GraphQL remaining  4800 / 5000 points  
+ ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░           
                                         
  REST attempts / UTC hour               
  00:00  0 so far (partial)              
  23:00  ━━━━━━━━━━━━━━━━━━━━━━━━━━  173 
  22:00  ━━━━━━━━━━━━━━━━━━━━━━━━    160 
  21:00  ━━━━━━━━━━━━━━━━━━━━━━      147 
- 1-8 of 16                              
+ 1-10 of 18                             
  ↓/j down  ↑/k up  i details  ? keys
 ```
 
 256 colors · ansi256 · 100 × 26 terminal cells
 
 ```
- API operations                                                                                     
- Synthetic observations / 14-15 Nov 2026 / UTC                                                      
- Observed 00:16 UTC / quota resets 01:00 UTC                                                        
+ API operations  Synthetic / 14-15 Nov 2026                       Observed 00:16 UTC / resets 01:00 
                                                                                                     
- REST remaining     3500 / 5000 requests                                                            
- GraphQL remaining  4800 / 5000 points                                                              
+ REST remaining     ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░░░░░░░░  3500 / 5000 requests                              
+ GraphQL remaining  ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░  4800 / 5000 points                                
                                                                                                     
  REST attempts / UTC hour                                                                           
  00:00  0 so far (partial)                                                                          
@@ -407,6 +405,8 @@ Narrow · truecolor · 40 × 16 terminal cells
  Coverage                                                                                           
  Complete hourly counts share a scale. Current hour is partial.                                     
  History begins at coordinator start; earlier hours are unavailable.                                
+                                                                                                    
+                                                                                                    
                                                                                                     
                                                                                                     
                                                                                                     
@@ -420,12 +420,10 @@ Narrow · truecolor · 40 × 16 terminal cells
 16 colors · ansi16 · 100 × 26 terminal cells
 
 ```
- API operations                                                                                     
- Synthetic observations / 14-15 Nov 2026 / UTC                                                      
- Observed 00:16 UTC / quota resets 01:00 UTC                                                        
+ API operations  Synthetic / 14-15 Nov 2026                       Observed 00:16 UTC / resets 01:00 
                                                                                                     
- REST remaining     3500 / 5000 requests                                                            
- GraphQL remaining  4800 / 5000 points                                                              
+ REST remaining     ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░░░░░░░░  3500 / 5000 requests                              
+ GraphQL remaining  ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░  4800 / 5000 points                                
                                                                                                     
  REST attempts / UTC hour                                                                           
  00:00  0 so far (partial)                                                                          
@@ -444,6 +442,8 @@ Narrow · truecolor · 40 × 16 terminal cells
                                                                                                     
                                                                                                     
                                                                                                     
+                                                                                                    
+                                                                                                    
  1-14 of 14                                                                                         
  ↓/j down  ↑/k up  i details  ? keys
 ```
@@ -451,12 +451,10 @@ Narrow · truecolor · 40 × 16 terminal cells
 Monochrome · none · 100 × 26 terminal cells
 
 ```
- API operations                                                                                     
- Synthetic observations / 14-15 Nov 2026 / UTC                                                      
- Observed 00:16 UTC / quota resets 01:00 UTC                                                        
+ API operations  Synthetic / 14-15 Nov 2026                       Observed 00:16 UTC / resets 01:00 
                                                                                                     
- REST remaining     3500 / 5000 requests                                                            
- GraphQL remaining  4800 / 5000 points                                                              
+ REST remaining     ####################--------  3500 / 5000 requests                              
+ GraphQL remaining  ###########################-  4800 / 5000 points                                
                                                                                                     
  REST attempts / UTC hour                                                                           
  00:00  0 so far (partial)                                                                          
@@ -475,6 +473,8 @@ Monochrome · none · 100 × 26 terminal cells
                                                                                                     
                                                                                                     
                                                                                                     
+                                                                                                    
+                                                                                                    
  1-14 of 14                                                                                         
  v/j down  ^/k up  i details  ? keys
 ```
@@ -482,9 +482,7 @@ Monochrome · none · 100 × 26 terminal cells
 Inspection · truecolor · 100 × 26 terminal cells
 
 ```
- API operations / Details                                                                           
- Synthetic observations / 14-15 Nov 2026 / UTC                                                      
- Observed 00:16 UTC / quota resets 01:00 UTC                                                        
+ API operations / Details  Synthetic / 14-15 Nov 2026             Observed 00:16 UTC / resets 01:00 
                                                                                                     
  Scheduler                                                                                          
  Cadence   1s tick / 2s minimum request gap                                                         
@@ -506,6 +504,8 @@ Inspection · truecolor · 100 × 26 terminal cells
                                                                                                     
                                                                                                     
                                                                                                     
+                                                                                                    
+                                                                                                    
  1-9 of 9                                                                                           
  ↓/j down  ↑/k up  esc overview  ? keys
 ```
@@ -513,12 +513,12 @@ Inspection · truecolor · 100 × 26 terminal cells
 Empty · truecolor · 100 × 26 terminal cells
 
 ```
- API operations                                                                                     
- Synthetic observations / 14-15 Nov 2026 / UTC                                                      
- No observations received                                                                           
+ API operations  Synthetic / 14-15 Nov 2026                                No observations received 
                                                                                                     
- REST remaining     ∅ missing                                                                       
+ REST remaining  ∅ missing                                                                          
  GraphQL remaining  ∅ missing                                                                       
+                                                                                                    
+                                                                                                    
                                                                                                     
                                                                                                     
                                                                                                     
@@ -544,12 +544,11 @@ Empty · truecolor · 100 × 26 terminal cells
 Error · truecolor · 100 × 26 terminal cells
 
 ```
- API operations                                                                                     
- Synthetic observations / 14-15 Nov 2026 / UTC                                                      
- Refresh failed / showing last observation from 00:16 UTC                                           
+ API operations                            Refresh failed / showing last observation from 00:16 UTC 
+ Synthetic / 14-15 Nov 2026                                                                         
                                                                                                     
- REST remaining     3500 / 5000 requests                                                            
- GraphQL remaining  4800 / 5000 points                                                              
+ REST remaining     ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░░░░░░░░  3500 / 5000 requests                              
+ GraphQL remaining  ▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌░  4800 / 5000 points                                
                                                                                                     
  REST attempts / UTC hour                                                                           
  00:00  0 so far (partial)                                                                          
@@ -568,6 +567,7 @@ Error · truecolor · 100 × 26 terminal cells
                                                                                                     
                                                                                                     
                                                                                                     
+                                                                                                    
  1-14 of 14                                                                                         
  ↓/j down  ↑/k up  i details  ? keys
 ```
@@ -575,12 +575,12 @@ Error · truecolor · 100 × 26 terminal cells
 Loading · truecolor · 100 × 26 terminal cells
 
 ```
- API operations                                                                                     
- Synthetic observations / 14-15 Nov 2026 / UTC                                                      
- Waiting for first observation                                                                      
+ API operations  Synthetic / 14-15 Nov 2026                           Waiting for first observation 
                                                                                                     
- REST remaining     ∅ missing                                                                       
+ REST remaining  ∅ missing                                                                          
  GraphQL remaining  ∅ missing                                                                       
+                                                                                                    
+                                                                                                    
                                                                                                     
                                                                                                     
                                                                                                     
@@ -616,8 +616,8 @@ bars := chart.BucketBars{Buckets: []chart.CountBucket{
 }}
 snapshot := pattern.DashboardSnapshot{
 	Title: "API operations", Context: "Synthetic observations / UTC",
-	Status:  "Observed 00:16 UTC / quota resets 01:00 UTC",
-	Summary: []layout.Pair{{Label: "REST remaining", Value: "3500 / 5000 requests"}},
+	Status: "Observed 00:16 UTC / quota resets 01:00 UTC",
+	Meters: []pattern.DashboardMeter{{Label: "REST remaining", Value: 3500, Total: 5000, Unit: "requests"}},
 	Sections: []pattern.DashboardSection{{Title: "REST attempts per hour", Body: func(width int) string {
 		return bars.View(width, palette)
 	}}},
@@ -632,7 +632,7 @@ return dashboard.View()
 
 ### [Updates, focus & sizing](https://lanej.io/charmed/templates-pattern.html#template%2foperations-integration)
 
-Forward Update only while focused and return its command. Resize and SetSnapshot retain both native viewports, bindings and styles; offsets clamp to available content. SetSnapshot replaces render callbacks on the application loop. Overview and inspection scroll independently; i opens details, Escape returns and ? expands help. The parent owns refresh, quit and observations.
+Forward Update only while focused and return its command. Resize and SetSnapshot retain both native viewports, bindings and styles; offsets clamp to available content. Meters preserve exact counts and presence states beside native proportional bars; zero capacity and invalid ratios have no bar. SetSnapshot replaces render callbacks on the application loop. Overview and inspection scroll independently; i opens details, Escape returns and ? expands help. The parent owns refresh, quit and observations.
 
 ### [Run this example](https://lanej.io/charmed/templates-pattern.html#template%2foperations-run)
 
@@ -640,6 +640,6 @@ Forward Update only while focused and return its command. Resize and SetSnapshot
 go run ./examples/catalog template/operations
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/template_operations.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/pattern/operational.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/template_operations.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/pattern/operational.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/key-value](https://lanej.io/charmed/molecules-layout.html#layout/key-value) [collection/viewport](https://lanej.io/charmed/atoms-collection.html#collection/viewport) [text/key-hint](https://lanej.io/charmed/atoms-text.html#text/key-hint)

@@ -526,6 +526,6 @@ SetSource copies the bytes and reports parsing failures without retaining stale 
 go run ./examples/catalog collection/json-viewer
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_json_viewer.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/json.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_json_viewer.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/json.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [collection/viewport](https://lanej.io/charmed/atoms-collection.html#collection/viewport) [text/disclosure](https://lanej.io/charmed/atoms-text.html#text/disclosure) [text/syntax](https://lanej.io/charmed/atoms-text.html#text/syntax)

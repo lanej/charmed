@@ -145,17 +145,17 @@ Construct the grid with ordered axes and keyed entries, then focus it when its r
 go run ./examples/catalog collection/data-grid
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_data_grid.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/data_grid.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_data_grid.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/data_grid.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Data grid dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/data_grid.go#L44)
+[Data grid dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/data_grid.go#L44)
 
 Consumer usage uses
 
 - [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_data_grid.go#L9)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_data_grid.go#L9)
 
 [Organisms](https://lanej.io/charmed/organisms.html) / Collections
 
@@ -293,11 +293,11 @@ Construct the grid with ordered axes and keyed entries, then focus it when its r
 go run ./examples/catalog collection/status-matrix
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_status_matrix.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/status_matrix.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_status_matrix.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/status_matrix.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Status matrix dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/status_matrix.go#L23)
+[Status matrix dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/status_matrix.go#L23)
 
 - [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid) · specializes · grid base
 - [Status cell](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus-cell) · composes · cell presentation
@@ -306,7 +306,7 @@ Consumer usage uses
 
 - [Status matrix](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_status_matrix.go#L10)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_status_matrix.go#L10)
 
 [Organisms](https://lanej.io/charmed/organisms.html) / Collections
 
@@ -532,7 +532,7 @@ The parent model supplies observations, coordinates focus and owns application d
 go run ./examples/catalog collection/list
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_list.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_list.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -747,7 +747,7 @@ In a running application, return picker.Init from Init and retain picker.Update'
 go run ./examples/catalog collection/files
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_files.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_files.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -955,7 +955,7 @@ The parent model supplies observations, coordinates focus and owns application d
 go run ./examples/catalog collection/logs
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_logs.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_logs.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [collection/viewport](https://lanej.io/charmed/atoms-collection.html#collection/viewport) [feedback/log-level](https://lanej.io/charmed/atoms-feedback.html#feedback/log-level)
 
@@ -1065,11 +1065,11 @@ Supply an existing grid and a detail renderer that handles present=false. Route 
 go run ./examples/catalog collection/grid-inspector
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_grid_inspector.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/grid_inspector.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_grid_inspector.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/grid_inspector.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Grid inspector dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/grid_inspector.go#L50)
+[Grid inspector dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/grid_inspector.go#L50)
 
 - [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid) · composes · grid
 - [Scroll pane](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane) · composes · details
@@ -1078,7 +1078,7 @@ Consumer usage uses
 
 - [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_grid_inspector.go#L11)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_grid_inspector.go#L11)
 
 [Organisms](https://lanej.io/charmed/organisms.html) / Collections
 
@@ -1170,6 +1170,6 @@ Bind the wrapper to an existing native table pointer. Replace rows through SetRo
 go run ./examples/catalog collection/keyed-table
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_keyed_table.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/keyed_table.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_keyed_table.go) · [Implementation](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/keyed_table.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [collection/table](https://lanej.io/charmed/atoms-collection.html#collection/table)

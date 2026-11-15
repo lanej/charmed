@@ -20,7 +20,7 @@ Atoms
 
 Evidence
 
-[feedback/canary\_membership.go · CanaryMembership](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/canary_membership.go#L11)
+[feedback/canary\_membership.go · CanaryMembership](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/canary_membership.go#L11)
 
 ### Native example
 
@@ -38,7 +38,7 @@ Pill                 Compact
 
 ### Built from
 
-- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · pool membership presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/canary_membership.go#L21)
+- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · pool membership presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/canary_membership.go#L21)
 
 ### Used by
 
@@ -46,7 +46,7 @@ Pill                 Compact
 
 ### Direct example usage
 
-- [Atoms/Feedback/Canary membership · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Fcanary-membership)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/feedback_canary_membership.go#L10)
+- [Atoms/Feedback/Canary membership · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Fcanary-membership)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_canary_membership.go#L10)
   
   - [Canary membership](https://lanej.io/charmed/dependencies.html#component-feedback%2Fcanary-membership)primary demonstration
 
@@ -64,7 +64,7 @@ Atoms
 
 Evidence
 
-[text/text.go · Indicator](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/text.go#L60)
+[text/text.go · Indicator](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/text/text.go#L60)
 
 ### Native example
 
@@ -81,20 +81,20 @@ Saved output of the compiled consumer example
 
 ### Built from
 
-- [Color pill](https://lanej.io/charmed/dependencies.html#component-text%2Fpill)composes · labeled pill presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/text.go#L60)
+- [Color pill](https://lanej.io/charmed/dependencies.html#component-text%2Fpill)composes · labeled pill presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/text/text.go#L60)
 
 ### Used by
 
-- [Canary membership](https://lanej.io/charmed/dependencies.html#component-feedback%2Fcanary-membership)composes · pool membership presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/canary_membership.go#L21)
-- [Status](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/status.go#L45)
-- [Availability](https://lanej.io/charmed/dependencies.html#component-feedback%2Favailability)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/availability.go#L18)
-- [Health](https://lanej.io/charmed/dependencies.html#component-feedback%2Fhealth)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/health.go#L18)
-- [Readiness](https://lanej.io/charmed/dependencies.html#component-feedback%2Freadiness)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/readiness.go#L18)
-- [Rollout](https://lanej.io/charmed/dependencies.html#component-feedback%2Frollout)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/rollout.go#L19)
+- [Canary membership](https://lanej.io/charmed/dependencies.html#component-feedback%2Fcanary-membership)composes · pool membership presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/canary_membership.go#L21)
+- [Status](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/status.go#L45)
+- [Availability](https://lanej.io/charmed/dependencies.html#component-feedback%2Favailability)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/availability.go#L18)
+- [Health](https://lanej.io/charmed/dependencies.html#component-feedback%2Fhealth)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/health.go#L18)
+- [Readiness](https://lanej.io/charmed/dependencies.html#component-feedback%2Freadiness)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/readiness.go#L18)
+- [Rollout](https://lanej.io/charmed/dependencies.html#component-feedback%2Frollout)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/rollout.go#L19)
 
 ### Direct example usage
 
-- [Atoms/Text/Indicator · Consumer usage](https://lanej.io/charmed/atoms-text.html#text%2Findicator)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_indicator.go#L9)
+- [Atoms/Text/Indicator · Consumer usage](https://lanej.io/charmed/atoms-text.html#text%2Findicator)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/text_indicator.go#L9)
   
   - [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)primary demonstration
 
@@ -112,7 +112,7 @@ Atoms
 
 Evidence
 
-[text/text.go · Pill](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/text.go#L29)
+[text/text.go · Pill](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/text/text.go#L29)
 
 ### Native example
 
@@ -132,11 +132,11 @@ Saved output of the compiled consumer example
 
 ### Used by
 
-- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · labeled pill presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/text.go#L60)
+- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · labeled pill presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/text/text.go#L60)
 
 ### Direct example usage
 
-- [Atoms/Text/Color pill · Consumer usage](https://lanej.io/charmed/atoms-text.html#text%2Fpill)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_pill.go#L9)
+- [Atoms/Text/Color pill · Consumer usage](https://lanej.io/charmed/atoms-text.html#text%2Fpill)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/text_pill.go#L9)
   
   - [Color pill](https://lanej.io/charmed/dependencies.html#component-text%2Fpill)primary demonstration
 
@@ -154,7 +154,7 @@ Atoms
 
 Evidence
 
-[feedback/availability.go · Availability](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/availability.go#L9)
+[feedback/availability.go · Availability](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/availability.go#L9)
 
 ### Native example
 
@@ -172,7 +172,7 @@ Pill           Compact
 
 ### Built from
 
-- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/availability.go#L18)
+- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/availability.go#L18)
 
 ### Used by
 
@@ -180,7 +180,7 @@ Pill           Compact
 
 ### Direct example usage
 
-- [Atoms/Feedback/Availability · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Favailability)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/feedback_availability.go#L10)
+- [Atoms/Feedback/Availability · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Favailability)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_availability.go#L10)
   
   - [Availability](https://lanej.io/charmed/dependencies.html#component-feedback%2Favailability)primary demonstration
 
@@ -198,7 +198,7 @@ Atoms
 
 Evidence
 
-[feedback/health.go · Health](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/health.go#L9)
+[feedback/health.go · Health](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/health.go#L9)
 
 ### Native example
 
@@ -216,7 +216,7 @@ Pill             Compact
 
 ### Built from
 
-- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/health.go#L18)
+- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/health.go#L18)
 
 ### Used by
 
@@ -224,7 +224,7 @@ Pill             Compact
 
 ### Direct example usage
 
-- [Atoms/Feedback/Health · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Fhealth)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/feedback_health.go#L10)
+- [Atoms/Feedback/Health · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Fhealth)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_health.go#L10)
   
   - [Health](https://lanej.io/charmed/dependencies.html#component-feedback%2Fhealth)primary demonstration
 
@@ -242,7 +242,7 @@ Atoms
 
 Evidence
 
-[feedback/readiness.go · Readiness](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/readiness.go#L9)
+[feedback/readiness.go · Readiness](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/readiness.go#L9)
 
 ### Native example
 
@@ -260,7 +260,7 @@ Pill             Compact
 
 ### Built from
 
-- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/readiness.go#L18)
+- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/readiness.go#L18)
 
 ### Used by
 
@@ -268,7 +268,7 @@ Pill             Compact
 
 ### Direct example usage
 
-- [Atoms/Feedback/Readiness · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Freadiness)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/feedback_readiness.go#L10)
+- [Atoms/Feedback/Readiness · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Freadiness)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_readiness.go#L10)
   
   - [Readiness](https://lanej.io/charmed/dependencies.html#component-feedback%2Freadiness)primary demonstration
 
@@ -286,7 +286,7 @@ Atoms
 
 Evidence
 
-[feedback/rollout.go · Rollout](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/rollout.go#L10)
+[feedback/rollout.go · Rollout](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/rollout.go#L10)
 
 ### Native example
 
@@ -304,7 +304,7 @@ Pill           Compact
 
 ### Built from
 
-- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/rollout.go#L19)
+- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/rollout.go#L19)
 
 ### Used by
 
@@ -312,7 +312,7 @@ Pill           Compact
 
 ### Direct example usage
 
-- [Atoms/Feedback/Rollout · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Frollout)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/feedback_rollout.go#L10)
+- [Atoms/Feedback/Rollout · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Frollout)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_rollout.go#L10)
   
   - [Rollout](https://lanej.io/charmed/dependencies.html#component-feedback%2Frollout)primary demonstration
 
@@ -330,7 +330,7 @@ Organisms
 
 Evidence
 
-[collection/data\_grid.go · DataGrid](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/data_grid.go#L44)
+[collection/data\_grid.go · DataGrid](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/data_grid.go#L44)
 
 ### Native example
 
@@ -351,12 +351,12 @@ Rows 1-2/2  Columns 1-2/2
 
 ### Used by
 
-- [Status matrix](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix)specializes · grid base[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/status_matrix.go#L23)
-- [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector)composes · grid[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/grid_inspector.go#L51)
+- [Status matrix](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix)specializes · grid base[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/status_matrix.go#L23)
+- [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector)composes · grid[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/grid_inspector.go#L51)
 
 ### Direct example usage
 
-- [Organisms/Collections/Data grid · Consumer usage](https://lanej.io/charmed/organisms-collection.html#collection%2Fdata-grid)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_data_grid.go#L9)
+- [Organisms/Collections/Data grid · Consumer usage](https://lanej.io/charmed/organisms-collection.html#collection%2Fdata-grid)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_data_grid.go#L9)
   
   - [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid)primary demonstration
 
@@ -374,7 +374,7 @@ Organisms
 
 Evidence
 
-[collection/status\_matrix.go · StatusMatrix](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/status_matrix.go#L23)
+[collection/status\_matrix.go · StatusMatrix](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/status_matrix.go#L23)
 
 ### Native example
 
@@ -391,8 +391,8 @@ Rows 1-2/2  Columns 1-3/3
 
 ### Built from
 
-- [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid)specializes · grid base[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/status_matrix.go#L23)
-- [Status cell](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus-cell)composes · cell presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/status_matrix.go#L65)
+- [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid)specializes · grid base[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/status_matrix.go#L23)
+- [Status cell](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus-cell)composes · cell presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/status_matrix.go#L65)
 
 ### Used by
 
@@ -400,7 +400,7 @@ Rows 1-2/2  Columns 1-3/3
 
 ### Direct example usage
 
-- [Organisms/Collections/Status matrix · Consumer usage](https://lanej.io/charmed/organisms-collection.html#collection%2Fstatus-matrix)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_status_matrix.go#L10)
+- [Organisms/Collections/Status matrix · Consumer usage](https://lanej.io/charmed/organisms-collection.html#collection%2Fstatus-matrix)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_status_matrix.go#L10)
   
   - [Status matrix](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix)primary demonstration
 
@@ -418,7 +418,7 @@ Molecules
 
 Evidence
 
-[feedback/status\_cell.go · StatusCell](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/status_cell.go#L11)
+[feedback/status\_cell.go · StatusCell](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/status_cell.go#L11)
 
 ### Native example
 
@@ -435,15 +435,15 @@ Saved output of the compiled consumer example
 
 ### Built from
 
-- [Status](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus)composes · health presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/status_cell.go#L18)
+- [Status](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus)composes · health presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/status_cell.go#L18)
 
 ### Used by
 
-- [Status matrix](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix)composes · cell presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/status_matrix.go#L65)
+- [Status matrix](https://lanej.io/charmed/dependencies.html#component-collection%2Fstatus-matrix)composes · cell presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/status_matrix.go#L65)
 
 ### Direct example usage
 
-- [Molecules/Feedback/Status cell · Consumer usage](https://lanej.io/charmed/molecules-feedback.html#feedback%2Fstatus-cell)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/feedback_status_cell.go#L9)
+- [Molecules/Feedback/Status cell · Consumer usage](https://lanej.io/charmed/molecules-feedback.html#feedback%2Fstatus-cell)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_status_cell.go#L9)
   
   - [Status cell](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus-cell)primary demonstration
 
@@ -461,7 +461,7 @@ Atoms
 
 Evidence
 
-[feedback/status.go · Status](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/status.go#L12)
+[feedback/status.go · Status](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/status.go#L12)
 
 ### Native example
 
@@ -478,15 +478,15 @@ Saved output of the compiled consumer example
 
 ### Built from
 
-- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/status.go#L45)
+- [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator)composes · state presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/status.go#L45)
 
 ### Used by
 
-- [Status cell](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus-cell)composes · health presentation[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/status_cell.go#L18)
+- [Status cell](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus-cell)composes · health presentation[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/status_cell.go#L18)
 
 ### Direct example usage
 
-- [Atoms/Feedback/Status · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Fstatus)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/feedback_status.go#L10)
+- [Atoms/Feedback/Status · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Fstatus)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_status.go#L10)
   
   - [Status](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus)primary demonstration
 
@@ -504,7 +504,7 @@ Organisms
 
 Evidence
 
-[collection/grid\_inspector.go · GridInspector](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/grid_inspector.go#L50)
+[collection/grid\_inspector.go · GridInspector](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/grid_inspector.go#L50)
 
 ### Native example
 
@@ -526,16 +526,16 @@ Replicas: 24
 
 ### Built from
 
-- [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid)composes · grid[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/grid_inspector.go#L51)
-- [Scroll pane](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane)composes · details[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/grid_inspector.go#L52)
+- [Data grid](https://lanej.io/charmed/dependencies.html#component-collection%2Fdata-grid)composes · grid[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/grid_inspector.go#L51)
+- [Scroll pane](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane)composes · details[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/grid_inspector.go#L52)
 
 ### Used by
 
-- [Measurement history](https://lanej.io/charmed/dependencies.html#component-pattern%2Fmeasurement-history)composes · inspection[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/pattern/measurement_history.go#L37)
+- [Measurement history](https://lanej.io/charmed/dependencies.html#component-pattern%2Fmeasurement-history)composes · inspection[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/pattern/measurement_history.go#L37)
 
 ### Direct example usage
 
-- [Organisms/Collections/Grid inspector · Consumer usage](https://lanej.io/charmed/organisms-collection.html#collection%2Fgrid-inspector)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_grid_inspector.go#L11)
+- [Organisms/Collections/Grid inspector · Consumer usage](https://lanej.io/charmed/organisms-collection.html#collection%2Fgrid-inspector)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_grid_inspector.go#L11)
   
   - [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector)primary demonstration
 
@@ -553,7 +553,7 @@ Molecules
 
 Evidence
 
-[collection/scroll\_pane.go · ScrollPane](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/scroll_pane.go#L14)
+[collection/scroll\_pane.go · ScrollPane](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/scroll_pane.go#L14)
 
 ### Native example
 
@@ -572,16 +572,16 @@ ble.                               │
 
 ### Built from
 
-- [Viewport](https://lanej.io/charmed/dependencies.html#component-collection%2Fviewport)composes · content viewport[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/scroll_pane.go#L15)
-- [Scrollbar](https://lanej.io/charmed/dependencies.html#component-feedback%2Fscrollbar)composes · scroll position[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/scroll_pane.go#L59)
+- [Viewport](https://lanej.io/charmed/dependencies.html#component-collection%2Fviewport)composes · content viewport[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/scroll_pane.go#L15)
+- [Scrollbar](https://lanej.io/charmed/dependencies.html#component-feedback%2Fscrollbar)composes · scroll position[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/scroll_pane.go#L59)
 
 ### Used by
 
-- [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector)composes · details[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/grid_inspector.go#L52)
+- [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector)composes · details[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/grid_inspector.go#L52)
 
 ### Direct example usage
 
-- [Molecules/Collections/Scroll pane · Consumer usage](https://lanej.io/charmed/molecules-collection.html#collection%2Fscroll-pane)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_scroll_pane.go#L11)
+- [Molecules/Collections/Scroll pane · Consumer usage](https://lanej.io/charmed/molecules-collection.html#collection%2Fscroll-pane)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_scroll_pane.go#L11)
   
   - [Scroll pane](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane)primary demonstration
 
@@ -599,7 +599,7 @@ Atoms
 
 Evidence
 
-[collection/collection.go · NewViewport](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/collection.go#L36)
+[collection/collection.go · NewViewport](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/collection.go#L36)
 
 ### Native example
 
@@ -619,11 +619,11 @@ Job workers: degraded
 
 ### Used by
 
-- [Scroll pane](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane)composes · content viewport[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/scroll_pane.go#L15)
+- [Scroll pane](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane)composes · content viewport[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/scroll_pane.go#L15)
 
 ### Direct example usage
 
-- [Atoms/Collections/Viewport · Consumer usage](https://lanej.io/charmed/atoms-collection.html#collection%2Fviewport)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_viewport.go#L7)
+- [Atoms/Collections/Viewport · Consumer usage](https://lanej.io/charmed/atoms-collection.html#collection%2Fviewport)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/collection_viewport.go#L7)
   
   - [Viewport](https://lanej.io/charmed/dependencies.html#component-collection%2Fviewport)primary demonstration
 
@@ -641,7 +641,7 @@ Atoms
 
 Evidence
 
-[feedback/controls.go · Scrollbar](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/feedback/controls.go#L22)
+[feedback/controls.go · Scrollbar](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/feedback/controls.go#L22)
 
 ### Native example
 
@@ -666,11 +666,11 @@ Saved output of the compiled consumer example
 
 ### Used by
 
-- [Scroll pane](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane)composes · scroll position[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/collection/scroll_pane.go#L59)
+- [Scroll pane](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane)composes · scroll position[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/collection/scroll_pane.go#L59)
 
 ### Direct example usage
 
-- [Atoms/Feedback/Scrollbar · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Fscrollbar)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/feedback_scrollbar.go#L8)
+- [Atoms/Feedback/Scrollbar · Consumer usage](https://lanej.io/charmed/atoms-feedback.html#feedback%2Fscrollbar)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/feedback_scrollbar.go#L8)
   
   - [Scrollbar](https://lanej.io/charmed/dependencies.html#component-feedback%2Fscrollbar)primary demonstration
 
@@ -688,7 +688,7 @@ Organisms
 
 Evidence
 
-[pattern/measurement\_history.go · MeasurementHistory](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/pattern/measurement_history.go#L36)
+[pattern/measurement\_history.go · MeasurementHistory](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/pattern/measurement_history.go#L36)
 
 ### Native example
 
@@ -713,7 +713,7 @@ Metric absent
 
 ### Built from
 
-- [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector)composes · inspection[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/pattern/measurement_history.go#L37)
+- [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector)composes · inspection[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/pattern/measurement_history.go#L37)
 
 ### Used by
 
@@ -721,7 +721,7 @@ Metric absent
 
 ### Direct example usage
 
-- [Organisms/Patterns/Measurement history · Consumer usage](https://lanej.io/charmed/organisms-pattern.html#pattern%2Fmeasurement-history)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/pattern_measurement_history.go#L11)
+- [Organisms/Patterns/Measurement history · Consumer usage](https://lanej.io/charmed/organisms-pattern.html#pattern%2Fmeasurement-history)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/pattern_measurement_history.go#L11)
   
   - [Measurement history](https://lanej.io/charmed/dependencies.html#component-pattern%2Fmeasurement-history)primary demonstration
 
@@ -739,7 +739,7 @@ Molecules
 
 Evidence
 
-[diagram/state.go · StateDiagram](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/diagram/state.go#L36)
+[diagram/state.go · StateDiagram](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/diagram/state.go#L36)
 
 ### Native example
 
@@ -787,23 +787,23 @@ Saved output of the compiled consumer example
 
 ### Used by
 
-- [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay)composes · diagram[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/diagram/trace_replay.go#L25)
+- [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay)composes · diagram[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/diagram/trace_replay.go#L25)
 
 ### Direct example usage
 
-- [Molecules/Diagrams/State transitions · Consumer usage](https://lanej.io/charmed/molecules-diagram.html#diagram%2Fstate-transitions)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/diagram_state_transitions.go#L8)
+- [Molecules/Diagrams/State transitions · Consumer usage](https://lanej.io/charmed/molecules-diagram.html#diagram%2Fstate-transitions)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/diagram_state_transitions.go#L8)
   
   - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)primary demonstration
-- [Organisms/Diagrams/Trace replay · Consumer usage](https://lanej.io/charmed/organisms-diagram.html#diagram%2Ftrace-replay)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/diagram_trace_replay.go#L9)
+- [Organisms/Diagrams/Trace replay · Consumer usage](https://lanej.io/charmed/organisms-diagram.html#diagram%2Ftrace-replay)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/diagram_trace_replay.go#L9)
   
   - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay)primary demonstration
   - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)graph data
-- [Organisms/Diagrams/Trace replay · Interactive fixture](https://lanej.io/charmed/organisms-diagram.html#panel-diagram%2Ftrace-replay-0)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/diagrams.go#L12)
+- [Organisms/Diagrams/Trace replay · Interactive fixture](https://lanej.io/charmed/organisms-diagram.html#panel-diagram%2Ftrace-replay-0)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/diagrams.go#L12)
   
   - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)graph data
   - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay)trace inspection
   - [Radio group](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group)history-window controls
-- [Molecules/Diagrams/State transitions · Interactive fixture](https://lanej.io/charmed/molecules-diagram.html#panel-diagram%2Fstate-transitions-0)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/diagrams.go#L12)
+- [Molecules/Diagrams/State transitions · Interactive fixture](https://lanej.io/charmed/molecules-diagram.html#panel-diagram%2Fstate-transitions-0)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/diagrams.go#L12)
   
   - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)graph data
   - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay)trace inspection
@@ -823,7 +823,7 @@ Organisms
 
 Evidence
 
-[diagram/trace\_replay.go · TraceReplay](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/diagram/trace_replay.go#L21)
+[diagram/trace\_replay.go · TraceReplay](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/diagram/trace_replay.go#L21)
 
 ### Native example
 
@@ -840,7 +840,7 @@ Saved output of the compiled consumer example
 
 ### Built from
 
-- [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)composes · diagram[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/diagram/trace_replay.go#L25)
+- [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)composes · diagram[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/diagram/trace_replay.go#L25)
 
 ### Used by
 
@@ -848,16 +848,16 @@ Saved output of the compiled consumer example
 
 ### Direct example usage
 
-- [Organisms/Diagrams/Trace replay · Consumer usage](https://lanej.io/charmed/organisms-diagram.html#diagram%2Ftrace-replay)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/diagram_trace_replay.go#L9)
+- [Organisms/Diagrams/Trace replay · Consumer usage](https://lanej.io/charmed/organisms-diagram.html#diagram%2Ftrace-replay)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/diagram_trace_replay.go#L9)
   
   - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay)primary demonstration
   - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)graph data
-- [Organisms/Diagrams/Trace replay · Interactive fixture](https://lanej.io/charmed/organisms-diagram.html#panel-diagram%2Ftrace-replay-0)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/diagrams.go#L12)
+- [Organisms/Diagrams/Trace replay · Interactive fixture](https://lanej.io/charmed/organisms-diagram.html#panel-diagram%2Ftrace-replay-0)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/diagrams.go#L12)
   
   - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)graph data
   - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay)trace inspection
   - [Radio group](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group)history-window controls
-- [Molecules/Diagrams/State transitions · Interactive fixture](https://lanej.io/charmed/molecules-diagram.html#panel-diagram%2Fstate-transitions-0)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/diagrams.go#L12)
+- [Molecules/Diagrams/State transitions · Interactive fixture](https://lanej.io/charmed/molecules-diagram.html#panel-diagram%2Fstate-transitions-0)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/diagrams.go#L12)
   
   - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)graph data
   - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay)trace inspection
@@ -877,7 +877,7 @@ Molecules
 
 Evidence
 
-[input/radio\_group.go · RadioGroup](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/input/radio_group.go#L20)
+[input/radio\_group.go · RadioGroup](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/input/radio_group.go#L20)
 
 ### Native example
 
@@ -894,7 +894,7 @@ Saved output of the compiled consumer example
 
 ### Built from
 
-- [Radio](https://lanej.io/charmed/dependencies.html#component-input%2Fradio)composes · options[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/input/radio_group.go#L21)
+- [Radio](https://lanej.io/charmed/dependencies.html#component-input%2Fradio)composes · options[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/input/radio_group.go#L21)
 
 ### Used by
 
@@ -902,15 +902,15 @@ Saved output of the compiled consumer example
 
 ### Direct example usage
 
-- [Molecules/Input/Radio group · Consumer usage](https://lanej.io/charmed/molecules-input.html#input%2Fradio-group)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/input_radio_group.go#L8)
+- [Molecules/Input/Radio group · Consumer usage](https://lanej.io/charmed/molecules-input.html#input%2Fradio-group)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/input_radio_group.go#L8)
   
   - [Radio group](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group)primary demonstration
-- [Organisms/Diagrams/Trace replay · Interactive fixture](https://lanej.io/charmed/organisms-diagram.html#panel-diagram%2Ftrace-replay-0)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/diagrams.go#L12)
+- [Organisms/Diagrams/Trace replay · Interactive fixture](https://lanej.io/charmed/organisms-diagram.html#panel-diagram%2Ftrace-replay-0)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/diagrams.go#L12)
   
   - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)graph data
   - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay)trace inspection
   - [Radio group](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group)history-window controls
-- [Molecules/Diagrams/State transitions · Interactive fixture](https://lanej.io/charmed/molecules-diagram.html#panel-diagram%2Fstate-transitions-0)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/diagrams.go#L12)
+- [Molecules/Diagrams/State transitions · Interactive fixture](https://lanej.io/charmed/molecules-diagram.html#panel-diagram%2Fstate-transitions-0)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/story/diagrams.go#L12)
   
   - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram)graph data
   - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay)trace inspection
@@ -930,7 +930,7 @@ Atoms
 
 Evidence
 
-[input/controls.go · Radio](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/input/controls.go#L157)
+[input/controls.go · Radio](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/input/controls.go#L157)
 
 ### Native example
 
@@ -948,10 +948,10 @@ Saved output of the compiled consumer example
 
 ### Used by
 
-- [Radio group](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group)composes · options[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/input/radio_group.go#L21)
+- [Radio group](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group)composes · options[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/input/radio_group.go#L21)
 
 ### Direct example usage
 
-- [Atoms/Input/Radio · Consumer usage](https://lanej.io/charmed/atoms-input.html#input%2Fradio)[Source ↗](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/input_radio.go#L8)
+- [Atoms/Input/Radio · Consumer usage](https://lanej.io/charmed/atoms-input.html#input%2Fradio)[Source ↗](https://github.com/lanej/charmed/blob/91c558bb8aca62050bbfc3f0781f1e9ffd13e33d/docs/snippets/input_radio.go#L8)
   
   - [Radio](https://lanej.io/charmed/dependencies.html#component-input%2Fradio)primary demonstration
