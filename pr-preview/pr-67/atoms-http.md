@@ -178,7 +178,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/url
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/text_url.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/text/url.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/text_url.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/text/url.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -357,7 +357,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/http-method
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/text_http_method.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/text/http.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/text_http_method.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/text/http.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -556,6 +556,6 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/http-status
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/text_http_status.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/text/http.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/text_http_status.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/text/http.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.

@@ -120,11 +120,11 @@ Supply cohort data and a member key; construction and SetData validate and copy 
 go run ./examples/catalog pattern/measurement-history
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/pattern_measurement_history.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/pattern/measurement_history.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/pattern_measurement_history.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/pattern/measurement_history.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Measurement history dependency graph](https://lanej.io/charmed/dependencies.html#component-pattern%2Fmeasurement-history) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/pattern/measurement_history.go#L36)
+[Measurement history dependency graph](https://lanej.io/charmed/dependencies.html#component-pattern%2Fmeasurement-history) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/pattern/measurement_history.go#L36)
 
 - [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector) · composes · inspection
 
@@ -132,4 +132,4 @@ Consumer usage uses
 
 - [Measurement history](https://lanej.io/charmed/dependencies.html#component-pattern%2Fmeasurement-history) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/pattern_measurement_history.go#L11)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/pattern_measurement_history.go#L11)

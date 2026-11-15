@@ -138,7 +138,7 @@ Return Focus's command when the input becomes active. In Update, retain both the
 go run ./examples/catalog input/text
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/input_text.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/input_text.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -333,7 +333,7 @@ Focus the native textarea when its region becomes active, and retain the model a
 go run ./examples/catalog input/textarea
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/input_textarea.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/input_textarea.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -450,7 +450,7 @@ The parent routes keys to the focused control and retains the model and command 
 go run ./examples/catalog input/checkbox
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/input_checkbox.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/input/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/input_checkbox.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/input/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -552,17 +552,17 @@ The parent routes keys to the focused control and retains the model and command 
 go run ./examples/catalog input/radio
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/input_radio.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/input/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/input_radio.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/input/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Radio dependency graph](https://lanej.io/charmed/dependencies.html#component-input%2Fradio) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/input/controls.go#L157)
+[Radio dependency graph](https://lanej.io/charmed/dependencies.html#component-input%2Fradio) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/input/controls.go#L157)
 
 Consumer usage uses
 
 - [Radio](https://lanej.io/charmed/dependencies.html#component-input%2Fradio) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/input_radio.go#L8)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/input_radio.go#L8)
 
 [Atoms](https://lanej.io/charmed/atoms.html) / Input
 
@@ -661,7 +661,7 @@ The parent routes keys to the focused control and retains the model and command 
 go run ./examples/catalog input/toggle
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/input_toggle.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/input/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/input_toggle.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/input/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -765,6 +765,6 @@ The parent routes keys to the focused control and retains the model and command 
 go run ./examples/catalog input/button
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/input_button.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/input/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/input_button.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/input/controls.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.

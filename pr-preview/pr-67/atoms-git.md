@@ -82,7 +82,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/commit-id
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_commit_id.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_commit_id.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -182,7 +182,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/ref
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_ref.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_ref.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -272,7 +272,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/head
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_head.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_head.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -377,7 +377,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/file-state
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_file_state.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_file_state.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -457,7 +457,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/divergence
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_divergence.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_divergence.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -547,7 +547,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/diff-summary
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_diff_summary.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_diff_summary.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -627,7 +627,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/worktree-state
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_worktree_state.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_worktree_state.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -697,7 +697,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/staged-state
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_staged_state.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_staged_state.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -767,7 +767,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/unstaged-state
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_unstaged_state.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_unstaged_state.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -837,7 +837,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/untracked-state
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_untracked_state.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_untracked_state.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -907,6 +907,6 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog git/conflict-state
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/git_conflict_state.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/git_conflict_state.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.

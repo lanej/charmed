@@ -192,6 +192,6 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog chart/picture
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/docs/snippets/chart_picture.go) · [Implementation](https://github.com/lanej/charmed/blob/4899458b504339096b00026ea0cdba306a9e5503/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/docs/snippets/chart_picture.go) · [Implementation](https://github.com/lanej/charmed/blob/a32ca8934068617468e6e1f29305319108b33f92/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
