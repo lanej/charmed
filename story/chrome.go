@@ -14,17 +14,18 @@ import (
 
 func chromeDefinitions() []Definition {
 	definitions := []Definition{
+		{ID: "layout/text-row", Title: "Molecules/Layout/Text row", Level: "Molecules", Family: "layout", Description: "Styled text, fixed gaps and flexible spacers share a cell-measured row. Overflow wraps without dropping fields; explicit stacking retains the same content.", Source: "layout/text_row.go", Symbol: "TextRow", Composes: []string{"foundations/layout", "text/primitives"}, Defaults: DefaultConfig(), Factory: textRowStory},
 		{ID: "layout/link-group", Title: "Molecules/Layout/Link group", Level: "Molecules", Family: "layout", Description: "Related destinations flow in order with shared spacing, wrap between items, and retain exact targets through long-label wrapping. Each link keeps its own presentation and emphasis.", Source: "layout/links.go", Symbol: "LinkGroup", Composes: []string{"text/link", "foundations/layout"}, Defaults: DefaultConfig(), Factory: linkGroupStory},
 		{ID: "feedback/connection", Title: "Atoms/Feedback/Connection", Level: "Atoms", Family: "feedback", Description: "Connected and disconnected describe connectivity independently of health, severity or unknown state. Labels and glyphs remain visible in every profile.", Source: "story/chrome.go", Symbol: "connectionStory", Controls: []string{"emphasis"}, Composes: []string{"feedback/status"}, Defaults: DefaultConfig(), Factory: connectionStory},
 		{ID: "navigation/tabs", Title: "Molecules/Navigation/Tabs", Level: "Molecules", Family: "navigation", Description: "Focused arrow-key navigation with stable selection, visible overflow and shared selection styling.", Source: "story/chrome.go", Symbol: "tabsStory", Composes: []string{"foundations/layout"}, Defaults: DefaultConfig(), Factory: tabsStory},
-		{ID: "layout/header", Title: "Molecules/Layout/Header", Level: "Molecules", Family: "layout", Description: "Title and trailing actions with an optional context row. Narrow widths preserve the title before actions.", Source: "story/chrome.go", Symbol: "headerStory", Composes: []string{"foundations/layout"}, Defaults: DefaultConfig(), Factory: headerStory},
-		{ID: "layout/identity-header", Title: "Molecules/Layout/Identity header", Level: "Molecules", Family: "layout", Description: "A request UUID or other entity identifier is the headline. Narrow terminals move the kind above the complete identifier before wrapping.", Source: "story/chrome.go", Symbol: "identityHeaderStory", Composes: []string{"foundations/layout"}, Defaults: DefaultConfig(), Factory: identityHeaderStory},
+		{ID: "layout/header", Title: "Molecules/Layout/Header", Level: "Molecules", Family: "layout", Description: "Title and trailing actions with an optional context row. Narrow widths preserve the title before actions.", Source: "story/chrome.go", Symbol: "headerStory", Composes: []string{"layout/text-row", "foundations/layout"}, Defaults: DefaultConfig(), Factory: headerStory},
+		{ID: "layout/identity-header", Title: "Molecules/Layout/Identity header", Level: "Molecules", Family: "layout", Description: "A request UUID or other entity identifier is the headline. Narrow terminals move the kind above the complete identifier before wrapping.", Source: "story/chrome.go", Symbol: "identityHeaderStory", Composes: []string{"layout/text-row", "foundations/layout"}, Defaults: DefaultConfig(), Factory: identityHeaderStory},
 		{ID: "layout/section", Title: "Molecules/Layout/Foldable section", Level: "Molecules", Family: "layout", Description: "A panel folds to one heading row, returning space to sibling content. The application owns state and bindings; press Enter to toggle this specimen.", Source: "story/chrome.go", Symbol: "sectionStory", Composes: []string{"foundations/layout", "text/disclosure"}, Defaults: DefaultConfig(), Factory: sectionStory},
 		{ID: "layout/key-value", Title: "Molecules/Layout/Key-value", Level: "Molecules", Family: "layout", Description: "Aligned labels and values; 55 columns and narrower stack each pair. Missing values stay distinct from empty strings.", Source: "layout/keyvalue.go", Symbol: "KeyValue", Composes: []string{"text/value-state", "foundations/layout"}, Defaults: DefaultConfig(), Factory: keyValueStory},
 		{ID: "collection/static-table", Title: "Molecules/Collections/Static table", Level: "Molecules", Family: "collection", Description: "A non-interactive comparison table. Cells wrap in their column; 55 columns and narrower stack a table that would not fit whole, never truncating a value. Missing, unknown and truncated cells keep their word and glyph.", Source: "collection/static_table.go", Symbol: "StaticTable", Composes: []string{"feedback/evidence", "text/value-state", "text/omission", "foundations/layout"}, Defaults: DefaultConfig(), Factory: staticTableStory},
 		{ID: "feedback/evidence-summary", Title: "Molecules/Feedback/Evidence summary", Level: "Molecules", Family: "feedback", Description: "Counts per evidence state, worst first. No evidence is never zero healthy.", Source: "feedback/evidence.go", Symbol: "SummaryLine", Composes: []string{"feedback/evidence"}, Defaults: DefaultConfig(), Factory: evidenceSummaryStory},
 		{ID: "feedback/evidence-footer", Title: "Molecules/Feedback/Evidence footer", Level: "Molecules", Family: "feedback", Description: "Source, scope, state with observation age, and omission. Missing parts say so; aged evidence keeps its state word.", Source: "feedback/evidence.go", Symbol: "EvidenceFooter", Composes: []string{"feedback/evidence", "text/value-state", "text/omission"}, Defaults: DefaultConfig(), Factory: evidenceFooterStory},
-		{ID: "layout/footer", Title: "Molecules/Layout/Footer", Level: "Molecules", Family: "layout", Description: "Keyboard help and right-aligned status share one row. Narrow widths preserve help before status.", Source: "story/chrome.go", Symbol: "footerStory", Composes: []string{"foundations/layout", "text/primitives", "feedback/status"}, Defaults: DefaultConfig(), Factory: footerStory},
+		{ID: "layout/footer", Title: "Molecules/Layout/Footer", Level: "Molecules", Family: "layout", Description: "Keyboard help and right-aligned status share one row. Narrow widths preserve help before status.", Source: "story/chrome.go", Symbol: "footerStory", Composes: []string{"layout/text-row", "foundations/layout", "text/primitives", "feedback/status"}, Defaults: DefaultConfig(), Factory: footerStory},
 		{ID: "template/application", Title: "Templates/Application shell", Level: "Templates", Family: "pattern", Description: "A header, tab bar, active content panel and footer compose a resizable application shell. Left/Right changes the visible section.", Source: "story/chrome.go", Symbol: "applicationStory", Composes: []string{"layout/header", "navigation/tabs", "layout/footer", "foundations/layout", "feedback/status"}, Defaults: DefaultConfig(), Factory: applicationStory},
 	}
 	for i := range definitions {
@@ -219,5 +220,18 @@ func staticTableStory(e Environment) (runtime.Scene, error) {
 			t.Heading().Render("At the allocation"), table.View(size.Width, t), "",
 			t.Heading().Render("At 50 columns"), table.View(50, t),
 		)
+	}), nil
+}
+
+func textRowStory(e Environment) (runtime.Scene, error) {
+	return static(func(size layout.Size) string {
+		t := e.Config.Palette()
+
+		return (layout.TextRow{Gap: 2, Items: []layout.TextRowItem{
+			{Text: t.Heading().Render("API operations")},
+			{Text: t.Subtle().Render("Production / us-east-1")},
+			{Flex: true},
+			{Text: t.Text().Render("Observed 00:16 UTC")},
+		}}).View(size.Width)
 	}), nil
 }

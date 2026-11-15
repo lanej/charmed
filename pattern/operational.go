@@ -195,49 +195,12 @@ func (m *OperationalDashboard) heading(width int) string {
 		style = m.Theme.Heading()
 	}
 
-	title := style.Render(dashboardWrap(label, width))
-	context := m.Theme.Subtle().Render(dashboardWrap(text.Inline(m.snapshot.Context), width))
-	status := text.ToneStyle(m.snapshot.StatusTone, text.Normal, m.Theme).Render(dashboardWrap(text.Inline(m.snapshot.Status), width))
-
-	left := title
-	if m.snapshot.Context != "" {
-		left += "  " + context
-	}
-
-	if !strings.Contains(left+status, "\n") && ansi.StringWidth(left)+ansi.StringWidth(status)+2 <= width {
-		return dashboardHeaderRow(left, status, width)
-	}
-
-	if m.snapshot.Status != "" && !strings.Contains(title+status, "\n") && ansi.StringWidth(title)+ansi.StringWidth(status)+2 <= width {
-		return dashboardHeaderRow(title, status, width) + dashboardContext(context, m.snapshot.Context)
-	}
-
-	parts := []string{title}
-	if m.snapshot.Context != "" {
-		parts = append(parts, context)
-	}
-
-	if m.snapshot.Status != "" {
-		parts = append(parts, lipgloss.NewStyle().Width(width).Align(lipgloss.Right).Render(status))
-	}
-
-	return strings.Join(parts, "\n")
-}
-
-func dashboardHeaderRow(left, status string, width int) string {
-	if status == "" {
-		return left
-	}
-
-	return left + strings.Repeat(" ", max(2, width-ansi.StringWidth(left)-ansi.StringWidth(status))) + status
-}
-
-func dashboardContext(rendered, raw string) string {
-	if raw == "" {
-		return ""
-	}
-
-	return "\n" + rendered
+	return (layout.TextRow{Gap: 2, Items: []layout.TextRowItem{
+		{Text: style.Render(label)},
+		{Text: m.Theme.Subtle().Render(text.Inline(m.snapshot.Context))},
+		{Flex: true},
+		{Text: text.ToneStyle(m.snapshot.StatusTone, text.Normal, m.Theme).Render(text.Inline(m.snapshot.Status))},
+	}}).View(width)
 }
 
 func dashboardMeters(meters []DashboardMeter, width int, t theme.Theme) string {
@@ -337,21 +300,22 @@ func (m *OperationalDashboard) help(width int) string {
 
 	bindings = append(bindings, m.AppKeys...)
 	bindings = append(bindings, m.Keys.Help)
-	labels := []string{}
+	items := []layout.TextRowItem{}
 
 	for _, binding := range bindings {
 		if binding.Enabled() {
 			hint := binding.Help()
-			labels = append(labels, text.KeyHint(hint.Key, hint.Desc, m.Theme))
+			label := text.KeyHint(hint.Key, hint.Desc, m.Theme)
+
+			if m.Theme.ASCII {
+				label = layout.ASCII(strings.ReplaceAll(label, "½", "half"))
+			}
+
+			items = append(items, layout.TextRowItem{Text: label})
 		}
 	}
 
-	content := strings.Join(labels, "  ")
-	if m.Theme.ASCII {
-		content = layout.ASCII(strings.ReplaceAll(content, "½", "half"))
-	}
-
-	return ansi.Hardwrap(ansi.Wrap(content, width, ""), width, true)
+	return (layout.TextRow{Gap: 2, Items: items}).View(width)
 }
 
 func (m *OperationalDashboard) View() string {

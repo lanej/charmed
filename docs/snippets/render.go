@@ -263,6 +263,8 @@ func Render(id string) (string, error) {
 		return ExampleNavigationTabs(), nil
 	case "layout/link-group":
 		return ExampleLayoutLinkGroup()
+	case "layout/text-row":
+		return ExampleLayoutTextRow(), nil
 	case "layout/header":
 		return ExampleLayoutHeader(), nil
 	case "layout/identity-header":

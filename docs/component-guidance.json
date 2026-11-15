@@ -1,5 +1,6 @@
 {
   "use": {
+    "layout/text-row": "Compose headers, operational status lines and compact summaries from styled text segments, fixed gaps and flexible space. Fields wrap in order rather than disappearing when the terminal narrows.",
     "chart/timeseries": "Compare timestamped measurements over the same interval. Supply labeled series with explicit units; the shared axes make changes in API and worker throughput directly comparable.",
     "input/text": "Collect a single editable value such as an environment name. Use a labeled field when the value also needs persistent help or validation feedback.",
     "pattern/log-inspector": "Investigate one HTTP exchange alongside its correlated application logs. Request and response payloads keep separate viewports while the parent coordinates selection, focus and available space.",
@@ -75,6 +76,7 @@
     "template/operations": "Start an operational dashboard with a summary and primary evidence, then open secondary diagnostics with i. Exact count/capacity meters show remaining quota. The title and subtitle share a header with right-aligned observation status; narrow allocations stack fields without dropping them."
   },
   "integration": {
+    "text-row": "Supply trusted native display strings, escaping application data with text.Inline before styling. Gap reserves cells between nonempty items; flexible spacers share remaining width. View wraps at item boundaries and within long items. Stack selects explicit vertical layout. Allocate the returned height or provide scrolling; Fit clips. Rendering is pure, preserves native styling and owns no focus or input handling.",
     "grid": "Construct the grid with ordered axes and keyed entries, then focus it when its region becomes active. Forward Update messages and return its command; the parent owns Tab routing and Resize allocations. Replace observations through SetData and inspect Selected for stable IDs and presence. Theme, geometry, renderer and optional help survive updates.",
     "static": "Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.",
     "chart": "Keep observations and their units in the application, and pass changes through the chart's public data API. Allocate terminal columns and rows from the parent layout. Forward native model commands when enabling interaction, and check whether resizing rebuilds plotted data before applying native overrides.",
