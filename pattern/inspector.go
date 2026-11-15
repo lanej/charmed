@@ -81,7 +81,7 @@ func (m *CohortComparison) updateInspector() {
 
 					metric := m.data.Metrics[i]
 
-					value := text.NumberLabel(p.Value*metric.Scale(), 3, metric.DisplayUnit(), p.HasValue)
+					value := text.AbbreviatedNumber(p.Value*metric.Scale(), 3, metric.DisplayUnit(), p.HasValue)
 
 					row := table.Row{m.metricLabel(i, true), palette.Text().Render(value), z}
 					if showAttention {

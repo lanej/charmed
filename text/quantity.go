@@ -2,8 +2,6 @@ package text
 
 import (
 	"math"
-	"strconv"
-	"strings"
 
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/x/ansi"
@@ -19,7 +17,7 @@ const (
 )
 
 // Quantity retains the supplied observation. Scaling and rounding affect its label only.
-// Unit is literal text (e.g. B or req/s); scaling is opt-in and precision is clamped to 0..9.
+// Unit is literal text (e.g. B or req/s); scaling is opt-in; precision is a maximum of 0..9 decimal places.
 type Quantity struct {
 	Value     float64
 	State     ValueState
@@ -65,14 +63,7 @@ func (q Quantity) Label() string {
 		index++
 	}
 
-	if value == 0 {
-		value = 0
-	}
-
-	label := strconv.FormatFloat(value, 'f', precision, 64)
-	if value != 0 && strings.Trim(label, "-0.") == "" {
-		label = strconv.FormatFloat(value, 'g', 3, 64)
-	}
+	label := numberDigits(value, precision, false)
 
 	unit := prefixes[index] + Inline(q.Unit)
 	if unit != "" {

@@ -16,8 +16,14 @@ func TestSignedNumberPreservesDirectionAndMissingness(t *testing.T) {
 		available bool
 		want      string
 	}{
-		{.25, true, "+0.250pp"}, {-.25, true, "-0.250pp"}, {0, true, "+0.000pp"}, {math.Copysign(0, -1), true, "+0.000pp"},
-		{-.000001, true, "-1e-06pp"}, {0, false, "n/a"}, {math.NaN(), true, "n/a"}, {math.Inf(1), true, "n/a"},
+		{.25, true, "+0.25pp"},
+		{-.25, true, "-0.25pp"},
+		{0, true, "+0pp"},
+		{math.Copysign(0, -1), true, "+0pp"},
+		{-.000001, true, "-1e-06pp"},
+		{0, false, "n/a"},
+		{math.NaN(), true, "n/a"},
+		{math.Inf(1), true, "n/a"},
 	} {
 		n := text.SignedNumber{Value: tc.value, Available: tc.available, Precision: 3, Unit: "pp"}
 		for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast, theme.Mono} {
@@ -28,7 +34,7 @@ func TestSignedNumberPreservesDirectionAndMissingness(t *testing.T) {
 	}
 	palette := theme.New(theme.Dark)
 	n := text.SignedNumber{Value: .25, Available: true, Precision: 3, Tones: text.SignTones{Positive: text.Danger, Negative: text.Success}}
-	if n.View(palette) != text.ToneStyle(text.Danger, text.Normal, palette).Render("+0.250") {
+	if n.View(palette) != text.ToneStyle(text.Danger, text.Normal, palette).Render("+0.25") {
 		t.Fatal("caller-supplied increasing-is-bad tone was ignored")
 	}
 	n.Available = false

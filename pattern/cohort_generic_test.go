@@ -247,7 +247,7 @@ func TestLongCohortLabelsRetainNumericComparisons(t *testing.T) {
 			m.Resize(size)
 
 			frame := ansi.Strip(m.Panels.View())
-			if !strings.Contains(frame, "+8.000C") || !strings.Contains(frame, "+15.500C") {
+			if !strings.Contains(frame, "+8C") || !strings.Contains(frame, "+15.5C") {
 				t.Fatalf("labels hid scalar deltas at %+v: %s", size, frame)
 			}
 		}
@@ -338,7 +338,7 @@ func TestInspectorPreservesTinyNonzeroMeasurements(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	for i, want := range []string{"0.0001%", "1e-06C", "-1e-06C", "0.000C"} {
+	for i, want := range []string{"0.0001%", "1e-06C", "-1e-06C", "0C"} {
 		if got := ansi.Strip(m.Inspector.Rows()[i][1]); got != want {
 			t.Fatalf("metric %s: got %q, want %q", d.Metrics[i].ID, got, want)
 		}

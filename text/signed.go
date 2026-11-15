@@ -1,7 +1,6 @@
 package text
 
 import (
-	"fmt"
 	"math"
 
 	"github.com/lanej/charmed/theme"
@@ -20,25 +19,31 @@ type SignedNumber struct {
 	Unit      string
 	Tones     SignTones
 	Emphasis  Emphasis
+	// Abbreviate uses the common-unit policy of AbbreviatedNumber.
+	Abbreviate bool
 }
 
 func (n SignedNumber) valid() bool {
 	return n.Available && !math.IsNaN(n.Value) && !math.IsInf(n.Value, 0)
 }
+
 func (n SignedNumber) Label() string {
 	if !n.valid() {
 		return "n/a"
 	}
-	value := n.Value
-	if value == 0 {
-		value = 0
-	} // Canonicalize IEEE negative zero.
-	precision := max(0, min(9, n.Precision))
-	if value != 0 && math.Abs(value) < .5*math.Pow10(-precision) {
-		return fmt.Sprintf("%+.3g%s", value, n.Unit)
+
+	if n.Abbreviate {
+		label := AbbreviatedNumber(n.Value, n.Precision, n.Unit, true)
+		if n.Value >= 0 {
+			label = "+" + label
+		}
+
+		return label
 	}
-	return fmt.Sprintf("%+.*f%s", precision, value, n.Unit)
+
+	return numberDigits(n.Value, n.Precision, true) + n.Unit
 }
+
 func (n SignedNumber) View(t theme.Theme) string {
 	tone := n.Tones.Zero
 	if !n.valid() {

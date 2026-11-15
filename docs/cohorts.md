@@ -65,3 +65,16 @@ Configured policies without sufficient observations or a reference report `Unkno
 | Labels | Cohort, metric, value and member labels apply across domains |
 
 Native table and viewport access remain available. Data, reference, metric, window and size changes rebuild generated rows, columns, charts and inspector sizing; direct mutations to those properties reset. Apply customizations after those operations, and forward lifecycle commands on the Bubble Tea update thread.
+
+## Compact numbers and stable columns
+
+Comparison labels use a maximum decimal precision and omit redundant trailing zeros. `text.AbbreviatedNumber` applies binary scaling to base byte units and decimal scaling to counts, rates and supported base SI units. Percentages, temperatures, already-prefixed and unknown units retain their supplied meaning; `text.NumberLabel` provides unscaled formatting.
+
+```go
+text.AbbreviatedNumber(2048, 3, "B", true)     // "2 KiB"
+text.AbbreviatedNumber(1250, 2, "req/s", true) // "1.25 kreq/s"
+text.AbbreviatedNumber(20, 3, "kWh", true)     // "20kWh"
+text.NumberLabel(0.000001, 3, "C", true)      // "1e-06C"
+```
+
+The organism measures comparison labels across all supplied metrics and windows, then reserves shared label, plot and value columns. Delta and distribution tracks share both physical edges, while their numeric scales remain independent. The horizontal header reflows and reserves its rendered height. Short screens show a marked summary so the comparison stays reachable; cohort identities remain in the scrollable bands and member table. Metric selection and window navigation retain those columns while each metric keeps its own numeric domain. `chart.BandMatrix.Height` measures the same shared compact-label fallback and wrapping used by its renderer.

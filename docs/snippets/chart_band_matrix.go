@@ -28,6 +28,6 @@ func ExampleChartBandMatrix() string {
 		},
 	}
 
-	return matrix.View(layout.Size{Width: 64, Height: 12}, palette, false)
+	return matrix.View(layout.Size{Width: 64, Height: matrix.Height(64, palette)}, palette, false)
 	// Add one BandRow per metric; each row owns its axis shared by both versions.
 }
