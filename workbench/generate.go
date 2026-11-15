@@ -99,6 +99,30 @@ func Generate(out string) error {
 			}{name: "Inspection", change: func(c *story.Config) { c.VerboseDetails = true }})
 		}
 
+		if d.ID == "git/review" || d.ID == "pattern/outline-document" || d.ID == "collection/section-stack" {
+			for _, state := range d.States {
+				if state == "ready" {
+					continue
+				}
+
+				variants = append(variants, struct {
+					name   string
+					change func(*story.Config)
+				}{name: strings.ToUpper(state[:1]) + state[1:], change: func(c *story.Config) { c.State = state }})
+			}
+
+			variants = append(variants,
+				struct {
+					name   string
+					change func(*story.Config)
+				}{name: "ASCII", change: func(c *story.Config) { c.ASCII = true }},
+				struct {
+					name   string
+					change func(*story.Config)
+				}{name: "Unicode monochrome", change: func(c *story.Config) { c.Theme = theme.Mono; c.Profile = "none" }},
+			)
+		}
+
 		if d.ID == "diagram/state-transitions" {
 			for _, trace := range []struct{ name, state string }{{"Last 3 transitions", "last-3"}, {"Whole path", "all"}} {
 				variants = append(variants, struct {

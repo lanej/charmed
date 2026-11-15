@@ -147,17 +147,17 @@ func TestDiffNumberGutterExpandsOnlyForShiftedPositions(t *testing.T) {
 		lines []DiffLine
 		want  string
 	}{
-		{"aligned context", []DiffLine{{Kind: ContextLine, OldLine: 10, NewLine: 10, Text: "same"}}, "   10  same"},
-		{"replacement", []DiffLine{{Kind: DeletedLine, OldLine: 10, Text: "old"}, {Kind: AddedLine, NewLine: 10, Text: "new"}}, "   10 -old\n   10 +new"},
-		{"addition only", []DiffLine{{Kind: AddedLine, NewLine: 10, Text: "new"}}, "   10 +new"},
-		{"deletion only", []DiffLine{{Kind: DeletedLine, OldLine: 10, Text: "old"}}, "   10 -old"},
-		{"shifted replacement", []DiffLine{{Kind: DeletedLine, OldLine: 10, Text: "old"}, {Kind: AddedLine, NewLine: 20, Text: "new"}}, "   10       -old\n         20 +new"},
-		{"insertion shifts context", []DiffLine{{Kind: AddedLine, NewLine: 10, Text: "new"}, {Kind: ContextLine, OldLine: 10, NewLine: 11, Text: "same"}}, "         10 +new\n   10    11  same"},
-		{"deletion shifts context", []DiffLine{{Kind: DeletedLine, OldLine: 10, Text: "old"}, {Kind: ContextLine, OldLine: 11, NewLine: 10, Text: "same"}}, "   10       -old\n   11    10  same"},
-		{"missing numbers", []DiffLine{{Kind: ContextLine, Text: "same"}}, "       same"},
+		{"aligned context", []DiffLine{{Kind: ContextLine, OldLine: 10, NewLine: 10, Text: "same"}}, "10  same"},
+		{"replacement", []DiffLine{{Kind: DeletedLine, OldLine: 10, Text: "old"}, {Kind: AddedLine, NewLine: 10, Text: "new"}}, "10 -old\n10 +new"},
+		{"addition only", []DiffLine{{Kind: AddedLine, NewLine: 10, Text: "new"}}, "10 +new"},
+		{"deletion only", []DiffLine{{Kind: DeletedLine, OldLine: 10, Text: "old"}}, "10 -old"},
+		{"shifted replacement", []DiffLine{{Kind: DeletedLine, OldLine: 10, Text: "old"}, {Kind: AddedLine, NewLine: 20, Text: "new"}}, "10    -old\n   20 +new"},
+		{"insertion shifts context", []DiffLine{{Kind: AddedLine, NewLine: 10, Text: "new"}, {Kind: ContextLine, OldLine: 10, NewLine: 11, Text: "same"}}, "   10 +new\n10 11  same"},
+		{"deletion shifts context", []DiffLine{{Kind: DeletedLine, OldLine: 10, Text: "old"}, {Kind: ContextLine, OldLine: 11, NewLine: 10, Text: "same"}}, "10    -old\n11 10  same"},
+		{"missing numbers", []DiffLine{{Kind: ContextLine, Text: "same"}}, "   same"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			view := ansi.Strip(DiffHunk(Hunk{Header: "hunk", Lines: tc.lines}, theme.New(theme.Dark)))
+			view := ansi.Strip(DiffHunk(Hunk{Header: "hunk", Lines: tc.lines}, theme.New(theme.Dark), DiffOptions{Gutter: AutoGutter}))
 			if view != "hunk\n"+tc.want {
 				t.Fatalf("got %q; want %q", view, "hunk\n"+tc.want)
 			}
@@ -175,7 +175,7 @@ func TestDiffOutputPreservesSourceGuttersAndSafeControls(t *testing.T) {
 	view := DiffHunk(hunk, palette, DiffOptions{Language: "go"})
 	plain := ansi.Strip(view)
 
-	want := "@@ -10,2 +10,2 @@\n   10  const ready = true\n   11 -return \"old\"\n   11 +return \"new\"\n\\ No newline at end of file"
+	want := "@@ -10,2 +10,2 @@\n10  const ready = true\n11 -return \"old\"\n11 +return \"new\"\n\\ No newline at end of file"
 	if plain != want {
 		t.Fatalf("source changed:\n%q\nwant:\n%q", plain, want)
 	}

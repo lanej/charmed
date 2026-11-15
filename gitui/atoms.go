@@ -88,7 +88,7 @@ func DivergenceIndicator(d Divergence, t theme.Theme) string {
 func DiffSummary(stat DiffStat, t theme.Theme) string {
 	switch stat.State {
 	case TextDiff:
-		return portable(t.Text().Render(fmt.Sprintf("+%d -%d", stat.Added, stat.Deleted)), t)
+		return portable(t.Text().Foreground(t.Success).Render(fmt.Sprintf("+%d", stat.Added))+" "+t.Text().Foreground(t.Danger).Render(fmt.Sprintf("-%d", stat.Deleted)), t)
 	case BinaryDiff:
 		return portable(t.Subtle().Render("binary"), t)
 	case UnavailableDiff:

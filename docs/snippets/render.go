@@ -10,6 +10,12 @@ func Render(id string) (string, error) {
 		return ExampleChartBuckets(), nil
 	case "template/operations":
 		return ExampleTemplateOperations(), nil
+	case "collection/section-stack":
+		return ExampleCollectionSectionStack()
+	case "pattern/outline-document":
+		return ExamplePatternOutlineDocument()
+	case "git/review":
+		return ExampleGitReview()
 	case "feedback/canary-membership":
 		return ExampleFeedbackCanaryMembership(), nil
 	case "text/indicator":

@@ -57,7 +57,7 @@ func command() *cobra.Command {
 		cmd.Flags().BoolVar(&c.ASCII, "ascii", false, "Use ASCII/text fallbacks")
 		cmd.Flags().BoolVar(&c.ReducedMotion, "reduced-motion", false, "Disable automatic animation")
 		cmd.Flags().BoolVar(&c.Live, "live", false, "Run wall-clock animations")
-		cmd.Flags().StringVar(&c.State, "state", c.State, "ready, empty, loading, error, or disabled")
+		cmd.Flags().StringVar(&c.State, "state", c.State, "ready, empty, loading, error, disabled, folded, or reviewed (story-dependent)")
 		cmd.Flags().StringVar(&c.Value, "value", c.Value, "Input fixture value")
 		cmd.Flags().IntVar(&c.Series, "series", c.Series, "Chart series count")
 		cmd.Flags().IntVar(&c.Sigma, "sigma", c.Sigma, "Maximum nested host-spread band: 1, 2 or 3")
