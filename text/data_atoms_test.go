@@ -22,7 +22,7 @@ func TestQuantityFormattingKeepsUnitsSignAndMissingDistinct(t *testing.T) {
 		{text.Quantity{Value: 1258291, Unit: "B", Scale: text.BinaryScale, Precision: 1}, "1.2 MiB"},
 		{text.Quantity{Value: 842, Unit: "req/s"}, "842 req/s"},
 		{text.Quantity{Value: 1250, Scale: text.DecimalScale, Precision: 1}, "1.2k"},
-		{text.Quantity{Value: 999.96, Unit: "B", Scale: text.DecimalScale, Precision: 1}, "1.0 kB"},
+		{text.Quantity{Value: 999.96, Unit: "B", Scale: text.DecimalScale, Precision: 1}, "1 kB"},
 		{text.Quantity{Value: -2048, Unit: "B", Scale: text.BinaryScale}, "-2 KiB"},
 		{text.Quantity{Value: .0000001, Precision: 2}, "1e-07"},
 		{text.Quantity{Value: .5}, "0.5"},

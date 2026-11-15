@@ -6,6 +6,8 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/cohort"
+	regions "github.com/lanej/charmed/examples/cohorts/fixture"
 	"github.com/lanej/charmed/examples/deployment/fixture"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/pattern"
@@ -72,5 +74,128 @@ func TestDefaultComparisonRetainsStackedPresentation(t *testing.T) {
 	}
 	if m.Variant() != pattern.Stacked || strings.Contains(ansi.Strip(m.Panels.View()), "Disconnected bands") {
 		t.Fatal("the band variant replaced the default stacked presentation")
+	}
+}
+
+func TestBandMatrixKeepsComparisonColumnsAcrossMetricsFocusAndWindows(t *testing.T) {
+	d := regions.Data()
+	for i := range d.Windows[len(d.Windows)-1].Samples {
+		sample := &d.Windows[len(d.Windows)-1].Samples[i]
+		if sample.CohortID == "west" {
+			sample.Measurements["energy"] = cohort.Measurement{Value: 100000000}
+		}
+	}
+
+	d.Metrics[0].Unit = "µs"
+
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Data: d, ReferenceID: "north", Theme: theme.New(theme.Mono), Variant: pattern.Bands})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	m.Resize(layout.Size{Width: 150, Height: 80})
+
+	baseline := -1
+
+	for _, window := range []int{0, len(d.Windows) - 1} {
+		if err := m.SetWindow(window); err != nil {
+			t.Fatal(err)
+		}
+
+		for _, metric := range d.Metrics {
+			if err := m.SetMetric(metric.ID); err != nil {
+				t.Fatal(err)
+			}
+
+			rows := 0
+
+			for _, line := range strings.Split(ansi.Strip(m.Panels.View()), "\n") {
+				if !strings.Contains(line, "vs North") {
+					continue
+				}
+
+				index := strings.Index(line[1:], "|") + 1
+				if index <= 0 {
+					t.Fatal("comparison bar missing")
+				}
+
+				column := ansi.StringWidth(line[:index])
+				if baseline < 0 {
+					baseline = column
+				} else if column != baseline {
+					t.Fatalf("zero column moved: %d to %d for %s window %d", baseline, column, metric.ID, window)
+				}
+
+				rows++
+			}
+
+			if rows != 8 {
+				t.Fatalf("got %d peer comparisons, want 8", rows)
+			}
+		}
+	}
+}
+
+func TestCohortHeaderReflowsWithoutOverlappingPanels(t *testing.T) {
+	m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Regional measurements", Scope: "SYNTHETIC sensor observations", Data: regions.Data(), ReferenceID: "north", Theme: theme.New(theme.Dark), Variant: pattern.Bands})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, width := range []int{40, 80, 150} {
+		m.Resize(layout.Size{Width: width, Height: 60})
+
+		lines := strings.Split(ansi.Strip(m.View()), "\n")
+		if len(lines) != 60 {
+			t.Fatalf("frame height %d at width %d", len(lines), width)
+		}
+
+		panel := -1
+
+		for i, line := range lines {
+			if ansi.StringWidth(line) != width {
+				t.Fatalf("line width at %d: %q", width, line)
+			}
+
+			if strings.Contains(line, "Disconnected bands") {
+				panel = i
+				break
+			}
+		}
+
+		if panel < 0 {
+			t.Fatal("header hid the primary panel")
+		}
+
+		header := strings.Join(lines[:panel], "\n")
+		for _, value := range []string{"Regional measurements", "SYNTHETIC sensor observations", "Reference North", "South", "West", "eligible"} {
+			if !strings.Contains(header, value) {
+				t.Fatalf("header lost %q at width %d: %s", value, width, header)
+			}
+		}
+	}
+}
+
+func TestManyCohortsKeepPrimaryPanelReachableInShortTerminal(t *testing.T) {
+	d := regions.Data()
+	for i := 0; i < 9; i++ {
+		group := d.Cohorts[0]
+		group.ID = "extra-" + strings.Repeat("x", i+1)
+		group.Label = group.ID
+		d.Cohorts = append(d.Cohorts, group)
+	}
+
+	for _, variant := range []pattern.ComparisonVariant{pattern.Stacked, pattern.Bands} {
+		m, err := pattern.NewCohortComparison(pattern.CohortComparisonOptions{Title: "Measurements", Scope: "Synthetic", Data: d, ReferenceID: "north", Theme: theme.New(theme.Dark), Variant: variant})
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		m.Resize(layout.Size{Width: 40, Height: 16})
+
+		frame := ansi.Strip(m.View())
+		if !strings.Contains(frame, "12 cohorts") || !strings.Contains(frame, "temp") {
+			t.Fatalf("header hid primary evidence for %s:\n%s", variant, frame)
+		}
 	}
 }

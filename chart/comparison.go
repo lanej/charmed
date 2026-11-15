@@ -33,7 +33,22 @@ type DistributionComparison struct {
 	ShowLegend bool
 }
 
-func (d DistributionComparison) View(width int, t theme.Theme) string {
+func (d DistributionComparison) View(width int, t theme.Theme) string { return d.view(width, t, -1) }
+
+func (d DistributionComparison) compactPrefix(width int, t theme.Theme) int {
+	prefix := min(29, max(8, width/3))
+
+	for _, series := range d.Series {
+		value := text.AbbreviatedNumber(series.Mean, 3, d.Unit, true)
+		if prefix >= width || prefix < lipgloss.Width(value)+2 {
+			return 0
+		}
+	}
+
+	return prefix
+}
+
+func (d DistributionComparison) view(width int, t theme.Theme, sharedPrefix int) string {
 	if width <= 0 {
 		return ""
 	}
@@ -46,6 +61,80 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 		return t.Subtle().Render(ansi.Wrap("No observations", width, ""))
 	}
 
+	low, high := d.domain()
+
+	var (
+		lines  []string
+		legend []legendEntry
+	)
+
+	prefixWidth := 0
+	if d.Compact {
+		prefixWidth = sharedPrefix
+		if prefixWidth < 0 {
+			prefixWidth = d.compactPrefix(width, t)
+		}
+	}
+
+	for i, s := range d.Series {
+		style := t.Text().Foreground(t.SeriesColor(i))
+		if s.Members == 0 {
+			if d.Compact {
+				lines = append(lines, style.Render(ansi.Wrap(s.Label+" n/a", width, "")))
+			} else {
+				lines = append(lines, style.Render(ansi.Wrap(s.Label+" member mean n/a", width, "")), t.Subtle().Render(ansi.Wrap("Insufficient member samples", width, "")))
+			}
+			continue
+		}
+		spread := "n/a"
+		if s.HasSpread {
+			spread = text.AbbreviatedNumber(s.StdDev, 3, d.SpreadUnit, true)
+		}
+		if !d.Compact {
+			label := fmt.Sprintf("%s mean %s s=%s n=%d", s.Label, text.AbbreviatedNumber(s.Mean, 3, d.Unit, true), spread, s.Members)
+			lines = append(lines, style.Render(ansi.Wrap(label, width, "")))
+		}
+
+		opts := distributionOptions(d, s, i, low, high)
+		prefix := ""
+		if d.Compact {
+			value := text.AbbreviatedNumber(s.Mean, 3, d.Unit, true)
+			if prefixWidth == 0 {
+				lines = append(lines, style.Render(ansi.Wrap(s.Label+" "+value, width, "")))
+			} else {
+				labelWidth := prefixWidth - lipgloss.Width(value) - 1
+				label := ansi.Truncate(s.Label, labelWidth, "~")
+				prefix = style.Render(layout.Fit(label, layout.Size{Width: labelWidth, Height: 1}) + " " + value)
+			}
+		}
+
+		lines = append(lines, prefix+IntervalBand(opts, max(1, width-lipgloss.Width(prefix)), t))
+		if d.ShowLegend {
+			legend = append(legend, opts.legendEntries(s.Label+" ", t)...)
+		}
+	}
+	if math.IsInf(low, 0) {
+		lines = append(lines, t.Subtle().Render(ansi.Wrap("No eligible member spread", width, "")))
+	} else {
+		left, right := text.AbbreviatedNumber(low, 3, d.Unit, true), text.AbbreviatedNumber(high, 3, d.Unit, true)
+		axisWidth := width - prefixWidth
+		labelWidth := lipgloss.Width(left) + lipgloss.Width(right)
+
+		if labelWidth+1 <= axisWidth {
+			lines = append(lines, strings.Repeat(" ", prefixWidth)+left+strings.Repeat(" ", axisWidth-labelWidth)+right)
+		} else {
+			lines = append(lines, t.Subtle().Render(ansi.Wrap(left+"  "+right, width, "")))
+		}
+	}
+	if d.ShowLegend {
+		if key := renderLegend(legend, width, t); key != "" {
+			lines = append(lines, key)
+		}
+	}
+	return strings.Join(lines, "\n")
+}
+
+func (d DistributionComparison) domain() (float64, float64) {
 	low, high := math.Inf(1), math.Inf(-1)
 	for _, s := range d.Series {
 		if s.Members > 0 {
@@ -75,84 +164,18 @@ func (d DistributionComparison) View(width int, t theme.Theme) string {
 		high = min(d.Max, high+pad)
 	}
 
-	var (
-		lines  []string
-		legend []legendEntry
-	)
+	return low, high
+}
 
-	prefixWidth := 0
-	if d.Compact {
-		prefixWidth = min(29, max(8, width/3))
-
-		for _, series := range d.Series {
-			value := text.NumberLabel(series.Mean, 3, d.Unit, true)
-			if prefixWidth >= width || prefixWidth < lipgloss.Width(value)+2 {
-				prefixWidth = 0
-				break
-			}
+func distributionOptions(d DistributionComparison, s DistributionSeries, index int, low, high float64) BandOptions {
+	options := BandOptions{Min: low, Max: high, Center: s.Mean, Selected: s.Selected, Series: index, Markers: d.Markers}
+	if s.HasSpread {
+		for k := max(1, min(3, d.Sigma)); k >= 1; k-- {
+			options.Intervals = append(options.Intervals, Interval{Low: max(low, s.Mean-float64(k)*s.StdDev), High: min(high, s.Mean+float64(k)*s.StdDev)})
 		}
 	}
 
-	for i, s := range d.Series {
-		style := t.Text().Foreground(t.SeriesColor(i))
-		if s.Members == 0 {
-			if d.Compact {
-				lines = append(lines, style.Render(ansi.Wrap(s.Label+" n/a", width, "")))
-			} else {
-				lines = append(lines, style.Render(ansi.Wrap(s.Label+" member mean n/a", width, "")), t.Subtle().Render(ansi.Wrap("Insufficient member samples", width, "")))
-			}
-			continue
-		}
-		spread := "n/a"
-		if s.HasSpread {
-			spread = text.NumberLabel(s.StdDev, 3, d.SpreadUnit, true)
-		}
-		if !d.Compact {
-			label := fmt.Sprintf("%s mean %s s=%s n=%d", s.Label, text.NumberLabel(s.Mean, 3, d.Unit, true), spread, s.Members)
-			lines = append(lines, style.Render(ansi.Wrap(label, width, "")))
-		}
-		opts := BandOptions{Min: low, Max: high, Center: s.Mean, Selected: s.Selected, Series: i, Markers: d.Markers}
-		if s.HasSpread {
-			for k := max(1, min(3, d.Sigma)); k >= 1; k-- {
-				opts.Intervals = append(opts.Intervals, Interval{Low: max(low, s.Mean-float64(k)*s.StdDev), High: min(high, s.Mean+float64(k)*s.StdDev)})
-			}
-		}
-		prefix := ""
-		if d.Compact {
-			value := text.NumberLabel(s.Mean, 3, d.Unit, true)
-			if prefixWidth == 0 {
-				lines = append(lines, style.Render(ansi.Wrap(s.Label+" "+value, width, "")))
-			} else {
-				labelWidth := prefixWidth - lipgloss.Width(value) - 1
-				label := ansi.Truncate(s.Label, labelWidth, "~")
-				prefix = style.Render(layout.Fit(label, layout.Size{Width: labelWidth, Height: 1}) + " " + value)
-			}
-		}
-
-		lines = append(lines, prefix+IntervalBand(opts, max(1, width-lipgloss.Width(prefix)), t))
-		if d.ShowLegend {
-			legend = append(legend, opts.legendEntries(s.Label+" ", t)...)
-		}
-	}
-	if math.IsInf(low, 0) {
-		lines = append(lines, t.Subtle().Render(ansi.Wrap("No eligible member spread", width, "")))
-	} else {
-		left, right := text.NumberLabel(low, 3, d.Unit, true), text.NumberLabel(high, 3, d.Unit, true)
-		axisWidth := width - prefixWidth
-		labelWidth := lipgloss.Width(left) + lipgloss.Width(right)
-
-		if labelWidth+1 <= axisWidth {
-			lines = append(lines, strings.Repeat(" ", prefixWidth)+left+strings.Repeat(" ", axisWidth-labelWidth)+right)
-		} else {
-			lines = append(lines, t.Subtle().Render(ansi.Wrap(left+"  "+right, width, "")))
-		}
-	}
-	if d.ShowLegend {
-		if key := renderLegend(legend, width, t); key != "" {
-			lines = append(lines, key)
-		}
-	}
-	return strings.Join(lines, "\n")
+	return options
 }
 
 // ComparisonPanel composes labels, distribution and native history as one region.
@@ -173,33 +196,4 @@ func (p ComparisonPanel) View(size layout.Size, t theme.Theme, focused bool) str
 	lines = append(lines, p.History.View())
 
 	return layout.Panel(p.Title, strings.Join(lines, "\n"), size, t, focused)
-}
-
-type BandRow struct {
-	Title        string
-	Distribution DistributionComparison
-}
-
-// BandMatrix composes disconnected, directly labeled comparisons in one frame.
-// Each metric owns a numeric axis shared by its versions, never a connecting
-// profile across categories. The rows preserve version colors and interval atoms.
-type BandMatrix struct {
-	Title string
-	Rows  []BandRow
-}
-
-func (b BandMatrix) View(size layout.Size, t theme.Theme, focused bool) string {
-	var rows []string
-
-	for _, row := range b.Rows {
-		d := row.Distribution
-		d.Compact = true
-		rows = append(rows, row.Title+"\n"+d.View(max(1, layout.PanelContentSize(size).Width), t))
-	}
-
-	if len(rows) == 0 {
-		rows = []string{"No observations"}
-	}
-
-	return layout.Panel(b.Title, strings.Join(rows, "\n\n"), size, t, focused)
 }

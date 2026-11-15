@@ -136,7 +136,7 @@ func TestDistributionRowsKeepValuesUnitsAndMissingStatesAtNarrowWidths(t *testin
 			}
 		}
 
-		if !strings.Contains(view, "20.000%") || !strings.Contains(view, "40.000%") {
+		if !strings.Contains(view, "20%") || !strings.Contains(view, "40%") {
 			t.Fatal("compact labels clipped a value or its unit")
 		}
 	}
@@ -144,7 +144,7 @@ func TestDistributionRowsKeepValuesUnitsAndMissingStatesAtNarrowWidths(t *testin
 	distribution.Compact = false
 	view := distribution.View(24, palette)
 
-	if !strings.Contains(strings.Join(strings.Fields(view), " "), "Reference mean 20.000% s=n/a n=10") {
+	if !strings.Contains(strings.Join(strings.Fields(view), " "), "Reference mean 20% s=n/a n=10") {
 		t.Fatal("expanded distribution dropped wrapped metadata")
 	}
 

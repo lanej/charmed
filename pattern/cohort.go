@@ -56,36 +56,37 @@ type CohortComparisonOptions struct {
 // and a member inspector. It owns UI state; callers supply measurements.
 // Sigma is descriptive member spread, never a significance or rollout decision.
 type CohortComparison struct {
-	geometryOnly                 bool
-	Table                        table.Model
-	Panels                       viewport.Model
-	Inspector                    table.Model
-	data                         cohort.Data
-	title, scope                 string
-	theme                        theme.Theme
-	minRequests                  uint64
-	sigma, window, metric        int
-	selected                     cohort.MemberKey
-	visible                      []cohort.MemberRate
-	summaries                    [][]cohort.Summary
-	referenceID                  string
-	comparisons                  []map[string]cohort.ComparisonAttention
-	plots                        []chart.TimeSeries
-	historyNotes                 [][]string
-	focus                        interaction.Focus
-	size                         layout.Size
-	gridSize, sideSize           layout.Size
-	tableHeight, inspectorHeight int
-	sidebar                      bool
-	emit                         func(any)
-	metricTones                  map[string]text.Tone
-	boundaries                   map[string]cohort.ComparisonPolicy
-	assessments                  []cohort.ComparisonAttention
-	attentionLevels              map[string]attention.Level
-	initialized                  bool
-	deltaExtent                  float64
-	variant                      ComparisonVariant
-	metricSigns                  map[string]text.SignTones
+	geometryOnly                          bool
+	Table                                 table.Model
+	Panels                                viewport.Model
+	Inspector                             table.Model
+	data                                  cohort.Data
+	title, scope                          string
+	theme                                 theme.Theme
+	minRequests                           uint64
+	sigma, window, metric                 int
+	selected                              cohort.MemberKey
+	visible                               []cohort.MemberRate
+	summaries                             [][]cohort.Summary
+	referenceID                           string
+	comparisons                           []map[string]cohort.ComparisonAttention
+	plots                                 []chart.TimeSeries
+	historyNotes                          [][]string
+	focus                                 interaction.Focus
+	size                                  layout.Size
+	gridSize, sideSize                    layout.Size
+	tableHeight, inspectorHeight          int
+	sidebar                               bool
+	emit                                  func(any)
+	metricTones                           map[string]text.Tone
+	boundaries                            map[string]cohort.ComparisonPolicy
+	assessments                           []cohort.ComparisonAttention
+	attentionLevels                       map[string]attention.Level
+	initialized                           bool
+	deltaExtent                           float64
+	comparisonLabelWidth, deltaLabelWidth int
+	variant                               ComparisonVariant
+	metricSigns                           map[string]text.SignTones
 }
 
 func NewCohortComparison(o CohortComparisonOptions) (*CohortComparison, error) {
@@ -356,7 +357,8 @@ func (m *CohortComparison) Resize(size layout.Size) {
 	previousGridWidth := m.gridSize.Width
 	previousSideWidth := m.sideSize.Width
 	m.size = size
-	height := max(1, size.Height-3)
+	header, _ := m.headerView()
+	height := max(1, size.Height-lipgloss.Height(header))
 
 	m.sidebar = size.Width >= 124 && size.Height >= 28
 	if m.sidebar {
@@ -485,7 +487,8 @@ func (m *CohortComparison) refresh() {
 		m.Table.SetCursor(cursor)
 	}
 
-	m.updateDetails()
+	m.rebuildPlots()
+	m.Resize(m.size)
 
 	for _, change := range changes {
 		m.emit(change)
@@ -529,7 +532,7 @@ func (m *CohortComparison) rebuildPlots() {
 		low, high, _ = chart.PaddedRange(low, high, 0.15)
 		m.plots[i] = chart.NewTimeSeries(series, layout.Size{Width: width, Height: m.historyHeight()}, m.theme,
 			timeserieslinechart.WithYRange(low, high),
-			timeserieslinechart.WithYLabelFormatter(func(_ int, value float64) string { return text.NumberLabel(value, 2, metric.DisplayUnit(), true) }),
+			timeserieslinechart.WithYLabelFormatter(func(_ int, value float64) string { return text.AbbreviatedNumber(value, 2, metric.DisplayUnit(), true) }),
 			timeserieslinechart.WithXLabelFormatter(func(_ int, value float64) string {
 				return time.UnixMilli(int64(math.Round(value * 1000))).UTC().Format("15:04")
 			}))
@@ -576,13 +579,14 @@ func (m *CohortComparison) comparisonTitle(index, width int) string {
 	return layout.Fit(m.metricLabel(index, true)+" "+feedback.Attention(m.assessments[index].Level, m.theme), layout.Size{Width: width, Height: 1})
 }
 
-func (m *CohortComparison) comparisonRows(index, width int) []string {
+func (m *CohortComparison) comparisonItems(index int) []chart.DeltaRow {
+	if m.referenceID == "" {
+		return nil
+	}
+
 	metric := m.data.Metrics[index]
 
-	var rows []string
-	if m.referenceID == "" {
-		return rows
-	}
+	var rows []chart.DeltaRow
 
 	for c, group := range m.data.Cohorts {
 		if group.ID == m.referenceID {
@@ -592,11 +596,24 @@ func (m *CohortComparison) comparisonRows(index, width int) []string {
 		delta, available := m.cohortDelta(index, c)
 		state := m.comparisons[index][group.ID]
 		property := chart.DeltaProperty{Value: delta, Extent: m.metricDeltaExtent(index), Available: available, Unit: metric.DeltaUnit(), Unitless: metric.DeltaUnit() == "", Style: feedback.AttentionStyle(state.Fleet.Level, m.theme), Tones: m.metricSigns[metric.ID]}
-		labelWidth := max(0, width-15)
+		rows = append(rows, chart.DeltaRow{Label: group.Label + " vs " + m.referenceLabel(), Property: property})
+	}
 
-		label := ansi.Truncate(group.Label+" vs "+m.referenceLabel(), labelWidth, "~")
-		if label != "" {
-			label += " "
+	return rows
+}
+
+func (m *CohortComparison) comparisonRows(index, width int) []string {
+	labelWidth, numberWidth := m.comparisonColumns(width)
+
+	var rows []string
+
+	for _, item := range m.comparisonItems(index) {
+		property := item.Property
+		property.LabelWidth = numberWidth
+
+		label := ansi.Truncate(item.Label, labelWidth, "~")
+		if labelWidth > 0 {
+			label = layout.Fit(label, layout.Size{Width: labelWidth, Height: 1}) + " "
 		}
 
 		rows = append(rows, label+property.View(max(1, width-lipgloss.Width(label)), m.theme))
@@ -677,15 +694,18 @@ func (m *CohortComparison) grid() string {
 	return layout.Column(rows...)
 }
 
-func (m *CohortComparison) View() string {
+func (m *CohortComparison) headerView() (string, string) {
 	overall := attention.Off
 	for _, a := range m.assessments {
 		overall = attention.Worst(overall, a.Level)
 	}
 
-	header := m.theme.Heading().Render(m.title) + " " + feedback.Attention(overall, m.theme) + " / " + m.scope
+	header := layout.TextRow{Gap: 2, Items: []layout.TextRowItem{
+		{Text: m.theme.Heading().Render(m.title) + " " + feedback.Attention(overall, m.theme), Flex: true},
+		{Text: m.scope},
+	}}.View(m.size.Width)
 
-	var groups []string
+	var groups []layout.TextRowItem
 
 	for c, group := range m.data.Cohorts {
 		members := len(m.memberSummary(m.metric, c).Points)
@@ -695,7 +715,7 @@ func (m *CohortComparison) View() string {
 			role = "Reference "
 		}
 
-		groups = append(groups, m.theme.Text().Foreground(m.theme.SeriesColor(c)).Render(fmt.Sprintf("%s%s / %d members", role, group.Label, members)))
+		groups = append(groups, layout.TextRowItem{Text: m.theme.Text().Foreground(m.theme.SeriesColor(c)).Render(fmt.Sprintf("%s%s / %d members", role, group.Label, members))})
 	}
 
 	window := "No windows"
@@ -729,6 +749,47 @@ func (m *CohortComparison) View() string {
 		count = "baseline s unavailable"
 	}
 
+	groupRow := layout.TextRow{Gap: 3, Items: groups}.View(m.size.Width)
+	infoRow := layout.TextRow{Gap: 2, Items: []layout.TextRowItem{{Text: info}}}.View(m.size.Width)
+
+	full := layout.Column(header, groupRow, infoRow)
+	if lipgloss.Height(full) <= max(3, m.size.Height/3) {
+		return full, count
+	}
+
+	// Full identities remain in the scrollable comparison and member table.
+	omission := "…"
+	if m.theme.ASCII {
+		omission = "~"
+	}
+
+	compact := []string{
+		m.theme.Heading().Render(m.title) + " / " + m.scope,
+		fmt.Sprintf("%d cohorts / reference %s", len(m.data.Cohorts), m.referenceLabel()),
+		window,
+		fmt.Sprintf("%d eligible / %d excluded / %s", eligible, excluded, omission),
+	}
+	if m.referenceID == "" {
+		compact[1] = fmt.Sprintf("%d cohorts / no reference", len(m.data.Cohorts))
+	}
+
+	budget := max(1, min(len(compact), m.size.Height/3))
+
+	items := make([]layout.TextRowItem, budget)
+	for i := range items {
+		value := compact[i]
+		if i == budget-1 && budget < len(compact) {
+			value += " / " + omission
+		}
+
+		items[i] = layout.TextRowItem{Text: ansi.Truncate(value, max(1, m.size.Width), omission)}
+	}
+
+	return layout.TextRow{Items: items, Stack: true}.View(m.size.Width), count
+}
+
+func (m *CohortComparison) View() string {
+	header, count := m.headerView()
 	tableTitle := fmt.Sprintf("%s / %s %s", m.metricLabel(m.metric, true), count, feedback.Attention(m.assessments[m.metric].Level, m.theme))
 	tablePanel := layout.Panel(tableTitle, m.Table.View(), layout.Size{Width: m.sideSize.Width, Height: m.tableHeight}, m.theme, m.focus.Current() == "hosts")
 	inspector := m.inspectorView()
@@ -739,7 +800,7 @@ func (m *CohortComparison) View() string {
 		content = layout.Row(m.Panels.View(), " ", side)
 	}
 
-	return layout.Fit(strings.Join([]string{header, strings.Join(groups, " | "), info, content}, "\n"), m.size)
+	return layout.Fit(layout.Column(header, content), m.size)
 }
 
 func (m *CohortComparison) historyHeight() int {
