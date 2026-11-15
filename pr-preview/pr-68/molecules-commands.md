@@ -662,7 +662,7 @@ Return Open's focus command, then route keyboard and paste messages exclusively 
 go run ./examples/catalog collection/command-palette
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/collection_command_palette.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/commands.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/collection_command_palette.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/commands.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [input/text](https://lanej.io/charmed/atoms-input.html#input/text) [text/key-hint](https://lanej.io/charmed/atoms-text.html#text/key-hint) [text/match](https://lanej.io/charmed/atoms-text.html#text/match) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -884,6 +884,6 @@ Install HelpFormatter on the Cobra root for inherited help, or call Format to re
 go run ./examples/catalog cli/help
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/cli_help.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/cli/help.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/cli_help.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/cli/help.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/theme](https://lanej.io/charmed/foundations-theme.html#foundations/theme)

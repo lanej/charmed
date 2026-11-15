@@ -232,7 +232,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/status
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/git_status.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/git_status.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/summary](https://lanej.io/charmed/molecules-git.html#git/summary) [git/staged](https://lanej.io/charmed/molecules-git.html#git/staged) [git/unstaged](https://lanej.io/charmed/molecules-git.html#git/unstaged) [git/untracked](https://lanej.io/charmed/molecules-git.html#git/untracked) [git/conflicts](https://lanej.io/charmed/molecules-git.html#git/conflicts)
 
@@ -451,7 +451,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/branches
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/git_branches.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/git_branches.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/branch-row](https://lanej.io/charmed/molecules-git.html#git/branch-row)
 
@@ -679,7 +679,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/history
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/git_history.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/git_history.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/commit-row](https://lanej.io/charmed/molecules-git.html#git/commit-row)
 
@@ -806,7 +806,7 @@ Supply FileDiff with ordered hunk lines and paths. Language overrides path detec
 go run ./examples/catalog git/diff
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/git_diff.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/git_diff.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/hunk](https://lanej.io/charmed/molecules-git.html#git/hunk)
 
@@ -1042,7 +1042,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/changes
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/git_changes.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/git_changes.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/status](https://lanej.io/charmed/organisms-git.html#git/status) [git/diff](https://lanej.io/charmed/organisms-git.html#git/diff)
 
@@ -1261,7 +1261,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/stashes
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/git_stashes.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/git_stashes.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/stash-row](https://lanej.io/charmed/molecules-git.html#git/stash-row)
 
@@ -1480,7 +1480,7 @@ Supply observations from the application and resize the model to its allocated t
 go run ./examples/catalog git/worktrees
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/git_worktrees.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/git_worktrees.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/worktree-row](https://lanej.io/charmed/molecules-git.html#git/worktree-row)
 
@@ -1622,6 +1622,6 @@ Supply a PatchObservation with explicit availability and ordered diffs; SetPatch
 go run ./examples/catalog git/patch-browser
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/git_patch_browser.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/gitui/patch_browser.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/git_patch_browser.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/gitui/patch_browser.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/diff](https://lanej.io/charmed/organisms-git.html#git/diff) [collection/scroll-pane](https://lanej.io/charmed/molecules-collection.html#collection/scroll-pane)

@@ -134,7 +134,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/waffle-header
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/chart_waffle_header.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/chart/waffle.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/chart_waffle_header.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/chart/waffle.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [chart/waffle](https://lanej.io/charmed/atoms-chart.html#chart/waffle) [collection/table](https://lanej.io/charmed/atoms-collection.html#collection/table) [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status) [feedback/progress](https://lanej.io/charmed/atoms-feedback.html#feedback/progress)
 
@@ -366,7 +366,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/band-matrix
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/chart_band_matrix.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/chart/comparison.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/chart_band_matrix.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/chart/comparison.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [chart/distributions](https://lanej.io/charmed/molecules-chart.html#chart/distributions) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -473,7 +473,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/metric
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/chart_metric.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/molecules.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/chart_metric.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/molecules.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [chart/sparkline](https://lanej.io/charmed/atoms-chart.html#chart/sparkline)
 
@@ -765,7 +765,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/panel
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/chart_panel.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/molecules.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/chart_panel.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/molecules.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [chart/timeseries](https://lanej.io/charmed/atoms-chart.html#chart/timeseries) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -896,7 +896,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/distributions
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/chart_distributions.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/chart/comparison.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/chart_distributions.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/chart/comparison.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [chart/interval-band](https://lanej.io/charmed/atoms-chart.html#chart/interval-band)
 
@@ -982,7 +982,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/delta
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/chart_delta.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/chart/delta.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/chart_delta.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/chart/delta.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [chart/interval-band](https://lanej.io/charmed/atoms-chart.html#chart/interval-band) [text/signed-number](https://lanej.io/charmed/atoms-text.html#text/signed-number)
 
@@ -1082,6 +1082,6 @@ Supply ordered intervals with explicit complete, partial, missing or unknown cov
 go run ./examples/catalog chart/buckets
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/chart_buckets.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/chart/buckets.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/chart_buckets.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/chart/buckets.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/theme](https://lanej.io/charmed/foundations-theme.html#foundations/theme)

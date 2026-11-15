@@ -28,7 +28,7 @@ go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
 ```
 
-Run from the repository root with **Go 1.26.11+**. Use Ctrl+C to exit. You can pass fixture-specific options such as `--theme light`, `--legend`, or `--columns 40`; see the [component registry](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/catalog.go) for available fixtures.
+Run from the repository root with **Go 1.26.11+**. Use Ctrl+C to exit. You can pass fixture-specific options such as `--theme light`, `--legend`, or `--columns 40`; see the [component registry](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/catalog.go) for available fixtures.
 
 ## [Add a component](https://lanej.io/charmed/development.html#add-a-component)
 

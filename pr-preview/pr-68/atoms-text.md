@@ -144,7 +144,7 @@ Pass literal source, a language and the available width to CodeBlock. Re-render 
 go run ./examples/catalog text/code
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_code.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/code.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_code.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/code.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -334,7 +334,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/link
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_link.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/link.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_link.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/link.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -457,7 +457,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/primitives
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_primitives.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_primitives.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/story/atoms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -596,7 +596,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/signed-number
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_signed_number.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/signed.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_signed_number.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/signed.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -744,17 +744,17 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/pill
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_pill.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/text.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_pill.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/text.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Color pill dependency graph](https://lanej.io/charmed/dependencies.html#component-text%2Fpill) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/text.go#L29)
+[Color pill dependency graph](https://lanej.io/charmed/dependencies.html#component-text%2Fpill) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/text.go#L29)
 
 Consumer usage uses
 
 - [Color pill](https://lanej.io/charmed/dependencies.html#component-text%2Fpill) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_pill.go#L9)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_pill.go#L9)
 
 [Atoms](https://lanej.io/charmed/atoms.html) / Text
 
@@ -869,7 +869,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/presentation
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_presentation.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/presentation.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_presentation.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/presentation.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -978,7 +978,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/disclosure
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_disclosure.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/disclosure.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_disclosure.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/disclosure.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1072,7 +1072,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/key-hint
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_key_hint.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/text.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_key_hint.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/text.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1204,7 +1204,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/syntax
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_syntax.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/syntax.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_syntax.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/syntax.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1358,7 +1358,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/value-state
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_value_state.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/value.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_value_state.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/value.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1505,7 +1505,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/quantity
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_quantity.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/quantity.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_quantity.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/quantity.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1625,7 +1625,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/identifier
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_identifier.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/identifier.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_identifier.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/identifier.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1739,7 +1739,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/match
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_match.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/match.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_match.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/match.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1861,7 +1861,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/sort
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_sort.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/markers.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_sort.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/markers.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1991,7 +1991,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/change
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_change.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/markers.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_change.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/markers.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -2121,7 +2121,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog text/omission
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_omission.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/markers.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_omission.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/markers.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -2242,11 +2242,11 @@ Supply glyphs through theme.Glyph and labels as plain text; controls are escaped
 go run ./examples/catalog text/indicator
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_indicator.go) · [Implementation](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/text.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_indicator.go) · [Implementation](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/text.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Indicator dependency graph](https://lanej.io/charmed/dependencies.html#component-text%2Findicator) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/text/text.go#L60)
+[Indicator dependency graph](https://lanej.io/charmed/dependencies.html#component-text%2Findicator) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/text/text.go#L60)
 
 - [Color pill](https://lanej.io/charmed/dependencies.html#component-text%2Fpill) · composes · labeled pill presentation
 
@@ -2254,4 +2254,4 @@ Consumer usage uses
 
 - [Indicator](https://lanej.io/charmed/dependencies.html#component-text%2Findicator) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/docs/snippets/text_indicator.go#L9)
+[Example source](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/docs/snippets/text_indicator.go#L9)

@@ -56,7 +56,7 @@ The primary lockup pairs the terminal talisman with the lowercase **charmed** wo
 
 The swatches below are **derived directly from Charmed's native dark theme**. Generated CSS and this page draw from the same semantic roles used in terminal fixtures, including surfaces, borders, text, statuses, and data-series colors. Syntax highlighting maps to these roles instead of defining another hex palette.
 
-For native widgets, source semantic colors from [`theme.New(theme.Dark)`](https://github.com/lanej/charmed/blob/a8a29e65b33913f8df2f703e4af6f8443876d0b9/theme/theme.go). Documentation consumes those values during static generation rather than maintaining a second palette. Success, information, warning, danger, and data-series colors remain distinct.
+For native widgets, source semantic colors from [`theme.New(theme.Dark)`](https://github.com/lanej/charmed/blob/1a9aa465012af77168ac97c5347d8b3b60184fd4/theme/theme.go). Documentation consumes those values during static generation rather than maintaining a second palette. Success, information, warning, danger, and data-series colors remain distinct.
 
 ## [Typography and code](https://lanej.io/charmed/brand.html#typography-and-code)
 
