@@ -13,10 +13,10 @@ import (
 func inspectionDefinitions() []Definition {
 	return []Definition{{
 		ID: "pattern/list-inspector", Title: "Organisms/Patterns/List inspector", Level: "Organisms", Family: "pattern",
-		Description: "Browse stable records with unequal row heights and independently scrollable evidence. Wide layouts preview the selection; Enter opens inspection and Escape restores the list.",
+		Description: "Browse structured record summaries and inspect grouped facts, named conditions and event history. Wide layouts preview the selection; Enter opens inspection and Escape restores the list.",
 		Source:      "pattern/list_inspector.go", Symbol: "ListInspector",
 		Controls: []string{"state"}, States: []string{"ready", "inspecting", "empty", "loading", "error", "confirmed"},
-		Composes: []string{"collection/viewport", "foundations/layout"},
+		Composes: []string{"collection/viewport", "layout/record-summary", "layout/detail-document", "foundations/layout"},
 		Defaults: func() Config { c := DefaultConfig(); c.Columns = 112; c.Rows = 28; return c }(),
 		Factory:  inspectionStory,
 	}}

@@ -2,7 +2,6 @@ package pattern
 
 import (
 	"fmt"
-	"slices"
 	"strings"
 	"unicode"
 
@@ -16,13 +15,18 @@ import (
 	"github.com/lanej/charmed/theme"
 )
 
-// InspectorRecord supplies a stable identity and pure presentation callbacks.
-// Heading is optional plain text above the record, not a selectable item. Row
-// receives the body width after the selection gutter; Detail receives its full
-// content width. Both may return styled, multiline text. A nil Detail disables
-// inspection. The caller owns ordering, grouping, observations and actions.
+// InspectorRecord supplies a stable identity with structured presentation.
+// Summary renders the list row and Document supplies sectioned inspection.
+// Heading is optional plain text above the record, not a selectable item.
+//
+// Row and Detail are optional pure custom renderers that override Summary and
+// Document respectively. Row receives the width after the selection gutter;
+// Detail receives its full content width. With neither Document nor Detail,
+// inspection is disabled. The caller owns ordering, evidence and actions.
 type InspectorRecord struct {
 	ID, Heading string
+	Summary     *layout.RecordSummary
+	Document    *layout.DetailDocument
 	Row         func(width int, selected bool) string
 	Detail      func(width int) string
 }
@@ -48,11 +52,15 @@ type inspectorListAnchor struct {
 // List and Detail retain their native models, styles and key maps across record
 // replacement and resize. Content, dimensions, SoftWrap and row anchoring belong
 // to this wrapper. Hidden panes retain their native size and offset until shown;
-// visible reflow can clamp offsets. Detail resets only when selection changes.
+// visible reflow can clamp offsets. Structured documents retain their leading
+// visible section and relative row across reflow; side-by-side sections anchor
+// to the first section in reading order. Custom details retain their row offset.
+// Changing selection resets the detail position.
 //
-// SetRecords copies the record slice, not callback captures. Callbacks run during
-// mutation or reflow, never View, and must remain pure on the owning UI loop.
-// Call Refresh after changing captured data, theme or native presentation. Public
+// SetRecords copies typed data, including nested slices, but not callback
+// captures. Renderers run during mutation or reflow, never View, and must remain
+// pure on the owning UI loop. Call SetRecords to replace typed observations;
+// Refresh after changing captured data, theme or native presentation. Public
 // presentation options also take effect on Refresh or Resize.
 type ListInspector struct {
 	List, Detail               viewport.Model
@@ -66,6 +74,7 @@ type ListInspector struct {
 	indices                    map[string]int
 	selected                   string
 	spans                      []inspectorRowSpan
+	detailSections             []layout.DetailSectionRange
 	size, listSize, detailSize layout.Size
 	focused, inspecting, split bool
 	pendingReveal              bool
@@ -96,7 +105,8 @@ func NewListInspector(records []InspectorRecord, size layout.Size, t theme.Theme
 }
 
 // SetRecords validates the whole replacement before changing either pane. IDs
-// must be unique, nonempty and free of control characters; Row must be present.
+// must be unique, nonempty and free of control characters; Summary or Row must
+// be present. Structured section IDs have the same rules within each document.
 // A retained ID keeps selection. Removing it selects the first remaining record
 // and closes inspection, so a different identity cannot silently take its place.
 func (m *ListInspector) SetRecords(records []InspectorRecord) error {
@@ -110,8 +120,12 @@ func (m *ListInspector) SetRecords(records []InspectorRecord) error {
 			return fmt.Errorf("duplicate inspector record ID %q", record.ID)
 		}
 
-		if record.Row == nil {
-			return fmt.Errorf("inspector record %q has no row renderer", record.ID)
+		if record.Row == nil && record.Summary == nil {
+			return fmt.Errorf("inspector record %q has no summary or row renderer", record.ID)
+		}
+
+		if err := validateInspectorDocument(record); err != nil {
+			return err
 		}
 
 		indices[record.ID] = index
@@ -119,7 +133,7 @@ func (m *ListInspector) SetRecords(records []InspectorRecord) error {
 
 	previous := m.selected
 	reveal := m.selectionVisible()
-	m.records, m.indices = slices.Clone(records), indices
+	m.records, m.indices = cloneInspectorRecords(records), indices
 
 	if _, retained := indices[m.selected]; !retained {
 		m.selected, m.inspecting = "", false
@@ -128,12 +142,13 @@ func (m *ListInspector) SetRecords(records []InspectorRecord) error {
 		}
 	}
 
-	if record, present := m.current(); !present || record.Detail == nil {
+	if record, present := m.current(); !present || !record.hasDetail() {
 		m.inspecting = false
 	}
 
 	if m.selected != previous {
 		m.Detail.GotoTop()
+		m.detailSections = nil
 		m.pendingReveal = true
 		reveal = true
 	}
@@ -159,8 +174,9 @@ func (m *ListInspector) Select(id string) bool {
 		m.selected = id
 		m.pendingReveal = true
 		m.Detail.GotoTop()
+		m.detailSections = nil
 
-		if record, _ := m.current(); record.Detail == nil {
+		if record, _ := m.current(); !record.hasDetail() {
 			m.inspecting = false
 		}
 
@@ -185,7 +201,7 @@ func (m *ListInspector) Move(delta int) {
 
 func (m *ListInspector) Inspect() bool {
 	record, present := m.current()
-	if !present || record.Detail == nil {
+	if !present || !record.hasDetail() {
 		return false
 	}
 
@@ -316,17 +332,24 @@ func (m *ListInspector) reflow(reveal bool) {
 	}
 
 	if m.detailSize.Width > 0 {
-		offset := m.Detail.YOffset()
+		anchor := m.detailAnchor()
 		inspectorResizeViewport(&m.Detail, m.detailSize)
 		width := max(1, inspectorViewportSize(&m.Detail).Width)
 		content := m.Theme.Subtle().Render("No details supplied")
+		m.detailSections = nil
 
-		if record, present := m.current(); present && record.Detail != nil {
-			content = record.Detail(width)
+		if record, present := m.current(); present {
+			switch {
+			case record.Detail != nil:
+				content = record.Detail(width)
+			case record.Document != nil:
+				rendered := record.Document.Render(width, m.Theme)
+				content, m.detailSections = rendered.Content, rendered.Sections
+			}
 		}
 
 		m.Detail.SetContent(ansi.Hardwrap(content, width, true))
-		m.Detail.SetYOffset(offset)
+		m.restoreDetail(anchor)
 	}
 }
 
@@ -380,7 +403,9 @@ func (m *ListInspector) renderRows() {
 
 		selected := record.ID == m.selected
 
-		body := ansi.Hardwrap(record.Row(width-gutter, selected), width-gutter, true)
+		body := record.row(width-gutter, selected, m.Theme)
+
+		body = ansi.Hardwrap(body, width-gutter, true)
 		for index, line := range strings.Split(body, "\n") {
 			prefix := padding
 			if selected && index == 0 && gutter > 0 {

@@ -1,7 +1,6 @@
 package snippets
 
 import (
-	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/layout"
 	"github.com/lanej/charmed/pattern"
 	"github.com/lanej/charmed/text"
@@ -10,34 +9,31 @@ import (
 
 func ExamplePatternListInspector() (string, error) {
 	palette := theme.New(theme.Dark)
-	row := func(title, condition, next string) func(int, bool) string {
-		return func(width int, selected bool) string {
-			style := palette.Text()
-			if selected {
-				style = palette.Heading()
-			}
-
-			return ansi.Hardwrap(style.Render(title)+"\n"+condition+"\nNext: "+next, width, true)
-		}
+	summary := layout.RecordSummary{
+		Title: "Gateway route update", Status: text.Pill("Outcome unknown", text.Warning, palette, text.Normal),
+		Fields: []layout.Pair{{Label: "Observed", Value: "09:42 UTC"}},
+		Next:   &layout.Pair{Label: "Next", Value: "Inspect the saved route request."},
+	}
+	document := layout.DetailDocument{
+		Header: layout.IdentityHeader{Kind: "Operation", ID: "route-0042"}, Summary: summary,
+		Sections: []layout.DetailSection{
+			{ID: "source", Title: "Observation", Fields: []layout.Pair{{Label: "Source", Value: "Controller journal"}, {Label: "Receipt", State: text.ValueMissing}}},
+			{ID: "checks", Title: "Verification", Statuses: []layout.StatusItem{{Label: "Submission", Value: "Recorded"}, {Label: "Remote route", Value: "Not observed"}}},
+			{ID: "history", Title: "Activity", FullWidth: true, Timeline: []layout.TimelineEvent{
+				{When: "09:42 UTC", Actor: "Controller", Title: "Response timed out", Detail: "Submission is recorded; the external result remains unknown."},
+			}},
+		},
 	}
 	records := []pattern.InspectorRecord{
-		{ID: "route-0042", Heading: "Network", Row: row("Gateway route update", "Outcome unknown", "inspect remote evidence"), Detail: func(width int) string {
-			return layout.KeyValue([]layout.Pair{
-				{Label: "Operation", Value: "route-0042"},
-				{Label: "Condition", Value: "Outcome unknown"},
-				{Label: "Evidence", Value: "Submission recorded; response lost. Remote route has not been observed."},
-				{Label: "Next", Value: "Read the saved request's remote state before changing traffic."},
-			}, width, palette)
-		}},
-		{ID: "pool-0007", Heading: "Compute", Row: row("Worker capacity", "Outcome confirmed", "check queue latency"), Detail: func(int) string {
-			return "An independent observer found twelve workers.\nCapacity does not establish healthy workers or acceptable latency."
-		}},
-		{ID: "index-0031", Row: row("Indexer restart", "Success reported", "read process observer"), Detail: func(int) string {
-			return "The operator reported success.\nNo independent process sample confirms recovery."
+		{ID: "route-0042", Heading: "Network", Summary: &summary, Document: &document},
+		{ID: "pool-0007", Heading: "Compute", Summary: &layout.RecordSummary{
+			Title: "Worker capacity", Status: text.Pill("Outcome confirmed", text.Success, palette, text.Normal),
+			Fields: []layout.Pair{{Label: "Capacity", Value: "12 workers observed"}},
+			Next:   &layout.Pair{Label: "Next", Value: "Check queue latency."},
 		}},
 	}
 
-	inspector, err := pattern.NewListInspector(records, layout.Size{Width: 104, Height: 19}, palette)
+	inspector, err := pattern.NewListInspector(records, layout.Size{Width: 104, Height: 20}, palette)
 	if err != nil {
 		return "", err
 	}
@@ -45,7 +41,5 @@ func ExamplePatternListInspector() (string, error) {
 	inspector.ListTitle, inspector.DetailTitle = "Operations", "Evidence"
 	inspector.Refresh()
 
-	help := text.KeyHint("j/k", "select", palette) + "  " + text.KeyHint("enter", "inspect", palette) + "  " + text.KeyHint("esc", "back", palette) + "  " + text.KeyHint("[/]", "scroll", palette)
-
-	return layout.Column(inspector.View(), help), nil
+	return layout.Column(inspector.View(), text.KeyHint("j/k", "select", palette)+"  "+text.KeyHint("enter", "inspect", palette)+"  "+text.KeyHint("esc", "back", palette)), nil
 }
