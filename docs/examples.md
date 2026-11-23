@@ -34,3 +34,14 @@ Switch between the [deployment fixture](screens-pattern.html#screen/deployment)'
 The application shell fixture composes `layout.Header`, `navigation.Tabs`, `layout.Panel` and `layout.Footer`. The header reserves two rows, the tab bar and footer one each, and the panel receives the remaining height. Left/Right or Home/End changes the active section and its content; resize keeps the selected tab. The fixture contains synthetic display data. In an application with focusable content, use the parent focus scope to focus or blur the tab bar before forwarding keys.
 
 The [regional measurement screen](screens-pattern.html#screen/cohorts) compares three cohorts using scalar temperature, summed energy, ratio yield and humidity. Read the [measurement contract](cohorts.html) before supplying application observations or comparison boundaries.
+
+## List and evidence inspection
+
+```sh
+go run ./examples/inspection
+go run ./cmd/workbench run pattern/list-inspector --columns 80 --rows 24
+```
+
+Use [List inspector](organisms-pattern.html#pattern/list-inspector) when a task starts with selecting a record and examining its evidence. Supply stable identities, multiline row renderers and independent detail content. Wide allocations show a preview beside the list; narrow allocations preserve the list until Enter opens inspection. Escape returns to the retained list position, and brackets page the active native viewport.
+
+The service-operations example supplies unknown outcomes, independently confirmed observations and caller reports as separate labels. Its application owns refresh and quit: the first refresh fails while retaining evidence, and the next supplies a later observation under the same record identity. Charmed preserves selection and native customization; it performs no service requests and assigns no meaning to those observations.

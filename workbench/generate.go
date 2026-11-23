@@ -99,7 +99,7 @@ func Generate(out string) error {
 			}{name: "Inspection", change: func(c *story.Config) { c.VerboseDetails = true }})
 		}
 
-		if d.ID == "git/review" || d.ID == "pattern/outline-document" || d.ID == "collection/section-stack" {
+		if d.ID == "git/review" || d.ID == "pattern/outline-document" || d.ID == "collection/section-stack" || d.ID == "pattern/list-inspector" {
 			for _, state := range d.States {
 				if state == "ready" {
 					continue

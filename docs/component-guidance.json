@@ -1,5 +1,6 @@
 {
   "use": {
+    "pattern/list-inspector": "Browse records with multiline summaries and inspect the evidence behind a selection. Wide views preview details beside the list; narrow views retain the selected record and open complete inspection with Enter.",
     "layout/text-row": "Compose headers, operational status lines and compact summaries from styled text segments, fixed gaps and flexible space. Fields wrap in order rather than disappearing when the terminal narrows.",
     "chart/timeseries": "Compare timestamped measurements over the same interval. Supply labeled series with explicit units; the shared axes make changes in API and worker throughput directly comparable.",
     "input/text": "Collect a single editable value such as an environment name. Use a labeled field when the value also needs persistent help or validation feedback.",
@@ -79,6 +80,7 @@
     "git/review": "Review supplied patches in one stacked document, with optional file grouping and statistics. Mark reviewed files without losing access to their content."
   },
   "integration": {
+    "list-inspector": "Supply unique stable IDs and pure width-aware row and detail renderers. Forward Update while focused; Enter inspects, Escape returns, and brackets scroll the active native viewport. SetRecords validates before replacement and retains surviving selection; selection changes reset detail scrolling. Resize preserves native styles and bindings. Call Refresh after changing captured data or presentation. Preview controls the wide detail pane; ListWidth and MinDetailWidth set its threshold. Applications own observations, ordering, actions, refresh and quit. Run go run ./examples/inspection for the complete consumer.",
     "text-row": "Supply trusted native display strings, escaping application data with text.Inline before styling. Gap reserves cells between nonempty items; flexible spacers share remaining width. View wraps at item boundaries and within long items. Stack selects explicit vertical layout. Allocate the returned height or provide scrolling; Fit clips. Rendering is pure, preserves native styling and owns no focus or input handling.",
     "grid": "Construct the grid with ordered axes and keyed entries, then focus it when its region becomes active. Forward Update messages and return its command; the parent owns Tab routing and Resize allocations. Replace observations through SetData and inspect Selected for stable IDs and presence. Theme, geometry, renderer and optional help survive updates.",
     "static": "Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.",

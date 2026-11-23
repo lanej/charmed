@@ -9,7 +9,7 @@ import (
 
 func definitions() []Definition {
 	var d []Definition
-	for _, level := range [][]Definition{foundationsDefinitions(), atomsDefinitions(), moleculesDefinitions(), chromeDefinitions(), organismsDefinitions(), screensDefinitions(), operationalDefinitions(), logDefinitions(), commandDefinitions(), dataAtomDefinitions(), gitDefinitions(), layoutDefinitions(), composedDefinitions(), nestedLayoutDefinitions(), semanticStateDefinitions(), reviewDefinitions()} {
+	for _, level := range [][]Definition{foundationsDefinitions(), atomsDefinitions(), moleculesDefinitions(), chromeDefinitions(), organismsDefinitions(), screensDefinitions(), operationalDefinitions(), logDefinitions(), commandDefinitions(), dataAtomDefinitions(), gitDefinitions(), layoutDefinitions(), composedDefinitions(), nestedLayoutDefinitions(), semanticStateDefinitions(), reviewDefinitions(), inspectionDefinitions()} {
 		d = append(d, level...)
 	}
 

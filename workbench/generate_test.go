@@ -215,6 +215,12 @@ func TestStaticGuide(t *testing.T) {
 		}
 	}
 
+	for _, state := range []string{"Inspecting", "Empty", "Loading", "Error", "Confirmed"} {
+		if !bytes.Contains(pages["organisms-pattern.html"], []byte("<figcaption>"+state+" · truecolor")) {
+			t.Errorf("list inspector guide omitted %s state", state)
+		}
+	}
+
 	if !bytes.Contains(pages["foundations-text.html"], []byte(`style="color:#172033;background-color:#f8fafc"`)) {
 		t.Error("light permission preview must retain its theme foreground and background")
 	}
