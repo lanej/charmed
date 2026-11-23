@@ -4,7 +4,7 @@ Atomic design
 
 Small compositions with one purpose: a labeled field, a metric with history, or a searchable command palette.
 
-49 components · 11 groups
+50 components · 11 groups
 
 [**Charts**  
 \
@@ -40,7 +40,7 @@ Labeled field2 components](https://lanej.io/charmed/molecules-input.html)
 
 [**Layout**  
 \
-Header13 components](https://lanej.io/charmed/molecules-layout.html)
+Header14 components](https://lanej.io/charmed/molecules-layout.html)
 
 [**Logs**  
 \

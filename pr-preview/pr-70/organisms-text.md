@@ -170,6 +170,6 @@ Render trusted application content with the shared theme, then place long output
 go run ./examples/catalog text/markdown
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/cc72980fb2707507db01071d8516e7386896097a/docs/snippets/text_markdown.go) · [Implementation](https://github.com/lanej/charmed/blob/cc72980fb2707507db01071d8516e7386896097a/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/text_markdown.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [collection/viewport](https://lanej.io/charmed/atoms-collection.html#collection/viewport)

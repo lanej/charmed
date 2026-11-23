@@ -54,6 +54,7 @@ Go terminal components, composition and contributor reference. Each link contain
 - [Organisms / Diagrams](https://lanej.io/charmed/organisms-diagram.md)
 - [Organisms / Forms](https://lanej.io/charmed/organisms-form.md)
 - [Organisms / git](https://lanej.io/charmed/organisms-git.md)
+- [Organisms / Layout](https://lanej.io/charmed/organisms-layout.md)
 - [Organisms / Logs](https://lanej.io/charmed/organisms-logs.md)
 - [Organisms / Patterns](https://lanej.io/charmed/organisms-pattern.md)
 - [Organisms / Text](https://lanej.io/charmed/organisms-text.md)

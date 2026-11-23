@@ -4,7 +4,7 @@ Atomic design
 
 Coordinated regions with their own behavior, from forms and log inspectors to comparison panels.
 
-25 components · 8 groups
+26 components · 9 groups
 
 [**Charts**  
 \
@@ -25,6 +25,10 @@ Settings1 component](https://lanej.io/charmed/organisms-form.html)
 [**git**  
 \
 Repository status9 components](https://lanej.io/charmed/organisms-git.html)
+
+[**Layout**  
+\
+Detail document1 component](https://lanej.io/charmed/organisms-layout.html)
 
 [**Logs**  
 \

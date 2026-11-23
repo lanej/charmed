@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#101722"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Organisms / Layout · Charmed</title><link rel="alternate" type="text/markdown" href="organisms-layout.md"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Organisms / Layout</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">72</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">50</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">26</span></a>
+<div class="nav-groups"><a class="nav-group" href="organisms-chart.html" >Charts</a><a class="nav-group" href="organisms-collection.html" >Collections</a><a class="nav-group" href="organisms-diagram.html" >Diagrams</a><a class="nav-group" href="organisms-form.html" >Forms</a><a class="nav-group" href="organisms-git.html" >git</a><a class="nav-group" href="organisms-layout.html" aria-current="page">Layout</a><a class="nav-group" href="organisms-logs.html" >Logs</a><a class="nav-group" href="organisms-pattern.html" >Patterns</a><a class="nav-group" href="organisms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">9</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="diff-review.html" >Diff review</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#layout%2fdetail-document">Detail document</a></div>
+
+</div>
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">72</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">50</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">26</span></a>
+<div class="nav-groups"><a class="nav-group" href="organisms-chart.html" >Charts</a><a class="nav-group" href="organisms-collection.html" >Collections</a><a class="nav-group" href="organisms-diagram.html" >Diagrams</a><a class="nav-group" href="organisms-form.html" >Forms</a><a class="nav-group" href="organisms-git.html" >git</a><a class="nav-group" href="organisms-layout.html" aria-current="page">Layout</a><a class="nav-group" href="organisms-logs.html" >Logs</a><a class="nav-group" href="organisms-pattern.html" >Patterns</a><a class="nav-group" href="organisms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">9</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="diff-review.html" >Diff review</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#layout%2fdetail-document">Detail document</a></div>
+
+</div>
+</nav>
+</aside>
+<main id="main">
+
+
+
+
+
+
+
+
+
+<section class="atomic-level" id="level-organisms">
+<p class="catalog-breadcrumb"><a href="organisms.html">Organisms</a><span aria-hidden="true"> / </span>Layout</p>
+
+<section class="component-family" id="level-organisms-layout"><h1><a class="heading-permalink" href="#level-organisms-layout"><span>Layout</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">1 component · <a href="organisms.html">All organisms</a></p>
+<ul class="group-jump-links" aria-label="Components in Layout"><li><a href="#layout%2fdetail-document">Detail document</a></li></ul>
+
+
+<section class="component" id="layout/detail-document">
+<p class="eyebrow"><a href="organisms.html">Organisms</a> / Layout</p><h2><a class="heading-permalink" href="#layout%2fdetail-document" aria-label="Link to Detail document component"><span>Detail document</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Group identity, observations, conditions and event history into a readable inspection document. Related sections share columns when space permits, while long narrative or history sections can occupy the full width.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="layout/detail-document-preview"><a class="heading-permalink" href="#layout%2fdetail-document-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Detail document variants">
+<a id="tab-layout/detail-document-example" href="#panel-layout%2fdetail-document-example" role="tab" aria-controls="panel-layout/detail-document-example" aria-selected="true">Example</a>
+<a id="tab-layout/detail-document-0" href="#panel-layout%2fdetail-document-0" role="tab" aria-controls="panel-layout/detail-document-0" aria-selected="false">Demo</a><a id="tab-layout/detail-document-1" href="#panel-layout%2fdetail-document-1" role="tab" aria-controls="panel-layout/detail-document-1" aria-selected="false">Narrow</a><a id="tab-layout/detail-document-2" href="#panel-layout%2fdetail-document-2" role="tab" aria-controls="panel-layout/detail-document-2" aria-selected="false">256 colors</a><a id="tab-layout/detail-document-3" href="#panel-layout%2fdetail-document-3" role="tab" aria-controls="panel-layout/detail-document-3" aria-selected="false">16 colors</a><a id="tab-layout/detail-document-4" href="#panel-layout%2fdetail-document-4" role="tab" aria-controls="panel-layout/detail-document-4" aria-selected="false">Monochrome</a><a id="tab-layout/detail-document-5" href="#panel-layout%2fdetail-document-5" role="tab" aria-controls="panel-layout/detail-document-5" aria-selected="false">ASCII</a><a id="tab-layout/detail-document-6" href="#panel-layout%2fdetail-document-6" role="tab" aria-controls="panel-layout/detail-document-6" aria-selected="false">Unicode monochrome</a>
+</div>
+<div id="panel-layout/detail-document-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#a8a8a8;">Operation</span> <span style="color:#67d4c0;font-weight:bold;">route-0042</span>                                                                                
+
+<span style="color:#67d4c0;font-weight:bold;">Gateway route update</span>                                                                                
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">Outcome unknown</span><span style="background-color:#32322f;"> </span>                                                                                   
+<span style="color:#67d4c0;font-weight:bold;">Next:</span> <span style="color:#eeeeee;">Read the remote route before changing traffic.</span>                                                
+
+<span style="color:#eeeeee;font-weight:bold;">Observation</span>  <span style="color:#a8a8a8;">───────────────────────────────────</span>    <span style="color:#eeeeee;font-weight:bold;">Verification</span>  <span style="color:#a8a8a8;">──────────────────────────────────</span>
+<span style="color:#a8a8a8;">Source: </span><span style="color:#eeeeee;">Controller journal</span>                          <span style="color:#a8a8a8;">Submission:</span> Recorded                            
+<span style="color:#a8a8a8;">Observed: </span><span style="color:#eeeeee;">09:42 UTC</span>                                 <span style="color:#a8a8a8;">Remote route:</span> Not observed                      
+<span style="color:#a8a8a8;">Receipt: </span><span style="color:#eeeeee;">∅ missing</span>                                    <span style="color:#a8a8a8;">No independent read follows the request.</span>      
+
+<span style="color:#eeeeee;font-weight:bold;">Activity</span>  <span style="color:#a8a8a8;">──────────────────────────────────────────────────────────────────────────────────────────</span>
+<span style="color:#a8a8a8;">◷</span> <span style="color:#eeeeee;font-weight:bold;">Request recorded</span>                                                                                  
+  <span style="color:#a8a8a8;">09:41 UTC</span>  <span style="color:#a8a8a8;">Controller</span>                                                                             
+
+<span style="color:#a8a8a8;">◷</span> <span style="color:#eeeeee;font-weight:bold;">Response timed out</span>                                                                                
+  <span style="color:#a8a8a8;">09:42 UTC</span>  <span style="color:#a8a8a8;">Controller</span>                                                                             
+  A lost response does not establish the remote result.</pre></figure>
+</div>
+<div id="panel-layout/detail-document-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#a8a8a8;">Operation</span> <span style="color:#67d4c0;font-weight:bold;">route-2026-11-23-0042</span>                                                                                 
+                                                                                                                
+<span style="color:#67d4c0;font-weight:bold;">Gateway route update</span>                                                                                            
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">Outcome unknown</span><span style="background-color:#32322f;"> </span>                                                                                               
+<span style="color:#67d4c0;font-weight:bold;">Next:</span> <span style="color:#eeeeee;">Inspect the saved route request before changing traffic.</span>                                                  
+<span style="color:#a8a8a8;">Observed  </span><span style="color:#eeeeee;">09:42 UTC</span>                                                                                             
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Observation</span>  <span style="color:#a8a8a8;">────────────────────────────────────────</span>    <span style="color:#eeeeee;font-weight:bold;">Verification</span>  <span style="color:#a8a8a8;">────────────────────────────────────────</span> 
+<span style="color:#a8a8a8;">Domain: </span><span style="color:#eeeeee;">Network</span>                                          <span style="color:#a8a8a8;">Submission:</span> Recorded                                   
+<span style="color:#a8a8a8;">Source: </span><span style="color:#eeeeee;">Controller journal</span>                                 <span style="color:#a8a8a8;">The request reached the controller journal.</span>          
+<span style="color:#a8a8a8;">Observed: </span><span style="color:#eeeeee;">09:42 UTC</span>                                      <span style="color:#a8a8a8;">Remote route:</span> Not observed                             
+<span style="color:#a8a8a8;">Request receipt: </span><span style="color:#eeeeee;">∅ missing</span>                                 <span style="color:#a8a8a8;">No read follows the submitted request.</span>               
+                                                         <span style="color:#a8a8a8;">Attribution:</span> Unknown                                   
+                                                           <span style="color:#a8a8a8;">The lost response cannot establish the effect.</span>       
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Observed evidence</span>  <span style="color:#a8a8a8;">────────────────────────────────────────────────────────────────────────────────────────────</span> 
+The controller recorded a request to switch the gateway route. Its response timed out after submission. The     
+remote route has not been observed since the request.                                                           
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Activity</span>  <span style="color:#a8a8a8;">─────────────────────────────────────────────────────────────────────────────────────────────────────</span> 
+<span style="color:#a8a8a8;">◷</span> <span style="color:#eeeeee;font-weight:bold;">Route request recorded</span>                                                                                        
+  <span style="color:#a8a8a8;">09:41 UTC</span>  <span style="color:#a8a8a8;">Controller</span>                                                                                         
+  Switch the gateway route to the prepared target.                                                              
+                                                                                                                
+<span style="color:#a8a8a8;">◷</span> <span style="color:#eeeeee;font-weight:bold;">Response timed out</span>                                                                                            
+  <span style="color:#a8a8a8;">09:42 UTC</span>  <span style="color:#a8a8a8;">Controller</span>                                                                                         
+  Submission is recorded; the external result is still unknown.                                                 
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Interpretation limits</span>  <span style="color:#a8a8a8;">──────────────────────────────</span>    <span style="color:#eeeeee;font-weight:bold;">Inspection notes</span>  <span style="color:#a8a8a8;">────────────────────────────────────</span> 
+A recorded request establishes intent. A caller&#39;s        Compare the saved identity with the observer&#39;s         
+report establishes what the caller said. An              evidence. Keep the last observation when a refresh     
+independent observation may confirm the external         fails. Check the observation time before taking        
+state; it does not automatically prove request           another action. Record any remaining attribution gap.  
+attribution, service health or incident resolution.</pre></figure>
+</div><div id="panel-layout/detail-document-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#a8a8a8;">Operation</span> <span style="color:#67d4c0;font-weight:bold;">route-2026-11-23-0042</span>        <span style="color:#67d4c0;font-weight:bold;">┃</span>
+                                       <span style="color:#67d4c0;font-weight:bold;">┃</span>
+<span style="color:#67d4c0;font-weight:bold;">Gateway route update</span>                   <span style="color:#67d4c0;font-weight:bold;">┃</span>
+<span style="background-color:#32322f;"> </span><span style="color:#f2c879;background-color:#32322f;">Outcome unknown</span><span style="background-color:#32322f;"> </span>                      <span style="color:#67d4c0;font-weight:bold;">┃</span>
+<span style="color:#67d4c0;font-weight:bold;">Next:</span> <span style="color:#eeeeee;">Inspect the saved route request  </span><span style="color:#a8a8a8;">│</span>
+<span style="color:#eeeeee;">before changing traffic.</span>               <span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">Observed: </span><span style="color:#eeeeee;">09:42 UTC</span>                    <span style="color:#a8a8a8;">│</span>
+                                       <span style="color:#a8a8a8;">│</span>
+<span style="color:#eeeeee;font-weight:bold;">Observation</span>  <span style="color:#a8a8a8;">──────────────────────────│</span>
+<span style="color:#a8a8a8;">Domain: </span><span style="color:#eeeeee;">Network</span>                        <span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">Source: </span><span style="color:#eeeeee;">Controller journal</span>             <span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">Observed: </span><span style="color:#eeeeee;">09:42 UTC</span>                    <span style="color:#a8a8a8;">│</span>
+<span style="color:#a8a8a8;">Request receipt: </span><span style="color:#eeeeee;">∅ missing</span>             <span style="color:#a8a8a8;">│</span>
+                                       <span style="color:#a8a8a8;">│</span>
+<span style="color:#eeeeee;font-weight:bold;">Verification</span>  <span style="color:#a8a8a8;">─────────────────────────│</span>
+<span style="color:#a8a8a8;">Submission:</span> Recorded                   <span style="color:#a8a8a8;">│</span></pre></figure>
+</div><div id="panel-layout/detail-document-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#a8a8a8;">Operation</span> <span style="color:#5fd7af;font-weight:bold;">route-2026-11-23-0042</span>                                                                                 
+                                                                                                                
+<span style="color:#5fd7af;font-weight:bold;">Gateway route update</span>                                                                                            
+<span style="background-color:#303030;"> </span><span style="color:#ffd787;background-color:#303030;">Outcome unknown</span><span style="background-color:#303030;"> </span>                                                                                               
+<span style="color:#5fd7af;font-weight:bold;">Next:</span> <span style="color:#eeeeee;">Inspect the saved route request before changing traffic.</span>                                                  
+<span style="color:#a8a8a8;">Observed  </span><span style="color:#eeeeee;">09:42 UTC</span>                                                                                             
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Observation</span>  <span style="color:#a8a8a8;">────────────────────────────────────────</span>    <span style="color:#eeeeee;font-weight:bold;">Verification</span>  <span style="color:#a8a8a8;">────────────────────────────────────────</span> 
+<span style="color:#a8a8a8;">Domain: </span><span style="color:#eeeeee;">Network</span>                                          <span style="color:#a8a8a8;">Submission:</span> Recorded                                   
+<span style="color:#a8a8a8;">Source: </span><span style="color:#eeeeee;">Controller journal</span>                                 <span style="color:#a8a8a8;">The request reached the controller journal.</span>          
+<span style="color:#a8a8a8;">Observed: </span><span style="color:#eeeeee;">09:42 UTC</span>                                      <span style="color:#a8a8a8;">Remote route:</span> Not observed                             
+<span style="color:#a8a8a8;">Request receipt: </span><span style="color:#eeeeee;">∅ missing</span>                                 <span style="color:#a8a8a8;">No read follows the submitted request.</span>               
+                                                         <span style="color:#a8a8a8;">Attribution:</span> Unknown                                   
+                                                           <span style="color:#a8a8a8;">The lost response cannot establish the effect.</span>       
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Observed evidence</span>  <span style="color:#a8a8a8;">────────────────────────────────────────────────────────────────────────────────────────────</span> 
+The controller recorded a request to switch the gateway route. Its response timed out after submission. The     
+remote route has not been observed since the request.                                                           
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Activity</span>  <span style="color:#a8a8a8;">─────────────────────────────────────────────────────────────────────────────────────────────────────</span> 
+<span style="color:#a8a8a8;">◷</span> <span style="color:#eeeeee;font-weight:bold;">Route request recorded</span>                                                                                        
+  <span style="color:#a8a8a8;">09:41 UTC</span>  <span style="color:#a8a8a8;">Controller</span>                                                                                         
+  Switch the gateway route to the prepared target.                                                              
+                                                                                                                
+<span style="color:#a8a8a8;">◷</span> <span style="color:#eeeeee;font-weight:bold;">Response timed out</span>                                                                                            
+  <span style="color:#a8a8a8;">09:42 UTC</span>  <span style="color:#a8a8a8;">Controller</span>                                                                                         
+  Submission is recorded; the external result is still unknown.                                                 
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Interpretation limits</span>  <span style="color:#a8a8a8;">──────────────────────────────</span>    <span style="color:#eeeeee;font-weight:bold;">Inspection notes</span>  <span style="color:#a8a8a8;">────────────────────────────────────</span> 
+A recorded request establishes intent. A caller&#39;s        Compare the saved identity with the observer&#39;s         
+report establishes what the caller said. An              evidence. Keep the last observation when a refresh     
+independent observation may confirm the external         fails. Check the observation time before taking        
+state; it does not automatically prove request           another action. Record any remaining attribution gap.  
+attribution, service health or incident resolution.</pre></figure>
+</div><div id="panel-layout/detail-document-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#c0c0c0;">Operation</span> <span style="color:#00ff00;font-weight:bold;">route-2026-11-23-0042</span>                                                                                 
+                                                                                                                
+<span style="color:#00ff00;font-weight:bold;">Gateway route update</span>                                                                                            
+<span style="background-color:#000000;"> </span><span style="color:#ff0000;background-color:#000000;">Outcome unknown</span><span style="background-color:#000000;"> </span>                                                                                               
+<span style="color:#00ff00;font-weight:bold;">Next:</span> <span style="color:#ffffff;">Inspect the saved route request before changing traffic.</span>                                                  
+<span style="color:#c0c0c0;">Observed  </span><span style="color:#ffffff;">09:42 UTC</span>                                                                                             
+                                                                                                                
+<span style="color:#ffffff;font-weight:bold;">Observation</span>  <span style="color:#c0c0c0;">────────────────────────────────────────</span>    <span style="color:#ffffff;font-weight:bold;">Verification</span>  <span style="color:#c0c0c0;">────────────────────────────────────────</span> 
+<span style="color:#c0c0c0;">Domain: </span><span style="color:#ffffff;">Network</span>                                          <span style="color:#c0c0c0;">Submission:</span> Recorded                                   
+<span style="color:#c0c0c0;">Source: </span><span style="color:#ffffff;">Controller journal</span>                                 <span style="color:#c0c0c0;">The request reached the controller journal.</span>          
+<span style="color:#c0c0c0;">Observed: </span><span style="color:#ffffff;">09:42 UTC</span>                                      <span style="color:#c0c0c0;">Remote route:</span> Not observed                             
+<span style="color:#c0c0c0;">Request receipt: </span><span style="color:#ffffff;">∅ missing</span>                                 <span style="color:#c0c0c0;">No read follows the submitted request.</span>               
+                                                         <span style="color:#c0c0c0;">Attribution:</span> Unknown                                   
+                                                           <span style="color:#c0c0c0;">The lost response cannot establish the effect.</span>       
+                                                                                                                
+<span style="color:#ffffff;font-weight:bold;">Observed evidence</span>  <span style="color:#c0c0c0;">────────────────────────────────────────────────────────────────────────────────────────────</span> 
+The controller recorded a request to switch the gateway route. Its response timed out after submission. The     
+remote route has not been observed since the request.                                                           
+                                                                                                                
+<span style="color:#ffffff;font-weight:bold;">Activity</span>  <span style="color:#c0c0c0;">─────────────────────────────────────────────────────────────────────────────────────────────────────</span> 
+<span style="color:#c0c0c0;">◷</span> <span style="color:#ffffff;font-weight:bold;">Route request recorded</span>                                                                                        
+  <span style="color:#c0c0c0;">09:41 UTC</span>  <span style="color:#c0c0c0;">Controller</span>                                                                                         
+  Switch the gateway route to the prepared target.                                                              
+                                                                                                                
+<span style="color:#c0c0c0;">◷</span> <span style="color:#ffffff;font-weight:bold;">Response timed out</span>                                                                                            
+  <span style="color:#c0c0c0;">09:42 UTC</span>  <span style="color:#c0c0c0;">Controller</span>                                                                                         
+  Submission is recorded; the external result is still unknown.                                                 
+                                                                                                                
+<span style="color:#ffffff;font-weight:bold;">Interpretation limits</span>  <span style="color:#c0c0c0;">──────────────────────────────</span>    <span style="color:#ffffff;font-weight:bold;">Inspection notes</span>  <span style="color:#c0c0c0;">────────────────────────────────────</span> 
+A recorded request establishes intent. A caller&#39;s        Compare the saved identity with the observer&#39;s         
+report establishes what the caller said. An              evidence. Keep the last observation when a refresh     
+independent observation may confirm the external         fails. Check the observation time before taking        
+state; it does not automatically prove request           another action. Record any remaining attribution gap.  
+attribution, service health or incident resolution.</pre></figure>
+</div><div id="panel-layout/detail-document-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Operation <span style="font-weight:bold;">route-2026-11-23-0042</span>                                                                                 
+                                                                                                                
+<span style="font-weight:bold;">Gateway route update</span>                                                                                            
+[Outcome unknown]                                                                                               
+<span style="font-weight:bold;">Next:</span> Inspect the saved route request before changing traffic.                                                  
+Observed  09:42 UTC                                                                                             
+                                                                                                                
+<span style="font-weight:bold;">Observation</span>  ----------------------------------------    <span style="font-weight:bold;">Verification</span>  ---------------------------------------- 
+Domain: Network                                          Submission: Recorded                                   
+Source: Controller journal                                 The request reached the controller journal.          
+Observed: 09:42 UTC                                      Remote route: Not observed                             
+Request receipt: missing                                   No read follows the submitted request.               
+                                                         Attribution: Unknown                                   
+                                                           The lost response cannot establish the effect.       
+                                                                                                                
+<span style="font-weight:bold;">Observed evidence</span>  -------------------------------------------------------------------------------------------- 
+The controller recorded a request to switch the gateway route. Its response timed out after submission. The     
+remote route has not been observed since the request.                                                           
+                                                                                                                
+<span style="font-weight:bold;">Activity</span>  ----------------------------------------------------------------------------------------------------- 
+t <span style="font-weight:bold;">Route request recorded</span>                                                                                        
+  09:41 UTC  Controller                                                                                         
+  Switch the gateway route to the prepared target.                                                              
+                                                                                                                
+t <span style="font-weight:bold;">Response timed out</span>                                                                                            
+  09:42 UTC  Controller                                                                                         
+  Submission is recorded; the external result is still unknown.                                                 
+                                                                                                                
+<span style="font-weight:bold;">Interpretation limits</span>  ------------------------------    <span style="font-weight:bold;">Inspection notes</span>  ------------------------------------ 
+A recorded request establishes intent. A caller&#39;s        Compare the saved identity with the observer&#39;s         
+report establishes what the caller said. An              evidence. Keep the last observation when a refresh     
+independent observation may confirm the external         fails. Check the observation time before taking        
+state; it does not automatically prove request           another action. Record any remaining attribution gap.  
+attribution, service health or incident resolution.</pre></figure>
+</div><div id="panel-layout/detail-document-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-5" tabindex="0">
+<figure><figcaption>ASCII · truecolor · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#eeeeee;background-color:#101722"><span style="color:#a8a8a8;">Operation</span> <span style="color:#67d4c0;font-weight:bold;">route-2026-11-23-0042</span>                                                                                 
+                                                                                                                
+<span style="color:#67d4c0;font-weight:bold;">Gateway route update</span>                                                                                            
+<span style="color:#eeeeee;">[Outcome unknown]</span>                                                                                               
+<span style="color:#67d4c0;font-weight:bold;">Next:</span> <span style="color:#eeeeee;">Inspect the saved route request before changing traffic.</span>                                                  
+<span style="color:#a8a8a8;">Observed  </span><span style="color:#eeeeee;">09:42 UTC</span>                                                                                             
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Observation</span>  <span style="color:#a8a8a8;">----------------------------------------</span>    <span style="color:#eeeeee;font-weight:bold;">Verification</span>  <span style="color:#a8a8a8;">----------------------------------------</span> 
+<span style="color:#a8a8a8;">Domain: </span><span style="color:#eeeeee;">Network</span>                                          <span style="color:#a8a8a8;">Submission:</span> Recorded                                   
+<span style="color:#a8a8a8;">Source: </span><span style="color:#eeeeee;">Controller journal</span>                                 <span style="color:#a8a8a8;">The request reached the controller journal.</span>          
+<span style="color:#a8a8a8;">Observed: </span><span style="color:#eeeeee;">09:42 UTC</span>                                      <span style="color:#a8a8a8;">Remote route:</span> Not observed                             
+<span style="color:#a8a8a8;">Request receipt: </span><span style="color:#eeeeee;">missing</span>                                   <span style="color:#a8a8a8;">No read follows the submitted request.</span>               
+                                                         <span style="color:#a8a8a8;">Attribution:</span> Unknown                                   
+                                                           <span style="color:#a8a8a8;">The lost response cannot establish the effect.</span>       
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Observed evidence</span>  <span style="color:#a8a8a8;">--------------------------------------------------------------------------------------------</span> 
+The controller recorded a request to switch the gateway route. Its response timed out after submission. The     
+remote route has not been observed since the request.                                                           
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Activity</span>  <span style="color:#a8a8a8;">-----------------------------------------------------------------------------------------------------</span> 
+<span style="color:#a8a8a8;">t</span> <span style="color:#eeeeee;font-weight:bold;">Route request recorded</span>                                                                                        
+  <span style="color:#a8a8a8;">09:41 UTC</span>  <span style="color:#a8a8a8;">Controller</span>                                                                                         
+  Switch the gateway route to the prepared target.                                                              
+                                                                                                                
+<span style="color:#a8a8a8;">t</span> <span style="color:#eeeeee;font-weight:bold;">Response timed out</span>                                                                                            
+  <span style="color:#a8a8a8;">09:42 UTC</span>  <span style="color:#a8a8a8;">Controller</span>                                                                                         
+  Submission is recorded; the external result is still unknown.                                                 
+                                                                                                                
+<span style="color:#eeeeee;font-weight:bold;">Interpretation limits</span>  <span style="color:#a8a8a8;">------------------------------</span>    <span style="color:#eeeeee;font-weight:bold;">Inspection notes</span>  <span style="color:#a8a8a8;">------------------------------------</span> 
+A recorded request establishes intent. A caller&#39;s        Compare the saved identity with the observer&#39;s         
+report establishes what the caller said. An              evidence. Keep the last observation when a refresh     
+independent observation may confirm the external         fails. Check the observation time before taking        
+state; it does not automatically prove request           another action. Record any remaining attribution gap.  
+attribution, service health or incident resolution.</pre></figure>
+</div><div id="panel-layout/detail-document-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-6" tabindex="0">
+<figure><figcaption>Unicode monochrome · none · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000">Operation <span style="font-weight:bold;">route-2026-11-23-0042</span>                                                                                 
+                                                                                                                
+<span style="font-weight:bold;">Gateway route update</span>                                                                                            
+[Outcome unknown]                                                                                               
+<span style="font-weight:bold;">Next:</span> Inspect the saved route request before changing traffic.                                                  
+Observed  09:42 UTC                                                                                             
+                                                                                                                
+<span style="font-weight:bold;">Observation</span>  ----------------------------------------    <span style="font-weight:bold;">Verification</span>  ---------------------------------------- 
+Domain: Network                                          Submission: Recorded                                   
+Source: Controller journal                                 The request reached the controller journal.          
+Observed: 09:42 UTC                                      Remote route: Not observed                             
+Request receipt: missing                                   No read follows the submitted request.               
+                                                         Attribution: Unknown                                   
+                                                           The lost response cannot establish the effect.       
+                                                                                                                
+<span style="font-weight:bold;">Observed evidence</span>  -------------------------------------------------------------------------------------------- 
+The controller recorded a request to switch the gateway route. Its response timed out after submission. The     
+remote route has not been observed since the request.                                                           
+                                                                                                                
+<span style="font-weight:bold;">Activity</span>  ----------------------------------------------------------------------------------------------------- 
+t <span style="font-weight:bold;">Route request recorded</span>                                                                                        
+  09:41 UTC  Controller                                                                                         
+  Switch the gateway route to the prepared target.                                                              
+                                                                                                                
+t <span style="font-weight:bold;">Response timed out</span>                                                                                            
+  09:42 UTC  Controller                                                                                         
+  Submission is recorded; the external result is still unknown.                                                 
+                                                                                                                
+<span style="font-weight:bold;">Interpretation limits</span>  ------------------------------    <span style="font-weight:bold;">Inspection notes</span>  ------------------------------------ 
+A recorded request establishes intent. A caller&#39;s        Compare the saved identity with the observer&#39;s         
+report establishes what the caller said. An              evidence. Keep the last observation when a refresh     
+independent observation may confirm the external         fails. Check the observation time before taking        
+state; it does not automatically prove request           another action. Record any remaining attribution gap.  
+attribution, service health or incident resolution.</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="layout/detail-document-code"><a class="heading-permalink" href="#layout%2fdetail-document-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+document <span class="syn-operator">:=</span> layout<span class="syn-operator">.</span>DetailDocument<span class="syn-operator">{</span>
+	Header<span class="syn-operator">:</span> layout<span class="syn-operator">.</span>IdentityHeader<span class="syn-operator">{</span>Kind<span class="syn-operator">:</span> <span class="syn-string">&#34;Operation&#34;</span><span class="syn-operator">,</span> ID<span class="syn-operator">:</span> <span class="syn-string">&#34;route-0042&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+	Summary<span class="syn-operator">:</span> layout<span class="syn-operator">.</span>RecordSummary<span class="syn-operator">{</span>
+		Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Gateway route update&#34;</span><span class="syn-operator">,</span> Status<span class="syn-operator">:</span> text<span class="syn-operator">.</span><span class="syn-function">Pill</span><span class="syn-operator">(</span><span class="syn-string">&#34;Outcome unknown&#34;</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span>Warning<span class="syn-operator">,</span> palette<span class="syn-operator">,</span> text<span class="syn-operator">.</span>Normal<span class="syn-operator">)</span><span class="syn-operator">,</span>
+		Next<span class="syn-operator">:</span> <span class="syn-operator">&amp;</span>layout<span class="syn-operator">.</span>Pair<span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Next&#34;</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-string">&#34;Read the remote route before changing traffic.&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+	<span class="syn-operator">}</span><span class="syn-operator">,</span>
+	Sections<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>layout<span class="syn-operator">.</span>DetailSection<span class="syn-operator">{</span>
+		<span class="syn-operator">{</span>ID<span class="syn-operator">:</span> <span class="syn-string">&#34;observation&#34;</span><span class="syn-operator">,</span> Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Observation&#34;</span><span class="syn-operator">,</span> Fields<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>layout<span class="syn-operator">.</span>Pair<span class="syn-operator">{</span>
+			<span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Source&#34;</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-string">&#34;Controller journal&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Observed&#34;</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-string">&#34;09:42 UTC&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Receipt&#34;</span><span class="syn-operator">,</span> State<span class="syn-operator">:</span> text<span class="syn-operator">.</span>ValueMissing<span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>ID<span class="syn-operator">:</span> <span class="syn-string">&#34;verification&#34;</span><span class="syn-operator">,</span> Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Verification&#34;</span><span class="syn-operator">,</span> Statuses<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>layout<span class="syn-operator">.</span>StatusItem<span class="syn-operator">{</span>
+			<span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Submission&#34;</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-string">&#34;Recorded&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span> <span class="syn-operator">{</span>Label<span class="syn-operator">:</span> <span class="syn-string">&#34;Remote route&#34;</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-string">&#34;Not observed&#34;</span><span class="syn-operator">,</span> Detail<span class="syn-operator">:</span> <span class="syn-string">&#34;No independent read follows the request.&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">{</span>ID<span class="syn-operator">:</span> <span class="syn-string">&#34;history&#34;</span><span class="syn-operator">,</span> Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Activity&#34;</span><span class="syn-operator">,</span> FullWidth<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">,</span> Timeline<span class="syn-operator">:</span> <span class="syn-operator">[</span><span class="syn-operator">]</span>layout<span class="syn-operator">.</span>TimelineEvent<span class="syn-operator">{</span>
+			<span class="syn-operator">{</span>When<span class="syn-operator">:</span> <span class="syn-string">&#34;09:41 UTC&#34;</span><span class="syn-operator">,</span> Actor<span class="syn-operator">:</span> <span class="syn-string">&#34;Controller&#34;</span><span class="syn-operator">,</span> Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Request recorded&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+			<span class="syn-operator">{</span>When<span class="syn-operator">:</span> <span class="syn-string">&#34;09:42 UTC&#34;</span><span class="syn-operator">,</span> Actor<span class="syn-operator">:</span> <span class="syn-string">&#34;Controller&#34;</span><span class="syn-operator">,</span> Title<span class="syn-operator">:</span> <span class="syn-string">&#34;Response timed out&#34;</span><span class="syn-operator">,</span> Detail<span class="syn-operator">:</span> <span class="syn-string">&#34;A lost response does not establish the remote result.&#34;</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+		<span class="syn-operator">}</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
+	<span class="syn-operator">}</span><span class="syn-operator">,</span>
+<span class="syn-operator">}</span>
+
+<span class="syn-keyword">return</span> document<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-number">100</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="layout/detail-document-integration"><h3 id="layout/detail-document-integration"><a class="heading-permalink" href="#layout%2fdetail-document-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Supply stable section IDs, grouped Fields, Statuses, Timeline and Paragraphs. Sections pair above MinSectionWidth, defaulting to 40 cells per column; FullWidth breaks pairing. StatusList and Timeline also render independently. Titles, prose and event data are escaped; status values accept trusted styled text. Body appends a pure width-aware custom renderer. View returns the full content; Render also returns section ranges. A native viewport or ListInspector owns scrolling. Re-render after data, theme or width changes. Run go run ./cmd/workbench run layout/detail-document for scrollable inspection.</p></section>
+<div class="component-run"><h3 id="layout/detail-document-run"><a class="heading-permalink" href="#layout%2fdetail-document-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog layout/detail-document</code></pre><p><a href="https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_detail_document.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/layout/detail_document.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Declared example links (unaudited): <a class="dependency" href="molecules-layout.html#layout/identity-header">layout/identity-header</a> <a class="dependency" href="molecules-layout.html#layout/record-summary">layout/record-summary</a> <a class="dependency" href="molecules-layout.html#layout/key-value">layout/key-value</a> </p>
+</section>
+</section>
+</section>
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution · <a href="organisms-layout.md" class="markdown-download">Markdown</a></footer>
+</main></div></body></html>
+
