@@ -238,7 +238,7 @@ Nest Flex, Grid and Region nodes directly; only leaf region IDs are registered w
 go run ./examples/catalog template/nested-columns
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/template_nested_columns.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/nested_layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/template_nested_columns.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/nested_layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [tui/screen](https://lanej.io/charmed/templates-tui.html#tui/screen) [layout/flex](https://lanej.io/charmed/molecules-layout.html#layout/flex) [layout/responsive](https://lanej.io/charmed/molecules-layout.html#layout/responsive) [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)
 
@@ -475,6 +475,6 @@ Nest Flex, Grid and Region nodes directly; only leaf region IDs are registered w
 go run ./examples/catalog template/nested-grid
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/template_nested_grid.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/nested_layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/template_nested_grid.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/nested_layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [tui/screen](https://lanej.io/charmed/templates-tui.html#tui/screen) [layout/flex](https://lanej.io/charmed/molecules-layout.html#layout/flex) [layout/grid](https://lanej.io/charmed/molecules-layout.html#layout/grid) [layout/responsive](https://lanej.io/charmed/molecules-layout.html#layout/responsive) [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)

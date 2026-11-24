@@ -155,11 +155,11 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/status-cell
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/feedback_status_cell.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/feedback/status_cell.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/feedback_status_cell.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/feedback/status_cell.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Status cell dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus-cell) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/feedback/status_cell.go#L11)
+[Status cell dependency graph](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus-cell) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/feedback/status_cell.go#L11)
 
 - [Status](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus) · composes · health presentation
 
@@ -167,7 +167,7 @@ Consumer usage uses
 
 - [Status cell](https://lanej.io/charmed/dependencies.html#component-feedback%2Fstatus-cell) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/feedback_status_cell.go#L9)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/feedback_status_cell.go#L9)
 
 [Molecules](https://lanej.io/charmed/molecules.html) / Feedback
 
@@ -269,7 +269,7 @@ Keep the native control state in the owning application model and route keyboard
 go run ./examples/catalog feedback/paginator
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/feedback_paginator.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/molecules.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/feedback_paginator.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/molecules.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -353,7 +353,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/help
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/feedback_help.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/molecules.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/feedback_help.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/molecules.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -489,7 +489,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/attention
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/feedback_attention.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/feedback/attention.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/feedback_attention.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/feedback/attention.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)
 
@@ -572,7 +572,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/percent
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/feedback_percent.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/feedback/percent.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/feedback_percent.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/feedback/percent.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [feedback/progress](https://lanej.io/charmed/atoms-feedback.html#feedback/progress)
 
@@ -685,7 +685,7 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/evidence-summary
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/feedback_evidence_summary.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/feedback/evidence.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/feedback_evidence_summary.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/feedback/evidence.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [feedback/evidence](https://lanej.io/charmed/atoms-feedback.html#feedback/evidence)
 
@@ -802,6 +802,6 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog feedback/evidence-footer
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/feedback_evidence_footer.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/feedback/evidence.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/feedback_evidence_footer.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/feedback/evidence.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [feedback/evidence](https://lanej.io/charmed/atoms-feedback.html#feedback/evidence) [text/value-state](https://lanej.io/charmed/atoms-text.html#text/value-state) [text/omission](https://lanej.io/charmed/atoms-text.html#text/omission)

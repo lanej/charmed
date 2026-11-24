@@ -98,7 +98,7 @@ Return Focus's command when the input becomes active. In Update, retain both the
 go run ./examples/catalog input/field
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/input_field.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/molecules.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/input_field.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/molecules.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [input/text](https://lanej.io/charmed/atoms-input.html#input/text)
 
@@ -197,11 +197,11 @@ Construct ordered options with unique nonempty IDs and an optional selected ID. 
 go run ./examples/catalog input/radio-group
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/input_radio_group.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/input/radio_group.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/input_radio_group.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/input/radio_group.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Radio group dependency graph](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/input/radio_group.go#L20)
+[Radio group dependency graph](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/input/radio_group.go#L20)
 
 - [Radio](https://lanej.io/charmed/dependencies.html#component-input%2Fradio) · composes · options
 
@@ -209,4 +209,4 @@ Consumer usage uses
 
 - [Radio group](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/input_radio_group.go#L8)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/input_radio_group.go#L8)

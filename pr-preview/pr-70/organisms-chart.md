@@ -246,6 +246,6 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/comparison-panel
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/chart_comparison_panel.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/chart_comparison_panel.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/organisms.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [chart/distributions](https://lanej.io/charmed/molecules-chart.html#chart/distributions) [chart/timeseries](https://lanej.io/charmed/atoms-chart.html#chart/timeseries) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)

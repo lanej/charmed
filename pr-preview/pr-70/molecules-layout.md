@@ -94,7 +94,7 @@ Supply trusted native display strings, escaping application data with text.Inlin
 go run ./examples/catalog layout/text-row
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_text_row.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/layout/text_row.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_text_row.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/layout/text_row.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [text/primitives](https://lanej.io/charmed/atoms-text.html#text/primitives)
 
@@ -237,7 +237,7 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/link-group
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_link_group.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/layout/links.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_link_group.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/layout/links.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [text/link](https://lanej.io/charmed/atoms-text.html#text/link) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -319,7 +319,7 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/header
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_header.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_header.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/text-row](https://lanej.io/charmed/molecules-layout.html#layout/text-row) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -400,7 +400,7 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/identity-header
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_identity_header.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_identity_header.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/text-row](https://lanej.io/charmed/molecules-layout.html#layout/text-row) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -528,7 +528,7 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/section
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_section.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_section.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [text/disclosure](https://lanej.io/charmed/atoms-text.html#text/disclosure)
 
@@ -643,7 +643,7 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/key-value
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_key_value.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/layout/keyvalue.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_key_value.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/layout/keyvalue.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [text/value-state](https://lanej.io/charmed/atoms-text.html#text/value-state) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -718,7 +718,7 @@ The parent owns state, focus and input routing; layout helpers render the values
 go run ./examples/catalog layout/footer
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_footer.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_footer.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/text-row](https://lanej.io/charmed/molecules-layout.html#layout/text-row) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout) [text/primitives](https://lanej.io/charmed/atoms-text.html#text/primitives) [feedback/status](https://lanej.io/charmed/atoms-feedback.html#feedback/status)
 
@@ -914,7 +914,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/flex
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_flex.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_flex.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -1110,7 +1110,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/grid
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_grid.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_grid.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -1237,7 +1237,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/flow
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_flow.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_flow.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -1435,7 +1435,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/dock
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_dock.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_dock.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/flex](https://lanej.io/charmed/molecules-layout.html#layout/flex)
 
@@ -1631,7 +1631,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/split-pane
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_split_pane.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_split_pane.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/flex](https://lanej.io/charmed/molecules-layout.html#layout/flex)
 
@@ -1827,7 +1827,7 @@ Declare region identities and hard minimum sizes, then arrange a registered tui.
 go run ./examples/catalog layout/responsive
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_responsive.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_responsive.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/grid](https://lanej.io/charmed/molecules-layout.html#layout/grid) [layout/split-pane](https://lanej.io/charmed/molecules-layout.html#layout/split-pane)
 
@@ -1844,75 +1844,73 @@ Saved terminal output · truecolor reference
 Output of the Go usage example below
 
 ```
-Gateway route update                                                    
-Production gateway                                                      
- Outcome unknown                                                        
-Next: Inspect the saved route request before changing traffic.          
-Observed  09:42 UTC                                                     
-Source    Controller journal
+PR #42 · Route update                                                   
+ Outcome uncertain                                                      
+Next action: Reconcile the saved merge operation                        
+Observed  09:42 UTC
 ```
 
 Demo · truecolor · 72 × 10 terminal cells
 
 ```
-Gateway route update                                                    
- Outcome unknown                                                        
-Next: Inspect the saved route request before changing traffic.          
+PR #42 · Route update                                                   
+ Outcome uncertain                                                      
+Next action: Reconcile the saved merge operation                        
 Observed  09:42 UTC
 ```
 
 Narrow · truecolor · 40 × 16 terminal cells
 
 ```
-Gateway route update                    
- Outcome unknown                        
-Next: Inspect the saved route request   
-before changing traffic.                
+PR #42 · Route update                   
+ Outcome uncertain                      
+Next action: Reconcile the saved merge  
+operation                               
 Observed: 09:42 UTC
 ```
 
 256 colors · ansi256 · 72 × 10 terminal cells
 
 ```
-Gateway route update                                                    
- Outcome unknown                                                        
-Next: Inspect the saved route request before changing traffic.          
+PR #42 · Route update                                                   
+ Outcome uncertain                                                      
+Next action: Reconcile the saved merge operation                        
 Observed  09:42 UTC
 ```
 
 16 colors · ansi16 · 72 × 10 terminal cells
 
 ```
-Gateway route update                                                    
- Outcome unknown                                                        
-Next: Inspect the saved route request before changing traffic.          
+PR #42 · Route update                                                   
+ Outcome uncertain                                                      
+Next action: Reconcile the saved merge operation                        
 Observed  09:42 UTC
 ```
 
 Monochrome · none · 72 × 10 terminal cells
 
 ```
-Gateway route update                                                    
-[Outcome unknown]                                                       
-Next: Inspect the saved route request before changing traffic.          
+PR #42 * Route update                                                   
+[Outcome uncertain]                                                     
+Next action: Reconcile the saved merge operation                        
 Observed  09:42 UTC
 ```
 
 ASCII · truecolor · 72 × 10 terminal cells
 
 ```
-Gateway route update                                                    
-[Outcome unknown]                                                       
-Next: Inspect the saved route request before changing traffic.          
+PR #42 * Route update                                                   
+[Outcome uncertain]                                                     
+Next action: Reconcile the saved merge operation                        
 Observed  09:42 UTC
 ```
 
 Unicode monochrome · none · 72 × 10 terminal cells
 
 ```
-Gateway route update                                                    
-[Outcome unknown]                                                       
-Next: Inspect the saved route request before changing traffic.          
+PR #42 * Route update                                                   
+[Outcome uncertain]                                                     
+Next action: Reconcile the saved merge operation                        
 Observed  09:42 UTC
 ```
 
@@ -1923,10 +1921,9 @@ Imports: [`layout`](https://pkg.go.dev/github.com/lanej/charmed/layout "github.c
 ```go
 palette := theme.New(theme.Dark)
 summary := layout.RecordSummary{
-	Title: "Gateway route update", Subtitle: "Production gateway",
-	Status: text.Pill("Outcome unknown", text.Warning, palette, text.Normal),
-	Fields: []layout.Pair{{Label: "Observed", Value: "09:42 UTC"}, {Label: "Source", Value: "Controller journal"}},
-	Next:   &layout.Pair{Label: "Next", Value: "Inspect the saved route request before changing traffic."},
+	Title: "PR #42 · Route update", Status: text.Pill("Outcome uncertain", text.Warning, palette, text.Normal),
+	Fields: []layout.Pair{{Label: "Observed", Value: "09:42 UTC"}},
+	Next:   &layout.Pair{Label: "Next action", Value: "Reconcile the saved merge operation"},
 }
 
 return summary.View(72, palette, true)
@@ -1942,6 +1939,6 @@ Supply Title, optional Subtitle and Status as trusted styled display text; escap
 go run ./examples/catalog layout/record-summary
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/docs/snippets/layout_record_summary.go) · [Implementation](https://github.com/lanej/charmed/blob/49f755da5bd25a044043cf98bc303185c2ebce6d/layout/record_summary.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/docs/snippets/layout_record_summary.go) · [Implementation](https://github.com/lanej/charmed/blob/27e05a1997640606888402c2223835e8d5e8e451/layout/record_summary.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/text-row](https://lanej.io/charmed/molecules-layout.html#layout/text-row) [layout/key-value](https://lanej.io/charmed/molecules-layout.html#layout/key-value)
