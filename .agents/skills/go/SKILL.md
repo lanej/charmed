@@ -1,27 +1,50 @@
 ---
 name: go
-description: Use when creating, modifying, testing, or reviewing Go code. Apply the portable Go correctness profile with exhaustive enums and sum types, strict error handling, security analysis, race tests, and vulnerability checks; preserve repository-specific policy.
+description: "Use when creating, modifying, testing, or reviewing Go code. Apply Go correctness guidance and the selected lifecycle checks; preserve repository-specific requirements. Apply the selected beta expectations."
 ---
 
-# Go
+# go: beta
 
-Use the repository's Go checks early and before handoff. Use `repo-bootstrap --go` for new projects or `repo-bootstrap --go-retrofit --pr-template none` for existing repositories. Bootstrap detects root modules, preserves an existing lint config, and defaults existing code to a shrinking lint baseline. Installation supplies guidance and portable assets; it does not install checks into a consumer repository or authorize replacing its policy. Without the optional workstation bootstrap command, follow the manual copy instructions. Read [the adoption instructions](references/correctness.md) before installing or merging the profile; they also describe copying the portable assets without dotfiles. Commit the checks and policy so other machines and CI use them.
+Protect supported behavior, affected integrations, and compatibility. Use independent expected outcomes and migration checks where relevant.
 
-Preserve and extend existing project checks; reconcile an existing configuration instead of replacing or weakening it. For nested modules, workspaces, build tags, platform-specific code, or native dependencies, adapt the checks and CI matrix to the actual build surfaces. The supplied runner covers one root module on its host platform. Run relevant extra configurations explicitly.
+## Verification
 
-## Correctness checks
+Run `python3 scripts/check-source-code.py go` for the installed lifecycle gate. The selected stage entrypoint controls required checks; standalone modes describe available tools and do not add another stage’s gates. Preserve stronger repository requirements. Missing tools and failed checks require resolution or a reported limit, never a silent skip.
 
-Run `bash scripts/check-go.sh lint` during implementation, `bash scripts/check-go.sh fmt path/to/file.go` to apply formatting, and `bash scripts/check-go.sh` before delivery. Use `fix ./path/to/package` for available cuddling fixes and review their diff. The same full command runs in CI: formatting, module tidiness, strict lint, uncached race tests, and reachable-vulnerability analysis. `test` and `vuln` modes isolate failures. Read [the correctness guide](references/correctness.md) when adopting, tuning, or explaining the profile.
+The runner supports `lint`, `fmt` with explicit paths, `fix` for scoped cuddling repairs, `test`, and `vuln`. Inspect source-writing changes. Pinned tools are cached outside the project, and the linter release checksum is verified. Initial tool setup and vulnerability analysis need network access. Keep tool dependencies out of the application’s `go.mod`.
 
-The runner caches pinned tools outside the project, verifies the linter release checksum, and keeps tool dependencies out of the application's `go.mod`. Initial setup and vulnerability analysis need network access. Missing tools, unavailable dependencies, or failed checks are failures to resolve or report. Preserve all findings for batch repairs. Respect an explicitly adopted ratchet: initialize its baseline only on committed existing Go source before adding new work, and use `ratchet` to remove resolved findings. Never grow a baseline or use changed-line filters, blanket exclusions, or omitted tests to silence new findings. New file paths are strict; analysis still checks unchanged consumers affected by a new enum value.
+The supplied runner covers one root module on its host platform. Adapt checks to actual nested modules, workspaces, build tags, platform-specific code, and native dependencies. Read [the correctness guide](references/correctness.md) when adopting, tuning, or explaining the profile.
+
+## Enforcement: ratchet
+
+Preserve the adopted baseline. New files have no allowance; new findings in old files fail, including untouched consumers affected by changed declarations. Do not use changed-line filters or enlarge the baseline. After repairs, run `bash scripts/check-go.sh ratchet` and commit the reduction with the fix. Normal lint requires resolved allowances to be removed.
+
+Baseline initialization belongs only to authorized adoption against committed existing Go source. It rejects dirty, untracked, or ignored Go source, compilation errors, and an existing baseline. Never reinitialize it for ordinary feature work. Use explicit paths with `fmt`; ratchets reject unscoped formatting. A signature budget is gradual adoption, not proof that all legacy code complies. Read [the adoption mechanics](references/correctness.md) when installing or changing the profile.
+
+## Go
+
+Before selecting application tools or an API protocol, read [the installed project policy](../source-code-lifecycle/SKILL.md). Apply the declared authority and adoption at the configured maturity; preserve external providers’ protocols and established stacks according to that policy.
+
+Follow the verification commands and enforcement in this skill’s installed entrypoint. Preserve existing repository checks.
+
+For comment decisions, read the [shared comment guidance](../code-comments/SKILL.md). For public library APIs, also read the [library comment guidance](../library-code-comments/SKILL.md). Bootstrap bundles both with this skill in tracked or local mode; apply the library perspective only to library work and preserve project requirements.
+
+### API client generation
+
+For Go client generation from OpenAPI-described JSON APIs, prefer [Ogen](https://ogen.dev/). Source the authoritative OpenAPI specification, whether encoded as JSON or YAML, and pin the generator version. JSON samples or a standalone JSON Schema do not supply the full HTTP contract; establish the missing operations and protocol semantics before generation. Document a concrete compatibility constraint and a revisit condition when selecting another generator. Preserve established project tools unless a migration is authorized.
+
+### Correctness
+
+Fix findings at their cause. Use only narrowly scoped suppressions with the named linter and a concrete rationale. Static analysis and passing tests do not prove domain correctness or cover unexecuted race paths.
 
 Use a named type and typed constants for simple enums. Give zero an intentional meaning or treat it as invalid. Handle every declared value explicitly in switches and enum-keyed maps; a `default` branch must not substitute for a missing declared case. Handle out-of-set values at runtime too: `State(99)` can still compile. For variants carrying different data, use an interface marked `//sumtype:decl` with an unexported marker method and concrete variants; require exhaustive type switches with `gochecksumtype`.
 
 Fix findings at their cause. Use only narrowly scoped suppressions with the named linter and a concrete rationale, including intentional partial enum maps. Do not blanket-disable rules or loosen checks merely to obtain green output. Static analysis and passing tests cannot prove domain correctness or cover unexecuted race paths; retain independent behavioral expectations and meaningful tests.
 
-## Use `gotestsum`, not bare `go test`
+### Use `gotestsum`, not bare `go test`
 
-`gotestsum` wraps `go test` with readable, colorized output and failure re-runs. Fall back to `go test` only if it is not installed.
+`gotestsum` wraps `go test` with readable, colorized output and failure re-runs. Fall back to
+`go test` only if it isn't installed.
 
 ```bash
 gotestsum ./...
@@ -32,9 +55,12 @@ gotestsum --rerun-fails=2 ./...         # isolate flakes
 gotestsum --junitfile=junit.xml ./...   # CI
 ```
 
-`--rerun-fails` diagnoses flakes; a passing rerun does not erase a failed first run. Investigate the failure before treating the gate as passed.
+`--rerun-fails` is for *diagnosing* a flake, not for making CI green. A test that only passes on
+re-run is a bug to fix.
 
-## Existing projects without the profile
+### Existing repository checks
+
+These examples describe available Go tools; use the installed profile selector and repository requirements to choose required commands.
 
 ```bash
 gofmt -l .          # inspect output; this command alone does not fail on differences
@@ -44,23 +70,10 @@ gotestsum -- -race ./...
 
 Treat unformatted output as a failed check. Run the project's existing linter and security checks as well. The fallback above does not provide exhaustive-match enforcement; adopt the profile or reconcile equivalent checks before claiming those protections.
 
-## Coverage
+### Coverage
 
 ```bash
 go test -coverprofile=cover.out ./... && go tool cover -html=cover.out
 ```
 
-## Compiler and editor diagnostics
-
-Confirm editor diagnostics with the compiler before changing code. Go's build and test caches are content-addressed; cached output alone does not mean a source change was ignored. Use an uncached focused test when resolving disagreement, then investigate editor indexing if compilation succeeds.
-
-## Environment
-
-```bash
-CGO_ENABLED=0                          # static binaries; required for scratch/distroless images
-GOOS=linux GOARCH=amd64                # cross-compile
-GOPRIVATE=github.com/myorg/*           # skip the proxy and checksum DB for private modules
-```
-
-`GOPRIVATE` is the usual fix when `go mod download` 404s or fails checksum verification on an
-internal repository.
+Read [troubleshooting](references/troubleshooting.md) when investigating stale editor diagnostics or environment settings.
