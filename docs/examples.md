@@ -34,3 +34,14 @@ Switch between the [deployment fixture](screens-pattern.html#screen/deployment)'
 The application shell fixture composes `layout.Header`, `navigation.Tabs`, `layout.Panel` and `layout.Footer`. The header reserves two rows, the tab bar and footer one each, and the panel receives the remaining height. Left/Right or Home/End changes the active section and its content; resize keeps the selected tab. The fixture contains synthetic display data. In an application with focusable content, use the parent focus scope to focus or blur the tab bar before forwarding keys.
 
 The [regional measurement screen](screens-pattern.html#screen/cohorts) compares three cohorts using scalar temperature, summed energy, ratio yield and humidity. Read the [measurement contract](cohorts.html) before supplying application observations or comparison boundaries.
+
+## List and evidence inspection
+
+```sh
+go run ./examples/inspection
+go run ./cmd/workbench run pattern/list-inspector --columns 80 --rows 24
+```
+
+Use [List inspector](organisms-pattern.html#pattern/list-inspector) when a task starts with selecting a record and examining its evidence. Supply stable identities, [record summaries](molecules-layout.html#layout/record-summary) and [detail documents](organisms-layout.html#layout/detail-document) containing related fields, named conditions and event history. Wide allocations preview the selection; narrow allocations preserve the list until Enter opens inspection. Escape restores the list, and brackets page the active native viewport.
+
+The delivery queue opens on PR #42. Inspect it to see the saved merge request, tests and review, feedback delivery stages and a timeline of the missing remote response. Each stage has its own observation, so a successful send can appear beside an unconfirmed receipt. The first simulated refresh fails and retains the observation. A second supplies the confirmed merge under the same record identity.

@@ -10,6 +10,12 @@ func Render(id string) (string, error) {
 		return ExampleChartBuckets(), nil
 	case "template/operations":
 		return ExampleTemplateOperations(), nil
+	case "pattern/list-inspector":
+		return ExamplePatternListInspector()
+	case "layout/record-summary":
+		return ExampleLayoutRecordSummary(), nil
+	case "layout/detail-document":
+		return ExampleLayoutDetailDocument(), nil
 	case "collection/section-stack":
 		return ExampleCollectionSectionStack()
 	case "pattern/outline-document":

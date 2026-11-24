@@ -99,7 +99,7 @@ func Generate(out string) error {
 			}{name: "Inspection", change: func(c *story.Config) { c.VerboseDetails = true }})
 		}
 
-		if d.ID == "git/review" || d.ID == "pattern/outline-document" || d.ID == "collection/section-stack" {
+		if slices.Contains([]string{"git/review", "pattern/outline-document", "collection/section-stack", "pattern/list-inspector", "layout/record-summary", "layout/detail-document"}, d.ID) {
 			for _, state := range d.States {
 				if state == "ready" {
 					continue

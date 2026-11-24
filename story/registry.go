@@ -129,7 +129,7 @@ func (c Config) Validate() error {
 		return fmt.Errorf("unknown color profile %q", c.Profile)
 	}
 
-	if !slices.Contains([]string{"ready", "empty", "loading", "error", "disabled", "folded", "reviewed"}, c.State) {
+	if !slices.Contains([]string{"ready", "empty", "loading", "error", "disabled", "folded", "reviewed", "inspecting", "confirmed"}, c.State) {
 		return fmt.Errorf("unknown fixture state %q", c.State)
 	}
 
