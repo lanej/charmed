@@ -193,3 +193,21 @@ func TestDetailDocumentKeepsIndependentDeliveryStages(t *testing.T) {
 		}
 	}
 }
+
+func TestDetailStagesKeepWrappedHeadingsAndValuesInTheirRows(t *testing.T) {
+	section := layout.DetailSection{Stages: []layout.StatusItem{
+		{Label: "Transport", Value: "Recorded", Detail: "journal"},
+		{Label: "Recipient acknowledgement", Value: "Awaiting confirmation", Detail: "recipient"},
+		{Label: "Disposition", Value: "Open"},
+	}}
+	document := layout.DetailDocument{Sections: []layout.DetailSection{section}}
+	view := ansi.Strip(document.View(56, theme.New(theme.Dark)))
+	lines := strings.Split(view, "\n")
+
+	if len(lines) != 5 || !strings.Contains(lines[1], "acknowledgement") ||
+		!strings.Contains(lines[2], "Recorded") || !strings.Contains(lines[2], "Awaiting") || !strings.Contains(lines[2], "Open") ||
+		!strings.Contains(lines[3], "confirmation") ||
+		!strings.Contains(lines[4], "journal") || !strings.Contains(lines[4], "recipient") {
+		t.Fatalf("stage labels, values and explanations lost their shared baselines:\n%s", view)
+	}
+}

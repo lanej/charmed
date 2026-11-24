@@ -95,8 +95,10 @@ func stageSequence(items []StatusItem, width int, t theme.Theme) string {
 	}
 
 	available := width - (len(items)-1)*connection
-	columns := make([]string, 0, 2*len(items)-1)
+	headings, values, details := []string{}, []string{}, []string{}
 	arrow := t.BorderStyle(false).Render(" " + t.Glyph(theme.GlyphRight) + " ")
+	gap := strings.Repeat(" ", connection)
+	hasDetail := false
 
 	for i, item := range items {
 		cellWidth := available / len(items)
@@ -105,14 +107,33 @@ func stageSequence(items []StatusItem, width int, t theme.Theme) string {
 		}
 
 		if i > 0 {
-			columns = append(columns, arrow)
+			headings = append(headings, arrow)
+			values = append(values, gap)
+			details = append(details, gap)
 		}
 
-		label := t.Text().Bold(true).Render(text.Inline(item.Label))
-		columns = append(columns, recordWrap(label, cellWidth)+"\n"+statusValue(item, cellWidth, t))
+		heading := t.Text().Bold(true).Render(text.Inline(item.Label))
+		headings = append(headings, stageCell(heading, cellWidth))
+		values = append(values, stageCell(item.value(), cellWidth))
+		details = append(details, stageCell(t.Subtle().Render(text.Escape(item.Detail)), cellWidth))
+		hasDetail = hasDetail || item.Detail != ""
 	}
 
-	return Row(columns...)
+	bands := []string{Row(headings...), Row(values...)}
+	if hasDetail {
+		bands = append(bands, Row(details...))
+	}
+
+	return strings.Join(bands, "\n")
+}
+
+// An empty cell still reserves its column when neighbours wrap.
+func stageCell(content string, width int) string {
+	if content == "" {
+		return strings.Repeat(" ", width)
+	}
+
+	return recordWrap(content, width)
 }
 
 // TimelineEvent is one caller-ordered event. Every field is escaped data. When
