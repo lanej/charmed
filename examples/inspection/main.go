@@ -1,4 +1,4 @@
-// Command inspection demonstrates an application-owned service operation list.
+// Command inspection demonstrates an application-owned delivery queue.
 package main
 
 import (
@@ -34,9 +34,9 @@ func newModel() (*model, error) {
 		return nil, err
 	}
 
-	inspector.ListTitle, inspector.DetailTitle = "Operations", "Evidence"
+	inspector.ListTitle, inspector.DetailTitle = "Deliveries", ""
 	m := &model{
-		inspector: inspector, size: size, status: "Synthetic observations / 09:42 UTC",
+		inspector: inspector, size: size, status: "Illustrative deliveries",
 		quit:    key.NewBinding(key.WithKeys("q", "ctrl+c"), key.WithHelp("q", "quit")),
 		refresh: key.NewBinding(key.WithKeys("r"), key.WithHelp("r", "refresh")),
 	}
@@ -51,7 +51,7 @@ func (m *model) resize(size layout.Size) {
 	m.size = size
 	t := m.inspector.Theme
 	m.header = (layout.TextRow{Gap: 2, Items: []layout.TextRowItem{
-		{Text: t.Heading().Render("Service operations")},
+		{Text: t.Heading().Render("Delivery queue")},
 		{Flex: true},
 		{Text: text.ToneStyle(m.statusTone, text.Normal, t).Render(m.status)},
 	}}).View(max(1, size.Width))
@@ -66,7 +66,7 @@ func (m *model) resize(size layout.Size) {
 	m.footer = (layout.TextRow{Gap: 2, Items: []layout.TextRowItem{
 		{Text: text.KeyHint("j/k", navigation, t)},
 		{Text: text.KeyHint(toggleKey, toggleLabel, t)},
-		{Text: text.KeyHint("[/]", "scroll", t)},
+		{Text: text.KeyHint("[/]", "page", t)},
 		{Text: text.KeyHint("r", "refresh", t)},
 		{Text: text.KeyHint("q", "quit", t)},
 	}}).View(max(1, size.Width))
@@ -85,7 +85,7 @@ func (m *model) replaceObservation() {
 	if err := m.inspector.SetRecords(fixture.Records("confirmed", m.inspector.Theme)); err != nil {
 		m.status, m.statusTone = "Replacement rejected: "+err.Error(), text.Danger
 	} else {
-		m.status, m.statusTone = "Synthetic route observation / 09:43 UTC", text.Neutral
+		m.status, m.statusTone = "Updated at 09:43 UTC", text.Neutral
 	}
 
 	m.resize(m.size)

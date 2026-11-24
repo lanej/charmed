@@ -76,6 +76,7 @@ func cloneInspectorRecords(records []InspectorRecord) []InspectorRecord {
 			section := &document.Sections[index]
 			section.Fields = slices.Clone(section.Fields)
 			section.Statuses = slices.Clone(section.Statuses)
+			section.Stages = slices.Clone(section.Stages)
 			section.Timeline = slices.Clone(section.Timeline)
 			section.Paragraphs = slices.Clone(section.Paragraphs)
 		}

@@ -10,26 +10,23 @@ import (
 func ExamplePatternListInspector() (string, error) {
 	palette := theme.New(theme.Dark)
 	summary := layout.RecordSummary{
-		Title: "Gateway route update", Status: text.Pill("Outcome unknown", text.Warning, palette, text.Normal),
+		Title: "PR #42 · Route update", Status: text.Pill("Outcome uncertain", text.Warning, palette, text.Normal),
 		Fields: []layout.Pair{{Label: "Observed", Value: "09:42 UTC"}},
-		Next:   &layout.Pair{Label: "Next", Value: "Inspect the saved route request."},
+		Next:   &layout.Pair{Label: "Next action", Value: "Reconcile the saved merge operation"},
 	}
 	document := layout.DetailDocument{
-		Header: layout.IdentityHeader{Kind: "Operation", ID: "route-0042"}, Summary: summary,
+		Header: layout.IdentityHeader{ID: "DELIVERY INSPECTION · ILLUSTRATIVE"}, Summary: summary,
+		ActionDetail: "The request was recorded, but the remote response was unavailable.",
 		Sections: []layout.DetailSection{
-			{ID: "source", Title: "Observation", Fields: []layout.Pair{{Label: "Source", Value: "Controller journal"}, {Label: "Receipt", State: text.ValueMissing}}},
-			{ID: "checks", Title: "Verification", Statuses: []layout.StatusItem{{Label: "Submission", Value: "Recorded"}, {Label: "Remote route", Value: "Not observed"}}},
-			{ID: "history", Title: "Activity", FullWidth: true, Timeline: []layout.TimelineEvent{
-				{When: "09:42 UTC", Actor: "Controller", Title: "Response timed out", Detail: "Submission is recorded; the external result remains unknown."},
-			}},
+			{ID: "identity", Title: "Identity", Fields: []layout.Pair{{Label: "Repository", Value: "example/service"}, {Label: "Owner", Value: "Worker 2"}}},
+			{ID: "checks", Title: "Verification", Statuses: []layout.StatusItem{{Label: "Tests", Value: "Passed"}, {Label: "Merge", Value: "Unverified"}}},
 		},
 	}
 	records := []pattern.InspectorRecord{
-		{ID: "route-0042", Heading: "Network", Summary: &summary, Document: &document},
-		{ID: "pool-0007", Heading: "Compute", Summary: &layout.RecordSummary{
-			Title: "Worker capacity", Status: text.Pill("Outcome confirmed", text.Success, palette, text.Normal),
-			Fields: []layout.Pair{{Label: "Capacity", Value: "12 workers observed"}},
-			Next:   &layout.Pair{Label: "Next", Value: "Check queue latency."},
+		{ID: "example/service#42", Heading: "Needs attention", Summary: &summary, Document: &document},
+		{ID: "example/service#41", Heading: "Completed", Summary: &layout.RecordSummary{
+			Title: "PR #41 · Request parsing", Status: text.Pill("Merged", text.Success, palette, text.Normal),
+			Fields: []layout.Pair{{Label: "Observed", Value: "09:38 UTC"}},
 		}},
 	}
 
@@ -38,7 +35,7 @@ func ExamplePatternListInspector() (string, error) {
 		return "", err
 	}
 
-	inspector.ListTitle, inspector.DetailTitle = "Operations", "Evidence"
+	inspector.ListTitle, inspector.DetailTitle = "Deliveries", ""
 	inspector.Refresh()
 
 	return layout.Column(inspector.View(), text.KeyHint("j/k", "select", palette)+"  "+text.KeyHint("enter", "inspect", palette)+"  "+text.KeyHint("esc", "back", palette)), nil

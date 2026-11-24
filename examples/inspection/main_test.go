@@ -19,7 +19,7 @@ func TestInspectionConsumerGeometryAndInspection(t *testing.T) {
 
 		m.Update(size)
 
-		if !strings.Contains(ansi.Strip(m.View().Content), "Outcome unknown") {
+		if !strings.Contains(ansi.Strip(m.View().Content), "Outcome uncertain") {
 			t.Fatalf("%v: list did not preserve the supplied unknown condition", size)
 		}
 
@@ -65,7 +65,7 @@ func TestInspectionConsumerGeometryAndInspection(t *testing.T) {
 
 		m.Update(tea.KeyPressMsg{Code: 'j'})
 
-		if id, present := m.inspector.SelectedID(); !present || id != "cache-2026-11-23-0018" {
+		if id, present := m.inspector.SelectedID(); !present || id != "example/service#43" {
 			t.Fatalf("%v: application did not forward record navigation", size)
 		}
 	}
@@ -96,24 +96,24 @@ func TestInspectionConsumerOwnsRefreshAndQuit(t *testing.T) {
 
 	m.inspector.Detail.GotoTop()
 
-	if !strings.Contains(ansi.Strip(m.View().Content), "Outcome unknown") {
+	if !strings.Contains(ansi.Strip(m.View().Content), "Outcome uncertain") {
 		t.Fatal("failed refresh strengthened the operation's evidence")
 	}
 
 	m.Update(tea.KeyPressMsg{Code: 'r'})
 
-	if id, present := m.inspector.SelectedID(); !present || id != "route-2026-11-23-0042" || !m.inspector.Inspecting() {
+	if id, present := m.inspector.SelectedID(); !present || id != "example/service#42" || !m.inspector.Inspecting() {
 		t.Fatal("replacement evidence lost the inspected record identity")
 	}
 
-	if !strings.Contains(ansi.Strip(m.View().Content), "Outcome confirmed") {
+	if !strings.Contains(ansi.Strip(m.View().Content), "Merge confirmed") {
 		t.Fatal("later supplied evidence did not reach the inspector")
 	}
 
 	m.Update(tea.KeyPressMsg{Code: tea.KeyEscape})
 	m.Update(tea.KeyPressMsg{Code: 'j'})
 
-	if id, present := m.inspector.SelectedID(); !present || id != "cache-2026-11-23-0018" {
+	if id, present := m.inspector.SelectedID(); !present || id != "example/service#43" {
 		t.Fatal("returning from inspection changed the record order")
 	}
 

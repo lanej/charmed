@@ -19,6 +19,7 @@ type RecordSummary struct {
 }
 
 // View wraps complete content to the supplied cell width with unbounded height.
+// Wide rows place identity, condition and next action in comparable columns.
 // Selection changes title emphasis without adding or removing content. Callers
 // allocate the returned height or place it in a viewport. No caller data changes.
 func (s RecordSummary) View(width int, t theme.Theme, selected bool) string {
@@ -26,7 +27,47 @@ func (s RecordSummary) View(width int, t theme.Theme, selected bool) string {
 		return ""
 	}
 
-	parts := make([]string, 0, 5)
+	// Each inventory column needs enough room for a record identifier, a
+	// condition, or an instruction. Narrow lists keep the same reading order.
+	if width >= 96 && s.Title != "" && s.Status != "" && s.Next != nil {
+		gap := strings.Repeat(" ", theme.SpaceLarge)
+		available := width - 2*theme.SpaceLarge
+		identityWidth, conditionWidth := available/3, available/4
+		identity := s.identity(identityWidth, t, selected)
+		condition := recordWrap(s.Status, conditionWidth)
+		actionWidth := available - identityWidth - conditionWidth
+		action := s.action(actionWidth, t)
+		row := Row(identity, gap, condition, gap, action)
+
+		if len(s.Fields) > 0 {
+			return row + "\n" + recordWrap(KeyValue(s.Fields, width, t), width)
+		}
+
+		return row
+	}
+
+	parts := make([]string, 0, 4)
+	if identity := s.identity(width, t, selected); identity != "" {
+		parts = append(parts, identity)
+	}
+
+	if s.Status != "" {
+		parts = append(parts, recordWrap(s.Status, width))
+	}
+
+	if s.Next != nil {
+		parts = append(parts, s.action(width, t))
+	}
+
+	if len(s.Fields) > 0 {
+		parts = append(parts, recordWrap(KeyValue(s.Fields, width, t), width))
+	}
+
+	return strings.Join(parts, "\n")
+}
+
+func (s RecordSummary) identity(width int, t theme.Theme, selected bool) string {
+	parts := make([]string, 0, 2)
 
 	if s.Title != "" {
 		style := t.Text().Bold(true)
@@ -41,24 +82,16 @@ func (s RecordSummary) View(width int, t theme.Theme, selected bool) string {
 		parts = append(parts, recordWrap(t.Subtle().Render(s.Subtitle), width))
 	}
 
-	if s.Status != "" {
-		parts = append(parts, recordWrap(s.Status, width))
-	}
-
-	if s.Next != nil {
-		label := text.Inline(s.Next.Label)
-		if label != "" {
-			label = t.Heading().Render(label+":") + " "
-		}
-
-		parts = append(parts, recordWrap(label+s.Next.State.View(s.Next.Value, text.Normal, t), width))
-	}
-
-	if len(s.Fields) > 0 {
-		parts = append(parts, recordWrap(KeyValue(s.Fields, width, t), width))
-	}
-
 	return strings.Join(parts, "\n")
+}
+
+func (s RecordSummary) action(width int, t theme.Theme) string {
+	label := text.Inline(s.Next.Label)
+	if label != "" {
+		label = t.Heading().Render(label+":") + " "
+	}
+
+	return recordWrap(label+s.Next.State.View(s.Next.Value, text.Normal, t), width)
 }
 
 // recordWrap shares TextRow's styled wrapping and explicit impossible-grapheme

@@ -9,10 +9,9 @@ import (
 func ExampleLayoutRecordSummary() string {
 	palette := theme.New(theme.Dark)
 	summary := layout.RecordSummary{
-		Title: "Gateway route update", Subtitle: "Production gateway",
-		Status: text.Pill("Outcome unknown", text.Warning, palette, text.Normal),
-		Fields: []layout.Pair{{Label: "Observed", Value: "09:42 UTC"}, {Label: "Source", Value: "Controller journal"}},
-		Next:   &layout.Pair{Label: "Next", Value: "Inspect the saved route request before changing traffic."},
+		Title: "PR #42 · Route update", Status: text.Pill("Outcome uncertain", text.Warning, palette, text.Normal),
+		Fields: []layout.Pair{{Label: "Observed", Value: "09:42 UTC"}},
+		Next:   &layout.Pair{Label: "Next action", Value: "Reconcile the saved merge operation"},
 	}
 
 	return summary.View(72, palette, true)

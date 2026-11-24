@@ -88,6 +88,21 @@ func TestDetailDocumentRetainsCompleteEvidenceAcrossWidths(t *testing.T) {
 			assertRecordBounds(t, rendered.Content, width)
 			assertDetailRanges(t, rendered)
 			compact := compactRecordText(rendered.Content)
+			// Wrapped explanations in the right column read vertically even when
+			// more facts occupy the same rows in the left column.
+			verification := rendered.Sections[1]
+
+			if verification.Start == rendered.Sections[0].Start {
+				lines := strings.Split(rendered.Content, "\n")[verification.Start:verification.End]
+				heading := ansi.Strip(lines[0])
+				start := ansi.StringWidth(strings.SplitN(heading, "Verification", 2)[0])
+
+				for i, line := range lines {
+					lines[i] = ansi.Cut(line, start, width)
+				}
+
+				compact += compactRecordText(strings.Join(lines, "\n"))
+			}
 
 			for _, expected := range []string{"route-42", "Gatewayroute", "Outcomeunknown", "Inspectremoteevidence", "netops", "missing", `""`, "Accepted", "doesnotconfirm", "effect.", "Requestsubmitted", "Intentrecorded", "Noindependentobservation", "Customevidenceretained", `\u001b[2J`} {
 				if !strings.Contains(compact, expected) {
@@ -128,6 +143,53 @@ func assertDetailRanges(t *testing.T, rendering layout.DetailRendering) {
 	for _, span := range rendering.Sections {
 		if span.Start < 0 || span.End <= span.Start || span.End > len(rows) {
 			t.Fatalf("section %+v escaped %d rendered rows", span, len(rows))
+		}
+	}
+}
+
+func TestDetailDocumentKeepsIndependentDeliveryStages(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	document := layout.DetailDocument{
+		Summary:      layout.RecordSummary{Title: "PR #42", Status: "Outcome uncertain", Next: &layout.Pair{Label: "Next action", Value: "Inspect the saved request"}},
+		ActionDetail: "Check the receipt.",
+		Sections: []layout.DetailSection{{ID: "feedback", Title: "Feedback delivery", Stages: []layout.StatusItem{
+			{Label: "Transport", Value: "Recorded"},
+			{Label: "Receipt", Value: "Unknown"},
+			{Label: "Disposition", Value: "Open", Detail: "Owner has not responded."},
+		}}},
+	}
+
+	wide := ansi.Strip(document.View(80, palette))
+	lines := strings.Split(wide, "\n")
+
+	if !strings.Contains(lines[0], "PR #42") || !strings.Contains(lines[0], "Outcome uncertain") {
+		t.Fatalf("identity and outcome no longer share the wide headline: %q", lines[0])
+	}
+
+	var stages, outcomes string
+
+	for i, line := range lines {
+		if strings.Contains(line, "Transport") && i+1 < len(lines) {
+			stages, outcomes = line, lines[i+1]
+		}
+	}
+
+	for _, pair := range [][2]string{{"Transport", "Recorded"}, {"Receipt", "Unknown"}, {"Disposition", "Open"}} {
+		stage, outcome := strings.Index(stages, pair[0]), strings.Index(outcomes, pair[1])
+		if stage < 0 || outcome < 0 || ansi.StringWidth(stages[:stage]) != ansi.StringWidth(outcomes[:outcome]) {
+			t.Fatalf("state %q is not under stage %q: %q", pair[1], pair[0], wide)
+		}
+	}
+
+	for _, width := range []int{1, 2, 20, 32, 55, 80} {
+		view := document.View(width, palette)
+		assertRecordBounds(t, view, width)
+		compact := compactRecordText(view)
+
+		for _, wanted := range []string{"Recorded", "Unknown", "Open", "Ownerhasnotresponded.", "Checkthereceipt."} {
+			if !strings.Contains(compact, wanted) {
+				t.Fatalf("width %d lost %q: %q", width, wanted, ansi.Strip(view))
+			}
 		}
 	}
 }

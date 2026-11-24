@@ -13,7 +13,7 @@ import (
 func inspectionDefinitions() []Definition {
 	return []Definition{{
 		ID: "pattern/list-inspector", Title: "Organisms/Patterns/List inspector", Level: "Organisms", Family: "pattern",
-		Description: "Browse structured record summaries and inspect grouped facts, named conditions and event history. Wide layouts preview the selection; Enter opens inspection and Escape restores the list.",
+		Description: "Browse structured record summaries and inspect grouped facts, named conditions, feedback delivery and event history. Wide layouts preview the selection; Enter opens inspection and Escape restores the list.",
 		Source:      "pattern/list_inspector.go", Symbol: "ListInspector",
 		Controls: []string{"state"}, States: []string{"ready", "inspecting", "empty", "loading", "error", "confirmed"},
 		Composes: []string{"collection/viewport", "layout/record-summary", "layout/detail-document", "foundations/layout"},
@@ -28,11 +28,11 @@ func inspectionStory(e Environment) (runtime.Scene, error) {
 		return nil, err
 	}
 
-	m.ListTitle, m.DetailTitle = "Operations", "Evidence"
+	m.ListTitle, m.DetailTitle = "Deliveries", ""
 	if e.Config.State == "loading" {
 		m.Empty = "Waiting for the first observation"
 	} else {
-		m.Empty = "No operations observed"
+		m.Empty = "No deliveries observed"
 	}
 
 	m.Refresh()
@@ -57,7 +57,7 @@ func inspectionStory(e Environment) (runtime.Scene, error) {
 		help = (layout.TextRow{Gap: 2, Items: []layout.TextRowItem{
 			{Text: text.KeyHint("j/k", navigation, m.Theme)},
 			{Text: text.KeyHint(toggleKey, toggleLabel, m.Theme)},
-			{Text: text.KeyHint("[/]", "scroll", m.Theme)},
+			{Text: text.KeyHint("[/]", "page", m.Theme)},
 		}}).View(max(1, size.Width))
 		m.Resize(layout.Size{Width: size.Width, Height: max(0, size.Height-lipgloss.Height(help))})
 	}

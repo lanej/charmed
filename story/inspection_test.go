@@ -19,9 +19,9 @@ func TestListInspectorStoryStatesRenderSuppliedEvidence(t *testing.T) {
 	}
 
 	wants := map[string]string{
-		"ready": "Outcome unknown", "inspecting": "j/k scroll",
-		"empty": "No operations observed", "loading": "Waiting for the first observation",
-		"error": "Refresh failed", "confirmed": "Route observer",
+		"ready": "Outcome uncertain", "inspecting": "j/k scroll",
+		"empty": "No deliveries observed", "loading": "Waiting for the first observation",
+		"error": "Refresh failed", "confirmed": "Merge confirmed",
 	}
 
 	for _, state := range definition.States {

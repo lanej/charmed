@@ -15,7 +15,7 @@ func recordDefinitions() []Definition {
 
 	return []Definition{
 		{ID: "layout/record-summary", Title: "Molecules/Layout/Record summary", Level: "Molecules", Family: "layout", Description: "Title, state, metadata and a next step form a reusable record summary. Styled text wraps without dropping evidence, and selection keeps the same geometry.", Source: "layout/record_summary.go", Symbol: "RecordSummary", Composes: []string{"layout/text-row", "layout/key-value"}, Defaults: summaryDefaults, Factory: recordSummaryStory},
-		{ID: "layout/detail-document", Title: "Organisms/Layout/Detail document", Level: "Organisms", Family: "layout", Description: "Compose an identity, summary, related facts, named conditions and event history into one document. Sections pair when space permits, stack when narrow and preserve their complete content.", Source: "layout/detail_document.go", Symbol: "DetailDocument", Composes: []string{"layout/identity-header", "layout/record-summary", "layout/key-value"}, Defaults: documentDefaults, Factory: detailDocumentStory},
+		{ID: "layout/detail-document", Title: "Organisms/Layout/Detail document", Level: "Organisms", Family: "layout", Description: "Lead with a next action and its evidence, then group identity, verification, delivery stages and event history. Sections pair when space permits, stack when narrow and preserve their complete content.", Source: "layout/detail_document.go", Symbol: "DetailDocument", Composes: []string{"layout/identity-header", "layout/record-summary", "layout/key-value"}, Defaults: documentDefaults, Factory: detailDocumentStory},
 	}
 }
 

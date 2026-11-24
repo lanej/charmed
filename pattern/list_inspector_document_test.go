@@ -43,6 +43,7 @@ func TestListInspectorCopiesStructuredObservations(t *testing.T) {
 	t.Parallel()
 
 	record := structuredRecord()
+	record.Document.Sections[1].Stages = []layout.StatusItem{{Label: "Delivery", Value: "Recorded"}}
 	m := newInspector(t, []pattern.InspectorRecord{record}, layout.Size{Width: 132, Height: 20})
 	list, detail := m.List.GetContent(), m.Detail.GetContent()
 
@@ -54,6 +55,7 @@ func TestListInspectorCopiesStructuredObservations(t *testing.T) {
 	record.Document.Summary.Next.Value = "caller changed recovery"
 	record.Document.Sections[0].Fields[0].Value = "caller changed target"
 	record.Document.Sections[1].Statuses[0].Value = "caller changed receipt"
+	record.Document.Sections[1].Stages[0].Value = "caller changed delivery"
 	record.Document.Sections[2].Timeline[0].Title = "caller changed event"
 	record.Document.Sections[2].Paragraphs[0] = "caller changed evidence"
 

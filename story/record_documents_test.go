@@ -31,8 +31,8 @@ func TestDetailDocumentStoryKeepsNarrowEvidenceReachable(t *testing.T) {
 		}
 	})
 
-	if !strings.Contains(ansi.Strip(m.Render().Content), "Outcome unknown") {
-		t.Fatal("narrow inspection lost the supplied operation state")
+	if !strings.Contains(ansi.Strip(m.Render().Content), "Outcome uncertain") {
+		t.Fatal("narrow inspection lost the supplied merge state")
 	}
 
 	for range 10 {
@@ -40,7 +40,7 @@ func TestDetailDocumentStoryKeepsNarrowEvidenceReachable(t *testing.T) {
 	}
 
 	view := ansi.Strip(m.Render().Content)
-	if !strings.Contains(view, "Inspection notes") || !strings.Contains(view, "attribution gap") {
+	if !strings.Contains(view, "Remote response unavailable") || !strings.Contains(view, "External outcome unknown") {
 		t.Fatalf("narrow document made its final section unreachable:\n%s", view)
 	}
 }

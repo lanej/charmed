@@ -408,8 +408,14 @@ func (m *ListInspector) renderRows() {
 		body = ansi.Hardwrap(body, width-gutter, true)
 		for index, line := range strings.Split(body, "\n") {
 			prefix := padding
-			if selected && index == 0 && gutter > 0 {
-				prefix = m.Theme.Heading().Render(m.Theme.Glyph(theme.GlyphRight)) + strings.Repeat(" ", gutter-1)
+
+			if selected && gutter > 0 {
+				mark := theme.GlyphScrollThumb
+				if index == 0 {
+					mark = theme.GlyphRight
+				}
+
+				prefix = m.Theme.Heading().Render(m.Theme.Glyph(mark)) + strings.Repeat(" ", gutter-1)
 			}
 
 			lines = append(lines, prefix+line)
