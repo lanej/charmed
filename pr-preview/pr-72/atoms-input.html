@@ -183,7 +183,7 @@ Type to edit / Enter emits Submitted / Ctrl+C exits</pre></figure>
 <figure><figcaption>Disabled · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">Text input</span>                                                                                          
                                                                                                     
 <span style="color:#6b8575;">┌</span><span style="color:#a3b1a7;"> Value </span><span style="color:#6b8575;">───────────────────────────────────────────────────────────────────────────────────────────┐</span>
-<span style="color:#6b8575;">│</span> <span style="color:#9b9b9b;">⊘ production</span> <span style="color:#9b9b9b;">                                                                                   </span> <span style="color:#6b8575;">│</span>
+<span style="color:#6b8575;">│</span> <span style="color:#909f95;">⊘ production</span> <span style="color:#909f95;">                                                                                   </span> <span style="color:#6b8575;">│</span>
 <span style="color:#6b8575;">└──────────────────────────────────────────────────────────────────────────────────────────────────┘</span>
                                                                                                     
 <span style="color:#a3b1a7;">Type to edit / Enter emits Submitted / Ctrl+C exits</span></pre></figure>
@@ -193,18 +193,18 @@ Type to edit / Enter emits Submitted / Ctrl+C exits</pre></figure>
 <div class="component-source">
 <div class="component-subheading"><h3 id="input/text-code"><a class="heading-permalink" href="#input%2ftext-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/input" title="github.com/lanej/charmed/input"><code>input</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
-field <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewText</span><span class="syn-operator">(</span>input<span class="syn-operator">.</span>TextOptions<span class="syn-operator">{</span>
-	Placeholder<span class="syn-operator">:</span> <span class="syn-string">&#34;Type a value&#34;</span><span class="syn-operator">,</span> Value<span class="syn-operator">:</span> <span class="syn-string">&#34;production&#34;</span><span class="syn-operator">,</span>
-	Width<span class="syn-operator">:</span> <span class="syn-number">36</span><span class="syn-operator">,</span> Theme<span class="syn-operator">:</span> palette<span class="syn-operator">,</span>
-<span class="syn-operator">}</span><span class="syn-operator">)</span>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>)
+field <span class="syn-operator">:=</span> input.<span class="syn-function">NewText</span>(input.<span class="syn-member">TextOptions</span>{
+	Placeholder: <span class="syn-string">&#34;Type a value&#34;</span>, Value: <span class="syn-string">&#34;production&#34;</span>,
+	Width: <span class="syn-number">36</span>, Theme: palette,
+})
 <span class="syn-comment">// In Init, return field.Focus(); in Update, retain field.Update(msg)&#39;s model and command.</span>
-<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Panel</span><span class="syn-operator">(</span><span class="syn-string">&#34;Value&#34;</span><span class="syn-operator">,</span> field<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span>
-	layout<span class="syn-operator">.</span>Size<span class="syn-operator">{</span>Width<span class="syn-operator">:</span> <span class="syn-number">40</span><span class="syn-operator">,</span> Height<span class="syn-operator">:</span> <span class="syn-number">3</span><span class="syn-operator">}</span><span class="syn-operator">,</span> palette<span class="syn-operator">,</span> <span class="syn-builtin">false</span><span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> layout.<span class="syn-function">Panel</span>(<span class="syn-string">&#34;Value&#34;</span>, field.<span class="syn-function">View</span>(),
+	layout.<span class="syn-member">Size</span>{Width: <span class="syn-number">40</span>, Height: <span class="syn-number">3</span>}, palette, <span class="syn-false">false</span>)
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="input/text-integration"><h3 id="input/text-integration"><a class="heading-permalink" href="#input%2ftext-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Return Focus&#39;s command when the input becomes active. In Update, retain both the returned model and command; blur inactive controls before routing keys. Call Resize with the allocated column count. SetTheme reapplies shared styles, so apply native style overrides after a theme change.</p></section>
-<div class="component-run"><h3 id="input/text-run"><a class="heading-permalink" href="#input%2ftext-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/text</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/input_text.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="input/text-run"><a class="heading-permalink" href="#input%2ftext-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/text</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/input_text.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 
@@ -359,15 +359,15 @@ field <span class="syn-operator">:=</span> input<span class="syn-operator">.</sp
 <div class="component-source">
 <div class="component-subheading"><h3 id="input/textarea-code"><a class="heading-permalink" href="#input%2ftextarea-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/input" title="github.com/lanej/charmed/input"><code>input</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">editor <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewArea</span><span class="syn-operator">(</span><span class="syn-number">48</span><span class="syn-operator">,</span> <span class="syn-number">8</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
-editor<span class="syn-operator">.</span>Placeholder <span class="syn-operator">=</span> <span class="syn-string">&#34;Write a note&#34;</span>
-editor<span class="syn-operator">.</span><span class="syn-function">SetValue</span><span class="syn-operator">(</span><span class="syn-string">&#34;Deployment notes\nReady for production.&#34;</span><span class="syn-operator">)</span>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">editor <span class="syn-operator">:=</span> input.<span class="syn-function">NewArea</span>(<span class="syn-number">48</span>, <span class="syn-number">8</span>, theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>))
+editor.<span class="syn-member">Placeholder</span> <span class="syn-operator">=</span> <span class="syn-string">&#34;Write a note&#34;</span>
+editor.<span class="syn-function">SetValue</span>(<span class="syn-string">&#34;Deployment notes\nReady for production.&#34;</span>)
 <span class="syn-comment">// Return editor.Focus() from Init and forward messages through editor.Update(msg).</span>
-<span class="syn-keyword">return</span> editor<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> editor.<span class="syn-function">View</span>()
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="input/textarea-integration"><h3 id="input/textarea-integration"><a class="heading-permalink" href="#input%2ftextarea-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Focus the native textarea when its region becomes active, and retain the model and command returned by Update. SetWidth and SetHeight from the parent allocation on resize. Configure the exposed native styles and key map directly; the wrapper does not own application validation or submission.</p></section>
-<div class="component-run"><h3 id="input/textarea-run"><a class="heading-permalink" href="#input%2ftextarea-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/textarea</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/input_textarea.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="input/textarea-run"><a class="heading-permalink" href="#input%2ftextarea-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/textarea</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/input_textarea.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 
@@ -381,50 +381,50 @@ editor<span class="syn-operator">.</span><span class="syn-function">SetValue</sp
 <a id="tab-input/checkbox-0" href="#panel-input%2fcheckbox-0" role="tab" aria-controls="panel-input/checkbox-0" aria-selected="false">Demo</a><a id="tab-input/checkbox-1" href="#panel-input%2fcheckbox-1" role="tab" aria-controls="panel-input/checkbox-1" aria-selected="false">Narrow</a><a id="tab-input/checkbox-2" href="#panel-input%2fcheckbox-2" role="tab" aria-controls="panel-input/checkbox-2" aria-selected="false">256 colors</a><a id="tab-input/checkbox-3" href="#panel-input%2fcheckbox-3" role="tab" aria-controls="panel-input/checkbox-3" aria-selected="false">16 colors</a><a id="tab-input/checkbox-4" href="#panel-input%2fcheckbox-4" role="tab" aria-controls="panel-input/checkbox-4" aria-selected="false">Monochrome</a>
 </div>
 <div id="panel-input/checkbox-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/checkbox-example" tabindex="0">
-<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;"> ▣  All services</span><span style="background-color:#acc8b7;"> </span></pre></figure>
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;"> ▣  All services</span><span style="background-color:#c4b2d9;"> </span></pre></figure>
 </div>
 <div id="panel-input/checkbox-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/checkbox-0" tabindex="0">
 <figure><figcaption>Demo · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">input/checkbox</span>                                                                  
                                                                                 
-<span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;"> ▣  All services</span><span style="background-color:#acc8b7;"> </span>                                                              
+<span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;"> ▣  All services</span><span style="background-color:#c4b2d9;"> </span>                                                              
                                                                                 
  <span style="color:#a3b1a7;"> ☐ </span> Services                                                                   
  <span style="color:#acc8b7;font-weight:bold;"> ☑ </span> Services                                                                   
  <span style="color:#acc8b7;font-weight:bold;"> ▣ </span> Services                                                                   
- <span style="color:#a3b1a7;"> ☑  Restricted ⊘ disabled Read-only</span>                                            
+ <span style="color:#909f95;"> ☑  Restricted ⊘ disabled Read-only</span>                                            
                                                                                 
 <span style="color:#a3b1a7;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/checkbox-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/checkbox-1" tabindex="0">
 <figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">input/checkbox</span>                          
                                         
-<span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;"> ▣  All services</span><span style="background-color:#acc8b7;"> </span>                      
+<span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;"> ▣  All services</span><span style="background-color:#c4b2d9;"> </span>                      
                                         
  <span style="color:#a3b1a7;"> ☐ </span> Services                           
  <span style="color:#acc8b7;font-weight:bold;"> ☑ </span> Services                           
  <span style="color:#acc8b7;font-weight:bold;"> ▣ </span> Services                           
- <span style="color:#a3b1a7;"> ☑  Restricted ⊘ disabled Read-only</span>    
+ <span style="color:#909f95;"> ☑  Restricted ⊘ disabled Read-only</span>    
                                         
 <span style="color:#a3b1a7;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/checkbox-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/checkbox-2" tabindex="0">
 <figure><figcaption>256 colors · ansi256 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#afd7af;font-weight:bold;">input/checkbox</span>                                                                  
                                                                                 
-<span style="background-color:#afd7af;"> </span><span style="color:#121212;background-color:#afd7af;font-weight:bold;"> ▣  All services</span><span style="background-color:#afd7af;"> </span>                                                              
+<span style="background-color:#d7afd7;"> </span><span style="color:#121212;background-color:#d7afd7;font-weight:bold;"> ▣  All services</span><span style="background-color:#d7afd7;"> </span>                                                              
                                                                                 
  <span style="color:#afafaf;"> ☐ </span> Services                                                                   
  <span style="color:#afd7af;font-weight:bold;"> ☑ </span> Services                                                                   
  <span style="color:#afd7af;font-weight:bold;"> ▣ </span> Services                                                                   
- <span style="color:#afafaf;"> ☑  Restricted ⊘ disabled Read-only</span>                                            
+ <span style="color:#87af87;"> ☑  Restricted ⊘ disabled Read-only</span>                                            
                                                                                 
 <span style="color:#afafaf;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/checkbox-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/checkbox-3" tabindex="0">
 <figure><figcaption>16 colors · ansi16 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#00ff00;font-weight:bold;">input/checkbox</span>                                                                  
                                                                                 
-<span style="background-color:#00ff00;"> </span><span style="color:#000000;background-color:#00ff00;font-weight:bold;"> ▣  All services</span><span style="background-color:#00ff00;"> </span>                                                              
+<span style="background-color:#ff00ff;"> </span><span style="color:#000000;background-color:#ff00ff;font-weight:bold;"> ▣  All services</span><span style="background-color:#ff00ff;"> </span>                                                              
                                                                                 
  <span style="color:#c0c0c0;"> ☐ </span> Services                                                                   
  <span style="color:#00ff00;font-weight:bold;"> ☑ </span> Services                                                                   
  <span style="color:#00ff00;font-weight:bold;"> ▣ </span> Services                                                                   
- <span style="color:#c0c0c0;"> ☑  Restricted ⊘ disabled Read-only</span>                                            
+ <span style="color:#008000;"> ☑  Restricted ⊘ disabled Read-only</span>                                            
                                                                                 
 <span style="color:#c0c0c0;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/checkbox-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/checkbox-4" tabindex="0">
@@ -444,15 +444,15 @@ Space / Enter activates</pre></figure>
 <div class="component-source">
 <div class="component-subheading"><h3 id="input/checkbox-code"><a class="heading-permalink" href="#input%2fcheckbox-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/input" title="github.com/lanej/charmed/input"><code>input</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
-checkbox <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewCheckbox</span><span class="syn-operator">(</span><span class="syn-string">&#34;services&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;All services&#34;</span><span class="syn-operator">,</span> input<span class="syn-operator">.</span>Mixed<span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
-checkbox<span class="syn-operator">.</span><span class="syn-function">Focus</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>)
+checkbox <span class="syn-operator">:=</span> input.<span class="syn-function">NewCheckbox</span>(<span class="syn-string">&#34;services&#34;</span>, <span class="syn-string">&#34;All services&#34;</span>, input.<span class="syn-member">Mixed</span>, palette)
+checkbox.<span class="syn-function">Focus</span>()
 <span class="syn-comment">// Retain checkbox.Update(msg)&#39;s model and command; handle input.CheckChanged in the parent.</span>
-<span class="syn-keyword">return</span> checkbox<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> checkbox.<span class="syn-function">View</span>()
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="input/checkbox-integration"><h3 id="input/checkbox-integration"><a class="heading-permalink" href="#input%2fcheckbox-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>The parent routes keys to the focused control and retains the model and command returned by Update. Use the stable control ID when handling its activation or change message. The control measures its own glyph and label; reserve that space in the layout.</p></section>
-<div class="component-run"><h3 id="input/checkbox-run"><a class="heading-permalink" href="#input%2fcheckbox-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/checkbox</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/input_checkbox.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/input/controls.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="input/checkbox-run"><a class="heading-permalink" href="#input%2fcheckbox-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/checkbox</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/input_checkbox.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/input/controls.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 
@@ -471,33 +471,33 @@ checkbox<span class="syn-operator">.</span><span class="syn-function">Focus</spa
 <div id="panel-input/radio-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/radio-0" tabindex="0">
 <figure><figcaption>Demo · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">input/radio</span>                                                                     
                                                                                 
-<span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;"> ○  Production</span><span style="background-color:#acc8b7;"> </span>                                                                
+<span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;"> ○  Production</span><span style="background-color:#c4b2d9;"> </span>                                                                
  <span style="color:#acc8b7;font-weight:bold;"> ◉ </span> Staging                                                                    
- <span style="color:#a3b1a7;"> ○  Development ⊘ disabled Unavailable</span>                                         
+ <span style="color:#909f95;"> ○  Development ⊘ disabled Unavailable</span>                                         
                                                                                 
 <span style="color:#a3b1a7;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/radio-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/radio-1" tabindex="0">
 <figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">input/radio</span>                             
                                         
-<span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;"> ○  Production</span><span style="background-color:#acc8b7;"> </span>                        
+<span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;"> ○  Production</span><span style="background-color:#c4b2d9;"> </span>                        
  <span style="color:#acc8b7;font-weight:bold;"> ◉ </span> Staging                            
- <span style="color:#a3b1a7;"> ○  Development ⊘ disabled Unavailable</span> 
+ <span style="color:#909f95;"> ○  Development ⊘ disabled Unavailable</span> 
                                         
 <span style="color:#a3b1a7;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/radio-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/radio-2" tabindex="0">
 <figure><figcaption>256 colors · ansi256 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#afd7af;font-weight:bold;">input/radio</span>                                                                     
                                                                                 
-<span style="background-color:#afd7af;"> </span><span style="color:#121212;background-color:#afd7af;font-weight:bold;"> ○  Production</span><span style="background-color:#afd7af;"> </span>                                                                
+<span style="background-color:#d7afd7;"> </span><span style="color:#121212;background-color:#d7afd7;font-weight:bold;"> ○  Production</span><span style="background-color:#d7afd7;"> </span>                                                                
  <span style="color:#afd7af;font-weight:bold;"> ◉ </span> Staging                                                                    
- <span style="color:#afafaf;"> ○  Development ⊘ disabled Unavailable</span>                                         
+ <span style="color:#87af87;"> ○  Development ⊘ disabled Unavailable</span>                                         
                                                                                 
 <span style="color:#afafaf;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/radio-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/radio-3" tabindex="0">
 <figure><figcaption>16 colors · ansi16 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#00ff00;font-weight:bold;">input/radio</span>                                                                     
                                                                                 
-<span style="background-color:#00ff00;"> </span><span style="color:#000000;background-color:#00ff00;font-weight:bold;"> ○  Production</span><span style="background-color:#00ff00;"> </span>                                                                
+<span style="background-color:#ff00ff;"> </span><span style="color:#000000;background-color:#ff00ff;font-weight:bold;"> ○  Production</span><span style="background-color:#ff00ff;"> </span>                                                                
  <span style="color:#00ff00;font-weight:bold;"> ◉ </span> Staging                                                                    
- <span style="color:#c0c0c0;"> ○  Development ⊘ disabled Unavailable</span>                                         
+ <span style="color:#008000;"> ○  Development ⊘ disabled Unavailable</span>                                         
                                                                                 
 <span style="color:#c0c0c0;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/radio-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/radio-4" tabindex="0">
@@ -514,21 +514,21 @@ Space / Enter activates</pre></figure>
 <div class="component-source">
 <div class="component-subheading"><h3 id="input/radio-code"><a class="heading-permalink" href="#input%2fradio-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/input" title="github.com/lanej/charmed/input"><code>input</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
-production <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewRadio</span><span class="syn-operator">(</span><span class="syn-string">&#34;production&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Production&#34;</span><span class="syn-operator">,</span> <span class="syn-builtin">true</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
-staging <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewRadio</span><span class="syn-operator">(</span><span class="syn-string">&#34;staging&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Staging&#34;</span><span class="syn-operator">,</span> <span class="syn-builtin">false</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>)
+production <span class="syn-operator">:=</span> input.<span class="syn-function">NewRadio</span>(<span class="syn-string">&#34;production&#34;</span>, <span class="syn-string">&#34;Production&#34;</span>, <span class="syn-true">true</span>, palette)
+staging <span class="syn-operator">:=</span> input.<span class="syn-function">NewRadio</span>(<span class="syn-string">&#34;staging&#34;</span>, <span class="syn-string">&#34;Staging&#34;</span>, <span class="syn-false">false</span>, palette)
 <span class="syn-comment">// On input.RadioSelected, the parent deselects every other radio in this group.</span>
-<span class="syn-keyword">return</span> production<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">+</span> <span class="syn-string">&#34;  &#34;</span> <span class="syn-operator">+</span> staging<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> production.<span class="syn-function">View</span>() <span class="syn-operator">+</span> <span class="syn-string">&#34;  &#34;</span> <span class="syn-operator">+</span> staging.<span class="syn-function">View</span>()
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="input/radio-integration"><h3 id="input/radio-integration"><a class="heading-permalink" href="#input%2fradio-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>The parent routes keys to the focused control and retains the model and command returned by Update. Use the stable control ID when handling its activation or change message. The control measures its own glyph and label; reserve that space in the layout.</p></section>
-<div class="component-run"><h3 id="input/radio-run"><a class="heading-permalink" href="#input%2fradio-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/radio</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/input_radio.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/input/controls.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="input/radio-run"><a class="heading-permalink" href="#input%2fradio-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/radio</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/input_radio.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/input/controls.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 
 <section class="component-relations" aria-label="Component relationships">
 <h3>Reusable component</h3>
-<p><a href="dependencies.html#component-input%2Fradio">Radio dependency graph</a> · Partial map · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/input/controls.go#L157">Source declaration</a></p>
+<p><a href="dependencies.html#component-input%2Fradio">Radio dependency graph</a> · Partial map · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/input/controls.go#L168">Source declaration</a></p>
 
-<details><summary>Consumer usage uses</summary><ul><li><a href="dependencies.html#component-input%2Fradio">Radio</a> · primary demonstration</li></ul><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/input_radio.go#L8">Example source</a></details>
+<details><summary>Consumer usage uses</summary><ul><li><a href="dependencies.html#component-input%2Fradio">Radio</a> · primary demonstration</li></ul><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/input_radio.go#L8">Example source</a></details>
 </section>
 
 </section>
@@ -543,38 +543,38 @@ staging <span class="syn-operator">:=</span> input<span class="syn-operator">.</
 <a id="tab-input/toggle-0" href="#panel-input%2ftoggle-0" role="tab" aria-controls="panel-input/toggle-0" aria-selected="false">Demo</a><a id="tab-input/toggle-1" href="#panel-input%2ftoggle-1" role="tab" aria-controls="panel-input/toggle-1" aria-selected="false">Narrow</a><a id="tab-input/toggle-2" href="#panel-input%2ftoggle-2" role="tab" aria-controls="panel-input/toggle-2" aria-selected="false">256 colors</a><a id="tab-input/toggle-3" href="#panel-input%2ftoggle-3" role="tab" aria-controls="panel-input/toggle-3" aria-selected="false">16 colors</a><a id="tab-input/toggle-4" href="#panel-input%2ftoggle-4" role="tab" aria-controls="panel-input/toggle-4" aria-selected="false">Monochrome</a>
 </div>
 <div id="panel-input/toggle-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/toggle-example" tabindex="0">
-<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;">━━● ON  Live updates</span><span style="background-color:#acc8b7;"> </span></pre></figure>
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;">━━● ON  Live updates</span><span style="background-color:#c4b2d9;"> </span></pre></figure>
 </div>
 <div id="panel-input/toggle-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/toggle-0" tabindex="0">
 <figure><figcaption>Demo · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">input/toggle</span>                                                                    
                                                                                 
-<span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;">○── OFF Live updates</span><span style="background-color:#acc8b7;"> </span>                                                          
+<span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;">○── OFF Live updates</span><span style="background-color:#c4b2d9;"> </span>                                                          
  <span style="color:#acc8b7;font-weight:bold;">━━● ON </span> Enabled setting                                                        
- <span style="color:#a3b1a7;">○── OFF Locked ⊘ disabled Read-only</span>                                            
+ <span style="color:#909f95;">○── OFF Locked ⊘ disabled Read-only</span>                                            
                                                                                 
 <span style="color:#a3b1a7;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/toggle-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/toggle-1" tabindex="0">
 <figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">input/toggle</span>                            
                                         
-<span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;">○── OFF Live updates</span><span style="background-color:#acc8b7;"> </span>                  
+<span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;">○── OFF Live updates</span><span style="background-color:#c4b2d9;"> </span>                  
  <span style="color:#acc8b7;font-weight:bold;">━━● ON </span> Enabled setting                
- <span style="color:#a3b1a7;">○── OFF Locked ⊘ disabled Read-only</span>    
+ <span style="color:#909f95;">○── OFF Locked ⊘ disabled Read-only</span>    
                                         
 <span style="color:#a3b1a7;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/toggle-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/toggle-2" tabindex="0">
 <figure><figcaption>256 colors · ansi256 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#afd7af;font-weight:bold;">input/toggle</span>                                                                    
                                                                                 
-<span style="background-color:#afd7af;"> </span><span style="color:#121212;background-color:#afd7af;font-weight:bold;">○── OFF Live updates</span><span style="background-color:#afd7af;"> </span>                                                          
+<span style="background-color:#d7afd7;"> </span><span style="color:#121212;background-color:#d7afd7;font-weight:bold;">○── OFF Live updates</span><span style="background-color:#d7afd7;"> </span>                                                          
  <span style="color:#afd7af;font-weight:bold;">━━● ON </span> Enabled setting                                                        
- <span style="color:#afafaf;">○── OFF Locked ⊘ disabled Read-only</span>                                            
+ <span style="color:#87af87;">○── OFF Locked ⊘ disabled Read-only</span>                                            
                                                                                 
 <span style="color:#afafaf;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/toggle-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/toggle-3" tabindex="0">
 <figure><figcaption>16 colors · ansi16 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#00ff00;font-weight:bold;">input/toggle</span>                                                                    
                                                                                 
-<span style="background-color:#00ff00;"> </span><span style="color:#000000;background-color:#00ff00;font-weight:bold;">○── OFF Live updates</span><span style="background-color:#00ff00;"> </span>                                                          
+<span style="background-color:#ff00ff;"> </span><span style="color:#000000;background-color:#ff00ff;font-weight:bold;">○── OFF Live updates</span><span style="background-color:#ff00ff;"> </span>                                                          
  <span style="color:#00ff00;font-weight:bold;">━━● ON </span> Enabled setting                                                        
- <span style="color:#c0c0c0;">○── OFF Locked ⊘ disabled Read-only</span>                                            
+ <span style="color:#008000;">○── OFF Locked ⊘ disabled Read-only</span>                                            
                                                                                 
 <span style="color:#c0c0c0;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/toggle-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/toggle-4" tabindex="0">
@@ -591,14 +591,14 @@ Space / Enter activates</pre></figure>
 <div class="component-source">
 <div class="component-subheading"><h3 id="input/toggle-code"><a class="heading-permalink" href="#input%2ftoggle-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/input" title="github.com/lanej/charmed/input"><code>input</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">toggle <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewToggle</span><span class="syn-operator">(</span><span class="syn-string">&#34;live&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Live updates&#34;</span><span class="syn-operator">,</span> <span class="syn-builtin">true</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
-toggle<span class="syn-operator">.</span><span class="syn-function">Focus</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">toggle <span class="syn-operator">:=</span> input.<span class="syn-function">NewToggle</span>(<span class="syn-string">&#34;live&#34;</span>, <span class="syn-string">&#34;Live updates&#34;</span>, <span class="syn-true">true</span>, theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>))
+toggle.<span class="syn-function">Focus</span>()
 <span class="syn-comment">// input.Toggled carries the setting ID and new On value.</span>
-<span class="syn-keyword">return</span> toggle<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> toggle.<span class="syn-function">View</span>()
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="input/toggle-integration"><h3 id="input/toggle-integration"><a class="heading-permalink" href="#input%2ftoggle-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>The parent routes keys to the focused control and retains the model and command returned by Update. Use the stable control ID when handling its activation or change message. The control measures its own glyph and label; reserve that space in the layout.</p></section>
-<div class="component-run"><h3 id="input/toggle-run"><a class="heading-permalink" href="#input%2ftoggle-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/toggle</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/input_toggle.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/input/controls.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="input/toggle-run"><a class="heading-permalink" href="#input%2ftoggle-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/toggle</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/input_toggle.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/input/controls.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 
@@ -612,38 +612,38 @@ toggle<span class="syn-operator">.</span><span class="syn-function">Focus</span>
 <a id="tab-input/button-0" href="#panel-input%2fbutton-0" role="tab" aria-controls="panel-input/button-0" aria-selected="false">Demo</a><a id="tab-input/button-1" href="#panel-input%2fbutton-1" role="tab" aria-controls="panel-input/button-1" aria-selected="false">Narrow</a><a id="tab-input/button-2" href="#panel-input%2fbutton-2" role="tab" aria-controls="panel-input/button-2" aria-selected="false">256 colors</a><a id="tab-input/button-3" href="#panel-input%2fbutton-3" role="tab" aria-controls="panel-input/button-3" aria-selected="false">16 colors</a><a id="tab-input/button-4" href="#panel-input%2fbutton-4" role="tab" aria-controls="panel-input/button-4" aria-selected="false">Monochrome</a>
 </div>
 <div id="panel-input/button-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/button-example" tabindex="0">
-<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;">⟨ ↻ Retry ⟩ ⟳ BUSY</span><span style="background-color:#acc8b7;"> </span></pre></figure>
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;">⟨ ↻ Retry ⟩ ⟳ BUSY</span><span style="background-color:#c4b2d9;"> </span></pre></figure>
 </div>
 <div id="panel-input/button-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/button-0" tabindex="0">
 <figure><figcaption>Demo · truecolor · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">input/button</span>                                                                    
                                                                                 
-<span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;">⟨ ↻ Retry ⟩</span><span style="background-color:#acc8b7;"> </span>                                                                   
+<span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;">⟨ ↻ Retry ⟩</span><span style="background-color:#c4b2d9;"> </span>                                                                   
  <span style="color:#d7dfd9;">⟨ ↻ Refreshing ⟩ ⟳ BUSY</span>                                                        
- <span style="color:#a3b1a7;">⟨ ⌫ Delete ⟩ ⊘ disabled Read-only</span>                                              
+ <span style="color:#909f95;">⟨ ⌫ Delete ⟩ ⊘ disabled Read-only</span>                                              
                                                                                 
 <span style="color:#a3b1a7;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/button-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/button-1" tabindex="0">
 <figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">input/button</span>                            
                                         
-<span style="background-color:#acc8b7;"> </span><span style="color:#0d1513;background-color:#acc8b7;font-weight:bold;">⟨ ↻ Retry ⟩</span><span style="background-color:#acc8b7;"> </span>                           
+<span style="background-color:#c4b2d9;"> </span><span style="color:#0d1513;background-color:#c4b2d9;font-weight:bold;">⟨ ↻ Retry ⟩</span><span style="background-color:#c4b2d9;"> </span>                           
  <span style="color:#d7dfd9;">⟨ ↻ Refreshing ⟩ ⟳ BUSY</span>                
- <span style="color:#a3b1a7;">⟨ ⌫ Delete ⟩ ⊘ disabled Read-only</span>      
+ <span style="color:#909f95;">⟨ ⌫ Delete ⟩ ⊘ disabled Read-only</span>      
                                         
 <span style="color:#a3b1a7;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/button-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/button-2" tabindex="0">
 <figure><figcaption>256 colors · ansi256 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#afd7af;font-weight:bold;">input/button</span>                                                                    
                                                                                 
-<span style="background-color:#afd7af;"> </span><span style="color:#121212;background-color:#afd7af;font-weight:bold;">⟨ ↻ Retry ⟩</span><span style="background-color:#afd7af;"> </span>                                                                   
+<span style="background-color:#d7afd7;"> </span><span style="color:#121212;background-color:#d7afd7;font-weight:bold;">⟨ ↻ Retry ⟩</span><span style="background-color:#d7afd7;"> </span>                                                                   
  <span style="color:#dadada;">⟨ ↻ Refreshing ⟩ ⟳ BUSY</span>                                                        
- <span style="color:#afafaf;">⟨ ⌫ Delete ⟩ ⊘ disabled Read-only</span>                                              
+ <span style="color:#87af87;">⟨ ⌫ Delete ⟩ ⊘ disabled Read-only</span>                                              
                                                                                 
 <span style="color:#afafaf;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/button-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/button-3" tabindex="0">
 <figure><figcaption>16 colors · ansi16 · 80 × 18 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#00ff00;font-weight:bold;">input/button</span>                                                                    
                                                                                 
-<span style="background-color:#00ff00;"> </span><span style="color:#000000;background-color:#00ff00;font-weight:bold;">⟨ ↻ Retry ⟩</span><span style="background-color:#00ff00;"> </span>                                                                   
+<span style="background-color:#ff00ff;"> </span><span style="color:#000000;background-color:#ff00ff;font-weight:bold;">⟨ ↻ Retry ⟩</span><span style="background-color:#ff00ff;"> </span>                                                                   
  <span style="color:#ffffff;">⟨ ↻ Refreshing ⟩ ⟳ BUSY</span>                                                        
- <span style="color:#c0c0c0;">⟨ ⌫ Delete ⟩ ⊘ disabled Read-only</span>                                              
+ <span style="color:#008000;">⟨ ⌫ Delete ⟩ ⊘ disabled Read-only</span>                                              
                                                                                 
 <span style="color:#c0c0c0;">Space / Enter activates</span></pre></figure>
 </div><div id="panel-input/button-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-input/button-4" tabindex="0">
@@ -660,17 +660,17 @@ Space / Enter activates</pre></figure>
 <div class="component-source">
 <div class="component-subheading"><h3 id="input/button-code"><a class="heading-permalink" href="#input%2fbutton-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/input" title="github.com/lanej/charmed/input"><code>input</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">button <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewButton</span><span class="syn-operator">(</span><span class="syn-string">&#34;retry&#34;</span><span class="syn-operator">,</span> <span class="syn-string">&#34;Retry&#34;</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
-button<span class="syn-operator">.</span>Icon <span class="syn-operator">=</span> theme<span class="syn-operator">.</span>GlyphRefresh
-button<span class="syn-operator">.</span><span class="syn-function">Focus</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">button <span class="syn-operator">:=</span> input.<span class="syn-function">NewButton</span>(<span class="syn-string">&#34;retry&#34;</span>, <span class="syn-string">&#34;Retry&#34;</span>, theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>))
+button.<span class="syn-member">Icon</span> <span class="syn-operator">=</span> theme.<span class="syn-member">GlyphRefresh</span>
+button.<span class="syn-function">Focus</span>()
 <span class="syn-comment">// Handle input.Activated in the application; set Busy while its operation is outstanding.</span>
-button<span class="syn-operator">.</span>Busy <span class="syn-operator">=</span> <span class="syn-builtin">true</span>
+button.<span class="syn-member">Busy</span> <span class="syn-operator">=</span> <span class="syn-true">true</span>
 
-<span class="syn-keyword">return</span> button<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> button.<span class="syn-function">View</span>()
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="input/button-integration"><h3 id="input/button-integration"><a class="heading-permalink" href="#input%2fbutton-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>The parent routes keys to the focused control and retains the model and command returned by Update. Use the stable control ID when handling its activation or change message. The control measures its own glyph and label; reserve that space in the layout.</p></section>
-<div class="component-run"><h3 id="input/button-run"><a class="heading-permalink" href="#input%2fbutton-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/button</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/input_button.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/input/controls.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="input/button-run"><a class="heading-permalink" href="#input%2fbutton-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog input/button</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/input_button.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/input/controls.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 </section>

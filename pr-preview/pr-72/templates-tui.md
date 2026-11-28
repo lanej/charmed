@@ -177,7 +177,7 @@ The screen owns allocation validation and composition, while the application own
 go run ./examples/catalog tui/screen
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/tui_screen.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/tui_screen.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/responsive](https://lanej.io/charmed/molecules-layout.html#layout/responsive) [layout/dock](https://lanej.io/charmed/molecules-layout.html#layout/dock)
 
@@ -357,7 +357,7 @@ The screen owns allocation validation and composition, while the application own
 go run ./examples/catalog tui/regions
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/tui_regions.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/tui_regions.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [tui/screen](https://lanej.io/charmed/templates-tui.html#tui/screen)
 
@@ -466,7 +466,7 @@ The screen owns allocation validation and composition, while the application own
 go run ./examples/catalog tui/validation
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/tui_validation.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/tui_validation.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/flex](https://lanej.io/charmed/molecules-layout.html#layout/flex) [tui/screen](https://lanej.io/charmed/templates-tui.html#tui/screen)
 
@@ -578,6 +578,6 @@ Pass the registered region identities, a width, a declaration that uses the meas
 go run ./examples/catalog tui/static
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/tui_static.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/tui_static.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/layouts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/responsive](https://lanej.io/charmed/molecules-layout.html#layout/responsive) [tui/screen](https://lanej.io/charmed/templates-tui.html#tui/screen)

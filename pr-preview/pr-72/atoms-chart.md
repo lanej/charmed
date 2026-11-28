@@ -133,7 +133,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/sparkline
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_sparkline.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_sparkline.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -364,7 +364,7 @@ Call SetData when observations change and Resize with the new cell allocation. B
 go run ./examples/catalog chart/timeseries
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_timeseries.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/examples/timeseries/main.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_timeseries.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/examples/timeseries/main.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -559,7 +559,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/line
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_line.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_line.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -748,7 +748,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/scatter
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_scatter.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_scatter.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -937,7 +937,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/bars
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_bars.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_bars.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1126,7 +1126,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/heatmap
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_heatmap.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_heatmap.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1311,7 +1311,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/stream
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_stream.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_stream.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1498,7 +1498,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/wave
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_wave.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_wave.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1690,7 +1690,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/ohlc
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_ohlc.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_ohlc.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -1865,7 +1865,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/canvas
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_canvas.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_canvas.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/atoms_charts.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -2014,7 +2014,7 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/waffle
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_waffle.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/chart/waffle.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_waffle.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/chart/waffle.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.
 
@@ -2116,6 +2116,6 @@ Keep observations and their units in the application, and pass changes through t
 go run ./examples/catalog chart/interval-band
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/chart_interval_band.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/chart/band.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/chart_interval_band.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/chart/band.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Dependency map: not audited.

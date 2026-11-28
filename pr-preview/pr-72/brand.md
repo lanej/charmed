@@ -56,7 +56,7 @@ The primary lockup pairs the terminal talisman with the lowercase **charmed** wo
 
 Charmed uses **Sage Midnight** for its native dark theme and this guide. The talisman takes the sage accent, keyboard focus uses lavender, and selected items use a deeper green surface. The swatches show the values used in the terminal.
 
-Use [`theme.New(theme.Dark)`](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/theme/theme.go) for the same palette in a native widget. The guide takes its syntax colors from `Theme.Syntax` and its chart colors from `Theme.Series`.
+Use [`theme.New(theme.Dark)`](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/theme/theme.go) for the same palette in a native widget. The guide takes its syntax colors from `Theme.Syntax` and `Theme.Lexical`, its active and inactive tab colors from `Theme.Tabs`, and its chart colors from `Theme.Series`.
 
 ## [Typography and code](https://lanej.io/charmed/brand.html#typography-and-code)
 

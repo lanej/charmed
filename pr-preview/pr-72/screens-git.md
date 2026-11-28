@@ -263,6 +263,6 @@ The parent model supplies observations, coordinates focus and owns application d
 go run ./examples/catalog git/browser
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/git_browser.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/git_browser.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/git.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [git/changes](https://lanej.io/charmed/organisms-git.html#git/changes) [git/branches](https://lanej.io/charmed/organisms-git.html#git/branches) [git/history](https://lanej.io/charmed/organisms-git.html#git/history) [git/stashes](https://lanej.io/charmed/organisms-git.html#git/stashes) [git/worktrees](https://lanej.io/charmed/organisms-git.html#git/worktrees) [tui/screen](https://lanej.io/charmed/templates-tui.html#tui/screen)

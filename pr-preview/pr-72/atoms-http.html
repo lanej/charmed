@@ -239,15 +239,15 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a></p>
 <pre tabindex="0" class="code-block source-code"><code class="language-go">url <span class="syn-operator">:=</span> <span class="syn-string">&#34;https://api.example.test/v1/labels?expand=rate&amp;locale=en_US&#34;</span>
 
-<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
-	text<span class="syn-operator">.</span><span class="syn-function">FormatURL</span><span class="syn-operator">(</span>url<span class="syn-operator">,</span> text<span class="syn-operator">.</span>PathOnly<span class="syn-operator">)</span><span class="syn-operator">,</span>
-	text<span class="syn-operator">.</span><span class="syn-function">FormatURL</span><span class="syn-operator">(</span>url<span class="syn-operator">,</span> text<span class="syn-operator">.</span>PathAndQuery<span class="syn-operator">)</span><span class="syn-operator">,</span>
-	text<span class="syn-operator">.</span><span class="syn-function">FormatURL</span><span class="syn-operator">(</span>url<span class="syn-operator">,</span> text<span class="syn-operator">.</span>FullURL<span class="syn-operator">)</span><span class="syn-operator">,</span>
-<span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> layout.<span class="syn-function">Column</span>(
+	text.<span class="syn-function">FormatURL</span>(url, text.<span class="syn-member">PathOnly</span>),
+	text.<span class="syn-function">FormatURL</span>(url, text.<span class="syn-member">PathAndQuery</span>),
+	text.<span class="syn-function">FormatURL</span>(url, text.<span class="syn-member">FullURL</span>),
+)
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="text/url-integration"><h3 id="text/url-integration"><a class="heading-permalink" href="#text%2furl-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
-<div class="component-run"><h3 id="text/url-run"><a class="heading-permalink" href="#text%2furl-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/url</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/text_url.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/text/url.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="text/url-run"><a class="heading-permalink" href="#text%2furl-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/url</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/text_url.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/text/url.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 
@@ -377,16 +377,16 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
 <div class="component-source">
 <div class="component-subheading"><h3 id="text/http-method-code"><a class="heading-permalink" href="#text%2fhttp-method-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>)
 
-<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
-	text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;GET&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;POST&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
-	text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;PATCH&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span> text<span class="syn-operator">.</span><span class="syn-function">HTTPMethod</span><span class="syn-operator">(</span><span class="syn-string">&#34;DELETE&#34;</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">,</span>
-<span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> layout.<span class="syn-function">Column</span>(
+	text.<span class="syn-function">HTTPMethod</span>(<span class="syn-string">&#34;GET&#34;</span>, palette), text.<span class="syn-function">HTTPMethod</span>(<span class="syn-string">&#34;POST&#34;</span>, palette),
+	text.<span class="syn-function">HTTPMethod</span>(<span class="syn-string">&#34;PATCH&#34;</span>, palette), text.<span class="syn-function">HTTPMethod</span>(<span class="syn-string">&#34;DELETE&#34;</span>, palette),
+)
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="text/http-method-integration"><h3 id="text/http-method-integration"><a class="heading-permalink" href="#text%2fhttp-method-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
-<div class="component-run"><h3 id="text/http-method-run"><a class="heading-permalink" href="#text%2fhttp-method-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/http-method</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/text_http_method.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/text/http.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="text/http-method-run"><a class="heading-permalink" href="#text%2fhttp-method-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/http-method</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/text_http_method.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/text/http.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 
@@ -420,8 +420,8 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
  <span style="color:#f18c96;font-weight:bold;">500</span>  Internal Server Error                                                                         
  <span style="color:#f18c96;font-weight:bold;">502</span>  Bad Gateway                                                                                   
  <span style="color:#f18c96;font-weight:bold;">503</span>  Service Unavailable                                                                           
- <span style="color:#a2b3c1;font-weight:bold;">?</span>                                                                                                  
- <span style="color:#a2b3c1;font-weight:bold;">799?</span></pre></figure>
+ <span style="color:#a3b1a7;font-weight:bold;">?</span>                                                                                                  
+ <span style="color:#a3b1a7;font-weight:bold;">799?</span></pre></figure>
 </div><div id="panel-text/http-status-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-1" tabindex="0">
 <figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513">HTTP response codes / exact observations
                                         
@@ -438,7 +438,7 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
  <span style="color:#f18c96;font-weight:bold;">500</span>  Internal Server Error             
  <span style="color:#f18c96;font-weight:bold;">502</span>  Bad Gateway                       
  <span style="color:#f18c96;font-weight:bold;">503</span>  Service Unavailable               
- <span style="color:#a2b3c1;font-weight:bold;">?</span></pre></figure>
+ <span style="color:#a3b1a7;font-weight:bold;">?</span></pre></figure>
 </div><div id="panel-text/http-status-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-2" tabindex="0">
 <figure><figcaption>256 colors · ansi256 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513">HTTP response codes / exact observations                                                            
                                                                                                     
@@ -455,8 +455,8 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
  <span style="color:#ff8787;font-weight:bold;">500</span>  Internal Server Error                                                                         
  <span style="color:#ff8787;font-weight:bold;">502</span>  Bad Gateway                                                                                   
  <span style="color:#ff8787;font-weight:bold;">503</span>  Service Unavailable                                                                           
- <span style="color:#b2b2b2;font-weight:bold;">?</span>                                                                                                  
- <span style="color:#b2b2b2;font-weight:bold;">799?</span></pre></figure>
+ <span style="color:#afafaf;font-weight:bold;">?</span>                                                                                                  
+ <span style="color:#afafaf;font-weight:bold;">799?</span></pre></figure>
 </div><div id="panel-text/http-status-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-text/http-status-3" tabindex="0">
 <figure><figcaption>16 colors · ansi16 · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513">HTTP response codes / exact observations                                                            
                                                                                                     
@@ -535,17 +535,17 @@ https://api.example.test:8443/v1/labels/p_42?limit=25&amp;tag=a%2Fb#detail</pre>
 <div class="component-source">
 <div class="component-subheading"><h3 id="text/http-status-code"><a class="heading-permalink" href="#text%2fhttp-status-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>)
 
-<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
-	text<span class="syn-operator">.</span><span class="syn-function">HTTPStatusCode</span><span class="syn-operator">(</span><span class="syn-number">200</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; OK&#34;</span><span class="syn-operator">,</span>
-	text<span class="syn-operator">.</span><span class="syn-function">HTTPStatusCode</span><span class="syn-operator">(</span><span class="syn-number">404</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Not Found&#34;</span><span class="syn-operator">,</span>
-	text<span class="syn-operator">.</span><span class="syn-function">HTTPStatusCode</span><span class="syn-operator">(</span><span class="syn-number">502</span><span class="syn-operator">,</span> palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34; Bad Gateway&#34;</span><span class="syn-operator">,</span>
-<span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> layout.<span class="syn-function">Column</span>(
+	text.<span class="syn-function">HTTPStatusCode</span>(<span class="syn-number">200</span>, palette)<span class="syn-operator">+</span><span class="syn-string">&#34; OK&#34;</span>,
+	text.<span class="syn-function">HTTPStatusCode</span>(<span class="syn-number">404</span>, palette)<span class="syn-operator">+</span><span class="syn-string">&#34; Not Found&#34;</span>,
+	text.<span class="syn-function">HTTPStatusCode</span>(<span class="syn-number">502</span>, palette)<span class="syn-operator">+</span><span class="syn-string">&#34; Bad Gateway&#34;</span>,
+)
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="text/http-status-integration"><h3 id="text/http-status-integration"><a class="heading-permalink" href="#text%2fhttp-status-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
-<div class="component-run"><h3 id="text/http-status-run"><a class="heading-permalink" href="#text%2fhttp-status-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/http-status</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/text_http_status.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/text/http.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="text/http-status-run"><a class="heading-permalink" href="#text%2fhttp-status-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog text/http-status</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/text_http_status.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/text/http.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 </section>

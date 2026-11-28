@@ -94,38 +94,38 @@
 
 
 <h1 id="retained-rendering">Retained rendering</h1>
-<p><code class="inline-code">runtime<span class="syn-operator">.</span>Root</code> coordinates ordered scene updates and cached presentation. <code class="inline-code">Root<span class="syn-operator">.</span>View</code> reads the completed frame; cached Git/JSON views require invalidation after direct native presentation edits. Applications can also use Charmed components within their own Bubble Tea models.</p>
+<p><code class="inline-code">runtime.<span class="syn-member">Root</span></code> coordinates ordered scene updates and cached presentation. <code class="inline-code">Root.<span class="syn-member">View</span></code> reads the completed frame; cached Git/JSON views require invalidation after direct native presentation edits. Applications can also use Charmed components within their own Bubble Tea models.</p>
 <h2 id="forward-runtime-commands"><a class="heading-permalink" href="#forward-runtime-commands"><span>Forward runtime commands</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p>When passing <code class="inline-code">root</code> directly to <code class="inline-code">tea<span class="syn-operator">.</span>NewProgram</code>, Bubble Tea already runs its lifecycle. Applications wrapping a root must forward <code class="inline-code">Init</code> and all messages, return every command from <code class="inline-code">Update</code>, and let their <code class="inline-code">View</code> read the cached frame. Non-input messages include scheduled frames and native command results. Call <code class="inline-code">Root<span class="syn-operator">.</span>Close</code> to release owned scene resources when the program ends.</p>
-<pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-keyword">type</span> app <span class="syn-keyword">struct</span> <span class="syn-operator">{</span> root <span class="syn-operator">*</span>runtime<span class="syn-operator">.</span>Root <span class="syn-operator">}</span>
+<p>When passing <code class="inline-code">root</code> directly to <code class="inline-code">tea.<span class="syn-member">NewProgram</span></code>, Bubble Tea already runs its lifecycle. Applications wrapping a root must forward <code class="inline-code">Init</code> and all messages, return every command from <code class="inline-code">Update</code>, and let their <code class="inline-code">View</code> read the cached frame. Non-input messages include scheduled frames and native command results. Call <code class="inline-code">Root.<span class="syn-member">Close</span></code> to release owned scene resources when the program ends.</p>
+<pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-keyword">type</span> <span class="syn-type">app</span> <span class="syn-keyword">struct</span> { root <span class="syn-operator">*</span>runtime.<span class="syn-member">Root</span> }
 
-<span class="syn-keyword">func</span> <span class="syn-operator">(</span>m <span class="syn-operator">*</span>app<span class="syn-operator">)</span> <span class="syn-function">Init</span><span class="syn-operator">(</span><span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span> <span class="syn-keyword">return</span> m<span class="syn-operator">.</span>root<span class="syn-operator">.</span><span class="syn-function">Init</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">}</span>
+<span class="syn-keyword">func</span> (m <span class="syn-operator">*</span>app) <span class="syn-function">Init</span>() tea.<span class="syn-member">Cmd</span> { <span class="syn-keyword">return</span> m.<span class="syn-member">root</span>.<span class="syn-function">Init</span>() }
 
-<span class="syn-keyword">func</span> <span class="syn-operator">(</span>m <span class="syn-operator">*</span>app<span class="syn-operator">)</span> <span class="syn-function">Update</span><span class="syn-operator">(</span>msg tea<span class="syn-operator">.</span>Msg<span class="syn-operator">)</span> <span class="syn-operator">(</span>tea<span class="syn-operator">.</span>Model<span class="syn-operator">,</span> tea<span class="syn-operator">.</span>Cmd<span class="syn-operator">)</span> <span class="syn-operator">{</span>
-    _<span class="syn-operator">,</span> cmd <span class="syn-operator">:=</span> m<span class="syn-operator">.</span>root<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span>
-    <span class="syn-keyword">return</span> m<span class="syn-operator">,</span> cmd
-<span class="syn-operator">}</span>
+<span class="syn-keyword">func</span> (m <span class="syn-operator">*</span>app) <span class="syn-function">Update</span>(msg tea.<span class="syn-member">Msg</span>) (tea.<span class="syn-member">Model</span>, tea.<span class="syn-member">Cmd</span>) {
+    _, cmd <span class="syn-operator">:=</span> m.<span class="syn-member">root</span>.<span class="syn-function">Update</span>(msg)
+    <span class="syn-keyword">return</span> m, cmd
+}
 
-<span class="syn-keyword">func</span> <span class="syn-operator">(</span>m <span class="syn-operator">*</span>app<span class="syn-operator">)</span> <span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> tea<span class="syn-operator">.</span>View <span class="syn-operator">{</span> <span class="syn-keyword">return</span> m<span class="syn-operator">.</span>root<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span> <span class="syn-operator">}</span>
+<span class="syn-keyword">func</span> (m <span class="syn-operator">*</span>app) <span class="syn-function">View</span>() tea.<span class="syn-member">View</span> { <span class="syn-keyword">return</span> m.<span class="syn-member">root</span>.<span class="syn-function">View</span>() }
 </code></pre>
 <p>State updates are ordered and immediate. Presentation defaults to at most 60 frames per second, with one command pending during bursts and none scheduled while idle; sparse updates do not wait an unnecessary full interval. Bubble Tea owns terminal flushing and its native timer.</p>
 <h2 id="capture-snapshots-explicitly"><a class="heading-permalink" href="#capture-snapshots-explicitly"><span>Capture snapshots explicitly</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Call <code class="inline-code">PresentNow</code> before reading <code class="inline-code">View</code> when a synchronous snapshot must include the latest state. <code class="inline-code">PresentNow</code> returns errors to the caller and invalidates any pending frame command, so an old timer cannot overwrite the snapshot.</p>
-<pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">snapshot</span><span class="syn-operator">(</span>root <span class="syn-operator">*</span>runtime<span class="syn-operator">.</span>Root<span class="syn-operator">)</span> <span class="syn-operator">(</span>tea<span class="syn-operator">.</span>View<span class="syn-operator">,</span> <span class="syn-builtin">error</span><span class="syn-operator">)</span> <span class="syn-operator">{</span>
-    <span class="syn-keyword">if</span> err <span class="syn-operator">:=</span> root<span class="syn-operator">.</span><span class="syn-function">PresentNow</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">;</span> err <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
-        <span class="syn-keyword">return</span> tea<span class="syn-operator">.</span>View<span class="syn-operator">{</span><span class="syn-operator">}</span><span class="syn-operator">,</span> err
-    <span class="syn-operator">}</span>
-    <span class="syn-keyword">return</span> root<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
-<span class="syn-operator">}</span>
+<pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">snapshot</span>(root <span class="syn-operator">*</span>runtime.<span class="syn-member">Root</span>) (tea.<span class="syn-member">View</span>, <span class="syn-type">error</span>) {
+    <span class="syn-keyword">if</span> err <span class="syn-operator">:=</span> root.<span class="syn-function">PresentNow</span>(); err <span class="syn-operator">!=</span> <span class="syn-null">nil</span> {
+        <span class="syn-keyword">return</span> tea.<span class="syn-member">View</span>{}, err
+    }
+    <span class="syn-keyword">return</span> root.<span class="syn-function">View</span>(), <span class="syn-null">nil</span>
+}
 </code></pre>
-<p><code class="inline-code">PresentNow</code> does not execute returned application commands. Process those commands and their result messages through the live event loop when their effects are needed before capture. <code class="inline-code"><span class="syn-function">Render</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code> is a synchronous convenience; prefer <code class="inline-code">PresentNow</code> when snapshot failures must be returned explicitly.</p>
+<p><code class="inline-code">PresentNow</code> does not execute returned application commands. Process those commands and their result messages through the live event loop when their effects are needed before capture. <code class="inline-code"><span class="syn-function">Render</span>()</code> is a synchronous convenience; prefer <code class="inline-code">PresentNow</code> when snapshot failures must be returned explicitly.</p>
 <h2 id="invalidate-direct-native-edits"><a class="heading-permalink" href="#invalidate-direct-native-edits"><span>Invalidate direct native edits</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Charmed's own data and interaction methods maintain their presentation dependencies. After directly changing exposed styles or theme fields, invalidate the affected cached component and request a runtime frame from the same serialized application update.</p>
-<pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">restyleList</span><span class="syn-operator">(</span>root <span class="syn-operator">*</span>runtime<span class="syn-operator">.</span>Root<span class="syn-operator">,</span> list <span class="syn-operator">*</span>gitui<span class="syn-operator">.</span>List<span class="syn-operator">,</span> style lipgloss<span class="syn-operator">.</span>Style<span class="syn-operator">)</span> tea<span class="syn-operator">.</span>Cmd <span class="syn-operator">{</span>
-    list<span class="syn-operator">.</span>Viewport<span class="syn-operator">.</span>Style <span class="syn-operator">=</span> style
-    list<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
-    <span class="syn-keyword">return</span> root<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span>
-<span class="syn-operator">}</span>
+<pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-keyword">func</span> <span class="syn-function">restyleList</span>(root <span class="syn-operator">*</span>runtime.<span class="syn-member">Root</span>, list <span class="syn-operator">*</span>gitui.<span class="syn-member">List</span>, style lipgloss.<span class="syn-member">Style</span>) tea.<span class="syn-member">Cmd</span> {
+    list.<span class="syn-member">Viewport</span>.<span class="syn-member">Style</span> <span class="syn-operator">=</span> style
+    list.<span class="syn-function">Invalidate</span>()
+    <span class="syn-keyword">return</span> root.<span class="syn-function">Invalidate</span>()
+}
 </code></pre>
 <table tabindex="0">
 <thead>
@@ -137,23 +137,23 @@
 <tbody>
 <tr>
 <td>Git list native styling or theme</td>
-<td>Call <code class="inline-code">list<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code>, then return <code class="inline-code">root<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code></td>
+<td>Call <code class="inline-code">list.<span class="syn-function">Invalidate</span>()</code>, then return <code class="inline-code">root.<span class="syn-function">Invalidate</span>()</code></td>
 </tr>
 <tr>
 <td>JSON viewer native styling or theme</td>
-<td>Call <code class="inline-code">viewer<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code> or <code class="inline-code"><span class="syn-function">Refresh</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code>, then return <code class="inline-code">root<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code></td>
+<td>Call <code class="inline-code">viewer.<span class="syn-function">Invalidate</span>()</code> or <code class="inline-code"><span class="syn-function">Refresh</span>()</code>, then return <code class="inline-code">root.<span class="syn-function">Invalidate</span>()</code></td>
 </tr>
 <tr>
 <td>Direct native viewport scrolling</td>
-<td>Return <code class="inline-code">root<span class="syn-operator">.</span><span class="syn-function">Invalidate</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code>; viewport offsets already participate in component cache keys</td>
+<td>Return <code class="inline-code">root.<span class="syn-function">Invalidate</span>()</code>; viewport offsets already participate in component cache keys</td>
 </tr>
 <tr>
 <td>Retained screen region contents</td>
-<td>Advance the affected <code class="inline-code">tui<span class="syn-operator">.</span>RegionView<span class="syn-operator">.</span>Revision</code>, then request presentation</td>
+<td>Advance the affected <code class="inline-code">tui.<span class="syn-member">RegionView</span>.<span class="syn-member">Revision</span></code>, then request presentation</td>
 </tr>
 </tbody>
 </table>
-<p>Native model access exposes complete viewport content. Git source replacement installs all rows immediately; input bursts can defer row projection until <code class="inline-code">View</code>. Full-refresh resize methods reapply presentation; geometry-only methods reuse prepared content. With retained screen or inspector panes, also advance the affected region or pane revision; <code class="inline-code">Root<span class="syn-operator">.</span>Invalidate</code> does not change application-owned counters.</p>
+<p>Native model access exposes complete viewport content. Git source replacement installs all rows immediately; input bursts can defer row projection until <code class="inline-code">View</code>. Full-refresh resize methods reapply presentation; geometry-only methods reuse prepared content. With retained screen or inspector panes, also advance the affected region or pane revision; <code class="inline-code">Root.<span class="syn-member">Invalidate</span></code> does not change application-owned counters.</p>
 <p>An optional <code class="inline-code">PresentationRevision() uint64</code> on a scene can suppress frames for unchanged updates. Omit it unless the counter advances for every visible change; a data-only counter can hide focus, cursor, scrolling or styling updates.</p>
 <p>See <a href="development.html#batch-native-presentation">presentation ownership</a> for the scheduling contract and <a href="examples.html">composition</a> for native lifecycle patterns. Keep component updates and presentation on the owning Bubble Tea update thread.</p>
 

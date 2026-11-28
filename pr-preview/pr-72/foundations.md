@@ -34,12 +34,12 @@ Themes, cell geometry, focus and motion are shared across components. Use semant
 
 ## [Colors and emphasis](https://lanej.io/charmed/foundations.html#colors-and-emphasis)
 
-Sage Midnight is the default dark palette. Its sage accent identifies interaction, lavender outlines keyboard focus, and a deep green fill marks selected rows. Semantic colors express meaning, while ordered intensity and categorical series use separate palettes. Keep series order stable across views, and preserve labels when fallback colors converge.
+The default dark palette, Sage Midnight, uses the named roles and state definitions from the [dotfiles design system](https://github.com/lanej/dotfiles/tree/master/design-system). Its sage accent identifies interaction, lavender outlines keyboard focus, and a deep green fill marks selected rows. Semantic colors express meaning, while ordered intensity and categorical series use separate palettes. Keep series order stable across views, and preserve labels when fallback colors converge.
 
 | Role                                  | Meaning and customization                                                                                                  |
 |---------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
 | Success, information, warning, danger | Semantic state, independent of interaction and series identity                                                             |
-| UNKNOWN                               | Cool slate-blue uncertainty; distinct from achromatic OFF inactivity                                                       |
+| UNKNOWN                               | The `health.unknown` role uses muted text. Configuration off uses subtle text and a power glyph                            |
 | Sequential scale                      | Ordered intensity, lighter with larger values in dark themes and darker in light themes                                    |
 | Custom sequential fallback            | Neutral black-to-white ramp when the theme has no scale                                                                    |
 | Bright, normal, dim                   | Same label, glyph and allocation; dim uses explicit semantic shades rather than terminal faint                             |
@@ -50,21 +50,21 @@ Sage Midnight is the default dark palette. Its sage accent identifies interactio
 
 Applications decide when a state applies; rendering never starts, pauses or disables work. Use feedback.MaxStatusWidth for lifecycle columns and feedback.MaxAttentionWidth for attention-only tables, rather than assuming every label fits a fixed twelve-cell allocation.
 
-| State        | Meaning                        | Color family                   |
-|--------------|--------------------------------|--------------------------------|
-| OK           | Healthy or successful          | Green                          |
-| WARN         | Attention needed               | Amber                          |
-| ERROR        | Failed or unhealthy            | Red                            |
-| UNKNOWN      | Cannot establish state         | Slate blue                     |
-| OFF          | Switched off or inactive       | Gray                           |
-| PENDING      | Waiting to start               | Blue                           |
-| RUNNING      | Actively executing             | Teal or cyan                   |
-| PAUSED       | Suspended and resumable        | Sand                           |
-| DISABLED     | Unavailable to start or select | Gray with slashed-circle glyph |
-| CONNECTED    | Established connection         | Green with filled-circle glyph |
-| DISCONNECTED | No established connection      | Gray with hollow-circle glyph  |
+| State        | Meaning                        | Sage Midnight role          |
+|--------------|--------------------------------|-----------------------------|
+| OK           | Healthy or successful          | `status.success`            |
+| WARN         | Degraded health                | `status.warning`            |
+| ERROR        | Failed or unhealthy            | `status.error`              |
+| UNKNOWN      | Cannot establish state         | `health.unknown`            |
+| OFF          | Switched off                   | `configuration.off`         |
+| PENDING      | Waiting to start               | `execution.queued`          |
+| RUNNING      | Actively executing             | `execution.running`         |
+| PAUSED       | Suspended and resumable        | `execution.paused`          |
+| DISABLED     | Unavailable to start or select | `interaction.disabled`      |
+| CONNECTED    | Established connection         | `connectivity.connected`    |
+| DISCONNECTED | No established connection      | `connectivity.disconnected` |
 
-Pending, running and paused have independent normal and dim tokens. Disabled and off share inactivity colors but retain different labels and glyphs. Disconnected can be intentional; use UNKNOWN when connectivity cannot be established. These atoms do not probe connections or evaluate attention rules.
+The theme resolves each state to its shared color role. Labels and glyphs distinguish states that share a hue, including pending and paused. Charmed supplies its terminal emphasis levels, categorical chart colors and ordered intensity ramp.
 
 ## [Glyphs and spacing](https://lanej.io/charmed/foundations.html#glyphs-and-spacing)
 
@@ -84,16 +84,16 @@ go run ./examples/catalog foundations/tokens
 
 Permissions display supplied io/fs.FileMode bits without reading files or checking effective access. The zero value is unknown; known mode 000 is distinct. Callers identify whether a supplied observation describes a link or its target, and use Go's special-bit constants rather than raw Unix octal flags.
 
-| Permission API       | Contract                                                                                                                 |
-|----------------------|--------------------------------------------------------------------------------------------------------------------------|
-| Groups(theme)        | Owner, group, other order; one Unicode cell per group                                                                    |
-| Group shapes         | Read is upper left, write upper right, execute lower left; exact bits remain visible without color                       |
-| Capability colors    | Cyan read, amber write, violet execute, rose write-plus-execute; combinations with read retain those capability families |
-| Compact(theme)       | Separate groups with spaces and append explicit setuid, setgid and sticky modifiers                                      |
-| Label()              | Preserve exact nine-character rwx spelling and s/S/t/T special markers                                                   |
-| ASCII                | Exact three-character groups, never invented single-letter abbreviations                                                 |
-| Unknown versus none  | Question mark for unknown, empty-set glyph for no bits                                                                   |
-| Native customization | Theme.Permissions owns capability colors; absent custom colors retain ordinary foreground                                |
+| Permission API       | Contract                                                                                                                                                             |
+|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Groups(theme)        | Owner, group, other order; one Unicode cell per group                                                                                                                |
+| Group shapes         | Read is upper left, write upper right, execute lower left; exact bits remain visible without color                                                                   |
+| Capability colors    | Sage Midnight uses the read-only and read/write access colors, executable-file green for execute, and dusty rose for write-plus-execute. The glyph records each bit. |
+| Compact(theme)       | Separate groups with spaces and append explicit setuid, setgid and sticky modifiers                                                                                  |
+| Label()              | Preserve exact nine-character rwx spelling and s/S/t/T special markers                                                                                               |
+| ASCII                | Exact three-character groups, never invented single-letter abbreviations                                                                                             |
+| Unknown versus none  | Question mark for unknown, empty-set glyph for no bits                                                                                                               |
+| Native customization | Theme.Permissions owns capability colors; absent custom colors retain ordinary foreground                                                                            |
 
 Keep the exact label beside compact permission displays or in their details. Built-in permission colors target 4.5:1 contrast against background, surface and selection fills. Terminal-profile quantization can reduce visible distinctions, so color does not replace the preserved bit shapes and explicit labels.
 

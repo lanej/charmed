@@ -122,24 +122,24 @@ Velocity 0.00                           </pre></div>
 <div class="group-card-body"><div class="group-card-heading"><h2>Motion</h2><span class="group-card-arrow" aria-hidden="true">→</span></div>
 <p class="group-card-caption"><span>Motion</span><span>1 component</span></p></div>
 </a><a class="group-card" href="foundations-text.html" aria-label="Text, 1 component">
-<div class="group-specimen" data-specimen="foundations/permissions" aria-hidden="true"><pre class="terminal"><span style="color:#8cc5cc;">▘</span>  r--  read                            
-<span style="color:#e8c88b;">▀</span>  rw-  read + write                    
-<span style="color:#c4b2d9;">▌</span>  r-x  read + execute                  
+<div class="group-specimen" data-specimen="foundations/permissions" aria-hidden="true"><pre class="terminal"><span style="color:#a3b1a7;">▘</span>  r--  read                            
+<span style="color:#acc8b7;">▀</span>  rw-  read + write                    
+<span style="color:#a6cd82;">▌</span>  r-x  read + execute                  
 <span style="color:#d89dae;">▛</span>  rwx  read + write + execute          
-<span style="color:#e8c88b;">▝</span>  -w-  write                           
-<span style="color:#c4b2d9;">▖</span>  --x  execute                         
+<span style="color:#acc8b7;">▝</span>  -w-  write                           
+<span style="color:#a6cd82;">▖</span>  --x  execute                         
 <span style="color:#d89dae;">▞</span>  -wx  write + execute                 
-<span style="color:#a3b1a7;">∅</span>  ---  none                            </pre></div>
+<span style="color:#909f95;">∅</span>  ---  none                            </pre></div>
 <div class="group-card-body"><div class="group-card-heading"><h2>Text</h2><span class="group-card-arrow" aria-hidden="true">→</span></div>
 <p class="group-card-caption"><span>Permissions</span><span>1 component</span></p></div>
 </a><a class="group-card" href="foundations-theme.html" aria-label="Theme, 4 components">
 <div class="group-specimen" data-specimen="foundations/theme" aria-hidden="true"><pre class="terminal"><span style="color:#d7dfd9;">neutral  </span>  <span style="color:#a3b1a7;">dim neutral</span>                  
-<span style="color:#a6cd82;">success  </span>  <span style="color:#87a86c;">dim success</span>                  
-<span style="color:#8cc5cc;">info     </span>  <span style="color:#75a5ab;">dim info</span>                     
-<span style="color:#e8c88b;">warning  </span>  <span style="color:#bca473;">dim warning</span>                  
-<span style="color:#f18c96;">danger   </span>  <span style="color:#df828c;">dim danger</span>                   
-<span style="color:#a2b3c1;">unknown  </span>  <span style="color:#8c9daa;">dim unknown</span>                  
-<span style="color:#b1b1b1;">off      </span>  <span style="color:#9b9b9b;">dim off</span>                      </pre></div>
+<span style="color:#a6cd82;">success  </span>  <span style="color:#98bc77;">dim success</span>                  
+<span style="color:#8cc5cc;">info     </span>  <span style="color:#80b5bb;">dim info</span>                     
+<span style="color:#e8c88b;">warning  </span>  <span style="color:#d5b87f;">dim warning</span>                  
+<span style="color:#f18c96;">danger   </span>  <span style="color:#dd808a;">dim danger</span>                   
+<span style="color:#a3b1a7;">unknown  </span>  <span style="color:#95a299;">dim unknown</span>                  
+<span style="color:#909f95;">off      </span>  <span style="color:#909f95;">dim off</span>                      </pre></div>
 <div class="group-card-body"><div class="group-card-heading"><h2>Theme</h2><span class="group-card-arrow" aria-hidden="true">→</span></div>
 <p class="group-card-caption"><span>Theme</span><span>4 components</span></p></div>
 </a>
@@ -170,7 +170,7 @@ Velocity 0.00                           </pre></div>
 </tbody>
 </table>
 <h2 id="colors-and-emphasis"><a class="heading-permalink" href="#colors-and-emphasis"><span>Colors and emphasis</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p>Sage Midnight is the default dark palette. Its sage accent identifies interaction, lavender outlines keyboard focus, and a deep green fill marks selected rows. Semantic colors express meaning, while ordered intensity and categorical series use separate palettes. Keep series order stable across views, and preserve labels when fallback colors converge.</p>
+<p>The default dark palette, Sage Midnight, uses the named roles and state definitions from the <a href="https://github.com/lanej/dotfiles/tree/master/design-system">dotfiles design system</a>. Its sage accent identifies interaction, lavender outlines keyboard focus, and a deep green fill marks selected rows. Semantic colors express meaning, while ordered intensity and categorical series use separate palettes. Keep series order stable across views, and preserve labels when fallback colors converge.</p>
 <table tabindex="0">
 <thead>
 <tr>
@@ -185,7 +185,7 @@ Velocity 0.00                           </pre></div>
 </tr>
 <tr>
 <td>UNKNOWN</td>
-<td>Cool slate-blue uncertainty; distinct from achromatic OFF inactivity</td>
+<td>The <code class="inline-code">health.<span class="syn-member">unknown</span></code> role uses muted text. Configuration off uses subtle text and a power glyph</td>
 </tr>
 <tr>
 <td>Sequential scale</td>
@@ -216,68 +216,68 @@ Velocity 0.00                           </pre></div>
 <tr>
 <th>State</th>
 <th>Meaning</th>
-<th>Color family</th>
+<th>Sage Midnight role</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>OK</td>
 <td>Healthy or successful</td>
-<td>Green</td>
+<td><code class="inline-code">status.<span class="syn-member">success</span></code></td>
 </tr>
 <tr>
 <td>WARN</td>
-<td>Attention needed</td>
-<td>Amber</td>
+<td>Degraded health</td>
+<td><code class="inline-code">status.<span class="syn-member">warning</span></code></td>
 </tr>
 <tr>
 <td>ERROR</td>
 <td>Failed or unhealthy</td>
-<td>Red</td>
+<td><code class="inline-code">status.<span class="syn-type">error</span></code></td>
 </tr>
 <tr>
 <td>UNKNOWN</td>
 <td>Cannot establish state</td>
-<td>Slate blue</td>
+<td><code class="inline-code">health.<span class="syn-member">unknown</span></code></td>
 </tr>
 <tr>
 <td>OFF</td>
-<td>Switched off or inactive</td>
-<td>Gray</td>
+<td>Switched off</td>
+<td><code class="inline-code">configuration.<span class="syn-member">off</span></code></td>
 </tr>
 <tr>
 <td>PENDING</td>
 <td>Waiting to start</td>
-<td>Blue</td>
+<td><code class="inline-code">execution.<span class="syn-member">queued</span></code></td>
 </tr>
 <tr>
 <td>RUNNING</td>
 <td>Actively executing</td>
-<td>Teal or cyan</td>
+<td><code class="inline-code">execution.<span class="syn-member">running</span></code></td>
 </tr>
 <tr>
 <td>PAUSED</td>
 <td>Suspended and resumable</td>
-<td>Sand</td>
+<td><code class="inline-code">execution.<span class="syn-member">paused</span></code></td>
 </tr>
 <tr>
 <td>DISABLED</td>
 <td>Unavailable to start or select</td>
-<td>Gray with slashed-circle glyph</td>
+<td><code class="inline-code">interaction.<span class="syn-member">disabled</span></code></td>
 </tr>
 <tr>
 <td>CONNECTED</td>
 <td>Established connection</td>
-<td>Green with filled-circle glyph</td>
+<td><code class="inline-code">connectivity.<span class="syn-member">connected</span></code></td>
 </tr>
 <tr>
 <td>DISCONNECTED</td>
 <td>No established connection</td>
-<td>Gray with hollow-circle glyph</td>
+<td><code class="inline-code">connectivity.<span class="syn-member">disconnected</span></code></td>
 </tr>
 </tbody>
 </table>
-<p>Pending, running and paused have independent normal and dim tokens. Disabled and off share inactivity colors but retain different labels and glyphs. Disconnected can be intentional; use UNKNOWN when connectivity cannot be established. These atoms do not probe connections or evaluate attention rules.</p>
+<p>The theme resolves each state to its shared color role. Labels and glyphs distinguish states that share a hue, including pending and paused. Charmed supplies its terminal emphasis levels, categorical chart colors and ordered intensity ramp.</p>
 <h2 id="glyphs-and-spacing"><a class="heading-permalink" href="#glyphs-and-spacing"><span>Glyphs and spacing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Theme.Glyph selects one-cell Unicode or ASCII marks from the named status, action, selection, expansion, navigation and loading catalog. Glyphs supplement labels. Expand changes the viewing area; expanded and collapsed describe disclosure. Reduced motion uses a static loading mark instead of native spinner animation. Infrastructure glyphs distinguish entity labels without changing stable IDs. Unicode is primary; fallback forms are selected only by explicit ASCII policy.</p>
 <table tabindex="0">
@@ -327,7 +327,7 @@ Velocity 0.00                           </pre></div>
 </tr>
 <tr>
 <td>Capability colors</td>
-<td>Cyan read, amber write, violet execute, rose write-plus-execute; combinations with read retain those capability families</td>
+<td>Sage Midnight uses the read-only and read/write access colors, executable-file green for execute, and dusty rose for write-plus-execute. The glyph records each bit.</td>
 </tr>
 <tr>
 <td>Compact(theme)</td>

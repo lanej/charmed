@@ -17,6 +17,8 @@ Start with [Getting started](https://lanej.io/charmed/getting-started.html) to i
 | Change library behavior      | Native Go packages, registry stories and retained-behavior tests                  |
 | Change the guide             | Markdown, consumer examples and the shared site template                          |
 
+Charmed ships its Sage Midnight tokens as generated Go constants. To refresh them, update the dotfiles commit in `scripts/sync_sage_tokens.py` and run `python3 scripts/sync_sage_tokens.py` with Python 3.11 or later and `gofmt` on the path. For an offline comparison, pass `--check --dotfiles /path/to/dotfiles` with a checkout containing that commit. Builds and applications read the checked-in constants.
+
 ## [Inspect a native fixture](https://lanej.io/charmed/development.html#inspect-a-native-fixture)
 
 The workbench uses Charmed's [CLI help formatter](https://lanej.io/charmed/molecules-commands.html#cli/help). Compare `go run ./cmd/workbench --help` with `go run ./cmd/workbench help capture` to see the root's commands and a subcommand's flags.
@@ -28,7 +30,7 @@ go run ./cmd/workbench list
 go run ./cmd/workbench run screen/services
 ```
 
-Run from the repository root with **Go 1.26.11+**. Use Ctrl+C to exit. You can pass fixture-specific options such as `--theme light`, `--legend`, or `--columns 40`; see the [component registry](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/catalog.go) for available fixtures.
+Run from the repository root with **Go 1.26.11+**. Use Ctrl+C to exit. You can pass fixture-specific options such as `--theme light`, `--legend`, or `--columns 40`; see the [component registry](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/catalog.go) for available fixtures.
 
 ## [Add a component](https://lanej.io/charmed/development.html#add-a-component)
 

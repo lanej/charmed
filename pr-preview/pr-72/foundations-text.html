@@ -127,34 +127,34 @@
 <a id="tab-foundations/permissions-0" href="#panel-foundations%2fpermissions-0" role="tab" aria-controls="panel-foundations/permissions-0" aria-selected="false">Demo</a><a id="tab-foundations/permissions-1" href="#panel-foundations%2fpermissions-1" role="tab" aria-controls="panel-foundations/permissions-1" aria-selected="false">Narrow</a><a id="tab-foundations/permissions-2" href="#panel-foundations%2fpermissions-2" role="tab" aria-controls="panel-foundations/permissions-2" aria-selected="false">256 colors</a><a id="tab-foundations/permissions-3" href="#panel-foundations%2fpermissions-3" role="tab" aria-controls="panel-foundations/permissions-3" aria-selected="false">16 colors</a><a id="tab-foundations/permissions-4" href="#panel-foundations%2fpermissions-4" role="tab" aria-controls="panel-foundations/permissions-4" aria-selected="false">Monochrome</a><a id="tab-foundations/permissions-5" href="#panel-foundations%2fpermissions-5" role="tab" aria-controls="panel-foundations/permissions-5" aria-selected="false">light</a><a id="tab-foundations/permissions-6" href="#panel-foundations%2fpermissions-6" role="tab" aria-controls="panel-foundations/permissions-6" aria-selected="false">contrast</a>
 </div>
 <div id="panel-foundations/permissions-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/permissions-example" tabindex="0">
-<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#d89dae;">▛</span> <span style="color:#c4b2d9;">▌</span> <span style="color:#c4b2d9;">▌</span>  rwxr-xr-x
-<span style="color:#95b5d3;">?</span> <span style="color:#95b5d3;">?</span> <span style="color:#95b5d3;">?</span>  ?????????</pre></figure>
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#d89dae;">▛</span> <span style="color:#a6cd82;">▌</span> <span style="color:#a6cd82;">▌</span>  rwxr-xr-x
+<span style="color:#a3b1a7;">?</span> <span style="color:#a3b1a7;">?</span> <span style="color:#a3b1a7;">?</span>  ?????????</pre></figure>
 </div>
 <div id="panel-foundations/permissions-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-foundations/permissions-0" tabindex="0">
 <figure><figcaption>Demo · truecolor · 100 × 30 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513">Permission combinations / one group                                                                 
 Read: top left. Write: top right.                                                                   
 Execute: bottom left.                                                                               
                                                                                                     
-<span style="color:#8cc5cc;">▘</span>  r--  read                                                                                        
-<span style="color:#e8c88b;">▀</span>  rw-  read + write                                                                                
-<span style="color:#c4b2d9;">▌</span>  r-x  read + execute                                                                              
+<span style="color:#a3b1a7;">▘</span>  r--  read                                                                                        
+<span style="color:#acc8b7;">▀</span>  rw-  read + write                                                                                
+<span style="color:#a6cd82;">▌</span>  r-x  read + execute                                                                              
 <span style="color:#d89dae;">▛</span>  rwx  read + write + execute                                                                      
-<span style="color:#e8c88b;">▝</span>  -w-  write                                                                                       
-<span style="color:#c4b2d9;">▖</span>  --x  execute                                                                                     
+<span style="color:#acc8b7;">▝</span>  -w-  write                                                                                       
+<span style="color:#a6cd82;">▖</span>  --x  execute                                                                                     
 <span style="color:#d89dae;">▞</span>  -wx  write + execute                                                                             
-<span style="color:#a3b1a7;">∅</span>  ---  none                                                                                        
+<span style="color:#909f95;">∅</span>  ---  none                                                                                        
                                                                                                     
 Owner / group / other    exact mode                                                                 
-<span style="color:#d89dae;">▛</span> <span style="color:#c4b2d9;">▌</span> <span style="color:#c4b2d9;">▌</span>  docs/      rwxr-xr-x                                                                         
-<span style="color:#e8c88b;">▀</span> <span style="color:#8cc5cc;">▘</span> <span style="color:#8cc5cc;">▘</span>  app.ts     rw-r--r--                                                                         
-<span style="color:#d89dae;">▛</span> <span style="color:#c4b2d9;">▌</span> <span style="color:#c4b2d9;">▌</span>  deploy.sh  rwxr-xr-x                                                                         
-<span style="color:#e8c88b;">▀</span> <span style="color:#a3b1a7;">∅</span> <span style="color:#a3b1a7;">∅</span>  .env       rw-------                                                                         
-<span style="color:#8cc5cc;">▘</span> <span style="color:#8cc5cc;">▘</span> <span style="color:#8cc5cc;">▘</span>  report.pdf r--r--r--                                                                         
-<span style="color:#95b5d3;">?</span> <span style="color:#95b5d3;">?</span> <span style="color:#95b5d3;">?</span>  uninspected ?????????                                                                        
+<span style="color:#d89dae;">▛</span> <span style="color:#a6cd82;">▌</span> <span style="color:#a6cd82;">▌</span>  docs/      rwxr-xr-x                                                                         
+<span style="color:#acc8b7;">▀</span> <span style="color:#a3b1a7;">▘</span> <span style="color:#a3b1a7;">▘</span>  app.ts     rw-r--r--                                                                         
+<span style="color:#d89dae;">▛</span> <span style="color:#a6cd82;">▌</span> <span style="color:#a6cd82;">▌</span>  deploy.sh  rwxr-xr-x                                                                         
+<span style="color:#acc8b7;">▀</span> <span style="color:#909f95;">∅</span> <span style="color:#909f95;">∅</span>  .env       rw-------                                                                         
+<span style="color:#a3b1a7;">▘</span> <span style="color:#a3b1a7;">▘</span> <span style="color:#a3b1a7;">▘</span>  report.pdf r--r--r--                                                                         
+<span style="color:#a3b1a7;">?</span> <span style="color:#a3b1a7;">?</span> <span style="color:#a3b1a7;">?</span>  uninspected ?????????                                                                        
                                                                                                     
 Special bits / explicit modifiers                                                                   
-<span style="color:#d89dae;">▛</span> <span style="color:#c4b2d9;">▌</span> <span style="color:#c4b2d9;">▌</span> <span style="color:#d7dfd9;text-decoration:underline;">setuid</span>  rwsr-xr-x                                                                             
-<span style="color:#e8c88b;">▀</span> <span style="color:#8cc5cc;">▘</span> <span style="color:#8cc5cc;">▘</span> <span style="color:#d7dfd9;text-decoration:underline;">setgid</span>  rw-r-Sr--                                                                             
+<span style="color:#d89dae;">▛</span> <span style="color:#a6cd82;">▌</span> <span style="color:#a6cd82;">▌</span> <span style="color:#d7dfd9;text-decoration:underline;">setuid</span>  rwsr-xr-x                                                                             
+<span style="color:#acc8b7;">▀</span> <span style="color:#a3b1a7;">▘</span> <span style="color:#a3b1a7;">▘</span> <span style="color:#d7dfd9;text-decoration:underline;">setgid</span>  rw-r-Sr--                                                                             
 <span style="color:#d89dae;">▛</span> <span style="color:#d89dae;">▛</span> <span style="color:#d89dae;">▛</span> <span style="color:#d7dfd9;text-decoration:underline;">sticky</span>  rwxrwxrwt                                                                             
                                                                                                     
 Mode bits are not effective access.</pre></figure>
@@ -163,26 +163,26 @@ Mode bits are not effective access.</pre></figure>
 Read: top left. Write: top right.       
 Execute: bottom left.                   
                                         
-<span style="color:#8cc5cc;">▘</span>  r--  read                            
-<span style="color:#e8c88b;">▀</span>  rw-  read + write                    
-<span style="color:#c4b2d9;">▌</span>  r-x  read + execute                  
+<span style="color:#a3b1a7;">▘</span>  r--  read                            
+<span style="color:#acc8b7;">▀</span>  rw-  read + write                    
+<span style="color:#a6cd82;">▌</span>  r-x  read + execute                  
 <span style="color:#d89dae;">▛</span>  rwx  read + write + execute          
-<span style="color:#e8c88b;">▝</span>  -w-  write                           
-<span style="color:#c4b2d9;">▖</span>  --x  execute                         
+<span style="color:#acc8b7;">▝</span>  -w-  write                           
+<span style="color:#a6cd82;">▖</span>  --x  execute                         
 <span style="color:#d89dae;">▞</span>  -wx  write + execute                 
-<span style="color:#a3b1a7;">∅</span>  ---  none                            
+<span style="color:#909f95;">∅</span>  ---  none                            
                                         
 Owner / group / other    exact mode     
-<span style="color:#d89dae;">▛</span> <span style="color:#c4b2d9;">▌</span> <span style="color:#c4b2d9;">▌</span>  docs/      rwxr-xr-x             
-<span style="color:#e8c88b;">▀</span> <span style="color:#8cc5cc;">▘</span> <span style="color:#8cc5cc;">▘</span>  app.ts     rw-r--r--             
-<span style="color:#d89dae;">▛</span> <span style="color:#c4b2d9;">▌</span> <span style="color:#c4b2d9;">▌</span>  deploy.sh  rwxr-xr-x             
-<span style="color:#e8c88b;">▀</span> <span style="color:#a3b1a7;">∅</span> <span style="color:#a3b1a7;">∅</span>  .env       rw-------             
-<span style="color:#8cc5cc;">▘</span> <span style="color:#8cc5cc;">▘</span> <span style="color:#8cc5cc;">▘</span>  report.pdf r--r--r--             
-<span style="color:#95b5d3;">?</span> <span style="color:#95b5d3;">?</span> <span style="color:#95b5d3;">?</span>  uninspected ?????????            
+<span style="color:#d89dae;">▛</span> <span style="color:#a6cd82;">▌</span> <span style="color:#a6cd82;">▌</span>  docs/      rwxr-xr-x             
+<span style="color:#acc8b7;">▀</span> <span style="color:#a3b1a7;">▘</span> <span style="color:#a3b1a7;">▘</span>  app.ts     rw-r--r--             
+<span style="color:#d89dae;">▛</span> <span style="color:#a6cd82;">▌</span> <span style="color:#a6cd82;">▌</span>  deploy.sh  rwxr-xr-x             
+<span style="color:#acc8b7;">▀</span> <span style="color:#909f95;">∅</span> <span style="color:#909f95;">∅</span>  .env       rw-------             
+<span style="color:#a3b1a7;">▘</span> <span style="color:#a3b1a7;">▘</span> <span style="color:#a3b1a7;">▘</span>  report.pdf r--r--r--             
+<span style="color:#a3b1a7;">?</span> <span style="color:#a3b1a7;">?</span> <span style="color:#a3b1a7;">?</span>  uninspected ?????????            
                                         
 Special bits / explicit modifiers       
-<span style="color:#d89dae;">▛</span> <span style="color:#c4b2d9;">▌</span> <span style="color:#c4b2d9;">▌</span> <span style="color:#d7dfd9;text-decoration:underline;">setuid</span>  rwsr-xr-x                 
-<span style="color:#e8c88b;">▀</span> <span style="color:#8cc5cc;">▘</span> <span style="color:#8cc5cc;">▘</span> <span style="color:#d7dfd9;text-decoration:underline;">setgid</span>  rw-r-Sr--                 
+<span style="color:#d89dae;">▛</span> <span style="color:#a6cd82;">▌</span> <span style="color:#a6cd82;">▌</span> <span style="color:#d7dfd9;text-decoration:underline;">setuid</span>  rwsr-xr-x                 
+<span style="color:#acc8b7;">▀</span> <span style="color:#a3b1a7;">▘</span> <span style="color:#a3b1a7;">▘</span> <span style="color:#d7dfd9;text-decoration:underline;">setgid</span>  rw-r-Sr--                 
 <span style="color:#d89dae;">▛</span> <span style="color:#d89dae;">▛</span> <span style="color:#d89dae;">▛</span> <span style="color:#d7dfd9;text-decoration:underline;">sticky</span>  rwxrwxrwt                 
                                         
 Mode bits are not effective access.</pre></figure>
@@ -191,26 +191,26 @@ Mode bits are not effective access.</pre></figure>
 Read: top left. Write: top right.                                                                   
 Execute: bottom left.                                                                               
                                                                                                     
-<span style="color:#87d7d7;">▘</span>  r--  read                                                                                        
-<span style="color:#d7d787;">▀</span>  rw-  read + write                                                                                
-<span style="color:#d7afd7;">▌</span>  r-x  read + execute                                                                              
+<span style="color:#afafaf;">▘</span>  r--  read                                                                                        
+<span style="color:#afd7af;">▀</span>  rw-  read + write                                                                                
+<span style="color:#afd787;">▌</span>  r-x  read + execute                                                                              
 <span style="color:#d7afaf;">▛</span>  rwx  read + write + execute                                                                      
-<span style="color:#d7d787;">▝</span>  -w-  write                                                                                       
-<span style="color:#d7afd7;">▖</span>  --x  execute                                                                                     
+<span style="color:#afd7af;">▝</span>  -w-  write                                                                                       
+<span style="color:#afd787;">▖</span>  --x  execute                                                                                     
 <span style="color:#d7afaf;">▞</span>  -wx  write + execute                                                                             
-<span style="color:#afafaf;">∅</span>  ---  none                                                                                        
+<span style="color:#87af87;">∅</span>  ---  none                                                                                        
                                                                                                     
 Owner / group / other    exact mode                                                                 
-<span style="color:#d7afaf;">▛</span> <span style="color:#d7afd7;">▌</span> <span style="color:#d7afd7;">▌</span>  docs/      rwxr-xr-x                                                                         
-<span style="color:#d7d787;">▀</span> <span style="color:#87d7d7;">▘</span> <span style="color:#87d7d7;">▘</span>  app.ts     rw-r--r--                                                                         
-<span style="color:#d7afaf;">▛</span> <span style="color:#d7afd7;">▌</span> <span style="color:#d7afd7;">▌</span>  deploy.sh  rwxr-xr-x                                                                         
-<span style="color:#d7d787;">▀</span> <span style="color:#afafaf;">∅</span> <span style="color:#afafaf;">∅</span>  .env       rw-------                                                                         
-<span style="color:#87d7d7;">▘</span> <span style="color:#87d7d7;">▘</span> <span style="color:#87d7d7;">▘</span>  report.pdf r--r--r--                                                                         
-<span style="color:#87afd7;">?</span> <span style="color:#87afd7;">?</span> <span style="color:#87afd7;">?</span>  uninspected ?????????                                                                        
+<span style="color:#d7afaf;">▛</span> <span style="color:#afd787;">▌</span> <span style="color:#afd787;">▌</span>  docs/      rwxr-xr-x                                                                         
+<span style="color:#afd7af;">▀</span> <span style="color:#afafaf;">▘</span> <span style="color:#afafaf;">▘</span>  app.ts     rw-r--r--                                                                         
+<span style="color:#d7afaf;">▛</span> <span style="color:#afd787;">▌</span> <span style="color:#afd787;">▌</span>  deploy.sh  rwxr-xr-x                                                                         
+<span style="color:#afd7af;">▀</span> <span style="color:#87af87;">∅</span> <span style="color:#87af87;">∅</span>  .env       rw-------                                                                         
+<span style="color:#afafaf;">▘</span> <span style="color:#afafaf;">▘</span> <span style="color:#afafaf;">▘</span>  report.pdf r--r--r--                                                                         
+<span style="color:#afafaf;">?</span> <span style="color:#afafaf;">?</span> <span style="color:#afafaf;">?</span>  uninspected ?????????                                                                        
                                                                                                     
 Special bits / explicit modifiers                                                                   
-<span style="color:#d7afaf;">▛</span> <span style="color:#d7afd7;">▌</span> <span style="color:#d7afd7;">▌</span> <span style="color:#dadada;text-decoration:underline;">setuid</span>  rwsr-xr-x                                                                             
-<span style="color:#d7d787;">▀</span> <span style="color:#87d7d7;">▘</span> <span style="color:#87d7d7;">▘</span> <span style="color:#dadada;text-decoration:underline;">setgid</span>  rw-r-Sr--                                                                             
+<span style="color:#d7afaf;">▛</span> <span style="color:#afd787;">▌</span> <span style="color:#afd787;">▌</span> <span style="color:#dadada;text-decoration:underline;">setuid</span>  rwsr-xr-x                                                                             
+<span style="color:#afd7af;">▀</span> <span style="color:#afafaf;">▘</span> <span style="color:#afafaf;">▘</span> <span style="color:#dadada;text-decoration:underline;">setgid</span>  rw-r-Sr--                                                                             
 <span style="color:#d7afaf;">▛</span> <span style="color:#d7afaf;">▛</span> <span style="color:#d7afaf;">▛</span> <span style="color:#dadada;text-decoration:underline;">sticky</span>  rwxrwxrwt                                                                             
                                                                                                     
 Mode bits are not effective access.</pre></figure>
@@ -219,26 +219,26 @@ Mode bits are not effective access.</pre></figure>
 Read: top left. Write: top right.                                                                   
 Execute: bottom left.                                                                               
                                                                                                     
-<span style="color:#00ffff;">▘</span>  r--  read                                                                                        
-<span style="color:#ffff00;">▀</span>  rw-  read + write                                                                                
-<span style="color:#ff00ff;">▌</span>  r-x  read + execute                                                                              
+<span style="color:#c0c0c0;">▘</span>  r--  read                                                                                        
+<span style="color:#00ff00;">▀</span>  rw-  read + write                                                                                
+<span style="color:#00ff00;">▌</span>  r-x  read + execute                                                                              
 <span style="color:#ff0000;">▛</span>  rwx  read + write + execute                                                                      
-<span style="color:#ffff00;">▝</span>  -w-  write                                                                                       
-<span style="color:#ff00ff;">▖</span>  --x  execute                                                                                     
+<span style="color:#00ff00;">▝</span>  -w-  write                                                                                       
+<span style="color:#00ff00;">▖</span>  --x  execute                                                                                     
 <span style="color:#ff0000;">▞</span>  -wx  write + execute                                                                             
-<span style="color:#c0c0c0;">∅</span>  ---  none                                                                                        
+<span style="color:#008000;">∅</span>  ---  none                                                                                        
                                                                                                     
 Owner / group / other    exact mode                                                                 
-<span style="color:#ff0000;">▛</span> <span style="color:#ff00ff;">▌</span> <span style="color:#ff00ff;">▌</span>  docs/      rwxr-xr-x                                                                         
-<span style="color:#ffff00;">▀</span> <span style="color:#00ffff;">▘</span> <span style="color:#00ffff;">▘</span>  app.ts     rw-r--r--                                                                         
-<span style="color:#ff0000;">▛</span> <span style="color:#ff00ff;">▌</span> <span style="color:#ff00ff;">▌</span>  deploy.sh  rwxr-xr-x                                                                         
-<span style="color:#ffff00;">▀</span> <span style="color:#c0c0c0;">∅</span> <span style="color:#c0c0c0;">∅</span>  .env       rw-------                                                                         
-<span style="color:#00ffff;">▘</span> <span style="color:#00ffff;">▘</span> <span style="color:#00ffff;">▘</span>  report.pdf r--r--r--                                                                         
-<span style="color:#0000ff;">?</span> <span style="color:#0000ff;">?</span> <span style="color:#0000ff;">?</span>  uninspected ?????????                                                                        
+<span style="color:#ff0000;">▛</span> <span style="color:#00ff00;">▌</span> <span style="color:#00ff00;">▌</span>  docs/      rwxr-xr-x                                                                         
+<span style="color:#00ff00;">▀</span> <span style="color:#c0c0c0;">▘</span> <span style="color:#c0c0c0;">▘</span>  app.ts     rw-r--r--                                                                         
+<span style="color:#ff0000;">▛</span> <span style="color:#00ff00;">▌</span> <span style="color:#00ff00;">▌</span>  deploy.sh  rwxr-xr-x                                                                         
+<span style="color:#00ff00;">▀</span> <span style="color:#008000;">∅</span> <span style="color:#008000;">∅</span>  .env       rw-------                                                                         
+<span style="color:#c0c0c0;">▘</span> <span style="color:#c0c0c0;">▘</span> <span style="color:#c0c0c0;">▘</span>  report.pdf r--r--r--                                                                         
+<span style="color:#c0c0c0;">?</span> <span style="color:#c0c0c0;">?</span> <span style="color:#c0c0c0;">?</span>  uninspected ?????????                                                                        
                                                                                                     
 Special bits / explicit modifiers                                                                   
-<span style="color:#ff0000;">▛</span> <span style="color:#ff00ff;">▌</span> <span style="color:#ff00ff;">▌</span> <span style="color:#ffffff;text-decoration:underline;">setuid</span>  rwsr-xr-x                                                                             
-<span style="color:#ffff00;">▀</span> <span style="color:#00ffff;">▘</span> <span style="color:#00ffff;">▘</span> <span style="color:#ffffff;text-decoration:underline;">setgid</span>  rw-r-Sr--                                                                             
+<span style="color:#ff0000;">▛</span> <span style="color:#00ff00;">▌</span> <span style="color:#00ff00;">▌</span> <span style="color:#ffffff;text-decoration:underline;">setuid</span>  rwsr-xr-x                                                                             
+<span style="color:#00ff00;">▀</span> <span style="color:#c0c0c0;">▘</span> <span style="color:#c0c0c0;">▘</span> <span style="color:#ffffff;text-decoration:underline;">setgid</span>  rw-r-Sr--                                                                             
 <span style="color:#ff0000;">▛</span> <span style="color:#ff0000;">▛</span> <span style="color:#ff0000;">▛</span> <span style="color:#ffffff;text-decoration:underline;">sticky</span>  rwxrwxrwt                                                                             
                                                                                                     
 Mode bits are not effective access.</pre></figure>
@@ -332,18 +332,18 @@ Mode bits are not effective access.</pre></figure>
 <div class="component-source">
 <div class="component-subheading"><h3 id="foundations/permissions-code"><a class="heading-permalink" href="#foundations%2fpermissions-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span>
-mode <span class="syn-operator">:=</span> text<span class="syn-operator">.</span>Permissions<span class="syn-operator">{</span>Mode<span class="syn-operator">:</span> <span class="syn-number">0o755</span><span class="syn-operator">,</span> Available<span class="syn-operator">:</span> <span class="syn-builtin">true</span><span class="syn-operator">}</span>
-unknown <span class="syn-operator">:=</span> text<span class="syn-operator">.</span>Permissions<span class="syn-operator">{</span><span class="syn-operator">}</span>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>)
+mode <span class="syn-operator">:=</span> text.<span class="syn-member">Permissions</span>{Mode: <span class="syn-number">0o755</span>, Available: <span class="syn-true">true</span>}
+unknown <span class="syn-operator">:=</span> text.<span class="syn-member">Permissions</span>{}
 
-<span class="syn-keyword">return</span> layout<span class="syn-operator">.</span><span class="syn-function">Column</span><span class="syn-operator">(</span>
-	mode<span class="syn-operator">.</span><span class="syn-function">Compact</span><span class="syn-operator">(</span>palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34;  &#34;</span><span class="syn-operator">+</span>mode<span class="syn-operator">.</span><span class="syn-function">Label</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span>
-	unknown<span class="syn-operator">.</span><span class="syn-function">Compact</span><span class="syn-operator">(</span>palette<span class="syn-operator">)</span><span class="syn-operator">+</span><span class="syn-string">&#34;  &#34;</span><span class="syn-operator">+</span>unknown<span class="syn-operator">.</span><span class="syn-function">Label</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span>
-<span class="syn-operator">)</span>
+<span class="syn-keyword">return</span> layout.<span class="syn-function">Column</span>(
+	mode.<span class="syn-function">Compact</span>(palette)<span class="syn-operator">+</span><span class="syn-string">&#34;  &#34;</span><span class="syn-operator">+</span>mode.<span class="syn-function">Label</span>(),
+	unknown.<span class="syn-function">Compact</span>(palette)<span class="syn-operator">+</span><span class="syn-string">&#34;  &#34;</span><span class="syn-operator">+</span>unknown.<span class="syn-function">Label</span>(),
+)
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="foundations/permissions-integration"><h3 id="foundations/permissions-integration"><a class="heading-permalink" href="#foundations%2fpermissions-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Render from application-owned values and pass one shared theme to related elements. These display helpers have no event loop or keyboard focus; the parent supplies updated values and recomputes the available terminal-cell allocation when the screen changes size.</p></section>
-<div class="component-run"><h3 id="foundations/permissions-run"><a class="heading-permalink" href="#foundations%2fpermissions-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog foundations/permissions</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/foundations_permissions.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/permissions.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="foundations/permissions-run"><a class="heading-permalink" href="#foundations%2fpermissions-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog foundations/permissions</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/foundations_permissions.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/permissions.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Dependency map: not audited.</p>
 </section>
 </section>

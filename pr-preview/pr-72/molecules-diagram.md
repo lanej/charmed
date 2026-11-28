@@ -260,17 +260,17 @@ Render from application-owned values and pass one shared theme to related elemen
 go run ./examples/catalog diagram/state-transitions
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/diagram_state_transitions.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/diagrams.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/diagram_state_transitions.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/diagrams.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[State diagram dependency graph](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/diagram/state.go#L36)
+[State diagram dependency graph](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/diagram/state.go#L36)
 
 Consumer usage uses
 
 - [State diagram](https://lanej.io/charmed/dependencies.html#component-diagram%2Fstate-diagram) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/diagram_state_transitions.go#L8)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/diagram_state_transitions.go#L8)
 
 Interactive fixture uses
 
@@ -278,4 +278,4 @@ Interactive fixture uses
 - [Trace replay](https://lanej.io/charmed/dependencies.html#component-diagram%2Ftrace-replay) · trace inspection
 - [Radio group](https://lanej.io/charmed/dependencies.html#component-input%2Fradio-group) · history-window controls
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/diagrams.go#L12)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/diagrams.go#L12)

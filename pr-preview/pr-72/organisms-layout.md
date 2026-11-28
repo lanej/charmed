@@ -269,6 +269,6 @@ Set Summary.Next and optional ActionDetail for the action region. Supply stable 
 go run ./examples/catalog layout/detail-document
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/layout_detail_document.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/layout/detail_document.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/layout_detail_document.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/layout/detail_document.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [layout/identity-header](https://lanej.io/charmed/molecules-layout.html#layout/identity-header) [layout/record-summary](https://lanej.io/charmed/molecules-layout.html#layout/record-summary) [layout/key-value](https://lanej.io/charmed/molecules-layout.html#layout/key-value)

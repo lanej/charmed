@@ -22,12 +22,19 @@ main :not(pre) > code, .inline-code {
   overflow-wrap: anywhere;
 }
 .syn-keyword { color: var(--syntax-keyword); }
-.syn-function,.syn-command,.syn-builtin { color: var(--syntax-name); }
+.syn-function,.syn-command { color: var(--syntax-function); }
+.syn-type { color: var(--syntax-type); }
+.syn-member { color: var(--syntax-name); }
+.syn-reference { color: var(--syntax-variable-reference); }
+.syn-true { color: var(--syntax-true); }
+.syn-false { color: var(--syntax-false); }
+.syn-null { color: var(--syntax-null); }
+.syn-constant { color: var(--syntax-constant); }
 .syn-string { color: var(--syntax-string); }
 .syn-number { color: var(--syntax-number); }
 .syn-comment { color: var(--syntax-comment); font-style: italic; }
-.syn-operator { color: var(--text); }
-.syn-flag { color: var(--syntax-keyword); }
+.syn-operator { color: var(--syntax-operator); }
+.syn-flag { color: var(--syntax-special); }
 
 /* Brand sheet: design guidance rendered from the same tokens as the guide. */
 .charmed-symbol { display: block; width: 100%; height: 100%; }
@@ -106,10 +113,11 @@ nav .nav-family-link:hover { text-decoration: underline; }
 .component-subheading h4 { margin: 0; font-size: 17px; }
 .component-subheading span { color: var(--muted); font-size: 13px; }
 .variant-tablist { display: flex; flex-wrap: nowrap; align-items: end; gap: 4px; overflow-x: auto; scrollbar-width: thin; border-bottom: 1px solid var(--line); }
-.variant-tablist [role=tab] { display: inline-block; flex: 0 0 auto; padding: 8px 12px; color: var(--muted); font-size: 13px; text-decoration: none; border-bottom: 2px solid transparent; border-radius: 3px 3px 0 0; }
+.variant-tablist [role=tab] { display: inline-block; flex: 0 0 auto; padding: 8px 12px; color: var(--tab-inactive-fg); background: var(--tab-inactive-bg); font-size: 13px; text-decoration: none; border-bottom: 2px solid transparent; border-radius: 3px 3px 0 0; }
 .variant-tablist [role=tab]:hover { color: var(--text); background: var(--surface); }
-.variant-tablist [role=tab][aria-selected=true] { color: var(--selection-text); border-bottom-color: var(--accent); background: var(--selection); font-weight: 600; }
+.variant-tablist [role=tab][aria-selected=true] { color: var(--tab-active-fg); border-bottom-color: currentColor; background: var(--tab-active-bg); font-weight: 600; }
 .variant-tablist [role=tab]:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.variant-tablist [role=tab][aria-selected=true]:focus-visible { outline-color: var(--tab-active-fg); }
 .variant-panel { background: var(--surface); border: 1px solid var(--line); border-top: 0; padding: 12px; min-width: 0; }
 .variant-panel[hidden] { display: none; }
 .variant-panel:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
@@ -298,4 +306,4 @@ main > h2,main > h3 { max-width: 60ch; }
  .graph-examples li span { display:block; margin-left:0; }
 }
 
-:root{--bg:#0d1513;--surface:#17231e;--text:#d7dfd9;--muted:#a3b1a7;--line:#6b8575;--accent:#acc8b7;--focus:#c4b2d9;--selection:#26352d;--selection-text:#eef1ee;--success:#a6cd82;--info:#8cc5cc;--warning:#e8c88b;--danger:#f18c96;--syntax-keyword:#95b5d3;--syntax-name:#8fb9a8;--syntax-string:#b7cb91;--syntax-number:#c4b2d9;--syntax-comment:#9cab9f;--series-0:#a798c9;--series-1:#95b5d3;--series-2:#d89dae;--series-3:#dda783;--series-4:#b7cb91;}
+:root{--bg:#0d1513;--surface:#17231e;--text:#d7dfd9;--muted:#a3b1a7;--line:#6b8575;--accent:#acc8b7;--focus:#c4b2d9;--selection:#26352d;--selection-text:#eef1ee;--success:#a6cd82;--info:#8cc5cc;--warning:#e8c88b;--danger:#f18c96;--syntax-keyword:#95b5d3;--syntax-name:#8fb9a8;--syntax-string:#b7cb91;--syntax-number:#c4b2d9;--syntax-comment:#9cab9f;--syntax-function:#8cc5cc;--syntax-type:#b7bde3;--syntax-operator:#95b5d3;--syntax-true:#95b5d3;--syntax-false:#c4b2d9;--syntax-null:#d89dae;--syntax-constant:#d7dfd9;--syntax-special:#e8c88b;--syntax-variable-reference:#8fb9a8;--tab-active-fg:#0d1513;--tab-active-bg:#c4b2d9;--tab-inactive-fg:#a3b1a7;--tab-inactive-bg:#0d1513;--series-0:#a798c9;--series-1:#95b5d3;--series-2:#d89dae;--series-3:#dda783;--series-4:#b7cb91;}

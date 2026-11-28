@@ -557,19 +557,19 @@
 <div class="component-source">
 <div class="component-subheading"><h3 id="collection/json-viewer-code"><a class="heading-permalink" href="#collection%2fjson-viewer-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
 <p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/collection" title="github.com/lanej/charmed/collection"><code>collection</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
-<pre tabindex="0" class="code-block source-code"><code class="language-go">payload <span class="syn-operator">:=</span> <span class="syn-operator">[</span><span class="syn-operator">]</span><span class="syn-builtin">byte</span><span class="syn-operator">(</span><span class="syn-string">`{
+<pre tabindex="0" class="code-block source-code"><code class="language-go">payload <span class="syn-operator">:=</span> []<span class="syn-type">byte</span>(<span class="syn-string">`{
   &#34;shipment&#34;: {&#34;id&#34;: &#34;shp_42&#34;, &#34;options&#34;: {&#34;insurance&#34;: true, &#34;currency&#34;: &#34;USD&#34;}},
   &#34;rates&#34;: [{&#34;carrier&#34;: &#34;USPS&#34;, &#34;rate&#34;: 8.500}, {&#34;carrier&#34;: &#34;UPS&#34;, &#34;rate&#34;: 12.50}],
   &#34;attempt&#34;: 1,
   &#34;attempt&#34;: 2,
   &#34;sequence&#34;: 9007199254740993
-}`</span><span class="syn-operator">)</span>
+}`</span>)
 
-viewer <span class="syn-operator">:=</span> collection<span class="syn-operator">.</span><span class="syn-function">NewJSONViewer</span><span class="syn-operator">(</span><span class="syn-number">64</span><span class="syn-operator">,</span> <span class="syn-number">30</span><span class="syn-operator">,</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">)</span>
-<span class="syn-keyword">if</span> err <span class="syn-operator">:=</span> viewer<span class="syn-operator">.</span><span class="syn-function">SetSource</span><span class="syn-operator">(</span>payload<span class="syn-operator">)</span><span class="syn-operator">;</span> err <span class="syn-operator">!=</span> <span class="syn-builtin">nil</span> <span class="syn-operator">{</span>
+viewer <span class="syn-operator">:=</span> collection.<span class="syn-function">NewJSONViewer</span>(<span class="syn-number">64</span>, <span class="syn-number">30</span>, theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>))
+<span class="syn-keyword">if</span> err <span class="syn-operator">:=</span> viewer.<span class="syn-function">SetSource</span>(payload); err <span class="syn-operator">!=</span> <span class="syn-null">nil</span> {
 	<span class="syn-comment">// The viewer displays a bounded source fallback with the diagnostic.</span>
-	<span class="syn-keyword">return</span> <span class="syn-string">&#34;&#34;</span><span class="syn-operator">,</span> err
-<span class="syn-operator">}</span>
+	<span class="syn-keyword">return</span> <span class="syn-string">&#34;&#34;</span>, err
+}
 
 <span class="syn-comment">// Forward Bubble Tea messages through viewer.Update(msg).</span>
 <span class="syn-comment">// Enter folds objects/arrays; arrows navigate; paging scrolls wrapped values.</span>
@@ -577,11 +577,11 @@ viewer <span class="syn-operator">:=</span> collection<span class="syn-operator"
 <span class="syn-comment">// Native viewport customization stays available through viewer.Model.</span>
 <span class="syn-comment">// Set viewer.Raw = true, then viewer.Refresh(), to inspect the original source.</span>
 
-<span class="syn-keyword">return</span> viewer<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">,</span> <span class="syn-builtin">nil</span>
+<span class="syn-keyword">return</span> viewer.<span class="syn-function">View</span>(), <span class="syn-null">nil</span>
 </code></pre>
 </div>
 <section class="component-integration" aria-labelledby="collection/json-viewer-integration"><h3 id="collection/json-viewer-integration"><a class="heading-permalink" href="#collection%2fjson-viewer-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>SetSource copies the bytes and reports parsing failures without retaining stale structure. Forward Update messages only while the viewer is active, and retain its native viewport for customization. Call Resize when its allocation changes. Identical source retains structural state; changed bytes reset the source-bound cursor and folds.</p></section>
-<div class="component-run"><h3 id="collection/json-viewer-run"><a class="heading-permalink" href="#collection%2fjson-viewer-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/json-viewer</code></pre><p><a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/collection_json_viewer.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/json.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<div class="component-run"><h3 id="collection/json-viewer-run"><a class="heading-permalink" href="#collection%2fjson-viewer-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/json-viewer</code></pre><p><a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/collection_json_viewer.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/json.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
 <p class="composition-line">Declared example links (unaudited): <a class="dependency" href="atoms-collection.html#collection/viewport">collection/viewport</a> <a class="dependency" href="atoms-text.html#text/disclosure">text/disclosure</a> <a class="dependency" href="atoms-text.html#text/syntax">text/syntax</a> </p>
 </section>
 </section>

@@ -97,13 +97,13 @@ The [application shell](https://lanej.io/charmed/templates-pattern.html#template
 | Level | Sage Midnight tone                                                            |
 |-------|-------------------------------------------------------------------------------|
 | TRACE | Subdued neutral; `feedback.TraceLevel` is the display-only typed extension -8 |
-| DEBUG | Blue                                                                          |
+| DEBUG | Muted text                                                                    |
 | INFO  | Cyan                                                                          |
 | WARN  | Amber                                                                         |
 | ERROR | Red                                                                           |
-| FATAL | Magenta                                                                       |
+| FATAL | Error red with a bold label                                                   |
 
-Customize Trace, Debug, Fatal and their Dim theme counterparts independently. Charm Log's native String and ParseLevel do not recognize the TRACE extension. The log viewer composes this atom with timestamps and messages while retaining native structured-field formatting, bounded history and scrolling.
+Customize Trace, Debug, Fatal and their Dim theme counterparts independently. FatalBold controls the additional weight of the fatal label. Charm Log's native String and ParseLevel do not recognize the TRACE extension. The log viewer composes this atom with timestamps and messages while retaining native structured-field formatting, bounded history and scrolling.
 
 ## [Selection and action atoms](https://lanej.io/charmed/components.html#selection-and-action-atoms)
 
@@ -202,7 +202,7 @@ Added and deleted lines use distinct `Theme.Diff` backgrounds while retaining `T
 
 Use [inline code and source blocks](https://lanej.io/charmed/atoms-text.html#text/code) for literal input. `text.InlineCode` preserves Markdown delimiters, and `text.CodeBlock` highlights a supplied language or falls back to plain text. [Rich Markdown](https://lanej.io/charmed/organisms-text.html#text/markdown) supports headings, links, quotes, lists, tables and code fences. Prose wraps to the requested width. Long source lines can extend beyond it, so place them in a viewport when readers need the whole line.
 
-`text.MarkdownStyles` returns an owned Glamour style configuration. `text.MarkdownSyntax` returns a local Chroma style derived from the same palette. Pass either through `text.MarkdownOptions` to `Markdown` or `CodeBlock`. Use the `Syntax` option for highlighting, including named Chroma palettes. Reapply the options when rendering after a resize. Monochrome output strips ANSI styling.
+`text.MarkdownStyles` returns an owned Glamour style configuration. `text.MarkdownSyntax` returns a local Chroma style derived from the same palette. Pass either through `text.MarkdownOptions` to `Markdown` or `CodeBlock`. Sage Midnight uses lexical colors for functions, types, operators, literals and comments. Set the `Syntax` option to supply a different Chroma palette. Reapply the options when rendering after a resize. Monochrome output strips ANSI styling.
 
 ## [Data grids and status matrices](https://lanej.io/charmed/components.html#data-grids-and-status-matrices)
 

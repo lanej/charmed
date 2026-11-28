@@ -97,7 +97,7 @@
 <p>Four linked panels compare <strong>2xx, 3xx, 4xx and 5xx response percentages</strong> between version identifiers <code class="inline-code">a13c9f2</code> and <code class="inline-code">f4d7e81</code> during a <strong>blue/green deployment</strong>. Reference and candidate are comparison roles; blue/green describes the deployment method. The counts are synthetic: 64 hosts serving the reference version, 32 serving the candidate, and twelve five-minute windows.</p>
 <p><img src="assets/deployment.png" alt="Fleet comparison showing weighted deltas beside host distributions and history"></p>
 <h2 id="presentation-variants"><a class="heading-permalink" href="#presentation-variants"><span>Presentation variants</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p><strong>Stacked is the default.</strong> Press <strong>b</strong> in the native terminal to switch to <strong>Disconnected bands</strong>. Changing it keeps the current host, metric, window, sigma, focus and attention policy. <strong>b</strong> toggles presentation natively; <code class="inline-code"><span class="syn-function">SetVariant</span><span class="syn-operator">(</span>pattern<span class="syn-operator">.</span>Stacked<span class="syn-operator">)</span></code> and <code class="inline-code"><span class="syn-function">SetVariant</span><span class="syn-operator">(</span>pattern<span class="syn-operator">.</span>Bands<span class="syn-operator">)</span></code> select it explicitly.</p>
+<p><strong>Stacked is the default.</strong> Press <strong>b</strong> in the native terminal to switch to <strong>Disconnected bands</strong>. Changing it keeps the current host, metric, window, sigma, focus and attention policy. <strong>b</strong> toggles presentation natively; <code class="inline-code"><span class="syn-function">SetVariant</span>(pattern.<span class="syn-member">Stacked</span>)</code> and <code class="inline-code"><span class="syn-function">SetVariant</span>(pattern.<span class="syn-member">Bands</span>)</code> select it explicitly.</p>
 <p>The band variant composes the same distributions and labeled peer-delta rows into a rectangle, with the active class's history below it. Each class retains a percentage axis shared by both versions. Static exports save <strong>Disconnected bands</strong> alongside the default stacked fixture, rather than publishing a replacement screen. Native: <code class="inline-code">go run ./cmd/workbench run screen/deployment --comparison-variant bands</code>.</p>
 <h2 id="read-the-comparison"><a class="heading-permalink" href="#read-the-comparison"><span>Read the comparison</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>The comparison separates request-weighted fleet behavior from equally weighted host distributions. Read both before interpreting a release difference: unequal traffic can change the fleet rate without shifting the typical host. Shared scales remain stable when selecting a different host or time window.</p>
@@ -233,7 +233,7 @@
 </table>
 <p>The member inspector combines exact rates with percentage bars on a fixed zero-to-one-hundred scale. Small rates may fall below bar resolution while retaining their numeric value. CLI flags select the initial scenario and sigma; all four response classes remain available in narrow terminals.</p>
 <h2 id="optional-warning-and-error-boundaries"><a class="heading-permalink" href="#optional-warning-and-error-boundaries"><span>Optional warning and error boundaries</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p>The <code class="inline-code"><span class="syn-operator">--</span>boundaries</code> flag enables illustrative policies; <code class="inline-code"><span class="syn-operator">--</span>boundaries<span class="syn-operator">=</span><span class="syn-builtin">false</span></code> removes them. The library has no default alert thresholds. With no configured rule, deviation remains descriptive: there is no warning, error or implied healthy state. Saved snapshots include a <strong>No boundaries</strong> variant.</p>
+<p>The <code class="inline-code"><span class="syn-operator">--</span>boundaries</code> flag enables illustrative policies; <code class="inline-code"><span class="syn-operator">--</span>boundaries<span class="syn-operator">=</span><span class="syn-false">false</span></code> removes them. The library has no default alert thresholds. With no configured rule, deviation remains descriptive: there is no warning, error or implied healthy state. Saved snapshots include a <strong>No boundaries</strong> variant.</p>
 <table tabindex="0">
 <thead>
 <tr>
@@ -246,13 +246,13 @@
 <tbody>
 <tr>
 <td>2xx host</td>
-<td>Host <code class="inline-code"><span class="syn-function">z</span><span class="syn-operator">(</span>ref<span class="syn-operator">)</span></code></td>
+<td>Host <code class="inline-code"><span class="syn-function">z</span>(ref)</code></td>
 <td>≤ −2σ</td>
 <td>≤ −3σ</td>
 </tr>
 <tr>
 <td>5xx host</td>
-<td>Host <code class="inline-code"><span class="syn-function">z</span><span class="syn-operator">(</span>ref<span class="syn-operator">)</span></code></td>
+<td>Host <code class="inline-code"><span class="syn-function">z</span>(ref)</code></td>
 <td>≥ +2σ</td>
 <td>≥ +3σ</td>
 </tr>
@@ -274,22 +274,22 @@
 <p>The attention indicator composes the shared pill component. It appears on the screen and metric heading, affected host rows and inspector values. The delta property uses the fleet attention tone; its metric badge shows the strongest fleet or host state. A metric's indicator shows the strongest fleet or host attention; the inspector preserves the individual results. HTTP status-category pills keep their separate meanings: a red <strong>5xx</strong> category does not itself raise an <strong>ERROR</strong> attention state.</p>
 <p><code class="inline-code">W</code> and <code class="inline-code">E</code> mark configured host warning and error boundaries on the distributions. The shared axis includes valid boundary positions. At terminal resolution, coincident markers show the stronger error marker; <code class="inline-code">X</code> takes priority for the selected host. Fleet limits appear directly on metric cards with full warning/error labels. Host limits are supplied by the application policy and marked on the bands. The 1/2/3σ controls change displayed bands and descriptive tail counts independently of attention policies. Supply explicit policies as shown below.</p>
 <pre tabindex="0" class="code-block"><code class="language-go"><span class="syn-comment">// Host limits are in z(ref) units; fleet limits are in percentage points.</span>
-rules <span class="syn-operator">:=</span> <span class="syn-keyword">map</span><span class="syn-operator">[</span><span class="syn-builtin">string</span><span class="syn-operator">]</span>cohort<span class="syn-operator">.</span>ComparisonPolicy<span class="syn-operator">{</span>
-    <span class="syn-string">&#34;5xx&#34;</span><span class="syn-operator">:</span> <span class="syn-operator">{</span>
-        Hosts<span class="syn-operator">:</span> attention<span class="syn-operator">.</span>Rule<span class="syn-operator">{</span>
-            Warn<span class="syn-operator">:</span>  <span class="syn-operator">&amp;</span>attention<span class="syn-operator">.</span>Bounds<span class="syn-operator">{</span>Upper<span class="syn-operator">:</span> attention<span class="syn-operator">.</span><span class="syn-function">Limit</span><span class="syn-operator">(</span><span class="syn-number">2</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
-            Error<span class="syn-operator">:</span> <span class="syn-operator">&amp;</span>attention<span class="syn-operator">.</span>Bounds<span class="syn-operator">{</span>Upper<span class="syn-operator">:</span> attention<span class="syn-operator">.</span><span class="syn-function">Limit</span><span class="syn-operator">(</span><span class="syn-number">3</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
-        <span class="syn-operator">}</span><span class="syn-operator">,</span>
-        Fleet<span class="syn-operator">:</span> attention<span class="syn-operator">.</span>Rule<span class="syn-operator">{</span>
-            Warn<span class="syn-operator">:</span>  <span class="syn-operator">&amp;</span>attention<span class="syn-operator">.</span>Bounds<span class="syn-operator">{</span>Upper<span class="syn-operator">:</span> attention<span class="syn-operator">.</span><span class="syn-function">Limit</span><span class="syn-operator">(</span><span class="syn-number">0.1</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
-            Error<span class="syn-operator">:</span> <span class="syn-operator">&amp;</span>attention<span class="syn-operator">.</span>Bounds<span class="syn-operator">{</span>Upper<span class="syn-operator">:</span> attention<span class="syn-operator">.</span><span class="syn-function">Limit</span><span class="syn-operator">(</span><span class="syn-number">0.3</span><span class="syn-operator">)</span><span class="syn-operator">}</span><span class="syn-operator">,</span>
-        <span class="syn-operator">}</span><span class="syn-operator">,</span>
-    <span class="syn-operator">}</span><span class="syn-operator">,</span>
-<span class="syn-operator">}</span>
-err <span class="syn-operator">:=</span> screen<span class="syn-operator">.</span><span class="syn-function">SetBoundaries</span><span class="syn-operator">(</span>rules<span class="syn-operator">)</span>
+rules <span class="syn-operator">:=</span> <span class="syn-keyword">map</span>[<span class="syn-type">string</span>]cohort.<span class="syn-member">ComparisonPolicy</span>{
+    <span class="syn-string">&#34;5xx&#34;</span>: {
+        Hosts: attention.<span class="syn-member">Rule</span>{
+            Warn:  <span class="syn-operator">&amp;</span>attention.<span class="syn-member">Bounds</span>{Upper: attention.<span class="syn-function">Limit</span>(<span class="syn-number">2</span>)},
+            Error: <span class="syn-operator">&amp;</span>attention.<span class="syn-member">Bounds</span>{Upper: attention.<span class="syn-function">Limit</span>(<span class="syn-number">3</span>)},
+        },
+        Fleet: attention.<span class="syn-member">Rule</span>{
+            Warn:  <span class="syn-operator">&amp;</span>attention.<span class="syn-member">Bounds</span>{Upper: attention.<span class="syn-function">Limit</span>(<span class="syn-number">0.1</span>)},
+            Error: <span class="syn-operator">&amp;</span>attention.<span class="syn-member">Bounds</span>{Upper: attention.<span class="syn-function">Limit</span>(<span class="syn-number">0.3</span>)},
+        },
+    },
+}
+err <span class="syn-operator">:=</span> screen.<span class="syn-function">SetBoundaries</span>(rules)
 </code></pre>
-<p><code class="inline-code">SetBoundaries</code> validates and copies rules before changing the screen. Set a lower limit to watch decreases, set both sides for two-sided attention, or omit a severity or scope. Pass <code class="inline-code"><span class="syn-builtin">nil</span></code> to remove all policies. Invalid or inverted limits leave the existing screen intact. These policies express application attention, rather than statistical confidence or an automatic deployment action.</p>
-<p>The optional callback emits typed <code class="inline-code">attention<span class="syn-operator">.</span>Changed</code> events when a metric's <strong>hosts</strong> or <strong>fleet</strong> attention level changes, including recovery and removal of a policy. It seeds the initial state without emitting a burst of events. Rendering, resizing and changing the displayed sigma do not emit attention transitions.</p>
+<p><code class="inline-code">SetBoundaries</code> validates and copies rules before changing the screen. Set a lower limit to watch decreases, set both sides for two-sided attention, or omit a severity or scope. Pass <code class="inline-code"><span class="syn-null">nil</span></code> to remove all policies. Invalid or inverted limits leave the existing screen intact. These policies express application attention, rather than statistical confidence or an automatic deployment action.</p>
+<p>The optional callback emits typed <code class="inline-code">attention.<span class="syn-member">Changed</span></code> events when a metric's <strong>hosts</strong> or <strong>fleet</strong> attention level changes, including recovery and removal of a policy. It seeds the initial state without emitting a burst of events. Rendering, resizing and changing the displayed sigma do not emit attention transitions.</p>
 <h2 id="sampling-and-interpretation"><a class="heading-permalink" href="#sampling-and-interpretation"><span>Sampling and interpretation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <table tabindex="0">
 <thead>
@@ -350,8 +350,8 @@ err <span class="syn-operator">:=</span> screen<span class="syn-operator">.</spa
 </tbody>
 </table>
 <h2 id="compose-the-reusable-pieces"><a class="heading-permalink" href="#compose-the-reusable-pieces"><span>Compose the reusable pieces</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p>Signed values use <code class="inline-code">text<span class="syn-operator">.</span>SignedNumber</code>. Its <code class="inline-code">SignTones</code> configure positive, negative and zero independently of warning/error boundaries. In this example, rising 2xx is green and falling 2xx is red; 5xx reverses those colors. Redirect and client-error changes use a direction-only tone because their benefit requires application context. Missing and non-finite observations render <code class="inline-code">n/a</code>; tiny nonzero values retain their sign rather than rounding to zero. Numeric color describes direction policy, while attention labels and the delta bar describe configured severity.</p>
-<p><code class="inline-code">text<span class="syn-operator">.</span>Pill</code> separates semantic tone from <code class="inline-code">text<span class="syn-operator">.</span>Bright</code>, <code class="inline-code">text<span class="syn-operator">.</span>Normal</code> and <code class="inline-code">text<span class="syn-operator">.</span>Dim</code> emphasis. <code class="inline-code">feedback<span class="syn-operator">.</span>Status</code> supplies reusable <code class="inline-code">OK</code>, <code class="inline-code">WARN</code>, <code class="inline-code">ERROR</code>, <code class="inline-code">UNKNOWN</code>, <code class="inline-code">OFF</code>, <code class="inline-code">PENDING</code>, <code class="inline-code">RUNNING</code>, <code class="inline-code">PAUSED</code> and <code class="inline-code">DISABLED</code> states. <code class="inline-code">feedback<span class="syn-operator">.</span>Attention</code> composes these display atoms after rule evaluation; it keeps unconfigured attention absent rather than implying an OK state. The component reference groups signed numbers, pills and statuses under their capabilities, with saved emphasis variants.</p>
+<p>Signed values use <code class="inline-code">text.<span class="syn-member">SignedNumber</span></code>. Its <code class="inline-code">SignTones</code> configure positive, negative and zero independently of warning/error boundaries. In this example, rising 2xx is green and falling 2xx is red; 5xx reverses those colors. Redirect and client-error changes use a direction-only tone because their benefit requires application context. Missing and non-finite observations render <code class="inline-code">n/a</code>; tiny nonzero values retain their sign rather than rounding to zero. Numeric color describes direction policy, while attention labels and the delta bar describe configured severity.</p>
+<p><code class="inline-code">text.<span class="syn-member">Pill</span></code> separates semantic tone from <code class="inline-code">text.<span class="syn-member">Bright</span></code>, <code class="inline-code">text.<span class="syn-member">Normal</span></code> and <code class="inline-code">text.<span class="syn-member">Dim</span></code> emphasis. <code class="inline-code">feedback.<span class="syn-member">Status</span></code> supplies reusable <code class="inline-code">OK</code>, <code class="inline-code">WARN</code>, <code class="inline-code">ERROR</code>, <code class="inline-code">UNKNOWN</code>, <code class="inline-code">OFF</code>, <code class="inline-code">PENDING</code>, <code class="inline-code">RUNNING</code>, <code class="inline-code">PAUSED</code> and <code class="inline-code">DISABLED</code> states. <code class="inline-code">feedback.<span class="syn-member">Attention</span></code> composes these display atoms after rule evaluation; it keeps unconfigured attention absent rather than implying an OK state. The component reference groups signed numbers, pills and statuses under their capabilities, with saved emphasis variants.</p>
 <table tabindex="0">
 <thead>
 <tr>
@@ -363,67 +363,67 @@ err <span class="syn-operator">:=</span> screen<span class="syn-operator">.</spa
 <tbody>
 <tr>
 <td>Atom</td>
-<td><code class="inline-code">chart<span class="syn-operator">.</span>IntervalBand</code></td>
+<td><code class="inline-code">chart.<span class="syn-member">IntervalBand</span></code></td>
 <td>Draw caller-supplied nested intervals and observation markers with ntcharts canvas</td>
 </tr>
 <tr>
 <td>Atom</td>
-<td><code class="inline-code">text<span class="syn-operator">.</span>Pill</code></td>
+<td><code class="inline-code">text.<span class="syn-member">Pill</span></code></td>
 <td>Render a labeled semantic tone, with theme-aware contrast and a text fallback</td>
 </tr>
 <tr>
 <td>Atom</td>
-<td><code class="inline-code">text<span class="syn-operator">.</span>SignedNumber</code></td>
+<td><code class="inline-code">text.<span class="syn-member">SignedNumber</span></code></td>
 <td>Preserve exact sign and units with configurable sign tones, neutral missing values and emphasis</td>
 </tr>
 <tr>
 <td>Atom</td>
-<td><code class="inline-code">feedback<span class="syn-operator">.</span>Status</code></td>
+<td><code class="inline-code">feedback.<span class="syn-member">Status</span></code></td>
 <td>Render labeled health and lifecycle states with shared tone and emphasis</td>
 </tr>
 <tr>
 <td>Molecule</td>
-<td><code class="inline-code">feedback<span class="syn-operator">.</span>Attention</code></td>
+<td><code class="inline-code">feedback.<span class="syn-member">Attention</span></code></td>
 <td>Compose a labeled warning/error/unknown/normal state from the shared pill</td>
 </tr>
 <tr>
 <td>Molecule</td>
-<td><code class="inline-code">chart<span class="syn-operator">.</span>DeltaProperty</code></td>
+<td><code class="inline-code">chart.<span class="syn-member">DeltaProperty</span></code></td>
 <td>Compose a merged, signed title-bar comparison from the interval atom</td>
 </tr>
 <tr>
 <td>Molecule</td>
-<td><code class="inline-code">feedback<span class="syn-operator">.</span>PercentBar</code></td>
+<td><code class="inline-code">feedback.<span class="syn-member">PercentBar</span></code></td>
 <td>Compose native progress and an exact percentage as a dense table cell</td>
 </tr>
 <tr>
 <td>Molecule</td>
-<td><code class="inline-code">chart<span class="syn-operator">.</span>DistributionComparison</code></td>
+<td><code class="inline-code">chart.<span class="syn-member">DistributionComparison</span></code></td>
 <td>Compose mean/spread labels, interval bands, boundary markers and a shared axis</td>
 </tr>
 <tr>
 <td>Molecule</td>
-<td><code class="inline-code">chart<span class="syn-operator">.</span>BandMatrix</code></td>
+<td><code class="inline-code">chart.<span class="syn-member">BandMatrix</span></code></td>
 <td>Compose disconnected distribution rows as a presentation variant</td>
 </tr>
 <tr>
 <td>Organism</td>
-<td><code class="inline-code">chart<span class="syn-operator">.</span>ComparisonPanel</code></td>
+<td><code class="inline-code">chart.<span class="syn-member">ComparisonPanel</span></code></td>
 <td>Compose the summary, distribution comparison and native time-series history</td>
 </tr>
 <tr>
 <td>Analysis</td>
-<td><code class="inline-code">cohort<span class="syn-operator">.</span>Analyze</code></td>
+<td><code class="inline-code">cohort.<span class="syn-member">Analyze</span></code></td>
 <td>Calculate weighted rates and unweighted sample spread from interval counts</td>
 </tr>
 <tr>
 <td>Policy</td>
-<td><code class="inline-code">attention<span class="syn-operator">.</span>Rule</code> and <code class="inline-code">cohort<span class="syn-operator">.</span>Assess</code></td>
+<td><code class="inline-code">attention.<span class="syn-member">Rule</span></code> and <code class="inline-code">cohort.<span class="syn-member">Assess</span></code></td>
 <td>Evaluate optional numeric boundaries separately from rendering and count aggregation</td>
 </tr>
 <tr>
 <td>Organism</td>
-<td><code class="inline-code">pattern<span class="syn-operator">.</span>CohortComparison</code></td>
+<td><code class="inline-code">pattern.<span class="syn-member">CohortComparison</span></code></td>
 <td>Coordinate distributions, time series, host selection, focus, windows and responsive layout</td>
 </tr>
 <tr>
@@ -439,7 +439,7 @@ err <span class="syn-operator">:=</span> screen<span class="syn-operator">.</spa
   <span class="syn-flag">--reference-version</span> release-42 <span class="syn-flag">--candidate-version</span> build-43
 </code></pre>
 <h2 id="supply-real-telemetry"><a class="heading-permalink" href="#supply-real-telemetry"><span>Supply real telemetry</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p>Replace <code class="inline-code">fixture<span class="syn-operator">.</span>Data</code> with validated <code class="inline-code">cohort<span class="syn-operator">.</span>Data</code> from the application's telemetry adapter. Version identity, interval counts and matched populations must remain explicit before the UI can support a meaningful comparison.</p>
+<p>Replace <code class="inline-code">fixture.<span class="syn-member">Data</span></code> with validated <code class="inline-code">cohort.<span class="syn-member">Data</span></code> from the application's telemetry adapter. Version identity, interval counts and matched populations must remain explicit before the UI can support a meaningful comparison.</p>
 <table tabindex="0">
 <thead>
 <tr>

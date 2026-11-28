@@ -121,11 +121,11 @@ Supply cohort data and a member key; construction and SetData validate and copy 
 go run ./examples/catalog pattern/measurement-history
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/pattern_measurement_history.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/pattern/measurement_history.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/pattern_measurement_history.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/pattern/measurement_history.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Measurement history dependency graph](https://lanej.io/charmed/dependencies.html#component-pattern%2Fmeasurement-history) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/pattern/measurement_history.go#L36)
+[Measurement history dependency graph](https://lanej.io/charmed/dependencies.html#component-pattern%2Fmeasurement-history) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/pattern/measurement_history.go#L36)
 
 - [Grid inspector](https://lanej.io/charmed/dependencies.html#component-collection%2Fgrid-inspector) · composes · inspection
 
@@ -133,7 +133,7 @@ Consumer usage uses
 
 - [Measurement history](https://lanej.io/charmed/dependencies.html#component-pattern%2Fmeasurement-history) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/pattern_measurement_history.go#L11)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/pattern_measurement_history.go#L11)
 
 [Organisms](https://lanej.io/charmed/organisms.html) / Patterns
 
@@ -603,6 +603,6 @@ Supply stable record IDs with Summary and Document; Row and Detail callbacks ove
 go run ./examples/catalog pattern/list-inspector
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/pattern_list_inspector.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/pattern/list_inspector.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/pattern_list_inspector.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/pattern/list_inspector.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [collection/viewport](https://lanej.io/charmed/atoms-collection.html#collection/viewport) [layout/record-summary](https://lanej.io/charmed/molecules-layout.html#layout/record-summary) [layout/detail-document](https://lanej.io/charmed/organisms-layout.html#layout/detail-document) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)

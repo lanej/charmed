@@ -105,19 +105,19 @@
 </thead>
 <tbody>
 <tr>
-<td><code class="inline-code">collection<span class="syn-operator">.</span>NewSectionStack</code></td>
+<td><code class="inline-code">collection.<span class="syn-member">NewSectionStack</span></code></td>
 <td>Ordered <code class="inline-code">DocumentSection</code> values, optional children and width-aware body renderers; one native scrolling viewport</td>
 </tr>
 <tr>
-<td><code class="inline-code">pattern<span class="syn-operator">.</span>NewOutlineDocument</code></td>
+<td><code class="inline-code">pattern.<span class="syn-member">NewOutlineDocument</span></code></td>
 <td>The same sections as <code class="inline-code">OutlineEntry</code> values; native tree navigation, linked scrolling and shared folding</td>
 </tr>
 <tr>
-<td><code class="inline-code">gitui<span class="syn-operator">.</span>NewDiffReview</code></td>
+<td><code class="inline-code">gitui.<span class="syn-member">NewDiffReview</span></code></td>
 <td><code class="inline-code">ReviewEntry</code> values with supplied diffs, optional statistics, labels and groups</td>
 </tr>
 <tr>
-<td><code class="inline-code">gitui<span class="syn-operator">.</span>NewFileDiffReview</code></td>
+<td><code class="inline-code">gitui.<span class="syn-member">NewFileDiffReview</span></code></td>
 <td><code class="inline-code">ReviewFile</code> values; the optional helper creates directory groups from slash-separated paths without reading a filesystem</td>
 </tr>
 </tbody>
@@ -174,14 +174,14 @@
 </tr>
 </tbody>
 </table>
-<p>Marking a file reviewed folds its body. Reopening the body preserves the reviewed mark; clearing the mark opens the body. Selecting a folded file reveals its heading without opening it. <code class="inline-code">ReviewedIDs</code> returns marks in document order, including hidden files, for application-owned persistence. Restore marks on new entries through <code class="inline-code">ReviewEntry<span class="syn-operator">.</span>Reviewed</code> or <code class="inline-code">ReviewFile<span class="syn-operator">.</span>Reviewed</code>; apply later mark changes through <code class="inline-code">SetReviewed</code>.</p>
+<p>Marking a file reviewed folds its body. Reopening the body preserves the reviewed mark; clearing the mark opens the body. Selecting a folded file reveals its heading without opening it. <code class="inline-code">ReviewedIDs</code> returns marks in document order, including hidden files, for application-owned persistence. Restore marks on new entries through <code class="inline-code">ReviewEntry.<span class="syn-member">Reviewed</span></code> or <code class="inline-code">ReviewFile.<span class="syn-member">Reviewed</span></code>; apply later mark changes through <code class="inline-code">SetReviewed</code>.</p>
 <p><code class="inline-code">SetEntries</code> copies nested diff data and rejects invalid identities before replacement. Retained IDs keep state. Changed hunk headers, lines, diff state or unavailable reasons clear the affected mark and open that leaf, while ancestor folds still apply. Label, path and statistic updates retain state. Supply <code class="inline-code">ContentRevision</code> when changes are not represented by patch data, especially binary or unavailable content; changing this opaque token also clears the mark. Without a changed patch or revision token, underlying changes are undetectable. Removed identities lose their state. Distinct review IDs allow staged and unstaged versions of one path to coexist.</p>
 <h2 id="diff-presentation"><a class="heading-permalink" href="#diff-presentation"><span>Diff presentation</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Diffs use one dynamically sized line-number gutter by default: context and added rows show the new number; deleted rows show the old number. Green addition signs and red deletion signs retain their meaning while source text receives syntax colors over change surfaces; changed words receive stronger emphasis. File viewers infer the language from the supplied filename; unknown languages remain readable plain text. Tree statistics color additions green and deletions red, with aggregate counts placed before group metadata.</p>
 <table tabindex="0">
 <thead>
 <tr>
-<th><code class="inline-code">gitui<span class="syn-operator">.</span>DiffOptions</code></th>
+<th><code class="inline-code">gitui.<span class="syn-member">DiffOptions</span></code></th>
 <th>Presentation</th>
 </tr>
 </thead>
@@ -208,9 +208,9 @@
 </tr>
 </tbody>
 </table>
-<p>Pass options after the theme to a diff viewer or review constructor. <code class="inline-code">DiffReview<span class="syn-operator">.</span>SetDiffOptions</code> refreshes cached bodies without resetting marks, folds or selection; direct viewer option changes take effect on <code class="inline-code">SetDiff</code>. Old and new fragments are tokenized independently within each hunk, preserving multiline comments and strings across supplied lines. Missing source outside the hunk can limit lexical accuracy. Source controls remain visible escapes; highlighting never reconstructs the whole file.</p>
+<p>Pass options after the theme to a diff viewer or review constructor. <code class="inline-code">DiffReview.<span class="syn-member">SetDiffOptions</span></code> refreshes cached bodies without resetting marks, folds or selection; direct viewer option changes take effect on <code class="inline-code">SetDiff</code>. Old and new fragments are tokenized independently within each hunk, preserving multiline comments and strings across supplied lines. Missing source outside the hunk can limit lexical accuracy. Source controls remain visible escapes; highlighting never reconstructs the whole file.</p>
 <h2 id="lifecycle-and-customization"><a class="heading-permalink" href="#lifecycle-and-customization"><span>Lifecycle and customization</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p>The composition preserves the top visible section and its relative rendered row through folding, replacement and resize where possible. Hidden sections anchor to their nearest visible ancestor; removed sections use a surviving ancestor or preceding section. Native viewport clamping applies near the document's end. Body renderers are cached until data replacement, width changes or <code class="inline-code">Document<span class="syn-operator">.</span>Refresh</code>; captured application data must remain stable until that refresh.</p>
+<p>The composition preserves the top visible section and its relative rendered row through folding, replacement and resize where possible. Hidden sections anchor to their nearest visible ancestor; removed sections use a surviving ancestor or preceding section. Native viewport clamping applies near the document's end. Body renderers are cached until data replacement, width changes or <code class="inline-code">Document.<span class="syn-member">Refresh</span></code>; captured application data must remain stable until that refresh.</p>
 <table tabindex="0">
 <thead>
 <tr>
@@ -224,7 +224,7 @@
 <td>Styles, enumerators and bindings survive updates; nodes are rebuilt after replacement, width changes and folding</td>
 </tr>
 <tr>
-<td><code class="inline-code">Document<span class="syn-operator">.</span>Viewport</code></td>
+<td><code class="inline-code">Document.<span class="syn-member">Viewport</span></code></td>
 <td>Native styles and bindings survive; content, dimensions, soft wrapping and vertical anchors belong to the stack</td>
 </tr>
 <tr>
@@ -236,7 +236,7 @@
 <td>Set the screen cell where the composition starts before forwarding screen-coordinate mouse messages</td>
 </tr>
 <tr>
-<td><code class="inline-code">Document<span class="syn-operator">.</span>Refresh</code></td>
+<td><code class="inline-code">Document.<span class="syn-member">Refresh</span></code></td>
 <td>Re-render bodies after caller-owned presentation changes; call <code class="inline-code">SyncScroll</code> after direct native scroll changes to synchronize selection</td>
 </tr>
 </tbody>

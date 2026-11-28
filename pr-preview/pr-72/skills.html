@@ -96,7 +96,7 @@
 <h1 id="agent-skills-and-markdown">Agent skills and Markdown</h1>
 <p>Charmed publishes portable agent guidance and a Markdown edition of every guide page. Download the relevant package for your project, or fetch individual reference pages when an agent needs current API examples and lifecycle contracts.</p>
 <h2 id="choose-a-skill"><a class="heading-permalink" href="#choose-a-skill"><span>Choose a skill</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p>Choose guidance for the work you are doing: building an application with Charmed or contributing to the library itself. Each package contains its own <code class="inline-code">SKILL<span class="syn-operator">.</span>md</code> entrypoint and references canonical documentation without installing tools or replacing project policy.</p>
+<p>Choose guidance for the work you are doing: building an application with Charmed or contributing to the library itself. Each package contains its own <code class="inline-code">SKILL.<span class="syn-member">md</span></code> entrypoint and references canonical documentation without installing tools or replacing project policy.</p>
 <table tabindex="0">
 <thead>
 <tr>
@@ -137,7 +137,7 @@
 </code></pre>
 <p>Load or refresh your agent's skills using its normal discovery workflow. Installing the package does not make its guidance authoritative over project instructions. Application authors use their own project checks; contributors follow the checked-out Charmed instructions and existing repository tooling.</p>
 <h2 id="read-the-website-as-markdown"><a class="heading-permalink" href="#read-the-website-as-markdown"><span>Read the website as Markdown</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
-<p>Replace a page's <code class="inline-code"><span class="syn-operator">.</span>html</code> suffix with <code class="inline-code"><span class="syn-operator">.</span>md</code>, or use its Markdown footer link. Exports contain the page's complete main content, including generated component usage, lifecycle guidance, tables and plain-text terminal previews; navigation chrome and color styling are omitted. Links resolve to the corresponding web references.</p>
+<p>Replace a page's <code class="inline-code">.<span class="syn-member">html</span></code> suffix with <code class="inline-code">.<span class="syn-member">md</span></code>, or use its Markdown footer link. Exports contain the page's complete main content, including generated component usage, lifecycle guidance, tables and plain-text terminal previews; navigation chrome and color styling are omitted. Links resolve to the corresponding web references.</p>
 <pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">curl</span> <span class="syn-flag">--fail</span> <span class="syn-flag">--show-error</span> <span class="syn-flag">--location</span> https://lanej.io/charmed/llms.txt
 <span class="syn-command">curl</span> <span class="syn-flag">--fail</span> <span class="syn-flag">--show-error</span> <span class="syn-flag">--location</span> https://lanej.io/charmed/getting-started.md
 <span class="syn-command">curl</span> <span class="syn-flag">--fail</span> <span class="syn-flag">--show-error</span> <span class="syn-flag">--location</span> https://lanej.io/charmed/atoms-chart.md

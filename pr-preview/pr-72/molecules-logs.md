@@ -626,7 +626,7 @@ Submit observations on the owning Bubble Tea update loop, using stable IDs to pr
 go run ./examples/catalog collection/log-tree
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/collection_log_tree.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/logs.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/collection_log_tree.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/logs.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [collection/tree](https://lanej.io/charmed/atoms-collection.html#collection/tree) [text/observation](https://lanej.io/charmed/atoms-logs.html#text/observation) [text/time](https://lanej.io/charmed/atoms-logs.html#text/time) [text/disclosure](https://lanej.io/charmed/atoms-text.html#text/disclosure) [feedback/scrollbar](https://lanej.io/charmed/atoms-feedback.html#feedback/scrollbar)
 
@@ -1523,6 +1523,6 @@ Submit observations on the owning Bubble Tea update loop, using stable IDs to pr
 go run ./examples/catalog collection/http-log
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/collection_http_log.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/logs.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/collection_http_log.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/logs.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [collection/table](https://lanej.io/charmed/atoms-collection.html#collection/table) [text/http-method](https://lanej.io/charmed/atoms-http.html#text/http-method) [text/url](https://lanej.io/charmed/atoms-http.html#text/url) [text/http-status](https://lanej.io/charmed/atoms-http.html#text/http-status) [text/pending](https://lanej.io/charmed/atoms-logs.html#text/pending) [text/time](https://lanej.io/charmed/atoms-logs.html#text/time) [text/disclosure](https://lanej.io/charmed/atoms-text.html#text/disclosure) [feedback/scrollbar](https://lanej.io/charmed/atoms-feedback.html#feedback/scrollbar) [text/syntax](https://lanej.io/charmed/atoms-text.html#text/syntax) [collection/viewport](https://lanej.io/charmed/atoms-collection.html#collection/viewport)

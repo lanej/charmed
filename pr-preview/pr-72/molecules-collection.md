@@ -124,7 +124,7 @@ Retain the native model and any command returned by Update, and route keyboard i
 go run ./examples/catalog collection/static-table
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/collection_static_table.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/collection/static_table.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/collection_static_table.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/collection/static_table.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [feedback/evidence](https://lanej.io/charmed/atoms-feedback.html#feedback/evidence) [text/value-state](https://lanej.io/charmed/atoms-text.html#text/value-state) [text/omission](https://lanej.io/charmed/atoms-text.html#text/omission) [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)
 
@@ -334,11 +334,11 @@ Pass a non-nil native viewport pointer and resize the pane from its full allocat
 go run ./examples/catalog collection/scroll-pane
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/collection_scroll_pane.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/collection/scroll_pane.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/collection_scroll_pane.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/collection/scroll_pane.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 ### Reusable component
 
-[Scroll pane dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/collection/scroll_pane.go#L14)
+[Scroll pane dependency graph](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane) · Partial map · [Source declaration](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/collection/scroll_pane.go#L14)
 
 - [Viewport](https://lanej.io/charmed/dependencies.html#component-collection%2Fviewport) · composes · content viewport
 - [Scrollbar](https://lanej.io/charmed/dependencies.html#component-feedback%2Fscrollbar) · composes · scroll position
@@ -347,4 +347,4 @@ Consumer usage uses
 
 - [Scroll pane](https://lanej.io/charmed/dependencies.html#component-collection%2Fscroll-pane) · primary demonstration
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/collection_scroll_pane.go#L11)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/collection_scroll_pane.go#L11)

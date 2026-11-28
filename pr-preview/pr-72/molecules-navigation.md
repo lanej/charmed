@@ -19,7 +19,7 @@ Saved terminal output · truecolor reference
 Output of the Go usage example below
 
 ```
-  Overview  Services  Activity
+  Overview  Services  Activity 
 ```
 
 Demo · truecolor · 64 × 8 terminal cells
@@ -98,6 +98,6 @@ Route arrow keys only to the focused tab bar and return the command from Update 
 go run ./examples/catalog navigation/tabs
 ```
 
-[Example source](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/docs/snippets/navigation_tabs.go) · [Implementation](https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
+[Example source](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/docs/snippets/navigation_tabs.go) · [Implementation](https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/story/chrome.go) · [Set up a checkout](https://lanej.io/charmed/getting-started.html)
 
 Declared example links (unaudited): [foundations/layout](https://lanej.io/charmed/foundations-layout.html#foundations/layout)

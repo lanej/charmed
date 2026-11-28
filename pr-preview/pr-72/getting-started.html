@@ -105,12 +105,12 @@
 </code></pre>
 <h2 id="build-your-first-app"><a class="heading-permalink" href="#build-your-first-app"><span>Build your first app</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2>
 <p>Create the field with a shared palette and an explicit width. The catalog pairs every minimal usage example with its actual terminal output, required imports and a command that renders it.</p>
-<pre tabindex="0" class="code-block"><code class="language-go">field <span class="syn-operator">:=</span> input<span class="syn-operator">.</span><span class="syn-function">NewText</span><span class="syn-operator">(</span>input<span class="syn-operator">.</span>TextOptions<span class="syn-operator">{</span>
-    Value<span class="syn-operator">:</span> <span class="syn-string">&#34;production&#34;</span><span class="syn-operator">,</span> Width<span class="syn-operator">:</span> <span class="syn-number">36</span><span class="syn-operator">,</span>
-    Theme<span class="syn-operator">:</span> theme<span class="syn-operator">.</span><span class="syn-function">New</span><span class="syn-operator">(</span>theme<span class="syn-operator">.</span>Dark<span class="syn-operator">)</span><span class="syn-operator">,</span>
-<span class="syn-operator">}</span><span class="syn-operator">)</span>
+<pre tabindex="0" class="code-block"><code class="language-go">field <span class="syn-operator">:=</span> input.<span class="syn-function">NewText</span>(input.<span class="syn-member">TextOptions</span>{
+    Value: <span class="syn-string">&#34;production&#34;</span>, Width: <span class="syn-number">36</span>,
+    Theme: theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>),
+})
 </code></pre>
-<p>The complete <a href="https://github.com/lanej/charmed/blob/e7987b1035f1f0309d8f643ca46001269083830a/examples/quickstart/main.go">quickstart program</a> includes imports, the outer model and terminal startup. Its event loop has three responsibilities: return the focus command, retain input updates, and resize the existing field when the terminal changes.</p>
+<p>The complete <a href="https://github.com/lanej/charmed/blob/2cad1ed1ef75b255703cce4145709deb9858e3f4/examples/quickstart/main.go">quickstart program</a> includes imports, the outer model and terminal startup. Its event loop has three responsibilities: return the focus command, retain input updates, and resize the existing field when the terminal changes.</p>
 <table tabindex="0">
 <thead>
 <tr>
@@ -121,23 +121,23 @@
 <tbody>
 <tr>
 <td>Init</td>
-<td>Return <code class="inline-code">field<span class="syn-operator">.</span><span class="syn-function">Focus</span><span class="syn-operator">(</span><span class="syn-operator">)</span></code> so Bubble Tea starts the cursor command</td>
+<td>Return <code class="inline-code">field.<span class="syn-function">Focus</span>()</code> so Bubble Tea starts the cursor command</td>
 </tr>
 <tr>
 <td>Update</td>
-<td>Retain both values from <code class="inline-code">field<span class="syn-operator">.</span><span class="syn-function">Update</span><span class="syn-operator">(</span>msg<span class="syn-operator">)</span></code> and return its command</td>
+<td>Retain both values from <code class="inline-code">field.<span class="syn-function">Update</span>(msg)</code> and return its command</td>
 </tr>
 <tr>
 <td>Resize</td>
-<td>Call <code class="inline-code">field<span class="syn-operator">.</span><span class="syn-function">Resize</span><span class="syn-operator">(</span>columns<span class="syn-operator">)</span></code> with the available terminal cells</td>
+<td>Call <code class="inline-code">field.<span class="syn-function">Resize</span>(columns)</code> with the available terminal cells</td>
 </tr>
 <tr>
 <td>View</td>
-<td>Return <code class="inline-code">tea<span class="syn-operator">.</span><span class="syn-function">NewView</span><span class="syn-operator">(</span>field<span class="syn-operator">.</span><span class="syn-function">View</span><span class="syn-operator">(</span><span class="syn-operator">)</span><span class="syn-operator">)</span></code>; rendering performs no input or network work</td>
+<td>Return <code class="inline-code">tea.<span class="syn-function">NewView</span>(field.<span class="syn-function">View</span>())</code>; rendering performs no input or network work</td>
 </tr>
 <tr>
 <td>Exit</td>
-<td>Handle Ctrl+C in the root model and return <code class="inline-code">tea<span class="syn-operator">.</span>Quit</code></td>
+<td>Handle Ctrl+C in the root model and return <code class="inline-code">tea.<span class="syn-member">Quit</span></code></td>
 </tr>
 </tbody>
 </table>

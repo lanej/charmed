@@ -94,7 +94,7 @@
 
 
 <h1 id="command-palette">Command palette</h1>
-<p>Use <code class="inline-code">collection<span class="syn-operator">.</span>CommandPalette</code> to search application commands without moving execution policy into a widget. Commands carry stable IDs, labels, descriptions, keywords, shortcut hints and optional disabled reasons. Disabled commands remain searchable but cannot execute; invalid replacement data leaves existing commands intact.</p>
+<p>Use <code class="inline-code">collection.<span class="syn-member">CommandPalette</span></code> to search application commands without moving execution policy into a widget. Commands carry stable IDs, labels, descriptions, keywords, shortcut hints and optional disabled reasons. Disabled commands remain searchable but cannot execute; invalid replacement data leaves existing commands intact.</p>
 <pre tabindex="0" class="code-block"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog collection/command-palette
 <span class="syn-command">go</span> run ./cmd/workbench run pattern/log-inspector <span class="syn-flag">--command-palette</span>
 </code></pre>
