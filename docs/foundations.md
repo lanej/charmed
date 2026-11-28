@@ -10,7 +10,7 @@ Themes, cell geometry, focus and motion are shared across components. Use semant
 
 ## Colors and emphasis
 
-The default dark palette, Sage Midnight, uses the named roles and state definitions from the [dotfiles design system](https://github.com/lanej/dotfiles/tree/master/design-system). Its sage accent identifies interaction, lavender outlines keyboard focus, and a deep green fill marks selected rows. Semantic colors express meaning, while ordered intensity and categorical series use separate palettes. Keep series order stable across views, and preserve labels when fallback colors converge.
+The default dark palette, [Sage Midnight](https://lanej.io/design-system/), uses the named roles and state definitions from the [dotfiles design system](https://github.com/lanej/dotfiles/tree/master/design-system). Its sage accent identifies interaction, lavender outlines keyboard focus, and a deep green fill marks selected rows. Semantic colors express meaning, while ordered intensity and categorical series use separate palettes. Keep series order stable across views, and preserve labels when fallback colors converge.
 
 | Role | Meaning and customization |
 | --- | --- |
