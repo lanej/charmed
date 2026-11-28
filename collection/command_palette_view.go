@@ -82,7 +82,12 @@ func (d *commandDelegate) Render(w io.Writer, model list.Model, index int, item 
 		}
 	}
 
-	label := text.HighlightMatches(text.Inline(command.Label), ranges, actionStyle, actionStyle.Underline(true))
+	matchStyle := actionStyle.Underline(true)
+	if command.DisabledReason == "" && d.theme.Match != nil {
+		matchStyle = matchStyle.Foreground(d.theme.Match)
+	}
+
+	label := text.HighlightMatches(text.Inline(command.Label), ranges, actionStyle, matchStyle)
 
 	suffix := text.Inline(command.State)
 	if command.Shortcut != "" {

@@ -18,22 +18,33 @@ const (
 
 // Theme is a value: a preview can change its theme without mutating other sessions.
 type Theme struct {
-	Mode                                                        Mode
-	ASCII                                                       bool
-	ReducedMotion                                               bool
-	Background, Surface, Foreground, Muted, Border, Accent      color.Color
-	FocusBorder, SelectionForeground, SelectionBackground       color.Color
-	Link, DimLink                                               color.Color
-	Success, Info, Warning, Danger                              color.Color
-	Unknown, Inactive, DimUnknown, DimInactive                  color.Color
-	Pending, Running, Paused, DimPending, DimRunning, DimPaused color.Color
-	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger   color.Color
-	Trace, Debug, Fatal, DimTrace, DimDebug, DimFatal           color.Color
-	Series, Sequential                                          []color.Color
-	Permissions                                                 PermissionColors
-	HTTP                                                        HTTPColors
-	Syntax                                                      SyntaxColors
-	Diff                                                        DiffColors
+	Mode                                                         Mode
+	ASCII                                                        bool
+	ReducedMotion                                                bool
+	Background, Surface, Foreground, Muted, Border, Accent       color.Color
+	FocusBorder, SelectionForeground, SelectionBackground        color.Color
+	Link, DimLink                                                color.Color
+	HeadingColor, KeyHintColor, FocusBackground, FocusForeground color.Color
+	Match                                                        color.Color
+	Connected, DimConnected, Disconnected, DimDisconnected       color.Color
+	Disabled, DimDisabled, Fresh, DimFresh, Missing, DimMissing  color.Color
+	UnknownOutcome, DimUnknownOutcome                            color.Color
+	ConfigOn, ConfigOff, Canceled, DimCanceled                   color.Color
+	Stale                                                        color.Color
+	FatalBold                                                    bool
+	Tabs                                                         TabColors
+	Git                                                          GitColors
+	Lexical                                                      LexicalColors
+	Success, Info, Warning, Danger                               color.Color
+	Unknown, Inactive, DimUnknown, DimInactive                   color.Color
+	Pending, Running, Paused, DimPending, DimRunning, DimPaused  color.Color
+	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger    color.Color
+	Trace, Debug, Fatal, DimTrace, DimDebug, DimFatal            color.Color
+	Series, Sequential                                           []color.Color
+	Permissions                                                  PermissionColors
+	HTTP                                                         HTTPColors
+	Syntax                                                       SyntaxColors
+	Diff                                                         DiffColors
 }
 
 func New(mode Mode) Theme {
@@ -80,23 +91,7 @@ func New(mode Mode) Theme {
 		t.DimLink = t.Muted
 		t.Sequential = colors("#202020", "#505050", "#808080", "#b0b0b0", "#eeeeee")
 	default:
-		t.Mode = Dark
-		t.Background, t.Foreground = hex("#101722"), hex("#eeeeee")
-		t.Surface = hex("#1b2734")
-		t.Muted, t.Border, t.Accent = hex("#a8a8a8"), hex("#475569"), hex("#67d4c0")
-		t.Success, t.Warning, t.Danger = hex("#86cf9a"), hex("#f2c879"), hex("#f28b82")
-		t.Info = hex("#78b8ed")
-		t.DimLink = hex("#6fc1b0")
-		t.Trace, t.Debug, t.Fatal = hex("#9a9a9a"), hex("#70c6d8"), hex("#e49aef")
-		t.DimTrace, t.DimDebug, t.DimFatal = hex("#898989"), hex("#519bab"), hex("#b477bd")
-		t.SelectionBackground = hex("#24433f")
-		t.Unknown, t.Inactive = hex("#a7bce0"), hex("#9a9a9a")
-		t.DimUnknown, t.DimInactive = hex("#829bc3"), hex("#898989")
-		t.Pending, t.Running, t.Paused = hex("#8ca8e8"), hex("#70c6d8"), hex("#c5b49b")
-		t.DimPending, t.DimRunning, t.DimPaused = hex("#758fc4"), hex("#519bab"), hex("#a59682")
-		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#a8a8a8"), hex("#629c73"), hex("#5a8fb9"), hex("#b5945c"), hex("#c17670")
-		t.Series = colors("#b9a7f5", "#87b5f9", "#e49ac2", "#d7b58b", "#8f9de8")
-		t.Sequential = colors("#202844", "#354b72", "#4e70a1", "#729bd0", "#afcbef")
+		return sageMidnight()
 	}
 
 	t.FocusBorder, t.SelectionForeground = t.Accent, t.Foreground
@@ -122,9 +117,29 @@ func colors(values ...string) []color.Color {
 // InlinePadding is the horizontal inset shared by controls and panel content, in cells.
 const InlinePadding = SpaceSmall
 
-func (t Theme) Text() lipgloss.Style    { return lipgloss.NewStyle().Foreground(t.Foreground) }
-func (t Theme) Subtle() lipgloss.Style  { return lipgloss.NewStyle().Foreground(t.Muted) }
-func (t Theme) Heading() lipgloss.Style { return lipgloss.NewStyle().Foreground(t.Accent).Bold(true) }
+func (t Theme) Text() lipgloss.Style   { return lipgloss.NewStyle().Foreground(t.Foreground) }
+func (t Theme) Subtle() lipgloss.Style { return lipgloss.NewStyle().Foreground(t.Muted) }
+func (t Theme) Heading() lipgloss.Style {
+	return lipgloss.NewStyle().Foreground(fallbackColor(t.HeadingColor, t.Accent)).Bold(true)
+}
+
+// KeyHintStyle styles the key binding independently of its description.
+func (t Theme) KeyHintStyle() lipgloss.Style {
+	style := t.Heading()
+	if t.KeyHintColor != nil {
+		style = style.Foreground(t.KeyHintColor)
+	}
+
+	return style
+}
+
+func fallbackColor(value, fallback color.Color) color.Color {
+	if value == nil {
+		return fallback
+	}
+
+	return value
+}
 
 // Control reserves the same inset as Focus so selection does not move its label.
 func (t Theme) Control() lipgloss.Style { return t.Text().Padding(0, InlinePadding) }
@@ -134,7 +149,7 @@ func (t Theme) Focus() lipgloss.Style {
 		return t.Control().Bold(true).Reverse(true)
 	}
 
-	return t.Control().Foreground(t.Background).Background(t.Accent).Bold(true)
+	return t.Control().Foreground(fallbackColor(t.FocusForeground, t.Background)).Background(fallbackColor(t.FocusBackground, t.Accent)).Bold(true)
 }
 
 // Selection styles a padded selection surface. Nested foreground styles retain

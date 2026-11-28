@@ -20,8 +20,8 @@ func TestOperationsConsumerAcceptance(t *testing.T) {
 	}
 
 	red, green, blue, _ := initial.ForegroundColor.RGBA()
-	if red != 0xeeee || green != 0xeeee || blue != 0xeeee {
-		t.Fatalf("dark starter default foreground = %04x/%04x/%04x, want neutral #eeeeee", red, green, blue)
+	if red != 0xd7d7 || green != 0xdfdf || blue != 0xd9d9 {
+		t.Fatalf("dark starter default foreground = %04x/%04x/%04x, want Sage Midnight #d7dfd9", red, green, blue)
 	}
 
 	for _, size := range []tea.WindowSizeMsg{{Width: 132, Height: 40}, {Width: 80, Height: 24}, {Width: 40, Height: 18}} {

@@ -35,8 +35,8 @@ func TestStatusAtomsKeepUnavailableAndDisabledDistinct(t *testing.T) {
 	}
 }
 
-func TestUnknownIsCoolAndOffIsAchromaticAtEveryEmphasis(t *testing.T) {
-	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast} {
+func TestLightAndContrastUnknownIsCoolAndOffIsAchromaticAtEveryEmphasis(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Light, theme.Contrast} {
 		palette := theme.New(mode)
 
 		for _, emphasis := range []text.Emphasis{text.Bright, text.Normal, text.Dim} {
@@ -65,6 +65,52 @@ func TestUnknownIsCoolAndOffIsAchromaticAtEveryEmphasis(t *testing.T) {
 				t.Fatalf("%s %s OFF must remain achromatic", mode, emphasis)
 			}
 		}
+	}
+}
+
+func TestSageStatusColorsUseStateDimensions(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	for _, example := range []struct {
+		status feedback.Status
+		want   color.Color
+	}{
+		{feedback.Unknown, palette.Muted},
+		{feedback.Off, palette.Inactive},
+		{feedback.Pending, palette.Muted},
+		{feedback.Running, palette.Info},
+		{feedback.Paused, palette.Muted},
+		{feedback.Disabled, palette.Inactive},
+		{feedback.Connected, palette.Connected},
+		{feedback.Disconnected, palette.Inactive},
+	} {
+		rendered := example.status.View(text.Normal, palette, text.Compact)
+		cell := uv.NewStyledString(rendered).Lines(ansi.GraphemeWidth)[0][0]
+
+		if !sameStateColor(cell.Style.Fg, example.want) {
+			t.Errorf("%s: got %v, want %v", example.status, cell.Style.Fg, example.want)
+		}
+	}
+}
+
+func TestSageInactiveStatesInheritCallerColors(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	palette.Inactive = color.RGBA{R: 122, G: 200, B: 183, A: 255}
+	palette.DimInactive = color.RGBA{R: 93, G: 166, B: 110, A: 255}
+
+	for _, status := range []feedback.Status{feedback.Disabled, feedback.Disconnected} {
+		for emphasis, want := range map[text.Emphasis]color.Color{text.Bright: palette.Inactive, text.Normal: palette.Inactive, text.Dim: palette.DimInactive} {
+			cell := uv.NewStyledString(status.View(emphasis, palette, text.Compact)).Lines(ansi.GraphemeWidth)[0][0]
+			if !sameStateColor(cell.Style.Fg, want) {
+				t.Errorf("%s/%s: got %v, want inherited %v", status, emphasis, cell.Style.Fg, want)
+			}
+		}
+	}
+
+	palette.Disabled = palette.Warning
+	cell := uv.NewStyledString(feedback.Disabled.View(text.Normal, palette, text.Compact)).Lines(ansi.GraphemeWidth)[0][0]
+
+	if !sameStateColor(cell.Style.Fg, palette.Warning) {
+		t.Errorf("disabled override: got %v, want %v", cell.Style.Fg, palette.Warning)
 	}
 }
 

@@ -1,6 +1,7 @@
 package gitui
 
 import (
+	"cmp"
 	"fmt"
 	"strings"
 
@@ -105,13 +106,13 @@ func renderDiffHunk(hunk Hunk, oldLanguage, newLanguage string, t theme.Theme, o
 			prefix = "+"
 
 			if t.Mode != theme.Mono {
-				style = style.Foreground(t.Success)
+				style = style.Foreground(cmp.Or(t.Git.DiffAdd, t.Success))
 			}
 		case DeletedLine:
 			prefix = "-"
 
 			if t.Mode != theme.Mono {
-				style = style.Foreground(t.Danger)
+				style = style.Foreground(cmp.Or(t.Git.DiffDelete, t.Danger))
 			}
 
 			syntax = oldLines[i]

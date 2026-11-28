@@ -1,11 +1,11 @@
 package gitui
 
 import (
+	"cmp"
 	"fmt"
 	"slices"
 	"strings"
 
-	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -13,22 +13,22 @@ import (
 // It is independent of FileIndicator, which describes how that file changed.
 func SectionIndicator(section ChangeSection, t theme.Theme) string {
 	label := string(section)
-	tone := text.Neutral
+	ink := t.Foreground
 
 	switch section {
 	case Staged:
-		tone = text.Success
+		ink = cmp.Or(t.Git.Staged, t.Success)
 	case Unstaged:
-		tone = text.Warning
+		ink = cmp.Or(t.Git.Modified, t.Warning)
 	case UntrackedFiles:
-		tone = text.Info
+		ink = cmp.Or(t.Git.Untracked, t.Info)
 	case Conflicts:
-		tone = text.Danger
+		ink = cmp.Or(t.Git.Conflicted, t.Danger)
 	default:
 		label = "unknown section"
 	}
 
-	return portable(text.Pill(label, tone, t, text.Normal), t)
+	return gitPill(label, ink, t)
 }
 
 // ChangeGroup is a presentation molecule: a section atom, count and matching file

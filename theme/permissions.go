@@ -27,9 +27,9 @@ func permissionColors(mode Mode) PermissionColors {
 		return PermissionColors{}
 	case Dark:
 		return PermissionColors{
-			Read: hex("#99c8d4"), Write: hex("#e1cd91"),
-			Execute: hex("#c3b2df"), WriteExecute: hex("#e6b6bf"),
-			None: hex("#a1acbd"), Unknown: hex("#a9c4e5"),
+			Read: hex(stateAccessReadonly), Write: hex(stateAccessReadwrite),
+			Execute: hex(roleFileExecutable), WriteExecute: hex(swatchDustyRose),
+			None: hex(roleTextSubtle), Unknown: hex(stateDataMissing),
 		}
 	default:
 		return PermissionColors{}

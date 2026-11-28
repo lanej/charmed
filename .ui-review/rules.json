@@ -48,7 +48,7 @@
     "selector": "html, body",
     "property": "background-color",
     "allowed": [
-      "rgb(16, 23, 34)"
+      "rgb(13, 21, 19)"
     ],
     "severity": "error",
     "reason": "Page surfaces share the night background."
@@ -59,7 +59,7 @@
     "selector": "main pre:not(.terminal), main details",
     "property": "background-color",
     "allowed": [
-      "rgb(27, 39, 52)"
+      "rgb(23, 35, 30)"
     ],
     "optional": true,
     "severity": "error",
@@ -71,7 +71,7 @@
     "selector": "main pre.terminal:not([data-theme]), main pre.terminal[data-theme=\"dark\"]",
     "property": "background-color",
     "allowed": [
-      "rgb(16, 23, 34)"
+      "rgb(13, 21, 19)"
     ],
     "severity": "error",
     "reason": "Native truecolor frames use the canonical theme background so dim tokens retain their contrast.",

@@ -1,6 +1,7 @@
 package text_test
 
 import (
+	"image/color"
 	"strings"
 	"testing"
 	"time"
@@ -12,7 +13,7 @@ import (
 
 func TestJSONSyntaxPreservesLexemesAndSemanticColors(t *testing.T) {
 	palette := theme.New(theme.Dark)
-	source := "{\n  \"same\": 9007199254740993,\n  \"same\": -1.2300e+04,\n  \"literal\": \"\\u0061\\\"true\\\\\",\n  \"ok\": true\n}\n"
+	source := "{\n  \"same\": 9007199254740993,\n  \"same\": -1.2300e+04,\n  \"literal\": \"\\u0061\\\"true\\\\\",\n  \"flags\": [true, false, null]\n}\n"
 	view := text.Syntax(source, "json", palette)
 
 	if ansi.Strip(view) != source {
@@ -29,8 +30,14 @@ func TestJSONSyntaxPreservesLexemesAndSemanticColors(t *testing.T) {
 		t.Fatal("duplicate object keys lost their independent lexical color")
 	}
 
-	if !strings.Contains(view, palette.Text().Foreground(palette.Syntax.String).Render(`"\u0061\"true\\"`)) || !strings.Contains(view, palette.Text().Foreground(palette.Syntax.Keyword).Render("true")) {
+	if !strings.Contains(view, palette.Text().Foreground(palette.Syntax.String).Render(`"\u0061\"true\\"`)) || !strings.Contains(view, palette.Text().Foreground(palette.Lexical.BooleanTrue).Render("true")) {
 		t.Fatal("escaped string content was confused with a JSON keyword")
+	}
+
+	for literal, role := range map[string]color.Color{"false": palette.Lexical.BooleanFalse, "null": palette.Lexical.Null} {
+		if !strings.Contains(view, palette.Text().Foreground(role).Render(literal)) {
+			t.Errorf("missing lexical color for %s in %q", literal, view)
+		}
 	}
 }
 

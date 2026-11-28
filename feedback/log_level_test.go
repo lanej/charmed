@@ -14,7 +14,7 @@ import (
 )
 
 func TestLogLevelColorsDistinguishEverySeverity(t *testing.T) {
-	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast} {
+	for _, mode := range []theme.Mode{theme.Light, theme.Contrast} {
 		for _, emphasis := range []text.Emphasis{text.Bright, text.Normal, text.Dim} {
 			seen := map[color.Color]bool{}
 
@@ -31,6 +31,41 @@ func TestLogLevelColorsDistinguishEverySeverity(t *testing.T) {
 				}
 
 				seen[color.NRGBAModel.Convert(ink)] = true
+			}
+		}
+	}
+}
+
+func TestSageSeverityUsesSourceColorsAndBoldFatal(t *testing.T) {
+	palette := theme.New(theme.Dark)
+
+	for _, level := range []struct {
+		level       log.Level
+		normal, dim color.Color
+	}{
+		{feedback.TraceLevel, palette.Trace, palette.DimTrace},
+		{log.DebugLevel, palette.Debug, palette.DimDebug},
+		{log.InfoLevel, palette.Info, palette.DimInfo},
+		{log.WarnLevel, palette.Warning, palette.DimWarning},
+		{log.ErrorLevel, palette.Danger, palette.DimDanger},
+		{log.FatalLevel, palette.Danger, palette.DimDanger},
+	} {
+		for _, emphasis := range []text.Emphasis{text.Normal, text.Bright, text.Dim} {
+			cell := uv.NewStyledString(feedback.LogLevel(level.level, emphasis, palette)).Lines(ansi.GraphemeWidth)[0][1]
+			ink, want := cell.Style.Fg, level.normal
+
+			switch emphasis {
+			case text.Bright:
+				ink = cell.Style.Bg
+			case text.Dim:
+				want = level.dim
+			case text.Normal:
+			default:
+				t.Fatalf("unexpected emphasis %s", emphasis)
+			}
+
+			if !sameStateColor(ink, want) || (cell.Style.Attrs&uv.AttrBold != 0) != (level.level == log.FatalLevel || emphasis == text.Bright) {
+				t.Errorf("%v/%s: got ink %v and attributes %v, want %v with fatal/bright emphasis", level.level, emphasis, ink, cell.Style.Attrs, want)
 			}
 		}
 	}

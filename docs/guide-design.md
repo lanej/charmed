@@ -20,7 +20,7 @@ Use a compact guide navigation and readable prose. Each fixture has a sidebar li
 
 ## Visual system and ownership
 
-The Go `theme` package owns the canonical palette for native applications and the guide. The site generator derives CSS variables and brand swatches from `theme.New(theme.Dark)`; `workbench/site/style.css` owns layout and typography without duplicating hex values. Prose uses system sans-serif; source and terminal cells use JuliaMono. Truecolor previews preserve the native foreground and fill values.
+The Go `theme` package binds the shared Sage Midnight roles to native components and the guide. The site generator derives CSS variables and brand swatches from `theme.New(theme.Dark)`; `workbench/site/style.css` owns layout and typography without duplicating hex values. Prose uses system sans-serif; source and terminal cells use JuliaMono. Truecolor previews preserve the native foreground and fill values.
 
 ## Behavior and resilience
 
@@ -62,7 +62,7 @@ The home page leads with a composed native service screen and representative ato
 
 | Visual element | Required presentation |
 | --- | --- |
-| Base terminal text | Neutral off-white or gray, including after ANSI 256-color conversion. Reserve lavender for data series. |
+| Base terminal text | Neutral off-white or gray, including after ANSI 256-color conversion. Lavender highlights keyboard focus and numeric literals. |
 | Optional legend | Hidden by default. Each enabled series or marker uses its plotted style. |
 | Boundary and mean keys | Warning and error boundaries use separate colors, mean keys retain each series color, and selection keeps its neutral marker. |
 

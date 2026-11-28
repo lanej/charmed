@@ -8,6 +8,13 @@ type HTTPColors struct{ Read, Create, Change, Delete, Meta, Other color.Color }
 // SyntaxColors describe lexical meaning independently of interaction and status.
 type SyntaxColors struct{ Keyword, String, Number, Name, Comment color.Color }
 
+// LexicalColors extends the basic syntax palette for lexers that distinguish finer roles.
+// A nil role lets consumers retain their existing keyword, name or base-text style.
+type LexicalColors struct {
+	Function, Type, Operator, BooleanTrue, BooleanFalse, Null, Special color.Color
+	Variable, Receiver, Constant, VariableReference, Section           color.Color
+}
+
 func httpColors(mode Mode) (HTTPColors, SyntaxColors) {
 	var values []color.Color
 
@@ -15,7 +22,8 @@ func httpColors(mode Mode) (HTTPColors, SyntaxColors) {
 	case Light:
 		values = colors("#365e70", "#725a20", "#65517f", "#7b4252", "#526176", "#365b78")
 	case Dark:
-		values = colors("#99c8d4", "#e1cd91", "#c3b2df", "#e6b6bf", "#a1acbd", "#a9c4e5")
+		return HTTPColors{hex(swatchCyan), hex(swatchAmber), hex(swatchLavender), hex(swatchDustyRose), hex(swatchMuted), hex(swatchBlue)},
+			SyntaxColors{Keyword: hex(roleSyntaxKeyword), String: hex(roleSyntaxString), Number: hex(roleSyntaxNumber), Name: hex(roleSyntaxMember), Comment: hex(roleSyntaxComment)}
 	case Contrast:
 		values = colors("#b7dfea", "#f4dfa6", "#d9c8f0", "#f3c6d0", "#b0bdcf", "#c1d9f5")
 	case Mono:

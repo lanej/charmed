@@ -82,13 +82,23 @@ func statusAppearance(s Status, t theme.Theme) (Status, string, text.Tone, theme
 	case Connected:
 		tone = text.Success
 		glyph = theme.GlyphConnected
+
+		if t.Connected != nil {
+			t.Success = t.Connected
+		}
+
+		if t.DimConnected != nil {
+			t.DimSuccess = t.DimConnected
+		}
 	case Disconnected:
 		glyph = theme.GlyphDisconnected
 
 		t = statusTheme(t, t.Inactive, t.DimInactive)
+		t = statusTheme(t, t.Disconnected, t.DimDisconnected)
 	case Disabled:
 		glyph = theme.GlyphDisabled
 		t = statusTheme(t, t.Inactive, t.DimInactive)
+		t = statusTheme(t, t.Disabled, t.DimDisabled)
 	default:
 		s = Unknown
 		t = statusTheme(t, t.Unknown, t.DimUnknown)

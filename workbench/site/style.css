@@ -1,6 +1,6 @@
 @font-face{font-family:"Charmed Mono";src:url("assets/JuliaMono-Regular.woff2") format("woff2");font-style:normal;font-weight:400;font-display:swap}
 :root{color-scheme:dark;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
-*{box-sizing:border-box}html,body{background:var(--bg);color:var(--text)}body{margin:0}::selection{background:var(--accent);color:var(--bg)}a{color:var(--accent);text-underline-offset:4px}a:hover{color:var(--text)}a:focus-visible,summary:focus-visible,pre:focus-visible,table:focus-visible{outline:2px solid var(--accent);outline-offset:4px}header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:20px 32px;gap:24px}.brand{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:700;text-decoration:none}.brand-name{color:var(--text)}.brand-description{font-size:13px;font-weight:400;color:var(--muted);margin-left:4px}.shell{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1440px;margin:auto}nav{padding:32px 24px;align-self:start;position:sticky;top:0;max-height:100vh;overflow:auto}nav a{display:block;padding:7px 10px;text-decoration:none}nav [aria-current]{background:var(--surface);border-left:2px solid var(--accent);color:var(--text)}nav p,.eyebrow,figcaption{color:var(--muted);font-size:13px}nav p{margin:24px 10px 8px}main{min-width:0;padding:32px 48px;max-width:1120px}h1{font-size:clamp(32px,5vw,52px);line-height:1.15;margin:12px 0 24px}h2{margin-top:48px;font-size:27px}h3{font-size:22px;margin-top:0}p{max-width:85ch}img{max-width:100%;height:auto;border:1px solid var(--line)}pre{overflow:auto;padding:16px;background:var(--surface);border:1px solid var(--line);font:13px/1.5 "Charmed Mono",ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:4}code{font-family:"Charmed Mono",ui-monospace,SFMono-Regular,Consolas,monospace;font-size:1em}pre code{font-size:inherit}.terminal{background:var(--bg);font-size:12px;line-height:1.25;white-space:pre}figure{margin:20px 0}figcaption{margin-bottom:6px}details{background:var(--surface);margin:12px 0;border:1px solid var(--line);padding:12px 16px}summary{cursor:pointer;color:var(--accent)}.component{padding:24px 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:16px}.eyebrow{text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}.index{display:flex;flex-wrap:wrap;gap:8px 24px;padding:0;list-style:none}.dependency{display:inline-block;margin-right:8px}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid var(--line)}th{color:var(--accent)}.table-wrap{overflow:auto}footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}.skip{position:absolute;left:16px;top:-80px;padding:12px;background:var(--surface)}.skip:focus{top:8px}
+*{box-sizing:border-box}html,body{background:var(--bg);color:var(--text)}body{margin:0}::selection{background:var(--accent);color:var(--bg)}a{color:var(--accent);text-underline-offset:4px}a:hover{color:var(--text)}a:focus-visible,summary:focus-visible,pre:focus-visible,table:focus-visible{outline:2px solid var(--focus);outline-offset:4px}header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:20px 32px;gap:24px}.brand{display:flex;align-items:center;gap:12px;font-size:24px;font-weight:700;text-decoration:none}.brand-name{color:var(--text)}.brand-description{font-size:13px;font-weight:400;color:var(--muted);margin-left:4px}.shell{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1440px;margin:auto}nav{padding:32px 24px;align-self:start;position:sticky;top:0;max-height:100vh;overflow:auto}nav a{display:block;padding:7px 10px;text-decoration:none}nav [aria-current]{background:var(--selection);border-left:2px solid var(--accent);color:var(--selection-text)}nav p,.eyebrow,figcaption{color:var(--muted);font-size:13px}nav p{margin:24px 10px 8px}main{min-width:0;padding:32px 48px;max-width:1120px}h1{font-size:clamp(32px,5vw,52px);line-height:1.15;margin:12px 0 24px}h2{margin-top:48px;font-size:27px}h3{font-size:22px;margin-top:0}p{max-width:85ch}img{max-width:100%;height:auto;border:1px solid var(--line)}pre{overflow:auto;padding:16px;background:var(--surface);border:1px solid var(--line);font:13px/1.5 "Charmed Mono",ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:4}code{font-family:"Charmed Mono",ui-monospace,SFMono-Regular,Consolas,monospace;font-size:1em}pre code{font-size:inherit}.terminal{background:var(--bg);font-size:12px;line-height:1.25;white-space:pre}figure{margin:20px 0}figcaption{margin-bottom:6px}details{background:var(--surface);margin:12px 0;border:1px solid var(--line);padding:12px 16px}summary{cursor:pointer;color:var(--accent)}.component{padding:24px 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:16px}.eyebrow{text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}.index{display:flex;flex-wrap:wrap;gap:8px 24px;padding:0;list-style:none}.dependency{display:inline-block;margin-right:8px}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid var(--line)}th{color:var(--accent)}.table-wrap{overflow:auto}footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}.skip{position:absolute;left:16px;top:-80px;padding:12px;background:var(--surface)}.skip:focus{top:8px}
 @media(max-width:760px){header{padding:16px 20px}.brand-description{display:none}.shell{display:block}nav{position:static;display:flex;flex-wrap:wrap;padding:12px;gap:2px;border-bottom:1px solid var(--line);max-height:none}nav p{display:none}nav a{padding:6px 8px;font-size:14px}main{padding:24px 20px}h2{margin-top:32px}table{display:block;overflow:auto}}
 
 .eyebrow{font-size:14px}
@@ -10,15 +10,6 @@
 
 
 /* Charmed source grammar: highlighted at build time; never applied to ANSI frames. */
-:root {
-  --syntax-keyword: var(--info);
-  --syntax-function: var(--warning);
-  --syntax-string: var(--success);
-  --syntax-number: var(--warning);
-  --syntax-builtin: var(--accent);
-  --syntax-comment: var(--muted);
-  --syntax-operator: var(--text);
-}
 .code-block { border-left: 2px solid var(--accent); }
 .code-block code { background: transparent; border: 0; padding: 0; white-space: pre; }
 main :not(pre) > code, .inline-code {
@@ -30,14 +21,20 @@ main :not(pre) > code, .inline-code {
   font: max(14px, 0.89em)/1.5 "Charmed Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
   overflow-wrap: anywhere;
 }
-.syn-keyword,.syn-command { color: var(--syntax-keyword); }
-.syn-function { color: var(--syntax-function); }
+.syn-keyword { color: var(--syntax-keyword); }
+.syn-function,.syn-command { color: var(--syntax-function); }
+.syn-type { color: var(--syntax-type); }
+.syn-member { color: var(--syntax-name); }
+.syn-reference { color: var(--syntax-variable-reference); }
+.syn-true { color: var(--syntax-true); }
+.syn-false { color: var(--syntax-false); }
+.syn-null { color: var(--syntax-null); }
+.syn-constant { color: var(--syntax-constant); }
 .syn-string { color: var(--syntax-string); }
 .syn-number { color: var(--syntax-number); }
-.syn-builtin { color: var(--syntax-builtin); }
 .syn-comment { color: var(--syntax-comment); font-style: italic; }
 .syn-operator { color: var(--syntax-operator); }
-.syn-flag { color: var(--syntax-function); }
+.syn-flag { color: var(--syntax-special); }
 
 /* Brand sheet: design guidance rendered from the same tokens as the guide. */
 .charmed-symbol { display: block; width: 100%; height: 100%; }
@@ -116,13 +113,14 @@ nav .nav-family-link:hover { text-decoration: underline; }
 .component-subheading h4 { margin: 0; font-size: 17px; }
 .component-subheading span { color: var(--muted); font-size: 13px; }
 .variant-tablist { display: flex; flex-wrap: nowrap; align-items: end; gap: 4px; overflow-x: auto; scrollbar-width: thin; border-bottom: 1px solid var(--line); }
-.variant-tablist [role=tab] { display: inline-block; flex: 0 0 auto; padding: 8px 12px; color: var(--muted); font-size: 13px; text-decoration: none; border-bottom: 2px solid transparent; border-radius: 3px 3px 0 0; }
+.variant-tablist [role=tab] { display: inline-block; flex: 0 0 auto; padding: 8px 12px; color: var(--tab-inactive-fg); background: var(--tab-inactive-bg); font-size: 13px; text-decoration: none; border-bottom: 2px solid transparent; border-radius: 3px 3px 0 0; }
 .variant-tablist [role=tab]:hover { color: var(--text); background: var(--surface); }
-.variant-tablist [role=tab][aria-selected=true] { color: var(--text); border-bottom-color: var(--accent); background: var(--surface); font-weight: 600; }
-.variant-tablist [role=tab]:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.variant-tablist [role=tab][aria-selected=true] { color: var(--tab-active-fg); border-bottom-color: currentColor; background: var(--tab-active-bg); font-weight: 600; }
+.variant-tablist [role=tab]:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.variant-tablist [role=tab][aria-selected=true]:focus-visible { outline-color: var(--tab-active-fg); }
 .variant-panel { background: var(--surface); border: 1px solid var(--line); border-top: 0; padding: 12px; min-width: 0; }
 .variant-panel[hidden] { display: none; }
-.variant-panel:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.variant-panel:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .variant-panel figure { margin: 0; min-width: 0; }
 .variant-panel figcaption { padding: 2px 4px 10px; }
 .variant-panel .terminal { margin: 0; background: var(--bg); max-width: 100%; }
@@ -276,7 +274,7 @@ main > h2,main > h3 { max-width: 60ch; }
 .graph-picker[hidden], .graph-card[hidden] { display:none; }
 .graph-picker label { font-weight:600; }
 .graph-picker select { max-width:100%; min-width:200px; padding:10px 12px; color:var(--text); background:var(--surface); border:1px solid var(--line); border-radius:3px; font:inherit; }
-.graph-picker select:focus-visible, .graph-card a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.graph-picker select:focus-visible, .graph-card a:focus-visible { outline:2px solid var(--focus); outline-offset:3px; }
 .graph-card { scroll-margin-top:100px; padding:24px 0 32px; border-bottom:1px solid var(--line); }
 .graph-card-header { display:flex; align-items:center; flex-wrap:wrap; gap:12px; }
 .graph-card-header h2 { margin:0; }

@@ -1,6 +1,7 @@
 package collection_test
 
 import (
+	"image/color"
 	"testing"
 
 	uv "github.com/charmbracelet/ultraviolet"
@@ -12,7 +13,9 @@ import (
 
 func TestPaletteMatchEmphasisIsOptionalAndActionRemainsDistinct(t *testing.T) {
 	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Mono} {
-		m, err := collection.NewCommandPalette([]collection.Command{{ID: "timeline", Label: "Layout: timeline", Description: "Arrange observations", Shortcut: "F5"}}, 72, 24, theme.New(mode))
+		palette := theme.New(mode)
+
+		m, err := collection.NewCommandPalette([]collection.Command{{ID: "timeline", Label: "Layout: timeline", Description: "Arrange observations", Shortcut: "F5"}}, 72, 24, palette)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -41,6 +44,9 @@ func TestPaletteMatchEmphasisIsOptionalAndActionRemainsDistinct(t *testing.T) {
 					switch cell.Content {
 					case "L":
 						action = cell.Style.Attrs&uv.AttrBold != 0
+						if enabled && palette.Match != nil && color.NRGBAModel.Convert(cell.Style.Fg) != color.NRGBAModel.Convert(palette.Match) {
+							t.Fatal("matched label does not use the theme match role")
+						}
 					case "A":
 						description = cell.Style.Attrs&uv.AttrBold == 0
 					case "F":

@@ -68,7 +68,18 @@ func (c *Control) view(mark string, active, busy bool) string {
 			label += " " + text.Inline(c.DisabledReason)
 		}
 
-		return text.ToneStyle(text.Neutral, text.Dim, c.Theme).Padding(0, theme.InlinePadding).Render(label)
+		style := text.ToneStyle(text.Neutral, text.Dim, c.Theme)
+		ink := c.Theme.DimDisabled
+
+		if c.Theme.Mode == theme.Dark && ink == nil {
+			ink = c.Theme.DimInactive
+		}
+
+		if c.Theme.Mode != theme.Mono && ink != nil {
+			style = style.Foreground(ink)
+		}
+
+		return style.Padding(0, theme.InlinePadding).Render(label)
 	}
 
 	if c.focused {
@@ -219,6 +230,14 @@ func (m Toggle) View() string {
 		if m.On {
 			mark = strings.Repeat(lipgloss.ThickBorder().Top, 2) + m.Theme.Glyph(theme.GlyphConnected) + " ON "
 		}
+	}
+
+	if m.Theme.ConfigOn != nil {
+		m.Theme.HeadingColor = m.Theme.ConfigOn
+	}
+
+	if m.Theme.ConfigOff != nil {
+		m.Theme.Muted = m.Theme.ConfigOff
 	}
 
 	return m.view(mark, m.On, false)

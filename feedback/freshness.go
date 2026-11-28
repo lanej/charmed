@@ -40,8 +40,19 @@ func (f Freshness) Label(now time.Time) string {
 
 func (f Freshness) View(now time.Time, t theme.Theme) string {
 	tone := text.Neutral
-	if !now.IsZero() && !f.ObservedAt.IsZero() && (now.Before(f.ObservedAt) || (f.StaleAfter > 0 && now.Sub(f.ObservedAt) >= f.StaleAfter)) {
+
+	switch {
+	case f.ObservedAt.IsZero() || now.IsZero():
+		t = statusTheme(t, t.Missing, t.DimMissing)
+	case now.Before(f.ObservedAt):
 		tone = text.Warning
+	case f.StaleAfter > 0 && now.Sub(f.ObservedAt) >= f.StaleAfter:
+		tone = text.Warning
+		if t.Stale != nil {
+			t.Warning = t.Stale
+		}
+	case f.StaleAfter > 0:
+		t = statusTheme(t, t.Fresh, t.DimFresh)
 	}
 
 	label := f.Label(now)

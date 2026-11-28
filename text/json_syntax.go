@@ -4,6 +4,8 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/alecthomas/chroma/v2"
+	"github.com/lanej/charmed/internal/lexical"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -31,6 +33,9 @@ func jsonSyntax(source string, t theme.Theme) string {
 			}
 		case 't', 'f', 'n':
 			color = t.Syntax.Keyword
+			if role := lexical.Color(lexical.Kind(chroma.Token{Type: chroma.KeywordConstant, Value: source[span[0]:span[1]]}, "json"), t); role != nil {
+				color = role
+			}
 		}
 
 		palette := t
