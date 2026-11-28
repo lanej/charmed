@@ -1,6 +1,0 @@
-.cache/
-docs/dist/
-*.test
-
-# Documentation checks import local Python modules.
-__pycache__/
