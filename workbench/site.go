@@ -304,6 +304,8 @@ type brandPalette struct {
 	Focus, Selection, SelectionText                  string
 	Success, Info, Warning, Danger                   string
 	Syntax                                           theme.SyntaxColors
+	Lexical                                          theme.LexicalColors
+	Tabs                                             theme.TabColors
 	Series                                           []string
 }
 
@@ -326,6 +328,7 @@ func newBrandPalette(t theme.Theme) brandPalette {
 		Success: colorHex(t.Success), Info: colorHex(t.Info),
 		Warning: colorHex(t.Warning), Danger: colorHex(t.Danger),
 		SelectionText: colorHex(t.SelectionForeground), Syntax: t.Syntax,
+		Lexical: t.Lexical, Tabs: t.Tabs,
 	}
 	for _, c := range t.Series {
 		b.Series = append(b.Series, colorHex(c))
@@ -352,7 +355,20 @@ func (b brandPalette) style() string {
 		";--syntax-name:" + colorHex(b.Syntax.Name) +
 		";--syntax-string:" + colorHex(b.Syntax.String) +
 		";--syntax-number:" + colorHex(b.Syntax.Number) +
-		";--syntax-comment:" + colorHex(b.Syntax.Comment) + ";"
+		";--syntax-comment:" + colorHex(b.Syntax.Comment) +
+		";--syntax-function:" + colorHex(b.Lexical.Function) +
+		";--syntax-type:" + colorHex(b.Lexical.Type) +
+		";--syntax-operator:" + colorHex(b.Lexical.Operator) +
+		";--syntax-true:" + colorHex(b.Lexical.BooleanTrue) +
+		";--syntax-false:" + colorHex(b.Lexical.BooleanFalse) +
+		";--syntax-null:" + colorHex(b.Lexical.Null) +
+		";--syntax-constant:" + colorHex(b.Lexical.Constant) +
+		";--syntax-special:" + colorHex(b.Lexical.Special) +
+		";--syntax-variable-reference:" + colorHex(b.Lexical.VariableReference) +
+		";--tab-active-fg:" + colorHex(b.Tabs.ActiveForeground) +
+		";--tab-active-bg:" + colorHex(b.Tabs.ActiveBackground) +
+		";--tab-inactive-fg:" + colorHex(b.Tabs.InactiveForeground) +
+		";--tab-inactive-bg:" + colorHex(b.Tabs.InactiveBackground) + ";"
 
 	for i, c := range b.Series {
 		styles += fmt.Sprintf("--series-%d:%s;", i, c)

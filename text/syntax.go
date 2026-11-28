@@ -2,8 +2,6 @@ package text
 
 import (
 	"bytes"
-	"fmt"
-	"image/color"
 	"mime"
 	"strings"
 
@@ -11,6 +9,7 @@ import (
 	"github.com/alecthomas/chroma/v2/formatters"
 	"github.com/alecthomas/chroma/v2/lexers"
 	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/internal/lexical"
 	"github.com/lanej/charmed/theme"
 )
 
@@ -69,32 +68,20 @@ func Syntax(source, language string, t theme.Theme) string {
 		return sourceText(source, t)
 	}
 
-	builder := chroma.NewStyleBuilder("charmed")
-
-	for _, role := range []struct {
-		token chroma.TokenType
-		color color.Color
-	}{
-		{chroma.Text, t.Foreground},
-		{chroma.Keyword, t.Syntax.Keyword},
-		{chroma.LiteralString, t.Syntax.String},
-		{chroma.LiteralNumber, t.Syntax.Number},
-		{chroma.Name, t.Syntax.Name},
-		{chroma.Comment, t.Syntax.Comment},
-	} {
-		if role.color != nil {
-			r, g, b, _ := role.color.RGBA()
-			builder.Add(role.token, fmt.Sprintf("#%02x%02x%02x", r>>8, g>>8, b>>8))
-		}
+	entries := chroma.StyleEntries{ //nolint:exhaustive // Chroma inherits unlisted lexical variants.
+		chroma.Text: syntaxColor(t.Foreground), chroma.Keyword: syntaxColor(t.Syntax.Keyword),
+		chroma.LiteralString: syntaxColor(t.Syntax.String), chroma.LiteralNumber: syntaxColor(t.Syntax.Number),
+		chroma.Name: syntaxColor(t.Syntax.Name), chroma.Comment: syntaxColor(t.Syntax.Comment),
 	}
+	lexical.Entries(entries, t)
 
-	style, err := builder.Build()
+	style, err := chroma.NewStyle("charmed", entries)
 	if err != nil {
 		return sourceText(source, t)
 	}
 
 	var output bytes.Buffer
-	if err := formatters.TTY16m.Format(&output, style, iterator); err != nil {
+	if err := formatters.TTY16m.Format(&output, style, lexical.Iterator(iterator, style, language)); err != nil {
 		return sourceText(source, t)
 	}
 
@@ -115,7 +102,11 @@ func sourceText(source string, t theme.Theme) string {
 }
 
 func formSyntax(source string, t theme.Theme) string {
-	keyTheme, valueTheme := t, t
+	keyTheme, valueTheme, operatorTheme := t, t, t
+	if t.Lexical.Operator != nil {
+		operatorTheme.Foreground = t.Lexical.Operator
+	}
+
 	if t.Syntax.Name != nil {
 		keyTheme.Foreground = t.Syntax.Name
 	}
@@ -128,11 +119,11 @@ func formSyntax(source string, t theme.Theme) string {
 	for i, part := range parts {
 		key, value, found := strings.Cut(part, "=")
 		if found && t.Mode != theme.Mono {
-			parts[i] = sourceText(key, keyTheme) + t.Text().Render("=") + sourceText(value, valueTheme)
+			parts[i] = sourceText(key, keyTheme) + operatorTheme.Text().Render("=") + sourceText(value, valueTheme)
 		} else {
 			parts[i] = sourceText(part, t)
 		}
 	}
 
-	return strings.Join(parts, t.Text().Render("&"))
+	return strings.Join(parts, operatorTheme.Text().Render("&"))
 }

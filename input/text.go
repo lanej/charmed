@@ -70,7 +70,11 @@ func (m Text) View() string {
 
 		styles := native.Styles()
 
-		dim := m.palette.DimInactive
+		dim := m.palette.DimDisabled
+		if dim == nil {
+			dim = m.palette.DimInactive
+		}
+
 		if dim == nil {
 			dim = m.palette.Muted
 		}

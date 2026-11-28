@@ -1,6 +1,7 @@
 package gitui
 
 import (
+	"cmp"
 	"fmt"
 	"strings"
 
@@ -20,9 +21,24 @@ func RepositorySummary(repo Repository, t theme.Theme) string {
 		}
 	}
 
+	changed := t.Text().Foreground(cmp.Or(t.Git.ChangedFiles, t.Foreground))
+	untracked := changed
+
+	if counts[UntrackedFiles] > 0 && t.Git.UntrackedFiles != nil {
+		untracked = untracked.Foreground(t.Git.UntrackedFiles)
+	}
+
+	countLine := changed.Render(fmt.Sprintf("staged %d · unstaged %d · ", counts[Staged], counts[Unstaged])) +
+		untracked.Render(fmt.Sprintf("untracked %d", counts[UntrackedFiles])) +
+		changed.Render(fmt.Sprintf(" · conflicts %d", counts[Conflicts]))
+	upstream := t.Subtle()
+
+	if repo.Upstream != "" && t.Git.SummaryBranch != nil {
+		upstream = upstream.Foreground(t.Git.SummaryBranch)
+	}
+
 	return portable(t.Heading().Render(clean(repo.Name))+" "+HeadIndicator(repo.Head, t)+"\n"+
-		t.Text().Render(fmt.Sprintf("staged %d · unstaged %d · untracked %d · conflicts %d", counts[Staged], counts[Unstaged], counts[UntrackedFiles], counts[Conflicts]))+"\n"+
-		t.Subtle().Render("upstream "+upstreamLabel(repo.Upstream))+" · "+DivergenceIndicator(repo.Divergence, t), t)
+		countLine+"\n"+upstream.Render("upstream "+upstreamLabel(repo.Upstream))+" · "+DivergenceIndicator(repo.Divergence, t), t)
 }
 
 func upstreamLabel(upstream string) string {
@@ -120,7 +136,12 @@ func CommitRow(commit Commit, refs []Ref, head Head, t theme.Theme) string {
 }
 
 func StashRow(stash Stash, t theme.Theme) string {
-	return portable(t.Heading().Render(fmt.Sprintf("stash@{%d}", stash.Ordinal))+" "+clean(stash.Subject)+" · "+clean(stash.Branch)+" · "+CommitIdentity(stash.CommitID, t), t)
+	heading := t.Heading()
+	if t.Git.Stashed != nil {
+		heading = heading.Foreground(t.Git.Stashed)
+	}
+
+	return portable(heading.Render(fmt.Sprintf("stash@{%d}", stash.Ordinal))+" "+clean(stash.Subject)+" · "+clean(stash.Branch)+" · "+CommitIdentity(stash.CommitID, t), t)
 }
 
 func WorktreeRow(w Worktree, t theme.Theme) string {

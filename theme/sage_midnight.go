@@ -1,68 +1,103 @@
 package theme
 
-// Shared swatches from lanej/dotfiles, design-system/themes/sage.toml.
-const (
-	sage      = "#acc8b7"
-	teal      = "#8fb9a8"
-	blue      = "#95b5d3"
-	cyan      = "#8cc5cc"
-	lichen    = "#b7cb91"
-	lavender  = "#c4b2d9"
-	dustyRose = "#d89dae"
-	copper    = "#dda783"
-	amber     = "#e8c88b"
-	muted     = "#a3b1a7"
-	comment   = "#9cab9f"
+import (
+	"image/color"
+
+	"charm.land/lipgloss/v2"
 )
 
-// Sage Midnight supplies the built-in dark profile. Charmed extends the shared
-// palette with lifecycle shades, an achromatic OFF and an ordered sage ramp.
+// Dotfiles supplies the named roles and state aliases. Charmed owns the dim
+// emphasis, categorical series and ordered intensity scale for native widgets.
 func sageMidnight() Theme {
 	http, syntax := httpColors(Dark)
 
 	return Theme{
-		Mode:                Dark,
-		Background:          hex("#0d1513"),
-		Surface:             hex("#17231e"),
-		Foreground:          hex("#d7dfd9"),
-		Muted:               hex(muted),
-		Border:              hex("#6b8575"),
-		Accent:              hex(sage),
-		FocusBorder:         hex(lavender),
-		SelectionForeground: hex("#eef1ee"),
-		SelectionBackground: hex("#26352d"),
-		Link:                hex(sage),
-		DimLink:             hex(teal),
-		Success:             hex("#a6cd82"),
-		Info:                hex(cyan),
-		Warning:             hex(amber),
-		Danger:              hex("#f18c96"),
-		Unknown:             hex("#a2b3c1"),
-		Inactive:            hex("#b1b1b1"),
-		DimUnknown:          hex("#8c9daa"),
-		DimInactive:         hex("#9b9b9b"),
-		Pending:             hex("#b7bde3"),
-		Running:             hex(teal),
-		Paused:              hex("#c0ac95"),
-		DimPending:          hex("#959bb9"),
-		DimRunning:          hex("#7da393"),
-		DimPaused:           hex("#aa9783"),
-		DimForeground:       hex(muted),
-		DimSuccess:          hex("#87a86c"),
-		DimInfo:             hex("#75a5ab"),
-		DimWarning:          hex("#bca473"),
-		DimDanger:           hex("#df828c"),
-		Trace:               hex(comment),
-		Debug:               hex("#93accc"),
-		Fatal:               hex("#d4a6ce"),
-		DimTrace:            hex("#8f9e93"),
-		DimDebug:            hex("#869cb9"),
-		DimFatal:            hex("#b48fb1"),
-		Series:              colors("#a798c9", blue, dustyRose, copper, lichen),
-		Sequential:          colors("#26352d", "#40574a", "#617b69", "#849f8d", sage),
+		Mode:         Dark,
+		Background:   hex(roleSurface),
+		Surface:      hex(roleSurfaceRaised),
+		Foreground:   hex(roleText),
+		Muted:        hex(roleTextMuted),
+		Border:       hex(roleBorder),
+		Accent:       hex(roleAccent),
+		HeadingColor: overrideColor(roleHeading, roleAccent),
+		KeyHintColor: overrideColor(roleKeyhint, roleHeading),
+		ConfigOn:     overrideColor(stateConfigurationOn, roleHeading),
+		ConfigOff:    overrideColor(stateConfigurationOff, roleTextMuted),
+		Canceled:     hex(stateExecutionCanceled), DimCanceled: sageDim(stateExecutionCanceled),
+		UnknownOutcome: hex(roleTextMuted), DimUnknownOutcome: sageDim(roleTextMuted),
+		FocusBorder:         hex(roleFocus),
+		FocusBackground:     overrideColor(roleFocus, roleAccent),
+		FocusForeground:     overrideColor(roleTextInverse, roleSurface),
+		SelectionForeground: hex(roleSelectionFg),
+		SelectionBackground: hex(roleSelectionBg),
+		Link:                hex(roleLink),
+		DimLink:             sageDim(roleLink),
+		Match:               hex(roleMatch),
+		Success:             hex(roleStatusSuccess),
+		Info:                hex(roleStatusInfo),
+		Warning:             hex(roleStatusWarning),
+		Danger:              hex(roleStatusError),
+		Unknown:             hex(stateHealthUnknown),
+		DimUnknown:          sageDim(stateHealthUnknown),
+		Inactive:            hex(stateConfigurationOff),
+		DimInactive:         hex(stateConfigurationOff),
+		Pending:             hex(stateExecutionQueued),
+		DimPending:          sageDim(stateExecutionQueued),
+		Running:             hex(stateExecutionRunning),
+		DimRunning:          sageDim(stateExecutionRunning),
+		Paused:              hex(stateExecutionPaused),
+		DimPaused:           sageDim(stateExecutionPaused),
+		Connected:           hex(stateConnectivityConnected),
+		DimConnected:        sageDim(stateConnectivityConnected),
+		Disconnected:        overrideColor(stateConnectivityDisconnected, stateConfigurationOff),
+		DimDisconnected:     overrideColor(stateConnectivityDisconnected, stateConfigurationOff),
+		Disabled:            overrideColor(stateInteractionDisabled, stateConfigurationOff),
+		DimDisabled:         overrideColor(stateInteractionDisabled, stateConfigurationOff),
+		Fresh:               hex(stateDataFresh),
+		DimFresh:            sageDim(stateDataFresh),
+		Missing:             hex(stateDataMissing),
+		DimMissing:          sageDim(stateDataMissing),
+		Stale:               overrideColor(stateDataStale, roleStatusWarning),
+		DimForeground:       hex(roleTextMuted),
+		DimSuccess:          sageDim(roleStatusSuccess),
+		DimInfo:             sageDim(roleStatusInfo),
+		DimWarning:          sageDim(roleStatusWarning),
+		DimDanger:           sageDim(roleStatusError),
+		Trace:               hex(stateSeverityTrace),
+		DimTrace:            hex(stateSeverityTrace),
+		Debug:               hex(stateSeverityDebug),
+		DimDebug:            sageDim(stateSeverityDebug),
+		Fatal:               hex(stateSeverityFatal),
+		DimFatal:            sageDim(stateSeverityFatal),
+		FatalBold:           stateSeverityFatalBold,
+		Series:              colors("#a798c9", swatchBlue, swatchDustyRose, swatchCopper, swatchLichen),
+		Sequential:          colors(roleSelectionBg, "#40574a", "#617b69", "#849f8d", roleAccent),
 		Permissions:         permissionColors(Dark),
 		HTTP:                http,
 		Syntax:              syntax,
 		Diff:                diffColors(Dark),
+		Git:                 sageGitColors(),
+		Tabs:                sageTabs(),
+		Lexical: LexicalColors{
+			Function: hex(roleSyntaxFunction), Type: hex(roleSyntaxType), Operator: hex(roleSyntaxOperator),
+			BooleanTrue: hex(roleSyntaxBooleanTrue), BooleanFalse: hex(roleSyntaxBooleanFalse), Null: hex(roleSyntaxNull),
+			Special: hex(roleSyntaxSpecial), Variable: hex(roleSyntaxVariable), Receiver: hex(roleSyntaxReceiver),
+			Constant: hex(roleSyntaxConstant), VariableReference: hex(roleSyntaxVariableReference), Section: hex(roleSyntaxSection),
+		},
 	}
+}
+
+// Leave equivalent roles inherited so changing a caller's base color still updates its dependents.
+func overrideColor(role, inherited string) color.Color {
+	if role == inherited {
+		return nil
+	}
+
+	return hex(role)
+}
+
+// This reduction preserves 4.5:1 on selected rows for the regular Sage inks.
+// States using subtle ink keep the original color at dim emphasis.
+func sageDim(role string) color.Color {
+	return lipgloss.Darken(hex(role), 0.08)
 }

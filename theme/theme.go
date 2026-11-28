@@ -18,22 +18,33 @@ const (
 
 // Theme is a value: a preview can change its theme without mutating other sessions.
 type Theme struct {
-	Mode                                                        Mode
-	ASCII                                                       bool
-	ReducedMotion                                               bool
-	Background, Surface, Foreground, Muted, Border, Accent      color.Color
-	FocusBorder, SelectionForeground, SelectionBackground       color.Color
-	Link, DimLink                                               color.Color
-	Success, Info, Warning, Danger                              color.Color
-	Unknown, Inactive, DimUnknown, DimInactive                  color.Color
-	Pending, Running, Paused, DimPending, DimRunning, DimPaused color.Color
-	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger   color.Color
-	Trace, Debug, Fatal, DimTrace, DimDebug, DimFatal           color.Color
-	Series, Sequential                                          []color.Color
-	Permissions                                                 PermissionColors
-	HTTP                                                        HTTPColors
-	Syntax                                                      SyntaxColors
-	Diff                                                        DiffColors
+	Mode                                                         Mode
+	ASCII                                                        bool
+	ReducedMotion                                                bool
+	Background, Surface, Foreground, Muted, Border, Accent       color.Color
+	FocusBorder, SelectionForeground, SelectionBackground        color.Color
+	Link, DimLink                                                color.Color
+	HeadingColor, KeyHintColor, FocusBackground, FocusForeground color.Color
+	Match                                                        color.Color
+	Connected, DimConnected, Disconnected, DimDisconnected       color.Color
+	Disabled, DimDisabled, Fresh, DimFresh, Missing, DimMissing  color.Color
+	UnknownOutcome, DimUnknownOutcome                            color.Color
+	ConfigOn, ConfigOff, Canceled, DimCanceled                   color.Color
+	Stale                                                        color.Color
+	FatalBold                                                    bool
+	Tabs                                                         TabColors
+	Git                                                          GitColors
+	Lexical                                                      LexicalColors
+	Success, Info, Warning, Danger                               color.Color
+	Unknown, Inactive, DimUnknown, DimInactive                   color.Color
+	Pending, Running, Paused, DimPending, DimRunning, DimPaused  color.Color
+	DimForeground, DimSuccess, DimInfo, DimWarning, DimDanger    color.Color
+	Trace, Debug, Fatal, DimTrace, DimDebug, DimFatal            color.Color
+	Series, Sequential                                           []color.Color
+	Permissions                                                  PermissionColors
+	HTTP                                                         HTTPColors
+	Syntax                                                       SyntaxColors
+	Diff                                                         DiffColors
 }
 
 func New(mode Mode) Theme {
@@ -106,9 +117,29 @@ func colors(values ...string) []color.Color {
 // InlinePadding is the horizontal inset shared by controls and panel content, in cells.
 const InlinePadding = SpaceSmall
 
-func (t Theme) Text() lipgloss.Style    { return lipgloss.NewStyle().Foreground(t.Foreground) }
-func (t Theme) Subtle() lipgloss.Style  { return lipgloss.NewStyle().Foreground(t.Muted) }
-func (t Theme) Heading() lipgloss.Style { return lipgloss.NewStyle().Foreground(t.Accent).Bold(true) }
+func (t Theme) Text() lipgloss.Style   { return lipgloss.NewStyle().Foreground(t.Foreground) }
+func (t Theme) Subtle() lipgloss.Style { return lipgloss.NewStyle().Foreground(t.Muted) }
+func (t Theme) Heading() lipgloss.Style {
+	return lipgloss.NewStyle().Foreground(fallbackColor(t.HeadingColor, t.Accent)).Bold(true)
+}
+
+// KeyHintStyle styles the key binding independently of its description.
+func (t Theme) KeyHintStyle() lipgloss.Style {
+	style := t.Heading()
+	if t.KeyHintColor != nil {
+		style = style.Foreground(t.KeyHintColor)
+	}
+
+	return style
+}
+
+func fallbackColor(value, fallback color.Color) color.Color {
+	if value == nil {
+		return fallback
+	}
+
+	return value
+}
 
 // Control reserves the same inset as Focus so selection does not move its label.
 func (t Theme) Control() lipgloss.Style { return t.Text().Padding(0, InlinePadding) }
@@ -118,7 +149,7 @@ func (t Theme) Focus() lipgloss.Style {
 		return t.Control().Bold(true).Reverse(true)
 	}
 
-	return t.Control().Foreground(t.Background).Background(t.Accent).Bold(true)
+	return t.Control().Foreground(fallbackColor(t.FocusForeground, t.Background)).Background(fallbackColor(t.FocusBackground, t.Accent)).Bold(true)
 }
 
 // Selection styles a padded selection surface. Nested foreground styles retain

@@ -7,6 +7,7 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/alecthomas/chroma/v2"
 	"github.com/alecthomas/chroma/v2/lexers"
+	"github.com/lanej/charmed/internal/lexical"
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
 	"github.com/rivo/uniseg"
@@ -108,7 +109,7 @@ func hunkSyntax(hunk Hunk, language string, old bool) []syntaxLine {
 
 			offset += len(text.Inline(part))
 			if part != "" {
-				lines[index].spans = append(lines[index].spans, syntaxSpan{end: offset, kind: token.Type})
+				lines[index].spans = append(lines[index].spans, syntaxSpan{end: offset, kind: lexical.Kind(token, language)})
 			}
 
 			value = rest
@@ -124,6 +125,10 @@ func hunkSyntax(hunk Hunk, language string, old bool) []syntaxLine {
 }
 
 func syntaxColor(kind chroma.TokenType, t theme.Theme) color.Color {
+	if role := lexical.Color(kind, t); role != nil {
+		return role
+	}
+
 	switch {
 	case kind.InCategory(chroma.Keyword):
 		return t.Syntax.Keyword

@@ -9,6 +9,8 @@ import (
 	"strings"
 	"unicode"
 	"unicode/utf8"
+
+	"github.com/lanej/charmed/internal/lexical"
 )
 
 var (
@@ -63,6 +65,7 @@ func highlightGo(source string) template.HTML {
 	s.Init(file, []byte(source), nil, scanner.ScanComments)
 	var out strings.Builder
 	last := 0
+	previous := token.ILLEGAL
 	for {
 		pos, tok, literal := s.Scan()
 		if tok == token.EOF {
@@ -99,14 +102,17 @@ func highlightGo(source string) template.HTML {
 			class = "syn-number"
 		case tok.IsKeyword():
 			class = "syn-keyword"
-		case tok == token.IDENT && isBuiltin(source[start:end]):
-			class = "syn-builtin"
-		case tok == token.IDENT && strings.HasPrefix(strings.TrimSpace(source[end:]), "("):
-			class = "syn-function"
-		case tok.IsOperator():
+		case tok == token.IDENT:
+			class = identifierClass(literal, previous, source[end:])
+		case tok >= token.ADD && tok <= token.ELLIPSIS || tok == token.TILDE:
 			class = "syn-operator"
 		}
 		writeSyntax(&out, class, source[start:end])
+
+		if tok != token.COMMENT {
+			previous = tok
+		}
+
 		last = end
 	}
 	out.WriteString(html.EscapeString(source[last:]))
@@ -120,18 +126,31 @@ func tokenText(tok token.Token, literal string) string {
 	return tok.String()
 }
 
-func isBuiltin(ident string) bool {
-	switch ident {
-	case "nil", "true", "false", "iota", "any", "comparable", "bool",
-		"byte", "rune", "string", "int", "int8", "int16", "int32", "int64",
-		"uint", "uint8", "uint16", "uint32", "uint64", "uintptr",
-		"float32", "float64", "complex64", "complex128",
-		"append", "cap", "clear", "close", "copy", "delete", "len",
-		"make", "max", "min", "new", "panic", "print", "println",
-		"real", "imag", "recover", "error":
-		return true
+func identifierClass(ident string, previous token.Token, rest string) string {
+	if previous == token.TYPE || lexical.GoType(ident) {
+		return "syn-type"
 	}
-	return false
+
+	switch ident {
+	case "true":
+		return "syn-true"
+	case "false":
+		return "syn-false"
+	case "nil":
+		return "syn-null"
+	case "iota":
+		return "syn-constant"
+	}
+
+	if strings.HasPrefix(strings.TrimSpace(rest), "(") {
+		return "syn-function"
+	}
+
+	if previous == token.PERIOD {
+		return "syn-member"
+	}
+
+	return ""
 }
 
 // Shell commands receive lightweight lexical styling. This is intentionally not
@@ -188,7 +207,8 @@ func highlightShell(source string) template.HTML {
 			for end < len(source) && (isWordChar(rune(source[end])) || source[end] == '{' || source[end] == '}') {
 				end++
 			}
-			writeSyntax(&out, "syn-builtin", source[i:end])
+
+			writeSyntax(&out, "syn-reference", source[i:end])
 			i = end
 			continue
 		}

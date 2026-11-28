@@ -1,15 +1,33 @@
 package input_test
 
 import (
+	"image/color"
 	"strings"
 	"testing"
 
 	"charm.land/bubbles/v2/key"
 	tea "charm.land/bubbletea/v2"
+	uv "github.com/charmbracelet/ultraviolet"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/lanej/charmed/input"
 	"github.com/lanej/charmed/theme"
 )
+
+func TestDisabledSageControlInkSurvivesASCIIGlyphs(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	palette.DimInactive = color.RGBA{R: 123, G: 191, B: 174, A: 255}
+
+	for _, ascii := range []bool{false, true} {
+		palette.ASCII = ascii
+		checkbox := input.NewCheckbox("enabled", "Enabled", input.Unchecked, palette)
+		checkbox.Disabled = true
+
+		cells := uv.NewStyledString(checkbox.View()).Lines(ansi.GraphemeWidth)
+		if got := cells[0][1].Style.Fg; color.NRGBAModel.Convert(got) != color.NRGBAModel.Convert(palette.DimInactive) {
+			t.Errorf("ASCII=%v disabled foreground %v, want %v", ascii, got, palette.DimInactive)
+		}
+	}
+}
 
 func TestCheckboxActivationRetainsIntentAndFocusBoundary(t *testing.T) {
 	tmode := theme.New(theme.Mono)

@@ -52,7 +52,7 @@ func Pill(value string, tone Tone, t theme.Theme, emphasis ...Emphasis) string {
 }
 
 func KeyHint(key, description string, t theme.Theme) string {
-	return t.Heading().Render(key) + " " + t.Subtle().Render(description)
+	return t.KeyHintStyle().Render(key) + " " + t.Subtle().Render(description)
 }
 
 // Indicator renders semantic glyphs and labels as pills, or bare glyphs in Compact mode.

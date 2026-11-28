@@ -9,6 +9,8 @@ Start with [Getting started](getting-started.html) to install Charmed and run an
 | Change library behavior | Native Go packages, registry stories and retained-behavior tests |
 | Change the guide | Markdown, consumer examples and the shared site template |
 
+Charmed ships its Sage Midnight tokens as generated Go constants. To refresh them, update the dotfiles commit in `scripts/sync_sage_tokens.py` and run `python3 scripts/sync_sage_tokens.py` with Python 3.11 or later and `gofmt` on the path. For an offline comparison, pass `--check --dotfiles /path/to/dotfiles` with a checkout containing that commit. Builds and applications read the checked-in constants.
+
 ## Inspect a native fixture
 
 The workbench uses Charmed's [CLI help formatter](molecules-commands.html#cli/help). Compare `go run ./cmd/workbench --help` with `go run ./cmd/workbench help capture` to see the root's commands and a subcommand's flags.

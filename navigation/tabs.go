@@ -153,12 +153,29 @@ func (m *Tabs) View() string {
 func (m *Tabs) cell(index int) string {
 	label := strings.SplitN(strings.ReplaceAll(m.items[index].Label, "\r", ""), "\n", 2)[0]
 	if index != m.index {
-		return m.Theme.Control().Render(label)
+		style := m.Theme.Control()
+		if m.Theme.Tabs.InactiveForeground != nil {
+			style = style.Foreground(m.Theme.Tabs.InactiveForeground)
+		}
+
+		if m.Theme.Tabs.InactiveBackground != nil {
+			style = style.Background(m.Theme.Tabs.InactiveBackground)
+		}
+
+		return style.Render(label)
 	}
 
 	style := m.Theme.Selection()
 	if m.focused {
 		style = m.Theme.Focus()
+	}
+
+	if m.Theme.Tabs.ActiveForeground != nil {
+		style = style.Foreground(m.Theme.Tabs.ActiveForeground)
+	}
+
+	if m.Theme.Tabs.ActiveBackground != nil {
+		style = style.Background(m.Theme.Tabs.ActiveBackground).Underline(m.focused)
 	}
 
 	return style.Render(label)

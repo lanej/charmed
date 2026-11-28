@@ -3,6 +3,7 @@ package feedback
 import (
 	"fmt"
 
+	"charm.land/lipgloss/v2"
 	"charm.land/log/v2"
 	"github.com/lanej/charmed/text"
 	"github.com/lanej/charmed/theme"
@@ -39,5 +40,10 @@ func LogLevel(level log.Level, emphasis text.Emphasis, t theme.Theme) string {
 		label = fmt.Sprintf("LEVEL %d", level)
 	}
 
-	return text.Pill(fmt.Sprintf("%-5s", label), tone, t, emphasis)
+	label = fmt.Sprintf("%-5s", label)
+	if level == log.FatalLevel && t.FatalBold {
+		label = lipgloss.NewStyle().Bold(true).Render(label)
+	}
+
+	return text.Pill(label, tone, t, emphasis)
 }

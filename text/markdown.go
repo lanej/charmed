@@ -14,6 +14,7 @@ import (
 	"github.com/alecthomas/chroma/v2/formatters"
 	"github.com/alecthomas/chroma/v2/lexers"
 	"github.com/charmbracelet/x/ansi"
+	"github.com/lanej/charmed/internal/lexical"
 	"github.com/lanej/charmed/theme"
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/ast"
@@ -45,11 +46,16 @@ func MarkdownStyles(t theme.Theme) glamour.StyleConfig {
 		style = styles.NoTTYStyleConfig
 	}
 
+	heading := markdownColor(t.Accent)
+	if t.HeadingColor != nil {
+		heading = markdownColor(t.HeadingColor)
+	}
+
 	style.Document.Color = markdownColor(t.Foreground)
-	style.Heading.Color = markdownColor(t.Accent)
+	style.Heading.Color = heading
 	style.H1.BackgroundColor = nil
-	style.H1.Color = markdownColor(t.Accent)
-	style.H6.Color = markdownColor(t.Accent)
+	style.H1.Color = heading
+	style.H6.Color = heading
 	style.Code.Color = markdownColor(t.Accent)
 	style.Code.BackgroundColor = markdownColor(t.Surface)
 	style.CodeBlock.Color = markdownColor(t.Foreground)
@@ -60,7 +66,14 @@ func MarkdownStyles(t theme.Theme) glamour.StyleConfig {
 	style.HorizontalRule.Color = markdownColor(t.Border)
 	style.Link.Color = markdownColor(t.Info)
 	style.LinkText.Color = markdownColor(t.Accent)
-	style.Image.Color = markdownColor(t.Info)
+
+	if t.Mode == theme.Dark && t.Link != nil {
+		stock := theme.New(theme.Dark)
+		style.Link.Color = markdownColor(markdownRole(t.Link, stock.Link, t.Info, stock.Info))
+		style.LinkText.Color = markdownColor(markdownRole(t.Link, stock.Link, t.Accent, stock.Accent))
+	}
+
+	style.Image.Color = style.Link.Color
 	style.ImageText.Color = markdownColor(t.Muted)
 	style.Table.Color = markdownColor(t.Foreground)
 	style.DefinitionTerm.Color = markdownColor(t.Accent)
@@ -93,12 +106,10 @@ func cloneStylePointers(value reflect.Value) {
 	}
 }
 
-// MarkdownSyntax derives lexical roles from the theme: accent keywords and
-// functions, information-colored types, categorical strings/numbers, muted
-// comments and normal foreground text. Missing colors inherit normal text.
+// MarkdownSyntax builds a local style. Sage Midnight uses the shared syntax
+// roles. Existing Markdown palette overrides and native Chroma styles remain usable.
 func MarkdownSyntax(t theme.Theme) (*chroma.Style, error) {
-	// Chroma inherits unlisted token variants from these lexical parent roles.
-	return chroma.NewStyle("charmed", chroma.StyleEntries{ //nolint:exhaustive // Intentional parent-role palette; Chroma supplies variant inheritance.
+	entries := chroma.StyleEntries{ //nolint:exhaustive // Chroma inherits unlisted lexical variants.
 		chroma.Text:          syntaxColor(t.Foreground),
 		chroma.Keyword:       "bold " + syntaxColor(t.Accent),
 		chroma.KeywordType:   syntaxColor(t.Info),
@@ -106,7 +117,43 @@ func MarkdownSyntax(t theme.Theme) (*chroma.Style, error) {
 		chroma.LiteralString: syntaxColor(t.SeriesColor(0)),
 		chroma.LiteralNumber: syntaxColor(t.SeriesColor(1)),
 		chroma.Comment:       "italic " + syntaxColor(t.Muted),
-	})
+	}
+	if t.Mode == theme.Dark {
+		stock := theme.New(theme.Dark)
+		// Before dedicated syntax roles, callers customized these categories
+		// through Accent, Info, Muted and Series. Honor each explicit override
+		// unless the caller has also supplied a more specific lexical color.
+		keyword := markdownRole(t.Syntax.Keyword, stock.Syntax.Keyword, t.Accent, stock.Accent)
+		str := markdownRole(t.Syntax.String, stock.Syntax.String, t.SeriesColor(0), stock.SeriesColor(0))
+		num := markdownRole(t.Syntax.Number, stock.Syntax.Number, t.SeriesColor(1), stock.SeriesColor(1))
+		comment := markdownRole(t.Syntax.Comment, stock.Syntax.Comment, t.Muted, stock.Muted)
+		t.Lexical.Function = markdownRole(t.Lexical.Function, stock.Lexical.Function, t.Accent, stock.Accent)
+		t.Lexical.Type = markdownRole(t.Lexical.Type, stock.Lexical.Type, t.Info, stock.Info)
+		entries[chroma.Keyword] = "bold " + syntaxColor(keyword)
+		entries[chroma.LiteralString] = syntaxColor(str)
+		entries[chroma.LiteralNumber] = syntaxColor(num)
+		entries[chroma.Comment] = "italic " + syntaxColor(comment)
+	}
+
+	lexical.Entries(entries, t)
+
+	return chroma.NewStyle("charmed", entries)
+}
+
+func markdownRole(role, stockRole, legacy, stockLegacy color.Color) color.Color {
+	if role == nil || sameMarkdownColor(role, stockRole) && !sameMarkdownColor(legacy, stockLegacy) {
+		return legacy
+	}
+
+	return role
+}
+
+func sameMarkdownColor(left, right color.Color) bool {
+	if left == nil || right == nil {
+		return left == nil && right == nil
+	}
+
+	return color.RGBA64Model.Convert(left) == color.RGBA64Model.Convert(right)
 }
 
 func syntaxColor(c color.Color) string {
@@ -262,7 +309,7 @@ func highlightMarkdownSource(document ast.Node, source []byte, syntax *chroma.St
 			}
 
 			var highlighted bytes.Buffer
-			if err = formatters.TTY16m.Format(&highlighted, syntax, tokens); err != nil {
+			if err = formatters.TTY16m.Format(&highlighted, syntax, lexical.Iterator(tokens, syntax, language)); err != nil {
 				return ast.WalkStop, err
 			}
 

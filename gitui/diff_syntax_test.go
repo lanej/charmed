@@ -3,6 +3,7 @@ package gitui
 import (
 	"errors"
 	"fmt"
+	"image/color"
 	"reflect"
 	"strings"
 	"testing"
@@ -56,13 +57,29 @@ func TestSyntaxRenderingIgnoresEquivalentTokenPartitions(t *testing.T) {
 	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast, theme.Mono} {
 		palette := theme.New(mode)
 		whole := syntaxLine{text: "    value", spans: []syntaxSpan{{4, chroma.Text}, {9, chroma.Name}}}
-		partitioned := syntaxLine{text: whole.text, spans: []syntaxSpan{{1, chroma.TextWhitespace}, {4, chroma.Text}, {6, chroma.NameVariable}, {9, chroma.NameFunction}}}
+		partitioned := syntaxLine{text: whole.text, spans: []syntaxSpan{{1, chroma.TextWhitespace}, {4, chroma.Text}, {6, chroma.Name}, {9, chroma.NameOther}}}
 
 		for _, kind := range []LineKind{ContextLine, AddedLine, DeletedLine} {
 			edits := []editSpan{{6, 9}}
 			if a, b := renderSyntaxLine(whole, kind, edits, palette), renderSyntaxLine(partitioned, kind, edits, palette); a != b {
 				t.Fatalf("%s %s: equivalent syntax partitions changed ANSI output: %q != %q", mode, kind, a, b)
 			}
+		}
+	}
+}
+
+func TestGoDiffUsesSageLexicalRoles(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	source := "n = int(len(s)); return !false"
+	lines := hunkSyntax(Hunk{Lines: []DiffLine{{Kind: AddedLine, Text: source}}}, "go", false)
+
+	for literal, want := range map[string]color.Color{
+		"=": palette.Lexical.Operator, "!": palette.Lexical.Operator, "int": palette.Lexical.Type,
+		"len": palette.Lexical.Function, "false": palette.Lexical.BooleanFalse,
+	} {
+		kind := tokenAt(lines[0], strings.Index(source, literal))
+		if got := syntaxColor(kind, palette); !sameSyntaxColor(got, want) {
+			t.Errorf("Go diff %q has color %v, want %v", literal, got, want)
 		}
 	}
 }

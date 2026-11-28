@@ -20,7 +20,7 @@ Use a compact guide navigation and readable prose. Each fixture has a sidebar li
 
 ## Visual system and ownership
 
-The Go `theme` package owns the Sage Midnight dark palette for native applications and the guide. The site generator derives CSS variables and brand swatches from `theme.New(theme.Dark)`; `workbench/site/style.css` owns layout and typography without duplicating hex values. Prose uses system sans-serif; source and terminal cells use JuliaMono. Truecolor previews preserve the native foreground and fill values.
+The Go `theme` package binds the shared Sage Midnight roles to native components and the guide. The site generator derives CSS variables and brand swatches from `theme.New(theme.Dark)`; `workbench/site/style.css` owns layout and typography without duplicating hex values. Prose uses system sans-serif; source and terminal cells use JuliaMono. Truecolor previews preserve the native foreground and fill values.
 
 ## Behavior and resilience
 

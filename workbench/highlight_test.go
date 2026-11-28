@@ -7,11 +7,15 @@ import (
 )
 
 func TestHighlightGoPreservesSourceAndEscapesHTML(t *testing.T) {
-	source := "func value() string { // note\n\treturn \"<unsafe>\"\n}"
+	source := "func value() string { // note\n\tx := false\n\treturn \"<unsafe>\"\n}"
 	got := string(highlightGo(source))
 	for _, part := range []string{
 		`<span class="syn-keyword">func</span>`,
 		`<span class="syn-keyword">return</span>`,
+		`<span class="syn-function">value</span>`,
+		`<span class="syn-type">string</span>`,
+		`<span class="syn-operator">:=</span>`,
+		`<span class="syn-false">false</span>`,
 		`<span class="syn-comment">// note</span>`,
 		`&lt;unsafe&gt;`,
 	} {

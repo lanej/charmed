@@ -1,6 +1,7 @@
 package text_test
 
 import (
+	"fmt"
 	"image/color"
 	"strings"
 	"sync"
@@ -57,6 +58,52 @@ func TestMarkdownCustomThemeAndNativeOverrides(t *testing.T) {
 
 	if mono != ansi.Strip(mono) {
 		t.Fatal("native options bypassed monochrome policy")
+	}
+}
+
+func TestMarkdownPartialLexicalRoles(t *testing.T) {
+	for _, mode := range []theme.Mode{theme.Dark, theme.Light, theme.Contrast} {
+		palette := theme.New(mode)
+		palette.Lexical = theme.LexicalColors{Type: lipgloss.Color("#123456")}
+
+		style, err := text.MarkdownSyntax(palette)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if got := style.Get(chroma.KeywordType).Colour.String(); got != "#123456" {
+			t.Errorf("%s partial type color = %s, want #123456", mode, got)
+		}
+
+		r, g, b, _ := palette.Accent.RGBA()
+		want := fmt.Sprintf("#%02x%02x%02x", r>>8, g>>8, b>>8)
+
+		if got := style.Get(chroma.NameFunction).Colour.String(); got != want {
+			t.Errorf("%s omitted function color = %s, want accent %s", mode, got, want)
+		}
+	}
+}
+
+func TestSageCodeBlockUsesLexicalRoles(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	source := "func check(s string) bool { n = int(len(s)); return !false && n != 42 }"
+
+	out, err := text.CodeBlock(source, "go", 80, palette)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for token, role := range map[string]color.Color{
+		"check": palette.Lexical.Function, "int": palette.Lexical.Type,
+		"!=": palette.Lexical.Operator, "=": palette.Lexical.Operator, "!": palette.Lexical.Operator,
+		"len": palette.Lexical.Function, "42": palette.Syntax.Number, "false": palette.Lexical.BooleanFalse,
+	} {
+		r, g, b, _ := role.RGBA()
+		styled := fmt.Sprintf("38;2;%d;%d;%dm%s", r>>8, g>>8, b>>8, token)
+
+		if !strings.Contains(out, styled) {
+			t.Errorf("Go code block missing %s with SGR %q", token, styled)
+		}
 	}
 }
 

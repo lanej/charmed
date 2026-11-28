@@ -140,3 +140,24 @@ func TestTabsFirstItemWithoutPriorSelection(t *testing.T) {
 		t.Fatalf("existing empty ID lost: %+v", selected)
 	}
 }
+
+func TestSageTabsSeparateActiveStateAndKeyboardFocus(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	model := navigation.NewTabs([]navigation.Tab{{ID: "one", Label: "One"}, {ID: "two", Label: "Two"}}, palette)
+	model.SetWidth(24)
+
+	active := palette.Control().Foreground(palette.Tabs.ActiveForeground).Background(palette.Tabs.ActiveBackground).Bold(true)
+	inactive := palette.Control().Foreground(palette.Tabs.InactiveForeground).Background(palette.Tabs.InactiveBackground)
+
+	blurred := model.View()
+	if !strings.Contains(blurred, active.Render("One")) || !strings.Contains(blurred, inactive.Render("Two")) {
+		t.Fatalf("tab roles missing in %q", blurred)
+	}
+
+	model.Focus()
+
+	focused := model.View()
+	if !strings.Contains(focused, active.Underline(true).Render("One")) || ansi.Strip(focused) != ansi.Strip(blurred) {
+		t.Fatalf("keyboard focus must underline the active tab without moving it: %q", focused)
+	}
+}
