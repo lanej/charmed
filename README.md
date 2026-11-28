@@ -31,7 +31,7 @@ Go packages follow capabilities. Atomic levels organize the catalog.
 | Package | Includes |
 | --- | --- |
 | `cli` | Responsive command-line help from native Cobra commands, groups, flags and examples |
-| `theme` | Dark, light, high-contrast and monochrome themes; semantic and dim colors; independent series colors; named glyphs, spacing, ASCII and motion policies |
+| `theme` | [Sage Midnight](https://lanej.io/design-system/) (default dark), light, high-contrast and monochrome themes; semantic and dim colors; independent series colors; named glyphs, spacing, ASCII and motion policies |
 | `layout` | ANSI-aware fitting, cell rectangles, responsive splits, stacks, panels, headers and footers |
 | `navigation` | Keyboard-driven tabs with stable selection and overflow indicators |
 | `interaction` | Focus scopes and typed selection/submission events |
