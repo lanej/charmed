@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="theme-color" content="#0d1513"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Organisms / Layout · Charmed</title><link rel="alternate" type="text/markdown" href="organisms-layout.md"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assets/mobile.css"><link rel="preload" href="assets/JuliaMono-Regular.woff2" as="font" type="font/woff2" crossorigin><script src="tabs.js" defer></script><meta name="robots" content="noindex,nofollow"></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 72" class="charmed-symbol" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Charmed terminal talisman" focusable="false">
+  <circle cx="32" cy="11" r="5"/>
+  <path d="M32 16v2"/>
+  <path d="M15 18h34l7 7v25L32 66 8 50V25Z"/>
+  <path d="M8 30h48M19 39l7 7-7 7M34 52h10"/>
+  <g fill="currentColor" stroke="none"><circle cx="17" cy="24" r="1.5"/><circle cx="24" cy="24" r="1.5"/></g>
+</svg>
+</span><span class="brand-name">charmed</span><span class="brand-description">terminal design system</span></a><a href="https://github.com/lanej/charmed">GitHub ↗</a></header>
+<div class="mobile-nav-bar">
+<details class="mobile-nav" data-mobile-nav>
+<summary><span class="mobile-nav-current">Organisms / Layout</span><span class="mobile-nav-trigger">Menu <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></summary>
+
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">72</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">50</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">26</span></a>
+<div class="nav-groups"><a class="nav-group" href="organisms-chart.html" >Charts</a><a class="nav-group" href="organisms-collection.html" >Collections</a><a class="nav-group" href="organisms-diagram.html" >Diagrams</a><a class="nav-group" href="organisms-form.html" >Forms</a><a class="nav-group" href="organisms-git.html" >git</a><a class="nav-group" href="organisms-layout.html" aria-current="page">Layout</a><a class="nav-group" href="organisms-logs.html" >Logs</a><a class="nav-group" href="organisms-pattern.html" >Patterns</a><a class="nav-group" href="organisms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">9</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="diff-review.html" >Diff review</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#layout%2fdetail-document">Detail document</a></div>
+
+</div>
+</nav>
+
+</details>
+</div>
+<div class="shell">
+<aside class="desktop-nav">
+<nav aria-label="Guide">
+<div class="nav-pages"><a href="index.html" >Showcase</a>
+<a href="getting-started.html" >Getting started</a>
+<a href="recipes.html" >Recipes</a>
+<p class="nav-title">Component catalog</p>
+
+<div class="nav-category ">
+<a class="nav-level" href="foundations.html" >Foundations<span class="nav-count">7</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="atoms.html" >Atoms<span class="nav-count">72</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="molecules.html" >Molecules<span class="nav-count">50</span></a>
+
+</div>
+<div class="nav-category is-active">
+<a class="nav-level" href="organisms.html" >Organisms<span class="nav-count">26</span></a>
+<div class="nav-groups"><a class="nav-group" href="organisms-chart.html" >Charts</a><a class="nav-group" href="organisms-collection.html" >Collections</a><a class="nav-group" href="organisms-diagram.html" >Diagrams</a><a class="nav-group" href="organisms-form.html" >Forms</a><a class="nav-group" href="organisms-git.html" >git</a><a class="nav-group" href="organisms-layout.html" aria-current="page">Layout</a><a class="nav-group" href="organisms-logs.html" >Logs</a><a class="nav-group" href="organisms-pattern.html" >Patterns</a><a class="nav-group" href="organisms-text.html" >Text</a></div>
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="templates.html" >Templates<span class="nav-count">9</span></a>
+
+</div>
+<div class="nav-category ">
+<a class="nav-level" href="screens.html" >Screens<span class="nav-count">4</span></a>
+
+</div>
+<p class="nav-title">Reference &amp; contributors</p>
+<a href="dependencies.html" >Component dependencies</a><a href="skills.html" >Agent skills &amp; Markdown</a><a href="rendering.html" >Retained rendering</a><a href="documentation-standard.html" >Documentation standard</a><a href="log-inspector.html" >Log inspector</a><a href="command-palette.html" >Command palette</a><a href="components.html" >Component reference</a><a href="examples.html" >Composition guide</a><a href="cohorts.html" >Cohort measurements</a><a href="deployment.html" >Compare a deployment</a><a href="diff-review.html" >Diff review</a><a href="json-viewer.html" >JSON viewer</a><a href="development.html" >Develop &amp; publish</a><a href="brand.html" >Brand sheet</a></div>
+
+<div class="nav-outline"><p class="nav-title">On this page</p>
+
+<div class="nav-items"><a class="nav-component" href="#layout%2fdetail-document">Detail document</a></div>
+
+</div>
+</nav>
+</aside>
+<main id="main">
+
+
+
+
+
+
+
+
+
+<section class="atomic-level" id="level-organisms">
+<p class="catalog-breadcrumb"><a href="organisms.html">Organisms</a><span aria-hidden="true"> / </span>Layout</p>
+
+<section class="component-family" id="level-organisms-layout"><h1><a class="heading-permalink" href="#level-organisms-layout"><span>Layout</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h1>
+<p class="catalog-count">1 component · <a href="organisms.html">All organisms</a></p>
+<ul class="group-jump-links" aria-label="Components in Layout"><li><a href="#layout%2fdetail-document">Detail document</a></li></ul>
+
+
+<section class="component" id="layout/detail-document">
+<p class="eyebrow"><a href="organisms.html">Organisms</a> / Layout</p><h2><a class="heading-permalink" href="#layout%2fdetail-document" aria-label="Link to Detail document component"><span>Detail document</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h2><p class="component-use">Present an action with its evidence, grouped facts, independent delivery stages and a chronological event rail. Related sections share columns when space permits, while long narrative or history sections can occupy the full width.</p>
+<div class="component-preview">
+<div class="component-subheading"><h3 id="layout/detail-document-preview"><a class="heading-permalink" href="#layout%2fdetail-document-preview"><span>Native preview</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><span>Saved terminal output · truecolor reference</span></div>
+<div class="variant-tabs" data-variant-tabs>
+<div class="variant-tablist" role="tablist" aria-label="Detail document variants">
+<a id="tab-layout/detail-document-example" href="#panel-layout%2fdetail-document-example" role="tab" aria-controls="panel-layout/detail-document-example" aria-selected="true">Example</a>
+<a id="tab-layout/detail-document-0" href="#panel-layout%2fdetail-document-0" role="tab" aria-controls="panel-layout/detail-document-0" aria-selected="false">Demo</a><a id="tab-layout/detail-document-1" href="#panel-layout%2fdetail-document-1" role="tab" aria-controls="panel-layout/detail-document-1" aria-selected="false">Narrow</a><a id="tab-layout/detail-document-2" href="#panel-layout%2fdetail-document-2" role="tab" aria-controls="panel-layout/detail-document-2" aria-selected="false">256 colors</a><a id="tab-layout/detail-document-3" href="#panel-layout%2fdetail-document-3" role="tab" aria-controls="panel-layout/detail-document-3" aria-selected="false">16 colors</a><a id="tab-layout/detail-document-4" href="#panel-layout%2fdetail-document-4" role="tab" aria-controls="panel-layout/detail-document-4" aria-selected="false">Monochrome</a><a id="tab-layout/detail-document-5" href="#panel-layout%2fdetail-document-5" role="tab" aria-controls="panel-layout/detail-document-5" aria-selected="false">ASCII</a><a id="tab-layout/detail-document-6" href="#panel-layout%2fdetail-document-6" role="tab" aria-controls="panel-layout/detail-document-6" aria-selected="false">Unicode monochrome</a>
+</div>
+<div id="panel-layout/detail-document-example" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-example" tabindex="0">
+<figure><figcaption>Output of the Go usage example below</figcaption><pre tabindex="0" class="terminal"><span style="color:#acc8b7;font-weight:bold;">DELIVERY INSPECTION · ILLUSTRATIVE</span>                                                                  
+<span style="color:#d7dfd9;font-weight:bold;">PR #42 · Route update</span>  <span style="background-color:#2e3025;"> </span><span style="color:#e8c88b;background-color:#2e3025;">Outcome uncertain</span><span style="background-color:#2e3025;"> </span>                                        <span style="color:#a3b1a7;">Observed </span><span style="color:#d7dfd9;">09:42 UTC</span>
+
+<span style="color:#acc8b7;font-weight:bold;">┃</span><span style="background-color:#17231e;"> </span><span style="color:#acc8b7;background-color:#17231e;font-weight:bold;">NEXT ACTION</span><span style="background-color:#17231e;">                                                                                       </span>
+<span style="color:#acc8b7;font-weight:bold;">┃</span><span style="background-color:#17231e;"> </span><span style="color:#d7dfd9;background-color:#17231e;font-weight:bold;">Reconcile the saved merge operation</span><span style="background-color:#17231e;">                                                               </span>
+<span style="color:#acc8b7;font-weight:bold;">┃</span><span style="background-color:#17231e;"> </span><span style="color:#a3b1a7;background-color:#17231e;">The request was recorded, but the remote response was unavailable.</span><span style="background-color:#17231e;">                                </span>
+
+<span style="color:#d7dfd9;font-weight:bold;">Identity</span>  <span style="color:#6b8575;">──────────────────────────────────────</span>    <span style="color:#d7dfd9;font-weight:bold;">Verification</span>  <span style="color:#6b8575;">──────────────────────────────────</span>
+<span style="color:#a3b1a7;">Repository  </span><span style="color:#d7dfd9;">example/service</span>                         <span style="color:#a3b1a7;">Tests</span>   Passed                                  
+<span style="color:#a3b1a7;">Revision    </span><span style="color:#d7dfd9;">a81f39d</span>                                 <span style="color:#a3b1a7;">Review</span>  Complete                                
+<span style="color:#a3b1a7;">Owner       </span><span style="color:#d7dfd9;">Worker 2</span>                                <span style="color:#a3b1a7;">Merge</span>   Unverified                              
+
+<span style="color:#d7dfd9;font-weight:bold;">Feedback delivery</span>  <span style="color:#6b8575;">─────────────────────────────────────────────────────────────────────────────────</span>
+<span style="color:#d7dfd9;font-weight:bold;">Transport</span>                       <span style="color:#6b8575;"> → </span><span style="color:#d7dfd9;font-weight:bold;">Receipt</span>                        <span style="color:#6b8575;"> → </span><span style="color:#d7dfd9;font-weight:bold;">Disposition</span>                    
+Delivered                          Unconfirmed                       Open                           
+
+<span style="color:#d7dfd9;font-weight:bold;">Activity</span>  <span style="color:#6b8575;">──────────────────────────────────────────────────────────────────────────────────────────</span>
+<span style="color:#a3b1a7;">09:41 UTC</span>  <span style="color:#6b8575;">○</span> <span style="color:#d7dfd9;font-weight:bold;">Merge requested</span>                                                                        
+           <span style="color:#6b8575;">│</span> <span style="color:#a3b1a7;">Request persisted</span>                                                                      
+<span style="color:#a3b1a7;">09:42 UTC</span>  <span style="color:#6b8575;">○</span> <span style="color:#d7dfd9;font-weight:bold;">Remote response unavailable</span>                                                            
+           <span style="color:#6b8575;"> </span> <span style="color:#a3b1a7;">External outcome unknown</span></pre></figure>
+</div>
+<div id="panel-layout/detail-document-0" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-0" tabindex="0">
+<figure><figcaption>Demo · truecolor · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">DELIVERY INSPECTION · ILLUSTRATIVE</span>                                                                              
+<span style="color:#d7dfd9;font-weight:bold;">PR #42 · Route update</span>  <span style="background-color:#2e3025;"> </span><span style="color:#e8c88b;background-color:#2e3025;">Outcome uncertain</span><span style="background-color:#2e3025;"> </span>                                                   <span style="color:#a3b1a7;">Observed </span><span style="color:#d7dfd9;">09:42 UTC</span> 
+                                                                                                                
+<span style="color:#acc8b7;font-weight:bold;">┃</span><span style="background-color:#17231e;"> </span><span style="color:#acc8b7;background-color:#17231e;font-weight:bold;">NEXT ACTION</span><span style="background-color:#17231e;">                                                                                                  </span> 
+<span style="color:#acc8b7;font-weight:bold;">┃</span><span style="background-color:#17231e;"> </span><span style="color:#d7dfd9;background-color:#17231e;font-weight:bold;">Reconcile the saved merge operation</span><span style="background-color:#17231e;">                                                                          </span> 
+<span style="color:#acc8b7;font-weight:bold;">┃</span><span style="background-color:#17231e;"> </span><span style="color:#a3b1a7;background-color:#17231e;">The request was recorded, but the remote response was unavailable.</span><span style="background-color:#17231e;">                                           </span> 
+                                                                                                                
+<span style="color:#d7dfd9;font-weight:bold;">Identity</span>  <span style="color:#6b8575;">───────────────────────────────────────────</span>    <span style="color:#d7dfd9;font-weight:bold;">Verification</span>  <span style="color:#6b8575;">────────────────────────────────────────</span> 
+<span style="color:#a3b1a7;">Repository  </span><span style="color:#d7dfd9;">example/service</span>                              <span style="color:#a3b1a7;">Tests</span>   <span style="color:#a6cd82;">✓ Passed</span>                                       
+<span style="color:#a3b1a7;">Revision    </span><span style="color:#d7dfd9;">a81f39d</span>                                      <span style="color:#a3b1a7;">Review</span>  <span style="color:#a6cd82;">✓ Complete</span>                                     
+<span style="color:#a3b1a7;">Owner       </span><span style="color:#d7dfd9;">Worker 2</span>                                     <span style="color:#a3b1a7;">Merge</span>   <span style="color:#e8c88b;">? Unverified</span>                                   
+                                                                                                                
+<span style="color:#d7dfd9;font-weight:bold;">Feedback delivery</span>  <span style="color:#6b8575;">────────────────────────────────────────────────────────────────────────────────────────────</span> 
+<span style="color:#d7dfd9;font-weight:bold;">Source</span>                    <span style="color:#6b8575;"> → </span><span style="color:#d7dfd9;font-weight:bold;">Transport</span>                 <span style="color:#6b8575;"> → </span><span style="color:#d7dfd9;font-weight:bold;">Receipt</span>                  <span style="color:#6b8575;"> → </span><span style="color:#d7dfd9;font-weight:bold;">Disposition</span>               
+<span style="color:#8cc5cc;">✓ Recorded</span>                   <span style="color:#a6cd82;">✓ Delivered</span>                  <span style="color:#e8c88b;">? Unconfirmed</span>               <span style="color:#8cc5cc;">◷ Open</span>                    
+<span style="color:#a3b1a7;">Review comment</span>               <span style="color:#a3b1a7;">To Worker 2</span>                  <span style="color:#a3b1a7;">No acknowledgement</span>          <span style="color:#a3b1a7;">Awaiting decision</span>         
+                                                                                                                
+<span style="color:#d7dfd9;font-weight:bold;">Activity</span>  <span style="color:#6b8575;">─────────────────────────────────────────────────────────────────────────────────────────────────────</span> 
+<span style="color:#a3b1a7;">09:41 UTC</span>  <span style="color:#6b8575;">○</span> <span style="color:#d7dfd9;font-weight:bold;">Merge requested</span>                                                                                    
+           <span style="color:#6b8575;">│</span> <span style="color:#a3b1a7;">Request persisted</span>                                                                                  
+<span style="color:#a3b1a7;">09:42 UTC</span>  <span style="color:#6b8575;">○</span> <span style="color:#d7dfd9;font-weight:bold;">Remote response unavailable</span>                                                                        
+           <span style="color:#6b8575;"> </span> <span style="color:#a3b1a7;">External outcome unknown</span></pre></figure>
+</div><div id="panel-layout/detail-document-1" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-1" tabindex="0">
+<figure><figcaption>Narrow · truecolor · 40 × 16 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">DELIVERY INSPECTION · ILLUSTRATIVE</span>     <span style="color:#acc8b7;font-weight:bold;">┃</span>
+<span style="color:#d7dfd9;font-weight:bold;">PR #42 · Route update</span>                  <span style="color:#acc8b7;font-weight:bold;">┃</span>
+<span style="background-color:#2e3025;"> </span><span style="color:#e8c88b;background-color:#2e3025;">Outcome uncertain</span><span style="background-color:#2e3025;"> </span>  <span style="color:#a3b1a7;">Observed </span><span style="color:#d7dfd9;">09:42 UTC</span><span style="color:#acc8b7;font-weight:bold;">┃</span>
+                                       <span style="color:#acc8b7;font-weight:bold;">┃</span>
+<span style="color:#acc8b7;font-weight:bold;">┃</span><span style="background-color:#17231e;"> </span><span style="color:#acc8b7;background-color:#17231e;font-weight:bold;">NEXT ACTION</span><span style="background-color:#17231e;">                          </span><span style="color:#acc8b7;font-weight:bold;">┃</span>
+<span style="color:#acc8b7;font-weight:bold;">┃</span><span style="background-color:#17231e;"> </span><span style="color:#d7dfd9;background-color:#17231e;font-weight:bold;">Reconcile the saved merge operation</span><span style="background-color:#17231e;">  </span><span style="color:#acc8b7;font-weight:bold;">┃</span>
+<span style="color:#acc8b7;font-weight:bold;">┃</span><span style="background-color:#17231e;"> </span><span style="color:#a3b1a7;background-color:#17231e;">The request was recorded, but the</span><span style="background-color:#17231e;">    </span><span style="color:#acc8b7;font-weight:bold;">┃</span>
+<span style="color:#acc8b7;font-weight:bold;">┃</span><span style="background-color:#17231e;"> remote response was unavailable.     </span><span style="color:#a3b1a7;">│</span>
+                                       <span style="color:#a3b1a7;">│</span>
+<span style="color:#d7dfd9;font-weight:bold;">Identity</span>  <span style="color:#6b8575;">─────────────────────────────</span><span style="color:#a3b1a7;">│</span>
+<span style="color:#a3b1a7;">Repository  </span><span style="color:#d7dfd9;">example/service</span>            <span style="color:#a3b1a7;">│</span>
+<span style="color:#a3b1a7;">Revision    </span><span style="color:#d7dfd9;">a81f39d</span>                    <span style="color:#a3b1a7;">│</span>
+<span style="color:#a3b1a7;">Owner       </span><span style="color:#d7dfd9;">Worker 2</span>                   <span style="color:#a3b1a7;">│</span>
+                                       <span style="color:#a3b1a7;">│</span>
+<span style="color:#d7dfd9;font-weight:bold;">Verification</span>  <span style="color:#6b8575;">─────────────────────────</span><span style="color:#a3b1a7;">│</span>
+<span style="color:#a3b1a7;">Tests</span>   <span style="color:#a6cd82;">✓ Passed</span>                       <span style="color:#a3b1a7;">│</span></pre></figure>
+</div><div id="panel-layout/detail-document-2" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-2" tabindex="0">
+<figure><figcaption>256 colors · ansi256 · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#afd7af;font-weight:bold;">DELIVERY INSPECTION · ILLUSTRATIVE</span>                                                                              
+<span style="color:#dadada;font-weight:bold;">PR #42 · Route update</span>  <span style="background-color:#005f00;"> </span><span style="color:#d7d787;background-color:#005f00;">Outcome uncertain</span><span style="background-color:#005f00;"> </span>                                                   <span style="color:#afafaf;">Observed </span><span style="color:#dadada;">09:42 UTC</span> 
+                                                                                                                
+<span style="color:#afd7af;font-weight:bold;">┃</span><span style="background-color:#1c1c1c;"> </span><span style="color:#afd7af;background-color:#1c1c1c;font-weight:bold;">NEXT ACTION</span><span style="background-color:#1c1c1c;">                                                                                                  </span> 
+<span style="color:#afd7af;font-weight:bold;">┃</span><span style="background-color:#1c1c1c;"> </span><span style="color:#dadada;background-color:#1c1c1c;font-weight:bold;">Reconcile the saved merge operation</span><span style="background-color:#1c1c1c;">                                                                          </span> 
+<span style="color:#afd7af;font-weight:bold;">┃</span><span style="background-color:#1c1c1c;"> </span><span style="color:#afafaf;background-color:#1c1c1c;">The request was recorded, but the remote response was unavailable.</span><span style="background-color:#1c1c1c;">                                           </span> 
+                                                                                                                
+<span style="color:#dadada;font-weight:bold;">Identity</span>  <span style="color:#5f8787;">───────────────────────────────────────────</span>    <span style="color:#dadada;font-weight:bold;">Verification</span>  <span style="color:#5f8787;">────────────────────────────────────────</span> 
+<span style="color:#afafaf;">Repository  </span><span style="color:#dadada;">example/service</span>                              <span style="color:#afafaf;">Tests</span>   <span style="color:#afd787;">✓ Passed</span>                                       
+<span style="color:#afafaf;">Revision    </span><span style="color:#dadada;">a81f39d</span>                                      <span style="color:#afafaf;">Review</span>  <span style="color:#afd787;">✓ Complete</span>                                     
+<span style="color:#afafaf;">Owner       </span><span style="color:#dadada;">Worker 2</span>                                     <span style="color:#afafaf;">Merge</span>   <span style="color:#d7d787;">? Unverified</span>                                   
+                                                                                                                
+<span style="color:#dadada;font-weight:bold;">Feedback delivery</span>  <span style="color:#5f8787;">────────────────────────────────────────────────────────────────────────────────────────────</span> 
+<span style="color:#dadada;font-weight:bold;">Source</span>                    <span style="color:#5f8787;"> → </span><span style="color:#dadada;font-weight:bold;">Transport</span>                 <span style="color:#5f8787;"> → </span><span style="color:#dadada;font-weight:bold;">Receipt</span>                  <span style="color:#5f8787;"> → </span><span style="color:#dadada;font-weight:bold;">Disposition</span>               
+<span style="color:#87d7d7;">✓ Recorded</span>                   <span style="color:#afd787;">✓ Delivered</span>                  <span style="color:#d7d787;">? Unconfirmed</span>               <span style="color:#87d7d7;">◷ Open</span>                    
+<span style="color:#afafaf;">Review comment</span>               <span style="color:#afafaf;">To Worker 2</span>                  <span style="color:#afafaf;">No acknowledgement</span>          <span style="color:#afafaf;">Awaiting decision</span>         
+                                                                                                                
+<span style="color:#dadada;font-weight:bold;">Activity</span>  <span style="color:#5f8787;">─────────────────────────────────────────────────────────────────────────────────────────────────────</span> 
+<span style="color:#afafaf;">09:41 UTC</span>  <span style="color:#5f8787;">○</span> <span style="color:#dadada;font-weight:bold;">Merge requested</span>                                                                                    
+           <span style="color:#5f8787;">│</span> <span style="color:#afafaf;">Request persisted</span>                                                                                  
+<span style="color:#afafaf;">09:42 UTC</span>  <span style="color:#5f8787;">○</span> <span style="color:#dadada;font-weight:bold;">Remote response unavailable</span>                                                                        
+           <span style="color:#5f8787;"> </span> <span style="color:#afafaf;">External outcome unknown</span></pre></figure>
+</div><div id="panel-layout/detail-document-3" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-3" tabindex="0">
+<figure><figcaption>16 colors · ansi16 · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#00ff00;font-weight:bold;">DELIVERY INSPECTION · ILLUSTRATIVE</span>                                                                              
+<span style="color:#ffffff;font-weight:bold;">PR #42 · Route update</span>  <span style="background-color:#008000;"> </span><span style="color:#ffff00;background-color:#008000;">Outcome uncertain</span><span style="background-color:#008000;"> </span>                                                   <span style="color:#c0c0c0;">Observed </span><span style="color:#ffffff;">09:42 UTC</span> 
+                                                                                                                
+<span style="color:#00ff00;font-weight:bold;">┃</span><span style="background-color:#000000;"> </span><span style="color:#00ff00;background-color:#000000;font-weight:bold;">NEXT ACTION</span><span style="background-color:#000000;">                                                                                                  </span> 
+<span style="color:#00ff00;font-weight:bold;">┃</span><span style="background-color:#000000;"> </span><span style="color:#ffffff;background-color:#000000;font-weight:bold;">Reconcile the saved merge operation</span><span style="background-color:#000000;">                                                                          </span> 
+<span style="color:#00ff00;font-weight:bold;">┃</span><span style="background-color:#000000;"> </span><span style="color:#c0c0c0;background-color:#000000;">The request was recorded, but the remote response was unavailable.</span><span style="background-color:#000000;">                                           </span> 
+                                                                                                                
+<span style="color:#ffffff;font-weight:bold;">Identity</span>  <span style="color:#008080;">───────────────────────────────────────────</span>    <span style="color:#ffffff;font-weight:bold;">Verification</span>  <span style="color:#008080;">────────────────────────────────────────</span> 
+<span style="color:#c0c0c0;">Repository  </span><span style="color:#ffffff;">example/service</span>                              <span style="color:#c0c0c0;">Tests</span>   <span style="color:#00ff00;">✓ Passed</span>                                       
+<span style="color:#c0c0c0;">Revision    </span><span style="color:#ffffff;">a81f39d</span>                                      <span style="color:#c0c0c0;">Review</span>  <span style="color:#00ff00;">✓ Complete</span>                                     
+<span style="color:#c0c0c0;">Owner       </span><span style="color:#ffffff;">Worker 2</span>                                     <span style="color:#c0c0c0;">Merge</span>   <span style="color:#ffff00;">? Unverified</span>                                   
+                                                                                                                
+<span style="color:#ffffff;font-weight:bold;">Feedback delivery</span>  <span style="color:#008080;">────────────────────────────────────────────────────────────────────────────────────────────</span> 
+<span style="color:#ffffff;font-weight:bold;">Source</span>                    <span style="color:#008080;"> → </span><span style="color:#ffffff;font-weight:bold;">Transport</span>                 <span style="color:#008080;"> → </span><span style="color:#ffffff;font-weight:bold;">Receipt</span>                  <span style="color:#008080;"> → </span><span style="color:#ffffff;font-weight:bold;">Disposition</span>               
+<span style="color:#00ffff;">✓ Recorded</span>                   <span style="color:#00ff00;">✓ Delivered</span>                  <span style="color:#ffff00;">? Unconfirmed</span>               <span style="color:#00ffff;">◷ Open</span>                    
+<span style="color:#c0c0c0;">Review comment</span>               <span style="color:#c0c0c0;">To Worker 2</span>                  <span style="color:#c0c0c0;">No acknowledgement</span>          <span style="color:#c0c0c0;">Awaiting decision</span>         
+                                                                                                                
+<span style="color:#ffffff;font-weight:bold;">Activity</span>  <span style="color:#008080;">─────────────────────────────────────────────────────────────────────────────────────────────────────</span> 
+<span style="color:#c0c0c0;">09:41 UTC</span>  <span style="color:#008080;">○</span> <span style="color:#ffffff;font-weight:bold;">Merge requested</span>                                                                                    
+           <span style="color:#008080;">│</span> <span style="color:#c0c0c0;">Request persisted</span>                                                                                  
+<span style="color:#c0c0c0;">09:42 UTC</span>  <span style="color:#008080;">○</span> <span style="color:#ffffff;font-weight:bold;">Remote response unavailable</span>                                                                        
+           <span style="color:#008080;"> </span> <span style="color:#c0c0c0;">External outcome unknown</span></pre></figure>
+</div><div id="panel-layout/detail-document-4" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-4" tabindex="0">
+<figure><figcaption>Monochrome · none · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">DELIVERY INSPECTION * ILLUSTRATIVE</span>                                                                              
+<span style="font-weight:bold;">PR #42 * Route update</span>  [Outcome uncertain]                                                   Observed 09:42 UTC 
+                                                                                                                
+<span style="font-weight:bold;">#</span> <span style="font-weight:bold;">NEXT ACTION</span>                                                                                                   
+<span style="font-weight:bold;">#</span> <span style="font-weight:bold;">Reconcile the saved merge operation</span>                                                                           
+<span style="font-weight:bold;">#</span> The request was recorded, but the remote response was unavailable.                                            
+                                                                                                                
+<span style="font-weight:bold;">Identity</span>  -------------------------------------------    <span style="font-weight:bold;">Verification</span>  ---------------------------------------- 
+Repository  example/service                              Tests   + Passed                                       
+Revision    a81f39d                                      Review  + Complete                                     
+Owner       Worker 2                                     Merge   ? Unverified                                   
+                                                                                                                
+<span style="font-weight:bold;">Feedback delivery</span>  -------------------------------------------------------------------------------------------- 
+<span style="font-weight:bold;">Source</span>                     &gt; <span style="font-weight:bold;">Transport</span>                  &gt; <span style="font-weight:bold;">Receipt</span>                   &gt; <span style="font-weight:bold;">Disposition</span>               
++ Recorded                   + Delivered                  ? Unconfirmed               p Open                    
+Review comment               To Worker 2                  No acknowledgement          Awaiting decision         
+                                                                                                                
+<span style="font-weight:bold;">Activity</span>  ----------------------------------------------------------------------------------------------------- 
+09:41 UTC  o <span style="font-weight:bold;">Merge requested</span>                                                                                    
+           | Request persisted                                                                                  
+09:42 UTC  o <span style="font-weight:bold;">Remote response unavailable</span>                                                                        
+             External outcome unknown</pre></figure>
+</div><div id="panel-layout/detail-document-5" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-5" tabindex="0">
+<figure><figcaption>ASCII · truecolor · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="dark" style="color:#d7dfd9;background-color:#0d1513"><span style="color:#acc8b7;font-weight:bold;">DELIVERY INSPECTION * ILLUSTRATIVE</span>                                                                              
+<span style="color:#d7dfd9;font-weight:bold;">PR #42 * Route update</span>  <span style="color:#d7dfd9;">[Outcome uncertain]</span>                                                   <span style="color:#a3b1a7;">Observed </span><span style="color:#d7dfd9;">09:42 UTC</span> 
+                                                                                                                
+<span style="color:#acc8b7;font-weight:bold;">#</span><span style="background-color:#17231e;"> </span><span style="color:#acc8b7;background-color:#17231e;font-weight:bold;">NEXT ACTION</span><span style="background-color:#17231e;">                                                                                                  </span> 
+<span style="color:#acc8b7;font-weight:bold;">#</span><span style="background-color:#17231e;"> </span><span style="color:#d7dfd9;background-color:#17231e;font-weight:bold;">Reconcile the saved merge operation</span><span style="background-color:#17231e;">                                                                          </span> 
+<span style="color:#acc8b7;font-weight:bold;">#</span><span style="background-color:#17231e;"> </span><span style="color:#a3b1a7;background-color:#17231e;">The request was recorded, but the remote response was unavailable.</span><span style="background-color:#17231e;">                                           </span> 
+                                                                                                                
+<span style="color:#d7dfd9;font-weight:bold;">Identity</span>  <span style="color:#6b8575;">-------------------------------------------</span>    <span style="color:#d7dfd9;font-weight:bold;">Verification</span>  <span style="color:#6b8575;">----------------------------------------</span> 
+<span style="color:#a3b1a7;">Repository  </span><span style="color:#d7dfd9;">example/service</span>                              <span style="color:#a3b1a7;">Tests</span>   <span style="color:#d7dfd9;">+ Passed</span>                                       
+<span style="color:#a3b1a7;">Revision    </span><span style="color:#d7dfd9;">a81f39d</span>                                      <span style="color:#a3b1a7;">Review</span>  <span style="color:#d7dfd9;">+ Complete</span>                                     
+<span style="color:#a3b1a7;">Owner       </span><span style="color:#d7dfd9;">Worker 2</span>                                     <span style="color:#a3b1a7;">Merge</span>   <span style="color:#d7dfd9;">? Unverified</span>                                   
+                                                                                                                
+<span style="color:#d7dfd9;font-weight:bold;">Feedback delivery</span>  <span style="color:#6b8575;">--------------------------------------------------------------------------------------------</span> 
+<span style="color:#d7dfd9;font-weight:bold;">Source</span>                    <span style="color:#6b8575;"> &gt; </span><span style="color:#d7dfd9;font-weight:bold;">Transport</span>                 <span style="color:#6b8575;"> &gt; </span><span style="color:#d7dfd9;font-weight:bold;">Receipt</span>                  <span style="color:#6b8575;"> &gt; </span><span style="color:#d7dfd9;font-weight:bold;">Disposition</span>               
+<span style="color:#d7dfd9;">+ Recorded</span>                   <span style="color:#d7dfd9;">+ Delivered</span>                  <span style="color:#d7dfd9;">? Unconfirmed</span>               <span style="color:#d7dfd9;">p Open</span>                    
+<span style="color:#a3b1a7;">Review comment</span>               <span style="color:#a3b1a7;">To Worker 2</span>                  <span style="color:#a3b1a7;">No acknowledgement</span>          <span style="color:#a3b1a7;">Awaiting decision</span>         
+                                                                                                                
+<span style="color:#d7dfd9;font-weight:bold;">Activity</span>  <span style="color:#6b8575;">-----------------------------------------------------------------------------------------------------</span> 
+<span style="color:#a3b1a7;">09:41 UTC</span>  <span style="color:#6b8575;">o</span> <span style="color:#d7dfd9;font-weight:bold;">Merge requested</span>                                                                                    
+           <span style="color:#6b8575;">|</span> <span style="color:#a3b1a7;">Request persisted</span>                                                                                  
+<span style="color:#a3b1a7;">09:42 UTC</span>  <span style="color:#6b8575;">o</span> <span style="color:#d7dfd9;font-weight:bold;">Remote response unavailable</span>                                                                        
+           <span style="color:#6b8575;"> </span> <span style="color:#a3b1a7;">External outcome unknown</span></pre></figure>
+</div><div id="panel-layout/detail-document-6" class="variant-panel" role="tabpanel" aria-labelledby="tab-layout/detail-document-6" tabindex="0">
+<figure><figcaption>Unicode monochrome · none · 112 × 34 terminal cells</figcaption><pre tabindex="0" class="terminal" data-theme="mono" style="color:#ffffff;background-color:#000000"><span style="font-weight:bold;">DELIVERY INSPECTION * ILLUSTRATIVE</span>                                                                              
+<span style="font-weight:bold;">PR #42 * Route update</span>  [Outcome uncertain]                                                   Observed 09:42 UTC 
+                                                                                                                
+<span style="font-weight:bold;">#</span> <span style="font-weight:bold;">NEXT ACTION</span>                                                                                                   
+<span style="font-weight:bold;">#</span> <span style="font-weight:bold;">Reconcile the saved merge operation</span>                                                                           
+<span style="font-weight:bold;">#</span> The request was recorded, but the remote response was unavailable.                                            
+                                                                                                                
+<span style="font-weight:bold;">Identity</span>  -------------------------------------------    <span style="font-weight:bold;">Verification</span>  ---------------------------------------- 
+Repository  example/service                              Tests   + Passed                                       
+Revision    a81f39d                                      Review  + Complete                                     
+Owner       Worker 2                                     Merge   ? Unverified                                   
+                                                                                                                
+<span style="font-weight:bold;">Feedback delivery</span>  -------------------------------------------------------------------------------------------- 
+<span style="font-weight:bold;">Source</span>                     &gt; <span style="font-weight:bold;">Transport</span>                  &gt; <span style="font-weight:bold;">Receipt</span>                   &gt; <span style="font-weight:bold;">Disposition</span>               
++ Recorded                   + Delivered                  ? Unconfirmed               p Open                    
+Review comment               To Worker 2                  No acknowledgement          Awaiting decision         
+                                                                                                                
+<span style="font-weight:bold;">Activity</span>  ----------------------------------------------------------------------------------------------------- 
+09:41 UTC  o <span style="font-weight:bold;">Merge requested</span>                                                                                    
+           | Request persisted                                                                                  
+09:42 UTC  o <span style="font-weight:bold;">Remote response unavailable</span>                                                                        
+             External outcome unknown</pre></figure>
+</div>
+</div>
+</div>
+<div class="component-source">
+<div class="component-subheading"><h3 id="layout/detail-document-code"><a class="heading-permalink" href="#layout%2fdetail-document-code"><span>Go usage</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3></div>
+<p class="example-imports">Imports: <a href="https://pkg.go.dev/github.com/lanej/charmed/layout" title="github.com/lanej/charmed/layout"><code>layout</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/text" title="github.com/lanej/charmed/text"><code>text</code></a> · <a href="https://pkg.go.dev/github.com/lanej/charmed/theme" title="github.com/lanej/charmed/theme"><code>theme</code></a></p>
+<pre tabindex="0" class="code-block source-code"><code class="language-go">palette <span class="syn-operator">:=</span> theme.<span class="syn-function">New</span>(theme.<span class="syn-member">Dark</span>)
+document <span class="syn-operator">:=</span> layout.<span class="syn-member">DetailDocument</span>{
+	Header: layout.<span class="syn-member">IdentityHeader</span>{ID: <span class="syn-string">&#34;DELIVERY INSPECTION · ILLUSTRATIVE&#34;</span>},
+	Summary: layout.<span class="syn-member">RecordSummary</span>{
+		Title: <span class="syn-string">&#34;PR #42 · Route update&#34;</span>, Status: text.<span class="syn-function">Pill</span>(<span class="syn-string">&#34;Outcome uncertain&#34;</span>, text.<span class="syn-member">Warning</span>, palette, text.<span class="syn-member">Normal</span>),
+		Fields: []layout.<span class="syn-member">Pair</span>{{Label: <span class="syn-string">&#34;Observed&#34;</span>, Value: <span class="syn-string">&#34;09:42 UTC&#34;</span>}},
+		Next:   <span class="syn-operator">&amp;</span>layout.<span class="syn-member">Pair</span>{Label: <span class="syn-string">&#34;Next action&#34;</span>, Value: <span class="syn-string">&#34;Reconcile the saved merge operation&#34;</span>},
+	},
+	ActionDetail: <span class="syn-string">&#34;The request was recorded, but the remote response was unavailable.&#34;</span>,
+	Sections: []layout.<span class="syn-member">DetailSection</span>{
+		{ID: <span class="syn-string">&#34;identity&#34;</span>, Title: <span class="syn-string">&#34;Identity&#34;</span>, Fields: []layout.<span class="syn-member">Pair</span>{
+			{Label: <span class="syn-string">&#34;Repository&#34;</span>, Value: <span class="syn-string">&#34;example/service&#34;</span>}, {Label: <span class="syn-string">&#34;Revision&#34;</span>, Value: <span class="syn-string">&#34;a81f39d&#34;</span>}, {Label: <span class="syn-string">&#34;Owner&#34;</span>, Value: <span class="syn-string">&#34;Worker 2&#34;</span>},
+		}},
+		{ID: <span class="syn-string">&#34;checks&#34;</span>, Title: <span class="syn-string">&#34;Verification&#34;</span>, Statuses: []layout.<span class="syn-member">StatusItem</span>{
+			{Label: <span class="syn-string">&#34;Tests&#34;</span>, Value: <span class="syn-string">&#34;Passed&#34;</span>}, {Label: <span class="syn-string">&#34;Review&#34;</span>, Value: <span class="syn-string">&#34;Complete&#34;</span>}, {Label: <span class="syn-string">&#34;Merge&#34;</span>, Value: <span class="syn-string">&#34;Unverified&#34;</span>},
+		}},
+		{ID: <span class="syn-string">&#34;feedback&#34;</span>, Title: <span class="syn-string">&#34;Feedback delivery&#34;</span>, FullWidth: <span class="syn-true">true</span>, Stages: []layout.<span class="syn-member">StatusItem</span>{
+			{Label: <span class="syn-string">&#34;Transport&#34;</span>, Value: <span class="syn-string">&#34;Delivered&#34;</span>}, {Label: <span class="syn-string">&#34;Receipt&#34;</span>, Value: <span class="syn-string">&#34;Unconfirmed&#34;</span>}, {Label: <span class="syn-string">&#34;Disposition&#34;</span>, Value: <span class="syn-string">&#34;Open&#34;</span>},
+		}},
+		{ID: <span class="syn-string">&#34;activity&#34;</span>, Title: <span class="syn-string">&#34;Activity&#34;</span>, FullWidth: <span class="syn-true">true</span>, Timeline: []layout.<span class="syn-member">TimelineEvent</span>{
+			{When: <span class="syn-string">&#34;09:41 UTC&#34;</span>, Title: <span class="syn-string">&#34;Merge requested&#34;</span>, Detail: <span class="syn-string">&#34;Request persisted&#34;</span>},
+			{When: <span class="syn-string">&#34;09:42 UTC&#34;</span>, Title: <span class="syn-string">&#34;Remote response unavailable&#34;</span>, Detail: <span class="syn-string">&#34;External outcome unknown&#34;</span>},
+		}},
+	},
+}
+
+<span class="syn-keyword">return</span> document.<span class="syn-function">View</span>(<span class="syn-number">100</span>, palette)
+</code></pre>
+</div>
+<section class="component-integration" aria-labelledby="layout/detail-document-integration"><h3 id="layout/detail-document-integration"><a class="heading-permalink" href="#layout%2fdetail-document-integration"><span>Updates, focus &amp; sizing</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><p>Set Summary.Next and optional ActionDetail for the action region. Supply stable section IDs, grouped Fields, Statuses, Stages, Timeline and Paragraphs. Stage states are independent. Sections pair above MinSectionWidth, defaulting to 40 cells per column; FullWidth breaks pairing. StatusList and Timeline also render independently. Titles, prose and event data are escaped; status values accept trusted styled text. Body appends a pure width-aware custom renderer. View returns the full content; Render also returns section ranges. A native viewport or ListInspector owns scrolling. Re-render after data, theme or width changes. Run go run ./cmd/workbench run layout/detail-document for scrollable inspection.</p></section>
+<div class="component-run"><h3 id="layout/detail-document-run"><a class="heading-permalink" href="#layout%2fdetail-document-run"><span>Run this example</span><span class="heading-link-icon" aria-hidden="true">#</span></a></h3><pre class="code-block" tabindex="0"><code class="language-sh"><span class="syn-command">go</span> run ./examples/catalog layout/detail-document</code></pre><p><a href="https://github.com/lanej/charmed/blob/cc0823efe6b1be9d1911e813477912332826207b/docs/snippets/layout_detail_document.go">Example source</a> · <a href="https://github.com/lanej/charmed/blob/cc0823efe6b1be9d1911e813477912332826207b/layout/detail_document.go">Implementation</a> · <a href="getting-started.html">Set up a checkout</a></p></div>
+<p class="composition-line">Declared example links (unaudited): <a class="dependency" href="molecules-layout.html#layout/identity-header">layout/identity-header</a> <a class="dependency" href="molecules-layout.html#layout/record-summary">layout/record-summary</a> <a class="dependency" href="molecules-layout.html#layout/key-value">layout/key-value</a> </p>
+</section>
+</section>
+</section>
+
+
+<footer>Charmed · Go, Charm &amp; ntcharts · Saved output, native execution · <a href="organisms-layout.md" class="markdown-download">Markdown</a></footer>
+</main></div></body></html>
+
