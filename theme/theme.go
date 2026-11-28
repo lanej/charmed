@@ -80,23 +80,7 @@ func New(mode Mode) Theme {
 		t.DimLink = t.Muted
 		t.Sequential = colors("#202020", "#505050", "#808080", "#b0b0b0", "#eeeeee")
 	default:
-		t.Mode = Dark
-		t.Background, t.Foreground = hex("#101722"), hex("#eeeeee")
-		t.Surface = hex("#1b2734")
-		t.Muted, t.Border, t.Accent = hex("#a8a8a8"), hex("#475569"), hex("#67d4c0")
-		t.Success, t.Warning, t.Danger = hex("#86cf9a"), hex("#f2c879"), hex("#f28b82")
-		t.Info = hex("#78b8ed")
-		t.DimLink = hex("#6fc1b0")
-		t.Trace, t.Debug, t.Fatal = hex("#9a9a9a"), hex("#70c6d8"), hex("#e49aef")
-		t.DimTrace, t.DimDebug, t.DimFatal = hex("#898989"), hex("#519bab"), hex("#b477bd")
-		t.SelectionBackground = hex("#24433f")
-		t.Unknown, t.Inactive = hex("#a7bce0"), hex("#9a9a9a")
-		t.DimUnknown, t.DimInactive = hex("#829bc3"), hex("#898989")
-		t.Pending, t.Running, t.Paused = hex("#8ca8e8"), hex("#70c6d8"), hex("#c5b49b")
-		t.DimPending, t.DimRunning, t.DimPaused = hex("#758fc4"), hex("#519bab"), hex("#a59682")
-		t.DimForeground, t.DimSuccess, t.DimInfo, t.DimWarning, t.DimDanger = hex("#a8a8a8"), hex("#629c73"), hex("#5a8fb9"), hex("#b5945c"), hex("#c17670")
-		t.Series = colors("#b9a7f5", "#87b5f9", "#e49ac2", "#d7b58b", "#8f9de8")
-		t.Sequential = colors("#202844", "#354b72", "#4e70a1", "#729bd0", "#afcbef")
+		return sageMidnight()
 	}
 
 	t.FocusBorder, t.SelectionForeground = t.Accent, t.Foreground

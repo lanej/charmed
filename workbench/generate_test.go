@@ -205,7 +205,7 @@ func TestStaticGuide(t *testing.T) {
 		t.Error("coverage inventory must not replace the home showcase")
 	}
 
-	if !bytes.Contains(pages["index.html"], []byte("background-color:#86cf9a")) {
+	if !bytes.Contains(pages["index.html"], []byte("background-color:#a6cd82")) {
 		t.Error("showcase must preserve native status pill fills")
 	}
 

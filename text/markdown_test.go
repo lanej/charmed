@@ -101,7 +101,7 @@ func TestCodeThemeSwitchingAndUnknownLanguage(t *testing.T) {
 	dark := render("go", theme.Dark)
 	light := render("go", theme.Light)
 
-	if !strings.Contains(dark, "38;2;103;212;192") || !strings.Contains(light, "38;2;7;89;133") {
+	if !strings.Contains(dark, "38;2;172;200;183") || !strings.Contains(light, "38;2;7;89;133") {
 		t.Fatal("Go keyword colors do not match the theme-derived syntax palettes")
 	}
 

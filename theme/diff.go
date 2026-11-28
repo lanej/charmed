@@ -8,7 +8,7 @@ type DiffColors struct{ Added, Deleted, AddedEmphasis, DeletedEmphasis color.Col
 func diffColors(mode Mode) DiffColors {
 	switch mode {
 	case Dark:
-		return DiffColors{hex("#142b24"), hex("#302027"), hex("#1d3d30"), hex("#492630")}
+		return DiffColors{hex("#253225"), hex("#312828"), hex("#2c3a29"), hex("#3b2d2d")}
 	case Light:
 		return DiffColors{hex("#e8f3eb"), hex("#faeaea"), hex("#d5e9da"), hex("#f9dede")}
 	case Contrast:

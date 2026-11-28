@@ -301,7 +301,9 @@ func writeSite(out, root string, entries []ManifestEntry) error {
 // The browser has no independent brand or data-series hex palette.
 type brandPalette struct {
 	Background, Surface, Text, Muted, Border, Accent string
+	Focus, Selection, SelectionText                  string
 	Success, Info, Warning, Danger                   string
+	Syntax                                           theme.SyntaxColors
 	Series                                           []string
 }
 
@@ -320,8 +322,10 @@ func newBrandPalette(t theme.Theme) brandPalette {
 		Background: colorHex(t.Background), Surface: colorHex(t.Surface),
 		Text: colorHex(t.Foreground), Muted: colorHex(t.Muted),
 		Border: colorHex(t.Border), Accent: colorHex(t.Accent),
+		Focus: colorHex(t.FocusBorder), Selection: colorHex(t.SelectionBackground),
 		Success: colorHex(t.Success), Info: colorHex(t.Info),
 		Warning: colorHex(t.Warning), Danger: colorHex(t.Danger),
+		SelectionText: colorHex(t.SelectionForeground), Syntax: t.Syntax,
 	}
 	for _, c := range t.Series {
 		b.Series = append(b.Series, colorHex(c))
@@ -337,10 +341,18 @@ func (b brandPalette) style() string {
 		";--muted:" + b.Muted +
 		";--line:" + b.Border +
 		";--accent:" + b.Accent +
+		";--focus:" + b.Focus +
+		";--selection:" + b.Selection +
+		";--selection-text:" + b.SelectionText +
 		";--success:" + b.Success +
 		";--info:" + b.Info +
 		";--warning:" + b.Warning +
-		";--danger:" + b.Danger + ";"
+		";--danger:" + b.Danger +
+		";--syntax-keyword:" + colorHex(b.Syntax.Keyword) +
+		";--syntax-name:" + colorHex(b.Syntax.Name) +
+		";--syntax-string:" + colorHex(b.Syntax.String) +
+		";--syntax-number:" + colorHex(b.Syntax.Number) +
+		";--syntax-comment:" + colorHex(b.Syntax.Comment) + ";"
 
 	for i, c := range b.Series {
 		styles += fmt.Sprintf("--series-%d:%s;", i, c)

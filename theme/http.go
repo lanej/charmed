@@ -15,7 +15,8 @@ func httpColors(mode Mode) (HTTPColors, SyntaxColors) {
 	case Light:
 		values = colors("#365e70", "#725a20", "#65517f", "#7b4252", "#526176", "#365b78")
 	case Dark:
-		values = colors("#99c8d4", "#e1cd91", "#c3b2df", "#e6b6bf", "#a1acbd", "#a9c4e5")
+		return HTTPColors{hex(cyan), hex(amber), hex(lavender), hex(dustyRose), hex(muted), hex(blue)},
+			SyntaxColors{Keyword: hex(blue), String: hex(lichen), Number: hex(lavender), Name: hex(teal), Comment: hex(comment)}
 	case Contrast:
 		values = colors("#b7dfea", "#f4dfa6", "#d9c8f0", "#f3c6d0", "#b0bdcf", "#c1d9f5")
 	case Mono:

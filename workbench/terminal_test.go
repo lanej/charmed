@@ -65,7 +65,7 @@ func TestTerminalHTMLWideCellsKeepTextDecorations(t *testing.T) {
 
 func TestTerminalHTMLPreservesMonochromeInverse(t *testing.T) {
 	rendered := string(terminalHTML("\x1b[7m focus \x1b[0m"))
-	for _, want := range []string{"color:#101722;", "background-color:#eeeeee;", "> focus </span>"} {
+	for _, want := range []string{"color:#0d1513;", "background-color:#d7dfd9;", "> focus </span>"} {
 		if !strings.Contains(rendered, want) {
 			t.Fatalf("monochrome inverse lost %q: %s", want, rendered)
 		}

@@ -24,9 +24,9 @@ The primary lockup pairs the terminal talisman with the lowercase **charmed** wo
 
 ## Tokens and roles
 
-The swatches below are **derived directly from Charmed's native dark theme**. Generated CSS and this page draw from the same semantic roles used in terminal fixtures, including surfaces, borders, text, statuses, and data-series colors. Syntax highlighting maps to these roles instead of defining another hex palette.
+Charmed uses **Sage Midnight** for its native dark theme and this guide. The talisman takes the sage accent, keyboard focus uses lavender, and selected items use a deeper green surface. The swatches show the values used in the terminal.
 
-For native widgets, source semantic colors from [`theme.New(theme.Dark)`](https://github.com/lanej/charmed/blob/main/theme/theme.go). Documentation consumes those values during static generation rather than maintaining a second palette. Success, information, warning, danger, and data-series colors remain distinct.
+Use [`theme.New(theme.Dark)`](https://github.com/lanej/charmed/blob/main/theme/theme.go) for the same palette in a native widget. The guide takes its syntax colors from `Theme.Syntax` and its chart colors from `Theme.Series`.
 
 ## Typography and code
 

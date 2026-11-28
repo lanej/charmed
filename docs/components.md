@@ -94,11 +94,11 @@ The [application shell](templates-pattern.html#template/application) composes th
 
 [Log level atoms](atoms-feedback.html#feedback/log-level) keep severity independent of emphasis. Rendering a fatal label does not log or exit. Unknown levels retain their numeric value, and equal-width labels keep columns aligned across Unicode, ASCII and monochrome output.
 
-| Level | Semantic tone |
+| Level | Sage Midnight tone |
 | --- | --- |
 | TRACE | Subdued neutral; `feedback.TraceLevel` is the display-only typed extension -8 |
-| DEBUG | Cyan |
-| INFO | Blue |
+| DEBUG | Blue |
+| INFO | Cyan |
 | WARN | Amber |
 | ERROR | Red |
 | FATAL | Magenta |

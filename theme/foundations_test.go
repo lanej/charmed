@@ -59,11 +59,28 @@ func TestDimTokensRemainReadableAndSeriesDoNotAliasSemanticRoles(t *testing.T) {
 		}
 
 		for i, series := range palette.Series {
-			for _, semantic := range []color.Color{palette.Accent, palette.Success, palette.Info, palette.Warning, palette.Danger, palette.Unknown, palette.Inactive, palette.Pending, palette.Running, palette.Paused} {
+			for _, semantic := range []color.Color{palette.Accent, palette.FocusBorder, palette.Success, palette.Info, palette.Warning, palette.Danger, palette.Unknown, palette.Inactive, palette.Pending, palette.Running, palette.Paused, palette.Trace, palette.Debug, palette.Fatal} {
 				if color.NRGBAModel.Convert(series) == color.NRGBAModel.Convert(semantic) {
 					t.Fatalf("%s series %d aliases a semantic token", mode, i)
 				}
 			}
+		}
+	}
+}
+
+func TestSageMidnightDimTextOnSelectedRows(t *testing.T) {
+	palette := theme.New(theme.Dark)
+	background := luminance(palette.SelectionBackground)
+
+	for name, foreground := range map[string]color.Color{
+		"text": palette.DimForeground, "link": palette.DimLink,
+		"success": palette.DimSuccess, "information": palette.DimInfo, "warning": palette.DimWarning, "danger": palette.DimDanger,
+		"unknown": palette.DimUnknown, "inactive": palette.DimInactive, "pending": palette.DimPending,
+		"running": palette.DimRunning, "paused": palette.DimPaused,
+		"trace": palette.DimTrace, "debug": palette.DimDebug, "fatal": palette.DimFatal,
+	} {
+		if ratio := (luminance(foreground) + .05) / (background + .05); ratio < 4.5 {
+			t.Errorf("dim %s text on a Sage Midnight selection has %.2f:1 contrast, want at least 4.5:1", name, ratio)
 		}
 	}
 }

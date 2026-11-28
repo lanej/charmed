@@ -10,7 +10,7 @@ Themes, cell geometry, focus and motion are shared across components. Use semant
 
 ## Colors and emphasis
 
-Foreground and muted text are neutral; accent identifies interaction. Semantic colors express meaning, while ordered intensity and categorical series use separate palettes. Keep series order stable across views, and preserve labels when fallback colors converge.
+Sage Midnight is the default dark palette. Its sage accent identifies interaction, lavender outlines keyboard focus, and a deep green fill marks selected rows. Semantic colors express meaning, while ordered intensity and categorical series use separate palettes. Keep series order stable across views, and preserve labels when fallback colors converge.
 
 | Role | Meaning and customization |
 | --- | --- |
@@ -34,7 +34,7 @@ Applications decide when a state applies; rendering never starts, pauses or disa
 | UNKNOWN | Cannot establish state | Slate blue |
 | OFF | Switched off or inactive | Gray |
 | PENDING | Waiting to start | Blue |
-| RUNNING | Actively executing | Cyan |
+| RUNNING | Actively executing | Teal or cyan |
 | PAUSED | Suspended and resumable | Sand |
 | DISABLED | Unavailable to start or select | Gray with slashed-circle glyph |
 | CONNECTED | Established connection | Green with filled-circle glyph |
